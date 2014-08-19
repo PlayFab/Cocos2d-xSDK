@@ -128,13 +128,13 @@ namespace ServerModels
 	struct CatalogItemConsumableInfo : public PlayFabBaseModel
     {
 		
-		Uint32 UsageCount;
+		OptionalUint32 UsageCount;
 		OptionalUint32 UsagePeriod;
 		std::string UsagePeriodGroup;
 	
         CatalogItemConsumableInfo() :
 			PlayFabBaseModel(),
-			UsageCount(0),
+			UsageCount(),
 			UsagePeriod(),
 			UsagePeriodGroup()
 			{}
@@ -1539,6 +1539,35 @@ namespace ServerModels
         }
 		
 		~UpdateUserDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateUserInternalDataRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::map<std::string, std::string> Data;
+	
+        UpdateUserInternalDataRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			Data()
+			{}
+		
+		UpdateUserInternalDataRequest(const UpdateUserInternalDataRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			Data(src.Data)
+			{}
+			
+		UpdateUserInternalDataRequest(const rapidjson::Value& obj) : UpdateUserInternalDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateUserInternalDataRequest();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

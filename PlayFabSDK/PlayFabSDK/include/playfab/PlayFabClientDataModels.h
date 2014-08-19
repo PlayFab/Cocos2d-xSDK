@@ -169,13 +169,13 @@ namespace ClientModels
 	struct CatalogItemConsumableInfo : public PlayFabBaseModel
     {
 		
-		Uint32 UsageCount;
+		OptionalUint32 UsageCount;
 		OptionalUint32 UsagePeriod;
 		std::string UsagePeriodGroup;
 	
         CatalogItemConsumableInfo() :
 			PlayFabBaseModel(),
-			UsageCount(0),
+			UsageCount(),
 			UsagePeriod(),
 			UsagePeriodGroup()
 			{}

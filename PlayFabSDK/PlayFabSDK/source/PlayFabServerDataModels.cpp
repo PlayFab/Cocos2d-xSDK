@@ -168,7 +168,7 @@ void CatalogItemConsumableInfo::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	writer.String("UsageCount"); writer.Uint(UsageCount);
+	if(UsageCount.notNull()) { writer.String("UsageCount"); writer.Uint(UsageCount); }
 	
 	if(UsagePeriod.notNull()) { writer.String("UsagePeriod"); writer.Uint(UsagePeriod); }
 	
@@ -2144,6 +2144,49 @@ void UpdateUserDataResult::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateUserDataResult::readFromValue(const rapidjson::Value& obj)
 {
+	
+	
+	return true;
+}
+
+
+UpdateUserInternalDataRequest::~UpdateUserInternalDataRequest()
+{
+	
+}
+
+void UpdateUserInternalDataRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	if(!Data.empty()) {
+	writer.String("Data");
+	writer.StartObject();
+	for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+	}
+	writer.EndObject();
+	}
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateUserInternalDataRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* Data_member = obj.FindMember("Data");
+	if (Data_member != NULL) {
+		for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
+			Data[iter->name.GetString()] = iter->value.GetString();
+		}
+	}
 	
 	
 	return true;

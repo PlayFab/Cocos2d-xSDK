@@ -230,7 +230,7 @@ void CatalogItemConsumableInfo::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	writer.String("UsageCount"); writer.Uint(UsageCount);
+	if(UsageCount.notNull()) { writer.String("UsageCount"); writer.Uint(UsageCount); }
 	
 	if(UsagePeriod.notNull()) { writer.String("UsagePeriod"); writer.Uint(UsagePeriod); }
 	

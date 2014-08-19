@@ -517,7 +517,7 @@ void PlayFabServerAPI::OnUpdateUserDataResult(int httpStatus, HttpRequest* reque
 
 
 void PlayFabServerAPI::UpdateUserInternalData(
-    UpdateUserDataRequest& request,
+    UpdateUserInternalDataRequest& request,
     UpdateUserInternalDataCallback callback,
     ErrorCallback errorCallback,
     void* userData

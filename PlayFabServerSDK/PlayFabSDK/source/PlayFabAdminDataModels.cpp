@@ -306,7 +306,7 @@ void CatalogItemConsumableInfo::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	writer.String("UsageCount"); writer.Uint(UsageCount);
+	if(UsageCount.notNull()) { writer.String("UsageCount"); writer.Uint(UsageCount); }
 	
 	if(UsagePeriod.notNull()) { writer.String("UsagePeriod"); writer.Uint(UsagePeriod); }
 	
@@ -2610,55 +2610,6 @@ bool RemoveServerBuildResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
-RemoveTitleDataRequest::~RemoveTitleDataRequest()
-{
-	
-}
-
-void RemoveTitleDataRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	writer.String("Key"); writer.String(Key.c_str());
-	
-	
-	writer.EndObject();
-}
-
-bool RemoveTitleDataRequest::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* Key_member = obj.FindMember("Key");
-	if (Key_member != NULL) Key = Key_member->value.GetString();
-	
-	
-	return true;
-}
-
-
-RemoveTitleDataResult::~RemoveTitleDataResult()
-{
-	
-}
-
-void RemoveTitleDataResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	
-	writer.EndObject();
-}
-
-bool RemoveTitleDataResult::readFromValue(const rapidjson::Value& obj)
-{
-	
-	
-	return true;
-}
-
-
 ResetUserStatisticsRequest::~ResetUserStatisticsRequest()
 {
 	
@@ -2865,6 +2816,80 @@ bool SetTitleDataResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+SetupPushNotificationRequest::~SetupPushNotificationRequest()
+{
+	
+}
+
+void SetupPushNotificationRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Name"); writer.String(Name.c_str());
+	
+	writer.String("Platform"); writer.String(Platform.c_str());
+	
+	if(Key.length() > 0) { writer.String("Key"); writer.String(Key.c_str()); }
+	
+	writer.String("Credential"); writer.String(Credential.c_str());
+	
+	writer.String("OverwriteOldARN"); writer.Bool(OverwriteOldARN);
+	
+	
+	writer.EndObject();
+}
+
+bool SetupPushNotificationRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Name_member = obj.FindMember("Name");
+	if (Name_member != NULL) Name = Name_member->value.GetString();
+	
+	const Value::Member* Platform_member = obj.FindMember("Platform");
+	if (Platform_member != NULL) Platform = Platform_member->value.GetString();
+	
+	const Value::Member* Key_member = obj.FindMember("Key");
+	if (Key_member != NULL) Key = Key_member->value.GetString();
+	
+	const Value::Member* Credential_member = obj.FindMember("Credential");
+	if (Credential_member != NULL) Credential = Credential_member->value.GetString();
+	
+	const Value::Member* OverwriteOldARN_member = obj.FindMember("OverwriteOldARN");
+	if (OverwriteOldARN_member != NULL) OverwriteOldARN = OverwriteOldARN_member->value.GetBool();
+	
+	
+	return true;
+}
+
+
+SetupPushNotificationResult::~SetupPushNotificationResult()
+{
+	
+}
+
+void SetupPushNotificationResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(ARN.length() > 0) { writer.String("ARN"); writer.String(ARN.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool SetupPushNotificationResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* ARN_member = obj.FindMember("ARN");
+	if (ARN_member != NULL) ARN = ARN_member->value.GetString();
+	
+	
+	return true;
+}
+
+
 SubtractUserVirtualCurrencyRequest::~SubtractUserVirtualCurrencyRequest()
 {
 	
@@ -2914,9 +2939,9 @@ void UpdateCatalogItemsRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
 	
-	writer.String("CatalogItems");
+	writer.String("Catalog");
 	writer.StartArray();
-	for (std::list<CatalogItem>::iterator iter = CatalogItems.begin(); iter != CatalogItems.end(); iter++) {
+	for (std::list<CatalogItem>::iterator iter = Catalog.begin(); iter != Catalog.end(); iter++) {
 		iter->writeJSON(writer);
 	}
 	writer.EndArray();
@@ -2932,11 +2957,11 @@ bool UpdateCatalogItemsRequest::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
 	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
 	
-	const Value::Member* CatalogItems_member = obj.FindMember("CatalogItems");
-	if (CatalogItems_member != NULL) {
-		const rapidjson::Value& memberList = CatalogItems_member->value;
+	const Value::Member* Catalog_member = obj.FindMember("Catalog");
+	if (Catalog_member != NULL) {
+		const rapidjson::Value& memberList = Catalog_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
-			CatalogItems.push_back(CatalogItem(memberList[i]));
+			Catalog.push_back(CatalogItem(memberList[i]));
 		}
 	}
 	
@@ -3092,6 +3117,49 @@ void UpdateUserDataResult::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateUserDataResult::readFromValue(const rapidjson::Value& obj)
 {
+	
+	
+	return true;
+}
+
+
+UpdateUserInternalDataRequest::~UpdateUserInternalDataRequest()
+{
+	
+}
+
+void UpdateUserInternalDataRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	if(!Data.empty()) {
+	writer.String("Data");
+	writer.StartObject();
+	for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+	}
+	writer.EndObject();
+	}
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateUserInternalDataRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* Data_member = obj.FindMember("Data");
+	if (Data_member != NULL) {
+		for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
+			Data[iter->name.GetString()] = iter->value.GetString();
+		}
+	}
 	
 	
 	return true;

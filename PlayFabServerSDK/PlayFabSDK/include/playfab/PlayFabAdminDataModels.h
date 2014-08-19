@@ -233,13 +233,13 @@ namespace AdminModels
 	struct CatalogItemConsumableInfo : public PlayFabBaseModel
     {
 		
-		Uint32 UsageCount;
+		OptionalUint32 UsageCount;
 		OptionalUint32 UsagePeriod;
 		std::string UsagePeriodGroup;
 	
         CatalogItemConsumableInfo() :
 			PlayFabBaseModel(),
-			UsageCount(0),
+			UsageCount(),
 			UsagePeriod(),
 			UsagePeriodGroup()
 			{}
@@ -1842,55 +1842,6 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	struct RemoveTitleDataRequest : public PlayFabBaseModel
-    {
-		
-		std::string Key;
-	
-        RemoveTitleDataRequest() :
-			PlayFabBaseModel(),
-			Key()
-			{}
-		
-		RemoveTitleDataRequest(const RemoveTitleDataRequest& src) :
-			PlayFabBaseModel(),
-			Key(src.Key)
-			{}
-			
-		RemoveTitleDataRequest(const rapidjson::Value& obj) : RemoveTitleDataRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~RemoveTitleDataRequest();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct RemoveTitleDataResult : public PlayFabBaseModel
-    {
-		
-	
-        RemoveTitleDataResult() :
-			PlayFabBaseModel()
-			{}
-		
-		RemoveTitleDataResult(const RemoveTitleDataResult& src) :
-			PlayFabBaseModel()
-			{}
-			
-		RemoveTitleDataResult(const rapidjson::Value& obj) : RemoveTitleDataResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~RemoveTitleDataResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
 	struct ResetUserStatisticsRequest : public PlayFabBaseModel
     {
 		
@@ -2093,6 +2044,70 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct SetupPushNotificationRequest : public PlayFabBaseModel
+    {
+		
+		std::string Name;
+		std::string Platform;
+		std::string Key;
+		std::string Credential;
+		bool OverwriteOldARN;
+	
+        SetupPushNotificationRequest() :
+			PlayFabBaseModel(),
+			Name(),
+			Platform(),
+			Key(),
+			Credential(),
+			OverwriteOldARN(false)
+			{}
+		
+		SetupPushNotificationRequest(const SetupPushNotificationRequest& src) :
+			PlayFabBaseModel(),
+			Name(src.Name),
+			Platform(src.Platform),
+			Key(src.Key),
+			Credential(src.Credential),
+			OverwriteOldARN(src.OverwriteOldARN)
+			{}
+			
+		SetupPushNotificationRequest(const rapidjson::Value& obj) : SetupPushNotificationRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~SetupPushNotificationRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct SetupPushNotificationResult : public PlayFabBaseModel
+    {
+		
+		std::string ARN;
+	
+        SetupPushNotificationResult() :
+			PlayFabBaseModel(),
+			ARN()
+			{}
+		
+		SetupPushNotificationResult(const SetupPushNotificationResult& src) :
+			PlayFabBaseModel(),
+			ARN(src.ARN)
+			{}
+			
+		SetupPushNotificationResult(const rapidjson::Value& obj) : SetupPushNotificationResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~SetupPushNotificationResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct SubtractUserVirtualCurrencyRequest : public PlayFabBaseModel
     {
 		
@@ -2129,18 +2144,18 @@ namespace AdminModels
     {
 		
 		std::string CatalogVersion;
-		std::list<CatalogItem> CatalogItems;
+		std::list<CatalogItem> Catalog;
 	
         UpdateCatalogItemsRequest() :
 			PlayFabBaseModel(),
 			CatalogVersion(),
-			CatalogItems()
+			Catalog()
 			{}
 		
 		UpdateCatalogItemsRequest(const UpdateCatalogItemsRequest& src) :
 			PlayFabBaseModel(),
 			CatalogVersion(src.CatalogVersion),
-			CatalogItems(src.CatalogItems)
+			Catalog(src.Catalog)
 			{}
 			
 		UpdateCatalogItemsRequest(const rapidjson::Value& obj) : UpdateCatalogItemsRequest()
@@ -2276,6 +2291,35 @@ namespace AdminModels
         }
 		
 		~UpdateUserDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateUserInternalDataRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::map<std::string, std::string> Data;
+	
+        UpdateUserInternalDataRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			Data()
+			{}
+		
+		UpdateUserInternalDataRequest(const UpdateUserInternalDataRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			Data(src.Data)
+			{}
+			
+		UpdateUserInternalDataRequest(const rapidjson::Value& obj) : UpdateUserInternalDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateUserInternalDataRequest();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

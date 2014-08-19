@@ -517,7 +517,7 @@ void PlayFabAdminAPI::OnUpdateUserDataResult(int httpStatus, HttpRequest* reques
 
 
 void PlayFabAdminAPI::UpdateUserInternalData(
-    UpdateUserDataRequest& request,
+    UpdateUserInternalDataRequest& request,
     UpdateUserInternalDataCallback callback,
     ErrorCallback errorCallback,
     void* userData
@@ -952,63 +952,6 @@ void PlayFabAdminAPI::OnListVirualCurrencyTypesResult(int httpStatus, HttpReques
         if (request->GetResultCallback() != NULL)
         {
             ListVirualCurrencyTypesCallback successCallback = (ListVirualCurrencyTypesCallback)(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != NULL)
-        {
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        }
-
-        if (request->GetErrorCallback() != NULL)
-        {
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-        }
-    }
-
-    delete request;
-}
-
-
-void PlayFabAdminAPI::RemoveTitleData(
-    RemoveTitleDataRequest& request,
-    RemoveTitleDataCallback callback,
-    ErrorCallback errorCallback,
-    void* userData
-    )
-{
-    
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/RemoveTitleData"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
-	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
-	
-    httpRequest->SetResultCallback((void*)callback);
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    mHttpRequester->AddRequest(httpRequest, OnRemoveTitleDataResult, this);
-}
-
-void PlayFabAdminAPI::OnRemoveTitleDataResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    RemoveTitleDataResult outResult;
-    PlayFabError errorResult;
-
-    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
-
-    if (success)
-    {
-        
-
-        if (request->GetResultCallback() != NULL)
-        {
-            RemoveTitleDataCallback successCallback = (RemoveTitleDataCallback)(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

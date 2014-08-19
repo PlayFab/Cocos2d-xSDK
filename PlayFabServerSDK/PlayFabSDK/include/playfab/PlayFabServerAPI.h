@@ -65,7 +65,7 @@ namespace PlayFab
 		
 		void UpdateUserData(ServerModels::UpdateUserDataRequest& request, UpdateUserDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
-		void UpdateUserInternalData(ServerModels::UpdateUserDataRequest& request, UpdateUserInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		void UpdateUserInternalData(ServerModels::UpdateUserInternalDataRequest& request, UpdateUserInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateUserReadOnlyData(ServerModels::UpdateUserDataRequest& request, UpdateUserReadOnlyDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
