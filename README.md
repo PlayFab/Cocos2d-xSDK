@@ -76,4 +76,7 @@ $(call import-module,network)
 
 Coming soon!
 
+# API Docs
+
+Please see http://api.playfab.com/Documentation/ for complete documentation of all PlayFab SDK calls.
 
