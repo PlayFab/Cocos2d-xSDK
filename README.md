@@ -13,8 +13,7 @@ PlayFabSDK - Contains all APIs in one SDK.
 
 # Integration
 
-
-To integrate the PlayFab SDK into your cocos2d-x project, follow these steps. First, from the version of the SDK you wish to use, copy the PlayFabSDK directory into your Cocos2d-x project folder. Next you must add the source files, headers and dependencies into your project. Here is the general overview for all Cocos2d-x platforms:
+To integrate the PlayFab SDK into your cocos2d-x project, follow these steps. First, determine which version of the SDK you need for your project. From that version, copy the PlayFabSDK directory into your Cocos2d-x project folder. Next you must add the source files, headers and dependencies into your project. Here is the general overview for all Cocos2d-x platforms:
 
 1. Link against libcurl
 2. Link against zlib
