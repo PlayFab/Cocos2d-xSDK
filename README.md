@@ -73,7 +73,23 @@ $(call import-module,network)
 
 ## XCode
 
-Coming soon!
+Open up your game's project file in Xcode. 
+
+### Add source files to project
+
+Drag the PlayFabSDK folder into your project in Xcode. Make sure both the iOS and Mac targers are checked (if applicable to your poject).
+
+### Add search headers
+
+Open your project's build settings tab. Find "Search Paths/Header Search Paths". Double click it to open, and add $(SRCROOT)/../PlayFabSDK/include to the end of the search paths.
+
+If you have put the SDK in a different location, edit this path as needed.
+
+For some reason, the Cocos2d-x project template includes the curl headers by default on MacOS, but not iOS. To fix that:
+
+Under Targets, pick your project's iOS Target. Find "Search Paths/Header Search Paths" again, and double click to open. Add $(SRCROOT)/../cocos2d/external/curl/include/ios to the paths.
+
+Compile and enjoy!
 
 # API Docs
 
