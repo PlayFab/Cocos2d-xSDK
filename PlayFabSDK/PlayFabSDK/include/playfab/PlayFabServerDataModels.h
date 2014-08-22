@@ -373,13 +373,13 @@ namespace ServerModels
 		
 		std::string StatisticName;
 		std::string PlayFabId;
-		Int32 MaxResultsCount;
+		OptionalInt32 MaxResultsCount;
 	
         GetLeaderboardAroundUserRequest() :
 			PlayFabBaseModel(),
 			StatisticName(),
 			PlayFabId(),
-			MaxResultsCount(0)
+			MaxResultsCount()
 			{}
 		
 		GetLeaderboardAroundUserRequest(const GetLeaderboardAroundUserRequest& src) :
@@ -466,13 +466,13 @@ namespace ServerModels
 		
 		std::string StatisticName;
 		Int32 StartPosition;
-		Int32 MaxResultsCount;
+		OptionalInt32 MaxResultsCount;
 	
         GetLeaderboardRequest() :
 			PlayFabBaseModel(),
 			StatisticName(),
 			StartPosition(0),
-			MaxResultsCount(0)
+			MaxResultsCount()
 			{}
 		
 		GetLeaderboardRequest(const GetLeaderboardRequest& src) :
@@ -994,8 +994,8 @@ namespace ServerModels
 		std::string ItemId;
 		std::string ItemInstanceId;
 		std::string ItemClass;
-		std::string PurchaseDate;
-		std::string Expiration;
+		OptionalTime PurchaseDate;
+		OptionalTime Expiration;
 		OptionalUint32 RemainingUses;
 		std::string Annotation;
 		std::string CatalogVersion;

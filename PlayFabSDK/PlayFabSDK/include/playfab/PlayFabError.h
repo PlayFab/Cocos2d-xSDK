@@ -87,7 +87,16 @@ namespace PlayFab
 		PlayFabErrorInvalidBodyValue = 1070,
 		PlayFabErrorInvalidRequest = 1071,
 		PlayFabErrorReservedEvent = 1072,
-		PlayFabErrorInvalidUserStatistics = 1073
+		PlayFabErrorInvalidUserStatistics = 1073,
+		PlayFabErrorNotAuthenticated = 1074,
+		PlayFabErrorStreamAlreadyExists = 1075,
+		PlayFabErrorErrorCreatingStream = 1076,
+		PlayFabErrorStreamNotFound = 1077,
+		PlayFabErrorInvalidAccount = 1078,
+		PlayFabErrorDisplayNameUpdatesNotEnabledForTitle = 1079,
+		PlayFabErrorPurchaseDoesNotExist = 1080,
+		PlayFabErrorInvalidPurchaseTransactionStatus = 1081,
+		PlayFabErrorAPINotEnabledForGameClientAccess = 1082
     };
 
     struct PlayFabError

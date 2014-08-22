@@ -1360,7 +1360,7 @@ void GetUserDataRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
 	
 	if(!Keys.empty()) {
 	writer.String("Keys");
@@ -1544,9 +1544,9 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 	
 	if(ItemClass.length() > 0) { writer.String("ItemClass"); writer.String(ItemClass.c_str()); }
 	
-	if(PurchaseDate.length() > 0) { writer.String("PurchaseDate"); writer.String(PurchaseDate.c_str()); }
+	if(PurchaseDate.notNull()) { writer.String("PurchaseDate"); writeDatetime(PurchaseDate, writer); }
 	
-	if(Expiration.length() > 0) { writer.String("Expiration"); writer.String(Expiration.c_str()); }
+	if(Expiration.notNull()) { writer.String("Expiration"); writeDatetime(Expiration, writer); }
 	
 	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Uint(RemainingUses); }
 	
@@ -1573,10 +1573,10 @@ bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 	if (ItemClass_member != NULL) ItemClass = ItemClass_member->value.GetString();
 	
 	const Value::Member* PurchaseDate_member = obj.FindMember("PurchaseDate");
-	if (PurchaseDate_member != NULL) PurchaseDate = PurchaseDate_member->value.GetString();
+	if (PurchaseDate_member != NULL) PurchaseDate = readDatetime(PurchaseDate_member->value);
 	
 	const Value::Member* Expiration_member = obj.FindMember("Expiration");
-	if (Expiration_member != NULL) Expiration = Expiration_member->value.GetString();
+	if (Expiration_member != NULL) Expiration = readDatetime(Expiration_member->value);
 	
 	const Value::Member* RemainingUses_member = obj.FindMember("RemainingUses");
 	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetUint();

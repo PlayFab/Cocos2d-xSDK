@@ -3,7 +3,7 @@
 
 namespace PlayFab
 {
-    const std::string PlayFabAPIRevision = "1.0.0.b6";
+    const std::string PlayFabAPIRevision = "1.0.0.b8";
     const std::string PlayFabWindowsSDKVersion = "1.0.0";
-    const std::string PlayFabVersionString = "Cocos2d-xSDK-1.0.0-1.0.0.b6";
+    const std::string PlayFabVersionString = "Cocos2d-xSDK-1.0.0-1.0.0.b8";
 }

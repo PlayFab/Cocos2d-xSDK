@@ -76,6 +76,38 @@ bool AddFriendResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+AddUserVirtualCurrencyRequest::~AddUserVirtualCurrencyRequest()
+{
+	
+}
+
+void AddUserVirtualCurrencyRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("VirtualCurrency"); writer.String(VirtualCurrency.c_str());
+	
+	writer.String("Amount"); writer.Int(Amount);
+	
+	
+	writer.EndObject();
+}
+
+bool AddUserVirtualCurrencyRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
+	if (VirtualCurrency_member != NULL) VirtualCurrency = VirtualCurrency_member->value.GetString();
+	
+	const Value::Member* Amount_member = obj.FindMember("Amount");
+	if (Amount_member != NULL) Amount = Amount_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
 AndroidDevicePushNotificationRegistrationRequest::~AndroidDevicePushNotificationRegistrationRequest()
 {
 	
@@ -1804,7 +1836,7 @@ void GetLeaderboardAroundCurrentUserRequest::writeJSON(PFStringJsonWriter& write
 	
 	writer.String("StatisticName"); writer.String(StatisticName.c_str());
 	
-	writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+	if(MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
 	
 	
 	writer.EndObject();
@@ -1919,7 +1951,7 @@ void GetLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("StartPosition"); writer.Int(StartPosition);
 	
-	writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+	if(MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
 	
 	
 	writer.EndObject();
@@ -2175,13 +2207,14 @@ void GetUserDataRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
+	if(!Keys.empty()) {
 	writer.String("Keys");
 	writer.StartArray();
 	for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
 		writer.String(iter->c_str());
 	}
 	writer.EndArray();
-	
+	 }
 	
 	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
 	
@@ -2343,9 +2376,9 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 	
 	if(ItemClass.length() > 0) { writer.String("ItemClass"); writer.String(ItemClass.c_str()); }
 	
-	if(PurchaseDate.length() > 0) { writer.String("PurchaseDate"); writer.String(PurchaseDate.c_str()); }
+	if(PurchaseDate.notNull()) { writer.String("PurchaseDate"); writeDatetime(PurchaseDate, writer); }
 	
-	if(Expiration.length() > 0) { writer.String("Expiration"); writer.String(Expiration.c_str()); }
+	if(Expiration.notNull()) { writer.String("Expiration"); writeDatetime(Expiration, writer); }
 	
 	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Uint(RemainingUses); }
 	
@@ -2372,10 +2405,10 @@ bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 	if (ItemClass_member != NULL) ItemClass = ItemClass_member->value.GetString();
 	
 	const Value::Member* PurchaseDate_member = obj.FindMember("PurchaseDate");
-	if (PurchaseDate_member != NULL) PurchaseDate = PurchaseDate_member->value.GetString();
+	if (PurchaseDate_member != NULL) PurchaseDate = readDatetime(PurchaseDate_member->value);
 	
 	const Value::Member* Expiration_member = obj.FindMember("Expiration");
-	if (Expiration_member != NULL) Expiration = Expiration_member->value.GetString();
+	if (Expiration_member != NULL) Expiration = readDatetime(Expiration_member->value);
 	
 	const Value::Member* RemainingUses_member = obj.FindMember("RemainingUses");
 	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetUint();
@@ -3201,6 +3234,38 @@ bool MatchmakeResult::readFromValue(const rapidjson::Value& obj)
 			Queue.push_back(memberList[i].GetString());
 		}
 	}
+	
+	
+	return true;
+}
+
+
+ModifyUserVirtualCurrencyResult::~ModifyUserVirtualCurrencyResult()
+{
+	
+}
+
+void ModifyUserVirtualCurrencyResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(VirtualCurrency.length() > 0) { writer.String("VirtualCurrency"); writer.String(VirtualCurrency.c_str()); }
+	
+	writer.String("Balance"); writer.Int(Balance);
+	
+	
+	writer.EndObject();
+}
+
+bool ModifyUserVirtualCurrencyResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
+	if (VirtualCurrency_member != NULL) VirtualCurrency = VirtualCurrency_member->value.GetString();
+	
+	const Value::Member* Balance_member = obj.FindMember("Balance");
+	if (Balance_member != NULL) Balance = Balance_member->value.GetInt();
 	
 	
 	return true;
@@ -4221,6 +4286,38 @@ bool StartPurchaseResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+SubtractUserVirtualCurrencyRequest::~SubtractUserVirtualCurrencyRequest()
+{
+	
+}
+
+void SubtractUserVirtualCurrencyRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("VirtualCurrency"); writer.String(VirtualCurrency.c_str());
+	
+	writer.String("Amount"); writer.Int(Amount);
+	
+	
+	writer.EndObject();
+}
+
+bool SubtractUserVirtualCurrencyRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
+	if (VirtualCurrency_member != NULL) VirtualCurrency = VirtualCurrency_member->value.GetString();
+	
+	const Value::Member* Amount_member = obj.FindMember("Amount");
+	if (Amount_member != NULL) Amount = Amount_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
 UnlinkFacebookAccountRequest::~UnlinkFacebookAccountRequest()
 {
 	
@@ -4584,6 +4681,66 @@ void UpdateUserDataResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool UpdateUserDataResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
+UpdateUserStatisticsRequest::~UpdateUserStatisticsRequest()
+{
+	
+}
+
+void UpdateUserStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!UserStatistics.empty()) {
+	writer.String("UserStatistics");
+	writer.StartObject();
+	for (std::map<std::string, Int32>::iterator iter = UserStatistics.begin(); iter != UserStatistics.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.Int(iter->second);
+	}
+	writer.EndObject();
+	}
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateUserStatisticsRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* UserStatistics_member = obj.FindMember("UserStatistics");
+	if (UserStatistics_member != NULL) {
+		for (Value::ConstMemberIterator iter = UserStatistics_member->value.MemberBegin(); iter != UserStatistics_member->value.MemberEnd(); ++iter) {
+			UserStatistics[iter->name.GetString()] = iter->value.GetInt();
+		}
+	}
+	
+	
+	return true;
+}
+
+
+UpdateUserStatisticsResult::~UpdateUserStatisticsResult()
+{
+	
+}
+
+void UpdateUserStatisticsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateUserStatisticsResult::readFromValue(const rapidjson::Value& obj)
 {
 	
 	

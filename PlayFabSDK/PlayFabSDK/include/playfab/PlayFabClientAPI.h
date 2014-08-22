@@ -41,9 +41,11 @@ namespace PlayFab
 		typedef void(*GetUserReadOnlyDataCallback)(ClientModels::GetUserDataResult& result, void* userData);
 		typedef void(*GetUserStatisticsCallback)(ClientModels::GetUserStatisticsResult& result, void* userData);
 		typedef void(*UpdateUserDataCallback)(ClientModels::UpdateUserDataResult& result, void* userData);
+		typedef void(*UpdateUserStatisticsCallback)(ClientModels::UpdateUserStatisticsResult& result, void* userData);
 		typedef void(*GetCatalogItemsCallback)(ClientModels::GetCatalogItemsResult& result, void* userData);
 		typedef void(*GetTitleDataCallback)(ClientModels::GetTitleDataResult& result, void* userData);
 		typedef void(*GetTitleNewsCallback)(ClientModels::GetTitleNewsResult& result, void* userData);
+		typedef void(*AddUserVirtualCurrencyCallback)(ClientModels::ModifyUserVirtualCurrencyResult& result, void* userData);
 		typedef void(*ConfirmPurchaseCallback)(ClientModels::ConfirmPurchaseResult& result, void* userData);
 		typedef void(*ConsumeItemCallback)(ClientModels::ConsumeItemResult& result, void* userData);
 		typedef void(*GetUserInventoryCallback)(ClientModels::GetUserInventoryResult& result, void* userData);
@@ -51,6 +53,7 @@ namespace PlayFab
 		typedef void(*PurchaseItemCallback)(ClientModels::PurchaseItemResult& result, void* userData);
 		typedef void(*RedeemCouponCallback)(ClientModels::RedeemCouponResult& result, void* userData);
 		typedef void(*StartPurchaseCallback)(ClientModels::StartPurchaseResult& result, void* userData);
+		typedef void(*SubtractUserVirtualCurrencyCallback)(ClientModels::ModifyUserVirtualCurrencyResult& result, void* userData);
 		typedef void(*UnlockContainerItemCallback)(ClientModels::UnlockContainerItemResult& result, void* userData);
 		typedef void(*AddFriendCallback)(ClientModels::AddFriendResult& result, void* userData);
 		typedef void(*GetFriendsListCallback)(ClientModels::GetFriendsListResult& result, void* userData);
@@ -125,11 +128,15 @@ namespace PlayFab
 		
 		void UpdateUserData(ClientModels::UpdateUserDataRequest& request, UpdateUserDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void UpdateUserStatistics(ClientModels::UpdateUserStatisticsRequest& request, UpdateUserStatisticsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void GetCatalogItems(ClientModels::GetCatalogItemsRequest& request, GetCatalogItemsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetTitleData(ClientModels::GetTitleDataRequest& request, GetTitleDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetTitleNews(ClientModels::GetTitleNewsRequest& request, GetTitleNewsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void AddUserVirtualCurrency(ClientModels::AddUserVirtualCurrencyRequest& request, AddUserVirtualCurrencyCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void ConfirmPurchase(ClientModels::ConfirmPurchaseRequest& request, ConfirmPurchaseCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -144,6 +151,8 @@ namespace PlayFab
 		void RedeemCoupon(ClientModels::RedeemCouponRequest& request, RedeemCouponCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void StartPurchase(ClientModels::StartPurchaseRequest& request, StartPurchaseCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void SubtractUserVirtualCurrency(ClientModels::SubtractUserVirtualCurrencyRequest& request, SubtractUserVirtualCurrencyCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UnlockContainerItem(ClientModels::UnlockContainerItemRequest& request, UnlockContainerItemCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -228,11 +237,15 @@ namespace PlayFab
 		
 		static void OnUpdateUserDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnUpdateUserStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnGetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetTitleNewsResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnAddUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnConfirmPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -247,6 +260,8 @@ namespace PlayFab
 		static void OnRedeemCouponResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnStartPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUnlockContainerItemResult(int httpStatus, HttpRequest* request, void* userData);
 		

@@ -70,6 +70,35 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct AddUserVirtualCurrencyRequest : public PlayFabBaseModel
+    {
+		
+		std::string VirtualCurrency;
+		Int32 Amount;
+	
+        AddUserVirtualCurrencyRequest() :
+			PlayFabBaseModel(),
+			VirtualCurrency(),
+			Amount(0)
+			{}
+		
+		AddUserVirtualCurrencyRequest(const AddUserVirtualCurrencyRequest& src) :
+			PlayFabBaseModel(),
+			VirtualCurrency(src.VirtualCurrency),
+			Amount(src.Amount)
+			{}
+			
+		AddUserVirtualCurrencyRequest(const rapidjson::Value& obj) : AddUserVirtualCurrencyRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~AddUserVirtualCurrencyRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct AndroidDevicePushNotificationRegistrationRequest : public PlayFabBaseModel
     {
 		
@@ -1223,12 +1252,12 @@ namespace ClientModels
     {
 		
 		std::string StatisticName;
-		Int32 MaxResultsCount;
+		OptionalInt32 MaxResultsCount;
 	
         GetLeaderboardAroundCurrentUserRequest() :
 			PlayFabBaseModel(),
 			StatisticName(),
-			MaxResultsCount(0)
+			MaxResultsCount()
 			{}
 		
 		GetLeaderboardAroundCurrentUserRequest(const GetLeaderboardAroundCurrentUserRequest& src) :
@@ -1314,13 +1343,13 @@ namespace ClientModels
 		
 		std::string StatisticName;
 		Int32 StartPosition;
-		Int32 MaxResultsCount;
+		OptionalInt32 MaxResultsCount;
 	
         GetLeaderboardRequest() :
 			PlayFabBaseModel(),
 			StatisticName(),
 			StartPosition(0),
-			MaxResultsCount(0)
+			MaxResultsCount()
 			{}
 		
 		GetLeaderboardRequest(const GetLeaderboardRequest& src) :
@@ -1632,8 +1661,8 @@ namespace ClientModels
 		std::string ItemId;
 		std::string ItemInstanceId;
 		std::string ItemClass;
-		std::string PurchaseDate;
-		std::string Expiration;
+		OptionalTime PurchaseDate;
+		OptionalTime Expiration;
 		OptionalUint32 RemainingUses;
 		std::string Annotation;
 		std::string CatalogVersion;
@@ -2312,6 +2341,35 @@ namespace ClientModels
         }
 		
 		~MatchmakeResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ModifyUserVirtualCurrencyResult : public PlayFabBaseModel
+    {
+		
+		std::string VirtualCurrency;
+		Int32 Balance;
+	
+        ModifyUserVirtualCurrencyResult() :
+			PlayFabBaseModel(),
+			VirtualCurrency(),
+			Balance(0)
+			{}
+		
+		ModifyUserVirtualCurrencyResult(const ModifyUserVirtualCurrencyResult& src) :
+			PlayFabBaseModel(),
+			VirtualCurrency(src.VirtualCurrency),
+			Balance(src.Balance)
+			{}
+			
+		ModifyUserVirtualCurrencyResult(const rapidjson::Value& obj) : ModifyUserVirtualCurrencyResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~ModifyUserVirtualCurrencyResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -3078,6 +3136,35 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct SubtractUserVirtualCurrencyRequest : public PlayFabBaseModel
+    {
+		
+		std::string VirtualCurrency;
+		Int32 Amount;
+	
+        SubtractUserVirtualCurrencyRequest() :
+			PlayFabBaseModel(),
+			VirtualCurrency(),
+			Amount(0)
+			{}
+		
+		SubtractUserVirtualCurrencyRequest(const SubtractUserVirtualCurrencyRequest& src) :
+			PlayFabBaseModel(),
+			VirtualCurrency(src.VirtualCurrency),
+			Amount(src.Amount)
+			{}
+			
+		SubtractUserVirtualCurrencyRequest(const rapidjson::Value& obj) : SubtractUserVirtualCurrencyRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~SubtractUserVirtualCurrencyRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct UnlinkFacebookAccountRequest : public PlayFabBaseModel
     {
 		
@@ -3402,6 +3489,55 @@ namespace ClientModels
         }
 		
 		~UpdateUserDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateUserStatisticsRequest : public PlayFabBaseModel
+    {
+		
+		std::map<std::string, Int32> UserStatistics;
+	
+        UpdateUserStatisticsRequest() :
+			PlayFabBaseModel(),
+			UserStatistics()
+			{}
+		
+		UpdateUserStatisticsRequest(const UpdateUserStatisticsRequest& src) :
+			PlayFabBaseModel(),
+			UserStatistics(src.UserStatistics)
+			{}
+			
+		UpdateUserStatisticsRequest(const rapidjson::Value& obj) : UpdateUserStatisticsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateUserStatisticsRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateUserStatisticsResult : public PlayFabBaseModel
+    {
+		
+	
+        UpdateUserStatisticsResult() :
+			PlayFabBaseModel()
+			{}
+		
+		UpdateUserStatisticsResult(const UpdateUserStatisticsResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UpdateUserStatisticsResult(const rapidjson::Value& obj) : UpdateUserStatisticsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateUserStatisticsResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

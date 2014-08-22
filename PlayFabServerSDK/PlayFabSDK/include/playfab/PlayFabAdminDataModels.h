@@ -1037,8 +1037,8 @@ namespace AdminModels
 		std::string ItemId;
 		std::string ItemInstanceId;
 		std::string ItemClass;
-		std::string PurchaseDate;
-		std::string Expiration;
+		OptionalTime PurchaseDate;
+		OptionalTime Expiration;
 		OptionalUint32 RemainingUses;
 		std::string Annotation;
 		std::string CatalogVersion;
