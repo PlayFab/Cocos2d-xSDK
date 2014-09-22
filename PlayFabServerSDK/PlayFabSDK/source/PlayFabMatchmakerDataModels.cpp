@@ -303,7 +303,7 @@ void StartGameRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("GameMode"); writer.Uint(GameMode);
 	
-	if(Subscriber.length() > 0) { writer.String("Subscriber"); writer.String(Subscriber.c_str()); }
+	if(CustomCommandLineData.length() > 0) { writer.String("CustomCommandLineData"); writer.String(CustomCommandLineData.c_str()); }
 	
 	
 	writer.EndObject();
@@ -321,8 +321,8 @@ bool StartGameRequest::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* GameMode_member = obj.FindMember("GameMode");
 	if (GameMode_member != NULL) GameMode = GameMode_member->value.GetUint();
 	
-	const Value::Member* Subscriber_member = obj.FindMember("Subscriber");
-	if (Subscriber_member != NULL) Subscriber = Subscriber_member->value.GetString();
+	const Value::Member* CustomCommandLineData_member = obj.FindMember("CustomCommandLineData");
+	if (CustomCommandLineData_member != NULL) CustomCommandLineData = CustomCommandLineData_member->value.GetString();
 	
 	
 	return true;

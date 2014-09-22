@@ -622,7 +622,7 @@ void GetLeaderboardAroundUserRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
 	
-	if(MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
+	writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
 	
 	
 	writer.EndObject();
@@ -740,7 +740,7 @@ void GetLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("StartPosition"); writer.Int(StartPosition);
 	
-	if(MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
+	writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
 	
 	
 	writer.EndObject();
@@ -974,6 +974,8 @@ void UserTitleInfo::writeJSON(PFStringJsonWriter& writer)
 	
 	if(FirstLogin.notNull()) { writer.String("FirstLogin"); writeDatetime(FirstLogin, writer); }
 	
+	if(isBanned.notNull()) { writer.String("isBanned"); writer.Bool(isBanned); }
+	
 	
 	writer.EndObject();
 }
@@ -995,6 +997,9 @@ bool UserTitleInfo::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* FirstLogin_member = obj.FindMember("FirstLogin");
 	if (FirstLogin_member != NULL) FirstLogin = readDatetime(FirstLogin_member->value);
+	
+	const Value::Member* isBanned_member = obj.FindMember("isBanned");
+	if (isBanned_member != NULL) isBanned = isBanned_member->value.GetBool();
 	
 	
 	return true;

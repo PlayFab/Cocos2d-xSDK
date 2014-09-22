@@ -242,14 +242,14 @@ namespace MatchmakerModels
 		std::string Build;
 		Region Region;
 		Uint32 GameMode;
-		std::string Subscriber;
+		std::string CustomCommandLineData;
 	
         StartGameRequest() :
 			PlayFabBaseModel(),
 			Build(),
 			Region(),
 			GameMode(0),
-			Subscriber()
+			CustomCommandLineData()
 			{}
 		
 		StartGameRequest(const StartGameRequest& src) :
@@ -257,7 +257,7 @@ namespace MatchmakerModels
 			Build(src.Build),
 			Region(src.Region),
 			GameMode(src.GameMode),
-			Subscriber(src.Subscriber)
+			CustomCommandLineData(src.CustomCommandLineData)
 			{}
 			
 		StartGameRequest(const rapidjson::Value& obj) : StartGameRequest()

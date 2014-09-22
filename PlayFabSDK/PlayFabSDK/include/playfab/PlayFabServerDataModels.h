@@ -373,13 +373,13 @@ namespace ServerModels
 		
 		std::string StatisticName;
 		std::string PlayFabId;
-		OptionalInt32 MaxResultsCount;
+		Int32 MaxResultsCount;
 	
         GetLeaderboardAroundUserRequest() :
 			PlayFabBaseModel(),
 			StatisticName(),
 			PlayFabId(),
-			MaxResultsCount()
+			MaxResultsCount(0)
 			{}
 		
 		GetLeaderboardAroundUserRequest(const GetLeaderboardAroundUserRequest& src) :
@@ -466,13 +466,13 @@ namespace ServerModels
 		
 		std::string StatisticName;
 		Int32 StartPosition;
-		OptionalInt32 MaxResultsCount;
+		Int32 MaxResultsCount;
 	
         GetLeaderboardRequest() :
 			PlayFabBaseModel(),
 			StatisticName(),
 			StartPosition(0),
-			MaxResultsCount()
+			MaxResultsCount(0)
 			{}
 		
 		GetLeaderboardRequest(const GetLeaderboardRequest& src) :
@@ -624,6 +624,7 @@ namespace ServerModels
 		time_t Created;
 		OptionalTime LastLogin;
 		OptionalTime FirstLogin;
+		OptionalBool isBanned;
 	
         UserTitleInfo() :
 			PlayFabBaseModel(),
@@ -631,7 +632,8 @@ namespace ServerModels
 			Origination(),
 			Created(0),
 			LastLogin(),
-			FirstLogin()
+			FirstLogin(),
+			isBanned()
 			{}
 		
 		UserTitleInfo(const UserTitleInfo& src) :
@@ -640,7 +642,8 @@ namespace ServerModels
 			Origination(src.Origination),
 			Created(src.Created),
 			LastLogin(src.LastLogin),
-			FirstLogin(src.FirstLogin)
+			FirstLogin(src.FirstLogin),
+			isBanned(src.isBanned)
 			{}
 			
 		UserTitleInfo(const rapidjson::Value& obj) : UserTitleInfo()

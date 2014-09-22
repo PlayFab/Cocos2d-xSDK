@@ -71,7 +71,6 @@ namespace AdminModels
     {
 		
 		std::string BuildId;
-		OptionalTime Timestamp;
 		bool Active;
 		bool DedicatedServerEligible;
 		std::list<std::string> ActiveRegions;
@@ -80,7 +79,6 @@ namespace AdminModels
         AddServerBuildRequest() :
 			PlayFabBaseModel(),
 			BuildId(),
-			Timestamp(),
 			Active(false),
 			DedicatedServerEligible(false),
 			ActiveRegions(),
@@ -90,7 +88,6 @@ namespace AdminModels
 		AddServerBuildRequest(const AddServerBuildRequest& src) :
 			PlayFabBaseModel(),
 			BuildId(src.BuildId),
-			Timestamp(src.Timestamp),
 			Active(src.Active),
 			DedicatedServerEligible(src.DedicatedServerEligible),
 			ActiveRegions(src.ActiveRegions),
@@ -108,6 +105,19 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	enum GameBuildStatus
+	{
+		GameBuildStatusAvailable,
+		GameBuildStatusValidating,
+		GameBuildStatusInvalidBuildPackage,
+		GameBuildStatusProcessing,
+		GameBuildStatusFailedToProcess
+	};
+	
+	void writeGameBuildStatusEnumJSON(GameBuildStatus enumVal, PFStringJsonWriter& writer);
+	GameBuildStatus readGameBuildStatusFromValue(const rapidjson::Value& obj);
+	
+	
 	struct AddServerBuildResult : public PlayFabBaseModel
     {
 		
@@ -117,6 +127,7 @@ namespace AdminModels
 		std::string Comment;
 		time_t Timestamp;
 		std::string TitleId;
+		Boxed<GameBuildStatus> Status;
 	
         AddServerBuildResult() :
 			PlayFabBaseModel(),
@@ -125,7 +136,8 @@ namespace AdminModels
 			ActiveRegions(),
 			Comment(),
 			Timestamp(0),
-			TitleId()
+			TitleId(),
+			Status()
 			{}
 		
 		AddServerBuildResult(const AddServerBuildResult& src) :
@@ -135,7 +147,8 @@ namespace AdminModels
 			ActiveRegions(src.ActiveRegions),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
-			TitleId(src.TitleId)
+			TitleId(src.TitleId),
+			Status(src.Status)
 			{}
 			
 		AddServerBuildResult(const rapidjson::Value& obj) : AddServerBuildResult()
@@ -565,8 +578,6 @@ namespace AdminModels
 		std::list<std::string> Players;
 		std::string ServerAddress;
 		Uint32 ServerPort;
-		std::string StdOutLog;
-		std::string StdErrLog;
 	
         GetMatchmakerGameInfoResult() :
 			PlayFabBaseModel(),
@@ -579,9 +590,7 @@ namespace AdminModels
 			Region(),
 			Players(),
 			ServerAddress(),
-			ServerPort(0),
-			StdOutLog(),
-			StdErrLog()
+			ServerPort(0)
 			{}
 		
 		GetMatchmakerGameInfoResult(const GetMatchmakerGameInfoResult& src) :
@@ -595,9 +604,7 @@ namespace AdminModels
 			Region(src.Region),
 			Players(src.Players),
 			ServerAddress(src.ServerAddress),
-			ServerPort(src.ServerPort),
-			StdOutLog(src.StdOutLog),
-			StdErrLog(src.StdErrLog)
+			ServerPort(src.ServerPort)
 			{}
 			
 		GetMatchmakerGameInfoResult(const rapidjson::Value& obj) : GetMatchmakerGameInfoResult()
@@ -818,6 +825,7 @@ namespace AdminModels
 		std::string Comment;
 		time_t Timestamp;
 		std::string TitleId;
+		Boxed<GameBuildStatus> Status;
 	
         GetServerBuildInfoResult() :
 			PlayFabBaseModel(),
@@ -826,7 +834,8 @@ namespace AdminModels
 			ActiveRegions(),
 			Comment(),
 			Timestamp(0),
-			TitleId()
+			TitleId(),
+			Status()
 			{}
 		
 		GetServerBuildInfoResult(const GetServerBuildInfoResult& src) :
@@ -836,7 +845,8 @@ namespace AdminModels
 			ActiveRegions(src.ActiveRegions),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
-			TitleId(src.TitleId)
+			TitleId(src.TitleId),
+			Status(src.Status)
 			{}
 			
 		GetServerBuildInfoResult(const rapidjson::Value& obj) : GetServerBuildInfoResult()
@@ -845,6 +855,145 @@ namespace AdminModels
         }
 		
 		~GetServerBuildInfoResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetServerBuildUploadURLRequest : public PlayFabBaseModel
+    {
+		
+		std::string BuildId;
+	
+        GetServerBuildUploadURLRequest() :
+			PlayFabBaseModel(),
+			BuildId()
+			{}
+		
+		GetServerBuildUploadURLRequest(const GetServerBuildUploadURLRequest& src) :
+			PlayFabBaseModel(),
+			BuildId(src.BuildId)
+			{}
+			
+		GetServerBuildUploadURLRequest(const rapidjson::Value& obj) : GetServerBuildUploadURLRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetServerBuildUploadURLRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetServerBuildUploadURLResult : public PlayFabBaseModel
+    {
+		
+		std::string URL;
+	
+        GetServerBuildUploadURLResult() :
+			PlayFabBaseModel(),
+			URL()
+			{}
+		
+		GetServerBuildUploadURLResult(const GetServerBuildUploadURLResult& src) :
+			PlayFabBaseModel(),
+			URL(src.URL)
+			{}
+			
+		GetServerBuildUploadURLResult(const rapidjson::Value& obj) : GetServerBuildUploadURLResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetServerBuildUploadURLResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetStoreItemsRequest : public PlayFabBaseModel
+    {
+		
+		std::string StoreId;
+	
+        GetStoreItemsRequest() :
+			PlayFabBaseModel(),
+			StoreId()
+			{}
+		
+		GetStoreItemsRequest(const GetStoreItemsRequest& src) :
+			PlayFabBaseModel(),
+			StoreId(src.StoreId)
+			{}
+			
+		GetStoreItemsRequest(const rapidjson::Value& obj) : GetStoreItemsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetStoreItemsRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct StoreItem : public PlayFabBaseModel
+    {
+		
+		std::string ItemId;
+		std::string CatalogVersion;
+		std::map<std::string, Uint32> VirtualCurrencyPrices;
+		std::map<std::string, Uint32> RealCurrencyPrices;
+	
+        StoreItem() :
+			PlayFabBaseModel(),
+			ItemId(),
+			CatalogVersion(),
+			VirtualCurrencyPrices(),
+			RealCurrencyPrices()
+			{}
+		
+		StoreItem(const StoreItem& src) :
+			PlayFabBaseModel(),
+			ItemId(src.ItemId),
+			CatalogVersion(src.CatalogVersion),
+			VirtualCurrencyPrices(src.VirtualCurrencyPrices),
+			RealCurrencyPrices(src.RealCurrencyPrices)
+			{}
+			
+		StoreItem(const rapidjson::Value& obj) : StoreItem()
+        {
+            readFromValue(obj);
+        }
+		
+		~StoreItem();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetStoreItemsResult : public PlayFabBaseModel
+    {
+		
+		std::list<StoreItem> Store;
+	
+        GetStoreItemsResult() :
+			PlayFabBaseModel(),
+			Store()
+			{}
+		
+		GetStoreItemsResult(const GetStoreItemsResult& src) :
+			PlayFabBaseModel(),
+			Store(src.Store)
+			{}
+			
+		GetStoreItemsResult(const rapidjson::Value& obj) : GetStoreItemsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetStoreItemsResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1395,6 +1544,7 @@ namespace AdminModels
 		time_t Created;
 		OptionalTime LastLogin;
 		OptionalTime FirstLogin;
+		OptionalBool isBanned;
 	
         UserTitleInfo() :
 			PlayFabBaseModel(),
@@ -1402,7 +1552,8 @@ namespace AdminModels
 			Origination(),
 			Created(0),
 			LastLogin(),
-			FirstLogin()
+			FirstLogin(),
+			isBanned()
 			{}
 		
 		UserTitleInfo(const UserTitleInfo& src) :
@@ -1411,7 +1562,8 @@ namespace AdminModels
 			Origination(src.Origination),
 			Created(src.Created),
 			LastLogin(src.LastLogin),
-			FirstLogin(src.FirstLogin)
+			FirstLogin(src.FirstLogin),
+			isBanned(src.isBanned)
 			{}
 			
 		UserTitleInfo(const rapidjson::Value& obj) : UserTitleInfo()
@@ -1729,6 +1881,7 @@ namespace AdminModels
 		std::string Comment;
 		time_t Timestamp;
 		std::string TitleId;
+		Boxed<GameBuildStatus> Status;
 	
         ModifyServerBuildResult() :
 			PlayFabBaseModel(),
@@ -1737,7 +1890,8 @@ namespace AdminModels
 			ActiveRegions(),
 			Comment(),
 			Timestamp(0),
-			TitleId()
+			TitleId(),
+			Status()
 			{}
 		
 		ModifyServerBuildResult(const ModifyServerBuildResult& src) :
@@ -1747,7 +1901,8 @@ namespace AdminModels
 			ActiveRegions(src.ActiveRegions),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
-			TitleId(src.TitleId)
+			TitleId(src.TitleId),
+			Status(src.Status)
 			{}
 			
 		ModifyServerBuildResult(const rapidjson::Value& obj) : ModifyServerBuildResult()
@@ -1819,16 +1974,13 @@ namespace AdminModels
 	struct RemoveServerBuildResult : public PlayFabBaseModel
     {
 		
-		std::string BuildId;
 	
         RemoveServerBuildResult() :
-			PlayFabBaseModel(),
-			BuildId()
+			PlayFabBaseModel()
 			{}
 		
 		RemoveServerBuildResult(const RemoveServerBuildResult& src) :
-			PlayFabBaseModel(),
-			BuildId(src.BuildId)
+			PlayFabBaseModel()
 			{}
 			
 		RemoveServerBuildResult(const rapidjson::Value& obj) : RemoveServerBuildResult()
@@ -2236,6 +2388,58 @@ namespace AdminModels
         }
 		
 		~UpdateRandomResultTablesResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateStoreItemsRequest : public PlayFabBaseModel
+    {
+		
+		std::string StoreId;
+		std::list<StoreItem> Store;
+	
+        UpdateStoreItemsRequest() :
+			PlayFabBaseModel(),
+			StoreId(),
+			Store()
+			{}
+		
+		UpdateStoreItemsRequest(const UpdateStoreItemsRequest& src) :
+			PlayFabBaseModel(),
+			StoreId(src.StoreId),
+			Store(src.Store)
+			{}
+			
+		UpdateStoreItemsRequest(const rapidjson::Value& obj) : UpdateStoreItemsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateStoreItemsRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateStoreItemsResult : public PlayFabBaseModel
+    {
+		
+	
+        UpdateStoreItemsResult() :
+			PlayFabBaseModel()
+			{}
+		
+		UpdateStoreItemsResult(const UpdateStoreItemsResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UpdateStoreItemsResult(const rapidjson::Value& obj) : UpdateStoreItemsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateStoreItemsResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

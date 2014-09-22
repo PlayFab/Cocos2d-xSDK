@@ -70,6 +70,58 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct AddSharedGroupMembersRequest : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+		std::list<std::string> PlayFabIds;
+	
+        AddSharedGroupMembersRequest() :
+			PlayFabBaseModel(),
+			SharedGroupId(),
+			PlayFabIds()
+			{}
+		
+		AddSharedGroupMembersRequest(const AddSharedGroupMembersRequest& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId),
+			PlayFabIds(src.PlayFabIds)
+			{}
+			
+		AddSharedGroupMembersRequest(const rapidjson::Value& obj) : AddSharedGroupMembersRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~AddSharedGroupMembersRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct AddSharedGroupMembersResult : public PlayFabBaseModel
+    {
+		
+	
+        AddSharedGroupMembersResult() :
+			PlayFabBaseModel()
+			{}
+		
+		AddSharedGroupMembersResult(const AddSharedGroupMembersResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		AddSharedGroupMembersResult(const rapidjson::Value& obj) : AddSharedGroupMembersResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~AddSharedGroupMembersResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct AddUserVirtualCurrencyRequest : public PlayFabBaseModel
     {
 		
@@ -103,15 +155,21 @@ namespace ClientModels
     {
 		
 		std::string DeviceToken;
+		OptionalBool SendPushNotificationConfirmation;
+		std::string ConfirmationMessege;
 	
         AndroidDevicePushNotificationRegistrationRequest() :
 			PlayFabBaseModel(),
-			DeviceToken()
+			DeviceToken(),
+			SendPushNotificationConfirmation(),
+			ConfirmationMessege()
 			{}
 		
 		AndroidDevicePushNotificationRegistrationRequest(const AndroidDevicePushNotificationRegistrationRequest& src) :
 			PlayFabBaseModel(),
-			DeviceToken(src.DeviceToken)
+			DeviceToken(src.DeviceToken),
+			SendPushNotificationConfirmation(src.SendPushNotificationConfirmation),
+			ConfirmationMessege(src.ConfirmationMessege)
 			{}
 			
 		AndroidDevicePushNotificationRegistrationRequest(const rapidjson::Value& obj) : AndroidDevicePushNotificationRegistrationRequest()
@@ -525,6 +583,58 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct CreateSharedGroupRequest : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+	
+        CreateSharedGroupRequest() :
+			PlayFabBaseModel(),
+			SharedGroupId()
+			{}
+		
+		CreateSharedGroupRequest(const CreateSharedGroupRequest& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId)
+			{}
+			
+		CreateSharedGroupRequest(const rapidjson::Value& obj) : CreateSharedGroupRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~CreateSharedGroupRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct CreateSharedGroupResult : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+	
+        CreateSharedGroupResult() :
+			PlayFabBaseModel(),
+			SharedGroupId()
+			{}
+		
+		CreateSharedGroupResult(const CreateSharedGroupResult& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId)
+			{}
+			
+		CreateSharedGroupResult(const rapidjson::Value& obj) : CreateSharedGroupResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~CreateSharedGroupResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	enum Currency
 	{
 		CurrencyUSD,
@@ -597,7 +707,6 @@ namespace ClientModels
 		std::string LobbyID;
 		std::string BuildVersion;
 		std::string GameMode;
-		std::string Map;
 		Int32 MaxPlayers;
 		std::list<std::string> PlayerUsernames;
 		Uint32 RunTime;
@@ -610,7 +719,6 @@ namespace ClientModels
 			LobbyID(),
 			BuildVersion(),
 			GameMode(),
-			Map(),
 			MaxPlayers(0),
 			PlayerUsernames(),
 			RunTime(0),
@@ -624,7 +732,6 @@ namespace ClientModels
 			LobbyID(src.LobbyID),
 			BuildVersion(src.BuildVersion),
 			GameMode(src.GameMode),
-			Map(src.Map),
 			MaxPlayers(src.MaxPlayers),
 			PlayerUsernames(src.PlayerUsernames),
 			RunTime(src.RunTime),
@@ -1015,6 +1122,7 @@ namespace ClientModels
 		time_t Created;
 		OptionalTime LastLogin;
 		OptionalTime FirstLogin;
+		OptionalBool isBanned;
 	
         UserTitleInfo() :
 			PlayFabBaseModel(),
@@ -1022,7 +1130,8 @@ namespace ClientModels
 			Origination(),
 			Created(0),
 			LastLogin(),
-			FirstLogin()
+			FirstLogin(),
+			isBanned()
 			{}
 		
 		UserTitleInfo(const UserTitleInfo& src) :
@@ -1031,7 +1140,8 @@ namespace ClientModels
 			Origination(src.Origination),
 			Created(src.Created),
 			LastLogin(src.LastLogin),
-			FirstLogin(src.FirstLogin)
+			FirstLogin(src.FirstLogin),
+			isBanned(src.isBanned)
 			{}
 			
 		UserTitleInfo(const rapidjson::Value& obj) : UserTitleInfo()
@@ -1252,12 +1362,12 @@ namespace ClientModels
     {
 		
 		std::string StatisticName;
-		OptionalInt32 MaxResultsCount;
+		Int32 MaxResultsCount;
 	
         GetLeaderboardAroundCurrentUserRequest() :
 			PlayFabBaseModel(),
 			StatisticName(),
-			MaxResultsCount()
+			MaxResultsCount(0)
 			{}
 		
 		GetLeaderboardAroundCurrentUserRequest(const GetLeaderboardAroundCurrentUserRequest& src) :
@@ -1343,13 +1453,13 @@ namespace ClientModels
 		
 		std::string StatisticName;
 		Int32 StartPosition;
-		OptionalInt32 MaxResultsCount;
+		Int32 MaxResultsCount;
 	
         GetLeaderboardRequest() :
 			PlayFabBaseModel(),
 			StatisticName(),
 			StartPosition(0),
-			MaxResultsCount()
+			MaxResultsCount(0)
 			{}
 		
 		GetLeaderboardRequest(const GetLeaderboardRequest& src) :
@@ -1391,6 +1501,199 @@ namespace ClientModels
         }
 		
 		~GetLeaderboardResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetSharedGroupDataRequest : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+		std::list<std::string> Keys;
+		OptionalBool GetMembers;
+	
+        GetSharedGroupDataRequest() :
+			PlayFabBaseModel(),
+			SharedGroupId(),
+			Keys(),
+			GetMembers()
+			{}
+		
+		GetSharedGroupDataRequest(const GetSharedGroupDataRequest& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId),
+			Keys(src.Keys),
+			GetMembers(src.GetMembers)
+			{}
+			
+		GetSharedGroupDataRequest(const rapidjson::Value& obj) : GetSharedGroupDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetSharedGroupDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	enum UserDataPermission
+	{
+		UserDataPermissionPrivate,
+		UserDataPermissionPublic
+	};
+	
+	void writeUserDataPermissionEnumJSON(UserDataPermission enumVal, PFStringJsonWriter& writer);
+	UserDataPermission readUserDataPermissionFromValue(const rapidjson::Value& obj);
+	
+	
+	struct SharedGroupDataRecord : public PlayFabBaseModel
+    {
+		
+		std::string Value;
+		std::string LastUpdatedBy;
+		time_t LastUpdated;
+		Boxed<UserDataPermission> Permission;
+	
+        SharedGroupDataRecord() :
+			PlayFabBaseModel(),
+			Value(),
+			LastUpdatedBy(),
+			LastUpdated(0),
+			Permission()
+			{}
+		
+		SharedGroupDataRecord(const SharedGroupDataRecord& src) :
+			PlayFabBaseModel(),
+			Value(src.Value),
+			LastUpdatedBy(src.LastUpdatedBy),
+			LastUpdated(src.LastUpdated),
+			Permission(src.Permission)
+			{}
+			
+		SharedGroupDataRecord(const rapidjson::Value& obj) : SharedGroupDataRecord()
+        {
+            readFromValue(obj);
+        }
+		
+		~SharedGroupDataRecord();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetSharedGroupDataResult : public PlayFabBaseModel
+    {
+		
+		std::map<std::string, SharedGroupDataRecord> Data;
+		std::list<std::string> Members;
+	
+        GetSharedGroupDataResult() :
+			PlayFabBaseModel(),
+			Data(),
+			Members()
+			{}
+		
+		GetSharedGroupDataResult(const GetSharedGroupDataResult& src) :
+			PlayFabBaseModel(),
+			Data(src.Data),
+			Members(src.Members)
+			{}
+			
+		GetSharedGroupDataResult(const rapidjson::Value& obj) : GetSharedGroupDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetSharedGroupDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetStoreItemsRequest : public PlayFabBaseModel
+    {
+		
+		std::string StoreId;
+	
+        GetStoreItemsRequest() :
+			PlayFabBaseModel(),
+			StoreId()
+			{}
+		
+		GetStoreItemsRequest(const GetStoreItemsRequest& src) :
+			PlayFabBaseModel(),
+			StoreId(src.StoreId)
+			{}
+			
+		GetStoreItemsRequest(const rapidjson::Value& obj) : GetStoreItemsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetStoreItemsRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct StoreItem : public PlayFabBaseModel
+    {
+		
+		std::string ItemId;
+		std::string CatalogVersion;
+		std::map<std::string, Uint32> VirtualCurrencyPrices;
+		std::map<std::string, Uint32> RealCurrencyPrices;
+	
+        StoreItem() :
+			PlayFabBaseModel(),
+			ItemId(),
+			CatalogVersion(),
+			VirtualCurrencyPrices(),
+			RealCurrencyPrices()
+			{}
+		
+		StoreItem(const StoreItem& src) :
+			PlayFabBaseModel(),
+			ItemId(src.ItemId),
+			CatalogVersion(src.CatalogVersion),
+			VirtualCurrencyPrices(src.VirtualCurrencyPrices),
+			RealCurrencyPrices(src.RealCurrencyPrices)
+			{}
+			
+		StoreItem(const rapidjson::Value& obj) : StoreItem()
+        {
+            readFromValue(obj);
+        }
+		
+		~StoreItem();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetStoreItemsResult : public PlayFabBaseModel
+    {
+		
+		std::list<StoreItem> Store;
+	
+        GetStoreItemsResult() :
+			PlayFabBaseModel(),
+			Store()
+			{}
+		
+		GetStoreItemsResult(const GetStoreItemsResult& src) :
+			PlayFabBaseModel(),
+			Store(src.Store)
+			{}
+			
+		GetStoreItemsResult(const rapidjson::Value& obj) : GetStoreItemsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetStoreItemsResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1535,121 +1838,48 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	struct GetUserDataRequest : public PlayFabBaseModel
+	struct GetUserCombinedInfoRequest : public PlayFabBaseModel
     {
 		
-		std::list<std::string> Keys;
 		std::string PlayFabId;
+		OptionalBool GetAccountInfo;
+		OptionalBool GetInventory;
+		OptionalBool GetVirtualCurrency;
+		OptionalBool GetUserData;
+		std::list<std::string> UserDataKeys;
+		OptionalBool GetReadOnlyData;
+		std::list<std::string> ReadOnlyDataKeys;
 	
-        GetUserDataRequest() :
+        GetUserCombinedInfoRequest() :
 			PlayFabBaseModel(),
-			Keys(),
-			PlayFabId()
+			PlayFabId(),
+			GetAccountInfo(),
+			GetInventory(),
+			GetVirtualCurrency(),
+			GetUserData(),
+			UserDataKeys(),
+			GetReadOnlyData(),
+			ReadOnlyDataKeys()
 			{}
 		
-		GetUserDataRequest(const GetUserDataRequest& src) :
+		GetUserCombinedInfoRequest(const GetUserCombinedInfoRequest& src) :
 			PlayFabBaseModel(),
-			Keys(src.Keys),
-			PlayFabId(src.PlayFabId)
+			PlayFabId(src.PlayFabId),
+			GetAccountInfo(src.GetAccountInfo),
+			GetInventory(src.GetInventory),
+			GetVirtualCurrency(src.GetVirtualCurrency),
+			GetUserData(src.GetUserData),
+			UserDataKeys(src.UserDataKeys),
+			GetReadOnlyData(src.GetReadOnlyData),
+			ReadOnlyDataKeys(src.ReadOnlyDataKeys)
 			{}
 			
-		GetUserDataRequest(const rapidjson::Value& obj) : GetUserDataRequest()
+		GetUserCombinedInfoRequest(const rapidjson::Value& obj) : GetUserCombinedInfoRequest()
         {
             readFromValue(obj);
         }
 		
-		~GetUserDataRequest();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	enum UserDataPermission
-	{
-		UserDataPermissionPrivate,
-		UserDataPermissionPublic
-	};
-	
-	void writeUserDataPermissionEnumJSON(UserDataPermission enumVal, PFStringJsonWriter& writer);
-	UserDataPermission readUserDataPermissionFromValue(const rapidjson::Value& obj);
-	
-	
-	struct UserDataRecord : public PlayFabBaseModel
-    {
-		
-		std::string Value;
-		time_t LastUpdated;
-		Boxed<UserDataPermission> Permission;
-	
-        UserDataRecord() :
-			PlayFabBaseModel(),
-			Value(),
-			LastUpdated(0),
-			Permission()
-			{}
-		
-		UserDataRecord(const UserDataRecord& src) :
-			PlayFabBaseModel(),
-			Value(src.Value),
-			LastUpdated(src.LastUpdated),
-			Permission(src.Permission)
-			{}
-			
-		UserDataRecord(const rapidjson::Value& obj) : UserDataRecord()
-        {
-            readFromValue(obj);
-        }
-		
-		~UserDataRecord();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct GetUserDataResult : public PlayFabBaseModel
-    {
-		
-		std::map<std::string, UserDataRecord> Data;
-	
-        GetUserDataResult() :
-			PlayFabBaseModel(),
-			Data()
-			{}
-		
-		GetUserDataResult(const GetUserDataResult& src) :
-			PlayFabBaseModel(),
-			Data(src.Data)
-			{}
-			
-		GetUserDataResult(const rapidjson::Value& obj) : GetUserDataResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~GetUserDataResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct GetUserInventoryRequest : public PlayFabBaseModel
-    {
-		
-	
-        GetUserInventoryRequest() :
-			PlayFabBaseModel()
-			{}
-		
-		GetUserInventoryRequest(const GetUserInventoryRequest& src) :
-			PlayFabBaseModel()
-			{}
-			
-		GetUserInventoryRequest(const rapidjson::Value& obj) : GetUserInventoryRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~GetUserInventoryRequest();
+		~GetUserCombinedInfoRequest();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1700,6 +1930,157 @@ namespace ClientModels
         }
 		
 		~ItemInstance();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UserDataRecord : public PlayFabBaseModel
+    {
+		
+		std::string Value;
+		time_t LastUpdated;
+		Boxed<UserDataPermission> Permission;
+	
+        UserDataRecord() :
+			PlayFabBaseModel(),
+			Value(),
+			LastUpdated(0),
+			Permission()
+			{}
+		
+		UserDataRecord(const UserDataRecord& src) :
+			PlayFabBaseModel(),
+			Value(src.Value),
+			LastUpdated(src.LastUpdated),
+			Permission(src.Permission)
+			{}
+			
+		UserDataRecord(const rapidjson::Value& obj) : UserDataRecord()
+        {
+            readFromValue(obj);
+        }
+		
+		~UserDataRecord();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetUserCombinedInfoResult : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		UserAccountInfo* AccountInfo;
+		std::list<ItemInstance> Inventory;
+		std::map<std::string, Int32> VirtualCurrency;
+		std::map<std::string, UserDataRecord> Data;
+		std::map<std::string, UserDataRecord> ReadOnlyData;
+	
+        GetUserCombinedInfoResult() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			AccountInfo(NULL),
+			Inventory(),
+			VirtualCurrency(),
+			Data(),
+			ReadOnlyData()
+			{}
+		
+		GetUserCombinedInfoResult(const GetUserCombinedInfoResult& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			AccountInfo(src.AccountInfo ? new UserAccountInfo(*src.AccountInfo) : NULL),
+			Inventory(src.Inventory),
+			VirtualCurrency(src.VirtualCurrency),
+			Data(src.Data),
+			ReadOnlyData(src.ReadOnlyData)
+			{}
+			
+		GetUserCombinedInfoResult(const rapidjson::Value& obj) : GetUserCombinedInfoResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetUserCombinedInfoResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetUserDataRequest : public PlayFabBaseModel
+    {
+		
+		std::list<std::string> Keys;
+		std::string PlayFabId;
+	
+        GetUserDataRequest() :
+			PlayFabBaseModel(),
+			Keys(),
+			PlayFabId()
+			{}
+		
+		GetUserDataRequest(const GetUserDataRequest& src) :
+			PlayFabBaseModel(),
+			Keys(src.Keys),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		GetUserDataRequest(const rapidjson::Value& obj) : GetUserDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetUserDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetUserDataResult : public PlayFabBaseModel
+    {
+		
+		std::map<std::string, UserDataRecord> Data;
+	
+        GetUserDataResult() :
+			PlayFabBaseModel(),
+			Data()
+			{}
+		
+		GetUserDataResult(const GetUserDataResult& src) :
+			PlayFabBaseModel(),
+			Data(src.Data)
+			{}
+			
+		GetUserDataResult(const rapidjson::Value& obj) : GetUserDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetUserDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetUserInventoryRequest : public PlayFabBaseModel
+    {
+		
+	
+        GetUserInventoryRequest() :
+			PlayFabBaseModel()
+			{}
+		
+		GetUserInventoryRequest(const GetUserInventoryRequest& src) :
+			PlayFabBaseModel()
+			{}
+			
+		GetUserInventoryRequest(const rapidjson::Value& obj) : GetUserInventoryRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetUserInventoryRequest();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1997,16 +2378,13 @@ namespace ClientModels
 	struct LogEventResult : public PlayFabBaseModel
     {
 		
-		std::list<std::string> errors;
 	
         LogEventResult() :
-			PlayFabBaseModel(),
-			errors()
+			PlayFabBaseModel()
 			{}
 		
 		LogEventResult(const LogEventResult& src) :
-			PlayFabBaseModel(),
-			errors(src.errors)
+			PlayFabBaseModel()
 			{}
 			
 		LogEventResult(const rapidjson::Value& obj) : LogEventResult()
@@ -2554,13 +2932,15 @@ namespace ClientModels
 		std::string VirtualCurrency;
 		Int32 Price;
 		std::string CatalogVersion;
+		std::string StoreId;
 	
         PurchaseItemRequest() :
 			PlayFabBaseModel(),
 			ItemId(),
 			VirtualCurrency(),
 			Price(0),
-			CatalogVersion()
+			CatalogVersion(),
+			StoreId()
 			{}
 		
 		PurchaseItemRequest(const PurchaseItemRequest& src) :
@@ -2568,7 +2948,8 @@ namespace ClientModels
 			ItemId(src.ItemId),
 			VirtualCurrency(src.VirtualCurrency),
 			Price(src.Price),
-			CatalogVersion(src.CatalogVersion)
+			CatalogVersion(src.CatalogVersion),
+			StoreId(src.StoreId)
 			{}
 			
 		PurchaseItemRequest(const rapidjson::Value& obj) : PurchaseItemRequest()
@@ -2725,15 +3106,21 @@ namespace ClientModels
     {
 		
 		std::string DeviceToken;
+		OptionalBool SendPushNotificationConfirmation;
+		std::string ConfirmationMessege;
 	
         RegisterForIOSPushNotificationRequest() :
 			PlayFabBaseModel(),
-			DeviceToken()
+			DeviceToken(),
+			SendPushNotificationConfirmation(),
+			ConfirmationMessege()
 			{}
 		
 		RegisterForIOSPushNotificationRequest(const RegisterForIOSPushNotificationRequest& src) :
 			PlayFabBaseModel(),
-			DeviceToken(src.DeviceToken)
+			DeviceToken(src.DeviceToken),
+			SendPushNotificationConfirmation(src.SendPushNotificationConfirmation),
+			ConfirmationMessege(src.ConfirmationMessege)
 			{}
 			
 		RegisterForIOSPushNotificationRequest(const rapidjson::Value& obj) : RegisterForIOSPushNotificationRequest()
@@ -2889,6 +3276,58 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct RemoveSharedGroupMembersRequest : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+		std::list<std::string> PlayFabIds;
+	
+        RemoveSharedGroupMembersRequest() :
+			PlayFabBaseModel(),
+			SharedGroupId(),
+			PlayFabIds()
+			{}
+		
+		RemoveSharedGroupMembersRequest(const RemoveSharedGroupMembersRequest& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId),
+			PlayFabIds(src.PlayFabIds)
+			{}
+			
+		RemoveSharedGroupMembersRequest(const rapidjson::Value& obj) : RemoveSharedGroupMembersRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~RemoveSharedGroupMembersRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct RemoveSharedGroupMembersResult : public PlayFabBaseModel
+    {
+		
+	
+        RemoveSharedGroupMembersResult() :
+			PlayFabBaseModel()
+			{}
+		
+		RemoveSharedGroupMembersResult(const RemoveSharedGroupMembersResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		RemoveSharedGroupMembersResult(const rapidjson::Value& obj) : RemoveSharedGroupMembersResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~RemoveSharedGroupMembersResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct SendAccountRecoveryEmailRequest : public PlayFabBaseModel
     {
 		
@@ -3000,7 +3439,7 @@ namespace ClientModels
 		Region Region;
 		std::string GameMode;
 		bool PasswordRestricted;
-		std::string ReplayLobbyId;
+		std::string CustomCommandLineData;
 	
         StartGameRequest() :
 			PlayFabBaseModel(),
@@ -3008,7 +3447,7 @@ namespace ClientModels
 			Region(),
 			GameMode(),
 			PasswordRestricted(false),
-			ReplayLobbyId()
+			CustomCommandLineData()
 			{}
 		
 		StartGameRequest(const StartGameRequest& src) :
@@ -3017,7 +3456,7 @@ namespace ClientModels
 			Region(src.Region),
 			GameMode(src.GameMode),
 			PasswordRestricted(src.PasswordRestricted),
-			ReplayLobbyId(src.ReplayLobbyId)
+			CustomCommandLineData(src.CustomCommandLineData)
 			{}
 			
 		StartGameRequest(const rapidjson::Value& obj) : StartGameRequest()
@@ -3076,17 +3515,20 @@ namespace ClientModels
     {
 		
 		std::string CatalogVersion;
+		std::string StoreId;
 		std::list<ItemPuchaseRequest> Items;
 	
         StartPurchaseRequest() :
 			PlayFabBaseModel(),
 			CatalogVersion(),
+			StoreId(),
 			Items()
 			{}
 		
 		StartPurchaseRequest(const StartPurchaseRequest& src) :
 			PlayFabBaseModel(),
 			CatalogVersion(src.CatalogVersion),
+			StoreId(src.StoreId),
 			Items(src.Items)
 			{}
 			
@@ -3252,6 +3694,29 @@ namespace ClientModels
         }
 		
 		~UnlinkGameCenterAccountResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UnlinkSteamAccountRequest : public PlayFabBaseModel
+    {
+		
+	
+        UnlinkSteamAccountRequest() :
+			PlayFabBaseModel()
+			{}
+		
+		UnlinkSteamAccountRequest(const UnlinkSteamAccountRequest& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UnlinkSteamAccountRequest(const rapidjson::Value& obj) : UnlinkSteamAccountRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UnlinkSteamAccountRequest();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -3442,6 +3907,61 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct UpdateSharedGroupDataRequest : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+		std::map<std::string, std::string> Data;
+		Boxed<UserDataPermission> Permission;
+	
+        UpdateSharedGroupDataRequest() :
+			PlayFabBaseModel(),
+			SharedGroupId(),
+			Data(),
+			Permission()
+			{}
+		
+		UpdateSharedGroupDataRequest(const UpdateSharedGroupDataRequest& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId),
+			Data(src.Data),
+			Permission(src.Permission)
+			{}
+			
+		UpdateSharedGroupDataRequest(const rapidjson::Value& obj) : UpdateSharedGroupDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateSharedGroupDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateSharedGroupDataResult : public PlayFabBaseModel
+    {
+		
+	
+        UpdateSharedGroupDataResult() :
+			PlayFabBaseModel()
+			{}
+		
+		UpdateSharedGroupDataResult(const UpdateSharedGroupDataResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UpdateSharedGroupDataResult(const rapidjson::Value& obj) : UpdateSharedGroupDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateSharedGroupDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct UpdateUserDataRequest : public PlayFabBaseModel
     {
 		
@@ -3598,25 +4118,19 @@ namespace ClientModels
 	struct ValidateGooglePlayPurchaseRequest : public PlayFabBaseModel
     {
 		
-		std::string packageName;
-		std::string productId;
-		std::string purchaseToken;
-		std::string accessToken;
+		std::string ReceiptJson;
+		std::string Signature;
 	
         ValidateGooglePlayPurchaseRequest() :
 			PlayFabBaseModel(),
-			packageName(),
-			productId(),
-			purchaseToken(),
-			accessToken()
+			ReceiptJson(),
+			Signature()
 			{}
 		
 		ValidateGooglePlayPurchaseRequest(const ValidateGooglePlayPurchaseRequest& src) :
 			PlayFabBaseModel(),
-			packageName(src.packageName),
-			productId(src.productId),
-			purchaseToken(src.purchaseToken),
-			accessToken(src.accessToken)
+			ReceiptJson(src.ReceiptJson),
+			Signature(src.Signature)
 			{}
 			
 		ValidateGooglePlayPurchaseRequest(const rapidjson::Value& obj) : ValidateGooglePlayPurchaseRequest()
@@ -3633,28 +4147,13 @@ namespace ClientModels
 	struct ValidateGooglePlayPurchaseResult : public PlayFabBaseModel
     {
 		
-		std::string kind;
-		time_t purchaseTime;
-		Int32 puchaseState;
-		Int32 consumptionState;
-		std::string developerPayload;
 	
         ValidateGooglePlayPurchaseResult() :
-			PlayFabBaseModel(),
-			kind(),
-			purchaseTime(0),
-			puchaseState(0),
-			consumptionState(0),
-			developerPayload()
+			PlayFabBaseModel()
 			{}
 		
 		ValidateGooglePlayPurchaseResult(const ValidateGooglePlayPurchaseResult& src) :
-			PlayFabBaseModel(),
-			kind(src.kind),
-			purchaseTime(src.purchaseTime),
-			puchaseState(src.puchaseState),
-			consumptionState(src.consumptionState),
-			developerPayload(src.developerPayload)
+			PlayFabBaseModel()
 			{}
 			
 		ValidateGooglePlayPurchaseResult(const rapidjson::Value& obj) : ValidateGooglePlayPurchaseResult()

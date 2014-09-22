@@ -83,8 +83,6 @@ void AddServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("BuildId"); writer.String(BuildId.c_str());
 	
-	if(Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
-	
 	writer.String("Active"); writer.Bool(Active);
 	
 	writer.String("DedicatedServerEligible"); writer.Bool(DedicatedServerEligible);
@@ -110,9 +108,6 @@ bool AddServerBuildRequest::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* BuildId_member = obj.FindMember("BuildId");
 	if (BuildId_member != NULL) BuildId = BuildId_member->value.GetString();
 	
-	const Value::Member* Timestamp_member = obj.FindMember("Timestamp");
-	if (Timestamp_member != NULL) Timestamp = readDatetime(Timestamp_member->value);
-	
 	const Value::Member* Active_member = obj.FindMember("Active");
 	if (Active_member != NULL) Active = Active_member->value.GetBool();
 	
@@ -132,6 +127,37 @@ bool AddServerBuildRequest::readFromValue(const rapidjson::Value& obj)
 	
 	
 	return true;
+}
+
+
+void PlayFab::AdminModels::writeGameBuildStatusEnumJSON(GameBuildStatus enumVal, PFStringJsonWriter& writer)
+{
+	switch(enumVal)
+	{
+		
+		case GameBuildStatusAvailable: writer.String("Available"); break;
+		case GameBuildStatusValidating: writer.String("Validating"); break;
+		case GameBuildStatusInvalidBuildPackage: writer.String("InvalidBuildPackage"); break;
+		case GameBuildStatusProcessing: writer.String("Processing"); break;
+		case GameBuildStatusFailedToProcess: writer.String("FailedToProcess"); break;
+	}
+}
+
+GameBuildStatus PlayFab::AdminModels::readGameBuildStatusFromValue(const rapidjson::Value& obj)
+{
+	std::string enumStr = obj.GetString();
+	if(enumStr == "Available")
+		return GameBuildStatusAvailable;
+	else if(enumStr == "Validating")
+		return GameBuildStatusValidating;
+	else if(enumStr == "InvalidBuildPackage")
+		return GameBuildStatusInvalidBuildPackage;
+	else if(enumStr == "Processing")
+		return GameBuildStatusProcessing;
+	else if(enumStr == "FailedToProcess")
+		return GameBuildStatusFailedToProcess;
+	
+	return GameBuildStatusAvailable;
 }
 
 
@@ -164,6 +190,8 @@ void AddServerBuildResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
 	
+	if(Status.notNull()) { writer.String("Status"); writeGameBuildStatusEnumJSON(Status, writer); }
+	
 	
 	writer.EndObject();
 }
@@ -193,6 +221,9 @@ bool AddServerBuildResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* TitleId_member = obj.FindMember("TitleId");
 	if (TitleId_member != NULL) TitleId = TitleId_member->value.GetString();
+	
+	const Value::Member* Status_member = obj.FindMember("Status");
+	if (Status_member != NULL) Status = readGameBuildStatusFromValue(Status_member->value);
 	
 	
 	return true;
@@ -898,10 +929,6 @@ void GetMatchmakerGameInfoResult::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("ServerPort"); writer.Uint(ServerPort);
 	
-	if(StdOutLog.length() > 0) { writer.String("StdOutLog"); writer.String(StdOutLog.c_str()); }
-	
-	if(StdErrLog.length() > 0) { writer.String("StdErrLog"); writer.String(StdErrLog.c_str()); }
-	
 	
 	writer.EndObject();
 }
@@ -943,12 +970,6 @@ bool GetMatchmakerGameInfoResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* ServerPort_member = obj.FindMember("ServerPort");
 	if (ServerPort_member != NULL) ServerPort = ServerPort_member->value.GetUint();
-	
-	const Value::Member* StdOutLog_member = obj.FindMember("StdOutLog");
-	if (StdOutLog_member != NULL) StdOutLog = StdOutLog_member->value.GetString();
-	
-	const Value::Member* StdErrLog_member = obj.FindMember("StdErrLog");
-	if (StdErrLog_member != NULL) StdErrLog = StdErrLog_member->value.GetString();
 	
 	
 	return true;
@@ -1239,6 +1260,8 @@ void GetServerBuildInfoResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
 	
+	if(Status.notNull()) { writer.String("Status"); writeGameBuildStatusEnumJSON(Status, writer); }
+	
 	
 	writer.EndObject();
 }
@@ -1268,6 +1291,193 @@ bool GetServerBuildInfoResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* TitleId_member = obj.FindMember("TitleId");
 	if (TitleId_member != NULL) TitleId = TitleId_member->value.GetString();
+	
+	const Value::Member* Status_member = obj.FindMember("Status");
+	if (Status_member != NULL) Status = readGameBuildStatusFromValue(Status_member->value);
+	
+	
+	return true;
+}
+
+
+GetServerBuildUploadURLRequest::~GetServerBuildUploadURLRequest()
+{
+	
+}
+
+void GetServerBuildUploadURLRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("BuildId"); writer.String(BuildId.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool GetServerBuildUploadURLRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* BuildId_member = obj.FindMember("BuildId");
+	if (BuildId_member != NULL) BuildId = BuildId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+GetServerBuildUploadURLResult::~GetServerBuildUploadURLResult()
+{
+	
+}
+
+void GetServerBuildUploadURLResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(URL.length() > 0) { writer.String("URL"); writer.String(URL.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetServerBuildUploadURLResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* URL_member = obj.FindMember("URL");
+	if (URL_member != NULL) URL = URL_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+GetStoreItemsRequest::~GetStoreItemsRequest()
+{
+	
+}
+
+void GetStoreItemsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("StoreId"); writer.String(StoreId.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool GetStoreItemsRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* StoreId_member = obj.FindMember("StoreId");
+	if (StoreId_member != NULL) StoreId = StoreId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+StoreItem::~StoreItem()
+{
+	
+}
+
+void StoreItem::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("ItemId"); writer.String(ItemId.c_str());
+	
+	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+	
+	if(!VirtualCurrencyPrices.empty()) {
+	writer.String("VirtualCurrencyPrices");
+	writer.StartObject();
+	for (std::map<std::string, Uint32>::iterator iter = VirtualCurrencyPrices.begin(); iter != VirtualCurrencyPrices.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.Uint(iter->second);
+	}
+	writer.EndObject();
+	}
+	
+	if(!RealCurrencyPrices.empty()) {
+	writer.String("RealCurrencyPrices");
+	writer.StartObject();
+	for (std::map<std::string, Uint32>::iterator iter = RealCurrencyPrices.begin(); iter != RealCurrencyPrices.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.Uint(iter->second);
+	}
+	writer.EndObject();
+	}
+	
+	
+	writer.EndObject();
+}
+
+bool StoreItem::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* ItemId_member = obj.FindMember("ItemId");
+	if (ItemId_member != NULL) ItemId = ItemId_member->value.GetString();
+	
+	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
+	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
+	
+	const Value::Member* VirtualCurrencyPrices_member = obj.FindMember("VirtualCurrencyPrices");
+	if (VirtualCurrencyPrices_member != NULL) {
+		for (Value::ConstMemberIterator iter = VirtualCurrencyPrices_member->value.MemberBegin(); iter != VirtualCurrencyPrices_member->value.MemberEnd(); ++iter) {
+			VirtualCurrencyPrices[iter->name.GetString()] = iter->value.GetUint();
+		}
+	}
+	
+	const Value::Member* RealCurrencyPrices_member = obj.FindMember("RealCurrencyPrices");
+	if (RealCurrencyPrices_member != NULL) {
+		for (Value::ConstMemberIterator iter = RealCurrencyPrices_member->value.MemberBegin(); iter != RealCurrencyPrices_member->value.MemberEnd(); ++iter) {
+			RealCurrencyPrices[iter->name.GetString()] = iter->value.GetUint();
+		}
+	}
+	
+	
+	return true;
+}
+
+
+GetStoreItemsResult::~GetStoreItemsResult()
+{
+	
+}
+
+void GetStoreItemsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!Store.empty()) {
+	writer.String("Store");
+	writer.StartArray();
+	for (std::list<StoreItem>::iterator iter = Store.begin(); iter != Store.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool GetStoreItemsResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Store_member = obj.FindMember("Store");
+	if (Store_member != NULL) {
+		const rapidjson::Value& memberList = Store_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Store.push_back(StoreItem(memberList[i]));
+		}
+	}
 	
 	
 	return true;
@@ -2050,6 +2260,8 @@ void UserTitleInfo::writeJSON(PFStringJsonWriter& writer)
 	
 	if(FirstLogin.notNull()) { writer.String("FirstLogin"); writeDatetime(FirstLogin, writer); }
 	
+	if(isBanned.notNull()) { writer.String("isBanned"); writer.Bool(isBanned); }
+	
 	
 	writer.EndObject();
 }
@@ -2071,6 +2283,9 @@ bool UserTitleInfo::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* FirstLogin_member = obj.FindMember("FirstLogin");
 	if (FirstLogin_member != NULL) FirstLogin = readDatetime(FirstLogin_member->value);
+	
+	const Value::Member* isBanned_member = obj.FindMember("isBanned");
+	if (isBanned_member != NULL) isBanned = isBanned_member->value.GetBool();
 	
 	
 	return true;
@@ -2489,6 +2704,8 @@ void ModifyServerBuildResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
 	
+	if(Status.notNull()) { writer.String("Status"); writeGameBuildStatusEnumJSON(Status, writer); }
+	
 	
 	writer.EndObject();
 }
@@ -2518,6 +2735,9 @@ bool ModifyServerBuildResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* TitleId_member = obj.FindMember("TitleId");
 	if (TitleId_member != NULL) TitleId = TitleId_member->value.GetString();
+	
+	const Value::Member* Status_member = obj.FindMember("Status");
+	if (Status_member != NULL) Status = readGameBuildStatusFromValue(Status_member->value);
 	
 	
 	return true;
@@ -2593,17 +2813,12 @@ void RemoveServerBuildResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	if(BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
-	
 	
 	writer.EndObject();
 }
 
 bool RemoveServerBuildResult::readFromValue(const rapidjson::Value& obj)
 {
-	
-	const Value::Member* BuildId_member = obj.FindMember("BuildId");
-	if (BuildId_member != NULL) BuildId = BuildId_member->value.GetString();
 	
 	
 	return true;
@@ -2939,13 +3154,14 @@ void UpdateCatalogItemsRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
 	
+	if(!Catalog.empty()) {
 	writer.String("Catalog");
 	writer.StartArray();
 	for (std::list<CatalogItem>::iterator iter = Catalog.begin(); iter != Catalog.end(); iter++) {
 		iter->writeJSON(writer);
 	}
 	writer.EndArray();
-	
+	 }
 	
 	
 	writer.EndObject();
@@ -3046,6 +3262,72 @@ void UpdateRandomResultTablesResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool UpdateRandomResultTablesResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
+UpdateStoreItemsRequest::~UpdateStoreItemsRequest()
+{
+	
+}
+
+void UpdateStoreItemsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("StoreId"); writer.String(StoreId.c_str());
+	
+	if(!Store.empty()) {
+	writer.String("Store");
+	writer.StartArray();
+	for (std::list<StoreItem>::iterator iter = Store.begin(); iter != Store.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateStoreItemsRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* StoreId_member = obj.FindMember("StoreId");
+	if (StoreId_member != NULL) StoreId = StoreId_member->value.GetString();
+	
+	const Value::Member* Store_member = obj.FindMember("Store");
+	if (Store_member != NULL) {
+		const rapidjson::Value& memberList = Store_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Store.push_back(StoreItem(memberList[i]));
+		}
+	}
+	
+	
+	return true;
+}
+
+
+UpdateStoreItemsResult::~UpdateStoreItemsResult()
+{
+	
+}
+
+void UpdateStoreItemsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateStoreItemsResult::readFromValue(const rapidjson::Value& obj)
 {
 	
 	

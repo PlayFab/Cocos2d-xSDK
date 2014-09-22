@@ -31,12 +31,15 @@ namespace PlayFab
 		typedef void(*AddVirtualCurrencyTypesCallback)(AdminModels::BlankResult& result, void* userData);
 		typedef void(*GetCatalogItemsCallback)(AdminModels::GetCatalogItemsResult& result, void* userData);
 		typedef void(*GetRandomResultTablesCallback)(AdminModels::GetRandomResultTablesResult& result, void* userData);
+		typedef void(*GetStoreItemsCallback)(AdminModels::GetStoreItemsResult& result, void* userData);
 		typedef void(*GetTitleDataCallback)(AdminModels::GetTitleDataResult& result, void* userData);
 		typedef void(*ListVirualCurrencyTypesCallback)(AdminModels::ListVirtualCurrencyTypesResult& result, void* userData);
 		typedef void(*SetCatalogItemsCallback)(AdminModels::UpdateCatalogItemsResult& result, void* userData);
+		typedef void(*SetStoreItemsCallback)(AdminModels::UpdateStoreItemsResult& result, void* userData);
 		typedef void(*SetTitleDataCallback)(AdminModels::SetTitleDataResult& result, void* userData);
 		typedef void(*UpdateCatalogItemsCallback)(AdminModels::UpdateCatalogItemsResult& result, void* userData);
 		typedef void(*UpdateRandomResultTablesCallback)(AdminModels::UpdateRandomResultTablesResult& result, void* userData);
+		typedef void(*UpdateStoreItemsCallback)(AdminModels::UpdateStoreItemsResult& result, void* userData);
 		typedef void(*AddUserVirtualCurrencyCallback)(AdminModels::ModifyUserVirtualCurrencyResult& result, void* userData);
 		typedef void(*GetUserInventoryCallback)(AdminModels::GetUserInventoryResult& result, void* userData);
 		typedef void(*GrantItemsToUsersCallback)(AdminModels::GrantItemsToUsersResult& result, void* userData);
@@ -47,6 +50,7 @@ namespace PlayFab
 		typedef void(*ModifyMatchmakerGameModesCallback)(AdminModels::ModifyMatchmakerGameModesResult& result, void* userData);
 		typedef void(*AddServerBuildCallback)(AdminModels::AddServerBuildResult& result, void* userData);
 		typedef void(*GetServerBuildInfoCallback)(AdminModels::GetServerBuildInfoResult& result, void* userData);
+		typedef void(*GetServerBuildUploadUrlCallback)(AdminModels::GetServerBuildUploadURLResult& result, void* userData);
 		typedef void(*ListServerBuildsCallback)(AdminModels::ListBuildsResult& result, void* userData);
 		typedef void(*ModifyServerBuildCallback)(AdminModels::ModifyServerBuildResult& result, void* userData);
 		typedef void(*RemoveServerBuildCallback)(AdminModels::RemoveServerBuildResult& result, void* userData);
@@ -89,17 +93,23 @@ namespace PlayFab
 		
 		void GetRandomResultTables(GetRandomResultTablesCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void GetStoreItems(AdminModels::GetStoreItemsRequest& request, GetStoreItemsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void GetTitleData(AdminModels::GetTitleDataRequest& request, GetTitleDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void ListVirualCurrencyTypes(ListVirualCurrencyTypesCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void SetCatalogItems(AdminModels::UpdateCatalogItemsRequest& request, SetCatalogItemsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void SetStoreItems(AdminModels::UpdateStoreItemsRequest& request, SetStoreItemsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void SetTitleData(AdminModels::SetTitleDataRequest& request, SetTitleDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateCatalogItems(AdminModels::UpdateCatalogItemsRequest& request, UpdateCatalogItemsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateRandomResultTables(AdminModels::UpdateRandomResultTablesRequest& request, UpdateRandomResultTablesCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UpdateStoreItems(AdminModels::UpdateStoreItemsRequest& request, UpdateStoreItemsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void AddUserVirtualCurrency(AdminModels::AddUserVirtualCurrencyRequest& request, AddUserVirtualCurrencyCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -120,6 +130,8 @@ namespace PlayFab
 		void AddServerBuild(AdminModels::AddServerBuildRequest& request, AddServerBuildCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetServerBuildInfo(AdminModels::GetServerBuildInfoRequest& request, GetServerBuildInfoCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetServerBuildUploadUrl(AdminModels::GetServerBuildUploadURLRequest& request, GetServerBuildUploadUrlCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void ListServerBuilds(ListServerBuildsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -160,17 +172,23 @@ namespace PlayFab
 		
 		static void OnGetRandomResultTablesResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnGetStoreItemsResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnGetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnListVirualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnSetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnSetStoreItemsResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnSetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateRandomResultTablesResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUpdateStoreItemsResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnAddUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -191,6 +209,8 @@ namespace PlayFab
 		static void OnAddServerBuildResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetServerBuildInfoResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetServerBuildUploadUrlResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnListServerBuildsResult(int httpStatus, HttpRequest* request, void* userData);
 		
