@@ -979,7 +979,6 @@ void PlayFab::ClientModels::writeRegionEnumJSON(Region enumVal, PFStringJsonWrit
 		case RegionSAEast: writer.String("SAEast"); break;
 		case RegionAustralia: writer.String("Australia"); break;
 		case RegionChina: writer.String("China"); break;
-		case RegionUberLan: writer.String("UberLan"); break;
 	}
 }
 
@@ -1004,8 +1003,6 @@ Region PlayFab::ClientModels::readRegionFromValue(const rapidjson::Value& obj)
 		return RegionAustralia;
 	else if(enumStr == "China")
 		return RegionChina;
-	else if(enumStr == "UberLan")
-		return RegionUberLan;
 	
 	return RegionUSWest;
 }
@@ -1081,8 +1078,6 @@ void GameInfo::writeJSON(PFStringJsonWriter& writer)
 	
 	if(GameServerState.length() > 0) { writer.String("GameServerState"); writer.String(GameServerState.c_str()); }
 	
-	if(TitleData.length() > 0) { writer.String("TitleData"); writer.String(TitleData.c_str()); }
-	
 	
 	writer.EndObject();
 }
@@ -1118,9 +1113,6 @@ bool GameInfo::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* GameServerState_member = obj.FindMember("GameServerState");
 	if (GameServerState_member != NULL) GameServerState = GameServerState_member->value.GetString();
-	
-	const Value::Member* TitleData_member = obj.FindMember("TitleData");
-	if (TitleData_member != NULL) TitleData = TitleData_member->value.GetString();
 	
 	
 	return true;
@@ -1395,43 +1387,6 @@ bool FriendInfo::readFromValue(const rapidjson::Value& obj)
 }
 
 
-GameModeInfo::~GameModeInfo()
-{
-	
-}
-
-void GameModeInfo::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	if(GameMode.length() > 0) { writer.String("GameMode"); writer.String(GameMode.c_str()); }
-	
-	writer.String("GameCount"); writer.Uint(GameCount);
-	
-	writer.String("GamePlayersCount"); writer.Uint(GamePlayersCount);
-	
-	
-	writer.EndObject();
-}
-
-bool GameModeInfo::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* GameMode_member = obj.FindMember("GameMode");
-	if (GameMode_member != NULL) GameMode = GameMode_member->value.GetString();
-	
-	const Value::Member* GameCount_member = obj.FindMember("GameCount");
-	if (GameCount_member != NULL) GameCount = GameCount_member->value.GetUint();
-	
-	const Value::Member* GamePlayersCount_member = obj.FindMember("GamePlayersCount");
-	if (GamePlayersCount_member != NULL) GamePlayersCount = GamePlayersCount_member->value.GetUint();
-	
-	
-	return true;
-}
-
-
 GameServerRegionsRequest::~GameServerRegionsRequest()
 {
 	
@@ -1482,19 +1437,6 @@ void RegionInfo::writeJSON(PFStringJsonWriter& writer)
 	
 	if(PingUrl.length() > 0) { writer.String("PingUrl"); writer.String(PingUrl.c_str()); }
 	
-	writer.String("GameCount"); writer.Uint(GameCount);
-	
-	writer.String("GamePlayersCount"); writer.Uint(GamePlayersCount);
-	
-	if(!GameModes.empty()) {
-	writer.String("GameModes");
-	writer.StartArray();
-	for (std::list<GameModeInfo>::iterator iter = GameModes.begin(); iter != GameModes.end(); iter++) {
-		iter->writeJSON(writer);
-	}
-	writer.EndArray();
-	 }
-	
 	
 	writer.EndObject();
 }
@@ -1513,20 +1455,6 @@ bool RegionInfo::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* PingUrl_member = obj.FindMember("PingUrl");
 	if (PingUrl_member != NULL) PingUrl = PingUrl_member->value.GetString();
-	
-	const Value::Member* GameCount_member = obj.FindMember("GameCount");
-	if (GameCount_member != NULL) GameCount = GameCount_member->value.GetUint();
-	
-	const Value::Member* GamePlayersCount_member = obj.FindMember("GamePlayersCount");
-	if (GamePlayersCount_member != NULL) GamePlayersCount = GamePlayersCount_member->value.GetUint();
-	
-	const Value::Member* GameModes_member = obj.FindMember("GameModes");
-	if (GameModes_member != NULL) {
-		const rapidjson::Value& memberList = GameModes_member->value;
-		for (SizeType i = 0; i < memberList.Size(); i++) {
-			GameModes.push_back(GameModeInfo(memberList[i]));
-		}
-	}
 	
 	
 	return true;
@@ -4074,43 +4002,6 @@ bool PaymentOption::readFromValue(const rapidjson::Value& obj)
 }
 
 
-PlaylistInfo::~PlaylistInfo()
-{
-	
-}
-
-void PlaylistInfo::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	if(PlaylistId.length() > 0) { writer.String("PlaylistId"); writer.String(PlaylistId.c_str()); }
-	
-	writer.String("GameCount"); writer.Uint(GameCount);
-	
-	writer.String("GamePlayersCount"); writer.Uint(GamePlayersCount);
-	
-	
-	writer.EndObject();
-}
-
-bool PlaylistInfo::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* PlaylistId_member = obj.FindMember("PlaylistId");
-	if (PlaylistId_member != NULL) PlaylistId = PlaylistId_member->value.GetString();
-	
-	const Value::Member* GameCount_member = obj.FindMember("GameCount");
-	if (GameCount_member != NULL) GameCount = GameCount_member->value.GetUint();
-	
-	const Value::Member* GamePlayersCount_member = obj.FindMember("GamePlayersCount");
-	if (GamePlayersCount_member != NULL) GamePlayersCount = GamePlayersCount_member->value.GetUint();
-	
-	
-	return true;
-}
-
-
 PurchaseItemRequest::~PurchaseItemRequest()
 {
 	
@@ -4260,82 +4151,6 @@ bool RedeemCouponResult::readFromValue(const rapidjson::Value& obj)
 		const rapidjson::Value& memberList = GrantedItems_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
 			GrantedItems.push_back(ItemInstance(memberList[i]));
-		}
-	}
-	
-	
-	return true;
-}
-
-
-RegionPlaylistsRequest::~RegionPlaylistsRequest()
-{
-	
-}
-
-void RegionPlaylistsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	writer.String("BuildVersion"); writer.String(BuildVersion.c_str());
-	
-	writer.String("Region"); writeRegionEnumJSON(Region, writer);
-	
-	if(TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
-	
-	
-	writer.EndObject();
-}
-
-bool RegionPlaylistsRequest::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* BuildVersion_member = obj.FindMember("BuildVersion");
-	if (BuildVersion_member != NULL) BuildVersion = BuildVersion_member->value.GetString();
-	
-	const Value::Member* Region_member = obj.FindMember("Region");
-	if (Region_member != NULL) Region = readRegionFromValue(Region_member->value);
-	
-	const Value::Member* TitleId_member = obj.FindMember("TitleId");
-	if (TitleId_member != NULL) TitleId = TitleId_member->value.GetString();
-	
-	
-	return true;
-}
-
-
-RegionPlaylistsResult::~RegionPlaylistsResult()
-{
-	
-}
-
-void RegionPlaylistsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	if(!Playlists.empty()) {
-	writer.String("Playlists");
-	writer.StartArray();
-	for (std::list<PlaylistInfo>::iterator iter = Playlists.begin(); iter != Playlists.end(); iter++) {
-		iter->writeJSON(writer);
-	}
-	writer.EndArray();
-	 }
-	
-	
-	writer.EndObject();
-}
-
-bool RegionPlaylistsResult::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* Playlists_member = obj.FindMember("Playlists");
-	if (Playlists_member != NULL) {
-		const rapidjson::Value& memberList = Playlists_member->value;
-		for (SizeType i = 0; i < memberList.Size(); i++) {
-			Playlists.push_back(PlaylistInfo(memberList[i]));
 		}
 	}
 	
@@ -5151,7 +4966,7 @@ void UnlockContainerItemResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	if(UnlockedItemInstanceId.length() > 0) { writer.String("UnlockedItemInstanceId"); writer.String(UnlockedItemInstanceId.c_str()); }
+	writer.String("UnlockedItemInstanceId"); writer.String(UnlockedItemInstanceId.c_str());
 	
 	if(UnlockedWithItemInstanceId.length() > 0) { writer.String("UnlockedWithItemInstanceId"); writer.String(UnlockedWithItemInstanceId.c_str()); }
 	

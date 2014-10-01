@@ -33,7 +33,7 @@ namespace PlayFab
 		typedef void(*GetRandomResultTablesCallback)(AdminModels::GetRandomResultTablesResult& result, void* userData);
 		typedef void(*GetStoreItemsCallback)(AdminModels::GetStoreItemsResult& result, void* userData);
 		typedef void(*GetTitleDataCallback)(AdminModels::GetTitleDataResult& result, void* userData);
-		typedef void(*ListVirualCurrencyTypesCallback)(AdminModels::ListVirtualCurrencyTypesResult& result, void* userData);
+		typedef void(*ListVirtualCurrencyTypesCallback)(AdminModels::ListVirtualCurrencyTypesResult& result, void* userData);
 		typedef void(*SetCatalogItemsCallback)(AdminModels::UpdateCatalogItemsResult& result, void* userData);
 		typedef void(*SetStoreItemsCallback)(AdminModels::UpdateStoreItemsResult& result, void* userData);
 		typedef void(*SetTitleDataCallback)(AdminModels::SetTitleDataResult& result, void* userData);
@@ -97,7 +97,7 @@ namespace PlayFab
 		
 		void GetTitleData(AdminModels::GetTitleDataRequest& request, GetTitleDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
-		void ListVirualCurrencyTypes(ListVirualCurrencyTypesCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		void ListVirtualCurrencyTypes(ListVirtualCurrencyTypesCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void SetCatalogItems(AdminModels::UpdateCatalogItemsRequest& request, SetCatalogItemsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -176,7 +176,7 @@ namespace PlayFab
 		
 		static void OnGetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
-		static void OnListVirualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData);
+		static void OnListVirtualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnSetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
 		

@@ -65,7 +65,6 @@ namespace PlayFab
 		typedef void(*ValidateIOSReceiptCallback)(ClientModels::ValidateIOSReceiptResult& result, void* userData);
 		typedef void(*GetCurrentGamesCallback)(ClientModels::CurrentGamesResult& result, void* userData);
 		typedef void(*GetGameServerRegionsCallback)(ClientModels::GameServerRegionsResult& result, void* userData);
-		typedef void(*GetRegionPlaylistsCallback)(ClientModels::RegionPlaylistsResult& result, void* userData);
 		typedef void(*MatchmakeCallback)(ClientModels::MatchmakeResult& result, void* userData);
 		typedef void(*StartGameCallback)(ClientModels::StartGameResult& result, void* userData);
 		typedef void(*AndroidDevicePushNotificationRegistrationCallback)(ClientModels::AndroidDevicePushNotificationRegistrationResult& result, void* userData);
@@ -182,8 +181,6 @@ namespace PlayFab
 		void GetCurrentGames(ClientModels::CurrentGamesRequest& request, GetCurrentGamesCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetGameServerRegions(ClientModels::GameServerRegionsRequest& request, GetGameServerRegionsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
-		
-		void GetRegionPlaylists(ClientModels::RegionPlaylistsRequest& request, GetRegionPlaylistsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void Matchmake(ClientModels::MatchmakeRequest& request, MatchmakeCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -305,8 +302,6 @@ namespace PlayFab
 		static void OnGetCurrentGamesResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetGameServerRegionsResult(int httpStatus, HttpRequest* request, void* userData);
-		
-		static void OnGetRegionPlaylistsResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnMatchmakeResult(int httpStatus, HttpRequest* request, void* userData);
 		

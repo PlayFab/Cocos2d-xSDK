@@ -972,15 +972,15 @@ void PlayFabAdminAPI::OnGetTitleDataResult(int httpStatus, HttpRequest* request,
 }
 
 
-void PlayFabAdminAPI::ListVirualCurrencyTypes(
+void PlayFabAdminAPI::ListVirtualCurrencyTypes(
     
-    ListVirualCurrencyTypesCallback callback,
+    ListVirtualCurrencyTypesCallback callback,
     ErrorCallback errorCallback,
     void* userData
     )
 {
     
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/ListVirualCurrencyTypes"));
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/ListVirtualCurrencyTypes"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
 	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
@@ -992,10 +992,10 @@ void PlayFabAdminAPI::ListVirualCurrencyTypes(
     httpRequest->SetBody("{}");
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnListVirualCurrencyTypesResult, this);
+    mHttpRequester->AddRequest(httpRequest, OnListVirtualCurrencyTypesResult, this);
 }
 
-void PlayFabAdminAPI::OnListVirualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData)
+void PlayFabAdminAPI::OnListVirtualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData)
 {
     ListVirtualCurrencyTypesResult outResult;
     PlayFabError errorResult;
@@ -1008,7 +1008,7 @@ void PlayFabAdminAPI::OnListVirualCurrencyTypesResult(int httpStatus, HttpReques
 
         if (request->GetResultCallback() != NULL)
         {
-            ListVirualCurrencyTypesCallback successCallback = (ListVirualCurrencyTypesCallback)(request->GetResultCallback());
+            ListVirtualCurrencyTypesCallback successCallback = (ListVirtualCurrencyTypesCallback)(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

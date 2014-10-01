@@ -103,7 +103,8 @@ namespace PlayFab
 		PlayFabErrorCustomAnalyticsEventsNotEnabledForTitle = 1087,
 		PlayFabErrorInvalidSharedGroupId = 1088,
 		PlayFabErrorNotAuthorized = 1089,
-		PlayFabErrorMissingTitleGoogleProperties = 1090
+		PlayFabErrorMissingTitleGoogleProperties = 1090,
+		PlayFabErrorInvalidItemProperties = 1091
     };
 
     struct PlayFabError

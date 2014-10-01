@@ -71,6 +71,49 @@ bool AddNewsResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+void PlayFab::AdminModels::writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer)
+{
+	switch(enumVal)
+	{
+		
+		case RegionUSWest: writer.String("USWest"); break;
+		case RegionUSCentral: writer.String("USCentral"); break;
+		case RegionUSEast: writer.String("USEast"); break;
+		case RegionEUWest: writer.String("EUWest"); break;
+		case RegionAPSouthEast: writer.String("APSouthEast"); break;
+		case RegionAPNorthEast: writer.String("APNorthEast"); break;
+		case RegionSAEast: writer.String("SAEast"); break;
+		case RegionAustralia: writer.String("Australia"); break;
+		case RegionChina: writer.String("China"); break;
+	}
+}
+
+Region PlayFab::AdminModels::readRegionFromValue(const rapidjson::Value& obj)
+{
+	std::string enumStr = obj.GetString();
+	if(enumStr == "USWest")
+		return RegionUSWest;
+	else if(enumStr == "USCentral")
+		return RegionUSCentral;
+	else if(enumStr == "USEast")
+		return RegionUSEast;
+	else if(enumStr == "EUWest")
+		return RegionEUWest;
+	else if(enumStr == "APSouthEast")
+		return RegionAPSouthEast;
+	else if(enumStr == "APNorthEast")
+		return RegionAPNorthEast;
+	else if(enumStr == "SAEast")
+		return RegionSAEast;
+	else if(enumStr == "Australia")
+		return RegionAustralia;
+	else if(enumStr == "China")
+		return RegionChina;
+	
+	return RegionUSWest;
+}
+
+
 AddServerBuildRequest::~AddServerBuildRequest()
 {
 	
@@ -83,15 +126,13 @@ void AddServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("BuildId"); writer.String(BuildId.c_str());
 	
-	writer.String("Active"); writer.Bool(Active);
-	
 	writer.String("DedicatedServerEligible"); writer.Bool(DedicatedServerEligible);
 	
 	if(!ActiveRegions.empty()) {
 	writer.String("ActiveRegions");
 	writer.StartArray();
-	for (std::list<std::string>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
-		writer.String(iter->c_str());
+	for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
+		writeRegionEnumJSON(*iter, writer);
 	}
 	writer.EndArray();
 	 }
@@ -108,9 +149,6 @@ bool AddServerBuildRequest::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* BuildId_member = obj.FindMember("BuildId");
 	if (BuildId_member != NULL) BuildId = BuildId_member->value.GetString();
 	
-	const Value::Member* Active_member = obj.FindMember("Active");
-	if (Active_member != NULL) Active = Active_member->value.GetBool();
-	
 	const Value::Member* DedicatedServerEligible_member = obj.FindMember("DedicatedServerEligible");
 	if (DedicatedServerEligible_member != NULL) DedicatedServerEligible = DedicatedServerEligible_member->value.GetBool();
 	
@@ -118,7 +156,7 @@ bool AddServerBuildRequest::readFromValue(const rapidjson::Value& obj)
 	if (ActiveRegions_member != NULL) {
 		const rapidjson::Value& memberList = ActiveRegions_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
-			ActiveRegions.push_back(memberList[i].GetString());
+			ActiveRegions.push_back(readRegionFromValue(memberList[i]));
 		}
 	}
 	
@@ -173,13 +211,11 @@ void AddServerBuildResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
 	
-	writer.String("Active"); writer.Bool(Active);
-	
 	if(!ActiveRegions.empty()) {
 	writer.String("ActiveRegions");
 	writer.StartArray();
-	for (std::list<std::string>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
-		writer.String(iter->c_str());
+	for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
+		writeRegionEnumJSON(*iter, writer);
 	}
 	writer.EndArray();
 	 }
@@ -202,14 +238,11 @@ bool AddServerBuildResult::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* BuildId_member = obj.FindMember("BuildId");
 	if (BuildId_member != NULL) BuildId = BuildId_member->value.GetString();
 	
-	const Value::Member* Active_member = obj.FindMember("Active");
-	if (Active_member != NULL) Active = Active_member->value.GetBool();
-	
 	const Value::Member* ActiveRegions_member = obj.FindMember("ActiveRegions");
 	if (ActiveRegions_member != NULL) {
 		const rapidjson::Value& memberList = ActiveRegions_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
-			ActiveRegions.push_back(memberList[i].GetString());
+			ActiveRegions.push_back(readRegionFromValue(memberList[i]));
 		}
 	}
 	
@@ -267,6 +300,58 @@ bool AddUserVirtualCurrencyRequest::readFromValue(const rapidjson::Value& obj)
 }
 
 
+VirtualCurrencyData::~VirtualCurrencyData()
+{
+	
+}
+
+void VirtualCurrencyData::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("CurrencyCode"); writer.String(CurrencyCode.c_str());
+	
+	if(DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
+	
+	if(InitialDeposit.notNull()) { writer.String("InitialDeposit"); writer.Int(InitialDeposit); }
+	
+	if(MaxAmount.notNull()) { writer.String("MaxAmount"); writer.Int(MaxAmount); }
+	
+	if(RechargeRate.notNull()) { writer.String("RechargeRate"); writer.Int(RechargeRate); }
+	
+	if(RechargeMax.notNull()) { writer.String("RechargeMax"); writer.Int(RechargeMax); }
+	
+	
+	writer.EndObject();
+}
+
+bool VirtualCurrencyData::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* CurrencyCode_member = obj.FindMember("CurrencyCode");
+	if (CurrencyCode_member != NULL) CurrencyCode = CurrencyCode_member->value.GetString();
+	
+	const Value::Member* DisplayName_member = obj.FindMember("DisplayName");
+	if (DisplayName_member != NULL) DisplayName = DisplayName_member->value.GetString();
+	
+	const Value::Member* InitialDeposit_member = obj.FindMember("InitialDeposit");
+	if (InitialDeposit_member != NULL) InitialDeposit = InitialDeposit_member->value.GetInt();
+	
+	const Value::Member* MaxAmount_member = obj.FindMember("MaxAmount");
+	if (MaxAmount_member != NULL) MaxAmount = MaxAmount_member->value.GetInt();
+	
+	const Value::Member* RechargeRate_member = obj.FindMember("RechargeRate");
+	if (RechargeRate_member != NULL) RechargeRate = RechargeRate_member->value.GetInt();
+	
+	const Value::Member* RechargeMax_member = obj.FindMember("RechargeMax");
+	if (RechargeMax_member != NULL) RechargeMax = RechargeMax_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
 AddVirtualCurrencyTypesRequest::~AddVirtualCurrencyTypesRequest()
 {
 	
@@ -277,10 +362,10 @@ void AddVirtualCurrencyTypesRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	writer.String("VirtualCurrencyIds");
+	writer.String("VirtualCurrencies");
 	writer.StartArray();
-	for (std::list<std::string>::iterator iter = VirtualCurrencyIds.begin(); iter != VirtualCurrencyIds.end(); iter++) {
-		writer.String(iter->c_str());
+	for (std::list<VirtualCurrencyData>::iterator iter = VirtualCurrencies.begin(); iter != VirtualCurrencies.end(); iter++) {
+		iter->writeJSON(writer);
 	}
 	writer.EndArray();
 	
@@ -292,11 +377,11 @@ void AddVirtualCurrencyTypesRequest::writeJSON(PFStringJsonWriter& writer)
 bool AddVirtualCurrencyTypesRequest::readFromValue(const rapidjson::Value& obj)
 {
 	
-	const Value::Member* VirtualCurrencyIds_member = obj.FindMember("VirtualCurrencyIds");
-	if (VirtualCurrencyIds_member != NULL) {
-		const rapidjson::Value& memberList = VirtualCurrencyIds_member->value;
+	const Value::Member* VirtualCurrencies_member = obj.FindMember("VirtualCurrencies");
+	if (VirtualCurrencies_member != NULL) {
+		const rapidjson::Value& memberList = VirtualCurrencies_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
-			VirtualCurrencyIds.push_back(memberList[i].GetString());
+			VirtualCurrencies.push_back(VirtualCurrencyData(memberList[i]));
 		}
 	}
 	
@@ -846,52 +931,6 @@ bool GetMatchmakerGameInfoRequest::readFromValue(const rapidjson::Value& obj)
 }
 
 
-void PlayFab::AdminModels::writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer)
-{
-	switch(enumVal)
-	{
-		
-		case RegionUSWest: writer.String("USWest"); break;
-		case RegionUSCentral: writer.String("USCentral"); break;
-		case RegionUSEast: writer.String("USEast"); break;
-		case RegionEUWest: writer.String("EUWest"); break;
-		case RegionAPSouthEast: writer.String("APSouthEast"); break;
-		case RegionAPNorthEast: writer.String("APNorthEast"); break;
-		case RegionSAEast: writer.String("SAEast"); break;
-		case RegionAustralia: writer.String("Australia"); break;
-		case RegionChina: writer.String("China"); break;
-		case RegionUberLan: writer.String("UberLan"); break;
-	}
-}
-
-Region PlayFab::AdminModels::readRegionFromValue(const rapidjson::Value& obj)
-{
-	std::string enumStr = obj.GetString();
-	if(enumStr == "USWest")
-		return RegionUSWest;
-	else if(enumStr == "USCentral")
-		return RegionUSCentral;
-	else if(enumStr == "USEast")
-		return RegionUSEast;
-	else if(enumStr == "EUWest")
-		return RegionEUWest;
-	else if(enumStr == "APSouthEast")
-		return RegionAPSouthEast;
-	else if(enumStr == "APNorthEast")
-		return RegionAPNorthEast;
-	else if(enumStr == "SAEast")
-		return RegionSAEast;
-	else if(enumStr == "Australia")
-		return RegionAustralia;
-	else if(enumStr == "China")
-		return RegionChina;
-	else if(enumStr == "UberLan")
-		return RegionUberLan;
-	
-	return RegionUSWest;
-}
-
-
 GetMatchmakerGameInfoResult::~GetMatchmakerGameInfoResult()
 {
 	
@@ -1243,13 +1282,11 @@ void GetServerBuildInfoResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
 	
-	writer.String("Active"); writer.Bool(Active);
-	
 	if(!ActiveRegions.empty()) {
 	writer.String("ActiveRegions");
 	writer.StartArray();
-	for (std::list<std::string>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
-		writer.String(iter->c_str());
+	for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
+		writeRegionEnumJSON(*iter, writer);
 	}
 	writer.EndArray();
 	 }
@@ -1262,6 +1299,8 @@ void GetServerBuildInfoResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(Status.notNull()) { writer.String("Status"); writeGameBuildStatusEnumJSON(Status, writer); }
 	
+	if(ErrorMessage.length() > 0) { writer.String("ErrorMessage"); writer.String(ErrorMessage.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -1272,14 +1311,11 @@ bool GetServerBuildInfoResult::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* BuildId_member = obj.FindMember("BuildId");
 	if (BuildId_member != NULL) BuildId = BuildId_member->value.GetString();
 	
-	const Value::Member* Active_member = obj.FindMember("Active");
-	if (Active_member != NULL) Active = Active_member->value.GetBool();
-	
 	const Value::Member* ActiveRegions_member = obj.FindMember("ActiveRegions");
 	if (ActiveRegions_member != NULL) {
 		const rapidjson::Value& memberList = ActiveRegions_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
-			ActiveRegions.push_back(memberList[i].GetString());
+			ActiveRegions.push_back(readRegionFromValue(memberList[i]));
 		}
 	}
 	
@@ -1294,6 +1330,9 @@ bool GetServerBuildInfoResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Status_member = obj.FindMember("Status");
 	if (Status_member != NULL) Status = readGameBuildStatusFromValue(Status_member->value);
+	
+	const Value::Member* ErrorMessage_member = obj.FindMember("ErrorMessage");
+	if (ErrorMessage_member != NULL) ErrorMessage = ErrorMessage_member->value.GetString();
 	
 	
 	return true;
@@ -2120,11 +2159,11 @@ void ListVirtualCurrencyTypesResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	if(!VirtualCurrencyIds.empty()) {
-	writer.String("VirtualCurrencyIds");
+	if(!VirtualCurrencies.empty()) {
+	writer.String("VirtualCurrencies");
 	writer.StartArray();
-	for (std::list<std::string>::iterator iter = VirtualCurrencyIds.begin(); iter != VirtualCurrencyIds.end(); iter++) {
-		writer.String(iter->c_str());
+	for (std::list<VirtualCurrencyData>::iterator iter = VirtualCurrencies.begin(); iter != VirtualCurrencies.end(); iter++) {
+		iter->writeJSON(writer);
 	}
 	writer.EndArray();
 	 }
@@ -2136,11 +2175,11 @@ void ListVirtualCurrencyTypesResult::writeJSON(PFStringJsonWriter& writer)
 bool ListVirtualCurrencyTypesResult::readFromValue(const rapidjson::Value& obj)
 {
 	
-	const Value::Member* VirtualCurrencyIds_member = obj.FindMember("VirtualCurrencyIds");
-	if (VirtualCurrencyIds_member != NULL) {
-		const rapidjson::Value& memberList = VirtualCurrencyIds_member->value;
+	const Value::Member* VirtualCurrencies_member = obj.FindMember("VirtualCurrencies");
+	if (VirtualCurrencies_member != NULL) {
+		const rapidjson::Value& memberList = VirtualCurrencies_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
-			VirtualCurrencyIds.push_back(memberList[i].GetString());
+			VirtualCurrencies.push_back(VirtualCurrencyData(memberList[i]));
 		}
 	}
 	
@@ -2630,13 +2669,11 @@ void ModifyServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
 	
-	if(Active.notNull()) { writer.String("Active"); writer.Bool(Active); }
-	
 	if(!ActiveRegions.empty()) {
 	writer.String("ActiveRegions");
 	writer.StartArray();
-	for (std::list<std::string>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
-		writer.String(iter->c_str());
+	for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
+		writeRegionEnumJSON(*iter, writer);
 	}
 	writer.EndArray();
 	 }
@@ -2656,14 +2693,11 @@ bool ModifyServerBuildRequest::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* Timestamp_member = obj.FindMember("Timestamp");
 	if (Timestamp_member != NULL) Timestamp = readDatetime(Timestamp_member->value);
 	
-	const Value::Member* Active_member = obj.FindMember("Active");
-	if (Active_member != NULL) Active = Active_member->value.GetBool();
-	
 	const Value::Member* ActiveRegions_member = obj.FindMember("ActiveRegions");
 	if (ActiveRegions_member != NULL) {
 		const rapidjson::Value& memberList = ActiveRegions_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
-			ActiveRegions.push_back(memberList[i].GetString());
+			ActiveRegions.push_back(readRegionFromValue(memberList[i]));
 		}
 	}
 	
@@ -2687,13 +2721,11 @@ void ModifyServerBuildResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
 	
-	writer.String("Active"); writer.Bool(Active);
-	
 	if(!ActiveRegions.empty()) {
 	writer.String("ActiveRegions");
 	writer.StartArray();
-	for (std::list<std::string>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
-		writer.String(iter->c_str());
+	for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
+		writeRegionEnumJSON(*iter, writer);
 	}
 	writer.EndArray();
 	 }
@@ -2716,14 +2748,11 @@ bool ModifyServerBuildResult::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* BuildId_member = obj.FindMember("BuildId");
 	if (BuildId_member != NULL) BuildId = BuildId_member->value.GetString();
 	
-	const Value::Member* Active_member = obj.FindMember("Active");
-	if (Active_member != NULL) Active = Active_member->value.GetBool();
-	
 	const Value::Member* ActiveRegions_member = obj.FindMember("ActiveRegions");
 	if (ActiveRegions_member != NULL) {
 		const rapidjson::Value& memberList = ActiveRegions_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
-			ActiveRegions.push_back(memberList[i].GetString());
+			ActiveRegions.push_back(readRegionFromValue(memberList[i]));
 		}
 	}
 	

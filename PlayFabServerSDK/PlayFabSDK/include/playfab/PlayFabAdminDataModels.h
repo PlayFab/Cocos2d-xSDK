@@ -67,19 +67,34 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	enum Region
+	{
+		RegionUSWest,
+		RegionUSCentral,
+		RegionUSEast,
+		RegionEUWest,
+		RegionAPSouthEast,
+		RegionAPNorthEast,
+		RegionSAEast,
+		RegionAustralia,
+		RegionChina
+	};
+	
+	void writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer);
+	Region readRegionFromValue(const rapidjson::Value& obj);
+	
+	
 	struct AddServerBuildRequest : public PlayFabBaseModel
     {
 		
 		std::string BuildId;
-		bool Active;
 		bool DedicatedServerEligible;
-		std::list<std::string> ActiveRegions;
+		std::list<Region> ActiveRegions;
 		std::string Comment;
 	
         AddServerBuildRequest() :
 			PlayFabBaseModel(),
 			BuildId(),
-			Active(false),
 			DedicatedServerEligible(false),
 			ActiveRegions(),
 			Comment()
@@ -88,7 +103,6 @@ namespace AdminModels
 		AddServerBuildRequest(const AddServerBuildRequest& src) :
 			PlayFabBaseModel(),
 			BuildId(src.BuildId),
-			Active(src.Active),
 			DedicatedServerEligible(src.DedicatedServerEligible),
 			ActiveRegions(src.ActiveRegions),
 			Comment(src.Comment)
@@ -122,8 +136,7 @@ namespace AdminModels
     {
 		
 		std::string BuildId;
-		bool Active;
-		std::list<std::string> ActiveRegions;
+		std::list<Region> ActiveRegions;
 		std::string Comment;
 		time_t Timestamp;
 		std::string TitleId;
@@ -132,7 +145,6 @@ namespace AdminModels
         AddServerBuildResult() :
 			PlayFabBaseModel(),
 			BuildId(),
-			Active(false),
 			ActiveRegions(),
 			Comment(),
 			Timestamp(0),
@@ -143,7 +155,6 @@ namespace AdminModels
 		AddServerBuildResult(const AddServerBuildResult& src) :
 			PlayFabBaseModel(),
 			BuildId(src.BuildId),
-			Active(src.Active),
 			ActiveRegions(src.ActiveRegions),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
@@ -194,19 +205,60 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct VirtualCurrencyData : public PlayFabBaseModel
+    {
+		
+		std::string CurrencyCode;
+		std::string DisplayName;
+		OptionalInt32 InitialDeposit;
+		OptionalInt32 MaxAmount;
+		OptionalInt32 RechargeRate;
+		OptionalInt32 RechargeMax;
+	
+        VirtualCurrencyData() :
+			PlayFabBaseModel(),
+			CurrencyCode(),
+			DisplayName(),
+			InitialDeposit(),
+			MaxAmount(),
+			RechargeRate(),
+			RechargeMax()
+			{}
+		
+		VirtualCurrencyData(const VirtualCurrencyData& src) :
+			PlayFabBaseModel(),
+			CurrencyCode(src.CurrencyCode),
+			DisplayName(src.DisplayName),
+			InitialDeposit(src.InitialDeposit),
+			MaxAmount(src.MaxAmount),
+			RechargeRate(src.RechargeRate),
+			RechargeMax(src.RechargeMax)
+			{}
+			
+		VirtualCurrencyData(const rapidjson::Value& obj) : VirtualCurrencyData()
+        {
+            readFromValue(obj);
+        }
+		
+		~VirtualCurrencyData();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct AddVirtualCurrencyTypesRequest : public PlayFabBaseModel
     {
 		
-		std::list<std::string> VirtualCurrencyIds;
+		std::list<VirtualCurrencyData> VirtualCurrencies;
 	
         AddVirtualCurrencyTypesRequest() :
 			PlayFabBaseModel(),
-			VirtualCurrencyIds()
+			VirtualCurrencies()
 			{}
 		
 		AddVirtualCurrencyTypesRequest(const AddVirtualCurrencyTypesRequest& src) :
 			PlayFabBaseModel(),
-			VirtualCurrencyIds(src.VirtualCurrencyIds)
+			VirtualCurrencies(src.VirtualCurrencies)
 			{}
 			
 		AddVirtualCurrencyTypesRequest(const rapidjson::Value& obj) : AddVirtualCurrencyTypesRequest()
@@ -547,24 +599,6 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	enum Region
-	{
-		RegionUSWest,
-		RegionUSCentral,
-		RegionUSEast,
-		RegionEUWest,
-		RegionAPSouthEast,
-		RegionAPNorthEast,
-		RegionSAEast,
-		RegionAustralia,
-		RegionChina,
-		RegionUberLan
-	};
-	
-	void writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer);
-	Region readRegionFromValue(const rapidjson::Value& obj);
-	
-	
 	struct GetMatchmakerGameInfoResult : public PlayFabBaseModel
     {
 		
@@ -820,33 +854,33 @@ namespace AdminModels
     {
 		
 		std::string BuildId;
-		bool Active;
-		std::list<std::string> ActiveRegions;
+		std::list<Region> ActiveRegions;
 		std::string Comment;
 		time_t Timestamp;
 		std::string TitleId;
 		Boxed<GameBuildStatus> Status;
+		std::string ErrorMessage;
 	
         GetServerBuildInfoResult() :
 			PlayFabBaseModel(),
 			BuildId(),
-			Active(false),
 			ActiveRegions(),
 			Comment(),
 			Timestamp(0),
 			TitleId(),
-			Status()
+			Status(),
+			ErrorMessage()
 			{}
 		
 		GetServerBuildInfoResult(const GetServerBuildInfoResult& src) :
 			PlayFabBaseModel(),
 			BuildId(src.BuildId),
-			Active(src.Active),
 			ActiveRegions(src.ActiveRegions),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
 			TitleId(src.TitleId),
-			Status(src.Status)
+			Status(src.Status),
+			ErrorMessage(src.ErrorMessage)
 			{}
 			
 		GetServerBuildInfoResult(const rapidjson::Value& obj) : GetServerBuildInfoResult()
@@ -1459,16 +1493,16 @@ namespace AdminModels
 	struct ListVirtualCurrencyTypesResult : public PlayFabBaseModel
     {
 		
-		std::list<std::string> VirtualCurrencyIds;
+		std::list<VirtualCurrencyData> VirtualCurrencies;
 	
         ListVirtualCurrencyTypesResult() :
 			PlayFabBaseModel(),
-			VirtualCurrencyIds()
+			VirtualCurrencies()
 			{}
 		
 		ListVirtualCurrencyTypesResult(const ListVirtualCurrencyTypesResult& src) :
 			PlayFabBaseModel(),
-			VirtualCurrencyIds(src.VirtualCurrencyIds)
+			VirtualCurrencies(src.VirtualCurrencies)
 			{}
 			
 		ListVirtualCurrencyTypesResult(const rapidjson::Value& obj) : ListVirtualCurrencyTypesResult()
@@ -1839,15 +1873,13 @@ namespace AdminModels
 		
 		std::string BuildId;
 		OptionalTime Timestamp;
-		OptionalBool Active;
-		std::list<std::string> ActiveRegions;
+		std::list<Region> ActiveRegions;
 		std::string Comment;
 	
         ModifyServerBuildRequest() :
 			PlayFabBaseModel(),
 			BuildId(),
 			Timestamp(),
-			Active(),
 			ActiveRegions(),
 			Comment()
 			{}
@@ -1856,7 +1888,6 @@ namespace AdminModels
 			PlayFabBaseModel(),
 			BuildId(src.BuildId),
 			Timestamp(src.Timestamp),
-			Active(src.Active),
 			ActiveRegions(src.ActiveRegions),
 			Comment(src.Comment)
 			{}
@@ -1876,8 +1907,7 @@ namespace AdminModels
     {
 		
 		std::string BuildId;
-		bool Active;
-		std::list<std::string> ActiveRegions;
+		std::list<Region> ActiveRegions;
 		std::string Comment;
 		time_t Timestamp;
 		std::string TitleId;
@@ -1886,7 +1916,6 @@ namespace AdminModels
         ModifyServerBuildResult() :
 			PlayFabBaseModel(),
 			BuildId(),
-			Active(false),
 			ActiveRegions(),
 			Comment(),
 			Timestamp(0),
@@ -1897,7 +1926,6 @@ namespace AdminModels
 		ModifyServerBuildResult(const ModifyServerBuildResult& src) :
 			PlayFabBaseModel(),
 			BuildId(src.BuildId),
-			Active(src.Active),
 			ActiveRegions(src.ActiveRegions),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),

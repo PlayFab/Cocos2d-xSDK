@@ -2810,63 +2810,6 @@ void PlayFabClientAPI::OnGetGameServerRegionsResult(int httpStatus, HttpRequest*
 }
 
 
-void PlayFabClientAPI::GetRegionPlaylists(
-    RegionPlaylistsRequest& request,
-    GetRegionPlaylistsCallback callback,
-    ErrorCallback errorCallback,
-    void* userData
-    )
-{
-    
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetRegionPlaylists"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
-	httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
-	
-    httpRequest->SetResultCallback((void*)callback);
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    mHttpRequester->AddRequest(httpRequest, OnGetRegionPlaylistsResult, this);
-}
-
-void PlayFabClientAPI::OnGetRegionPlaylistsResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    RegionPlaylistsResult outResult;
-    PlayFabError errorResult;
-
-    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
-
-    if (success)
-    {
-        
-
-        if (request->GetResultCallback() != NULL)
-        {
-            GetRegionPlaylistsCallback successCallback = (GetRegionPlaylistsCallback)(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != NULL)
-        {
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        }
-
-        if (request->GetErrorCallback() != NULL)
-        {
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-        }
-    }
-
-    delete request;
-}
-
-
 void PlayFabClientAPI::Matchmake(
     MatchmakeRequest& request,
     MatchmakeCallback callback,

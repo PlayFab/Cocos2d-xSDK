@@ -660,8 +660,7 @@ namespace ClientModels
 		RegionAPNorthEast,
 		RegionSAEast,
 		RegionAustralia,
-		RegionChina,
-		RegionUberLan
+		RegionChina
 	};
 	
 	void writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer);
@@ -711,7 +710,6 @@ namespace ClientModels
 		std::list<std::string> PlayerUsernames;
 		Uint32 RunTime;
 		std::string GameServerState;
-		std::string TitleData;
 	
         GameInfo() :
 			PlayFabBaseModel(),
@@ -722,8 +720,7 @@ namespace ClientModels
 			MaxPlayers(0),
 			PlayerUsernames(),
 			RunTime(0),
-			GameServerState(),
-			TitleData()
+			GameServerState()
 			{}
 		
 		GameInfo(const GameInfo& src) :
@@ -735,8 +732,7 @@ namespace ClientModels
 			MaxPlayers(src.MaxPlayers),
 			PlayerUsernames(src.PlayerUsernames),
 			RunTime(src.RunTime),
-			GameServerState(src.GameServerState),
-			TitleData(src.TitleData)
+			GameServerState(src.GameServerState)
 			{}
 			
 		GameInfo(const rapidjson::Value& obj) : GameInfo()
@@ -938,38 +934,6 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	struct GameModeInfo : public PlayFabBaseModel
-    {
-		
-		std::string GameMode;
-		Uint32 GameCount;
-		Uint32 GamePlayersCount;
-	
-        GameModeInfo() :
-			PlayFabBaseModel(),
-			GameMode(),
-			GameCount(0),
-			GamePlayersCount(0)
-			{}
-		
-		GameModeInfo(const GameModeInfo& src) :
-			PlayFabBaseModel(),
-			GameMode(src.GameMode),
-			GameCount(src.GameCount),
-			GamePlayersCount(src.GamePlayersCount)
-			{}
-			
-		GameModeInfo(const rapidjson::Value& obj) : GameModeInfo()
-        {
-            readFromValue(obj);
-        }
-		
-		~GameModeInfo();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
 	struct GameServerRegionsRequest : public PlayFabBaseModel
     {
 		
@@ -1006,19 +970,13 @@ namespace ClientModels
 		std::string Name;
 		bool Available;
 		std::string PingUrl;
-		Uint32 GameCount;
-		Uint32 GamePlayersCount;
-		std::list<GameModeInfo> GameModes;
 	
         RegionInfo() :
 			PlayFabBaseModel(),
 			Region(),
 			Name(),
 			Available(false),
-			PingUrl(),
-			GameCount(0),
-			GamePlayersCount(0),
-			GameModes()
+			PingUrl()
 			{}
 		
 		RegionInfo(const RegionInfo& src) :
@@ -1026,10 +984,7 @@ namespace ClientModels
 			Region(src.Region),
 			Name(src.Name),
 			Available(src.Available),
-			PingUrl(src.PingUrl),
-			GameCount(src.GameCount),
-			GamePlayersCount(src.GamePlayersCount),
-			GameModes(src.GameModes)
+			PingUrl(src.PingUrl)
 			{}
 			
 		RegionInfo(const rapidjson::Value& obj) : RegionInfo()
@@ -2893,38 +2848,6 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	struct PlaylistInfo : public PlayFabBaseModel
-    {
-		
-		std::string PlaylistId;
-		Uint32 GameCount;
-		Uint32 GamePlayersCount;
-	
-        PlaylistInfo() :
-			PlayFabBaseModel(),
-			PlaylistId(),
-			GameCount(0),
-			GamePlayersCount(0)
-			{}
-		
-		PlaylistInfo(const PlaylistInfo& src) :
-			PlayFabBaseModel(),
-			PlaylistId(src.PlaylistId),
-			GameCount(src.GameCount),
-			GamePlayersCount(src.GamePlayersCount)
-			{}
-			
-		PlaylistInfo(const rapidjson::Value& obj) : PlaylistInfo()
-        {
-            readFromValue(obj);
-        }
-		
-		~PlaylistInfo();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
 	struct PurchaseItemRequest : public PlayFabBaseModel
     {
 		
@@ -3039,64 +2962,6 @@ namespace ClientModels
         }
 		
 		~RedeemCouponResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct RegionPlaylistsRequest : public PlayFabBaseModel
-    {
-		
-		std::string BuildVersion;
-		Region Region;
-		std::string TitleId;
-	
-        RegionPlaylistsRequest() :
-			PlayFabBaseModel(),
-			BuildVersion(),
-			Region(),
-			TitleId()
-			{}
-		
-		RegionPlaylistsRequest(const RegionPlaylistsRequest& src) :
-			PlayFabBaseModel(),
-			BuildVersion(src.BuildVersion),
-			Region(src.Region),
-			TitleId(src.TitleId)
-			{}
-			
-		RegionPlaylistsRequest(const rapidjson::Value& obj) : RegionPlaylistsRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~RegionPlaylistsRequest();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct RegionPlaylistsResult : public PlayFabBaseModel
-    {
-		
-		std::list<PlaylistInfo> Playlists;
-	
-        RegionPlaylistsResult() :
-			PlayFabBaseModel(),
-			Playlists()
-			{}
-		
-		RegionPlaylistsResult(const RegionPlaylistsResult& src) :
-			PlayFabBaseModel(),
-			Playlists(src.Playlists)
-			{}
-			
-		RegionPlaylistsResult(const rapidjson::Value& obj) : RegionPlaylistsResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~RegionPlaylistsResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

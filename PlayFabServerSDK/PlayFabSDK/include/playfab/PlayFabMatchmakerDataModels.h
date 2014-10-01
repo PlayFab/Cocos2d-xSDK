@@ -228,8 +228,7 @@ namespace MatchmakerModels
 		RegionAPNorthEast,
 		RegionSAEast,
 		RegionAustralia,
-		RegionChina,
-		RegionUberLan
+		RegionChina
 	};
 	
 	void writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer);
