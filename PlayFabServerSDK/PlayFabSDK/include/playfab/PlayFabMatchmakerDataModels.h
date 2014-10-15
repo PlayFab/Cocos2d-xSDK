@@ -72,7 +72,7 @@ namespace MatchmakerModels
 		std::string ItemClass;
 		OptionalTime PurchaseDate;
 		OptionalTime Expiration;
-		OptionalUint32 RemainingUses;
+		OptionalInt32 RemainingUses;
 		std::string Annotation;
 		std::string CatalogVersion;
 		std::string BundleParent;
@@ -220,15 +220,13 @@ namespace MatchmakerModels
 	
 	enum Region
 	{
-		RegionUSWest,
 		RegionUSCentral,
 		RegionUSEast,
 		RegionEUWest,
-		RegionAPSouthEast,
-		RegionAPNorthEast,
-		RegionSAEast,
-		RegionAustralia,
-		RegionChina
+		RegionSingapore,
+		RegionJapan,
+		RegionBrazil,
+		RegionAustralia
 	};
 	
 	void writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer);
@@ -240,15 +238,17 @@ namespace MatchmakerModels
 		
 		std::string Build;
 		Region Region;
-		Uint32 GameMode;
+		std::string GameMode;
 		std::string CustomCommandLineData;
+		std::string ExternalMatchmakerEventEndpoint;
 	
         StartGameRequest() :
 			PlayFabBaseModel(),
 			Build(),
 			Region(),
-			GameMode(0),
-			CustomCommandLineData()
+			GameMode(),
+			CustomCommandLineData(),
+			ExternalMatchmakerEventEndpoint()
 			{}
 		
 		StartGameRequest(const StartGameRequest& src) :
@@ -256,7 +256,8 @@ namespace MatchmakerModels
 			Build(src.Build),
 			Region(src.Region),
 			GameMode(src.GameMode),
-			CustomCommandLineData(src.CustomCommandLineData)
+			CustomCommandLineData(src.CustomCommandLineData),
+			ExternalMatchmakerEventEndpoint(src.ExternalMatchmakerEventEndpoint)
 			{}
 			
 		StartGameRequest(const rapidjson::Value& obj) : StartGameRequest()
@@ -273,31 +274,22 @@ namespace MatchmakerModels
 	struct StartGameResponse : public PlayFabBaseModel
     {
 		
-		std::string LobbyID;
-		Boxed<Region> Region;
-		Uint32 GameMode;
-		std::string Build;
-		std::string Address;
-		Uint32 Port;
+		std::string GameID;
+		std::string ServerHostname;
+		Uint32 ServerPort;
 	
         StartGameResponse() :
 			PlayFabBaseModel(),
-			LobbyID(),
-			Region(),
-			GameMode(0),
-			Build(),
-			Address(),
-			Port(0)
+			GameID(),
+			ServerHostname(),
+			ServerPort(0)
 			{}
 		
 		StartGameResponse(const StartGameResponse& src) :
 			PlayFabBaseModel(),
-			LobbyID(src.LobbyID),
-			Region(src.Region),
-			GameMode(src.GameMode),
-			Build(src.Build),
-			Address(src.Address),
-			Port(src.Port)
+			GameID(src.GameID),
+			ServerHostname(src.ServerHostname),
+			ServerPort(src.ServerPort)
 			{}
 			
 		StartGameResponse(const rapidjson::Value& obj) : StartGameResponse()
@@ -315,7 +307,7 @@ namespace MatchmakerModels
     {
 		
 		std::string PlayFabId;
-		Uint32 MinCatalogVersion;
+		Int32 MinCatalogVersion;
 	
         UserInfoRequest() :
 			PlayFabBaseModel(),

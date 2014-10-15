@@ -122,6 +122,64 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct AddUsernamePasswordRequest : public PlayFabBaseModel
+    {
+		
+		std::string Username;
+		std::string Email;
+		std::string Password;
+	
+        AddUsernamePasswordRequest() :
+			PlayFabBaseModel(),
+			Username(),
+			Email(),
+			Password()
+			{}
+		
+		AddUsernamePasswordRequest(const AddUsernamePasswordRequest& src) :
+			PlayFabBaseModel(),
+			Username(src.Username),
+			Email(src.Email),
+			Password(src.Password)
+			{}
+			
+		AddUsernamePasswordRequest(const rapidjson::Value& obj) : AddUsernamePasswordRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~AddUsernamePasswordRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct AddUsernamePasswordResult : public PlayFabBaseModel
+    {
+		
+		std::string Username;
+	
+        AddUsernamePasswordResult() :
+			PlayFabBaseModel(),
+			Username()
+			{}
+		
+		AddUsernamePasswordResult(const AddUsernamePasswordResult& src) :
+			PlayFabBaseModel(),
+			Username(src.Username)
+			{}
+			
+		AddUsernamePasswordResult(const rapidjson::Value& obj) : AddUsernamePasswordResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~AddUsernamePasswordResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct AddUserVirtualCurrencyRequest : public PlayFabBaseModel
     {
 		
@@ -652,15 +710,13 @@ namespace ClientModels
 	
 	enum Region
 	{
-		RegionUSWest,
 		RegionUSCentral,
 		RegionUSEast,
 		RegionEUWest,
-		RegionAPSouthEast,
-		RegionAPNorthEast,
-		RegionSAEast,
-		RegionAustralia,
-		RegionChina
+		RegionSingapore,
+		RegionJapan,
+		RegionBrazil,
+		RegionAustralia
 	};
 	
 	void writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer);
@@ -1062,7 +1118,8 @@ namespace ClientModels
 		UserOriginationUnknown,
 		UserOriginationIOS,
 		UserOriginationLoadTest,
-		UserOriginationAndroid
+		UserOriginationAndroid,
+		UserOriginationPSN
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
@@ -1256,6 +1313,38 @@ namespace ClientModels
         }
 		
 		~GetCatalogItemsResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetFriendLeaderboardRequest : public PlayFabBaseModel
+    {
+		
+		std::string StatisticName;
+		Int32 StartPosition;
+		Int32 MaxResultsCount;
+	
+        GetFriendLeaderboardRequest() :
+			PlayFabBaseModel(),
+			StatisticName(),
+			StartPosition(0),
+			MaxResultsCount(0)
+			{}
+		
+		GetFriendLeaderboardRequest(const GetFriendLeaderboardRequest& src) :
+			PlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			StartPosition(src.StartPosition),
+			MaxResultsCount(src.MaxResultsCount)
+			{}
+			
+		GetFriendLeaderboardRequest(const rapidjson::Value& obj) : GetFriendLeaderboardRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetFriendLeaderboardRequest();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1848,7 +1937,7 @@ namespace ClientModels
 		std::string ItemClass;
 		OptionalTime PurchaseDate;
 		OptionalTime Expiration;
-		OptionalUint32 RemainingUses;
+		OptionalInt32 RemainingUses;
 		std::string Annotation;
 		std::string CatalogVersion;
 		std::string BundleParent;
@@ -2357,15 +2446,21 @@ namespace ClientModels
     {
 		
 		std::string SessionTicket;
+		std::string PlayFabId;
+		bool NewlyCreated;
 	
         LoginResult() :
 			PlayFabBaseModel(),
-			SessionTicket()
+			SessionTicket(),
+			PlayFabId(),
+			NewlyCreated(false)
 			{}
 		
 		LoginResult(const LoginResult& src) :
 			PlayFabBaseModel(),
-			SessionTicket(src.SessionTicket)
+			SessionTicket(src.SessionTicket),
+			PlayFabId(src.PlayFabId),
+			NewlyCreated(src.NewlyCreated)
 			{}
 			
 		LoginResult(const rapidjson::Value& obj) : LoginResult()
@@ -2634,11 +2729,11 @@ namespace ClientModels
 		
 		std::string LobbyID;
 		std::string ServerHostname;
-		OptionalUint32 ServerPort;
-		OptionalUint32 WebSocketPort;
+		OptionalInt32 ServerPort;
+		OptionalInt32 WebSocketPort;
 		std::string Ticket;
 		std::string Expires;
-		OptionalUint32 PollWaitTimeMS;
+		OptionalInt32 PollWaitTimeMS;
 		Boxed<MatchmakeStatus> Status;
 		std::list<std::string> Queue;
 	
@@ -3340,7 +3435,7 @@ namespace ClientModels
 		
 		std::string LobbyID;
 		std::string ServerHostname;
-		OptionalUint32 ServerPort;
+		OptionalInt32 ServerPort;
 		std::string Ticket;
 		std::string Expires;
 		std::string Password;
@@ -4036,14 +4131,12 @@ namespace ClientModels
     {
 		
 		std::string ReceiptData;
-		std::string ObjectName;
 		std::string CurrencyCode;
-		Uint32 PurchasePrice;
+		Int32 PurchasePrice;
 	
         ValidateIOSReceiptRequest() :
 			PlayFabBaseModel(),
 			ReceiptData(),
-			ObjectName(),
 			CurrencyCode(),
 			PurchasePrice(0)
 			{}
@@ -4051,7 +4144,6 @@ namespace ClientModels
 		ValidateIOSReceiptRequest(const ValidateIOSReceiptRequest& src) :
 			PlayFabBaseModel(),
 			ReceiptData(src.ReceiptData),
-			ObjectName(src.ObjectName),
 			CurrencyCode(src.CurrencyCode),
 			PurchasePrice(src.PurchasePrice)
 			{}

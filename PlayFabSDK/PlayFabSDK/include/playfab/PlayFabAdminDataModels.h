@@ -69,15 +69,13 @@ namespace AdminModels
 	
 	enum Region
 	{
-		RegionUSWest,
 		RegionUSCentral,
 		RegionUSEast,
 		RegionEUWest,
-		RegionAPSouthEast,
-		RegionAPNorthEast,
-		RegionSAEast,
-		RegionAustralia,
-		RegionChina
+		RegionSingapore,
+		RegionJapan,
+		RegionBrazil,
+		RegionAustralia
 	};
 	
 	void writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer);
@@ -88,24 +86,27 @@ namespace AdminModels
     {
 		
 		std::string BuildId;
-		bool DedicatedServerEligible;
+		std::string AdditionalCommandLineArguments;
 		std::list<Region> ActiveRegions;
 		std::string Comment;
+		Int32 MaxGamesPerHost;
 	
         AddServerBuildRequest() :
 			PlayFabBaseModel(),
 			BuildId(),
-			DedicatedServerEligible(false),
+			AdditionalCommandLineArguments(),
 			ActiveRegions(),
-			Comment()
+			Comment(),
+			MaxGamesPerHost(0)
 			{}
 		
 		AddServerBuildRequest(const AddServerBuildRequest& src) :
 			PlayFabBaseModel(),
 			BuildId(src.BuildId),
-			DedicatedServerEligible(src.DedicatedServerEligible),
+			AdditionalCommandLineArguments(src.AdditionalCommandLineArguments),
 			ActiveRegions(src.ActiveRegions),
-			Comment(src.Comment)
+			Comment(src.Comment),
+			MaxGamesPerHost(src.MaxGamesPerHost)
 			{}
 			
 		AddServerBuildRequest(const rapidjson::Value& obj) : AddServerBuildRequest()
@@ -137,6 +138,8 @@ namespace AdminModels
 		
 		std::string BuildId;
 		std::list<Region> ActiveRegions;
+		Int32 MaxGamesPerHost;
+		std::string AdditionalCommandLineArguments;
 		std::string Comment;
 		time_t Timestamp;
 		std::string TitleId;
@@ -146,6 +149,8 @@ namespace AdminModels
 			PlayFabBaseModel(),
 			BuildId(),
 			ActiveRegions(),
+			MaxGamesPerHost(0),
+			AdditionalCommandLineArguments(),
 			Comment(),
 			Timestamp(0),
 			TitleId(),
@@ -156,6 +161,8 @@ namespace AdminModels
 			PlayFabBaseModel(),
 			BuildId(src.BuildId),
 			ActiveRegions(src.ActiveRegions),
+			MaxGamesPerHost(src.MaxGamesPerHost),
+			AdditionalCommandLineArguments(src.AdditionalCommandLineArguments),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
 			TitleId(src.TitleId),
@@ -211,7 +218,6 @@ namespace AdminModels
 		std::string CurrencyCode;
 		std::string DisplayName;
 		OptionalInt32 InitialDeposit;
-		OptionalInt32 MaxAmount;
 		OptionalInt32 RechargeRate;
 		OptionalInt32 RechargeMax;
 	
@@ -220,7 +226,6 @@ namespace AdminModels
 			CurrencyCode(),
 			DisplayName(),
 			InitialDeposit(),
-			MaxAmount(),
 			RechargeRate(),
 			RechargeMax()
 			{}
@@ -230,7 +235,6 @@ namespace AdminModels
 			CurrencyCode(src.CurrencyCode),
 			DisplayName(src.DisplayName),
 			InitialDeposit(src.InitialDeposit),
-			MaxAmount(src.MaxAmount),
 			RechargeRate(src.RechargeRate),
 			RechargeMax(src.RechargeMax)
 			{}
@@ -492,22 +496,19 @@ namespace AdminModels
 		std::string Gamemode;
 		Uint32 MinPlayerCount;
 		Uint32 MaxPlayerCount;
-		float PerfCostPerGame;
 	
         GameModeInfo() :
 			PlayFabBaseModel(),
 			Gamemode(),
 			MinPlayerCount(0),
-			MaxPlayerCount(0),
-			PerfCostPerGame(0)
+			MaxPlayerCount(0)
 			{}
 		
 		GameModeInfo(const GameModeInfo& src) :
 			PlayFabBaseModel(),
 			Gamemode(src.Gamemode),
 			MinPlayerCount(src.MinPlayerCount),
-			MaxPlayerCount(src.MaxPlayerCount),
-			PerfCostPerGame(src.PerfCostPerGame)
+			MaxPlayerCount(src.MaxPlayerCount)
 			{}
 			
 		GameModeInfo(const rapidjson::Value& obj) : GameModeInfo()
@@ -855,6 +856,7 @@ namespace AdminModels
 		
 		std::string BuildId;
 		std::list<Region> ActiveRegions;
+		Int32 MaxGamesPerHost;
 		std::string Comment;
 		time_t Timestamp;
 		std::string TitleId;
@@ -865,6 +867,7 @@ namespace AdminModels
 			PlayFabBaseModel(),
 			BuildId(),
 			ActiveRegions(),
+			MaxGamesPerHost(0),
 			Comment(),
 			Timestamp(0),
 			TitleId(),
@@ -876,6 +879,7 @@ namespace AdminModels
 			PlayFabBaseModel(),
 			BuildId(src.BuildId),
 			ActiveRegions(src.ActiveRegions),
+			MaxGamesPerHost(src.MaxGamesPerHost),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
 			TitleId(src.TitleId),
@@ -1222,7 +1226,7 @@ namespace AdminModels
 		std::string ItemClass;
 		OptionalTime PurchaseDate;
 		OptionalTime Expiration;
-		OptionalUint32 RemainingUses;
+		OptionalInt32 RemainingUses;
 		std::string Annotation;
 		std::string CatalogVersion;
 		std::string BundleParent;
@@ -1563,7 +1567,8 @@ namespace AdminModels
 		UserOriginationUnknown,
 		UserOriginationIOS,
 		UserOriginationLoadTest,
-		UserOriginationAndroid
+		UserOriginationAndroid,
+		UserOriginationPSN
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
@@ -1874,6 +1879,8 @@ namespace AdminModels
 		std::string BuildId;
 		OptionalTime Timestamp;
 		std::list<Region> ActiveRegions;
+		Int32 MaxGamesPerHost;
+		std::string AdditionalCommandLineArguments;
 		std::string Comment;
 	
         ModifyServerBuildRequest() :
@@ -1881,6 +1888,8 @@ namespace AdminModels
 			BuildId(),
 			Timestamp(),
 			ActiveRegions(),
+			MaxGamesPerHost(0),
+			AdditionalCommandLineArguments(),
 			Comment()
 			{}
 		
@@ -1889,6 +1898,8 @@ namespace AdminModels
 			BuildId(src.BuildId),
 			Timestamp(src.Timestamp),
 			ActiveRegions(src.ActiveRegions),
+			MaxGamesPerHost(src.MaxGamesPerHost),
+			AdditionalCommandLineArguments(src.AdditionalCommandLineArguments),
 			Comment(src.Comment)
 			{}
 			
@@ -1908,6 +1919,8 @@ namespace AdminModels
 		
 		std::string BuildId;
 		std::list<Region> ActiveRegions;
+		Int32 MaxGamesPerHost;
+		std::string AdditionalCommandLineArguments;
 		std::string Comment;
 		time_t Timestamp;
 		std::string TitleId;
@@ -1917,6 +1930,8 @@ namespace AdminModels
 			PlayFabBaseModel(),
 			BuildId(),
 			ActiveRegions(),
+			MaxGamesPerHost(0),
+			AdditionalCommandLineArguments(),
 			Comment(),
 			Timestamp(0),
 			TitleId(),
@@ -1927,6 +1942,8 @@ namespace AdminModels
 			PlayFabBaseModel(),
 			BuildId(src.BuildId),
 			ActiveRegions(src.ActiveRegions),
+			MaxGamesPerHost(src.MaxGamesPerHost),
+			AdditionalCommandLineArguments(src.AdditionalCommandLineArguments),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
 			TitleId(src.TitleId),

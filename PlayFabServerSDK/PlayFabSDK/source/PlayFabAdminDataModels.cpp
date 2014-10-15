@@ -76,41 +76,35 @@ void PlayFab::AdminModels::writeRegionEnumJSON(Region enumVal, PFStringJsonWrite
 	switch(enumVal)
 	{
 		
-		case RegionUSWest: writer.String("USWest"); break;
 		case RegionUSCentral: writer.String("USCentral"); break;
 		case RegionUSEast: writer.String("USEast"); break;
 		case RegionEUWest: writer.String("EUWest"); break;
-		case RegionAPSouthEast: writer.String("APSouthEast"); break;
-		case RegionAPNorthEast: writer.String("APNorthEast"); break;
-		case RegionSAEast: writer.String("SAEast"); break;
+		case RegionSingapore: writer.String("Singapore"); break;
+		case RegionJapan: writer.String("Japan"); break;
+		case RegionBrazil: writer.String("Brazil"); break;
 		case RegionAustralia: writer.String("Australia"); break;
-		case RegionChina: writer.String("China"); break;
 	}
 }
 
 Region PlayFab::AdminModels::readRegionFromValue(const rapidjson::Value& obj)
 {
 	std::string enumStr = obj.GetString();
-	if(enumStr == "USWest")
-		return RegionUSWest;
-	else if(enumStr == "USCentral")
+	if(enumStr == "USCentral")
 		return RegionUSCentral;
 	else if(enumStr == "USEast")
 		return RegionUSEast;
 	else if(enumStr == "EUWest")
 		return RegionEUWest;
-	else if(enumStr == "APSouthEast")
-		return RegionAPSouthEast;
-	else if(enumStr == "APNorthEast")
-		return RegionAPNorthEast;
-	else if(enumStr == "SAEast")
-		return RegionSAEast;
+	else if(enumStr == "Singapore")
+		return RegionSingapore;
+	else if(enumStr == "Japan")
+		return RegionJapan;
+	else if(enumStr == "Brazil")
+		return RegionBrazil;
 	else if(enumStr == "Australia")
 		return RegionAustralia;
-	else if(enumStr == "China")
-		return RegionChina;
 	
-	return RegionUSWest;
+	return RegionUSCentral;
 }
 
 
@@ -126,7 +120,7 @@ void AddServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("BuildId"); writer.String(BuildId.c_str());
 	
-	writer.String("DedicatedServerEligible"); writer.Bool(DedicatedServerEligible);
+	if(AdditionalCommandLineArguments.length() > 0) { writer.String("AdditionalCommandLineArguments"); writer.String(AdditionalCommandLineArguments.c_str()); }
 	
 	if(!ActiveRegions.empty()) {
 	writer.String("ActiveRegions");
@@ -139,6 +133,8 @@ void AddServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
 	
+	writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
+	
 	
 	writer.EndObject();
 }
@@ -149,8 +145,8 @@ bool AddServerBuildRequest::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* BuildId_member = obj.FindMember("BuildId");
 	if (BuildId_member != NULL) BuildId = BuildId_member->value.GetString();
 	
-	const Value::Member* DedicatedServerEligible_member = obj.FindMember("DedicatedServerEligible");
-	if (DedicatedServerEligible_member != NULL) DedicatedServerEligible = DedicatedServerEligible_member->value.GetBool();
+	const Value::Member* AdditionalCommandLineArguments_member = obj.FindMember("AdditionalCommandLineArguments");
+	if (AdditionalCommandLineArguments_member != NULL) AdditionalCommandLineArguments = AdditionalCommandLineArguments_member->value.GetString();
 	
 	const Value::Member* ActiveRegions_member = obj.FindMember("ActiveRegions");
 	if (ActiveRegions_member != NULL) {
@@ -162,6 +158,9 @@ bool AddServerBuildRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Comment_member = obj.FindMember("Comment");
 	if (Comment_member != NULL) Comment = Comment_member->value.GetString();
+	
+	const Value::Member* MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
+	if (MaxGamesPerHost_member != NULL) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
 	
 	
 	return true;
@@ -220,6 +219,10 @@ void AddServerBuildResult::writeJSON(PFStringJsonWriter& writer)
 	writer.EndArray();
 	 }
 	
+	writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
+	
+	if(AdditionalCommandLineArguments.length() > 0) { writer.String("AdditionalCommandLineArguments"); writer.String(AdditionalCommandLineArguments.c_str()); }
+	
 	if(Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
 	
 	writer.String("Timestamp"); writeDatetime(Timestamp, writer);
@@ -245,6 +248,12 @@ bool AddServerBuildResult::readFromValue(const rapidjson::Value& obj)
 			ActiveRegions.push_back(readRegionFromValue(memberList[i]));
 		}
 	}
+	
+	const Value::Member* MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
+	if (MaxGamesPerHost_member != NULL) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+	
+	const Value::Member* AdditionalCommandLineArguments_member = obj.FindMember("AdditionalCommandLineArguments");
+	if (AdditionalCommandLineArguments_member != NULL) AdditionalCommandLineArguments = AdditionalCommandLineArguments_member->value.GetString();
 	
 	const Value::Member* Comment_member = obj.FindMember("Comment");
 	if (Comment_member != NULL) Comment = Comment_member->value.GetString();
@@ -316,8 +325,6 @@ void VirtualCurrencyData::writeJSON(PFStringJsonWriter& writer)
 	
 	if(InitialDeposit.notNull()) { writer.String("InitialDeposit"); writer.Int(InitialDeposit); }
 	
-	if(MaxAmount.notNull()) { writer.String("MaxAmount"); writer.Int(MaxAmount); }
-	
 	if(RechargeRate.notNull()) { writer.String("RechargeRate"); writer.Int(RechargeRate); }
 	
 	if(RechargeMax.notNull()) { writer.String("RechargeMax"); writer.Int(RechargeMax); }
@@ -337,9 +344,6 @@ bool VirtualCurrencyData::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* InitialDeposit_member = obj.FindMember("InitialDeposit");
 	if (InitialDeposit_member != NULL) InitialDeposit = InitialDeposit_member->value.GetInt();
-	
-	const Value::Member* MaxAmount_member = obj.FindMember("MaxAmount");
-	if (MaxAmount_member != NULL) MaxAmount = MaxAmount_member->value.GetInt();
 	
 	const Value::Member* RechargeRate_member = obj.FindMember("RechargeRate");
 	if (RechargeRate_member != NULL) RechargeRate = RechargeRate_member->value.GetInt();
@@ -812,8 +816,6 @@ void GameModeInfo::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("MaxPlayerCount"); writer.Uint(MaxPlayerCount);
 	
-	writer.String("PerfCostPerGame"); writer.Double(PerfCostPerGame);
-	
 	
 	writer.EndObject();
 }
@@ -829,9 +831,6 @@ bool GameModeInfo::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* MaxPlayerCount_member = obj.FindMember("MaxPlayerCount");
 	if (MaxPlayerCount_member != NULL) MaxPlayerCount = MaxPlayerCount_member->value.GetUint();
-	
-	const Value::Member* PerfCostPerGame_member = obj.FindMember("PerfCostPerGame");
-	if (PerfCostPerGame_member != NULL) PerfCostPerGame = (float)PerfCostPerGame_member->value.GetDouble();
 	
 	
 	return true;
@@ -1291,6 +1290,8 @@ void GetServerBuildInfoResult::writeJSON(PFStringJsonWriter& writer)
 	writer.EndArray();
 	 }
 	
+	writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
+	
 	if(Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
 	
 	writer.String("Timestamp"); writeDatetime(Timestamp, writer);
@@ -1318,6 +1319,9 @@ bool GetServerBuildInfoResult::readFromValue(const rapidjson::Value& obj)
 			ActiveRegions.push_back(readRegionFromValue(memberList[i]));
 		}
 	}
+	
+	const Value::Member* MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
+	if (MaxGamesPerHost_member != NULL) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
 	
 	const Value::Member* Comment_member = obj.FindMember("Comment");
 	if (Comment_member != NULL) Comment = Comment_member->value.GetString();
@@ -1797,7 +1801,7 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 	
 	if(Expiration.notNull()) { writer.String("Expiration"); writeDatetime(Expiration, writer); }
 	
-	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Uint(RemainingUses); }
+	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Int(RemainingUses); }
 	
 	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
 	
@@ -1828,7 +1832,7 @@ bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 	if (Expiration_member != NULL) Expiration = readDatetime(Expiration_member->value);
 	
 	const Value::Member* RemainingUses_member = obj.FindMember("RemainingUses");
-	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetUint();
+	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetInt();
 	
 	const Value::Member* Annotation_member = obj.FindMember("Annotation");
 	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
@@ -2246,6 +2250,7 @@ void PlayFab::AdminModels::writeUserOriginationEnumJSON(UserOrigination enumVal,
 		case UserOriginationIOS: writer.String("IOS"); break;
 		case UserOriginationLoadTest: writer.String("LoadTest"); break;
 		case UserOriginationAndroid: writer.String("Android"); break;
+		case UserOriginationPSN: writer.String("PSN"); break;
 	}
 }
 
@@ -2274,6 +2279,8 @@ UserOrigination PlayFab::AdminModels::readUserOriginationFromValue(const rapidjs
 		return UserOriginationLoadTest;
 	else if(enumStr == "Android")
 		return UserOriginationAndroid;
+	else if(enumStr == "PSN")
+		return UserOriginationPSN;
 	
 	return UserOriginationOrganic;
 }
@@ -2678,6 +2685,10 @@ void ModifyServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 	writer.EndArray();
 	 }
 	
+	writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
+	
+	if(AdditionalCommandLineArguments.length() > 0) { writer.String("AdditionalCommandLineArguments"); writer.String(AdditionalCommandLineArguments.c_str()); }
+	
 	if(Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
 	
 	
@@ -2700,6 +2711,12 @@ bool ModifyServerBuildRequest::readFromValue(const rapidjson::Value& obj)
 			ActiveRegions.push_back(readRegionFromValue(memberList[i]));
 		}
 	}
+	
+	const Value::Member* MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
+	if (MaxGamesPerHost_member != NULL) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+	
+	const Value::Member* AdditionalCommandLineArguments_member = obj.FindMember("AdditionalCommandLineArguments");
+	if (AdditionalCommandLineArguments_member != NULL) AdditionalCommandLineArguments = AdditionalCommandLineArguments_member->value.GetString();
 	
 	const Value::Member* Comment_member = obj.FindMember("Comment");
 	if (Comment_member != NULL) Comment = Comment_member->value.GetString();
@@ -2730,6 +2747,10 @@ void ModifyServerBuildResult::writeJSON(PFStringJsonWriter& writer)
 	writer.EndArray();
 	 }
 	
+	writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
+	
+	if(AdditionalCommandLineArguments.length() > 0) { writer.String("AdditionalCommandLineArguments"); writer.String(AdditionalCommandLineArguments.c_str()); }
+	
 	if(Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
 	
 	writer.String("Timestamp"); writeDatetime(Timestamp, writer);
@@ -2755,6 +2776,12 @@ bool ModifyServerBuildResult::readFromValue(const rapidjson::Value& obj)
 			ActiveRegions.push_back(readRegionFromValue(memberList[i]));
 		}
 	}
+	
+	const Value::Member* MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
+	if (MaxGamesPerHost_member != NULL) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+	
+	const Value::Member* AdditionalCommandLineArguments_member = obj.FindMember("AdditionalCommandLineArguments");
+	if (AdditionalCommandLineArguments_member != NULL) AdditionalCommandLineArguments = AdditionalCommandLineArguments_member->value.GetString();
 	
 	const Value::Member* Comment_member = obj.FindMember("Comment");
 	if (Comment_member != NULL) Comment = Comment_member->value.GetString();

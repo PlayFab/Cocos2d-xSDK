@@ -86,7 +86,7 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 	
 	if(Expiration.notNull()) { writer.String("Expiration"); writeDatetime(Expiration, writer); }
 	
-	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Uint(RemainingUses); }
+	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Int(RemainingUses); }
 	
 	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
 	
@@ -117,7 +117,7 @@ bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 	if (Expiration_member != NULL) Expiration = readDatetime(Expiration_member->value);
 	
 	const Value::Member* RemainingUses_member = obj.FindMember("RemainingUses");
-	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetUint();
+	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetInt();
 	
 	const Value::Member* Annotation_member = obj.FindMember("Annotation");
 	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
@@ -246,41 +246,35 @@ void PlayFab::MatchmakerModels::writeRegionEnumJSON(Region enumVal, PFStringJson
 	switch(enumVal)
 	{
 		
-		case RegionUSWest: writer.String("USWest"); break;
 		case RegionUSCentral: writer.String("USCentral"); break;
 		case RegionUSEast: writer.String("USEast"); break;
 		case RegionEUWest: writer.String("EUWest"); break;
-		case RegionAPSouthEast: writer.String("APSouthEast"); break;
-		case RegionAPNorthEast: writer.String("APNorthEast"); break;
-		case RegionSAEast: writer.String("SAEast"); break;
+		case RegionSingapore: writer.String("Singapore"); break;
+		case RegionJapan: writer.String("Japan"); break;
+		case RegionBrazil: writer.String("Brazil"); break;
 		case RegionAustralia: writer.String("Australia"); break;
-		case RegionChina: writer.String("China"); break;
 	}
 }
 
 Region PlayFab::MatchmakerModels::readRegionFromValue(const rapidjson::Value& obj)
 {
 	std::string enumStr = obj.GetString();
-	if(enumStr == "USWest")
-		return RegionUSWest;
-	else if(enumStr == "USCentral")
+	if(enumStr == "USCentral")
 		return RegionUSCentral;
 	else if(enumStr == "USEast")
 		return RegionUSEast;
 	else if(enumStr == "EUWest")
 		return RegionEUWest;
-	else if(enumStr == "APSouthEast")
-		return RegionAPSouthEast;
-	else if(enumStr == "APNorthEast")
-		return RegionAPNorthEast;
-	else if(enumStr == "SAEast")
-		return RegionSAEast;
+	else if(enumStr == "Singapore")
+		return RegionSingapore;
+	else if(enumStr == "Japan")
+		return RegionJapan;
+	else if(enumStr == "Brazil")
+		return RegionBrazil;
 	else if(enumStr == "Australia")
 		return RegionAustralia;
-	else if(enumStr == "China")
-		return RegionChina;
 	
-	return RegionUSWest;
+	return RegionUSCentral;
 }
 
 
@@ -298,9 +292,11 @@ void StartGameRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("Region"); writeRegionEnumJSON(Region, writer);
 	
-	writer.String("GameMode"); writer.Uint(GameMode);
+	writer.String("GameMode"); writer.String(GameMode.c_str());
 	
 	if(CustomCommandLineData.length() > 0) { writer.String("CustomCommandLineData"); writer.String(CustomCommandLineData.c_str()); }
+	
+	writer.String("ExternalMatchmakerEventEndpoint"); writer.String(ExternalMatchmakerEventEndpoint.c_str());
 	
 	
 	writer.EndObject();
@@ -316,10 +312,13 @@ bool StartGameRequest::readFromValue(const rapidjson::Value& obj)
 	if (Region_member != NULL) Region = readRegionFromValue(Region_member->value);
 	
 	const Value::Member* GameMode_member = obj.FindMember("GameMode");
-	if (GameMode_member != NULL) GameMode = GameMode_member->value.GetUint();
+	if (GameMode_member != NULL) GameMode = GameMode_member->value.GetString();
 	
 	const Value::Member* CustomCommandLineData_member = obj.FindMember("CustomCommandLineData");
 	if (CustomCommandLineData_member != NULL) CustomCommandLineData = CustomCommandLineData_member->value.GetString();
+	
+	const Value::Member* ExternalMatchmakerEventEndpoint_member = obj.FindMember("ExternalMatchmakerEventEndpoint");
+	if (ExternalMatchmakerEventEndpoint_member != NULL) ExternalMatchmakerEventEndpoint = ExternalMatchmakerEventEndpoint_member->value.GetString();
 	
 	
 	return true;
@@ -336,17 +335,11 @@ void StartGameResponse::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	if(LobbyID.length() > 0) { writer.String("LobbyID"); writer.String(LobbyID.c_str()); }
+	if(GameID.length() > 0) { writer.String("GameID"); writer.String(GameID.c_str()); }
 	
-	if(Region.notNull()) { writer.String("Region"); writeRegionEnumJSON(Region, writer); }
+	if(ServerHostname.length() > 0) { writer.String("ServerHostname"); writer.String(ServerHostname.c_str()); }
 	
-	writer.String("GameMode"); writer.Uint(GameMode);
-	
-	if(Build.length() > 0) { writer.String("Build"); writer.String(Build.c_str()); }
-	
-	if(Address.length() > 0) { writer.String("Address"); writer.String(Address.c_str()); }
-	
-	writer.String("Port"); writer.Uint(Port);
+	writer.String("ServerPort"); writer.Uint(ServerPort);
 	
 	
 	writer.EndObject();
@@ -355,23 +348,14 @@ void StartGameResponse::writeJSON(PFStringJsonWriter& writer)
 bool StartGameResponse::readFromValue(const rapidjson::Value& obj)
 {
 	
-	const Value::Member* LobbyID_member = obj.FindMember("LobbyID");
-	if (LobbyID_member != NULL) LobbyID = LobbyID_member->value.GetString();
+	const Value::Member* GameID_member = obj.FindMember("GameID");
+	if (GameID_member != NULL) GameID = GameID_member->value.GetString();
 	
-	const Value::Member* Region_member = obj.FindMember("Region");
-	if (Region_member != NULL) Region = readRegionFromValue(Region_member->value);
+	const Value::Member* ServerHostname_member = obj.FindMember("ServerHostname");
+	if (ServerHostname_member != NULL) ServerHostname = ServerHostname_member->value.GetString();
 	
-	const Value::Member* GameMode_member = obj.FindMember("GameMode");
-	if (GameMode_member != NULL) GameMode = GameMode_member->value.GetUint();
-	
-	const Value::Member* Build_member = obj.FindMember("Build");
-	if (Build_member != NULL) Build = Build_member->value.GetString();
-	
-	const Value::Member* Address_member = obj.FindMember("Address");
-	if (Address_member != NULL) Address = Address_member->value.GetString();
-	
-	const Value::Member* Port_member = obj.FindMember("Port");
-	if (Port_member != NULL) Port = Port_member->value.GetUint();
+	const Value::Member* ServerPort_member = obj.FindMember("ServerPort");
+	if (ServerPort_member != NULL) ServerPort = ServerPort_member->value.GetUint();
 	
 	
 	return true;
@@ -390,7 +374,7 @@ void UserInfoRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
 	
-	writer.String("MinCatalogVersion"); writer.Uint(MinCatalogVersion);
+	writer.String("MinCatalogVersion"); writer.Int(MinCatalogVersion);
 	
 	
 	writer.EndObject();
@@ -403,7 +387,7 @@ bool UserInfoRequest::readFromValue(const rapidjson::Value& obj)
 	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
 	
 	const Value::Member* MinCatalogVersion_member = obj.FindMember("MinCatalogVersion");
-	if (MinCatalogVersion_member != NULL) MinCatalogVersion = MinCatalogVersion_member->value.GetUint();
+	if (MinCatalogVersion_member != NULL) MinCatalogVersion = MinCatalogVersion_member->value.GetInt();
 	
 	
 	return true;

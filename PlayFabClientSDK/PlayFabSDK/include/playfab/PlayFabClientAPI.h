@@ -17,6 +17,7 @@ namespace PlayFab
     {
     public:
 		
+		typedef void(*AddUsernamePasswordCallback)(ClientModels::AddUsernamePasswordResult& result, void* userData);
 		typedef void(*LoginWithAndroidDeviceIDCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithFacebookCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithGoogleAccountCallback)(ClientModels::LoginResult& result, void* userData);
@@ -36,6 +37,7 @@ namespace PlayFab
 		typedef void(*UpdateEmailAddressCallback)(ClientModels::UpdateEmailAddressResult& result, void* userData);
 		typedef void(*UpdatePasswordCallback)(ClientModels::UpdatePasswordResult& result, void* userData);
 		typedef void(*UpdateUserTitleDisplayNameCallback)(ClientModels::UpdateUserTitleDisplayNameResult& result, void* userData);
+		typedef void(*GetFriendLeaderboardCallback)(ClientModels::GetLeaderboardResult& result, void* userData);
 		typedef void(*GetLeaderboardCallback)(ClientModels::GetLeaderboardResult& result, void* userData);
 		typedef void(*GetLeaderboardAroundCurrentUserCallback)(ClientModels::GetLeaderboardAroundCurrentUserResult& result, void* userData);
 		typedef void(*GetUserDataCallback)(ClientModels::GetUserDataResult& result, void* userData);
@@ -86,6 +88,8 @@ namespace PlayFab
 
         // ------------ Generated API calls
 		
+		void AddUsernamePassword(ClientModels::AddUsernamePasswordRequest& request, AddUsernamePasswordCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void LoginWithAndroidDeviceID(ClientModels::LoginWithAndroidDeviceIDRequest& request, LoginWithAndroidDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void LoginWithFacebook(ClientModels::LoginWithFacebookRequest& request, LoginWithFacebookCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
@@ -123,6 +127,8 @@ namespace PlayFab
 		void UpdatePassword(ClientModels::UpdatePasswordRequest& request, UpdatePasswordCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateUserTitleDisplayName(ClientModels::UpdateUserTitleDisplayNameRequest& request, UpdateUserTitleDisplayNameCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetFriendLeaderboard(ClientModels::GetFriendLeaderboardRequest& request, GetFriendLeaderboardCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetLeaderboard(ClientModels::GetLeaderboardRequest& request, GetLeaderboardCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -207,6 +213,8 @@ namespace PlayFab
 
         // ------------ Generated result handlers
 		
+		static void OnAddUsernamePasswordResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnLoginWithFacebookResult(int httpStatus, HttpRequest* request, void* userData);
@@ -244,6 +252,8 @@ namespace PlayFab
 		static void OnUpdatePasswordResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetFriendLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
 		

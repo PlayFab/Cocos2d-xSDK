@@ -104,7 +104,11 @@ namespace PlayFab
 		PlayFabErrorInvalidSharedGroupId = 1088,
 		PlayFabErrorNotAuthorized = 1089,
 		PlayFabErrorMissingTitleGoogleProperties = 1090,
-		PlayFabErrorInvalidItemProperties = 1091
+		PlayFabErrorInvalidItemProperties = 1091,
+		PlayFabErrorInvalidPSNAuthCode = 1092,
+		PlayFabErrorInvalidItemId = 1093,
+		PlayFabErrorPushNotEnabledForAccount = 1094,
+		PlayFabErrorPushServiceError = 1095
     };
 
     struct PlayFabError

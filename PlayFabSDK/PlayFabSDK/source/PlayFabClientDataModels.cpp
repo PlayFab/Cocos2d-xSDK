@@ -142,6 +142,70 @@ bool AddSharedGroupMembersResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+AddUsernamePasswordRequest::~AddUsernamePasswordRequest()
+{
+	
+}
+
+void AddUsernamePasswordRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Username"); writer.String(Username.c_str());
+	
+	writer.String("Email"); writer.String(Email.c_str());
+	
+	writer.String("Password"); writer.String(Password.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool AddUsernamePasswordRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Username_member = obj.FindMember("Username");
+	if (Username_member != NULL) Username = Username_member->value.GetString();
+	
+	const Value::Member* Email_member = obj.FindMember("Email");
+	if (Email_member != NULL) Email = Email_member->value.GetString();
+	
+	const Value::Member* Password_member = obj.FindMember("Password");
+	if (Password_member != NULL) Password = Password_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+AddUsernamePasswordResult::~AddUsernamePasswordResult()
+{
+	
+}
+
+void AddUsernamePasswordResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Username.length() > 0) { writer.String("Username"); writer.String(Username.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool AddUsernamePasswordResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Username_member = obj.FindMember("Username");
+	if (Username_member != NULL) Username = Username_member->value.GetString();
+	
+	
+	return true;
+}
+
+
 AddUserVirtualCurrencyRequest::~AddUserVirtualCurrencyRequest()
 {
 	
@@ -970,41 +1034,35 @@ void PlayFab::ClientModels::writeRegionEnumJSON(Region enumVal, PFStringJsonWrit
 	switch(enumVal)
 	{
 		
-		case RegionUSWest: writer.String("USWest"); break;
 		case RegionUSCentral: writer.String("USCentral"); break;
 		case RegionUSEast: writer.String("USEast"); break;
 		case RegionEUWest: writer.String("EUWest"); break;
-		case RegionAPSouthEast: writer.String("APSouthEast"); break;
-		case RegionAPNorthEast: writer.String("APNorthEast"); break;
-		case RegionSAEast: writer.String("SAEast"); break;
+		case RegionSingapore: writer.String("Singapore"); break;
+		case RegionJapan: writer.String("Japan"); break;
+		case RegionBrazil: writer.String("Brazil"); break;
 		case RegionAustralia: writer.String("Australia"); break;
-		case RegionChina: writer.String("China"); break;
 	}
 }
 
 Region PlayFab::ClientModels::readRegionFromValue(const rapidjson::Value& obj)
 {
 	std::string enumStr = obj.GetString();
-	if(enumStr == "USWest")
-		return RegionUSWest;
-	else if(enumStr == "USCentral")
+	if(enumStr == "USCentral")
 		return RegionUSCentral;
 	else if(enumStr == "USEast")
 		return RegionUSEast;
 	else if(enumStr == "EUWest")
 		return RegionEUWest;
-	else if(enumStr == "APSouthEast")
-		return RegionAPSouthEast;
-	else if(enumStr == "APNorthEast")
-		return RegionAPNorthEast;
-	else if(enumStr == "SAEast")
-		return RegionSAEast;
+	else if(enumStr == "Singapore")
+		return RegionSingapore;
+	else if(enumStr == "Japan")
+		return RegionJapan;
+	else if(enumStr == "Brazil")
+		return RegionBrazil;
 	else if(enumStr == "Australia")
 		return RegionAustralia;
-	else if(enumStr == "China")
-		return RegionChina;
 	
-	return RegionUSWest;
+	return RegionUSCentral;
 }
 
 
@@ -1543,6 +1601,7 @@ void PlayFab::ClientModels::writeUserOriginationEnumJSON(UserOrigination enumVal
 		case UserOriginationIOS: writer.String("IOS"); break;
 		case UserOriginationLoadTest: writer.String("LoadTest"); break;
 		case UserOriginationAndroid: writer.String("Android"); break;
+		case UserOriginationPSN: writer.String("PSN"); break;
 	}
 }
 
@@ -1571,6 +1630,8 @@ UserOrigination PlayFab::ClientModels::readUserOriginationFromValue(const rapidj
 		return UserOriginationLoadTest;
 	else if(enumStr == "Android")
 		return UserOriginationAndroid;
+	else if(enumStr == "PSN")
+		return UserOriginationPSN;
 	
 	return UserOriginationOrganic;
 }
@@ -1810,6 +1871,43 @@ bool GetCatalogItemsResult::readFromValue(const rapidjson::Value& obj)
 			Catalog.push_back(CatalogItem(memberList[i]));
 		}
 	}
+	
+	
+	return true;
+}
+
+
+GetFriendLeaderboardRequest::~GetFriendLeaderboardRequest()
+{
+	
+}
+
+void GetFriendLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("StatisticName"); writer.String(StatisticName.c_str());
+	
+	writer.String("StartPosition"); writer.Int(StartPosition);
+	
+	writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+	
+	
+	writer.EndObject();
+}
+
+bool GetFriendLeaderboardRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+	if (StatisticName_member != NULL) StatisticName = StatisticName_member->value.GetString();
+	
+	const Value::Member* StartPosition_member = obj.FindMember("StartPosition");
+	if (StartPosition_member != NULL) StartPosition = StartPosition_member->value.GetInt();
+	
+	const Value::Member* MaxResultsCount_member = obj.FindMember("MaxResultsCount");
+	if (MaxResultsCount_member != NULL) MaxResultsCount = MaxResultsCount_member->value.GetInt();
 	
 	
 	return true;
@@ -2659,7 +2757,7 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 	
 	if(Expiration.notNull()) { writer.String("Expiration"); writeDatetime(Expiration, writer); }
 	
-	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Uint(RemainingUses); }
+	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Int(RemainingUses); }
 	
 	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
 	
@@ -2690,7 +2788,7 @@ bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 	if (Expiration_member != NULL) Expiration = readDatetime(Expiration_member->value);
 	
 	const Value::Member* RemainingUses_member = obj.FindMember("RemainingUses");
-	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetUint();
+	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetInt();
 	
 	const Value::Member* Annotation_member = obj.FindMember("Annotation");
 	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
@@ -3338,6 +3436,10 @@ void LoginResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(SessionTicket.length() > 0) { writer.String("SessionTicket"); writer.String(SessionTicket.c_str()); }
 	
+	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+	
+	writer.String("NewlyCreated"); writer.Bool(NewlyCreated);
+	
 	
 	writer.EndObject();
 }
@@ -3347,6 +3449,12 @@ bool LoginResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* SessionTicket_member = obj.FindMember("SessionTicket");
 	if (SessionTicket_member != NULL) SessionTicket = SessionTicket_member->value.GetString();
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* NewlyCreated_member = obj.FindMember("NewlyCreated");
+	if (NewlyCreated_member != NULL) NewlyCreated = NewlyCreated_member->value.GetBool();
 	
 	
 	return true;
@@ -3676,15 +3784,15 @@ void MatchmakeResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(ServerHostname.length() > 0) { writer.String("ServerHostname"); writer.String(ServerHostname.c_str()); }
 	
-	if(ServerPort.notNull()) { writer.String("ServerPort"); writer.Uint(ServerPort); }
+	if(ServerPort.notNull()) { writer.String("ServerPort"); writer.Int(ServerPort); }
 	
-	if(WebSocketPort.notNull()) { writer.String("WebSocketPort"); writer.Uint(WebSocketPort); }
+	if(WebSocketPort.notNull()) { writer.String("WebSocketPort"); writer.Int(WebSocketPort); }
 	
 	if(Ticket.length() > 0) { writer.String("Ticket"); writer.String(Ticket.c_str()); }
 	
 	if(Expires.length() > 0) { writer.String("Expires"); writer.String(Expires.c_str()); }
 	
-	if(PollWaitTimeMS.notNull()) { writer.String("PollWaitTimeMS"); writer.Uint(PollWaitTimeMS); }
+	if(PollWaitTimeMS.notNull()) { writer.String("PollWaitTimeMS"); writer.Int(PollWaitTimeMS); }
 	
 	if(Status.notNull()) { writer.String("Status"); writeMatchmakeStatusEnumJSON(Status, writer); }
 	
@@ -3711,10 +3819,10 @@ bool MatchmakeResult::readFromValue(const rapidjson::Value& obj)
 	if (ServerHostname_member != NULL) ServerHostname = ServerHostname_member->value.GetString();
 	
 	const Value::Member* ServerPort_member = obj.FindMember("ServerPort");
-	if (ServerPort_member != NULL) ServerPort = ServerPort_member->value.GetUint();
+	if (ServerPort_member != NULL) ServerPort = ServerPort_member->value.GetInt();
 	
 	const Value::Member* WebSocketPort_member = obj.FindMember("WebSocketPort");
-	if (WebSocketPort_member != NULL) WebSocketPort = WebSocketPort_member->value.GetUint();
+	if (WebSocketPort_member != NULL) WebSocketPort = WebSocketPort_member->value.GetInt();
 	
 	const Value::Member* Ticket_member = obj.FindMember("Ticket");
 	if (Ticket_member != NULL) Ticket = Ticket_member->value.GetString();
@@ -3723,7 +3831,7 @@ bool MatchmakeResult::readFromValue(const rapidjson::Value& obj)
 	if (Expires_member != NULL) Expires = Expires_member->value.GetString();
 	
 	const Value::Member* PollWaitTimeMS_member = obj.FindMember("PollWaitTimeMS");
-	if (PollWaitTimeMS_member != NULL) PollWaitTimeMS = PollWaitTimeMS_member->value.GetUint();
+	if (PollWaitTimeMS_member != NULL) PollWaitTimeMS = PollWaitTimeMS_member->value.GetInt();
 	
 	const Value::Member* Status_member = obj.FindMember("Status");
 	if (Status_member != NULL) Status = readMatchmakeStatusFromValue(Status_member->value);
@@ -4597,7 +4705,7 @@ void StartGameResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(ServerHostname.length() > 0) { writer.String("ServerHostname"); writer.String(ServerHostname.c_str()); }
 	
-	if(ServerPort.notNull()) { writer.String("ServerPort"); writer.Uint(ServerPort); }
+	if(ServerPort.notNull()) { writer.String("ServerPort"); writer.Int(ServerPort); }
 	
 	if(Ticket.length() > 0) { writer.String("Ticket"); writer.String(Ticket.c_str()); }
 	
@@ -4619,7 +4727,7 @@ bool StartGameResult::readFromValue(const rapidjson::Value& obj)
 	if (ServerHostname_member != NULL) ServerHostname = ServerHostname_member->value.GetString();
 	
 	const Value::Member* ServerPort_member = obj.FindMember("ServerPort");
-	if (ServerPort_member != NULL) ServerPort = ServerPort_member->value.GetUint();
+	if (ServerPort_member != NULL) ServerPort = ServerPort_member->value.GetInt();
 	
 	const Value::Member* Ticket_member = obj.FindMember("Ticket");
 	if (Ticket_member != NULL) Ticket = Ticket_member->value.GetString();
@@ -5434,11 +5542,9 @@ void ValidateIOSReceiptRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("ReceiptData"); writer.String(ReceiptData.c_str());
 	
-	writer.String("ObjectName"); writer.String(ObjectName.c_str());
-	
 	writer.String("CurrencyCode"); writer.String(CurrencyCode.c_str());
 	
-	writer.String("PurchasePrice"); writer.Uint(PurchasePrice);
+	writer.String("PurchasePrice"); writer.Int(PurchasePrice);
 	
 	
 	writer.EndObject();
@@ -5450,14 +5556,11 @@ bool ValidateIOSReceiptRequest::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* ReceiptData_member = obj.FindMember("ReceiptData");
 	if (ReceiptData_member != NULL) ReceiptData = ReceiptData_member->value.GetString();
 	
-	const Value::Member* ObjectName_member = obj.FindMember("ObjectName");
-	if (ObjectName_member != NULL) ObjectName = ObjectName_member->value.GetString();
-	
 	const Value::Member* CurrencyCode_member = obj.FindMember("CurrencyCode");
 	if (CurrencyCode_member != NULL) CurrencyCode = CurrencyCode_member->value.GetString();
 	
 	const Value::Member* PurchasePrice_member = obj.FindMember("PurchasePrice");
-	if (PurchasePrice_member != NULL) PurchasePrice = PurchasePrice_member->value.GetUint();
+	if (PurchasePrice_member != NULL) PurchasePrice = PurchasePrice_member->value.GetInt();
 	
 	
 	return true;

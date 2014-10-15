@@ -609,7 +609,8 @@ namespace ServerModels
 		UserOriginationUnknown,
 		UserOriginationIOS,
 		UserOriginationLoadTest,
-		UserOriginationAndroid
+		UserOriginationAndroid,
+		UserOriginationPSN
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
@@ -999,7 +1000,7 @@ namespace ServerModels
 		std::string ItemClass;
 		OptionalTime PurchaseDate;
 		OptionalTime Expiration;
-		OptionalUint32 RemainingUses;
+		OptionalInt32 RemainingUses;
 		std::string Annotation;
 		std::string CatalogVersion;
 		std::string BundleParent;
@@ -1403,6 +1404,58 @@ namespace ServerModels
         }
 		
 		~RedeemMatchmakerTicketResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct SendPushNotificationRequest : public PlayFabBaseModel
+    {
+		
+		std::string Recipient;
+		std::string Message;
+	
+        SendPushNotificationRequest() :
+			PlayFabBaseModel(),
+			Recipient(),
+			Message()
+			{}
+		
+		SendPushNotificationRequest(const SendPushNotificationRequest& src) :
+			PlayFabBaseModel(),
+			Recipient(src.Recipient),
+			Message(src.Message)
+			{}
+			
+		SendPushNotificationRequest(const rapidjson::Value& obj) : SendPushNotificationRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~SendPushNotificationRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct SendPushNotificationResult : public PlayFabBaseModel
+    {
+		
+	
+        SendPushNotificationResult() :
+			PlayFabBaseModel()
+			{}
+		
+		SendPushNotificationResult(const SendPushNotificationResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		SendPushNotificationResult(const rapidjson::Value& obj) : SendPushNotificationResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~SendPushNotificationResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

@@ -921,6 +921,7 @@ void PlayFab::ServerModels::writeUserOriginationEnumJSON(UserOrigination enumVal
 		case UserOriginationIOS: writer.String("IOS"); break;
 		case UserOriginationLoadTest: writer.String("LoadTest"); break;
 		case UserOriginationAndroid: writer.String("Android"); break;
+		case UserOriginationPSN: writer.String("PSN"); break;
 	}
 }
 
@@ -949,6 +950,8 @@ UserOrigination PlayFab::ServerModels::readUserOriginationFromValue(const rapidj
 		return UserOriginationLoadTest;
 	else if(enumStr == "Android")
 		return UserOriginationAndroid;
+	else if(enumStr == "PSN")
+		return UserOriginationPSN;
 	
 	return UserOriginationOrganic;
 }
@@ -1463,7 +1466,7 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 	
 	if(Expiration.notNull()) { writer.String("Expiration"); writeDatetime(Expiration, writer); }
 	
-	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Uint(RemainingUses); }
+	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Int(RemainingUses); }
 	
 	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
 	
@@ -1494,7 +1497,7 @@ bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 	if (Expiration_member != NULL) Expiration = readDatetime(Expiration_member->value);
 	
 	const Value::Member* RemainingUses_member = obj.FindMember("RemainingUses");
-	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetUint();
+	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetInt();
 	
 	const Value::Member* Annotation_member = obj.FindMember("Annotation");
 	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
@@ -1988,6 +1991,60 @@ bool RedeemMatchmakerTicketResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* UserInfo_member = obj.FindMember("UserInfo");
 	if (UserInfo_member != NULL) UserInfo = new UserAccountInfo(UserInfo_member->value);
+	
+	
+	return true;
+}
+
+
+SendPushNotificationRequest::~SendPushNotificationRequest()
+{
+	
+}
+
+void SendPushNotificationRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Recipient"); writer.String(Recipient.c_str());
+	
+	writer.String("Message"); writer.String(Message.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool SendPushNotificationRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Recipient_member = obj.FindMember("Recipient");
+	if (Recipient_member != NULL) Recipient = Recipient_member->value.GetString();
+	
+	const Value::Member* Message_member = obj.FindMember("Message");
+	if (Message_member != NULL) Message = Message_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+SendPushNotificationResult::~SendPushNotificationResult()
+{
+	
+}
+
+void SendPushNotificationResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool SendPushNotificationResult::readFromValue(const rapidjson::Value& obj)
+{
 	
 	
 	return true;
