@@ -1602,6 +1602,7 @@ void PlayFab::ClientModels::writeUserOriginationEnumJSON(UserOrigination enumVal
 		case UserOriginationLoadTest: writer.String("LoadTest"); break;
 		case UserOriginationAndroid: writer.String("Android"); break;
 		case UserOriginationPSN: writer.String("PSN"); break;
+		case UserOriginationGameCenter: writer.String("GameCenter"); break;
 	}
 }
 
@@ -1632,6 +1633,8 @@ UserOrigination PlayFab::ClientModels::readUserOriginationFromValue(const rapidj
 		return UserOriginationAndroid;
 	else if(enumStr == "PSN")
 		return UserOriginationPSN;
+	else if(enumStr == "GameCenter")
+		return UserOriginationGameCenter;
 	
 	return UserOriginationOrganic;
 }
@@ -3536,6 +3539,43 @@ bool LoginWithFacebookRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* AccessToken_member = obj.FindMember("AccessToken");
 	if (AccessToken_member != NULL) AccessToken = AccessToken_member->value.GetString();
+	
+	const Value::Member* CreateAccount_member = obj.FindMember("CreateAccount");
+	if (CreateAccount_member != NULL) CreateAccount = CreateAccount_member->value.GetBool();
+	
+	
+	return true;
+}
+
+
+LoginWithGameCenterRequest::~LoginWithGameCenterRequest()
+{
+	
+}
+
+void LoginWithGameCenterRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("TitleId"); writer.String(TitleId.c_str());
+	
+	writer.String("PlayerId"); writer.String(PlayerId.c_str());
+	
+	writer.String("CreateAccount"); writer.Bool(CreateAccount);
+	
+	
+	writer.EndObject();
+}
+
+bool LoginWithGameCenterRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* TitleId_member = obj.FindMember("TitleId");
+	if (TitleId_member != NULL) TitleId = TitleId_member->value.GetString();
+	
+	const Value::Member* PlayerId_member = obj.FindMember("PlayerId");
+	if (PlayerId_member != NULL) PlayerId = PlayerId_member->value.GetString();
 	
 	const Value::Member* CreateAccount_member = obj.FindMember("CreateAccount");
 	if (CreateAccount_member != NULL) CreateAccount = CreateAccount_member->value.GetBool();

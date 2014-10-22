@@ -1119,7 +1119,8 @@ namespace ClientModels
 		UserOriginationIOS,
 		UserOriginationLoadTest,
 		UserOriginationAndroid,
-		UserOriginationPSN
+		UserOriginationPSN,
+		UserOriginationGameCenter
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
@@ -2539,6 +2540,38 @@ namespace ClientModels
         }
 		
 		~LoginWithFacebookRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct LoginWithGameCenterRequest : public PlayFabBaseModel
+    {
+		
+		std::string TitleId;
+		std::string PlayerId;
+		bool CreateAccount;
+	
+        LoginWithGameCenterRequest() :
+			PlayFabBaseModel(),
+			TitleId(),
+			PlayerId(),
+			CreateAccount(false)
+			{}
+		
+		LoginWithGameCenterRequest(const LoginWithGameCenterRequest& src) :
+			PlayFabBaseModel(),
+			TitleId(src.TitleId),
+			PlayerId(src.PlayerId),
+			CreateAccount(src.CreateAccount)
+			{}
+			
+		LoginWithGameCenterRequest(const rapidjson::Value& obj) : LoginWithGameCenterRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~LoginWithGameCenterRequest();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

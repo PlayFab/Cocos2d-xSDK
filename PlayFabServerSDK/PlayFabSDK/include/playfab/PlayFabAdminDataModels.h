@@ -1568,7 +1568,8 @@ namespace AdminModels
 		UserOriginationIOS,
 		UserOriginationLoadTest,
 		UserOriginationAndroid,
-		UserOriginationPSN
+		UserOriginationPSN,
+		UserOriginationGameCenter
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);

@@ -20,6 +20,7 @@ namespace PlayFab
 		typedef void(*AddUsernamePasswordCallback)(ClientModels::AddUsernamePasswordResult& result, void* userData);
 		typedef void(*LoginWithAndroidDeviceIDCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithFacebookCallback)(ClientModels::LoginResult& result, void* userData);
+		typedef void(*LoginWithGameCenterCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithGoogleAccountCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithIOSDeviceIDCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithPlayFabCallback)(ClientModels::LoginResult& result, void* userData);
@@ -93,6 +94,8 @@ namespace PlayFab
 		void LoginWithAndroidDeviceID(ClientModels::LoginWithAndroidDeviceIDRequest& request, LoginWithAndroidDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void LoginWithFacebook(ClientModels::LoginWithFacebookRequest& request, LoginWithFacebookCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void LoginWithGameCenter(ClientModels::LoginWithGameCenterRequest& request, LoginWithGameCenterCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void LoginWithGoogleAccount(ClientModels::LoginWithGoogleAccountRequest& request, LoginWithGoogleAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -218,6 +221,8 @@ namespace PlayFab
 		static void OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnLoginWithFacebookResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnLoginWithGameCenterResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnLoginWithGoogleAccountResult(int httpStatus, HttpRequest* request, void* userData);
 		
