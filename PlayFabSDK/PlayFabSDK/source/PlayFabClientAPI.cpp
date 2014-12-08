@@ -60,63 +60,6 @@ void PlayFabClientAPI::Update()
 }
 
 
-void PlayFabClientAPI::AddUsernamePassword(
-    AddUsernamePasswordRequest& request,
-    AddUsernamePasswordCallback callback,
-    ErrorCallback errorCallback,
-    void* userData
-    )
-{
-    
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/AddUsernamePassword"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
-	httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
-	
-    httpRequest->SetResultCallback((void*)callback);
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    mHttpRequester->AddRequest(httpRequest, OnAddUsernamePasswordResult, this);
-}
-
-void PlayFabClientAPI::OnAddUsernamePasswordResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    AddUsernamePasswordResult outResult;
-    PlayFabError errorResult;
-
-    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
-
-    if (success)
-    {
-        
-
-        if (request->GetResultCallback() != NULL)
-        {
-            AddUsernamePasswordCallback successCallback = (AddUsernamePasswordCallback)(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != NULL)
-        {
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        }
-
-        if (request->GetErrorCallback() != NULL)
-        {
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-        }
-    }
-
-    delete request;
-}
-
-
 void PlayFabClientAPI::LoginWithAndroidDeviceID(
     LoginWithAndroidDeviceIDRequest& request,
     LoginWithAndroidDeviceIDCallback callback,
@@ -589,18 +532,18 @@ void PlayFabClientAPI::OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* 
 }
 
 
-void PlayFabClientAPI::SendAccountRecoveryEmail(
-    SendAccountRecoveryEmailRequest& request,
-    SendAccountRecoveryEmailCallback callback,
+void PlayFabClientAPI::AddUsernamePassword(
+    AddUsernamePasswordRequest& request,
+    AddUsernamePasswordCallback callback,
     ErrorCallback errorCallback,
     void* userData
     )
 {
     
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/SendAccountRecoveryEmail"));
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/AddUsernamePassword"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
-	
+	httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 	
     httpRequest->SetResultCallback((void*)callback);
     httpRequest->SetErrorCallback(errorCallback);
@@ -609,12 +552,12 @@ void PlayFabClientAPI::SendAccountRecoveryEmail(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnSendAccountRecoveryEmailResult, this);
+    mHttpRequester->AddRequest(httpRequest, OnAddUsernamePasswordResult, this);
 }
 
-void PlayFabClientAPI::OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData)
+void PlayFabClientAPI::OnAddUsernamePasswordResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    SendAccountRecoveryEmailResult outResult;
+    AddUsernamePasswordResult outResult;
     PlayFabError errorResult;
 
     bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
@@ -625,7 +568,7 @@ void PlayFabClientAPI::OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequ
 
         if (request->GetResultCallback() != NULL)
         {
-            SendAccountRecoveryEmailCallback successCallback = (SendAccountRecoveryEmailCallback)(request->GetResultCallback());
+            AddUsernamePasswordCallback successCallback = (AddUsernamePasswordCallback)(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -683,6 +626,63 @@ void PlayFabClientAPI::OnGetAccountInfoResult(int httpStatus, HttpRequest* reque
         if (request->GetResultCallback() != NULL)
         {
             GetAccountInfoCallback successCallback = (GetAccountInfoCallback)(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != NULL)
+        {
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        }
+
+        if (request->GetErrorCallback() != NULL)
+        {
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+        }
+    }
+
+    delete request;
+}
+
+
+void PlayFabClientAPI::GetPlayFabIDsFromFacebookIDs(
+    GetPlayFabIDsFromFacebookIDsRequest& request,
+    GetPlayFabIDsFromFacebookIDsCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetPlayFabIDsFromFacebookIDs"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+	httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+	
+    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromFacebookIDsResult, this);
+}
+
+void PlayFabClientAPI::OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPlayFabIDsFromFacebookIDsResult outResult;
+    PlayFabError errorResult;
+
+    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
+
+    if (success)
+    {
+        
+
+        if (request->GetResultCallback() != NULL)
+        {
+            GetPlayFabIDsFromFacebookIDsCallback successCallback = (GetPlayFabIDsFromFacebookIDsCallback)(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -911,6 +911,63 @@ void PlayFabClientAPI::OnLinkSteamAccountResult(int httpStatus, HttpRequest* req
         if (request->GetResultCallback() != NULL)
         {
             LinkSteamAccountCallback successCallback = (LinkSteamAccountCallback)(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != NULL)
+        {
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        }
+
+        if (request->GetErrorCallback() != NULL)
+        {
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+        }
+    }
+
+    delete request;
+}
+
+
+void PlayFabClientAPI::SendAccountRecoveryEmail(
+    SendAccountRecoveryEmailRequest& request,
+    SendAccountRecoveryEmailCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/SendAccountRecoveryEmail"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+	
+	
+    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnSendAccountRecoveryEmailResult, this);
+}
+
+void PlayFabClientAPI::OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    SendAccountRecoveryEmailResult outResult;
+    PlayFabError errorResult;
+
+    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
+
+    if (success)
+    {
+        
+
+        if (request->GetResultCallback() != NULL)
+        {
+            SendAccountRecoveryEmailCallback successCallback = (SendAccountRecoveryEmailCallback)(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -3533,6 +3590,121 @@ void PlayFabClientAPI::OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest
         if (request->GetResultCallback() != NULL)
         {
             UpdateSharedGroupDataCallback successCallback = (UpdateSharedGroupDataCallback)(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != NULL)
+        {
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        }
+
+        if (request->GetErrorCallback() != NULL)
+        {
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+        }
+    }
+
+    delete request;
+}
+
+
+void PlayFabClientAPI::GetLogicServerUrl(
+    GetLogicServerUrlRequest& request,
+    GetLogicServerUrlCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetLogicServerUrl"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+	httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+	
+    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetLogicServerUrlResult, this);
+}
+
+void PlayFabClientAPI::OnGetLogicServerUrlResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetLogicServerUrlResult outResult;
+    PlayFabError errorResult;
+
+    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
+
+    if (success)
+    {
+        if (outResult.Url.length() > 0)
+			PlayFabSettings::logicServerURL = outResult.Url;
+
+        if (request->GetResultCallback() != NULL)
+        {
+            GetLogicServerUrlCallback successCallback = (GetLogicServerUrlCallback)(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != NULL)
+        {
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        }
+
+        if (request->GetErrorCallback() != NULL)
+        {
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+        }
+    }
+
+    delete request;
+}
+
+
+void PlayFabClientAPI::ServerAction(
+    ServerActionRequest& request,
+    ServerActionCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getLogicURL("/Client/ServerAction"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+	httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+	
+    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnServerActionResult, this);
+}
+
+void PlayFabClientAPI::OnServerActionResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ServerActionResult outResult;
+    PlayFabError errorResult;
+
+    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
+
+    if (success)
+    {
+        
+
+        if (request->GetResultCallback() != NULL)
+        {
+            ServerActionCallback successCallback = (ServerActionCallback)(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

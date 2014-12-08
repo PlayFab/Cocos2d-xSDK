@@ -18,6 +18,7 @@ namespace PlayFab
     public:
 		
 		typedef void(*GetUserAccountInfoCallback)(AdminModels::LookupUserAccountInfoResult& result, void* userData);
+		typedef void(*ResetUsersCallback)(AdminModels::BlankResult& result, void* userData);
 		typedef void(*SendAccountRecoveryEmailCallback)(AdminModels::SendAccountRecoveryEmailResult& result, void* userData);
 		typedef void(*UpdateUserTitleDisplayNameCallback)(AdminModels::UpdateUserTitleDisplayNameResult& result, void* userData);
 		typedef void(*GetUserDataCallback)(AdminModels::GetUserDataResult& result, void* userData);
@@ -66,6 +67,8 @@ namespace PlayFab
         // ------------ Generated API calls
 		
 		void GetUserAccountInfo(AdminModels::LookupUserAccountInfoRequest& request, GetUserAccountInfoCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void ResetUsers(AdminModels::ResetUsersRequest& request, ResetUsersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void SendAccountRecoveryEmail(AdminModels::SendAccountRecoveryEmailRequest& request, SendAccountRecoveryEmailCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -145,6 +148,8 @@ namespace PlayFab
         // ------------ Generated result handlers
 		
 		static void OnGetUserAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnResetUsersResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
 		

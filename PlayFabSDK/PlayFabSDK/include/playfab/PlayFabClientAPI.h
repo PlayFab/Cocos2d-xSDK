@@ -17,7 +17,6 @@ namespace PlayFab
     {
     public:
 		
-		typedef void(*AddUsernamePasswordCallback)(ClientModels::AddUsernamePasswordResult& result, void* userData);
 		typedef void(*LoginWithAndroidDeviceIDCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithFacebookCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithGameCenterCallback)(ClientModels::LoginResult& result, void* userData);
@@ -26,12 +25,14 @@ namespace PlayFab
 		typedef void(*LoginWithPlayFabCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithSteamCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*RegisterPlayFabUserCallback)(ClientModels::RegisterPlayFabUserResult& result, void* userData);
-		typedef void(*SendAccountRecoveryEmailCallback)(ClientModels::SendAccountRecoveryEmailResult& result, void* userData);
+		typedef void(*AddUsernamePasswordCallback)(ClientModels::AddUsernamePasswordResult& result, void* userData);
 		typedef void(*GetAccountInfoCallback)(ClientModels::GetAccountInfoResult& result, void* userData);
+		typedef void(*GetPlayFabIDsFromFacebookIDsCallback)(ClientModels::GetPlayFabIDsFromFacebookIDsResult& result, void* userData);
 		typedef void(*GetUserCombinedInfoCallback)(ClientModels::GetUserCombinedInfoResult& result, void* userData);
 		typedef void(*LinkFacebookAccountCallback)(ClientModels::LinkFacebookAccountResult& result, void* userData);
 		typedef void(*LinkGameCenterAccountCallback)(ClientModels::LinkGameCenterAccountResult& result, void* userData);
 		typedef void(*LinkSteamAccountCallback)(ClientModels::LinkSteamAccountResult& result, void* userData);
+		typedef void(*SendAccountRecoveryEmailCallback)(ClientModels::SendAccountRecoveryEmailResult& result, void* userData);
 		typedef void(*UnlinkFacebookAccountCallback)(ClientModels::UnlinkFacebookAccountResult& result, void* userData);
 		typedef void(*UnlinkGameCenterAccountCallback)(ClientModels::UnlinkGameCenterAccountResult& result, void* userData);
 		typedef void(*UnlinkSteamAccountCallback)(ClientModels::UnlinkSteamAccountResult& result, void* userData);
@@ -78,6 +79,8 @@ namespace PlayFab
 		typedef void(*GetSharedGroupDataCallback)(ClientModels::GetSharedGroupDataResult& result, void* userData);
 		typedef void(*RemoveSharedGroupMembersCallback)(ClientModels::RemoveSharedGroupMembersResult& result, void* userData);
 		typedef void(*UpdateSharedGroupDataCallback)(ClientModels::UpdateSharedGroupDataResult& result, void* userData);
+		typedef void(*GetLogicServerUrlCallback)(ClientModels::GetLogicServerUrlResult& result, void* userData);
+		typedef void(*ServerActionCallback)(ClientModels::ServerActionResult& result, void* userData);
 		
 	
         PlayFabClientAPI();
@@ -88,8 +91,6 @@ namespace PlayFab
         void Update();
 
         // ------------ Generated API calls
-		
-		void AddUsernamePassword(ClientModels::AddUsernamePasswordRequest& request, AddUsernamePasswordCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void LoginWithAndroidDeviceID(ClientModels::LoginWithAndroidDeviceIDRequest& request, LoginWithAndroidDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -107,9 +108,11 @@ namespace PlayFab
 		
 		void RegisterPlayFabUser(ClientModels::RegisterPlayFabUserRequest& request, RegisterPlayFabUserCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
-		void SendAccountRecoveryEmail(ClientModels::SendAccountRecoveryEmailRequest& request, SendAccountRecoveryEmailCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		void AddUsernamePassword(ClientModels::AddUsernamePasswordRequest& request, AddUsernamePasswordCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetAccountInfo(ClientModels::GetAccountInfoRequest& request, GetAccountInfoCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetPlayFabIDsFromFacebookIDs(ClientModels::GetPlayFabIDsFromFacebookIDsRequest& request, GetPlayFabIDsFromFacebookIDsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetUserCombinedInfo(ClientModels::GetUserCombinedInfoRequest& request, GetUserCombinedInfoCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -118,6 +121,8 @@ namespace PlayFab
 		void LinkGameCenterAccount(ClientModels::LinkGameCenterAccountRequest& request, LinkGameCenterAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void LinkSteamAccount(ClientModels::LinkSteamAccountRequest& request, LinkSteamAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void SendAccountRecoveryEmail(ClientModels::SendAccountRecoveryEmailRequest& request, SendAccountRecoveryEmailCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UnlinkFacebookAccount(UnlinkFacebookAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -211,12 +216,14 @@ namespace PlayFab
 		
 		void UpdateSharedGroupData(ClientModels::UpdateSharedGroupDataRequest& request, UpdateSharedGroupDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void GetLogicServerUrl(ClientModels::GetLogicServerUrlRequest& request, GetLogicServerUrlCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void ServerAction(ClientModels::ServerActionRequest& request, ServerActionCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 
     private:
 
         // ------------ Generated result handlers
-		
-		static void OnAddUsernamePasswordResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -234,9 +241,11 @@ namespace PlayFab
 		
 		static void OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* request, void* userData);
 		
-		static void OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
+		static void OnAddUsernamePasswordResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetUserCombinedInfoResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -245,6 +254,8 @@ namespace PlayFab
 		static void OnLinkGameCenterAccountResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnLinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUnlinkFacebookAccountResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -337,6 +348,10 @@ namespace PlayFab
 		static void OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetLogicServerUrlResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnServerActionResult(int httpStatus, HttpRequest* request, void* userData);
 		
  
         bool mOwnsRequester;

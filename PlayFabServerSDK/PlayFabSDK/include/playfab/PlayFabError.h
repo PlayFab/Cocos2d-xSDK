@@ -108,7 +108,15 @@ namespace PlayFab
 		PlayFabErrorInvalidPSNAuthCode = 1092,
 		PlayFabErrorInvalidItemId = 1093,
 		PlayFabErrorPushNotEnabledForAccount = 1094,
-		PlayFabErrorPushServiceError = 1095
+		PlayFabErrorPushServiceError = 1095,
+		PlayFabErrorReceiptDoesNotContainInAppItems = 1096,
+		PlayFabErrorReceiptContainsMultipleInAppItems = 1097,
+		PlayFabErrorInvalidBundleID = 1098,
+		PlayFabErrorJavascriptException = 1099,
+		PlayFabErrorInvalidSessionTicket = 1100,
+		PlayFabErrorUnableToConnectToDatabase = 1101,
+		PlayFabErrorInternalServerError = 1110,
+		PlayFabErrorDatabaseThroughputExceeded = 1111
     };
 
     struct PlayFabError

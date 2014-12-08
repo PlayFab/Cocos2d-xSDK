@@ -17,6 +17,7 @@ namespace PlayFab
     {
     public:
 		
+		typedef void(*AuthenticateSessionTicketCallback)(ServerModels::AuthenticateSessionTicketResult& result, void* userData);
 		typedef void(*GetUserAccountInfoCallback)(ServerModels::GetUserAccountInfoResult& result, void* userData);
 		typedef void(*SendPushNotificationCallback)(ServerModels::SendPushNotificationResult& result, void* userData);
 		typedef void(*GetLeaderboardCallback)(ServerModels::GetLeaderboardResult& result, void* userData);
@@ -34,11 +35,19 @@ namespace PlayFab
 		typedef void(*SetTitleDataCallback)(ServerModels::SetTitleDataResult& result, void* userData);
 		typedef void(*AddUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
 		typedef void(*GetUserInventoryCallback)(ServerModels::GetUserInventoryResult& result, void* userData);
+		typedef void(*GrantItemsToUserCallback)(ServerModels::GrantItemsToUserResult& result, void* userData);
 		typedef void(*GrantItemsToUsersCallback)(ServerModels::GrantItemsToUsersResult& result, void* userData);
+		typedef void(*ModifyItemUsesCallback)(ServerModels::ModifyItemUsesResult& result, void* userData);
 		typedef void(*SubtractUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
 		typedef void(*NotifyMatchmakerPlayerLeftCallback)(ServerModels::NotifyMatchmakerPlayerLeftResult& result, void* userData);
 		typedef void(*RedeemMatchmakerTicketCallback)(ServerModels::RedeemMatchmakerTicketResult& result, void* userData);
 		typedef void(*AwardSteamAchievementCallback)(ServerModels::AwardSteamAchievementResult& result, void* userData);
+		typedef void(*AddSharedGroupMembersCallback)(ServerModels::AddSharedGroupMembersResult& result, void* userData);
+		typedef void(*CreateSharedGroupCallback)(ServerModels::CreateSharedGroupResult& result, void* userData);
+		typedef void(*DeleteSharedGroupCallback)(ServerModels::EmptyResult& result, void* userData);
+		typedef void(*GetSharedGroupDataCallback)(ServerModels::GetSharedGroupDataResult& result, void* userData);
+		typedef void(*RemoveSharedGroupMembersCallback)(ServerModels::RemoveSharedGroupMembersResult& result, void* userData);
+		typedef void(*UpdateSharedGroupDataCallback)(ServerModels::UpdateSharedGroupDataResult& result, void* userData);
 		
 	
         PlayFabServerAPI();
@@ -49,6 +58,8 @@ namespace PlayFab
         void Update();
 
         // ------------ Generated API calls
+		
+		void AuthenticateSessionTicket(ServerModels::AuthenticateSessionTicketRequest& request, AuthenticateSessionTicketCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetUserAccountInfo(ServerModels::GetUserAccountInfoRequest& request, GetUserAccountInfoCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -84,7 +95,11 @@ namespace PlayFab
 		
 		void GetUserInventory(ServerModels::GetUserInventoryRequest& request, GetUserInventoryCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void GrantItemsToUser(ServerModels::GrantItemsToUserRequest& request, GrantItemsToUserCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void GrantItemsToUsers(ServerModels::GrantItemsToUsersRequest& request, GrantItemsToUsersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void ModifyItemUses(ServerModels::ModifyItemUsesRequest& request, ModifyItemUsesCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void SubtractUserVirtualCurrency(ServerModels::SubtractUserVirtualCurrencyRequest& request, SubtractUserVirtualCurrencyCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -94,10 +109,24 @@ namespace PlayFab
 		
 		void AwardSteamAchievement(ServerModels::AwardSteamAchievementRequest& request, AwardSteamAchievementCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void AddSharedGroupMembers(ServerModels::AddSharedGroupMembersRequest& request, AddSharedGroupMembersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void CreateSharedGroup(ServerModels::CreateSharedGroupRequest& request, CreateSharedGroupCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void DeleteSharedGroup(ServerModels::DeleteSharedGroupRequest& request, DeleteSharedGroupCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetSharedGroupData(ServerModels::GetSharedGroupDataRequest& request, GetSharedGroupDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void RemoveSharedGroupMembers(ServerModels::RemoveSharedGroupMembersRequest& request, RemoveSharedGroupMembersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UpdateSharedGroupData(ServerModels::UpdateSharedGroupDataRequest& request, UpdateSharedGroupDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 
     private:
 
         // ------------ Generated result handlers
+		
+		static void OnAuthenticateSessionTicketResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetUserAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -133,7 +162,11 @@ namespace PlayFab
 		
 		static void OnGetUserInventoryResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnGrantItemsToUserResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnGrantItemsToUsersResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnModifyItemUsesResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -142,6 +175,18 @@ namespace PlayFab
 		static void OnRedeemMatchmakerTicketResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnAwardSteamAchievementResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnAddSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnCreateSharedGroupResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnDeleteSharedGroupResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
  
         bool mOwnsRequester;

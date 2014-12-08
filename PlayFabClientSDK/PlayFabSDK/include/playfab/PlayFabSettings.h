@@ -15,6 +15,7 @@ namespace PlayFab
         static std::string serverURL;
         static std::string developmentEnvironmentURL;
         static std::string productionEnvironmentURL;
+		static std::string logicServerURL;
         static std::string titleId;
         static ErrorCallback globalErrorHandler;
 
@@ -24,6 +25,12 @@ namespace PlayFab
                 serverURL = "https://"+titleId+(useDevelopmentEnvironment ? developmentEnvironmentURL : productionEnvironmentURL);
             return serverURL + callPath;
         }
+		
+		static std::string getLogicURL(const std::string& callPath)
+		{
+			return logicServerURL + callPath;
+		}
+		
     };
 
 

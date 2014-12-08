@@ -86,7 +86,8 @@ namespace AdminModels
     {
 		
 		std::string BuildId;
-		std::string AdditionalCommandLineArguments;
+		std::string CommandLineTemplate;
+		std::string ExecutablePath;
 		std::list<Region> ActiveRegions;
 		std::string Comment;
 		Int32 MaxGamesPerHost;
@@ -94,7 +95,8 @@ namespace AdminModels
         AddServerBuildRequest() :
 			PlayFabBaseModel(),
 			BuildId(),
-			AdditionalCommandLineArguments(),
+			CommandLineTemplate(),
+			ExecutablePath(),
 			ActiveRegions(),
 			Comment(),
 			MaxGamesPerHost(0)
@@ -103,7 +105,8 @@ namespace AdminModels
 		AddServerBuildRequest(const AddServerBuildRequest& src) :
 			PlayFabBaseModel(),
 			BuildId(src.BuildId),
-			AdditionalCommandLineArguments(src.AdditionalCommandLineArguments),
+			CommandLineTemplate(src.CommandLineTemplate),
+			ExecutablePath(src.ExecutablePath),
 			ActiveRegions(src.ActiveRegions),
 			Comment(src.Comment),
 			MaxGamesPerHost(src.MaxGamesPerHost)
@@ -139,7 +142,8 @@ namespace AdminModels
 		std::string BuildId;
 		std::list<Region> ActiveRegions;
 		Int32 MaxGamesPerHost;
-		std::string AdditionalCommandLineArguments;
+		std::string CommandLineTemplate;
+		std::string ExecutablePath;
 		std::string Comment;
 		time_t Timestamp;
 		std::string TitleId;
@@ -150,7 +154,8 @@ namespace AdminModels
 			BuildId(),
 			ActiveRegions(),
 			MaxGamesPerHost(0),
-			AdditionalCommandLineArguments(),
+			CommandLineTemplate(),
+			ExecutablePath(),
 			Comment(),
 			Timestamp(0),
 			TitleId(),
@@ -162,7 +167,8 @@ namespace AdminModels
 			BuildId(src.BuildId),
 			ActiveRegions(src.ActiveRegions),
 			MaxGamesPerHost(src.MaxGamesPerHost),
-			AdditionalCommandLineArguments(src.AdditionalCommandLineArguments),
+			CommandLineTemplate(src.CommandLineTemplate),
+			ExecutablePath(src.ExecutablePath),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
 			TitleId(src.TitleId),
@@ -408,11 +414,6 @@ namespace AdminModels
 		std::string Description;
 		std::map<std::string, Uint32> VirtualCurrencyPrices;
 		std::map<std::string, Uint32> RealCurrencyPrices;
-		OptionalTime ReleaseDate;
-		OptionalTime ExpirationDate;
-		OptionalBool IsFree;
-		OptionalBool NotForSale;
-		OptionalBool NotForTrade;
 		std::list<std::string> Tags;
 		std::string CustomData;
 		std::list<std::string> GrantedIfPlayerHas;
@@ -429,11 +430,6 @@ namespace AdminModels
 			Description(),
 			VirtualCurrencyPrices(),
 			RealCurrencyPrices(),
-			ReleaseDate(),
-			ExpirationDate(),
-			IsFree(),
-			NotForSale(),
-			NotForTrade(),
 			Tags(),
 			CustomData(),
 			GrantedIfPlayerHas(),
@@ -451,11 +447,6 @@ namespace AdminModels
 			Description(src.Description),
 			VirtualCurrencyPrices(src.VirtualCurrencyPrices),
 			RealCurrencyPrices(src.RealCurrencyPrices),
-			ReleaseDate(src.ReleaseDate),
-			ExpirationDate(src.ExpirationDate),
-			IsFree(src.IsFree),
-			NotForSale(src.NotForSale),
-			NotForTrade(src.NotForTrade),
 			Tags(src.Tags),
 			CustomData(src.CustomData),
 			GrantedIfPlayerHas(src.GrantedIfPlayerHas),
@@ -1881,7 +1872,8 @@ namespace AdminModels
 		OptionalTime Timestamp;
 		std::list<Region> ActiveRegions;
 		Int32 MaxGamesPerHost;
-		std::string AdditionalCommandLineArguments;
+		std::string CommandLineTemplate;
+		std::string ExecutablePath;
 		std::string Comment;
 	
         ModifyServerBuildRequest() :
@@ -1890,7 +1882,8 @@ namespace AdminModels
 			Timestamp(),
 			ActiveRegions(),
 			MaxGamesPerHost(0),
-			AdditionalCommandLineArguments(),
+			CommandLineTemplate(),
+			ExecutablePath(),
 			Comment()
 			{}
 		
@@ -1900,7 +1893,8 @@ namespace AdminModels
 			Timestamp(src.Timestamp),
 			ActiveRegions(src.ActiveRegions),
 			MaxGamesPerHost(src.MaxGamesPerHost),
-			AdditionalCommandLineArguments(src.AdditionalCommandLineArguments),
+			CommandLineTemplate(src.CommandLineTemplate),
+			ExecutablePath(src.ExecutablePath),
 			Comment(src.Comment)
 			{}
 			
@@ -1921,7 +1915,8 @@ namespace AdminModels
 		std::string BuildId;
 		std::list<Region> ActiveRegions;
 		Int32 MaxGamesPerHost;
-		std::string AdditionalCommandLineArguments;
+		std::string CommandLineTemplate;
+		std::string ExecutablePath;
 		std::string Comment;
 		time_t Timestamp;
 		std::string TitleId;
@@ -1932,7 +1927,8 @@ namespace AdminModels
 			BuildId(),
 			ActiveRegions(),
 			MaxGamesPerHost(0),
-			AdditionalCommandLineArguments(),
+			CommandLineTemplate(),
+			ExecutablePath(),
 			Comment(),
 			Timestamp(0),
 			TitleId(),
@@ -1944,7 +1940,8 @@ namespace AdminModels
 			BuildId(src.BuildId),
 			ActiveRegions(src.ActiveRegions),
 			MaxGamesPerHost(src.MaxGamesPerHost),
-			AdditionalCommandLineArguments(src.AdditionalCommandLineArguments),
+			CommandLineTemplate(src.CommandLineTemplate),
+			ExecutablePath(src.ExecutablePath),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
 			TitleId(src.TitleId),
@@ -2035,6 +2032,61 @@ namespace AdminModels
         }
 		
 		~RemoveServerBuildResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UserCredentials : public PlayFabBaseModel
+    {
+		
+		std::string Username;
+		std::string Password;
+	
+        UserCredentials() :
+			PlayFabBaseModel(),
+			Username(),
+			Password()
+			{}
+		
+		UserCredentials(const UserCredentials& src) :
+			PlayFabBaseModel(),
+			Username(src.Username),
+			Password(src.Password)
+			{}
+			
+		UserCredentials(const rapidjson::Value& obj) : UserCredentials()
+        {
+            readFromValue(obj);
+        }
+		
+		~UserCredentials();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ResetUsersRequest : public PlayFabBaseModel
+    {
+		
+		std::list<UserCredentials> Users;
+	
+        ResetUsersRequest() :
+			PlayFabBaseModel(),
+			Users()
+			{}
+		
+		ResetUsersRequest(const ResetUsersRequest& src) :
+			PlayFabBaseModel(),
+			Users(src.Users)
+			{}
+			
+		ResetUsersRequest(const rapidjson::Value& obj) : ResetUsersRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~ResetUsersRequest();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

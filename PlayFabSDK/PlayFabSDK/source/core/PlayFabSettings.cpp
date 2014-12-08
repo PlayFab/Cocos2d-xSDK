@@ -11,6 +11,7 @@ namespace PlayFab
 	std::string PlayFabSettings::serverURL;
     std::string PlayFabSettings::developmentEnvironmentURL = ".playfabsandbox.com";
     std::string PlayFabSettings::productionEnvironmentURL = ".playfabapi.com";
+	std::string PlayFabSettings::logicServerURL = "";
     std::string PlayFabSettings::titleId;
     ErrorCallback PlayFabSettings::globalErrorHandler = NULL;
 	std::string PlayFabSettings::developerSecretKey;

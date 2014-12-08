@@ -9,6 +9,58 @@ namespace ServerModels
 {
 
 	
+	struct AddSharedGroupMembersRequest : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+		std::list<std::string> PlayFabIds;
+	
+        AddSharedGroupMembersRequest() :
+			PlayFabBaseModel(),
+			SharedGroupId(),
+			PlayFabIds()
+			{}
+		
+		AddSharedGroupMembersRequest(const AddSharedGroupMembersRequest& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId),
+			PlayFabIds(src.PlayFabIds)
+			{}
+			
+		AddSharedGroupMembersRequest(const rapidjson::Value& obj) : AddSharedGroupMembersRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~AddSharedGroupMembersRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct AddSharedGroupMembersResult : public PlayFabBaseModel
+    {
+		
+	
+        AddSharedGroupMembersResult() :
+			PlayFabBaseModel()
+			{}
+		
+		AddSharedGroupMembersResult(const AddSharedGroupMembersResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		AddSharedGroupMembersResult(const rapidjson::Value& obj) : AddSharedGroupMembersResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~AddSharedGroupMembersResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct AddUserVirtualCurrencyRequest : public PlayFabBaseModel
     {
 		
@@ -36,6 +88,314 @@ namespace ServerModels
         }
 		
 		~AddUserVirtualCurrencyRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct AuthenticateSessionTicketRequest : public PlayFabBaseModel
+    {
+		
+		std::string SessionTicket;
+	
+        AuthenticateSessionTicketRequest() :
+			PlayFabBaseModel(),
+			SessionTicket()
+			{}
+		
+		AuthenticateSessionTicketRequest(const AuthenticateSessionTicketRequest& src) :
+			PlayFabBaseModel(),
+			SessionTicket(src.SessionTicket)
+			{}
+			
+		AuthenticateSessionTicketRequest(const rapidjson::Value& obj) : AuthenticateSessionTicketRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~AuthenticateSessionTicketRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	enum UserOrigination
+	{
+		UserOriginationOrganic,
+		UserOriginationSteam,
+		UserOriginationGoogle,
+		UserOriginationAmazon,
+		UserOriginationFacebook,
+		UserOriginationKongregate,
+		UserOriginationGamersFirst,
+		UserOriginationUnknown,
+		UserOriginationIOS,
+		UserOriginationLoadTest,
+		UserOriginationAndroid,
+		UserOriginationPSN,
+		UserOriginationGameCenter
+	};
+	
+	void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
+	UserOrigination readUserOriginationFromValue(const rapidjson::Value& obj);
+	
+	
+	struct UserTitleInfo : public PlayFabBaseModel
+    {
+		
+		std::string DisplayName;
+		Boxed<UserOrigination> Origination;
+		time_t Created;
+		OptionalTime LastLogin;
+		OptionalTime FirstLogin;
+		OptionalBool isBanned;
+	
+        UserTitleInfo() :
+			PlayFabBaseModel(),
+			DisplayName(),
+			Origination(),
+			Created(0),
+			LastLogin(),
+			FirstLogin(),
+			isBanned()
+			{}
+		
+		UserTitleInfo(const UserTitleInfo& src) :
+			PlayFabBaseModel(),
+			DisplayName(src.DisplayName),
+			Origination(src.Origination),
+			Created(src.Created),
+			LastLogin(src.LastLogin),
+			FirstLogin(src.FirstLogin),
+			isBanned(src.isBanned)
+			{}
+			
+		UserTitleInfo(const rapidjson::Value& obj) : UserTitleInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~UserTitleInfo();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UserPrivateAccountInfo : public PlayFabBaseModel
+    {
+		
+		std::string Email;
+	
+        UserPrivateAccountInfo() :
+			PlayFabBaseModel(),
+			Email()
+			{}
+		
+		UserPrivateAccountInfo(const UserPrivateAccountInfo& src) :
+			PlayFabBaseModel(),
+			Email(src.Email)
+			{}
+			
+		UserPrivateAccountInfo(const rapidjson::Value& obj) : UserPrivateAccountInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~UserPrivateAccountInfo();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UserFacebookInfo : public PlayFabBaseModel
+    {
+		
+		std::string FacebookId;
+		std::string FacebookUsername;
+		std::string FacebookDisplayname;
+	
+        UserFacebookInfo() :
+			PlayFabBaseModel(),
+			FacebookId(),
+			FacebookUsername(),
+			FacebookDisplayname()
+			{}
+		
+		UserFacebookInfo(const UserFacebookInfo& src) :
+			PlayFabBaseModel(),
+			FacebookId(src.FacebookId),
+			FacebookUsername(src.FacebookUsername),
+			FacebookDisplayname(src.FacebookDisplayname)
+			{}
+			
+		UserFacebookInfo(const rapidjson::Value& obj) : UserFacebookInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~UserFacebookInfo();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	enum Currency
+	{
+		CurrencyUSD,
+		CurrencyGBP,
+		CurrencyEUR,
+		CurrencyRUB,
+		CurrencyBRL,
+		CurrencyCIS,
+		CurrencyCAD
+	};
+	
+	void writeCurrencyEnumJSON(Currency enumVal, PFStringJsonWriter& writer);
+	Currency readCurrencyFromValue(const rapidjson::Value& obj);
+	
+	
+	enum TitleActivationStatus
+	{
+		TitleActivationStatusNone,
+		TitleActivationStatusActivatedTitleKey,
+		TitleActivationStatusPendingSteam,
+		TitleActivationStatusActivatedSteam,
+		TitleActivationStatusRevokedSteam
+	};
+	
+	void writeTitleActivationStatusEnumJSON(TitleActivationStatus enumVal, PFStringJsonWriter& writer);
+	TitleActivationStatus readTitleActivationStatusFromValue(const rapidjson::Value& obj);
+	
+	
+	struct UserSteamInfo : public PlayFabBaseModel
+    {
+		
+		std::string SteamId;
+		std::string SteamCountry;
+		Boxed<Currency> SteamCurrency;
+		Boxed<TitleActivationStatus> SteamActivationStatus;
+	
+        UserSteamInfo() :
+			PlayFabBaseModel(),
+			SteamId(),
+			SteamCountry(),
+			SteamCurrency(),
+			SteamActivationStatus()
+			{}
+		
+		UserSteamInfo(const UserSteamInfo& src) :
+			PlayFabBaseModel(),
+			SteamId(src.SteamId),
+			SteamCountry(src.SteamCountry),
+			SteamCurrency(src.SteamCurrency),
+			SteamActivationStatus(src.SteamActivationStatus)
+			{}
+			
+		UserSteamInfo(const rapidjson::Value& obj) : UserSteamInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~UserSteamInfo();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UserGameCenterInfo : public PlayFabBaseModel
+    {
+		
+		std::string GameCenterId;
+	
+        UserGameCenterInfo() :
+			PlayFabBaseModel(),
+			GameCenterId()
+			{}
+		
+		UserGameCenterInfo(const UserGameCenterInfo& src) :
+			PlayFabBaseModel(),
+			GameCenterId(src.GameCenterId)
+			{}
+			
+		UserGameCenterInfo(const rapidjson::Value& obj) : UserGameCenterInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~UserGameCenterInfo();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UserAccountInfo : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		time_t Created;
+		std::string Username;
+		UserTitleInfo* TitleInfo;
+		UserPrivateAccountInfo* PrivateInfo;
+		UserFacebookInfo* FacebookInfo;
+		UserSteamInfo* SteamInfo;
+		UserGameCenterInfo* GameCenterInfo;
+	
+        UserAccountInfo() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			Created(0),
+			Username(),
+			TitleInfo(NULL),
+			PrivateInfo(NULL),
+			FacebookInfo(NULL),
+			SteamInfo(NULL),
+			GameCenterInfo(NULL)
+			{}
+		
+		UserAccountInfo(const UserAccountInfo& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			Created(src.Created),
+			Username(src.Username),
+			TitleInfo(src.TitleInfo ? new UserTitleInfo(*src.TitleInfo) : NULL),
+			PrivateInfo(src.PrivateInfo ? new UserPrivateAccountInfo(*src.PrivateInfo) : NULL),
+			FacebookInfo(src.FacebookInfo ? new UserFacebookInfo(*src.FacebookInfo) : NULL),
+			SteamInfo(src.SteamInfo ? new UserSteamInfo(*src.SteamInfo) : NULL),
+			GameCenterInfo(src.GameCenterInfo ? new UserGameCenterInfo(*src.GameCenterInfo) : NULL)
+			{}
+			
+		UserAccountInfo(const rapidjson::Value& obj) : UserAccountInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~UserAccountInfo();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct AuthenticateSessionTicketResult : public PlayFabBaseModel
+    {
+		
+		UserAccountInfo* UserInfo;
+	
+        AuthenticateSessionTicketResult() :
+			PlayFabBaseModel(),
+			UserInfo(NULL)
+			{}
+		
+		AuthenticateSessionTicketResult(const AuthenticateSessionTicketResult& src) :
+			PlayFabBaseModel(),
+			UserInfo(src.UserInfo ? new UserAccountInfo(*src.UserInfo) : NULL)
+			{}
+			
+		AuthenticateSessionTicketResult(const rapidjson::Value& obj) : AuthenticateSessionTicketResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~AuthenticateSessionTicketResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -234,11 +594,6 @@ namespace ServerModels
 		std::string Description;
 		std::map<std::string, Uint32> VirtualCurrencyPrices;
 		std::map<std::string, Uint32> RealCurrencyPrices;
-		OptionalTime ReleaseDate;
-		OptionalTime ExpirationDate;
-		OptionalBool IsFree;
-		OptionalBool NotForSale;
-		OptionalBool NotForTrade;
 		std::list<std::string> Tags;
 		std::string CustomData;
 		std::list<std::string> GrantedIfPlayerHas;
@@ -255,11 +610,6 @@ namespace ServerModels
 			Description(),
 			VirtualCurrencyPrices(),
 			RealCurrencyPrices(),
-			ReleaseDate(),
-			ExpirationDate(),
-			IsFree(),
-			NotForSale(),
-			NotForTrade(),
 			Tags(),
 			CustomData(),
 			GrantedIfPlayerHas(),
@@ -277,11 +627,6 @@ namespace ServerModels
 			Description(src.Description),
 			VirtualCurrencyPrices(src.VirtualCurrencyPrices),
 			RealCurrencyPrices(src.RealCurrencyPrices),
-			ReleaseDate(src.ReleaseDate),
-			ExpirationDate(src.ExpirationDate),
-			IsFree(src.IsFree),
-			NotForSale(src.NotForSale),
-			NotForTrade(src.NotForTrade),
 			Tags(src.Tags),
 			CustomData(src.CustomData),
 			GrantedIfPlayerHas(src.GrantedIfPlayerHas),
@@ -301,20 +646,106 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	enum Currency
-	{
-		CurrencyUSD,
-		CurrencyGBP,
-		CurrencyEUR,
-		CurrencyRUB,
-		CurrencyBRL,
-		CurrencyCIS,
-		CurrencyCAD
-	};
+	struct CreateSharedGroupRequest : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
 	
-	void writeCurrencyEnumJSON(Currency enumVal, PFStringJsonWriter& writer);
-	Currency readCurrencyFromValue(const rapidjson::Value& obj);
+        CreateSharedGroupRequest() :
+			PlayFabBaseModel(),
+			SharedGroupId()
+			{}
+		
+		CreateSharedGroupRequest(const CreateSharedGroupRequest& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId)
+			{}
+			
+		CreateSharedGroupRequest(const rapidjson::Value& obj) : CreateSharedGroupRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~CreateSharedGroupRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
 	
+	struct CreateSharedGroupResult : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+	
+        CreateSharedGroupResult() :
+			PlayFabBaseModel(),
+			SharedGroupId()
+			{}
+		
+		CreateSharedGroupResult(const CreateSharedGroupResult& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId)
+			{}
+			
+		CreateSharedGroupResult(const rapidjson::Value& obj) : CreateSharedGroupResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~CreateSharedGroupResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct DeleteSharedGroupRequest : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+	
+        DeleteSharedGroupRequest() :
+			PlayFabBaseModel(),
+			SharedGroupId()
+			{}
+		
+		DeleteSharedGroupRequest(const DeleteSharedGroupRequest& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId)
+			{}
+			
+		DeleteSharedGroupRequest(const rapidjson::Value& obj) : DeleteSharedGroupRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~DeleteSharedGroupRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct EmptyResult : public PlayFabBaseModel
+    {
+		
+	
+        EmptyResult() :
+			PlayFabBaseModel()
+			{}
+		
+		EmptyResult(const EmptyResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		EmptyResult(const rapidjson::Value& obj) : EmptyResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~EmptyResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
 	
 	struct GetCatalogItemsRequest : public PlayFabBaseModel
     {
@@ -519,6 +950,112 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GetSharedGroupDataRequest : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+		std::list<std::string> Keys;
+		OptionalBool GetMembers;
+	
+        GetSharedGroupDataRequest() :
+			PlayFabBaseModel(),
+			SharedGroupId(),
+			Keys(),
+			GetMembers()
+			{}
+		
+		GetSharedGroupDataRequest(const GetSharedGroupDataRequest& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId),
+			Keys(src.Keys),
+			GetMembers(src.GetMembers)
+			{}
+			
+		GetSharedGroupDataRequest(const rapidjson::Value& obj) : GetSharedGroupDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetSharedGroupDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	enum UserDataPermission
+	{
+		UserDataPermissionPrivate,
+		UserDataPermissionPublic
+	};
+	
+	void writeUserDataPermissionEnumJSON(UserDataPermission enumVal, PFStringJsonWriter& writer);
+	UserDataPermission readUserDataPermissionFromValue(const rapidjson::Value& obj);
+	
+	
+	struct SharedGroupDataRecord : public PlayFabBaseModel
+    {
+		
+		std::string Value;
+		std::string LastUpdatedBy;
+		time_t LastUpdated;
+		Boxed<UserDataPermission> Permission;
+	
+        SharedGroupDataRecord() :
+			PlayFabBaseModel(),
+			Value(),
+			LastUpdatedBy(),
+			LastUpdated(0),
+			Permission()
+			{}
+		
+		SharedGroupDataRecord(const SharedGroupDataRecord& src) :
+			PlayFabBaseModel(),
+			Value(src.Value),
+			LastUpdatedBy(src.LastUpdatedBy),
+			LastUpdated(src.LastUpdated),
+			Permission(src.Permission)
+			{}
+			
+		SharedGroupDataRecord(const rapidjson::Value& obj) : SharedGroupDataRecord()
+        {
+            readFromValue(obj);
+        }
+		
+		~SharedGroupDataRecord();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetSharedGroupDataResult : public PlayFabBaseModel
+    {
+		
+		std::map<std::string, SharedGroupDataRecord> Data;
+		std::list<std::string> Members;
+	
+        GetSharedGroupDataResult() :
+			PlayFabBaseModel(),
+			Data(),
+			Members()
+			{}
+		
+		GetSharedGroupDataResult(const GetSharedGroupDataResult& src) :
+			PlayFabBaseModel(),
+			Data(src.Data),
+			Members(src.Members)
+			{}
+			
+		GetSharedGroupDataResult(const rapidjson::Value& obj) : GetSharedGroupDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetSharedGroupDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetTitleDataRequest : public PlayFabBaseModel
     {
 		
@@ -597,247 +1134,6 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	enum UserOrigination
-	{
-		UserOriginationOrganic,
-		UserOriginationSteam,
-		UserOriginationGoogle,
-		UserOriginationAmazon,
-		UserOriginationFacebook,
-		UserOriginationKongregate,
-		UserOriginationGamersFirst,
-		UserOriginationUnknown,
-		UserOriginationIOS,
-		UserOriginationLoadTest,
-		UserOriginationAndroid,
-		UserOriginationPSN,
-		UserOriginationGameCenter
-	};
-	
-	void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
-	UserOrigination readUserOriginationFromValue(const rapidjson::Value& obj);
-	
-	
-	struct UserTitleInfo : public PlayFabBaseModel
-    {
-		
-		std::string DisplayName;
-		Boxed<UserOrigination> Origination;
-		time_t Created;
-		OptionalTime LastLogin;
-		OptionalTime FirstLogin;
-		OptionalBool isBanned;
-	
-        UserTitleInfo() :
-			PlayFabBaseModel(),
-			DisplayName(),
-			Origination(),
-			Created(0),
-			LastLogin(),
-			FirstLogin(),
-			isBanned()
-			{}
-		
-		UserTitleInfo(const UserTitleInfo& src) :
-			PlayFabBaseModel(),
-			DisplayName(src.DisplayName),
-			Origination(src.Origination),
-			Created(src.Created),
-			LastLogin(src.LastLogin),
-			FirstLogin(src.FirstLogin),
-			isBanned(src.isBanned)
-			{}
-			
-		UserTitleInfo(const rapidjson::Value& obj) : UserTitleInfo()
-        {
-            readFromValue(obj);
-        }
-		
-		~UserTitleInfo();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct UserPrivateAccountInfo : public PlayFabBaseModel
-    {
-		
-		std::string Email;
-	
-        UserPrivateAccountInfo() :
-			PlayFabBaseModel(),
-			Email()
-			{}
-		
-		UserPrivateAccountInfo(const UserPrivateAccountInfo& src) :
-			PlayFabBaseModel(),
-			Email(src.Email)
-			{}
-			
-		UserPrivateAccountInfo(const rapidjson::Value& obj) : UserPrivateAccountInfo()
-        {
-            readFromValue(obj);
-        }
-		
-		~UserPrivateAccountInfo();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct UserFacebookInfo : public PlayFabBaseModel
-    {
-		
-		std::string FacebookId;
-		std::string FacebookUsername;
-		std::string FacebookDisplayname;
-	
-        UserFacebookInfo() :
-			PlayFabBaseModel(),
-			FacebookId(),
-			FacebookUsername(),
-			FacebookDisplayname()
-			{}
-		
-		UserFacebookInfo(const UserFacebookInfo& src) :
-			PlayFabBaseModel(),
-			FacebookId(src.FacebookId),
-			FacebookUsername(src.FacebookUsername),
-			FacebookDisplayname(src.FacebookDisplayname)
-			{}
-			
-		UserFacebookInfo(const rapidjson::Value& obj) : UserFacebookInfo()
-        {
-            readFromValue(obj);
-        }
-		
-		~UserFacebookInfo();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	enum TitleActivationStatus
-	{
-		TitleActivationStatusNone,
-		TitleActivationStatusActivatedTitleKey,
-		TitleActivationStatusPendingSteam,
-		TitleActivationStatusActivatedSteam,
-		TitleActivationStatusRevokedSteam
-	};
-	
-	void writeTitleActivationStatusEnumJSON(TitleActivationStatus enumVal, PFStringJsonWriter& writer);
-	TitleActivationStatus readTitleActivationStatusFromValue(const rapidjson::Value& obj);
-	
-	
-	struct UserSteamInfo : public PlayFabBaseModel
-    {
-		
-		std::string SteamId;
-		std::string SteamCountry;
-		Boxed<Currency> SteamCurrency;
-		Boxed<TitleActivationStatus> SteamActivationStatus;
-	
-        UserSteamInfo() :
-			PlayFabBaseModel(),
-			SteamId(),
-			SteamCountry(),
-			SteamCurrency(),
-			SteamActivationStatus()
-			{}
-		
-		UserSteamInfo(const UserSteamInfo& src) :
-			PlayFabBaseModel(),
-			SteamId(src.SteamId),
-			SteamCountry(src.SteamCountry),
-			SteamCurrency(src.SteamCurrency),
-			SteamActivationStatus(src.SteamActivationStatus)
-			{}
-			
-		UserSteamInfo(const rapidjson::Value& obj) : UserSteamInfo()
-        {
-            readFromValue(obj);
-        }
-		
-		~UserSteamInfo();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct UserGameCenterInfo : public PlayFabBaseModel
-    {
-		
-		std::string GameCenterId;
-	
-        UserGameCenterInfo() :
-			PlayFabBaseModel(),
-			GameCenterId()
-			{}
-		
-		UserGameCenterInfo(const UserGameCenterInfo& src) :
-			PlayFabBaseModel(),
-			GameCenterId(src.GameCenterId)
-			{}
-			
-		UserGameCenterInfo(const rapidjson::Value& obj) : UserGameCenterInfo()
-        {
-            readFromValue(obj);
-        }
-		
-		~UserGameCenterInfo();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct UserAccountInfo : public PlayFabBaseModel
-    {
-		
-		std::string PlayFabId;
-		time_t Created;
-		std::string Username;
-		UserTitleInfo* TitleInfo;
-		UserPrivateAccountInfo* PrivateInfo;
-		UserFacebookInfo* FacebookInfo;
-		UserSteamInfo* SteamInfo;
-		UserGameCenterInfo* GameCenterInfo;
-	
-        UserAccountInfo() :
-			PlayFabBaseModel(),
-			PlayFabId(),
-			Created(0),
-			Username(),
-			TitleInfo(NULL),
-			PrivateInfo(NULL),
-			FacebookInfo(NULL),
-			SteamInfo(NULL),
-			GameCenterInfo(NULL)
-			{}
-		
-		UserAccountInfo(const UserAccountInfo& src) :
-			PlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			Created(src.Created),
-			Username(src.Username),
-			TitleInfo(src.TitleInfo ? new UserTitleInfo(*src.TitleInfo) : NULL),
-			PrivateInfo(src.PrivateInfo ? new UserPrivateAccountInfo(*src.PrivateInfo) : NULL),
-			FacebookInfo(src.FacebookInfo ? new UserFacebookInfo(*src.FacebookInfo) : NULL),
-			SteamInfo(src.SteamInfo ? new UserSteamInfo(*src.SteamInfo) : NULL),
-			GameCenterInfo(src.GameCenterInfo ? new UserGameCenterInfo(*src.GameCenterInfo) : NULL)
-			{}
-			
-		UserAccountInfo(const rapidjson::Value& obj) : UserAccountInfo()
-        {
-            readFromValue(obj);
-        }
-		
-		~UserAccountInfo();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
 	struct GetUserAccountInfoResult : public PlayFabBaseModel
     {
 		
@@ -892,16 +1188,6 @@ namespace ServerModels
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
     };
-	
-	enum UserDataPermission
-	{
-		UserDataPermissionPrivate,
-		UserDataPermissionPublic
-	};
-	
-	void writeUserDataPermissionEnumJSON(UserDataPermission enumVal, PFStringJsonWriter& writer);
-	UserDataPermission readUserDataPermissionFromValue(const rapidjson::Value& obj);
-	
 	
 	struct UserDataRecord : public PlayFabBaseModel
     {
@@ -1124,6 +1410,105 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GrantItemsToUserRequest : public PlayFabBaseModel
+    {
+		
+		std::string CatalogVersion;
+		std::string PlayFabId;
+		std::string Annotation;
+		std::list<std::string> ItemIds;
+	
+        GrantItemsToUserRequest() :
+			PlayFabBaseModel(),
+			CatalogVersion(),
+			PlayFabId(),
+			Annotation(),
+			ItemIds()
+			{}
+		
+		GrantItemsToUserRequest(const GrantItemsToUserRequest& src) :
+			PlayFabBaseModel(),
+			CatalogVersion(src.CatalogVersion),
+			PlayFabId(src.PlayFabId),
+			Annotation(src.Annotation),
+			ItemIds(src.ItemIds)
+			{}
+			
+		GrantItemsToUserRequest(const rapidjson::Value& obj) : GrantItemsToUserRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GrantItemsToUserRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ItemGrantResult : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string ItemId;
+		std::string ItemInstanceId;
+		std::string Annotation;
+		bool Result;
+	
+        ItemGrantResult() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			ItemId(),
+			ItemInstanceId(),
+			Annotation(),
+			Result(false)
+			{}
+		
+		ItemGrantResult(const ItemGrantResult& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			ItemId(src.ItemId),
+			ItemInstanceId(src.ItemInstanceId),
+			Annotation(src.Annotation),
+			Result(src.Result)
+			{}
+			
+		ItemGrantResult(const rapidjson::Value& obj) : ItemGrantResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~ItemGrantResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GrantItemsToUserResult : public PlayFabBaseModel
+    {
+		
+		std::list<ItemGrantResult> ItemGrantResults;
+	
+        GrantItemsToUserResult() :
+			PlayFabBaseModel(),
+			ItemGrantResults()
+			{}
+		
+		GrantItemsToUserResult(const GrantItemsToUserResult& src) :
+			PlayFabBaseModel(),
+			ItemGrantResults(src.ItemGrantResults)
+			{}
+			
+		GrantItemsToUserResult(const rapidjson::Value& obj) : GrantItemsToUserResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GrantItemsToUserResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct ItemGrant : public PlayFabBaseModel
     {
 		
@@ -1185,44 +1570,6 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	struct ItemGrantResult : public PlayFabBaseModel
-    {
-		
-		std::string PlayFabId;
-		std::string ItemId;
-		std::string ItemInstanceId;
-		std::string Annotation;
-		bool Result;
-	
-        ItemGrantResult() :
-			PlayFabBaseModel(),
-			PlayFabId(),
-			ItemId(),
-			ItemInstanceId(),
-			Annotation(),
-			Result(false)
-			{}
-		
-		ItemGrantResult(const ItemGrantResult& src) :
-			PlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			ItemId(src.ItemId),
-			ItemInstanceId(src.ItemInstanceId),
-			Annotation(src.Annotation),
-			Result(src.Result)
-			{}
-			
-		ItemGrantResult(const rapidjson::Value& obj) : ItemGrantResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~ItemGrantResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
 	struct GrantItemsToUsersResult : public PlayFabBaseModel
     {
 		
@@ -1244,6 +1591,67 @@ namespace ServerModels
         }
 		
 		~GrantItemsToUsersResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ModifyItemUsesRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string ItemInstanceId;
+		Int32 UsesToAdd;
+	
+        ModifyItemUsesRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			ItemInstanceId(),
+			UsesToAdd(0)
+			{}
+		
+		ModifyItemUsesRequest(const ModifyItemUsesRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			ItemInstanceId(src.ItemInstanceId),
+			UsesToAdd(src.UsesToAdd)
+			{}
+			
+		ModifyItemUsesRequest(const rapidjson::Value& obj) : ModifyItemUsesRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~ModifyItemUsesRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ModifyItemUsesResult : public PlayFabBaseModel
+    {
+		
+		std::string ItemInstanceId;
+		Int32 RemainingUses;
+	
+        ModifyItemUsesResult() :
+			PlayFabBaseModel(),
+			ItemInstanceId(),
+			RemainingUses(0)
+			{}
+		
+		ModifyItemUsesResult(const ModifyItemUsesResult& src) :
+			PlayFabBaseModel(),
+			ItemInstanceId(src.ItemInstanceId),
+			RemainingUses(src.RemainingUses)
+			{}
+			
+		ModifyItemUsesResult(const rapidjson::Value& obj) : ModifyItemUsesResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~ModifyItemUsesResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1281,18 +1689,18 @@ namespace ServerModels
 	struct NotifyMatchmakerPlayerLeftRequest : public PlayFabBaseModel
     {
 		
-		std::string ServerId;
+		std::string LobbyId;
 		std::string PlayFabId;
 	
         NotifyMatchmakerPlayerLeftRequest() :
 			PlayFabBaseModel(),
-			ServerId(),
+			LobbyId(),
 			PlayFabId()
 			{}
 		
 		NotifyMatchmakerPlayerLeftRequest(const NotifyMatchmakerPlayerLeftRequest& src) :
 			PlayFabBaseModel(),
-			ServerId(src.ServerId),
+			LobbyId(src.LobbyId),
 			PlayFabId(src.PlayFabId)
 			{}
 			
@@ -1351,20 +1759,20 @@ namespace ServerModels
 		
 		std::string Ticket;
 		std::string IP;
-		std::string ServerId;
+		std::string LobbyId;
 	
         RedeemMatchmakerTicketRequest() :
 			PlayFabBaseModel(),
 			Ticket(),
 			IP(),
-			ServerId()
+			LobbyId()
 			{}
 		
 		RedeemMatchmakerTicketRequest(const RedeemMatchmakerTicketRequest& src) :
 			PlayFabBaseModel(),
 			Ticket(src.Ticket),
 			IP(src.IP),
-			ServerId(src.ServerId)
+			LobbyId(src.LobbyId)
 			{}
 			
 		RedeemMatchmakerTicketRequest(const rapidjson::Value& obj) : RedeemMatchmakerTicketRequest()
@@ -1405,6 +1813,58 @@ namespace ServerModels
         }
 		
 		~RedeemMatchmakerTicketResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct RemoveSharedGroupMembersRequest : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+		std::list<std::string> PlayFabIds;
+	
+        RemoveSharedGroupMembersRequest() :
+			PlayFabBaseModel(),
+			SharedGroupId(),
+			PlayFabIds()
+			{}
+		
+		RemoveSharedGroupMembersRequest(const RemoveSharedGroupMembersRequest& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId),
+			PlayFabIds(src.PlayFabIds)
+			{}
+			
+		RemoveSharedGroupMembersRequest(const rapidjson::Value& obj) : RemoveSharedGroupMembersRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~RemoveSharedGroupMembersRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct RemoveSharedGroupMembersResult : public PlayFabBaseModel
+    {
+		
+	
+        RemoveSharedGroupMembersResult() :
+			PlayFabBaseModel()
+			{}
+		
+		RemoveSharedGroupMembersResult(const RemoveSharedGroupMembersResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		RemoveSharedGroupMembersResult(const rapidjson::Value& obj) : RemoveSharedGroupMembersResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~RemoveSharedGroupMembersResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1541,6 +2001,61 @@ namespace ServerModels
         }
 		
 		~SubtractUserVirtualCurrencyRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateSharedGroupDataRequest : public PlayFabBaseModel
+    {
+		
+		std::string SharedGroupId;
+		std::map<std::string, std::string> Data;
+		Boxed<UserDataPermission> Permission;
+	
+        UpdateSharedGroupDataRequest() :
+			PlayFabBaseModel(),
+			SharedGroupId(),
+			Data(),
+			Permission()
+			{}
+		
+		UpdateSharedGroupDataRequest(const UpdateSharedGroupDataRequest& src) :
+			PlayFabBaseModel(),
+			SharedGroupId(src.SharedGroupId),
+			Data(src.Data),
+			Permission(src.Permission)
+			{}
+			
+		UpdateSharedGroupDataRequest(const rapidjson::Value& obj) : UpdateSharedGroupDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateSharedGroupDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateSharedGroupDataResult : public PlayFabBaseModel
+    {
+		
+	
+        UpdateSharedGroupDataResult() :
+			PlayFabBaseModel()
+			{}
+		
+		UpdateSharedGroupDataResult(const UpdateSharedGroupDataResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UpdateSharedGroupDataResult(const rapidjson::Value& obj) : UpdateSharedGroupDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateSharedGroupDataResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
