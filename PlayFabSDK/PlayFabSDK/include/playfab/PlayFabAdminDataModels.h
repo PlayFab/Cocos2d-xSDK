@@ -565,6 +565,67 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GetDataReportRequest : public PlayFabBaseModel
+    {
+		
+		std::string ReportName;
+		Int32 Year;
+		Int32 Month;
+		Int32 Day;
+	
+        GetDataReportRequest() :
+			PlayFabBaseModel(),
+			ReportName(),
+			Year(0),
+			Month(0),
+			Day(0)
+			{}
+		
+		GetDataReportRequest(const GetDataReportRequest& src) :
+			PlayFabBaseModel(),
+			ReportName(src.ReportName),
+			Year(src.Year),
+			Month(src.Month),
+			Day(src.Day)
+			{}
+			
+		GetDataReportRequest(const rapidjson::Value& obj) : GetDataReportRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetDataReportRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetDataReportResult : public PlayFabBaseModel
+    {
+		
+		std::string DownloadUrl;
+	
+        GetDataReportResult() :
+			PlayFabBaseModel(),
+			DownloadUrl()
+			{}
+		
+		GetDataReportResult(const GetDataReportResult& src) :
+			PlayFabBaseModel(),
+			DownloadUrl(src.DownloadUrl)
+			{}
+			
+		GetDataReportResult(const rapidjson::Value& obj) : GetDataReportResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetDataReportResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetMatchmakerGameInfoRequest : public PlayFabBaseModel
     {
 		

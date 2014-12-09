@@ -1065,8 +1065,6 @@ void CurrentGamesRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(BuildVersion.length() > 0) { writer.String("BuildVersion"); writer.String(BuildVersion.c_str()); }
 	
-	if(IncludeState.length() > 0) { writer.String("IncludeState"); writer.String(IncludeState.c_str()); }
-	
 	
 	writer.EndObject();
 }
@@ -1079,9 +1077,6 @@ bool CurrentGamesRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* BuildVersion_member = obj.FindMember("BuildVersion");
 	if (BuildVersion_member != NULL) BuildVersion = BuildVersion_member->value.GetString();
-	
-	const Value::Member* IncludeState_member = obj.FindMember("IncludeState");
-	if (IncludeState_member != NULL) IncludeState = IncludeState_member->value.GetString();
 	
 	
 	return true;
@@ -1892,6 +1887,65 @@ bool GetCatalogItemsResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+GetCloudScriptUrlRequest::~GetCloudScriptUrlRequest()
+{
+	
+}
+
+void GetCloudScriptUrlRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Version.notNull()) { writer.String("Version"); writer.Int(Version); }
+	
+	if(Testing.notNull()) { writer.String("Testing"); writer.Bool(Testing); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetCloudScriptUrlRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Version_member = obj.FindMember("Version");
+	if (Version_member != NULL) Version = Version_member->value.GetInt();
+	
+	const Value::Member* Testing_member = obj.FindMember("Testing");
+	if (Testing_member != NULL) Testing = Testing_member->value.GetBool();
+	
+	
+	return true;
+}
+
+
+GetCloudScriptUrlResult::~GetCloudScriptUrlResult()
+{
+	
+}
+
+void GetCloudScriptUrlResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Url.length() > 0) { writer.String("Url"); writer.String(Url.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetCloudScriptUrlResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Url_member = obj.FindMember("Url");
+	if (Url_member != NULL) Url = Url_member->value.GetString();
+	
+	
+	return true;
+}
+
+
 GetFriendLeaderboardRequest::~GetFriendLeaderboardRequest()
 {
 	
@@ -2178,65 +2232,6 @@ bool GetLeaderboardResult::readFromValue(const rapidjson::Value& obj)
 			Leaderboard.push_back(PlayerLeaderboardEntry(memberList[i]));
 		}
 	}
-	
-	
-	return true;
-}
-
-
-GetLogicServerUrlRequest::~GetLogicServerUrlRequest()
-{
-	
-}
-
-void GetLogicServerUrlRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	if(Version.notNull()) { writer.String("Version"); writer.Int(Version); }
-	
-	if(Testing.notNull()) { writer.String("Testing"); writer.Bool(Testing); }
-	
-	
-	writer.EndObject();
-}
-
-bool GetLogicServerUrlRequest::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* Version_member = obj.FindMember("Version");
-	if (Version_member != NULL) Version = Version_member->value.GetInt();
-	
-	const Value::Member* Testing_member = obj.FindMember("Testing");
-	if (Testing_member != NULL) Testing = Testing_member->value.GetBool();
-	
-	
-	return true;
-}
-
-
-GetLogicServerUrlResult::~GetLogicServerUrlResult()
-{
-	
-}
-
-void GetLogicServerUrlResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	if(Url.length() > 0) { writer.String("Url"); writer.String(Url.c_str()); }
-	
-	
-	writer.EndObject();
-}
-
-bool GetLogicServerUrlResult::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* Url_member = obj.FindMember("Url");
-	if (Url_member != NULL) Url = Url_member->value.GetString();
 	
 	
 	return true;
@@ -3980,8 +3975,6 @@ void MatchmakeResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(ServerPort.notNull()) { writer.String("ServerPort"); writer.Int(ServerPort); }
 	
-	if(WebSocketPort.notNull()) { writer.String("WebSocketPort"); writer.Int(WebSocketPort); }
-	
 	if(Ticket.length() > 0) { writer.String("Ticket"); writer.String(Ticket.c_str()); }
 	
 	if(Expires.length() > 0) { writer.String("Expires"); writer.String(Expires.c_str()); }
@@ -3989,15 +3982,6 @@ void MatchmakeResult::writeJSON(PFStringJsonWriter& writer)
 	if(PollWaitTimeMS.notNull()) { writer.String("PollWaitTimeMS"); writer.Int(PollWaitTimeMS); }
 	
 	if(Status.notNull()) { writer.String("Status"); writeMatchmakeStatusEnumJSON(Status, writer); }
-	
-	if(!Queue.empty()) {
-	writer.String("Queue");
-	writer.StartArray();
-	for (std::list<std::string>::iterator iter = Queue.begin(); iter != Queue.end(); iter++) {
-		writer.String(iter->c_str());
-	}
-	writer.EndArray();
-	 }
 	
 	
 	writer.EndObject();
@@ -4015,9 +3999,6 @@ bool MatchmakeResult::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* ServerPort_member = obj.FindMember("ServerPort");
 	if (ServerPort_member != NULL) ServerPort = ServerPort_member->value.GetInt();
 	
-	const Value::Member* WebSocketPort_member = obj.FindMember("WebSocketPort");
-	if (WebSocketPort_member != NULL) WebSocketPort = WebSocketPort_member->value.GetInt();
-	
 	const Value::Member* Ticket_member = obj.FindMember("Ticket");
 	if (Ticket_member != NULL) Ticket = Ticket_member->value.GetString();
 	
@@ -4029,14 +4010,6 @@ bool MatchmakeResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Status_member = obj.FindMember("Status");
 	if (Status_member != NULL) Status = readMatchmakeStatusFromValue(Status_member->value);
-	
-	const Value::Member* Queue_member = obj.FindMember("Queue");
-	if (Queue_member != NULL) {
-		const rapidjson::Value& memberList = Queue_member->value;
-		for (SizeType i = 0; i < memberList.Size(); i++) {
-			Queue.push_back(memberList[i].GetString());
-		}
-	}
 	
 	
 	return true;
@@ -4719,6 +4692,80 @@ bool RemoveSharedGroupMembersResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+RunCloudScriptRequest::~RunCloudScriptRequest()
+{
+	
+}
+
+void RunCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("ActionId"); writer.String(ActionId.c_str());
+	
+	if(Params.notNull()) { writer.String("Params"); Params.writeJSON(writer); }
+	
+	if(ParamsEncoded.length() > 0) { writer.String("ParamsEncoded"); writer.String(ParamsEncoded.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool RunCloudScriptRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* ActionId_member = obj.FindMember("ActionId");
+	if (ActionId_member != NULL) ActionId = ActionId_member->value.GetString();
+	
+	const Value::Member* Params_member = obj.FindMember("Params");
+	if (Params_member != NULL) Params = MultitypeVar(Params_member->value);
+	
+	const Value::Member* ParamsEncoded_member = obj.FindMember("ParamsEncoded");
+	if (ParamsEncoded_member != NULL) ParamsEncoded = ParamsEncoded_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+RunCloudScriptResult::~RunCloudScriptResult()
+{
+	
+}
+
+void RunCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Results.notNull()) { writer.String("Results"); Results.writeJSON(writer); }
+	
+	if(ResultsEncoded.length() > 0) { writer.String("ResultsEncoded"); writer.String(ResultsEncoded.c_str()); }
+	
+	if(ActionLog.length() > 0) { writer.String("ActionLog"); writer.String(ActionLog.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool RunCloudScriptResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Results_member = obj.FindMember("Results");
+	if (Results_member != NULL) Results = MultitypeVar(Results_member->value);
+	
+	const Value::Member* ResultsEncoded_member = obj.FindMember("ResultsEncoded");
+	if (ResultsEncoded_member != NULL) ResultsEncoded = ResultsEncoded_member->value.GetString();
+	
+	const Value::Member* ActionLog_member = obj.FindMember("ActionLog");
+	if (ActionLog_member != NULL) ActionLog = ActionLog_member->value.GetString();
+	
+	
+	return true;
+}
+
+
 SendAccountRecoveryEmailRequest::~SendAccountRecoveryEmailRequest()
 {
 	
@@ -4767,80 +4814,6 @@ void SendAccountRecoveryEmailResult::writeJSON(PFStringJsonWriter& writer)
 
 bool SendAccountRecoveryEmailResult::readFromValue(const rapidjson::Value& obj)
 {
-	
-	
-	return true;
-}
-
-
-ServerActionRequest::~ServerActionRequest()
-{
-	
-}
-
-void ServerActionRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	writer.String("ActionId"); writer.String(ActionId.c_str());
-	
-	if(Params.notNull()) { writer.String("Params"); Params.writeJSON(writer); }
-	
-	if(ParamsEncoded.length() > 0) { writer.String("ParamsEncoded"); writer.String(ParamsEncoded.c_str()); }
-	
-	
-	writer.EndObject();
-}
-
-bool ServerActionRequest::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* ActionId_member = obj.FindMember("ActionId");
-	if (ActionId_member != NULL) ActionId = ActionId_member->value.GetString();
-	
-	const Value::Member* Params_member = obj.FindMember("Params");
-	if (Params_member != NULL) Params = MultitypeVar(Params_member->value);
-	
-	const Value::Member* ParamsEncoded_member = obj.FindMember("ParamsEncoded");
-	if (ParamsEncoded_member != NULL) ParamsEncoded = ParamsEncoded_member->value.GetString();
-	
-	
-	return true;
-}
-
-
-ServerActionResult::~ServerActionResult()
-{
-	
-}
-
-void ServerActionResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	if(Results.notNull()) { writer.String("Results"); Results.writeJSON(writer); }
-	
-	if(ResultsEncoded.length() > 0) { writer.String("ResultsEncoded"); writer.String(ResultsEncoded.c_str()); }
-	
-	if(ActionLog.length() > 0) { writer.String("ActionLog"); writer.String(ActionLog.c_str()); }
-	
-	
-	writer.EndObject();
-}
-
-bool ServerActionResult::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* Results_member = obj.FindMember("Results");
-	if (Results_member != NULL) Results = MultitypeVar(Results_member->value);
-	
-	const Value::Member* ResultsEncoded_member = obj.FindMember("ResultsEncoded");
-	if (ResultsEncoded_member != NULL) ResultsEncoded = ResultsEncoded_member->value.GetString();
-	
-	const Value::Member* ActionLog_member = obj.FindMember("ActionLog");
-	if (ActionLog_member != NULL) ActionLog = ActionLog_member->value.GetString();
 	
 	
 	return true;

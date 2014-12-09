@@ -117,18 +117,18 @@ namespace MatchmakerModels
 	struct PlayerJoinedRequest : public PlayFabBaseModel
     {
 		
-		std::string ServerId;
+		std::string LobbyId;
 		std::string PlayFabId;
 	
         PlayerJoinedRequest() :
 			PlayFabBaseModel(),
-			ServerId(),
+			LobbyId(),
 			PlayFabId()
 			{}
 		
 		PlayerJoinedRequest(const PlayerJoinedRequest& src) :
 			PlayFabBaseModel(),
-			ServerId(src.ServerId),
+			LobbyId(src.LobbyId),
 			PlayFabId(src.PlayFabId)
 			{}
 			
@@ -169,18 +169,18 @@ namespace MatchmakerModels
 	struct PlayerLeftRequest : public PlayFabBaseModel
     {
 		
-		std::string ServerId;
+		std::string LobbyId;
 		std::string PlayFabId;
 	
         PlayerLeftRequest() :
 			PlayFabBaseModel(),
-			ServerId(),
+			LobbyId(),
 			PlayFabId()
 			{}
 		
 		PlayerLeftRequest(const PlayerLeftRequest& src) :
 			PlayFabBaseModel(),
-			ServerId(src.ServerId),
+			LobbyId(src.LobbyId),
 			PlayFabId(src.PlayFabId)
 			{}
 			

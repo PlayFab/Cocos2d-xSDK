@@ -143,7 +143,7 @@ void PlayerJoinedRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	writer.String("ServerId"); writer.String(ServerId.c_str());
+	writer.String("LobbyId"); writer.String(LobbyId.c_str());
 	
 	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
 	
@@ -154,8 +154,8 @@ void PlayerJoinedRequest::writeJSON(PFStringJsonWriter& writer)
 bool PlayerJoinedRequest::readFromValue(const rapidjson::Value& obj)
 {
 	
-	const Value::Member* ServerId_member = obj.FindMember("ServerId");
-	if (ServerId_member != NULL) ServerId = ServerId_member->value.GetString();
+	const Value::Member* LobbyId_member = obj.FindMember("LobbyId");
+	if (LobbyId_member != NULL) LobbyId = LobbyId_member->value.GetString();
 	
 	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
 	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
@@ -197,7 +197,7 @@ void PlayerLeftRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	writer.String("ServerId"); writer.String(ServerId.c_str());
+	writer.String("LobbyId"); writer.String(LobbyId.c_str());
 	
 	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
 	
@@ -208,8 +208,8 @@ void PlayerLeftRequest::writeJSON(PFStringJsonWriter& writer)
 bool PlayerLeftRequest::readFromValue(const rapidjson::Value& obj)
 {
 	
-	const Value::Member* ServerId_member = obj.FindMember("ServerId");
-	if (ServerId_member != NULL) ServerId = ServerId_member->value.GetString();
+	const Value::Member* LobbyId_member = obj.FindMember("LobbyId");
+	if (LobbyId_member != NULL) LobbyId = LobbyId_member->value.GetString();
 	
 	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
 	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();

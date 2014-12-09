@@ -719,20 +719,17 @@ namespace ClientModels
 		
 		Boxed<Region> Region;
 		std::string BuildVersion;
-		std::string IncludeState;
 	
         CurrentGamesRequest() :
 			PlayFabBaseModel(),
 			Region(),
-			BuildVersion(),
-			IncludeState()
+			BuildVersion()
 			{}
 		
 		CurrentGamesRequest(const CurrentGamesRequest& src) :
 			PlayFabBaseModel(),
 			Region(src.Region),
-			BuildVersion(src.BuildVersion),
-			IncludeState(src.IncludeState)
+			BuildVersion(src.BuildVersion)
 			{}
 			
 		CurrentGamesRequest(const rapidjson::Value& obj) : CurrentGamesRequest()
@@ -1336,6 +1333,61 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GetCloudScriptUrlRequest : public PlayFabBaseModel
+    {
+		
+		OptionalInt32 Version;
+		OptionalBool Testing;
+	
+        GetCloudScriptUrlRequest() :
+			PlayFabBaseModel(),
+			Version(),
+			Testing()
+			{}
+		
+		GetCloudScriptUrlRequest(const GetCloudScriptUrlRequest& src) :
+			PlayFabBaseModel(),
+			Version(src.Version),
+			Testing(src.Testing)
+			{}
+			
+		GetCloudScriptUrlRequest(const rapidjson::Value& obj) : GetCloudScriptUrlRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCloudScriptUrlRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCloudScriptUrlResult : public PlayFabBaseModel
+    {
+		
+		std::string Url;
+	
+        GetCloudScriptUrlResult() :
+			PlayFabBaseModel(),
+			Url()
+			{}
+		
+		GetCloudScriptUrlResult(const GetCloudScriptUrlResult& src) :
+			PlayFabBaseModel(),
+			Url(src.Url)
+			{}
+			
+		GetCloudScriptUrlResult(const rapidjson::Value& obj) : GetCloudScriptUrlResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCloudScriptUrlResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetFriendLeaderboardRequest : public PlayFabBaseModel
     {
 		
@@ -1563,61 +1615,6 @@ namespace ClientModels
         }
 		
 		~GetLeaderboardResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct GetLogicServerUrlRequest : public PlayFabBaseModel
-    {
-		
-		OptionalInt32 Version;
-		OptionalBool Testing;
-	
-        GetLogicServerUrlRequest() :
-			PlayFabBaseModel(),
-			Version(),
-			Testing()
-			{}
-		
-		GetLogicServerUrlRequest(const GetLogicServerUrlRequest& src) :
-			PlayFabBaseModel(),
-			Version(src.Version),
-			Testing(src.Testing)
-			{}
-			
-		GetLogicServerUrlRequest(const rapidjson::Value& obj) : GetLogicServerUrlRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~GetLogicServerUrlRequest();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct GetLogicServerUrlResult : public PlayFabBaseModel
-    {
-		
-		std::string Url;
-	
-        GetLogicServerUrlResult() :
-			PlayFabBaseModel(),
-			Url()
-			{}
-		
-		GetLogicServerUrlResult(const GetLogicServerUrlResult& src) :
-			PlayFabBaseModel(),
-			Url(src.Url)
-			{}
-			
-		GetLogicServerUrlResult(const rapidjson::Value& obj) : GetLogicServerUrlResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~GetLogicServerUrlResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -2890,24 +2887,20 @@ namespace ClientModels
 		std::string LobbyID;
 		std::string ServerHostname;
 		OptionalInt32 ServerPort;
-		OptionalInt32 WebSocketPort;
 		std::string Ticket;
 		std::string Expires;
 		OptionalInt32 PollWaitTimeMS;
 		Boxed<MatchmakeStatus> Status;
-		std::list<std::string> Queue;
 	
         MatchmakeResult() :
 			PlayFabBaseModel(),
 			LobbyID(),
 			ServerHostname(),
 			ServerPort(),
-			WebSocketPort(),
 			Ticket(),
 			Expires(),
 			PollWaitTimeMS(),
-			Status(),
-			Queue()
+			Status()
 			{}
 		
 		MatchmakeResult(const MatchmakeResult& src) :
@@ -2915,12 +2908,10 @@ namespace ClientModels
 			LobbyID(src.LobbyID),
 			ServerHostname(src.ServerHostname),
 			ServerPort(src.ServerPort),
-			WebSocketPort(src.WebSocketPort),
 			Ticket(src.Ticket),
 			Expires(src.Expires),
 			PollWaitTimeMS(src.PollWaitTimeMS),
-			Status(src.Status),
-			Queue(src.Queue)
+			Status(src.Status)
 			{}
 			
 		MatchmakeResult(const rapidjson::Value& obj) : MatchmakeResult()
@@ -3448,6 +3439,70 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct RunCloudScriptRequest : public PlayFabBaseModel
+    {
+		
+		std::string ActionId;
+		MultitypeVar Params;
+		std::string ParamsEncoded;
+	
+        RunCloudScriptRequest() :
+			PlayFabBaseModel(),
+			ActionId(),
+			Params(),
+			ParamsEncoded()
+			{}
+		
+		RunCloudScriptRequest(const RunCloudScriptRequest& src) :
+			PlayFabBaseModel(),
+			ActionId(src.ActionId),
+			Params(src.Params),
+			ParamsEncoded(src.ParamsEncoded)
+			{}
+			
+		RunCloudScriptRequest(const rapidjson::Value& obj) : RunCloudScriptRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~RunCloudScriptRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct RunCloudScriptResult : public PlayFabBaseModel
+    {
+		
+		MultitypeVar Results;
+		std::string ResultsEncoded;
+		std::string ActionLog;
+	
+        RunCloudScriptResult() :
+			PlayFabBaseModel(),
+			Results(),
+			ResultsEncoded(),
+			ActionLog()
+			{}
+		
+		RunCloudScriptResult(const RunCloudScriptResult& src) :
+			PlayFabBaseModel(),
+			Results(src.Results),
+			ResultsEncoded(src.ResultsEncoded),
+			ActionLog(src.ActionLog)
+			{}
+			
+		RunCloudScriptResult(const rapidjson::Value& obj) : RunCloudScriptResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~RunCloudScriptResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct SendAccountRecoveryEmailRequest : public PlayFabBaseModel
     {
 		
@@ -3495,70 +3550,6 @@ namespace ClientModels
         }
 		
 		~SendAccountRecoveryEmailResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct ServerActionRequest : public PlayFabBaseModel
-    {
-		
-		std::string ActionId;
-		MultitypeVar Params;
-		std::string ParamsEncoded;
-	
-        ServerActionRequest() :
-			PlayFabBaseModel(),
-			ActionId(),
-			Params(),
-			ParamsEncoded()
-			{}
-		
-		ServerActionRequest(const ServerActionRequest& src) :
-			PlayFabBaseModel(),
-			ActionId(src.ActionId),
-			Params(src.Params),
-			ParamsEncoded(src.ParamsEncoded)
-			{}
-			
-		ServerActionRequest(const rapidjson::Value& obj) : ServerActionRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~ServerActionRequest();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct ServerActionResult : public PlayFabBaseModel
-    {
-		
-		MultitypeVar Results;
-		std::string ResultsEncoded;
-		std::string ActionLog;
-	
-        ServerActionResult() :
-			PlayFabBaseModel(),
-			Results(),
-			ResultsEncoded(),
-			ActionLog()
-			{}
-		
-		ServerActionResult(const ServerActionResult& src) :
-			PlayFabBaseModel(),
-			Results(src.Results),
-			ResultsEncoded(src.ResultsEncoded),
-			ActionLog(src.ActionLog)
-			{}
-			
-		ServerActionResult(const rapidjson::Value& obj) : ServerActionResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~ServerActionResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

@@ -3610,15 +3610,15 @@ void PlayFabClientAPI::OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest
 }
 
 
-void PlayFabClientAPI::GetLogicServerUrl(
-    GetLogicServerUrlRequest& request,
-    GetLogicServerUrlCallback callback,
+void PlayFabClientAPI::GetCloudScriptUrl(
+    GetCloudScriptUrlRequest& request,
+    GetCloudScriptUrlCallback callback,
     ErrorCallback errorCallback,
     void* userData
     )
 {
     
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetLogicServerUrl"));
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetCloudScriptUrl"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
 	httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
@@ -3630,12 +3630,12 @@ void PlayFabClientAPI::GetLogicServerUrl(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetLogicServerUrlResult, this);
+    mHttpRequester->AddRequest(httpRequest, OnGetCloudScriptUrlResult, this);
 }
 
-void PlayFabClientAPI::OnGetLogicServerUrlResult(int httpStatus, HttpRequest* request, void* userData)
+void PlayFabClientAPI::OnGetCloudScriptUrlResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    GetLogicServerUrlResult outResult;
+    GetCloudScriptUrlResult outResult;
     PlayFabError errorResult;
 
     bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
@@ -3647,7 +3647,7 @@ void PlayFabClientAPI::OnGetLogicServerUrlResult(int httpStatus, HttpRequest* re
 
         if (request->GetResultCallback() != NULL)
         {
-            GetLogicServerUrlCallback successCallback = (GetLogicServerUrlCallback)(request->GetResultCallback());
+            GetCloudScriptUrlCallback successCallback = (GetCloudScriptUrlCallback)(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -3668,15 +3668,15 @@ void PlayFabClientAPI::OnGetLogicServerUrlResult(int httpStatus, HttpRequest* re
 }
 
 
-void PlayFabClientAPI::ServerAction(
-    ServerActionRequest& request,
-    ServerActionCallback callback,
+void PlayFabClientAPI::RunCloudScript(
+    RunCloudScriptRequest& request,
+    RunCloudScriptCallback callback,
     ErrorCallback errorCallback,
     void* userData
     )
 {
     
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getLogicURL("/Client/ServerAction"));
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getLogicURL("/Client/RunCloudScript"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
 	httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
@@ -3688,12 +3688,12 @@ void PlayFabClientAPI::ServerAction(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnServerActionResult, this);
+    mHttpRequester->AddRequest(httpRequest, OnRunCloudScriptResult, this);
 }
 
-void PlayFabClientAPI::OnServerActionResult(int httpStatus, HttpRequest* request, void* userData)
+void PlayFabClientAPI::OnRunCloudScriptResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    ServerActionResult outResult;
+    RunCloudScriptResult outResult;
     PlayFabError errorResult;
 
     bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
@@ -3704,7 +3704,7 @@ void PlayFabClientAPI::OnServerActionResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != NULL)
         {
-            ServerActionCallback successCallback = (ServerActionCallback)(request->GetResultCallback());
+            RunCloudScriptCallback successCallback = (RunCloudScriptCallback)(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

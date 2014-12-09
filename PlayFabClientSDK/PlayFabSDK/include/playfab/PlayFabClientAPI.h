@@ -79,8 +79,8 @@ namespace PlayFab
 		typedef void(*GetSharedGroupDataCallback)(ClientModels::GetSharedGroupDataResult& result, void* userData);
 		typedef void(*RemoveSharedGroupMembersCallback)(ClientModels::RemoveSharedGroupMembersResult& result, void* userData);
 		typedef void(*UpdateSharedGroupDataCallback)(ClientModels::UpdateSharedGroupDataResult& result, void* userData);
-		typedef void(*GetLogicServerUrlCallback)(ClientModels::GetLogicServerUrlResult& result, void* userData);
-		typedef void(*ServerActionCallback)(ClientModels::ServerActionResult& result, void* userData);
+		typedef void(*GetCloudScriptUrlCallback)(ClientModels::GetCloudScriptUrlResult& result, void* userData);
+		typedef void(*RunCloudScriptCallback)(ClientModels::RunCloudScriptResult& result, void* userData);
 		
 	
         PlayFabClientAPI();
@@ -216,9 +216,9 @@ namespace PlayFab
 		
 		void UpdateSharedGroupData(ClientModels::UpdateSharedGroupDataRequest& request, UpdateSharedGroupDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
-		void GetLogicServerUrl(ClientModels::GetLogicServerUrlRequest& request, GetLogicServerUrlCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		void GetCloudScriptUrl(ClientModels::GetCloudScriptUrlRequest& request, GetCloudScriptUrlCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
-		void ServerAction(ClientModels::ServerActionRequest& request, ServerActionCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		void RunCloudScript(ClientModels::RunCloudScriptRequest& request, RunCloudScriptCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 
     private:
@@ -349,9 +349,9 @@ namespace PlayFab
 		
 		static void OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
-		static void OnGetLogicServerUrlResult(int httpStatus, HttpRequest* request, void* userData);
+		static void OnGetCloudScriptUrlResult(int httpStatus, HttpRequest* request, void* userData);
 		
-		static void OnServerActionResult(int httpStatus, HttpRequest* request, void* userData);
+		static void OnRunCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
 		
  
         bool mOwnsRequester;

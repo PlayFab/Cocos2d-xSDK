@@ -888,6 +888,75 @@ bool GetCatalogItemsResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+GetDataReportRequest::~GetDataReportRequest()
+{
+	
+}
+
+void GetDataReportRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("ReportName"); writer.String(ReportName.c_str());
+	
+	writer.String("Year"); writer.Int(Year);
+	
+	writer.String("Month"); writer.Int(Month);
+	
+	writer.String("Day"); writer.Int(Day);
+	
+	
+	writer.EndObject();
+}
+
+bool GetDataReportRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* ReportName_member = obj.FindMember("ReportName");
+	if (ReportName_member != NULL) ReportName = ReportName_member->value.GetString();
+	
+	const Value::Member* Year_member = obj.FindMember("Year");
+	if (Year_member != NULL) Year = Year_member->value.GetInt();
+	
+	const Value::Member* Month_member = obj.FindMember("Month");
+	if (Month_member != NULL) Month = Month_member->value.GetInt();
+	
+	const Value::Member* Day_member = obj.FindMember("Day");
+	if (Day_member != NULL) Day = Day_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
+GetDataReportResult::~GetDataReportResult()
+{
+	
+}
+
+void GetDataReportResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(DownloadUrl.length() > 0) { writer.String("DownloadUrl"); writer.String(DownloadUrl.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetDataReportResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* DownloadUrl_member = obj.FindMember("DownloadUrl");
+	if (DownloadUrl_member != NULL) DownloadUrl = DownloadUrl_member->value.GetString();
+	
+	
+	return true;
+}
+
+
 GetMatchmakerGameInfoRequest::~GetMatchmakerGameInfoRequest()
 {
 	
