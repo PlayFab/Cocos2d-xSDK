@@ -822,6 +822,29 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct EmptyResult : public PlayFabBaseModel
+    {
+		
+	
+        EmptyResult() :
+			PlayFabBaseModel()
+			{}
+		
+		EmptyResult(const EmptyResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		EmptyResult(const rapidjson::Value& obj) : EmptyResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~EmptyResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct FacebookPlayFabIdPair : public PlayFabBaseModel
     {
 		
@@ -1672,6 +1695,58 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GetPublisherDataRequest : public PlayFabBaseModel
+    {
+		
+		std::list<std::string> Keys;
+	
+        GetPublisherDataRequest() :
+			PlayFabBaseModel(),
+			Keys()
+			{}
+		
+		GetPublisherDataRequest(const GetPublisherDataRequest& src) :
+			PlayFabBaseModel(),
+			Keys(src.Keys)
+			{}
+			
+		GetPublisherDataRequest(const rapidjson::Value& obj) : GetPublisherDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetPublisherDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetPublisherDataResult : public PlayFabBaseModel
+    {
+		
+		std::map<std::string, std::string> Data;
+	
+        GetPublisherDataResult() :
+			PlayFabBaseModel(),
+			Data()
+			{}
+		
+		GetPublisherDataResult(const GetPublisherDataResult& src) :
+			PlayFabBaseModel(),
+			Data(src.Data)
+			{}
+			
+		GetPublisherDataResult(const rapidjson::Value& obj) : GetPublisherDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetPublisherDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetSharedGroupDataRequest : public PlayFabBaseModel
     {
 		
@@ -2365,6 +2440,61 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct LinkAndroidDeviceIDRequest : public PlayFabBaseModel
+    {
+		
+		std::string AndroidDeviceId;
+		std::string OS;
+		std::string AndroidDevice;
+	
+        LinkAndroidDeviceIDRequest() :
+			PlayFabBaseModel(),
+			AndroidDeviceId(),
+			OS(),
+			AndroidDevice()
+			{}
+		
+		LinkAndroidDeviceIDRequest(const LinkAndroidDeviceIDRequest& src) :
+			PlayFabBaseModel(),
+			AndroidDeviceId(src.AndroidDeviceId),
+			OS(src.OS),
+			AndroidDevice(src.AndroidDevice)
+			{}
+			
+		LinkAndroidDeviceIDRequest(const rapidjson::Value& obj) : LinkAndroidDeviceIDRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~LinkAndroidDeviceIDRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct LinkAndroidDeviceIDResult : public PlayFabBaseModel
+    {
+		
+	
+        LinkAndroidDeviceIDResult() :
+			PlayFabBaseModel()
+			{}
+		
+		LinkAndroidDeviceIDResult(const LinkAndroidDeviceIDResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		LinkAndroidDeviceIDResult(const rapidjson::Value& obj) : LinkAndroidDeviceIDResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~LinkAndroidDeviceIDResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct LinkFacebookAccountRequest : public PlayFabBaseModel
     {
 		
@@ -2458,6 +2588,61 @@ namespace ClientModels
         }
 		
 		~LinkGameCenterAccountResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct LinkIOSDeviceIDRequest : public PlayFabBaseModel
+    {
+		
+		std::string DeviceId;
+		std::string OS;
+		std::string DeviceModel;
+	
+        LinkIOSDeviceIDRequest() :
+			PlayFabBaseModel(),
+			DeviceId(),
+			OS(),
+			DeviceModel()
+			{}
+		
+		LinkIOSDeviceIDRequest(const LinkIOSDeviceIDRequest& src) :
+			PlayFabBaseModel(),
+			DeviceId(src.DeviceId),
+			OS(src.OS),
+			DeviceModel(src.DeviceModel)
+			{}
+			
+		LinkIOSDeviceIDRequest(const rapidjson::Value& obj) : LinkIOSDeviceIDRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~LinkIOSDeviceIDRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct LinkIOSDeviceIDResult : public PlayFabBaseModel
+    {
+		
+	
+        LinkIOSDeviceIDResult() :
+			PlayFabBaseModel()
+			{}
+		
+		LinkIOSDeviceIDResult(const LinkIOSDeviceIDResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		LinkIOSDeviceIDResult(const rapidjson::Value& obj) : LinkIOSDeviceIDResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~LinkIOSDeviceIDResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -3213,25 +3398,51 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct RefreshPSNAuthTokenRequest : public PlayFabBaseModel
+    {
+		
+		std::string AuthCode;
+	
+        RefreshPSNAuthTokenRequest() :
+			PlayFabBaseModel(),
+			AuthCode()
+			{}
+		
+		RefreshPSNAuthTokenRequest(const RefreshPSNAuthTokenRequest& src) :
+			PlayFabBaseModel(),
+			AuthCode(src.AuthCode)
+			{}
+			
+		RefreshPSNAuthTokenRequest(const rapidjson::Value& obj) : RefreshPSNAuthTokenRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~RefreshPSNAuthTokenRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct RegisterForIOSPushNotificationRequest : public PlayFabBaseModel
     {
 		
 		std::string DeviceToken;
 		OptionalBool SendPushNotificationConfirmation;
-		std::string ConfirmationMessege;
+		std::string ConfirmationMessage;
 	
         RegisterForIOSPushNotificationRequest() :
 			PlayFabBaseModel(),
 			DeviceToken(),
 			SendPushNotificationConfirmation(),
-			ConfirmationMessege()
+			ConfirmationMessage()
 			{}
 		
 		RegisterForIOSPushNotificationRequest(const RegisterForIOSPushNotificationRequest& src) :
 			PlayFabBaseModel(),
 			DeviceToken(src.DeviceToken),
 			SendPushNotificationConfirmation(src.SendPushNotificationConfirmation),
-			ConfirmationMessege(src.ConfirmationMessege)
+			ConfirmationMessage(src.ConfirmationMessage)
 			{}
 			
 		RegisterForIOSPushNotificationRequest(const rapidjson::Value& obj) : RegisterForIOSPushNotificationRequest()
@@ -3439,6 +3650,116 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct ReportPlayerClientRequest : public PlayFabBaseModel
+    {
+		
+		std::string ReporteeId;
+		std::string TitleId;
+		std::string Comment;
+	
+        ReportPlayerClientRequest() :
+			PlayFabBaseModel(),
+			ReporteeId(),
+			TitleId(),
+			Comment()
+			{}
+		
+		ReportPlayerClientRequest(const ReportPlayerClientRequest& src) :
+			PlayFabBaseModel(),
+			ReporteeId(src.ReporteeId),
+			TitleId(src.TitleId),
+			Comment(src.Comment)
+			{}
+			
+		ReportPlayerClientRequest(const rapidjson::Value& obj) : ReportPlayerClientRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~ReportPlayerClientRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ReportPlayerClientResult : public PlayFabBaseModel
+    {
+		
+		bool Updated;
+		Int32 SubmissionsRemaining;
+	
+        ReportPlayerClientResult() :
+			PlayFabBaseModel(),
+			Updated(false),
+			SubmissionsRemaining(0)
+			{}
+		
+		ReportPlayerClientResult(const ReportPlayerClientResult& src) :
+			PlayFabBaseModel(),
+			Updated(src.Updated),
+			SubmissionsRemaining(src.SubmissionsRemaining)
+			{}
+			
+		ReportPlayerClientResult(const rapidjson::Value& obj) : ReportPlayerClientResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~ReportPlayerClientResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct RestoreIOSPurchasesRequest : public PlayFabBaseModel
+    {
+		
+		std::string ReceiptData;
+	
+        RestoreIOSPurchasesRequest() :
+			PlayFabBaseModel(),
+			ReceiptData()
+			{}
+		
+		RestoreIOSPurchasesRequest(const RestoreIOSPurchasesRequest& src) :
+			PlayFabBaseModel(),
+			ReceiptData(src.ReceiptData)
+			{}
+			
+		RestoreIOSPurchasesRequest(const rapidjson::Value& obj) : RestoreIOSPurchasesRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~RestoreIOSPurchasesRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct RestoreIOSPurchasesResult : public PlayFabBaseModel
+    {
+		
+	
+        RestoreIOSPurchasesResult() :
+			PlayFabBaseModel()
+			{}
+		
+		RestoreIOSPurchasesResult(const RestoreIOSPurchasesResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		RestoreIOSPurchasesResult(const rapidjson::Value& obj) : RestoreIOSPurchasesResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~RestoreIOSPurchasesResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct RunCloudScriptRequest : public PlayFabBaseModel
     {
 		
@@ -3474,22 +3795,34 @@ namespace ClientModels
 	struct RunCloudScriptResult : public PlayFabBaseModel
     {
 		
+		std::string ActionId;
+		Int32 Version;
+		Int32 Revision;
 		MultitypeVar Results;
 		std::string ResultsEncoded;
 		std::string ActionLog;
+		double ExecutionTime;
 	
         RunCloudScriptResult() :
 			PlayFabBaseModel(),
+			ActionId(),
+			Version(0),
+			Revision(0),
 			Results(),
 			ResultsEncoded(),
-			ActionLog()
+			ActionLog(),
+			ExecutionTime(0)
 			{}
 		
 		RunCloudScriptResult(const RunCloudScriptResult& src) :
 			PlayFabBaseModel(),
+			ActionId(src.ActionId),
+			Version(src.Version),
+			Revision(src.Revision),
 			Results(src.Results),
 			ResultsEncoded(src.ResultsEncoded),
-			ActionLog(src.ActionLog)
+			ActionLog(src.ActionLog),
+			ExecutionTime(src.ExecutionTime)
 			{}
 			
 		RunCloudScriptResult(const rapidjson::Value& obj) : RunCloudScriptResult()
@@ -3782,6 +4115,52 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct UnlinkAndroidDeviceIDRequest : public PlayFabBaseModel
+    {
+		
+	
+        UnlinkAndroidDeviceIDRequest() :
+			PlayFabBaseModel()
+			{}
+		
+		UnlinkAndroidDeviceIDRequest(const UnlinkAndroidDeviceIDRequest& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UnlinkAndroidDeviceIDRequest(const rapidjson::Value& obj) : UnlinkAndroidDeviceIDRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UnlinkAndroidDeviceIDRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UnlinkAndroidDeviceIDResult : public PlayFabBaseModel
+    {
+		
+	
+        UnlinkAndroidDeviceIDResult() :
+			PlayFabBaseModel()
+			{}
+		
+		UnlinkAndroidDeviceIDResult(const UnlinkAndroidDeviceIDResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UnlinkAndroidDeviceIDResult(const rapidjson::Value& obj) : UnlinkAndroidDeviceIDResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~UnlinkAndroidDeviceIDResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct UnlinkFacebookAccountRequest : public PlayFabBaseModel
     {
 		
@@ -3869,6 +4248,52 @@ namespace ClientModels
         }
 		
 		~UnlinkGameCenterAccountResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UnlinkIOSDeviceIDRequest : public PlayFabBaseModel
+    {
+		
+	
+        UnlinkIOSDeviceIDRequest() :
+			PlayFabBaseModel()
+			{}
+		
+		UnlinkIOSDeviceIDRequest(const UnlinkIOSDeviceIDRequest& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UnlinkIOSDeviceIDRequest(const rapidjson::Value& obj) : UnlinkIOSDeviceIDRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UnlinkIOSDeviceIDRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UnlinkIOSDeviceIDResult : public PlayFabBaseModel
+    {
+		
+	
+        UnlinkIOSDeviceIDResult() :
+			PlayFabBaseModel()
+			{}
+		
+		UnlinkIOSDeviceIDResult(const UnlinkIOSDeviceIDResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UnlinkIOSDeviceIDResult(const rapidjson::Value& obj) : UnlinkIOSDeviceIDResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~UnlinkIOSDeviceIDResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

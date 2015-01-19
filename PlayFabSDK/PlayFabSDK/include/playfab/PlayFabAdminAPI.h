@@ -24,10 +24,16 @@ namespace PlayFab
 		typedef void(*GetDataReportCallback)(AdminModels::GetDataReportResult& result, void* userData);
 		typedef void(*GetUserDataCallback)(AdminModels::GetUserDataResult& result, void* userData);
 		typedef void(*GetUserInternalDataCallback)(AdminModels::GetUserDataResult& result, void* userData);
+		typedef void(*GetUserPublisherDataCallback)(AdminModels::GetUserDataResult& result, void* userData);
+		typedef void(*GetUserPublisherInternalDataCallback)(AdminModels::GetUserDataResult& result, void* userData);
+		typedef void(*GetUserPublisherReadOnlyDataCallback)(AdminModels::GetUserDataResult& result, void* userData);
 		typedef void(*GetUserReadOnlyDataCallback)(AdminModels::GetUserDataResult& result, void* userData);
 		typedef void(*ResetUserStatisticsCallback)(AdminModels::ResetUserStatisticsResult& result, void* userData);
 		typedef void(*UpdateUserDataCallback)(AdminModels::UpdateUserDataResult& result, void* userData);
 		typedef void(*UpdateUserInternalDataCallback)(AdminModels::UpdateUserDataResult& result, void* userData);
+		typedef void(*UpdateUserPublisherDataCallback)(AdminModels::UpdateUserDataResult& result, void* userData);
+		typedef void(*UpdateUserPublisherInternalDataCallback)(AdminModels::UpdateUserDataResult& result, void* userData);
+		typedef void(*UpdateUserPublisherReadOnlyDataCallback)(AdminModels::UpdateUserDataResult& result, void* userData);
 		typedef void(*UpdateUserReadOnlyDataCallback)(AdminModels::UpdateUserDataResult& result, void* userData);
 		typedef void(*AddNewsCallback)(AdminModels::AddNewsResult& result, void* userData);
 		typedef void(*AddVirtualCurrencyTypesCallback)(AdminModels::BlankResult& result, void* userData);
@@ -56,6 +62,8 @@ namespace PlayFab
 		typedef void(*ListServerBuildsCallback)(AdminModels::ListBuildsResult& result, void* userData);
 		typedef void(*ModifyServerBuildCallback)(AdminModels::ModifyServerBuildResult& result, void* userData);
 		typedef void(*RemoveServerBuildCallback)(AdminModels::RemoveServerBuildResult& result, void* userData);
+		typedef void(*GetPublisherDataCallback)(AdminModels::GetPublisherDataResult& result, void* userData);
+		typedef void(*SetPublisherDataCallback)(AdminModels::SetPublisherDataResult& result, void* userData);
 		
 	
         PlayFabAdminAPI();
@@ -81,6 +89,12 @@ namespace PlayFab
 		
 		void GetUserInternalData(AdminModels::GetUserDataRequest& request, GetUserInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void GetUserPublisherData(AdminModels::GetUserDataRequest& request, GetUserPublisherDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetUserPublisherInternalData(AdminModels::GetUserDataRequest& request, GetUserPublisherInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetUserPublisherReadOnlyData(AdminModels::GetUserDataRequest& request, GetUserPublisherReadOnlyDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void GetUserReadOnlyData(AdminModels::GetUserDataRequest& request, GetUserReadOnlyDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void ResetUserStatistics(AdminModels::ResetUserStatisticsRequest& request, ResetUserStatisticsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
@@ -88,6 +102,12 @@ namespace PlayFab
 		void UpdateUserData(AdminModels::UpdateUserDataRequest& request, UpdateUserDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateUserInternalData(AdminModels::UpdateUserInternalDataRequest& request, UpdateUserInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UpdateUserPublisherData(AdminModels::UpdateUserDataRequest& request, UpdateUserPublisherDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UpdateUserPublisherInternalData(AdminModels::UpdateUserInternalDataRequest& request, UpdateUserPublisherInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UpdateUserPublisherReadOnlyData(AdminModels::UpdateUserDataRequest& request, UpdateUserPublisherReadOnlyDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateUserReadOnlyData(AdminModels::UpdateUserDataRequest& request, UpdateUserReadOnlyDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -145,6 +165,10 @@ namespace PlayFab
 		
 		void RemoveServerBuild(AdminModels::RemoveServerBuildRequest& request, RemoveServerBuildCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void GetPublisherData(AdminModels::GetPublisherDataRequest& request, GetPublisherDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void SetPublisherData(AdminModels::SetPublisherDataRequest& request, SetPublisherDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 
     private:
 
@@ -164,6 +188,12 @@ namespace PlayFab
 		
 		static void OnGetUserInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnGetUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetUserPublisherInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetUserPublisherReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnGetUserReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnResetUserStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
@@ -171,6 +201,12 @@ namespace PlayFab
 		static void OnUpdateUserDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateUserInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUpdateUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUpdateUserPublisherInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUpdateUserPublisherReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateUserReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -227,6 +263,10 @@ namespace PlayFab
 		static void OnModifyServerBuildResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnRemoveServerBuildResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnSetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
  
         bool mOwnsRequester;

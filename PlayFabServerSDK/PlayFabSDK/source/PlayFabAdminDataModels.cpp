@@ -1134,6 +1134,82 @@ bool GetMatchmakerGameModesResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+GetPublisherDataRequest::~GetPublisherDataRequest()
+{
+	
+}
+
+void GetPublisherDataRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Keys");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	
+	
+	
+	writer.EndObject();
+}
+
+bool GetPublisherDataRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Keys_member = obj.FindMember("Keys");
+	if (Keys_member != NULL) {
+		const rapidjson::Value& memberList = Keys_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Keys.push_back(memberList[i].GetString());
+		}
+	}
+	
+	
+	return true;
+}
+
+
+GetPublisherDataResult::~GetPublisherDataResult()
+{
+	
+}
+
+void GetPublisherDataResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!Data.empty()) {
+	writer.String("Data");
+	writer.StartObject();
+	for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+	}
+	writer.EndObject();
+	}
+	
+	
+	writer.EndObject();
+}
+
+bool GetPublisherDataResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Data_member = obj.FindMember("Data");
+	if (Data_member != NULL) {
+		for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
+			Data[iter->name.GetString()] = iter->value.GetString();
+		}
+	}
+	
+	
+	return true;
+}
+
+
 GetRandomResultTablesRequest::~GetRandomResultTablesRequest()
 {
 	
@@ -3170,6 +3246,60 @@ bool SendAccountRecoveryEmailResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+SetPublisherDataRequest::~SetPublisherDataRequest()
+{
+	
+}
+
+void SetPublisherDataRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Key"); writer.String(Key.c_str());
+	
+	if(Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool SetPublisherDataRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Key_member = obj.FindMember("Key");
+	if (Key_member != NULL) Key = Key_member->value.GetString();
+	
+	const Value::Member* Value_member = obj.FindMember("Value");
+	if (Value_member != NULL) Value = Value_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+SetPublisherDataResult::~SetPublisherDataResult()
+{
+	
+}
+
+void SetPublisherDataResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool SetPublisherDataResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
 SetTitleDataRequest::~SetTitleDataRequest()
 {
 	
@@ -3182,7 +3312,7 @@ void SetTitleDataRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("Key"); writer.String(Key.c_str());
 	
-	writer.String("Value"); writer.String(Value.c_str());
+	if(Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
 	
 	
 	writer.EndObject();

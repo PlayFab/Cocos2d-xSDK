@@ -950,6 +950,58 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GetPublisherDataRequest : public PlayFabBaseModel
+    {
+		
+		std::list<std::string> Keys;
+	
+        GetPublisherDataRequest() :
+			PlayFabBaseModel(),
+			Keys()
+			{}
+		
+		GetPublisherDataRequest(const GetPublisherDataRequest& src) :
+			PlayFabBaseModel(),
+			Keys(src.Keys)
+			{}
+			
+		GetPublisherDataRequest(const rapidjson::Value& obj) : GetPublisherDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetPublisherDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetPublisherDataResult : public PlayFabBaseModel
+    {
+		
+		std::map<std::string, std::string> Data;
+	
+        GetPublisherDataResult() :
+			PlayFabBaseModel(),
+			Data()
+			{}
+		
+		GetPublisherDataResult(const GetPublisherDataResult& src) :
+			PlayFabBaseModel(),
+			Data(src.Data)
+			{}
+			
+		GetPublisherDataResult(const rapidjson::Value& obj) : GetPublisherDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetPublisherDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetSharedGroupDataRequest : public PlayFabBaseModel
     {
 		
@@ -1758,20 +1810,17 @@ namespace ServerModels
     {
 		
 		std::string Ticket;
-		std::string IP;
 		std::string LobbyId;
 	
         RedeemMatchmakerTicketRequest() :
 			PlayFabBaseModel(),
 			Ticket(),
-			IP(),
 			LobbyId()
 			{}
 		
 		RedeemMatchmakerTicketRequest(const RedeemMatchmakerTicketRequest& src) :
 			PlayFabBaseModel(),
 			Ticket(src.Ticket),
-			IP(src.IP),
 			LobbyId(src.LobbyId)
 			{}
 			
@@ -1870,6 +1919,70 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct ReportPlayerServerRequest : public PlayFabBaseModel
+    {
+		
+		std::string ReporterId;
+		std::string ReporteeId;
+		std::string TitleId;
+		std::string Comment;
+	
+        ReportPlayerServerRequest() :
+			PlayFabBaseModel(),
+			ReporterId(),
+			ReporteeId(),
+			TitleId(),
+			Comment()
+			{}
+		
+		ReportPlayerServerRequest(const ReportPlayerServerRequest& src) :
+			PlayFabBaseModel(),
+			ReporterId(src.ReporterId),
+			ReporteeId(src.ReporteeId),
+			TitleId(src.TitleId),
+			Comment(src.Comment)
+			{}
+			
+		ReportPlayerServerRequest(const rapidjson::Value& obj) : ReportPlayerServerRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~ReportPlayerServerRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ReportPlayerServerResult : public PlayFabBaseModel
+    {
+		
+		bool Updated;
+		Int32 SubmissionsRemaining;
+	
+        ReportPlayerServerResult() :
+			PlayFabBaseModel(),
+			Updated(false),
+			SubmissionsRemaining(0)
+			{}
+		
+		ReportPlayerServerResult(const ReportPlayerServerResult& src) :
+			PlayFabBaseModel(),
+			Updated(src.Updated),
+			SubmissionsRemaining(src.SubmissionsRemaining)
+			{}
+			
+		ReportPlayerServerResult(const rapidjson::Value& obj) : ReportPlayerServerResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~ReportPlayerServerResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct SendPushNotificationRequest : public PlayFabBaseModel
     {
 		
@@ -1917,6 +2030,58 @@ namespace ServerModels
         }
 		
 		~SendPushNotificationResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct SetPublisherDataRequest : public PlayFabBaseModel
+    {
+		
+		std::string Key;
+		std::string Value;
+	
+        SetPublisherDataRequest() :
+			PlayFabBaseModel(),
+			Key(),
+			Value()
+			{}
+		
+		SetPublisherDataRequest(const SetPublisherDataRequest& src) :
+			PlayFabBaseModel(),
+			Key(src.Key),
+			Value(src.Value)
+			{}
+			
+		SetPublisherDataRequest(const rapidjson::Value& obj) : SetPublisherDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~SetPublisherDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct SetPublisherDataResult : public PlayFabBaseModel
+    {
+		
+	
+        SetPublisherDataResult() :
+			PlayFabBaseModel()
+			{}
+		
+		SetPublisherDataResult(const SetPublisherDataResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		SetPublisherDataResult(const rapidjson::Value& obj) : SetPublisherDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~SetPublisherDataResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

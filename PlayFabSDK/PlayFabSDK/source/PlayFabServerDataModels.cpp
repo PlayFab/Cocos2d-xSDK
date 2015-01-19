@@ -1339,6 +1339,82 @@ bool GetLeaderboardResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+GetPublisherDataRequest::~GetPublisherDataRequest()
+{
+	
+}
+
+void GetPublisherDataRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Keys");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	
+	
+	
+	writer.EndObject();
+}
+
+bool GetPublisherDataRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Keys_member = obj.FindMember("Keys");
+	if (Keys_member != NULL) {
+		const rapidjson::Value& memberList = Keys_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Keys.push_back(memberList[i].GetString());
+		}
+	}
+	
+	
+	return true;
+}
+
+
+GetPublisherDataResult::~GetPublisherDataResult()
+{
+	
+}
+
+void GetPublisherDataResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!Data.empty()) {
+	writer.String("Data");
+	writer.StartObject();
+	for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+	}
+	writer.EndObject();
+	}
+	
+	
+	writer.EndObject();
+}
+
+bool GetPublisherDataResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Data_member = obj.FindMember("Data");
+	if (Data_member != NULL) {
+		for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
+			Data[iter->name.GetString()] = iter->value.GetString();
+		}
+	}
+	
+	
+	return true;
+}
+
+
 GetSharedGroupDataRequest::~GetSharedGroupDataRequest()
 {
 	
@@ -2444,8 +2520,6 @@ void RedeemMatchmakerTicketRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("Ticket"); writer.String(Ticket.c_str());
 	
-	if(IP.length() > 0) { writer.String("IP"); writer.String(IP.c_str()); }
-	
 	writer.String("LobbyId"); writer.String(LobbyId.c_str());
 	
 	
@@ -2457,9 +2531,6 @@ bool RedeemMatchmakerTicketRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Ticket_member = obj.FindMember("Ticket");
 	if (Ticket_member != NULL) Ticket = Ticket_member->value.GetString();
-	
-	const Value::Member* IP_member = obj.FindMember("IP");
-	if (IP_member != NULL) IP = IP_member->value.GetString();
 	
 	const Value::Member* LobbyId_member = obj.FindMember("LobbyId");
 	if (LobbyId_member != NULL) LobbyId = LobbyId_member->value.GetString();
@@ -2573,6 +2644,80 @@ bool RemoveSharedGroupMembersResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+ReportPlayerServerRequest::~ReportPlayerServerRequest()
+{
+	
+}
+
+void ReportPlayerServerRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("ReporterId"); writer.String(ReporterId.c_str());
+	
+	writer.String("ReporteeId"); writer.String(ReporteeId.c_str());
+	
+	if(TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
+	
+	if(Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool ReportPlayerServerRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* ReporterId_member = obj.FindMember("ReporterId");
+	if (ReporterId_member != NULL) ReporterId = ReporterId_member->value.GetString();
+	
+	const Value::Member* ReporteeId_member = obj.FindMember("ReporteeId");
+	if (ReporteeId_member != NULL) ReporteeId = ReporteeId_member->value.GetString();
+	
+	const Value::Member* TitleId_member = obj.FindMember("TitleId");
+	if (TitleId_member != NULL) TitleId = TitleId_member->value.GetString();
+	
+	const Value::Member* Comment_member = obj.FindMember("Comment");
+	if (Comment_member != NULL) Comment = Comment_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+ReportPlayerServerResult::~ReportPlayerServerResult()
+{
+	
+}
+
+void ReportPlayerServerResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Updated"); writer.Bool(Updated);
+	
+	writer.String("SubmissionsRemaining"); writer.Int(SubmissionsRemaining);
+	
+	
+	writer.EndObject();
+}
+
+bool ReportPlayerServerResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Updated_member = obj.FindMember("Updated");
+	if (Updated_member != NULL) Updated = Updated_member->value.GetBool();
+	
+	const Value::Member* SubmissionsRemaining_member = obj.FindMember("SubmissionsRemaining");
+	if (SubmissionsRemaining_member != NULL) SubmissionsRemaining = SubmissionsRemaining_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
 SendPushNotificationRequest::~SendPushNotificationRequest()
 {
 	
@@ -2627,6 +2772,60 @@ bool SendPushNotificationResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+SetPublisherDataRequest::~SetPublisherDataRequest()
+{
+	
+}
+
+void SetPublisherDataRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Key"); writer.String(Key.c_str());
+	
+	if(Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool SetPublisherDataRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Key_member = obj.FindMember("Key");
+	if (Key_member != NULL) Key = Key_member->value.GetString();
+	
+	const Value::Member* Value_member = obj.FindMember("Value");
+	if (Value_member != NULL) Value = Value_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+SetPublisherDataResult::~SetPublisherDataResult()
+{
+	
+}
+
+void SetPublisherDataResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool SetPublisherDataResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
 SetTitleDataRequest::~SetTitleDataRequest()
 {
 	
@@ -2639,7 +2838,7 @@ void SetTitleDataRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("Key"); writer.String(Key.c_str());
 	
-	writer.String("Value"); writer.String(Value.c_str());
+	if(Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
 	
 	
 	writer.EndObject();
