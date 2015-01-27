@@ -283,10 +283,6 @@ void UserFacebookInfo::writeJSON(PFStringJsonWriter& writer)
 	
 	if(FacebookId.length() > 0) { writer.String("FacebookId"); writer.String(FacebookId.c_str()); }
 	
-	if(FacebookUsername.length() > 0) { writer.String("FacebookUsername"); writer.String(FacebookUsername.c_str()); }
-	
-	if(FacebookDisplayname.length() > 0) { writer.String("FacebookDisplayname"); writer.String(FacebookDisplayname.c_str()); }
-	
 	
 	writer.EndObject();
 }
@@ -296,12 +292,6 @@ bool UserFacebookInfo::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* FacebookId_member = obj.FindMember("FacebookId");
 	if (FacebookId_member != NULL) FacebookId = FacebookId_member->value.GetString();
-	
-	const Value::Member* FacebookUsername_member = obj.FindMember("FacebookUsername");
-	if (FacebookUsername_member != NULL) FacebookUsername = FacebookUsername_member->value.GetString();
-	
-	const Value::Member* FacebookDisplayname_member = obj.FindMember("FacebookDisplayname");
-	if (FacebookDisplayname_member != NULL) FacebookDisplayname = FacebookDisplayname_member->value.GetString();
 	
 	
 	return true;
@@ -2732,6 +2722,8 @@ void SendPushNotificationRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("Message"); writer.String(Message.c_str());
 	
+	if(Subject.length() > 0) { writer.String("Subject"); writer.String(Subject.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -2744,6 +2736,9 @@ bool SendPushNotificationRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Message_member = obj.FindMember("Message");
 	if (Message_member != NULL) Message = Message_member->value.GetString();
+	
+	const Value::Member* Subject_member = obj.FindMember("Subject");
+	if (Subject_member != NULL) Subject = Subject_member->value.GetString();
 	
 	
 	return true;

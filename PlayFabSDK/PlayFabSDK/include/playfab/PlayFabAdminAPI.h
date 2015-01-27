@@ -64,6 +64,10 @@ namespace PlayFab
 		typedef void(*RemoveServerBuildCallback)(AdminModels::RemoveServerBuildResult& result, void* userData);
 		typedef void(*GetPublisherDataCallback)(AdminModels::GetPublisherDataResult& result, void* userData);
 		typedef void(*SetPublisherDataCallback)(AdminModels::SetPublisherDataResult& result, void* userData);
+		typedef void(*GetCloudScriptRevisionCallback)(AdminModels::GetCloudScriptRevisionResult& result, void* userData);
+		typedef void(*GetCloudScriptVersionsCallback)(AdminModels::GetCloudScriptVersionsResult& result, void* userData);
+		typedef void(*SetPublishedRevisionCallback)(AdminModels::SetPublishedRevisionResult& result, void* userData);
+		typedef void(*UpdateCloudScriptCallback)(AdminModels::UpdateCloudScriptResult& result, void* userData);
 		
 	
         PlayFabAdminAPI();
@@ -169,6 +173,14 @@ namespace PlayFab
 		
 		void SetPublisherData(AdminModels::SetPublisherDataRequest& request, SetPublisherDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void GetCloudScriptRevision(AdminModels::GetCloudScriptRevisionRequest& request, GetCloudScriptRevisionCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetCloudScriptVersions(GetCloudScriptVersionsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void SetPublishedRevision(AdminModels::SetPublishedRevisionRequest& request, SetPublishedRevisionCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UpdateCloudScript(AdminModels::UpdateCloudScriptRequest& request, UpdateCloudScriptCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 
     private:
 
@@ -267,6 +279,14 @@ namespace PlayFab
 		static void OnGetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnSetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCloudScriptRevisionResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCloudScriptVersionsResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnSetPublishedRevisionResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUpdateCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
 		
  
         bool mOwnsRequester;

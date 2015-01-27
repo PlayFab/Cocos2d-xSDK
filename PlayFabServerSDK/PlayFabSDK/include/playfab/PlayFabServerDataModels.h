@@ -211,21 +211,15 @@ namespace ServerModels
     {
 		
 		std::string FacebookId;
-		std::string FacebookUsername;
-		std::string FacebookDisplayname;
 	
         UserFacebookInfo() :
 			PlayFabBaseModel(),
-			FacebookId(),
-			FacebookUsername(),
-			FacebookDisplayname()
+			FacebookId()
 			{}
 		
 		UserFacebookInfo(const UserFacebookInfo& src) :
 			PlayFabBaseModel(),
-			FacebookId(src.FacebookId),
-			FacebookUsername(src.FacebookUsername),
-			FacebookDisplayname(src.FacebookDisplayname)
+			FacebookId(src.FacebookId)
 			{}
 			
 		UserFacebookInfo(const rapidjson::Value& obj) : UserFacebookInfo()
@@ -1988,17 +1982,20 @@ namespace ServerModels
 		
 		std::string Recipient;
 		std::string Message;
+		std::string Subject;
 	
         SendPushNotificationRequest() :
 			PlayFabBaseModel(),
 			Recipient(),
-			Message()
+			Message(),
+			Subject()
 			{}
 		
 		SendPushNotificationRequest(const SendPushNotificationRequest& src) :
 			PlayFabBaseModel(),
 			Recipient(src.Recipient),
-			Message(src.Message)
+			Message(src.Message),
+			Subject(src.Subject)
 			{}
 			
 		SendPushNotificationRequest(const rapidjson::Value& obj) : SendPushNotificationRequest()

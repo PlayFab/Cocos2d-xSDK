@@ -748,6 +748,75 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
 }
 
 
+CloudScriptFile::~CloudScriptFile()
+{
+	
+}
+
+void CloudScriptFile::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Filename"); writer.String(Filename.c_str());
+	
+	writer.String("FileContents"); writer.String(FileContents.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool CloudScriptFile::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Filename_member = obj.FindMember("Filename");
+	if (Filename_member != NULL) Filename = Filename_member->value.GetString();
+	
+	const Value::Member* FileContents_member = obj.FindMember("FileContents");
+	if (FileContents_member != NULL) FileContents = FileContents_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+CloudScriptVersionStatus::~CloudScriptVersionStatus()
+{
+	
+}
+
+void CloudScriptVersionStatus::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Version"); writer.Int(Version);
+	
+	writer.String("PublishedRevision"); writer.Int(PublishedRevision);
+	
+	writer.String("LatestRevision"); writer.Int(LatestRevision);
+	
+	
+	writer.EndObject();
+}
+
+bool CloudScriptVersionStatus::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Version_member = obj.FindMember("Version");
+	if (Version_member != NULL) Version = Version_member->value.GetInt();
+	
+	const Value::Member* PublishedRevision_member = obj.FindMember("PublishedRevision");
+	if (PublishedRevision_member != NULL) PublishedRevision = PublishedRevision_member->value.GetInt();
+	
+	const Value::Member* LatestRevision_member = obj.FindMember("LatestRevision");
+	if (LatestRevision_member != NULL) LatestRevision = LatestRevision_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
 void PlayFab::AdminModels::writeCurrencyEnumJSON(Currency enumVal, PFStringJsonWriter& writer)
 {
 	switch(enumVal)
@@ -880,6 +949,158 @@ bool GetCatalogItemsResult::readFromValue(const rapidjson::Value& obj)
 		const rapidjson::Value& memberList = Catalog_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
 			Catalog.push_back(CatalogItem(memberList[i]));
+		}
+	}
+	
+	
+	return true;
+}
+
+
+GetCloudScriptRevisionRequest::~GetCloudScriptRevisionRequest()
+{
+	
+}
+
+void GetCloudScriptRevisionRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Version.notNull()) { writer.String("Version"); writer.Int(Version); }
+	
+	if(Revision.notNull()) { writer.String("Revision"); writer.Int(Revision); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetCloudScriptRevisionRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Version_member = obj.FindMember("Version");
+	if (Version_member != NULL) Version = Version_member->value.GetInt();
+	
+	const Value::Member* Revision_member = obj.FindMember("Revision");
+	if (Revision_member != NULL) Revision = Revision_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
+GetCloudScriptRevisionResult::~GetCloudScriptRevisionResult()
+{
+	
+}
+
+void GetCloudScriptRevisionResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Version"); writer.Int(Version);
+	
+	writer.String("Revision"); writer.Int(Revision);
+	
+	writer.String("CreatedAt"); writeDatetime(CreatedAt, writer);
+	
+	if(!Files.empty()) {
+	writer.String("Files");
+	writer.StartArray();
+	for (std::list<CloudScriptFile>::iterator iter = Files.begin(); iter != Files.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	writer.String("IsPublished"); writer.Bool(IsPublished);
+	
+	
+	writer.EndObject();
+}
+
+bool GetCloudScriptRevisionResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Version_member = obj.FindMember("Version");
+	if (Version_member != NULL) Version = Version_member->value.GetInt();
+	
+	const Value::Member* Revision_member = obj.FindMember("Revision");
+	if (Revision_member != NULL) Revision = Revision_member->value.GetInt();
+	
+	const Value::Member* CreatedAt_member = obj.FindMember("CreatedAt");
+	if (CreatedAt_member != NULL) CreatedAt = readDatetime(CreatedAt_member->value);
+	
+	const Value::Member* Files_member = obj.FindMember("Files");
+	if (Files_member != NULL) {
+		const rapidjson::Value& memberList = Files_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Files.push_back(CloudScriptFile(memberList[i]));
+		}
+	}
+	
+	const Value::Member* IsPublished_member = obj.FindMember("IsPublished");
+	if (IsPublished_member != NULL) IsPublished = IsPublished_member->value.GetBool();
+	
+	
+	return true;
+}
+
+
+GetCloudScriptVersionsRequest::~GetCloudScriptVersionsRequest()
+{
+	
+}
+
+void GetCloudScriptVersionsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool GetCloudScriptVersionsRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
+GetCloudScriptVersionsResult::~GetCloudScriptVersionsResult()
+{
+	
+}
+
+void GetCloudScriptVersionsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!Versions.empty()) {
+	writer.String("Versions");
+	writer.StartArray();
+	for (std::list<CloudScriptVersionStatus>::iterator iter = Versions.begin(); iter != Versions.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool GetCloudScriptVersionsResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Versions_member = obj.FindMember("Versions");
+	if (Versions_member != NULL) {
+		const rapidjson::Value& memberList = Versions_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Versions.push_back(CloudScriptVersionStatus(memberList[i]));
 		}
 	}
 	
@@ -2510,10 +2731,6 @@ void UserFacebookInfo::writeJSON(PFStringJsonWriter& writer)
 	
 	if(FacebookId.length() > 0) { writer.String("FacebookId"); writer.String(FacebookId.c_str()); }
 	
-	if(FacebookUsername.length() > 0) { writer.String("FacebookUsername"); writer.String(FacebookUsername.c_str()); }
-	
-	if(FacebookDisplayname.length() > 0) { writer.String("FacebookDisplayname"); writer.String(FacebookDisplayname.c_str()); }
-	
 	
 	writer.EndObject();
 }
@@ -2523,12 +2740,6 @@ bool UserFacebookInfo::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* FacebookId_member = obj.FindMember("FacebookId");
 	if (FacebookId_member != NULL) FacebookId = FacebookId_member->value.GetString();
-	
-	const Value::Member* FacebookUsername_member = obj.FindMember("FacebookUsername");
-	if (FacebookUsername_member != NULL) FacebookUsername = FacebookUsername_member->value.GetString();
-	
-	const Value::Member* FacebookDisplayname_member = obj.FindMember("FacebookDisplayname");
-	if (FacebookDisplayname_member != NULL) FacebookDisplayname = FacebookDisplayname_member->value.GetString();
 	
 	
 	return true;
@@ -3246,6 +3457,60 @@ bool SendAccountRecoveryEmailResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+SetPublishedRevisionRequest::~SetPublishedRevisionRequest()
+{
+	
+}
+
+void SetPublishedRevisionRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Version"); writer.Int(Version);
+	
+	writer.String("Revision"); writer.Int(Revision);
+	
+	
+	writer.EndObject();
+}
+
+bool SetPublishedRevisionRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Version_member = obj.FindMember("Version");
+	if (Version_member != NULL) Version = Version_member->value.GetInt();
+	
+	const Value::Member* Revision_member = obj.FindMember("Revision");
+	if (Revision_member != NULL) Revision = Revision_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
+SetPublishedRevisionResult::~SetPublishedRevisionResult()
+{
+	
+}
+
+void SetPublishedRevisionResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool SetPublishedRevisionResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
 SetPublisherDataRequest::~SetPublisherDataRequest()
 {
 	
@@ -3525,6 +3790,81 @@ void UpdateCatalogItemsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateCatalogItemsResult::readFromValue(const rapidjson::Value& obj)
 {
+	
+	
+	return true;
+}
+
+
+UpdateCloudScriptRequest::~UpdateCloudScriptRequest()
+{
+	
+}
+
+void UpdateCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Version.notNull()) { writer.String("Version"); writer.Int(Version); }
+	
+	writer.String("Files");
+	writer.StartArray();
+	for (std::list<CloudScriptFile>::iterator iter = Files.begin(); iter != Files.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateCloudScriptRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Version_member = obj.FindMember("Version");
+	if (Version_member != NULL) Version = Version_member->value.GetInt();
+	
+	const Value::Member* Files_member = obj.FindMember("Files");
+	if (Files_member != NULL) {
+		const rapidjson::Value& memberList = Files_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Files.push_back(CloudScriptFile(memberList[i]));
+		}
+	}
+	
+	
+	return true;
+}
+
+
+UpdateCloudScriptResult::~UpdateCloudScriptResult()
+{
+	
+}
+
+void UpdateCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Version"); writer.Int(Version);
+	
+	writer.String("Revision"); writer.Int(Revision);
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateCloudScriptResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Version_member = obj.FindMember("Version");
+	if (Version_member != NULL) Version = Version_member->value.GetInt();
+	
+	const Value::Member* Revision_member = obj.FindMember("Revision");
+	if (Revision_member != NULL) Revision = Revision_member->value.GetInt();
 	
 	
 	return true;

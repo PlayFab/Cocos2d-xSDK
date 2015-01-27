@@ -41,7 +41,6 @@ namespace PlayFab
 		typedef void(*UnlinkIOSDeviceIDCallback)(ClientModels::UnlinkIOSDeviceIDResult& result, void* userData);
 		typedef void(*UnlinkSteamAccountCallback)(ClientModels::UnlinkSteamAccountResult& result, void* userData);
 		typedef void(*UpdateEmailAddressCallback)(ClientModels::UpdateEmailAddressResult& result, void* userData);
-		typedef void(*UpdatePasswordCallback)(ClientModels::UpdatePasswordResult& result, void* userData);
 		typedef void(*UpdateUserTitleDisplayNameCallback)(ClientModels::UpdateUserTitleDisplayNameResult& result, void* userData);
 		typedef void(*GetFriendLeaderboardCallback)(ClientModels::GetLeaderboardResult& result, void* userData);
 		typedef void(*GetLeaderboardCallback)(ClientModels::GetLeaderboardResult& result, void* userData);
@@ -150,8 +149,6 @@ namespace PlayFab
 		void UnlinkSteamAccount(UnlinkSteamAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateEmailAddress(ClientModels::UpdateEmailAddressRequest& request, UpdateEmailAddressCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
-		
-		void UpdatePassword(ClientModels::UpdatePasswordRequest& request, UpdatePasswordCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateUserTitleDisplayName(ClientModels::UpdateUserTitleDisplayNameRequest& request, UpdateUserTitleDisplayNameCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -305,8 +302,6 @@ namespace PlayFab
 		static void OnUnlinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateEmailAddressResult(int httpStatus, HttpRequest* request, void* userData);
-		
-		static void OnUpdatePasswordResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpRequest* request, void* userData);
 		

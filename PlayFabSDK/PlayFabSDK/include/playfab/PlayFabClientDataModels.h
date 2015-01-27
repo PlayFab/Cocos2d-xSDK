@@ -878,21 +878,15 @@ namespace ClientModels
     {
 		
 		std::string FacebookId;
-		std::string FacebookUsername;
-		std::string FacebookDisplayname;
 	
         UserFacebookInfo() :
 			PlayFabBaseModel(),
-			FacebookId(),
-			FacebookUsername(),
-			FacebookDisplayname()
+			FacebookId()
 			{}
 		
 		UserFacebookInfo(const UserFacebookInfo& src) :
 			PlayFabBaseModel(),
-			FacebookId(src.FacebookId),
-			FacebookUsername(src.FacebookUsername),
-			FacebookDisplayname(src.FacebookDisplayname)
+			FacebookId(src.FacebookId)
 			{}
 			
 		UserFacebookInfo(const rapidjson::Value& obj) : UserFacebookInfo()
@@ -2959,19 +2953,22 @@ namespace ClientModels
 		std::string TitleId;
 		std::string Username;
 		std::string Password;
+		std::string PublisherId;
 	
         LoginWithPlayFabRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
 			Username(),
-			Password()
+			Password(),
+			PublisherId()
 			{}
 		
 		LoginWithPlayFabRequest(const LoginWithPlayFabRequest& src) :
 			PlayFabBaseModel(),
 			TitleId(src.TitleId),
 			Username(src.Username),
-			Password(src.Password)
+			Password(src.Password),
+			PublisherId(src.PublisherId)
 			{}
 			
 		LoginWithPlayFabRequest(const rapidjson::Value& obj) : LoginWithPlayFabRequest()
@@ -3487,6 +3484,7 @@ namespace ClientModels
 		std::string Email;
 		std::string Password;
 		std::string Origination;
+		std::string PublisherId;
 	
         RegisterPlayFabUserRequest() :
 			PlayFabBaseModel(),
@@ -3494,7 +3492,8 @@ namespace ClientModels
 			Username(),
 			Email(),
 			Password(),
-			Origination()
+			Origination(),
+			PublisherId()
 			{}
 		
 		RegisterPlayFabUserRequest(const RegisterPlayFabUserRequest& src) :
@@ -3503,7 +3502,8 @@ namespace ClientModels
 			Username(src.Username),
 			Email(src.Email),
 			Password(src.Password),
-			Origination(src.Origination)
+			Origination(src.Origination),
+			PublisherId(src.PublisherId)
 			{}
 			
 		RegisterPlayFabUserRequest(const rapidjson::Value& obj) : RegisterPlayFabUserRequest()
@@ -4453,55 +4453,6 @@ namespace ClientModels
         }
 		
 		~UpdateEmailAddressResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct UpdatePasswordRequest : public PlayFabBaseModel
-    {
-		
-		std::string Password;
-	
-        UpdatePasswordRequest() :
-			PlayFabBaseModel(),
-			Password()
-			{}
-		
-		UpdatePasswordRequest(const UpdatePasswordRequest& src) :
-			PlayFabBaseModel(),
-			Password(src.Password)
-			{}
-			
-		UpdatePasswordRequest(const rapidjson::Value& obj) : UpdatePasswordRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~UpdatePasswordRequest();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct UpdatePasswordResult : public PlayFabBaseModel
-    {
-		
-	
-        UpdatePasswordResult() :
-			PlayFabBaseModel()
-			{}
-		
-		UpdatePasswordResult(const UpdatePasswordResult& src) :
-			PlayFabBaseModel()
-			{}
-			
-		UpdatePasswordResult(const rapidjson::Value& obj) : UpdatePasswordResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~UpdatePasswordResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

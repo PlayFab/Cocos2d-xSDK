@@ -127,7 +127,12 @@ namespace PlayFab
 		PlayFabErrorDeviceAlreadyLinked = 1119,
 		PlayFabErrorDeviceNotLinked = 1120,
 		PlayFabErrorPartialFailure = 1121,
-		PlayFabErrorPublisherNotSet = 1122
+		PlayFabErrorPublisherNotSet = 1122,
+		PlayFabErrorServiceUnavailable = 1123,
+		PlayFabErrorVersionNotFound = 1124,
+		PlayFabErrorRevisionNotFound = 1125,
+		PlayFabErrorInvalidPublisherId = 1126,
+		PlayFabErrorDownstreamServiceUnavailable = 1127
     };
 
     struct PlayFabError

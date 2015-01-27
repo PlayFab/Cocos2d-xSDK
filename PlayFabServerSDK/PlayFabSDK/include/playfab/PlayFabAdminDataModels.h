@@ -466,6 +466,67 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct CloudScriptFile : public PlayFabBaseModel
+    {
+		
+		std::string Filename;
+		std::string FileContents;
+	
+        CloudScriptFile() :
+			PlayFabBaseModel(),
+			Filename(),
+			FileContents()
+			{}
+		
+		CloudScriptFile(const CloudScriptFile& src) :
+			PlayFabBaseModel(),
+			Filename(src.Filename),
+			FileContents(src.FileContents)
+			{}
+			
+		CloudScriptFile(const rapidjson::Value& obj) : CloudScriptFile()
+        {
+            readFromValue(obj);
+        }
+		
+		~CloudScriptFile();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct CloudScriptVersionStatus : public PlayFabBaseModel
+    {
+		
+		Int32 Version;
+		Int32 PublishedRevision;
+		Int32 LatestRevision;
+	
+        CloudScriptVersionStatus() :
+			PlayFabBaseModel(),
+			Version(0),
+			PublishedRevision(0),
+			LatestRevision(0)
+			{}
+		
+		CloudScriptVersionStatus(const CloudScriptVersionStatus& src) :
+			PlayFabBaseModel(),
+			Version(src.Version),
+			PublishedRevision(src.PublishedRevision),
+			LatestRevision(src.LatestRevision)
+			{}
+			
+		CloudScriptVersionStatus(const rapidjson::Value& obj) : CloudScriptVersionStatus()
+        {
+            readFromValue(obj);
+        }
+		
+		~CloudScriptVersionStatus();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	enum Currency
 	{
 		CurrencyUSD,
@@ -560,6 +621,122 @@ namespace AdminModels
         }
 		
 		~GetCatalogItemsResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCloudScriptRevisionRequest : public PlayFabBaseModel
+    {
+		
+		OptionalInt32 Version;
+		OptionalInt32 Revision;
+	
+        GetCloudScriptRevisionRequest() :
+			PlayFabBaseModel(),
+			Version(),
+			Revision()
+			{}
+		
+		GetCloudScriptRevisionRequest(const GetCloudScriptRevisionRequest& src) :
+			PlayFabBaseModel(),
+			Version(src.Version),
+			Revision(src.Revision)
+			{}
+			
+		GetCloudScriptRevisionRequest(const rapidjson::Value& obj) : GetCloudScriptRevisionRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCloudScriptRevisionRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCloudScriptRevisionResult : public PlayFabBaseModel
+    {
+		
+		Int32 Version;
+		Int32 Revision;
+		time_t CreatedAt;
+		std::list<CloudScriptFile> Files;
+		bool IsPublished;
+	
+        GetCloudScriptRevisionResult() :
+			PlayFabBaseModel(),
+			Version(0),
+			Revision(0),
+			CreatedAt(0),
+			Files(),
+			IsPublished(false)
+			{}
+		
+		GetCloudScriptRevisionResult(const GetCloudScriptRevisionResult& src) :
+			PlayFabBaseModel(),
+			Version(src.Version),
+			Revision(src.Revision),
+			CreatedAt(src.CreatedAt),
+			Files(src.Files),
+			IsPublished(src.IsPublished)
+			{}
+			
+		GetCloudScriptRevisionResult(const rapidjson::Value& obj) : GetCloudScriptRevisionResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCloudScriptRevisionResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCloudScriptVersionsRequest : public PlayFabBaseModel
+    {
+		
+	
+        GetCloudScriptVersionsRequest() :
+			PlayFabBaseModel()
+			{}
+		
+		GetCloudScriptVersionsRequest(const GetCloudScriptVersionsRequest& src) :
+			PlayFabBaseModel()
+			{}
+			
+		GetCloudScriptVersionsRequest(const rapidjson::Value& obj) : GetCloudScriptVersionsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCloudScriptVersionsRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCloudScriptVersionsResult : public PlayFabBaseModel
+    {
+		
+		std::list<CloudScriptVersionStatus> Versions;
+	
+        GetCloudScriptVersionsResult() :
+			PlayFabBaseModel(),
+			Versions()
+			{}
+		
+		GetCloudScriptVersionsResult(const GetCloudScriptVersionsResult& src) :
+			PlayFabBaseModel(),
+			Versions(src.Versions)
+			{}
+			
+		GetCloudScriptVersionsResult(const rapidjson::Value& obj) : GetCloudScriptVersionsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCloudScriptVersionsResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1751,21 +1928,15 @@ namespace AdminModels
     {
 		
 		std::string FacebookId;
-		std::string FacebookUsername;
-		std::string FacebookDisplayname;
 	
         UserFacebookInfo() :
 			PlayFabBaseModel(),
-			FacebookId(),
-			FacebookUsername(),
-			FacebookDisplayname()
+			FacebookId()
 			{}
 		
 		UserFacebookInfo(const UserFacebookInfo& src) :
 			PlayFabBaseModel(),
-			FacebookId(src.FacebookId),
-			FacebookUsername(src.FacebookUsername),
-			FacebookDisplayname(src.FacebookDisplayname)
+			FacebookId(src.FacebookId)
 			{}
 			
 		UserFacebookInfo(const rapidjson::Value& obj) : UserFacebookInfo()
@@ -2355,6 +2526,58 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct SetPublishedRevisionRequest : public PlayFabBaseModel
+    {
+		
+		Int32 Version;
+		Int32 Revision;
+	
+        SetPublishedRevisionRequest() :
+			PlayFabBaseModel(),
+			Version(0),
+			Revision(0)
+			{}
+		
+		SetPublishedRevisionRequest(const SetPublishedRevisionRequest& src) :
+			PlayFabBaseModel(),
+			Version(src.Version),
+			Revision(src.Revision)
+			{}
+			
+		SetPublishedRevisionRequest(const rapidjson::Value& obj) : SetPublishedRevisionRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~SetPublishedRevisionRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct SetPublishedRevisionResult : public PlayFabBaseModel
+    {
+		
+	
+        SetPublishedRevisionResult() :
+			PlayFabBaseModel()
+			{}
+		
+		SetPublishedRevisionResult(const SetPublishedRevisionResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		SetPublishedRevisionResult(const rapidjson::Value& obj) : SetPublishedRevisionResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~SetPublishedRevisionResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct SetPublisherDataRequest : public PlayFabBaseModel
     {
 		
@@ -2602,6 +2825,64 @@ namespace AdminModels
         }
 		
 		~UpdateCatalogItemsResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateCloudScriptRequest : public PlayFabBaseModel
+    {
+		
+		OptionalInt32 Version;
+		std::list<CloudScriptFile> Files;
+	
+        UpdateCloudScriptRequest() :
+			PlayFabBaseModel(),
+			Version(),
+			Files()
+			{}
+		
+		UpdateCloudScriptRequest(const UpdateCloudScriptRequest& src) :
+			PlayFabBaseModel(),
+			Version(src.Version),
+			Files(src.Files)
+			{}
+			
+		UpdateCloudScriptRequest(const rapidjson::Value& obj) : UpdateCloudScriptRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateCloudScriptRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateCloudScriptResult : public PlayFabBaseModel
+    {
+		
+		Int32 Version;
+		Int32 Revision;
+	
+        UpdateCloudScriptResult() :
+			PlayFabBaseModel(),
+			Version(0),
+			Revision(0)
+			{}
+		
+		UpdateCloudScriptResult(const UpdateCloudScriptResult& src) :
+			PlayFabBaseModel(),
+			Version(src.Version),
+			Revision(src.Revision)
+			{}
+			
+		UpdateCloudScriptResult(const rapidjson::Value& obj) : UpdateCloudScriptResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateCloudScriptResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

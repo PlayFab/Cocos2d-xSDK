@@ -1272,10 +1272,6 @@ void UserFacebookInfo::writeJSON(PFStringJsonWriter& writer)
 	
 	if(FacebookId.length() > 0) { writer.String("FacebookId"); writer.String(FacebookId.c_str()); }
 	
-	if(FacebookUsername.length() > 0) { writer.String("FacebookUsername"); writer.String(FacebookUsername.c_str()); }
-	
-	if(FacebookDisplayname.length() > 0) { writer.String("FacebookDisplayname"); writer.String(FacebookDisplayname.c_str()); }
-	
 	
 	writer.EndObject();
 }
@@ -1285,12 +1281,6 @@ bool UserFacebookInfo::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* FacebookId_member = obj.FindMember("FacebookId");
 	if (FacebookId_member != NULL) FacebookId = FacebookId_member->value.GetString();
-	
-	const Value::Member* FacebookUsername_member = obj.FindMember("FacebookUsername");
-	if (FacebookUsername_member != NULL) FacebookUsername = FacebookUsername_member->value.GetString();
-	
-	const Value::Member* FacebookDisplayname_member = obj.FindMember("FacebookDisplayname");
-	if (FacebookDisplayname_member != NULL) FacebookDisplayname = FacebookDisplayname_member->value.GetString();
 	
 	
 	return true;
@@ -4045,6 +4035,8 @@ void LoginWithPlayFabRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("Password"); writer.String(Password.c_str());
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -4060,6 +4052,9 @@ bool LoginWithPlayFabRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Password_member = obj.FindMember("Password");
 	if (Password_member != NULL) Password = Password_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -4756,6 +4751,8 @@ void RegisterPlayFabUserRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(Origination.length() > 0) { writer.String("Origination"); writer.String(Origination.c_str()); }
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -4777,6 +4774,9 @@ bool RegisterPlayFabUserRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Origination_member = obj.FindMember("Origination");
 	if (Origination_member != NULL) Origination = Origination_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -5881,55 +5881,6 @@ void UpdateEmailAddressResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool UpdateEmailAddressResult::readFromValue(const rapidjson::Value& obj)
-{
-	
-	
-	return true;
-}
-
-
-UpdatePasswordRequest::~UpdatePasswordRequest()
-{
-	
-}
-
-void UpdatePasswordRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	writer.String("Password"); writer.String(Password.c_str());
-	
-	
-	writer.EndObject();
-}
-
-bool UpdatePasswordRequest::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* Password_member = obj.FindMember("Password");
-	if (Password_member != NULL) Password = Password_member->value.GetString();
-	
-	
-	return true;
-}
-
-
-UpdatePasswordResult::~UpdatePasswordResult()
-{
-	
-}
-
-void UpdatePasswordResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	
-	writer.EndObject();
-}
-
-bool UpdatePasswordResult::readFromValue(const rapidjson::Value& obj)
 {
 	
 	
