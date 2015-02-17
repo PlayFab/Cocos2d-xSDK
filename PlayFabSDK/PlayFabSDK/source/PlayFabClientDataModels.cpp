@@ -25,6 +25,8 @@ void AddFriendRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(FriendTitleDisplayName.length() > 0) { writer.String("FriendTitleDisplayName"); writer.String(FriendTitleDisplayName.c_str()); }
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -43,6 +45,9 @@ bool AddFriendRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* FriendTitleDisplayName_member = obj.FindMember("FriendTitleDisplayName");
 	if (FriendTitleDisplayName_member != NULL) FriendTitleDisplayName = FriendTitleDisplayName_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -158,6 +163,8 @@ void AddUsernamePasswordRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("Password"); writer.String(Password.c_str());
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -173,6 +180,9 @@ bool AddUsernamePasswordRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Password_member = obj.FindMember("Password");
 	if (Password_member != NULL) Password = Password_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -2260,14 +2270,15 @@ void GetPlayFabIDsFromFacebookIDsRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	if(!FacebookIDs.empty()) {
 	writer.String("FacebookIDs");
 	writer.StartArray();
 	for (std::list<std::string>::iterator iter = FacebookIDs.begin(); iter != FacebookIDs.end(); iter++) {
 		writer.String(iter->c_str());
 	}
 	writer.EndArray();
-	 }
+	
+	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
 	
 	
 	writer.EndObject();
@@ -2283,6 +2294,9 @@ bool GetPlayFabIDsFromFacebookIDsRequest::readFromValue(const rapidjson::Value& 
 			FacebookIDs.push_back(memberList[i].GetString());
 		}
 	}
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -2414,7 +2428,7 @@ void GetSharedGroupDataRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	if(SharedGroupId.length() > 0) { writer.String("SharedGroupId"); writer.String(SharedGroupId.c_str()); }
+	writer.String("SharedGroupId"); writer.String(SharedGroupId.c_str());
 	
 	if(!Keys.empty()) {
 	writer.String("Keys");
@@ -2611,8 +2625,6 @@ void StoreItem::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("ItemId"); writer.String(ItemId.c_str());
 	
-	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
-	
 	if(!VirtualCurrencyPrices.empty()) {
 	writer.String("VirtualCurrencyPrices");
 	writer.StartObject();
@@ -2640,9 +2652,6 @@ bool StoreItem::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* ItemId_member = obj.FindMember("ItemId");
 	if (ItemId_member != NULL) ItemId = ItemId_member->value.GetString();
-	
-	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
 	
 	const Value::Member* VirtualCurrencyPrices_member = obj.FindMember("VirtualCurrencyPrices");
 	if (VirtualCurrencyPrices_member != NULL) {
@@ -3459,6 +3468,8 @@ void LinkAndroidDeviceIDRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("AndroidDeviceId"); writer.String(AndroidDeviceId.c_str());
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	if(OS.length() > 0) { writer.String("OS"); writer.String(OS.c_str()); }
 	
 	if(AndroidDevice.length() > 0) { writer.String("AndroidDevice"); writer.String(AndroidDevice.c_str()); }
@@ -3472,6 +3483,9 @@ bool LinkAndroidDeviceIDRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* AndroidDeviceId_member = obj.FindMember("AndroidDeviceId");
 	if (AndroidDeviceId_member != NULL) AndroidDeviceId = AndroidDeviceId_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	const Value::Member* OS_member = obj.FindMember("OS");
 	if (OS_member != NULL) OS = OS_member->value.GetString();
@@ -3518,6 +3532,8 @@ void LinkFacebookAccountRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("AccessToken"); writer.String(AccessToken.c_str());
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -3527,6 +3543,9 @@ bool LinkFacebookAccountRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* AccessToken_member = obj.FindMember("AccessToken");
 	if (AccessToken_member != NULL) AccessToken = AccessToken_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -3567,6 +3586,8 @@ void LinkGameCenterAccountRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("GameCenterId"); writer.String(GameCenterId.c_str());
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -3576,6 +3597,9 @@ bool LinkGameCenterAccountRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* GameCenterId_member = obj.FindMember("GameCenterId");
 	if (GameCenterId_member != NULL) GameCenterId = GameCenterId_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -3620,6 +3644,8 @@ void LinkIOSDeviceIDRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(DeviceModel.length() > 0) { writer.String("DeviceModel"); writer.String(DeviceModel.c_str()); }
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -3635,6 +3661,9 @@ bool LinkIOSDeviceIDRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* DeviceModel_member = obj.FindMember("DeviceModel");
 	if (DeviceModel_member != NULL) DeviceModel = DeviceModel_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -3675,6 +3704,8 @@ void LinkSteamAccountRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("SteamTicket"); writer.String(SteamTicket.c_str());
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -3684,6 +3715,9 @@ bool LinkSteamAccountRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* SteamTicket_member = obj.FindMember("SteamTicket");
 	if (SteamTicket_member != NULL) SteamTicket = SteamTicket_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -3826,6 +3860,8 @@ void LoginWithAndroidDeviceIDRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("TitleId"); writer.String(TitleId.c_str());
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	writer.String("AndroidDeviceId"); writer.String(AndroidDeviceId.c_str());
 	
 	if(OS.length() > 0) { writer.String("OS"); writer.String(OS.c_str()); }
@@ -3844,6 +3880,9 @@ bool LoginWithAndroidDeviceIDRequest::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* TitleId_member = obj.FindMember("TitleId");
 	if (TitleId_member != NULL) TitleId = TitleId_member->value.GetString();
 	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
+	
 	const Value::Member* AndroidDeviceId_member = obj.FindMember("AndroidDeviceId");
 	if (AndroidDeviceId_member != NULL) AndroidDeviceId = AndroidDeviceId_member->value.GetString();
 	
@@ -3855,6 +3894,48 @@ bool LoginWithAndroidDeviceIDRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* CreateAccount_member = obj.FindMember("CreateAccount");
 	if (CreateAccount_member != NULL) CreateAccount = CreateAccount_member->value.GetBool();
+	
+	
+	return true;
+}
+
+
+LoginWithEmailAddressRequest::~LoginWithEmailAddressRequest()
+{
+	
+}
+
+void LoginWithEmailAddressRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("TitleId"); writer.String(TitleId.c_str());
+	
+	writer.String("Email"); writer.String(Email.c_str());
+	
+	writer.String("Password"); writer.String(Password.c_str());
+	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool LoginWithEmailAddressRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* TitleId_member = obj.FindMember("TitleId");
+	if (TitleId_member != NULL) TitleId = TitleId_member->value.GetString();
+	
+	const Value::Member* Email_member = obj.FindMember("Email");
+	if (Email_member != NULL) Email = Email_member->value.GetString();
+	
+	const Value::Member* Password_member = obj.FindMember("Password");
+	if (Password_member != NULL) Password = Password_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -3877,6 +3958,8 @@ void LoginWithFacebookRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -3892,6 +3975,9 @@ bool LoginWithFacebookRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* CreateAccount_member = obj.FindMember("CreateAccount");
 	if (CreateAccount_member != NULL) CreateAccount = CreateAccount_member->value.GetBool();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -3914,6 +4000,8 @@ void LoginWithGameCenterRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -3929,6 +4017,9 @@ bool LoginWithGameCenterRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* CreateAccount_member = obj.FindMember("CreateAccount");
 	if (CreateAccount_member != NULL) CreateAccount = CreateAccount_member->value.GetBool();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -3951,6 +4042,8 @@ void LoginWithGoogleAccountRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -3966,6 +4059,9 @@ bool LoginWithGoogleAccountRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* CreateAccount_member = obj.FindMember("CreateAccount");
 	if (CreateAccount_member != NULL) CreateAccount = CreateAccount_member->value.GetBool();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -3992,6 +4088,8 @@ void LoginWithIOSDeviceIDRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -4013,6 +4111,9 @@ bool LoginWithIOSDeviceIDRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* CreateAccount_member = obj.FindMember("CreateAccount");
 	if (CreateAccount_member != NULL) CreateAccount = CreateAccount_member->value.GetBool();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -4077,6 +4178,8 @@ void LoginWithSteamRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -4092,6 +4195,9 @@ bool LoginWithSteamRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* CreateAccount_member = obj.FindMember("CreateAccount");
 	if (CreateAccount_member != NULL) CreateAccount = CreateAccount_member->value.GetBool();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -5161,6 +5267,8 @@ void SendAccountRecoveryEmailRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("TitleId"); writer.String(TitleId.c_str());
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -5173,6 +5281,9 @@ bool SendAccountRecoveryEmailRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* TitleId_member = obj.FindMember("TitleId");
 	if (TitleId_member != NULL) TitleId = TitleId_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -5282,8 +5393,6 @@ void StartGameRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("GameMode"); writer.String(GameMode.c_str());
 	
-	writer.String("PasswordRestricted"); writer.Bool(PasswordRestricted);
-	
 	if(CustomCommandLineData.length() > 0) { writer.String("CustomCommandLineData"); writer.String(CustomCommandLineData.c_str()); }
 	
 	
@@ -5301,9 +5410,6 @@ bool StartGameRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* GameMode_member = obj.FindMember("GameMode");
 	if (GameMode_member != NULL) GameMode = GameMode_member->value.GetString();
-	
-	const Value::Member* PasswordRestricted_member = obj.FindMember("PasswordRestricted");
-	if (PasswordRestricted_member != NULL) PasswordRestricted = PasswordRestricted_member->value.GetBool();
 	
 	const Value::Member* CustomCommandLineData_member = obj.FindMember("CustomCommandLineData");
 	if (CustomCommandLineData_member != NULL) CustomCommandLineData = CustomCommandLineData_member->value.GetString();
@@ -5833,55 +5939,6 @@ bool UnlockContainerItemResult::readFromValue(const rapidjson::Value& obj)
 			VirtualCurrency[iter->name.GetString()] = iter->value.GetUint();
 		}
 	}
-	
-	
-	return true;
-}
-
-
-UpdateEmailAddressRequest::~UpdateEmailAddressRequest()
-{
-	
-}
-
-void UpdateEmailAddressRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	writer.String("Email"); writer.String(Email.c_str());
-	
-	
-	writer.EndObject();
-}
-
-bool UpdateEmailAddressRequest::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* Email_member = obj.FindMember("Email");
-	if (Email_member != NULL) Email = Email_member->value.GetString();
-	
-	
-	return true;
-}
-
-
-UpdateEmailAddressResult::~UpdateEmailAddressResult()
-{
-	
-}
-
-void UpdateEmailAddressResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	
-	writer.EndObject();
-}
-
-bool UpdateEmailAddressResult::readFromValue(const rapidjson::Value& obj)
-{
 	
 	
 	return true;

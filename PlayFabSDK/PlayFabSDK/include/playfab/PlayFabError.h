@@ -132,7 +132,12 @@ namespace PlayFab
 		PlayFabErrorVersionNotFound = 1124,
 		PlayFabErrorRevisionNotFound = 1125,
 		PlayFabErrorInvalidPublisherId = 1126,
-		PlayFabErrorDownstreamServiceUnavailable = 1127
+		PlayFabErrorDownstreamServiceUnavailable = 1127,
+		PlayFabErrorAPINotIncludedInTitleUsageTier = 1128,
+		PlayFabErrorDAULimitExceeded = 1129,
+		PlayFabErrorAPIRequestLimitExceeded = 1130,
+		PlayFabErrorInvalidAPIEndpoint = 1131,
+		PlayFabErrorBuildNotAvailable = 1132
     };
 
     struct PlayFabError

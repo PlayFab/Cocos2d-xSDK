@@ -1261,14 +1261,12 @@ namespace AdminModels
     {
 		
 		std::string ItemId;
-		std::string CatalogVersion;
 		std::map<std::string, Uint32> VirtualCurrencyPrices;
 		std::map<std::string, Uint32> RealCurrencyPrices;
 	
         StoreItem() :
 			PlayFabBaseModel(),
 			ItemId(),
-			CatalogVersion(),
 			VirtualCurrencyPrices(),
 			RealCurrencyPrices()
 			{}
@@ -1276,7 +1274,6 @@ namespace AdminModels
 		StoreItem(const StoreItem& src) :
 			PlayFabBaseModel(),
 			ItemId(src.ItemId),
-			CatalogVersion(src.CatalogVersion),
 			VirtualCurrencyPrices(src.VirtualCurrencyPrices),
 			RealCurrencyPrices(src.RealCurrencyPrices)
 			{}
@@ -1808,13 +1805,15 @@ namespace AdminModels
 		std::string Email;
 		std::string Username;
 		std::string TitleDisplayName;
+		std::string PublisherId;
 	
         LookupUserAccountInfoRequest() :
 			PlayFabBaseModel(),
 			PlayFabId(),
 			Email(),
 			Username(),
-			TitleDisplayName()
+			TitleDisplayName(),
+			PublisherId()
 			{}
 		
 		LookupUserAccountInfoRequest(const LookupUserAccountInfoRequest& src) :
@@ -1822,7 +1821,8 @@ namespace AdminModels
 			PlayFabId(src.PlayFabId),
 			Email(src.Email),
 			Username(src.Username),
-			TitleDisplayName(src.TitleDisplayName)
+			TitleDisplayName(src.TitleDisplayName),
+			PublisherId(src.PublisherId)
 			{}
 			
 		LookupUserAccountInfoRequest(const rapidjson::Value& obj) : LookupUserAccountInfoRequest()
@@ -2354,15 +2354,18 @@ namespace AdminModels
     {
 		
 		std::list<UserCredentials> Users;
+		std::string PublisherId;
 	
         ResetUsersRequest() :
 			PlayFabBaseModel(),
-			Users()
+			Users(),
+			PublisherId()
 			{}
 		
 		ResetUsersRequest(const ResetUsersRequest& src) :
 			PlayFabBaseModel(),
-			Users(src.Users)
+			Users(src.Users),
+			PublisherId(src.PublisherId)
 			{}
 			
 		ResetUsersRequest(const rapidjson::Value& obj) : ResetUsersRequest()
@@ -2481,15 +2484,18 @@ namespace AdminModels
     {
 		
 		std::string Email;
+		std::string PublisherId;
 	
         SendAccountRecoveryEmailRequest() :
 			PlayFabBaseModel(),
-			Email()
+			Email(),
+			PublisherId()
 			{}
 		
 		SendAccountRecoveryEmailRequest(const SendAccountRecoveryEmailRequest& src) :
 			PlayFabBaseModel(),
-			Email(src.Email)
+			Email(src.Email),
+			PublisherId(src.PublisherId)
 			{}
 			
 		SendAccountRecoveryEmailRequest(const rapidjson::Value& obj) : SendAccountRecoveryEmailRequest()

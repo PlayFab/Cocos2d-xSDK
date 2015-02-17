@@ -1714,7 +1714,7 @@ void GetUserDataRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
 	
 	if(!Keys.empty()) {
 	writer.String("Keys");

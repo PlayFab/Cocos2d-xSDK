@@ -16,13 +16,15 @@ namespace ClientModels
 		std::string FriendUsername;
 		std::string FriendEmail;
 		std::string FriendTitleDisplayName;
+		std::string PublisherId;
 	
         AddFriendRequest() :
 			PlayFabBaseModel(),
 			FriendPlayFabId(),
 			FriendUsername(),
 			FriendEmail(),
-			FriendTitleDisplayName()
+			FriendTitleDisplayName(),
+			PublisherId()
 			{}
 		
 		AddFriendRequest(const AddFriendRequest& src) :
@@ -30,7 +32,8 @@ namespace ClientModels
 			FriendPlayFabId(src.FriendPlayFabId),
 			FriendUsername(src.FriendUsername),
 			FriendEmail(src.FriendEmail),
-			FriendTitleDisplayName(src.FriendTitleDisplayName)
+			FriendTitleDisplayName(src.FriendTitleDisplayName),
+			PublisherId(src.PublisherId)
 			{}
 			
 		AddFriendRequest(const rapidjson::Value& obj) : AddFriendRequest()
@@ -128,19 +131,22 @@ namespace ClientModels
 		std::string Username;
 		std::string Email;
 		std::string Password;
+		std::string PublisherId;
 	
         AddUsernamePasswordRequest() :
 			PlayFabBaseModel(),
 			Username(),
 			Email(),
-			Password()
+			Password(),
+			PublisherId()
 			{}
 		
 		AddUsernamePasswordRequest(const AddUsernamePasswordRequest& src) :
 			PlayFabBaseModel(),
 			Username(src.Username),
 			Email(src.Email),
-			Password(src.Password)
+			Password(src.Password),
+			PublisherId(src.PublisherId)
 			{}
 			
 		AddUsernamePasswordRequest(const rapidjson::Value& obj) : AddUsernamePasswordRequest()
@@ -1641,15 +1647,18 @@ namespace ClientModels
     {
 		
 		std::list<std::string> FacebookIDs;
+		std::string PublisherId;
 	
         GetPlayFabIDsFromFacebookIDsRequest() :
 			PlayFabBaseModel(),
-			FacebookIDs()
+			FacebookIDs(),
+			PublisherId()
 			{}
 		
 		GetPlayFabIDsFromFacebookIDsRequest(const GetPlayFabIDsFromFacebookIDsRequest& src) :
 			PlayFabBaseModel(),
-			FacebookIDs(src.FacebookIDs)
+			FacebookIDs(src.FacebookIDs),
+			PublisherId(src.PublisherId)
 			{}
 			
 		GetPlayFabIDsFromFacebookIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromFacebookIDsRequest()
@@ -1877,14 +1886,12 @@ namespace ClientModels
     {
 		
 		std::string ItemId;
-		std::string CatalogVersion;
 		std::map<std::string, Uint32> VirtualCurrencyPrices;
 		std::map<std::string, Uint32> RealCurrencyPrices;
 	
         StoreItem() :
 			PlayFabBaseModel(),
 			ItemId(),
-			CatalogVersion(),
 			VirtualCurrencyPrices(),
 			RealCurrencyPrices()
 			{}
@@ -1892,7 +1899,6 @@ namespace ClientModels
 		StoreItem(const StoreItem& src) :
 			PlayFabBaseModel(),
 			ItemId(src.ItemId),
-			CatalogVersion(src.CatalogVersion),
 			VirtualCurrencyPrices(src.VirtualCurrencyPrices),
 			RealCurrencyPrices(src.RealCurrencyPrices)
 			{}
@@ -2438,12 +2444,14 @@ namespace ClientModels
     {
 		
 		std::string AndroidDeviceId;
+		std::string PublisherId;
 		std::string OS;
 		std::string AndroidDevice;
 	
         LinkAndroidDeviceIDRequest() :
 			PlayFabBaseModel(),
 			AndroidDeviceId(),
+			PublisherId(),
 			OS(),
 			AndroidDevice()
 			{}
@@ -2451,6 +2459,7 @@ namespace ClientModels
 		LinkAndroidDeviceIDRequest(const LinkAndroidDeviceIDRequest& src) :
 			PlayFabBaseModel(),
 			AndroidDeviceId(src.AndroidDeviceId),
+			PublisherId(src.PublisherId),
 			OS(src.OS),
 			AndroidDevice(src.AndroidDevice)
 			{}
@@ -2493,15 +2502,18 @@ namespace ClientModels
     {
 		
 		std::string AccessToken;
+		std::string PublisherId;
 	
         LinkFacebookAccountRequest() :
 			PlayFabBaseModel(),
-			AccessToken()
+			AccessToken(),
+			PublisherId()
 			{}
 		
 		LinkFacebookAccountRequest(const LinkFacebookAccountRequest& src) :
 			PlayFabBaseModel(),
-			AccessToken(src.AccessToken)
+			AccessToken(src.AccessToken),
+			PublisherId(src.PublisherId)
 			{}
 			
 		LinkFacebookAccountRequest(const rapidjson::Value& obj) : LinkFacebookAccountRequest()
@@ -2542,15 +2554,18 @@ namespace ClientModels
     {
 		
 		std::string GameCenterId;
+		std::string PublisherId;
 	
         LinkGameCenterAccountRequest() :
 			PlayFabBaseModel(),
-			GameCenterId()
+			GameCenterId(),
+			PublisherId()
 			{}
 		
 		LinkGameCenterAccountRequest(const LinkGameCenterAccountRequest& src) :
 			PlayFabBaseModel(),
-			GameCenterId(src.GameCenterId)
+			GameCenterId(src.GameCenterId),
+			PublisherId(src.PublisherId)
 			{}
 			
 		LinkGameCenterAccountRequest(const rapidjson::Value& obj) : LinkGameCenterAccountRequest()
@@ -2593,19 +2608,22 @@ namespace ClientModels
 		std::string DeviceId;
 		std::string OS;
 		std::string DeviceModel;
+		std::string PublisherId;
 	
         LinkIOSDeviceIDRequest() :
 			PlayFabBaseModel(),
 			DeviceId(),
 			OS(),
-			DeviceModel()
+			DeviceModel(),
+			PublisherId()
 			{}
 		
 		LinkIOSDeviceIDRequest(const LinkIOSDeviceIDRequest& src) :
 			PlayFabBaseModel(),
 			DeviceId(src.DeviceId),
 			OS(src.OS),
-			DeviceModel(src.DeviceModel)
+			DeviceModel(src.DeviceModel),
+			PublisherId(src.PublisherId)
 			{}
 			
 		LinkIOSDeviceIDRequest(const rapidjson::Value& obj) : LinkIOSDeviceIDRequest()
@@ -2646,15 +2664,18 @@ namespace ClientModels
     {
 		
 		std::string SteamTicket;
+		std::string PublisherId;
 	
         LinkSteamAccountRequest() :
 			PlayFabBaseModel(),
-			SteamTicket()
+			SteamTicket(),
+			PublisherId()
 			{}
 		
 		LinkSteamAccountRequest(const LinkSteamAccountRequest& src) :
 			PlayFabBaseModel(),
-			SteamTicket(src.SteamTicket)
+			SteamTicket(src.SteamTicket),
+			PublisherId(src.PublisherId)
 			{}
 			
 		LinkSteamAccountRequest(const rapidjson::Value& obj) : LinkSteamAccountRequest()
@@ -2779,6 +2800,7 @@ namespace ClientModels
     {
 		
 		std::string TitleId;
+		std::string PublisherId;
 		std::string AndroidDeviceId;
 		std::string OS;
 		std::string AndroidDevice;
@@ -2787,6 +2809,7 @@ namespace ClientModels
         LoginWithAndroidDeviceIDRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
+			PublisherId(),
 			AndroidDeviceId(),
 			OS(),
 			AndroidDevice(),
@@ -2796,6 +2819,7 @@ namespace ClientModels
 		LoginWithAndroidDeviceIDRequest(const LoginWithAndroidDeviceIDRequest& src) :
 			PlayFabBaseModel(),
 			TitleId(src.TitleId),
+			PublisherId(src.PublisherId),
 			AndroidDeviceId(src.AndroidDeviceId),
 			OS(src.OS),
 			AndroidDevice(src.AndroidDevice),
@@ -2813,25 +2837,63 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct LoginWithEmailAddressRequest : public PlayFabBaseModel
+    {
+		
+		std::string TitleId;
+		std::string Email;
+		std::string Password;
+		std::string PublisherId;
+	
+        LoginWithEmailAddressRequest() :
+			PlayFabBaseModel(),
+			TitleId(),
+			Email(),
+			Password(),
+			PublisherId()
+			{}
+		
+		LoginWithEmailAddressRequest(const LoginWithEmailAddressRequest& src) :
+			PlayFabBaseModel(),
+			TitleId(src.TitleId),
+			Email(src.Email),
+			Password(src.Password),
+			PublisherId(src.PublisherId)
+			{}
+			
+		LoginWithEmailAddressRequest(const rapidjson::Value& obj) : LoginWithEmailAddressRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~LoginWithEmailAddressRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct LoginWithFacebookRequest : public PlayFabBaseModel
     {
 		
 		std::string TitleId;
 		std::string AccessToken;
 		OptionalBool CreateAccount;
+		std::string PublisherId;
 	
         LoginWithFacebookRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
 			AccessToken(),
-			CreateAccount()
+			CreateAccount(),
+			PublisherId()
 			{}
 		
 		LoginWithFacebookRequest(const LoginWithFacebookRequest& src) :
 			PlayFabBaseModel(),
 			TitleId(src.TitleId),
 			AccessToken(src.AccessToken),
-			CreateAccount(src.CreateAccount)
+			CreateAccount(src.CreateAccount),
+			PublisherId(src.PublisherId)
 			{}
 			
 		LoginWithFacebookRequest(const rapidjson::Value& obj) : LoginWithFacebookRequest()
@@ -2851,19 +2913,22 @@ namespace ClientModels
 		std::string TitleId;
 		std::string PlayerId;
 		OptionalBool CreateAccount;
+		std::string PublisherId;
 	
         LoginWithGameCenterRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
 			PlayerId(),
-			CreateAccount()
+			CreateAccount(),
+			PublisherId()
 			{}
 		
 		LoginWithGameCenterRequest(const LoginWithGameCenterRequest& src) :
 			PlayFabBaseModel(),
 			TitleId(src.TitleId),
 			PlayerId(src.PlayerId),
-			CreateAccount(src.CreateAccount)
+			CreateAccount(src.CreateAccount),
+			PublisherId(src.PublisherId)
 			{}
 			
 		LoginWithGameCenterRequest(const rapidjson::Value& obj) : LoginWithGameCenterRequest()
@@ -2883,19 +2948,22 @@ namespace ClientModels
 		std::string TitleId;
 		std::string AccessToken;
 		OptionalBool CreateAccount;
+		std::string PublisherId;
 	
         LoginWithGoogleAccountRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
 			AccessToken(),
-			CreateAccount()
+			CreateAccount(),
+			PublisherId()
 			{}
 		
 		LoginWithGoogleAccountRequest(const LoginWithGoogleAccountRequest& src) :
 			PlayFabBaseModel(),
 			TitleId(src.TitleId),
 			AccessToken(src.AccessToken),
-			CreateAccount(src.CreateAccount)
+			CreateAccount(src.CreateAccount),
+			PublisherId(src.PublisherId)
 			{}
 			
 		LoginWithGoogleAccountRequest(const rapidjson::Value& obj) : LoginWithGoogleAccountRequest()
@@ -2917,6 +2985,7 @@ namespace ClientModels
 		std::string OS;
 		std::string DeviceModel;
 		OptionalBool CreateAccount;
+		std::string PublisherId;
 	
         LoginWithIOSDeviceIDRequest() :
 			PlayFabBaseModel(),
@@ -2924,7 +2993,8 @@ namespace ClientModels
 			DeviceId(),
 			OS(),
 			DeviceModel(),
-			CreateAccount()
+			CreateAccount(),
+			PublisherId()
 			{}
 		
 		LoginWithIOSDeviceIDRequest(const LoginWithIOSDeviceIDRequest& src) :
@@ -2933,7 +3003,8 @@ namespace ClientModels
 			DeviceId(src.DeviceId),
 			OS(src.OS),
 			DeviceModel(src.DeviceModel),
-			CreateAccount(src.CreateAccount)
+			CreateAccount(src.CreateAccount),
+			PublisherId(src.PublisherId)
 			{}
 			
 		LoginWithIOSDeviceIDRequest(const rapidjson::Value& obj) : LoginWithIOSDeviceIDRequest()
@@ -2988,19 +3059,22 @@ namespace ClientModels
 		std::string TitleId;
 		std::string SteamTicket;
 		OptionalBool CreateAccount;
+		std::string PublisherId;
 	
         LoginWithSteamRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
 			SteamTicket(),
-			CreateAccount()
+			CreateAccount(),
+			PublisherId()
 			{}
 		
 		LoginWithSteamRequest(const LoginWithSteamRequest& src) :
 			PlayFabBaseModel(),
 			TitleId(src.TitleId),
 			SteamTicket(src.SteamTicket),
-			CreateAccount(src.CreateAccount)
+			CreateAccount(src.CreateAccount),
+			PublisherId(src.PublisherId)
 			{}
 			
 		LoginWithSteamRequest(const rapidjson::Value& obj) : LoginWithSteamRequest()
@@ -3841,17 +3915,20 @@ namespace ClientModels
 		
 		std::string Email;
 		std::string TitleId;
+		std::string PublisherId;
 	
         SendAccountRecoveryEmailRequest() :
 			PlayFabBaseModel(),
 			Email(),
-			TitleId()
+			TitleId(),
+			PublisherId()
 			{}
 		
 		SendAccountRecoveryEmailRequest(const SendAccountRecoveryEmailRequest& src) :
 			PlayFabBaseModel(),
 			Email(src.Email),
-			TitleId(src.TitleId)
+			TitleId(src.TitleId),
+			PublisherId(src.PublisherId)
 			{}
 			
 		SendAccountRecoveryEmailRequest(const rapidjson::Value& obj) : SendAccountRecoveryEmailRequest()
@@ -3946,7 +4023,6 @@ namespace ClientModels
 		std::string BuildVersion;
 		Region Region;
 		std::string GameMode;
-		bool PasswordRestricted;
 		std::string CustomCommandLineData;
 	
         StartGameRequest() :
@@ -3954,7 +4030,6 @@ namespace ClientModels
 			BuildVersion(),
 			Region(),
 			GameMode(),
-			PasswordRestricted(false),
 			CustomCommandLineData()
 			{}
 		
@@ -3963,7 +4038,6 @@ namespace ClientModels
 			BuildVersion(src.BuildVersion),
 			Region(src.Region),
 			GameMode(src.GameMode),
-			PasswordRestricted(src.PasswordRestricted),
 			CustomCommandLineData(src.CustomCommandLineData)
 			{}
 			
@@ -4404,55 +4478,6 @@ namespace ClientModels
         }
 		
 		~UnlockContainerItemResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct UpdateEmailAddressRequest : public PlayFabBaseModel
-    {
-		
-		std::string Email;
-	
-        UpdateEmailAddressRequest() :
-			PlayFabBaseModel(),
-			Email()
-			{}
-		
-		UpdateEmailAddressRequest(const UpdateEmailAddressRequest& src) :
-			PlayFabBaseModel(),
-			Email(src.Email)
-			{}
-			
-		UpdateEmailAddressRequest(const rapidjson::Value& obj) : UpdateEmailAddressRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~UpdateEmailAddressRequest();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct UpdateEmailAddressResult : public PlayFabBaseModel
-    {
-		
-	
-        UpdateEmailAddressResult() :
-			PlayFabBaseModel()
-			{}
-		
-		UpdateEmailAddressResult(const UpdateEmailAddressResult& src) :
-			PlayFabBaseModel()
-			{}
-			
-		UpdateEmailAddressResult(const rapidjson::Value& obj) : UpdateEmailAddressResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~UpdateEmailAddressResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

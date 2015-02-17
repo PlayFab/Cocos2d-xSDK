@@ -2351,7 +2351,7 @@ void PlayFabAdminAPI::GetServerBuildInfo(
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/GetServerBuildInfo"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
-	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+	
 	
     httpRequest->SetResultCallback((void*)callback);
     httpRequest->SetErrorCallback(errorCallback);

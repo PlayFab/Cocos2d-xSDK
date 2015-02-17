@@ -18,6 +18,7 @@ namespace PlayFab
     public:
 		
 		typedef void(*LoginWithAndroidDeviceIDCallback)(ClientModels::LoginResult& result, void* userData);
+		typedef void(*LoginWithEmailAddressCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithFacebookCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithGameCenterCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithGoogleAccountCallback)(ClientModels::LoginResult& result, void* userData);
@@ -40,7 +41,6 @@ namespace PlayFab
 		typedef void(*UnlinkGameCenterAccountCallback)(ClientModels::UnlinkGameCenterAccountResult& result, void* userData);
 		typedef void(*UnlinkIOSDeviceIDCallback)(ClientModels::UnlinkIOSDeviceIDResult& result, void* userData);
 		typedef void(*UnlinkSteamAccountCallback)(ClientModels::UnlinkSteamAccountResult& result, void* userData);
-		typedef void(*UpdateEmailAddressCallback)(ClientModels::UpdateEmailAddressResult& result, void* userData);
 		typedef void(*UpdateUserTitleDisplayNameCallback)(ClientModels::UpdateUserTitleDisplayNameResult& result, void* userData);
 		typedef void(*GetFriendLeaderboardCallback)(ClientModels::GetLeaderboardResult& result, void* userData);
 		typedef void(*GetLeaderboardCallback)(ClientModels::GetLeaderboardResult& result, void* userData);
@@ -104,6 +104,8 @@ namespace PlayFab
 		
 		void LoginWithAndroidDeviceID(ClientModels::LoginWithAndroidDeviceIDRequest& request, LoginWithAndroidDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void LoginWithEmailAddress(ClientModels::LoginWithEmailAddressRequest& request, LoginWithEmailAddressCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void LoginWithFacebook(ClientModels::LoginWithFacebookRequest& request, LoginWithFacebookCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void LoginWithGameCenter(ClientModels::LoginWithGameCenterRequest& request, LoginWithGameCenterCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
@@ -147,8 +149,6 @@ namespace PlayFab
 		void UnlinkIOSDeviceID(UnlinkIOSDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UnlinkSteamAccount(UnlinkSteamAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
-		
-		void UpdateEmailAddress(ClientModels::UpdateEmailAddressRequest& request, UpdateEmailAddressCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateUserTitleDisplayName(ClientModels::UpdateUserTitleDisplayNameRequest& request, UpdateUserTitleDisplayNameCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -257,6 +257,8 @@ namespace PlayFab
 		
 		static void OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnLoginWithEmailAddressResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnLoginWithFacebookResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnLoginWithGameCenterResult(int httpStatus, HttpRequest* request, void* userData);
@@ -300,8 +302,6 @@ namespace PlayFab
 		static void OnUnlinkIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUnlinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData);
-		
-		static void OnUpdateEmailAddressResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpRequest* request, void* userData);
 		

@@ -1787,8 +1787,6 @@ void StoreItem::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("ItemId"); writer.String(ItemId.c_str());
 	
-	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
-	
 	if(!VirtualCurrencyPrices.empty()) {
 	writer.String("VirtualCurrencyPrices");
 	writer.StartObject();
@@ -1816,9 +1814,6 @@ bool StoreItem::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* ItemId_member = obj.FindMember("ItemId");
 	if (ItemId_member != NULL) ItemId = ItemId_member->value.GetString();
-	
-	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
 	
 	const Value::Member* VirtualCurrencyPrices_member = obj.FindMember("VirtualCurrencyPrices");
 	if (VirtualCurrencyPrices_member != NULL) {
@@ -1964,7 +1959,7 @@ void GetUserDataRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
 	
 	if(!Keys.empty()) {
 	writer.String("Keys");
@@ -2561,6 +2556,8 @@ void LookupUserAccountInfoRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(TitleDisplayName.length() > 0) { writer.String("TitleDisplayName"); writer.String(TitleDisplayName.c_str()); }
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -2579,6 +2576,9 @@ bool LookupUserAccountInfoRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* TitleDisplayName_member = obj.FindMember("TitleDisplayName");
 	if (TitleDisplayName_member != NULL) TitleDisplayName = TitleDisplayName_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -3285,6 +3285,8 @@ void ResetUsersRequest::writeJSON(PFStringJsonWriter& writer)
 	writer.EndArray();
 	
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -3299,6 +3301,9 @@ bool ResetUsersRequest::readFromValue(const rapidjson::Value& obj)
 			Users.push_back(UserCredentials(memberList[i]));
 		}
 	}
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
@@ -3420,6 +3425,8 @@ void SendAccountRecoveryEmailRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("Email"); writer.String(Email.c_str());
 	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -3429,6 +3436,9 @@ bool SendAccountRecoveryEmailRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Email_member = obj.FindMember("Email");
 	if (Email_member != NULL) Email = Email_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
 	
 	
 	return true;
