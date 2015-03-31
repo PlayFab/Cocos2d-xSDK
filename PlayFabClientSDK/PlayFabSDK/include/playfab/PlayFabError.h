@@ -99,7 +99,6 @@ namespace PlayFab
 		PlayFabErrorNoPushNotificationARNForTitle = 1083,
 		PlayFabErrorBuildAlreadyExists = 1084,
 		PlayFabErrorBuildPackageDoesNotExist = 1085,
-		PlayFabErrorBuildIsActive = 1086,
 		PlayFabErrorCustomAnalyticsEventsNotEnabledForTitle = 1087,
 		PlayFabErrorInvalidSharedGroupId = 1088,
 		PlayFabErrorNotAuthorized = 1089,
@@ -137,7 +136,16 @@ namespace PlayFab
 		PlayFabErrorDAULimitExceeded = 1129,
 		PlayFabErrorAPIRequestLimitExceeded = 1130,
 		PlayFabErrorInvalidAPIEndpoint = 1131,
-		PlayFabErrorBuildNotAvailable = 1132
+		PlayFabErrorBuildNotAvailable = 1132,
+		PlayFabErrorConcurrentEditError = 1133,
+		PlayFabErrorContentNotFound = 1134,
+		PlayFabErrorCharacterNotFound = 1135,
+		PlayFabErrorCloudScriptNotFound = 1136,
+		PlayFabErrorContentQuotaExceeded = 1137,
+		PlayFabErrorInvalidCharacterStatistics = 1138,
+		PlayFabErrorPhotonNotEnabledForTitle = 1139,
+		PlayFabErrorPhotonApplicationNotFound = 1140,
+		PlayFabErrorPhotonApplicationNotAssociatedWithTitle = 1141
     };
 
     struct PlayFabError

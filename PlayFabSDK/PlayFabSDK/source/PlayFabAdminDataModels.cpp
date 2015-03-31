@@ -817,6 +817,43 @@ bool CloudScriptVersionStatus::readFromValue(const rapidjson::Value& obj)
 }
 
 
+ContentInfo::~ContentInfo()
+{
+	
+}
+
+void ContentInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Key.length() > 0) { writer.String("Key"); writer.String(Key.c_str()); }
+	
+	writer.String("Size"); writer.Int64(Size);
+	
+	writer.String("LastModified"); writeDatetime(LastModified, writer);
+	
+	
+	writer.EndObject();
+}
+
+bool ContentInfo::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Key_member = obj.FindMember("Key");
+	if (Key_member != NULL) Key = Key_member->value.GetString();
+	
+	const Value::Member* Size_member = obj.FindMember("Size");
+	if (Size_member != NULL) Size = Size_member->value.GetInt64();
+	
+	const Value::Member* LastModified_member = obj.FindMember("LastModified");
+	if (LastModified_member != NULL) LastModified = readDatetime(LastModified_member->value);
+	
+	
+	return true;
+}
+
+
 void PlayFab::AdminModels::writeCurrencyEnumJSON(Currency enumVal, PFStringJsonWriter& writer)
 {
 	switch(enumVal)
@@ -851,6 +888,33 @@ Currency PlayFab::AdminModels::readCurrencyFromValue(const rapidjson::Value& obj
 		return CurrencyCAD;
 	
 	return CurrencyUSD;
+}
+
+
+DeleteContentRequest::~DeleteContentRequest()
+{
+	
+}
+
+void DeleteContentRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Key"); writer.String(Key.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool DeleteContentRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Key_member = obj.FindMember("Key");
+	if (Key_member != NULL) Key = Key_member->value.GetString();
+	
+	
+	return true;
 }
 
 
@@ -1103,6 +1167,141 @@ bool GetCloudScriptVersionsResult::readFromValue(const rapidjson::Value& obj)
 			Versions.push_back(CloudScriptVersionStatus(memberList[i]));
 		}
 	}
+	
+	
+	return true;
+}
+
+
+GetContentListRequest::~GetContentListRequest()
+{
+	
+}
+
+void GetContentListRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Prefix.length() > 0) { writer.String("Prefix"); writer.String(Prefix.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetContentListRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Prefix_member = obj.FindMember("Prefix");
+	if (Prefix_member != NULL) Prefix = Prefix_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+GetContentListResult::~GetContentListResult()
+{
+	
+}
+
+void GetContentListResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("ItemCount"); writer.Int64(ItemCount);
+	
+	writer.String("TotalSize"); writer.Int64(TotalSize);
+	
+	if(!Contents.empty()) {
+	writer.String("Contents");
+	writer.StartArray();
+	for (std::list<ContentInfo>::iterator iter = Contents.begin(); iter != Contents.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool GetContentListResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* ItemCount_member = obj.FindMember("ItemCount");
+	if (ItemCount_member != NULL) ItemCount = ItemCount_member->value.GetInt64();
+	
+	const Value::Member* TotalSize_member = obj.FindMember("TotalSize");
+	if (TotalSize_member != NULL) TotalSize = TotalSize_member->value.GetInt64();
+	
+	const Value::Member* Contents_member = obj.FindMember("Contents");
+	if (Contents_member != NULL) {
+		const rapidjson::Value& memberList = Contents_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Contents.push_back(ContentInfo(memberList[i]));
+		}
+	}
+	
+	
+	return true;
+}
+
+
+GetContentUploadUrlRequest::~GetContentUploadUrlRequest()
+{
+	
+}
+
+void GetContentUploadUrlRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Key"); writer.String(Key.c_str());
+	
+	if(ContentType.length() > 0) { writer.String("ContentType"); writer.String(ContentType.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetContentUploadUrlRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Key_member = obj.FindMember("Key");
+	if (Key_member != NULL) Key = Key_member->value.GetString();
+	
+	const Value::Member* ContentType_member = obj.FindMember("ContentType");
+	if (ContentType_member != NULL) ContentType = ContentType_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+GetContentUploadUrlResult::~GetContentUploadUrlResult()
+{
+	
+}
+
+void GetContentUploadUrlResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(URL.length() > 0) { writer.String("URL"); writer.String(URL.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetContentUploadUrlResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* URL_member = obj.FindMember("URL");
+	if (URL_member != NULL) URL = URL_member->value.GetString();
 	
 	
 	return true;
@@ -2265,6 +2464,8 @@ void ItemGrant::writeJSON(PFStringJsonWriter& writer)
 	
 	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
 	
+	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -2280,6 +2481,9 @@ bool ItemGrant::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Annotation_member = obj.FindMember("Annotation");
 	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
 	
 	
 	return true;
@@ -2298,14 +2502,13 @@ void GrantItemsToUsersRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
 	
-	if(!ItemGrants.empty()) {
 	writer.String("ItemGrants");
 	writer.StartArray();
 	for (std::list<ItemGrant>::iterator iter = ItemGrants.begin(); iter != ItemGrants.end(); iter++) {
 		iter->writeJSON(writer);
 	}
 	writer.EndArray();
-	 }
+	
 	
 	
 	writer.EndObject();
@@ -2350,6 +2553,8 @@ void ItemGrantResult::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("Result"); writer.Bool(Result);
 	
+	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -2371,6 +2576,9 @@ bool ItemGrantResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Result_member = obj.FindMember("Result");
 	if (Result_member != NULL) Result = Result_member->value.GetBool();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
 	
 	
 	return true;

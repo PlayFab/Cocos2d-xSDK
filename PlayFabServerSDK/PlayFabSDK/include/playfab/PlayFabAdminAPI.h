@@ -68,6 +68,9 @@ namespace PlayFab
 		typedef void(*GetCloudScriptVersionsCallback)(AdminModels::GetCloudScriptVersionsResult& result, void* userData);
 		typedef void(*SetPublishedRevisionCallback)(AdminModels::SetPublishedRevisionResult& result, void* userData);
 		typedef void(*UpdateCloudScriptCallback)(AdminModels::UpdateCloudScriptResult& result, void* userData);
+		typedef void(*DeleteContentCallback)(AdminModels::BlankResult& result, void* userData);
+		typedef void(*GetContentListCallback)(AdminModels::GetContentListResult& result, void* userData);
+		typedef void(*GetContentUploadUrlCallback)(AdminModels::GetContentUploadUrlResult& result, void* userData);
 		
 	
         PlayFabAdminAPI();
@@ -181,6 +184,12 @@ namespace PlayFab
 		
 		void UpdateCloudScript(AdminModels::UpdateCloudScriptRequest& request, UpdateCloudScriptCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void DeleteContent(AdminModels::DeleteContentRequest& request, DeleteContentCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetContentList(AdminModels::GetContentListRequest& request, GetContentListCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetContentUploadUrl(AdminModels::GetContentUploadUrlRequest& request, GetContentUploadUrlCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 
     private:
 
@@ -287,6 +296,12 @@ namespace PlayFab
 		static void OnSetPublishedRevisionResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnDeleteContentResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetContentListResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetContentUploadUrlResult(int httpStatus, HttpRequest* request, void* userData);
 		
  
         bool mOwnsRequester;

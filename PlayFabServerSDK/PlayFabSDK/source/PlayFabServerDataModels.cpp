@@ -966,6 +966,100 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
 }
 
 
+CharacterLeaderboardEntry::~CharacterLeaderboardEntry()
+{
+	
+}
+
+void CharacterLeaderboardEntry::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+	
+	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+	
+	if(CharacterName.length() > 0) { writer.String("CharacterName"); writer.String(CharacterName.c_str()); }
+	
+	if(DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
+	
+	if(CharacterType.length() > 0) { writer.String("CharacterType"); writer.String(CharacterType.c_str()); }
+	
+	writer.String("StatValue"); writer.Int(StatValue);
+	
+	writer.String("Position"); writer.Int(Position);
+	
+	
+	writer.EndObject();
+}
+
+bool CharacterLeaderboardEntry::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* CharacterName_member = obj.FindMember("CharacterName");
+	if (CharacterName_member != NULL) CharacterName = CharacterName_member->value.GetString();
+	
+	const Value::Member* DisplayName_member = obj.FindMember("DisplayName");
+	if (DisplayName_member != NULL) DisplayName = DisplayName_member->value.GetString();
+	
+	const Value::Member* CharacterType_member = obj.FindMember("CharacterType");
+	if (CharacterType_member != NULL) CharacterType = CharacterType_member->value.GetString();
+	
+	const Value::Member* StatValue_member = obj.FindMember("StatValue");
+	if (StatValue_member != NULL) StatValue = StatValue_member->value.GetInt();
+	
+	const Value::Member* Position_member = obj.FindMember("Position");
+	if (Position_member != NULL) Position = Position_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
+CharacterResult::~CharacterResult()
+{
+	
+}
+
+void CharacterResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+	
+	if(CharacterName.length() > 0) { writer.String("CharacterName"); writer.String(CharacterName.c_str()); }
+	
+	if(CharacterType.length() > 0) { writer.String("CharacterType"); writer.String(CharacterType.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool CharacterResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* CharacterName_member = obj.FindMember("CharacterName");
+	if (CharacterName_member != NULL) CharacterName = CharacterName_member->value.GetString();
+	
+	const Value::Member* CharacterType_member = obj.FindMember("CharacterType");
+	if (CharacterType_member != NULL) CharacterType = CharacterType_member->value.GetString();
+	
+	
+	return true;
+}
+
+
 CreateSharedGroupRequest::~CreateSharedGroupRequest()
 {
 	
@@ -1014,6 +1108,65 @@ bool CreateSharedGroupResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* SharedGroupId_member = obj.FindMember("SharedGroupId");
 	if (SharedGroupId_member != NULL) SharedGroupId = SharedGroupId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+DeleteCharacterFromUserRequest::~DeleteCharacterFromUserRequest()
+{
+	
+}
+
+void DeleteCharacterFromUserRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	writer.String("SaveCharacterInventory"); writer.Bool(SaveCharacterInventory);
+	
+	
+	writer.EndObject();
+}
+
+bool DeleteCharacterFromUserRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* SaveCharacterInventory_member = obj.FindMember("SaveCharacterInventory");
+	if (SaveCharacterInventory_member != NULL) SaveCharacterInventory = SaveCharacterInventory_member->value.GetBool();
+	
+	
+	return true;
+}
+
+
+DeleteCharacterFromUserResult::~DeleteCharacterFromUserResult()
+{
+	
+}
+
+void DeleteCharacterFromUserResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool DeleteCharacterFromUserResult::readFromValue(const rapidjson::Value& obj)
+{
 	
 	
 	return true;
@@ -1135,6 +1288,463 @@ bool GetCatalogItemsResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+GetCharacterDataRequest::~GetCharacterDataRequest()
+{
+	
+}
+
+void GetCharacterDataRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	if(!Keys.empty()) {
+	writer.String("Keys");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool GetCharacterDataRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* Keys_member = obj.FindMember("Keys");
+	if (Keys_member != NULL) {
+		const rapidjson::Value& memberList = Keys_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Keys.push_back(memberList[i].GetString());
+		}
+	}
+	
+	
+	return true;
+}
+
+
+void PlayFab::ServerModels::writeUserDataPermissionEnumJSON(UserDataPermission enumVal, PFStringJsonWriter& writer)
+{
+	switch(enumVal)
+	{
+		
+		case UserDataPermissionPrivate: writer.String("Private"); break;
+		case UserDataPermissionPublic: writer.String("Public"); break;
+	}
+}
+
+UserDataPermission PlayFab::ServerModels::readUserDataPermissionFromValue(const rapidjson::Value& obj)
+{
+	std::string enumStr = obj.GetString();
+	if(enumStr == "Private")
+		return UserDataPermissionPrivate;
+	else if(enumStr == "Public")
+		return UserDataPermissionPublic;
+	
+	return UserDataPermissionPrivate;
+}
+
+
+UserDataRecord::~UserDataRecord()
+{
+	
+}
+
+void UserDataRecord::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
+	
+	writer.String("LastUpdated"); writeDatetime(LastUpdated, writer);
+	
+	if(Permission.notNull()) { writer.String("Permission"); writeUserDataPermissionEnumJSON(Permission, writer); }
+	
+	
+	writer.EndObject();
+}
+
+bool UserDataRecord::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Value_member = obj.FindMember("Value");
+	if (Value_member != NULL) Value = Value_member->value.GetString();
+	
+	const Value::Member* LastUpdated_member = obj.FindMember("LastUpdated");
+	if (LastUpdated_member != NULL) LastUpdated = readDatetime(LastUpdated_member->value);
+	
+	const Value::Member* Permission_member = obj.FindMember("Permission");
+	if (Permission_member != NULL) Permission = readUserDataPermissionFromValue(Permission_member->value);
+	
+	
+	return true;
+}
+
+
+GetCharacterDataResult::~GetCharacterDataResult()
+{
+	
+}
+
+void GetCharacterDataResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+	
+	if(!Data.empty()) {
+	writer.String("Data");
+	writer.StartObject();
+	for (std::map<std::string, UserDataRecord>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+		writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+	}
+	writer.EndObject();
+	}
+	
+	
+	writer.EndObject();
+}
+
+bool GetCharacterDataResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* Data_member = obj.FindMember("Data");
+	if (Data_member != NULL) {
+		for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
+			Data[iter->name.GetString()] = UserDataRecord(iter->value);
+		}
+	}
+	
+	
+	return true;
+}
+
+
+GetCharacterLeaderboardRequest::~GetCharacterLeaderboardRequest()
+{
+	
+}
+
+void GetCharacterLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	if(CharacterType.length() > 0) { writer.String("CharacterType"); writer.String(CharacterType.c_str()); }
+	
+	writer.String("StatisticName"); writer.String(StatisticName.c_str());
+	
+	writer.String("StartPosition"); writer.Int(StartPosition);
+	
+	writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+	
+	
+	writer.EndObject();
+}
+
+bool GetCharacterLeaderboardRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* CharacterType_member = obj.FindMember("CharacterType");
+	if (CharacterType_member != NULL) CharacterType = CharacterType_member->value.GetString();
+	
+	const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+	if (StatisticName_member != NULL) StatisticName = StatisticName_member->value.GetString();
+	
+	const Value::Member* StartPosition_member = obj.FindMember("StartPosition");
+	if (StartPosition_member != NULL) StartPosition = StartPosition_member->value.GetInt();
+	
+	const Value::Member* MaxResultsCount_member = obj.FindMember("MaxResultsCount");
+	if (MaxResultsCount_member != NULL) MaxResultsCount = MaxResultsCount_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
+GetCharacterLeaderboardResult::~GetCharacterLeaderboardResult()
+{
+	
+}
+
+void GetCharacterLeaderboardResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!Leaderboard.empty()) {
+	writer.String("Leaderboard");
+	writer.StartArray();
+	for (std::list<CharacterLeaderboardEntry>::iterator iter = Leaderboard.begin(); iter != Leaderboard.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool GetCharacterLeaderboardResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Leaderboard_member = obj.FindMember("Leaderboard");
+	if (Leaderboard_member != NULL) {
+		const rapidjson::Value& memberList = Leaderboard_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Leaderboard.push_back(CharacterLeaderboardEntry(memberList[i]));
+		}
+	}
+	
+	
+	return true;
+}
+
+
+GetCharacterStatisticsRequest::~GetCharacterStatisticsRequest()
+{
+	
+}
+
+void GetCharacterStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool GetCharacterStatisticsRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+GetCharacterStatisticsResult::~GetCharacterStatisticsResult()
+{
+	
+}
+
+void GetCharacterStatisticsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!CharacterStatistics.empty()) {
+	writer.String("CharacterStatistics");
+	writer.StartObject();
+	for (std::map<std::string, Int32>::iterator iter = CharacterStatistics.begin(); iter != CharacterStatistics.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.Int(iter->second);
+	}
+	writer.EndObject();
+	}
+	
+	
+	writer.EndObject();
+}
+
+bool GetCharacterStatisticsResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* CharacterStatistics_member = obj.FindMember("CharacterStatistics");
+	if (CharacterStatistics_member != NULL) {
+		for (Value::ConstMemberIterator iter = CharacterStatistics_member->value.MemberBegin(); iter != CharacterStatistics_member->value.MemberEnd(); ++iter) {
+			CharacterStatistics[iter->name.GetString()] = iter->value.GetInt();
+		}
+	}
+	
+	
+	return true;
+}
+
+
+GetContentDownloadUrlRequest::~GetContentDownloadUrlRequest()
+{
+	
+}
+
+void GetContentDownloadUrlRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("Key"); writer.String(Key.c_str());
+	
+	if(HttpMethod.length() > 0) { writer.String("HttpMethod"); writer.String(HttpMethod.c_str()); }
+	
+	if(ThruCDN.notNull()) { writer.String("ThruCDN"); writer.Bool(ThruCDN); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetContentDownloadUrlRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Key_member = obj.FindMember("Key");
+	if (Key_member != NULL) Key = Key_member->value.GetString();
+	
+	const Value::Member* HttpMethod_member = obj.FindMember("HttpMethod");
+	if (HttpMethod_member != NULL) HttpMethod = HttpMethod_member->value.GetString();
+	
+	const Value::Member* ThruCDN_member = obj.FindMember("ThruCDN");
+	if (ThruCDN_member != NULL) ThruCDN = ThruCDN_member->value.GetBool();
+	
+	
+	return true;
+}
+
+
+GetContentDownloadUrlResult::~GetContentDownloadUrlResult()
+{
+	
+}
+
+void GetContentDownloadUrlResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(URL.length() > 0) { writer.String("URL"); writer.String(URL.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetContentDownloadUrlResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* URL_member = obj.FindMember("URL");
+	if (URL_member != NULL) URL = URL_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+GetLeaderboardAroundCharacterRequest::~GetLeaderboardAroundCharacterRequest()
+{
+	
+}
+
+void GetLeaderboardAroundCharacterRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("StatisticName"); writer.String(StatisticName.c_str());
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	if(CharacterType.length() > 0) { writer.String("CharacterType"); writer.String(CharacterType.c_str()); }
+	
+	writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+	
+	
+	writer.EndObject();
+}
+
+bool GetLeaderboardAroundCharacterRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+	if (StatisticName_member != NULL) StatisticName = StatisticName_member->value.GetString();
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* CharacterType_member = obj.FindMember("CharacterType");
+	if (CharacterType_member != NULL) CharacterType = CharacterType_member->value.GetString();
+	
+	const Value::Member* MaxResultsCount_member = obj.FindMember("MaxResultsCount");
+	if (MaxResultsCount_member != NULL) MaxResultsCount = MaxResultsCount_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
+GetLeaderboardAroundCharacterResult::~GetLeaderboardAroundCharacterResult()
+{
+	
+}
+
+void GetLeaderboardAroundCharacterResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!Leaderboard.empty()) {
+	writer.String("Leaderboard");
+	writer.StartArray();
+	for (std::list<CharacterLeaderboardEntry>::iterator iter = Leaderboard.begin(); iter != Leaderboard.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool GetLeaderboardAroundCharacterResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Leaderboard_member = obj.FindMember("Leaderboard");
+	if (Leaderboard_member != NULL) {
+		const rapidjson::Value& memberList = Leaderboard_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Leaderboard.push_back(CharacterLeaderboardEntry(memberList[i]));
+		}
+	}
+	
+	
+	return true;
+}
+
+
 GetLeaderboardAroundUserRequest::~GetLeaderboardAroundUserRequest()
 {
 	
@@ -1245,6 +1855,82 @@ bool GetLeaderboardAroundUserResult::readFromValue(const rapidjson::Value& obj)
 		const rapidjson::Value& memberList = Leaderboard_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
 			Leaderboard.push_back(PlayerLeaderboardEntry(memberList[i]));
+		}
+	}
+	
+	
+	return true;
+}
+
+
+GetLeaderboardForUsersCharactersRequest::~GetLeaderboardForUsersCharactersRequest()
+{
+	
+}
+
+void GetLeaderboardForUsersCharactersRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("StatisticName"); writer.String(StatisticName.c_str());
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+	
+	
+	writer.EndObject();
+}
+
+bool GetLeaderboardForUsersCharactersRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+	if (StatisticName_member != NULL) StatisticName = StatisticName_member->value.GetString();
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* MaxResultsCount_member = obj.FindMember("MaxResultsCount");
+	if (MaxResultsCount_member != NULL) MaxResultsCount = MaxResultsCount_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
+GetLeaderboardForUsersCharactersResult::~GetLeaderboardForUsersCharactersResult()
+{
+	
+}
+
+void GetLeaderboardForUsersCharactersResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!Leaderboard.empty()) {
+	writer.String("Leaderboard");
+	writer.StartArray();
+	for (std::list<CharacterLeaderboardEntry>::iterator iter = Leaderboard.begin(); iter != Leaderboard.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool GetLeaderboardForUsersCharactersResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Leaderboard_member = obj.FindMember("Leaderboard");
+	if (Leaderboard_member != NULL) {
+		const rapidjson::Value& memberList = Leaderboard_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Leaderboard.push_back(CharacterLeaderboardEntry(memberList[i]));
 		}
 	}
 	
@@ -1451,28 +2137,6 @@ bool GetSharedGroupDataRequest::readFromValue(const rapidjson::Value& obj)
 	
 	
 	return true;
-}
-
-
-void PlayFab::ServerModels::writeUserDataPermissionEnumJSON(UserDataPermission enumVal, PFStringJsonWriter& writer)
-{
-	switch(enumVal)
-	{
-		
-		case UserDataPermissionPrivate: writer.String("Private"); break;
-		case UserDataPermissionPublic: writer.String("Public"); break;
-	}
-}
-
-UserDataPermission PlayFab::ServerModels::readUserDataPermissionFromValue(const rapidjson::Value& obj)
-{
-	std::string enumStr = obj.GetString();
-	if(enumStr == "Private")
-		return UserDataPermissionPrivate;
-	else if(enumStr == "Public")
-		return UserDataPermissionPublic;
-	
-	return UserDataPermissionPrivate;
 }
 
 
@@ -1748,43 +2412,6 @@ bool GetUserDataRequest::readFromValue(const rapidjson::Value& obj)
 }
 
 
-UserDataRecord::~UserDataRecord()
-{
-	
-}
-
-void UserDataRecord::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	if(Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
-	
-	writer.String("LastUpdated"); writeDatetime(LastUpdated, writer);
-	
-	if(Permission.notNull()) { writer.String("Permission"); writeUserDataPermissionEnumJSON(Permission, writer); }
-	
-	
-	writer.EndObject();
-}
-
-bool UserDataRecord::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* Value_member = obj.FindMember("Value");
-	if (Value_member != NULL) Value = Value_member->value.GetString();
-	
-	const Value::Member* LastUpdated_member = obj.FindMember("LastUpdated");
-	if (LastUpdated_member != NULL) LastUpdated = readDatetime(LastUpdated_member->value);
-	
-	const Value::Member* Permission_member = obj.FindMember("Permission");
-	if (Permission_member != NULL) Permission = readUserDataPermissionFromValue(Permission_member->value);
-	
-	
-	return true;
-}
-
-
 GetUserDataResult::~GetUserDataResult()
 {
 	
@@ -2047,6 +2674,220 @@ bool GetUserStatisticsResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+GrantCharacterToUserRequest::~GrantCharacterToUserRequest()
+{
+	
+}
+
+void GrantCharacterToUserRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterName"); writer.String(CharacterName.c_str());
+	
+	writer.String("CharacterType"); writer.String(CharacterType.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool GrantCharacterToUserRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterName_member = obj.FindMember("CharacterName");
+	if (CharacterName_member != NULL) CharacterName = CharacterName_member->value.GetString();
+	
+	const Value::Member* CharacterType_member = obj.FindMember("CharacterType");
+	if (CharacterType_member != NULL) CharacterType = CharacterType_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+GrantCharacterToUserResult::~GrantCharacterToUserResult()
+{
+	
+}
+
+void GrantCharacterToUserResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool GrantCharacterToUserResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+GrantItemsToCharacterRequest::~GrantItemsToCharacterRequest()
+{
+	
+}
+
+void GrantItemsToCharacterRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
+	
+	if(!ItemIds.empty()) {
+	writer.String("ItemIds");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = ItemIds.begin(); iter != ItemIds.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool GrantItemsToCharacterRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
+	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* Annotation_member = obj.FindMember("Annotation");
+	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
+	
+	const Value::Member* ItemIds_member = obj.FindMember("ItemIds");
+	if (ItemIds_member != NULL) {
+		const rapidjson::Value& memberList = ItemIds_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			ItemIds.push_back(memberList[i].GetString());
+		}
+	}
+	
+	
+	return true;
+}
+
+
+ItemGrantResult::~ItemGrantResult()
+{
+	
+}
+
+void ItemGrantResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+	
+	if(ItemId.length() > 0) { writer.String("ItemId"); writer.String(ItemId.c_str()); }
+	
+	if(ItemInstanceId.length() > 0) { writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str()); }
+	
+	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
+	
+	writer.String("Result"); writer.Bool(Result);
+	
+	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool ItemGrantResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* ItemId_member = obj.FindMember("ItemId");
+	if (ItemId_member != NULL) ItemId = ItemId_member->value.GetString();
+	
+	const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+	if (ItemInstanceId_member != NULL) ItemInstanceId = ItemInstanceId_member->value.GetString();
+	
+	const Value::Member* Annotation_member = obj.FindMember("Annotation");
+	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
+	
+	const Value::Member* Result_member = obj.FindMember("Result");
+	if (Result_member != NULL) Result = Result_member->value.GetBool();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+GrantItemsToCharacterResult::~GrantItemsToCharacterResult()
+{
+	
+}
+
+void GrantItemsToCharacterResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!ItemGrantResults.empty()) {
+	writer.String("ItemGrantResults");
+	writer.StartArray();
+	for (std::list<ItemGrantResult>::iterator iter = ItemGrantResults.begin(); iter != ItemGrantResults.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool GrantItemsToCharacterResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* ItemGrantResults_member = obj.FindMember("ItemGrantResults");
+	if (ItemGrantResults_member != NULL) {
+		const rapidjson::Value& memberList = ItemGrantResults_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			ItemGrantResults.push_back(ItemGrantResult(memberList[i]));
+		}
+	}
+	
+	
+	return true;
+}
+
+
 GrantItemsToUserRequest::~GrantItemsToUserRequest()
 {
 	
@@ -2095,53 +2936,6 @@ bool GrantItemsToUserRequest::readFromValue(const rapidjson::Value& obj)
 			ItemIds.push_back(memberList[i].GetString());
 		}
 	}
-	
-	
-	return true;
-}
-
-
-ItemGrantResult::~ItemGrantResult()
-{
-	
-}
-
-void ItemGrantResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
-	
-	if(ItemId.length() > 0) { writer.String("ItemId"); writer.String(ItemId.c_str()); }
-	
-	if(ItemInstanceId.length() > 0) { writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str()); }
-	
-	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
-	
-	writer.String("Result"); writer.Bool(Result);
-	
-	
-	writer.EndObject();
-}
-
-bool ItemGrantResult::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
-	
-	const Value::Member* ItemId_member = obj.FindMember("ItemId");
-	if (ItemId_member != NULL) ItemId = ItemId_member->value.GetString();
-	
-	const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
-	if (ItemInstanceId_member != NULL) ItemInstanceId = ItemInstanceId_member->value.GetString();
-	
-	const Value::Member* Annotation_member = obj.FindMember("Annotation");
-	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
-	
-	const Value::Member* Result_member = obj.FindMember("Result");
-	if (Result_member != NULL) Result = Result_member->value.GetBool();
 	
 	
 	return true;
@@ -2203,6 +2997,8 @@ void ItemGrant::writeJSON(PFStringJsonWriter& writer)
 	
 	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
 	
+	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -2218,6 +3014,9 @@ bool ItemGrant::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Annotation_member = obj.FindMember("Annotation");
 	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
 	
 	
 	return true;
@@ -2236,14 +3035,13 @@ void GrantItemsToUsersRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
 	
-	if(!ItemGrants.empty()) {
 	writer.String("ItemGrants");
 	writer.StartArray();
 	for (std::list<ItemGrant>::iterator iter = ItemGrants.begin(); iter != ItemGrants.end(); iter++) {
 		iter->writeJSON(writer);
 	}
 	writer.EndArray();
-	 }
+	
 	
 	
 	writer.EndObject();
@@ -2301,6 +3099,162 @@ bool GrantItemsToUsersResult::readFromValue(const rapidjson::Value& obj)
 			ItemGrantResults.push_back(ItemGrantResult(memberList[i]));
 		}
 	}
+	
+	
+	return true;
+}
+
+
+ListUsersCharactersRequest::~ListUsersCharactersRequest()
+{
+	
+}
+
+void ListUsersCharactersRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool ListUsersCharactersRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+ListUsersCharactersResult::~ListUsersCharactersResult()
+{
+	
+}
+
+void ListUsersCharactersResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!Characters.empty()) {
+	writer.String("Characters");
+	writer.StartArray();
+	for (std::list<CharacterResult>::iterator iter = Characters.begin(); iter != Characters.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool ListUsersCharactersResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Characters_member = obj.FindMember("Characters");
+	if (Characters_member != NULL) {
+		const rapidjson::Value& memberList = Characters_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Characters.push_back(CharacterResult(memberList[i]));
+		}
+	}
+	
+	
+	return true;
+}
+
+
+LogEventRequest::~LogEventRequest()
+{
+	
+}
+
+void LogEventRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+	
+	if(EntityId.length() > 0) { writer.String("EntityId"); writer.String(EntityId.c_str()); }
+	
+	if(EntityType.length() > 0) { writer.String("EntityType"); writer.String(EntityType.c_str()); }
+	
+	if(Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
+	
+	if(EventName.length() > 0) { writer.String("EventName"); writer.String(EventName.c_str()); }
+	
+	if(!Body.empty()) {
+	writer.String("Body");
+	writer.StartObject();
+	for (std::map<std::string, MultitypeVar>::iterator iter = Body.begin(); iter != Body.end(); ++iter) {
+		writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+	}
+	writer.EndObject();
+	}
+	
+	writer.String("ProfileSetEvent"); writer.Bool(ProfileSetEvent);
+	
+	
+	writer.EndObject();
+}
+
+bool LogEventRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* EntityId_member = obj.FindMember("EntityId");
+	if (EntityId_member != NULL) EntityId = EntityId_member->value.GetString();
+	
+	const Value::Member* EntityType_member = obj.FindMember("EntityType");
+	if (EntityType_member != NULL) EntityType = EntityType_member->value.GetString();
+	
+	const Value::Member* Timestamp_member = obj.FindMember("Timestamp");
+	if (Timestamp_member != NULL) Timestamp = readDatetime(Timestamp_member->value);
+	
+	const Value::Member* EventName_member = obj.FindMember("EventName");
+	if (EventName_member != NULL) EventName = EventName_member->value.GetString();
+	
+	const Value::Member* Body_member = obj.FindMember("Body");
+	if (Body_member != NULL) {
+		for (Value::ConstMemberIterator iter = Body_member->value.MemberBegin(); iter != Body_member->value.MemberEnd(); ++iter) {
+			Body[iter->name.GetString()] = MultitypeVar(iter->value);
+		}
+	}
+	
+	const Value::Member* ProfileSetEvent_member = obj.FindMember("ProfileSetEvent");
+	if (ProfileSetEvent_member != NULL) ProfileSetEvent = ProfileSetEvent_member->value.GetBool();
+	
+	
+	return true;
+}
+
+
+LogEventResult::~LogEventResult()
+{
+	
+}
+
+void LogEventResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool LogEventResult::readFromValue(const rapidjson::Value& obj)
+{
 	
 	
 	return true;
@@ -2402,6 +3356,188 @@ bool ModifyUserVirtualCurrencyResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Balance_member = obj.FindMember("Balance");
 	if (Balance_member != NULL) Balance = Balance_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
+MoveItemToCharacterFromCharacterRequest::~MoveItemToCharacterFromCharacterRequest()
+{
+	
+}
+
+void MoveItemToCharacterFromCharacterRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("GivingCharacterId"); writer.String(GivingCharacterId.c_str());
+	
+	writer.String("ReceivingCharacterId"); writer.String(ReceivingCharacterId.c_str());
+	
+	writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool MoveItemToCharacterFromCharacterRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* GivingCharacterId_member = obj.FindMember("GivingCharacterId");
+	if (GivingCharacterId_member != NULL) GivingCharacterId = GivingCharacterId_member->value.GetString();
+	
+	const Value::Member* ReceivingCharacterId_member = obj.FindMember("ReceivingCharacterId");
+	if (ReceivingCharacterId_member != NULL) ReceivingCharacterId = ReceivingCharacterId_member->value.GetString();
+	
+	const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+	if (ItemInstanceId_member != NULL) ItemInstanceId = ItemInstanceId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+MoveItemToCharacterFromCharacterResult::~MoveItemToCharacterFromCharacterResult()
+{
+	
+}
+
+void MoveItemToCharacterFromCharacterResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool MoveItemToCharacterFromCharacterResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
+MoveItemToCharacterFromUserRequest::~MoveItemToCharacterFromUserRequest()
+{
+	
+}
+
+void MoveItemToCharacterFromUserRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool MoveItemToCharacterFromUserRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+	if (ItemInstanceId_member != NULL) ItemInstanceId = ItemInstanceId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+MoveItemToCharacterFromUserResult::~MoveItemToCharacterFromUserResult()
+{
+	
+}
+
+void MoveItemToCharacterFromUserResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool MoveItemToCharacterFromUserResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
+MoveItemToUserFromCharacterRequest::~MoveItemToUserFromCharacterRequest()
+{
+	
+}
+
+void MoveItemToUserFromCharacterRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool MoveItemToUserFromCharacterRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+	if (ItemInstanceId_member != NULL) ItemInstanceId = ItemInstanceId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+MoveItemToUserFromCharacterResult::~MoveItemToUserFromCharacterResult()
+{
+	
+}
+
+void MoveItemToUserFromCharacterResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool MoveItemToUserFromCharacterResult::readFromValue(const rapidjson::Value& obj)
+{
 	
 	
 	return true;
@@ -2906,6 +4042,151 @@ bool SubtractUserVirtualCurrencyRequest::readFromValue(const rapidjson::Value& o
 	
 	const Value::Member* Amount_member = obj.FindMember("Amount");
 	if (Amount_member != NULL) Amount = Amount_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
+UpdateCharacterDataRequest::~UpdateCharacterDataRequest()
+{
+	
+}
+
+void UpdateCharacterDataRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	if(!Data.empty()) {
+	writer.String("Data");
+	writer.StartObject();
+	for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+	}
+	writer.EndObject();
+	}
+	
+	if(Permission.notNull()) { writer.String("Permission"); writeUserDataPermissionEnumJSON(Permission, writer); }
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateCharacterDataRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* Data_member = obj.FindMember("Data");
+	if (Data_member != NULL) {
+		for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
+			Data[iter->name.GetString()] = iter->value.GetString();
+		}
+	}
+	
+	const Value::Member* Permission_member = obj.FindMember("Permission");
+	if (Permission_member != NULL) Permission = readUserDataPermissionFromValue(Permission_member->value);
+	
+	
+	return true;
+}
+
+
+UpdateCharacterDataResult::~UpdateCharacterDataResult()
+{
+	
+}
+
+void UpdateCharacterDataResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateCharacterDataResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
+UpdateCharacterStatisticsRequest::~UpdateCharacterStatisticsRequest()
+{
+	
+}
+
+void UpdateCharacterStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	if(!CharacterStatistics.empty()) {
+	writer.String("CharacterStatistics");
+	writer.StartObject();
+	for (std::map<std::string, Int32>::iterator iter = CharacterStatistics.begin(); iter != CharacterStatistics.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.Int(iter->second);
+	}
+	writer.EndObject();
+	}
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateCharacterStatisticsRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* CharacterStatistics_member = obj.FindMember("CharacterStatistics");
+	if (CharacterStatistics_member != NULL) {
+		for (Value::ConstMemberIterator iter = CharacterStatistics_member->value.MemberBegin(); iter != CharacterStatistics_member->value.MemberEnd(); ++iter) {
+			CharacterStatistics[iter->name.GetString()] = iter->value.GetInt();
+		}
+	}
+	
+	
+	return true;
+}
+
+
+UpdateCharacterStatisticsResult::~UpdateCharacterStatisticsResult()
+{
+	
+}
+
+void UpdateCharacterStatisticsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateCharacterStatisticsResult::readFromValue(const rapidjson::Value& obj)
+{
 	
 	
 	return true;

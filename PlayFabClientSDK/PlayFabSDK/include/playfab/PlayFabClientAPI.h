@@ -17,10 +17,10 @@ namespace PlayFab
     {
     public:
 		
+		typedef void(*GetPhotonAuthenticationTokenCallback)(ClientModels::GetPhotonAuthenticationTokenResult& result, void* userData);
 		typedef void(*LoginWithAndroidDeviceIDCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithEmailAddressCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithFacebookCallback)(ClientModels::LoginResult& result, void* userData);
-		typedef void(*LoginWithGameCenterCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithGoogleAccountCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithIOSDeviceIDCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithPlayFabCallback)(ClientModels::LoginResult& result, void* userData);
@@ -91,6 +91,14 @@ namespace PlayFab
 		typedef void(*RefreshPSNAuthTokenCallback)(ClientModels::EmptyResult& result, void* userData);
 		typedef void(*GetCloudScriptUrlCallback)(ClientModels::GetCloudScriptUrlResult& result, void* userData);
 		typedef void(*RunCloudScriptCallback)(ClientModels::RunCloudScriptResult& result, void* userData);
+		typedef void(*GetContentDownloadUrlCallback)(ClientModels::GetContentDownloadUrlResult& result, void* userData);
+		typedef void(*GetCharacterLeaderboardCallback)(ClientModels::GetCharacterLeaderboardResult& result, void* userData);
+		typedef void(*GetLeaderboardAroundCharacterCallback)(ClientModels::GetLeaderboardAroundCharacterResult& result, void* userData);
+		typedef void(*GetLeaderboardForUserCharactersCallback)(ClientModels::GetLeaderboardForUsersCharactersResult& result, void* userData);
+		typedef void(*GrantCharacterToUserCallback)(ClientModels::GrantCharacterToUserResult& result, void* userData);
+		typedef void(*GetCharacterDataCallback)(ClientModels::GetCharacterDataResult& result, void* userData);
+		typedef void(*GetCharacterReadOnlyDataCallback)(ClientModels::GetCharacterDataResult& result, void* userData);
+		typedef void(*UpdateCharacterDataCallback)(ClientModels::UpdateCharacterDataResult& result, void* userData);
 		
 	
         PlayFabClientAPI();
@@ -102,13 +110,13 @@ namespace PlayFab
 
         // ------------ Generated API calls
 		
+		void GetPhotonAuthenticationToken(ClientModels::GetPhotonAuthenticationTokenRequest& request, GetPhotonAuthenticationTokenCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void LoginWithAndroidDeviceID(ClientModels::LoginWithAndroidDeviceIDRequest& request, LoginWithAndroidDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void LoginWithEmailAddress(ClientModels::LoginWithEmailAddressRequest& request, LoginWithEmailAddressCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void LoginWithFacebook(ClientModels::LoginWithFacebookRequest& request, LoginWithFacebookCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
-		
-		void LoginWithGameCenter(ClientModels::LoginWithGameCenterRequest& request, LoginWithGameCenterCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void LoginWithGoogleAccount(ClientModels::LoginWithGoogleAccountRequest& request, LoginWithGoogleAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -250,18 +258,34 @@ namespace PlayFab
 		
 		void RunCloudScript(ClientModels::RunCloudScriptRequest& request, RunCloudScriptCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void GetContentDownloadUrl(ClientModels::GetContentDownloadUrlRequest& request, GetContentDownloadUrlCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetCharacterLeaderboard(ClientModels::GetCharacterLeaderboardRequest& request, GetCharacterLeaderboardCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetLeaderboardAroundCharacter(ClientModels::GetLeaderboardAroundCharacterRequest& request, GetLeaderboardAroundCharacterCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetLeaderboardForUserCharacters(ClientModels::GetLeaderboardForUsersCharactersRequest& request, GetLeaderboardForUserCharactersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GrantCharacterToUser(ClientModels::GrantCharacterToUserRequest& request, GrantCharacterToUserCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetCharacterData(ClientModels::GetCharacterDataRequest& request, GetCharacterDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetCharacterReadOnlyData(ClientModels::GetCharacterDataRequest& request, GetCharacterReadOnlyDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UpdateCharacterData(ClientModels::UpdateCharacterDataRequest& request, UpdateCharacterDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 
     private:
 
         // ------------ Generated result handlers
+		
+		static void OnGetPhotonAuthenticationTokenResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnLoginWithEmailAddressResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnLoginWithFacebookResult(int httpStatus, HttpRequest* request, void* userData);
-		
-		static void OnLoginWithGameCenterResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnLoginWithGoogleAccountResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -402,6 +426,22 @@ namespace PlayFab
 		static void OnGetCloudScriptUrlResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnRunCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetContentDownloadUrlResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCharacterLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetLeaderboardAroundCharacterResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetLeaderboardForUserCharactersResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGrantCharacterToUserResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUpdateCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
  
         bool mOwnsRequester;

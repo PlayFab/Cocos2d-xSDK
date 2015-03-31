@@ -478,6 +478,50 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct CharacterLeaderboardEntry : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string CharacterId;
+		std::string CharacterName;
+		std::string DisplayName;
+		std::string CharacterType;
+		Int32 StatValue;
+		Int32 Position;
+	
+        CharacterLeaderboardEntry() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			CharacterName(),
+			DisplayName(),
+			CharacterType(),
+			StatValue(0),
+			Position(0)
+			{}
+		
+		CharacterLeaderboardEntry(const CharacterLeaderboardEntry& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			CharacterName(src.CharacterName),
+			DisplayName(src.DisplayName),
+			CharacterType(src.CharacterType),
+			StatValue(src.StatValue),
+			Position(src.Position)
+			{}
+			
+		CharacterLeaderboardEntry(const rapidjson::Value& obj) : CharacterLeaderboardEntry()
+        {
+            readFromValue(obj);
+        }
+		
+		~CharacterLeaderboardEntry();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct ConfirmPurchaseRequest : public PlayFabBaseModel
     {
 		
@@ -1356,6 +1400,128 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GetCharacterDataRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string CharacterId;
+		std::list<std::string> Keys;
+	
+        GetCharacterDataRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			Keys()
+			{}
+		
+		GetCharacterDataRequest(const GetCharacterDataRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			Keys(src.Keys)
+			{}
+			
+		GetCharacterDataRequest(const rapidjson::Value& obj) : GetCharacterDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCharacterDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCharacterDataResult : public PlayFabBaseModel
+    {
+		
+		std::string CharacterId;
+	
+        GetCharacterDataResult() :
+			PlayFabBaseModel(),
+			CharacterId()
+			{}
+		
+		GetCharacterDataResult(const GetCharacterDataResult& src) :
+			PlayFabBaseModel(),
+			CharacterId(src.CharacterId)
+			{}
+			
+		GetCharacterDataResult(const rapidjson::Value& obj) : GetCharacterDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCharacterDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCharacterLeaderboardRequest : public PlayFabBaseModel
+    {
+		
+		std::string CharacterId;
+		std::string CharacterType;
+		std::string StatisticName;
+		Int32 StartPosition;
+		Int32 MaxResultsCount;
+	
+        GetCharacterLeaderboardRequest() :
+			PlayFabBaseModel(),
+			CharacterId(),
+			CharacterType(),
+			StatisticName(),
+			StartPosition(0),
+			MaxResultsCount(0)
+			{}
+		
+		GetCharacterLeaderboardRequest(const GetCharacterLeaderboardRequest& src) :
+			PlayFabBaseModel(),
+			CharacterId(src.CharacterId),
+			CharacterType(src.CharacterType),
+			StatisticName(src.StatisticName),
+			StartPosition(src.StartPosition),
+			MaxResultsCount(src.MaxResultsCount)
+			{}
+			
+		GetCharacterLeaderboardRequest(const rapidjson::Value& obj) : GetCharacterLeaderboardRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCharacterLeaderboardRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCharacterLeaderboardResult : public PlayFabBaseModel
+    {
+		
+		std::list<CharacterLeaderboardEntry> Leaderboard;
+	
+        GetCharacterLeaderboardResult() :
+			PlayFabBaseModel(),
+			Leaderboard()
+			{}
+		
+		GetCharacterLeaderboardResult(const GetCharacterLeaderboardResult& src) :
+			PlayFabBaseModel(),
+			Leaderboard(src.Leaderboard)
+			{}
+			
+		GetCharacterLeaderboardResult(const rapidjson::Value& obj) : GetCharacterLeaderboardResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCharacterLeaderboardResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetCloudScriptUrlRequest : public PlayFabBaseModel
     {
 		
@@ -1406,6 +1572,64 @@ namespace ClientModels
         }
 		
 		~GetCloudScriptUrlResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetContentDownloadUrlRequest : public PlayFabBaseModel
+    {
+		
+		std::string Key;
+		std::string HttpMethod;
+		OptionalBool ThruCDN;
+	
+        GetContentDownloadUrlRequest() :
+			PlayFabBaseModel(),
+			Key(),
+			HttpMethod(),
+			ThruCDN()
+			{}
+		
+		GetContentDownloadUrlRequest(const GetContentDownloadUrlRequest& src) :
+			PlayFabBaseModel(),
+			Key(src.Key),
+			HttpMethod(src.HttpMethod),
+			ThruCDN(src.ThruCDN)
+			{}
+			
+		GetContentDownloadUrlRequest(const rapidjson::Value& obj) : GetContentDownloadUrlRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetContentDownloadUrlRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetContentDownloadUrlResult : public PlayFabBaseModel
+    {
+		
+		std::string URL;
+	
+        GetContentDownloadUrlResult() :
+			PlayFabBaseModel(),
+			URL()
+			{}
+		
+		GetContentDownloadUrlResult(const GetContentDownloadUrlResult& src) :
+			PlayFabBaseModel(),
+			URL(src.URL)
+			{}
+			
+		GetContentDownloadUrlResult(const rapidjson::Value& obj) : GetContentDownloadUrlResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetContentDownloadUrlResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1490,6 +1714,67 @@ namespace ClientModels
         }
 		
 		~GetFriendsListResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetLeaderboardAroundCharacterRequest : public PlayFabBaseModel
+    {
+		
+		std::string StatisticName;
+		std::string CharacterId;
+		std::string CharacterType;
+		Int32 MaxResultsCount;
+	
+        GetLeaderboardAroundCharacterRequest() :
+			PlayFabBaseModel(),
+			StatisticName(),
+			CharacterId(),
+			CharacterType(),
+			MaxResultsCount(0)
+			{}
+		
+		GetLeaderboardAroundCharacterRequest(const GetLeaderboardAroundCharacterRequest& src) :
+			PlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			CharacterId(src.CharacterId),
+			CharacterType(src.CharacterType),
+			MaxResultsCount(src.MaxResultsCount)
+			{}
+			
+		GetLeaderboardAroundCharacterRequest(const rapidjson::Value& obj) : GetLeaderboardAroundCharacterRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetLeaderboardAroundCharacterRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetLeaderboardAroundCharacterResult : public PlayFabBaseModel
+    {
+		
+		std::list<CharacterLeaderboardEntry> Leaderboard;
+	
+        GetLeaderboardAroundCharacterResult() :
+			PlayFabBaseModel(),
+			Leaderboard()
+			{}
+		
+		GetLeaderboardAroundCharacterResult(const GetLeaderboardAroundCharacterResult& src) :
+			PlayFabBaseModel(),
+			Leaderboard(src.Leaderboard)
+			{}
+			
+		GetLeaderboardAroundCharacterResult(const rapidjson::Value& obj) : GetLeaderboardAroundCharacterResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetLeaderboardAroundCharacterResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1585,6 +1870,61 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GetLeaderboardForUsersCharactersRequest : public PlayFabBaseModel
+    {
+		
+		std::string StatisticName;
+		Int32 MaxResultsCount;
+	
+        GetLeaderboardForUsersCharactersRequest() :
+			PlayFabBaseModel(),
+			StatisticName(),
+			MaxResultsCount(0)
+			{}
+		
+		GetLeaderboardForUsersCharactersRequest(const GetLeaderboardForUsersCharactersRequest& src) :
+			PlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			MaxResultsCount(src.MaxResultsCount)
+			{}
+			
+		GetLeaderboardForUsersCharactersRequest(const rapidjson::Value& obj) : GetLeaderboardForUsersCharactersRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetLeaderboardForUsersCharactersRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetLeaderboardForUsersCharactersResult : public PlayFabBaseModel
+    {
+		
+		std::list<CharacterLeaderboardEntry> Leaderboard;
+	
+        GetLeaderboardForUsersCharactersResult() :
+			PlayFabBaseModel(),
+			Leaderboard()
+			{}
+		
+		GetLeaderboardForUsersCharactersResult(const GetLeaderboardForUsersCharactersResult& src) :
+			PlayFabBaseModel(),
+			Leaderboard(src.Leaderboard)
+			{}
+			
+		GetLeaderboardForUsersCharactersResult(const rapidjson::Value& obj) : GetLeaderboardForUsersCharactersResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetLeaderboardForUsersCharactersResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetLeaderboardRequest : public PlayFabBaseModel
     {
 		
@@ -1638,6 +1978,58 @@ namespace ClientModels
         }
 		
 		~GetLeaderboardResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetPhotonAuthenticationTokenRequest : public PlayFabBaseModel
+    {
+		
+		std::string PhotonApplicationId;
+	
+        GetPhotonAuthenticationTokenRequest() :
+			PlayFabBaseModel(),
+			PhotonApplicationId()
+			{}
+		
+		GetPhotonAuthenticationTokenRequest(const GetPhotonAuthenticationTokenRequest& src) :
+			PlayFabBaseModel(),
+			PhotonApplicationId(src.PhotonApplicationId)
+			{}
+			
+		GetPhotonAuthenticationTokenRequest(const rapidjson::Value& obj) : GetPhotonAuthenticationTokenRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetPhotonAuthenticationTokenRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetPhotonAuthenticationTokenResult : public PlayFabBaseModel
+    {
+		
+		std::string PhotonCustomAuthenticationToken;
+	
+        GetPhotonAuthenticationTokenResult() :
+			PlayFabBaseModel(),
+			PhotonCustomAuthenticationToken()
+			{}
+		
+		GetPhotonAuthenticationTokenResult(const GetPhotonAuthenticationTokenResult& src) :
+			PlayFabBaseModel(),
+			PhotonCustomAuthenticationToken(src.PhotonCustomAuthenticationToken)
+			{}
+			
+		GetPhotonAuthenticationTokenResult(const rapidjson::Value& obj) : GetPhotonAuthenticationTokenResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetPhotonAuthenticationTokenResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -2405,6 +2797,73 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GrantCharacterToUserRequest : public PlayFabBaseModel
+    {
+		
+		std::string CatalogVersion;
+		std::string PlayFabId;
+		std::string ItemId;
+		std::string CharacterName;
+	
+        GrantCharacterToUserRequest() :
+			PlayFabBaseModel(),
+			CatalogVersion(),
+			PlayFabId(),
+			ItemId(),
+			CharacterName()
+			{}
+		
+		GrantCharacterToUserRequest(const GrantCharacterToUserRequest& src) :
+			PlayFabBaseModel(),
+			CatalogVersion(src.CatalogVersion),
+			PlayFabId(src.PlayFabId),
+			ItemId(src.ItemId),
+			CharacterName(src.CharacterName)
+			{}
+			
+		GrantCharacterToUserRequest(const rapidjson::Value& obj) : GrantCharacterToUserRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GrantCharacterToUserRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GrantCharacterToUserResult : public PlayFabBaseModel
+    {
+		
+		std::string CharacterId;
+		std::string CharacterType;
+		bool Result;
+	
+        GrantCharacterToUserResult() :
+			PlayFabBaseModel(),
+			CharacterId(),
+			CharacterType(),
+			Result(false)
+			{}
+		
+		GrantCharacterToUserResult(const GrantCharacterToUserResult& src) :
+			PlayFabBaseModel(),
+			CharacterId(src.CharacterId),
+			CharacterType(src.CharacterType),
+			Result(src.Result)
+			{}
+			
+		GrantCharacterToUserResult(const rapidjson::Value& obj) : GrantCharacterToUserResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GrantCharacterToUserResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct ItemPuchaseRequest : public PlayFabBaseModel
     {
 		
@@ -2715,19 +3174,34 @@ namespace ClientModels
 	struct LogEventRequest : public PlayFabBaseModel
     {
 		
-		std::string eventName;
+		std::string PlayFabId;
+		std::string EntityId;
+		std::string EntityType;
+		OptionalTime Timestamp;
+		std::string EventName;
 		std::map<std::string, MultitypeVar> Body;
+		bool ProfileSetEvent;
 	
         LogEventRequest() :
 			PlayFabBaseModel(),
-			eventName(),
-			Body()
+			PlayFabId(),
+			EntityId(),
+			EntityType(),
+			Timestamp(),
+			EventName(),
+			Body(),
+			ProfileSetEvent(false)
 			{}
 		
 		LogEventRequest(const LogEventRequest& src) :
 			PlayFabBaseModel(),
-			eventName(src.eventName),
-			Body(src.Body)
+			PlayFabId(src.PlayFabId),
+			EntityId(src.EntityId),
+			EntityType(src.EntityType),
+			Timestamp(src.Timestamp),
+			EventName(src.EventName),
+			Body(src.Body),
+			ProfileSetEvent(src.ProfileSetEvent)
 			{}
 			
 		LogEventRequest(const rapidjson::Value& obj) : LogEventRequest()
@@ -2902,41 +3376,6 @@ namespace ClientModels
         }
 		
 		~LoginWithFacebookRequest();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct LoginWithGameCenterRequest : public PlayFabBaseModel
-    {
-		
-		std::string TitleId;
-		std::string PlayerId;
-		OptionalBool CreateAccount;
-		std::string PublisherId;
-	
-        LoginWithGameCenterRequest() :
-			PlayFabBaseModel(),
-			TitleId(),
-			PlayerId(),
-			CreateAccount(),
-			PublisherId()
-			{}
-		
-		LoginWithGameCenterRequest(const LoginWithGameCenterRequest& src) :
-			PlayFabBaseModel(),
-			TitleId(src.TitleId),
-			PlayerId(src.PlayerId),
-			CreateAccount(src.CreateAccount),
-			PublisherId(src.PublisherId)
-			{}
-			
-		LoginWithGameCenterRequest(const rapidjson::Value& obj) : LoginWithGameCenterRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~LoginWithGameCenterRequest();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -3728,20 +4167,17 @@ namespace ClientModels
     {
 		
 		std::string ReporteeId;
-		std::string TitleId;
 		std::string Comment;
 	
         ReportPlayerClientRequest() :
 			PlayFabBaseModel(),
 			ReporteeId(),
-			TitleId(),
 			Comment()
 			{}
 		
 		ReportPlayerClientRequest(const ReportPlayerClientRequest& src) :
 			PlayFabBaseModel(),
 			ReporteeId(src.ReporteeId),
-			TitleId(src.TitleId),
 			Comment(src.Comment)
 			{}
 			
@@ -4478,6 +4914,61 @@ namespace ClientModels
         }
 		
 		~UnlockContainerItemResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateCharacterDataRequest : public PlayFabBaseModel
+    {
+		
+		std::string CharacterId;
+		std::map<std::string, std::string> Data;
+		Boxed<UserDataPermission> Permission;
+	
+        UpdateCharacterDataRequest() :
+			PlayFabBaseModel(),
+			CharacterId(),
+			Data(),
+			Permission()
+			{}
+		
+		UpdateCharacterDataRequest(const UpdateCharacterDataRequest& src) :
+			PlayFabBaseModel(),
+			CharacterId(src.CharacterId),
+			Data(src.Data),
+			Permission(src.Permission)
+			{}
+			
+		UpdateCharacterDataRequest(const rapidjson::Value& obj) : UpdateCharacterDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateCharacterDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateCharacterDataResult : public PlayFabBaseModel
+    {
+		
+	
+        UpdateCharacterDataResult() :
+			PlayFabBaseModel()
+			{}
+		
+		UpdateCharacterDataResult(const UpdateCharacterDataResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UpdateCharacterDataResult(const rapidjson::Value& obj) : UpdateCharacterDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateCharacterDataResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

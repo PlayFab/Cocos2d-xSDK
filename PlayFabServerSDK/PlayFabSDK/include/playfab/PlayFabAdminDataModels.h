@@ -527,6 +527,38 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct ContentInfo : public PlayFabBaseModel
+    {
+		
+		std::string Key;
+		Int64 Size;
+		time_t LastModified;
+	
+        ContentInfo() :
+			PlayFabBaseModel(),
+			Key(),
+			Size(0),
+			LastModified(0)
+			{}
+		
+		ContentInfo(const ContentInfo& src) :
+			PlayFabBaseModel(),
+			Key(src.Key),
+			Size(src.Size),
+			LastModified(src.LastModified)
+			{}
+			
+		ContentInfo(const rapidjson::Value& obj) : ContentInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~ContentInfo();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	enum Currency
 	{
 		CurrencyUSD,
@@ -541,6 +573,32 @@ namespace AdminModels
 	void writeCurrencyEnumJSON(Currency enumVal, PFStringJsonWriter& writer);
 	Currency readCurrencyFromValue(const rapidjson::Value& obj);
 	
+	
+	struct DeleteContentRequest : public PlayFabBaseModel
+    {
+		
+		std::string Key;
+	
+        DeleteContentRequest() :
+			PlayFabBaseModel(),
+			Key()
+			{}
+		
+		DeleteContentRequest(const DeleteContentRequest& src) :
+			PlayFabBaseModel(),
+			Key(src.Key)
+			{}
+			
+		DeleteContentRequest(const rapidjson::Value& obj) : DeleteContentRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~DeleteContentRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
 	
 	struct GameModeInfo : public PlayFabBaseModel
     {
@@ -737,6 +795,119 @@ namespace AdminModels
         }
 		
 		~GetCloudScriptVersionsResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetContentListRequest : public PlayFabBaseModel
+    {
+		
+		std::string Prefix;
+	
+        GetContentListRequest() :
+			PlayFabBaseModel(),
+			Prefix()
+			{}
+		
+		GetContentListRequest(const GetContentListRequest& src) :
+			PlayFabBaseModel(),
+			Prefix(src.Prefix)
+			{}
+			
+		GetContentListRequest(const rapidjson::Value& obj) : GetContentListRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetContentListRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetContentListResult : public PlayFabBaseModel
+    {
+		
+		Int64 ItemCount;
+		Int64 TotalSize;
+		std::list<ContentInfo> Contents;
+	
+        GetContentListResult() :
+			PlayFabBaseModel(),
+			ItemCount(0),
+			TotalSize(0),
+			Contents()
+			{}
+		
+		GetContentListResult(const GetContentListResult& src) :
+			PlayFabBaseModel(),
+			ItemCount(src.ItemCount),
+			TotalSize(src.TotalSize),
+			Contents(src.Contents)
+			{}
+			
+		GetContentListResult(const rapidjson::Value& obj) : GetContentListResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetContentListResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetContentUploadUrlRequest : public PlayFabBaseModel
+    {
+		
+		std::string Key;
+		std::string ContentType;
+	
+        GetContentUploadUrlRequest() :
+			PlayFabBaseModel(),
+			Key(),
+			ContentType()
+			{}
+		
+		GetContentUploadUrlRequest(const GetContentUploadUrlRequest& src) :
+			PlayFabBaseModel(),
+			Key(src.Key),
+			ContentType(src.ContentType)
+			{}
+			
+		GetContentUploadUrlRequest(const rapidjson::Value& obj) : GetContentUploadUrlRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetContentUploadUrlRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetContentUploadUrlResult : public PlayFabBaseModel
+    {
+		
+		std::string URL;
+	
+        GetContentUploadUrlResult() :
+			PlayFabBaseModel(),
+			URL()
+			{}
+		
+		GetContentUploadUrlResult(const GetContentUploadUrlResult& src) :
+			PlayFabBaseModel(),
+			URL(src.URL)
+			{}
+			
+		GetContentUploadUrlResult(const rapidjson::Value& obj) : GetContentUploadUrlResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetContentUploadUrlResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1581,19 +1752,22 @@ namespace AdminModels
 		std::string PlayFabId;
 		std::string ItemId;
 		std::string Annotation;
+		std::string CharacterId;
 	
         ItemGrant() :
 			PlayFabBaseModel(),
 			PlayFabId(),
 			ItemId(),
-			Annotation()
+			Annotation(),
+			CharacterId()
 			{}
 		
 		ItemGrant(const ItemGrant& src) :
 			PlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
 			ItemId(src.ItemId),
-			Annotation(src.Annotation)
+			Annotation(src.Annotation),
+			CharacterId(src.CharacterId)
 			{}
 			
 		ItemGrant(const rapidjson::Value& obj) : ItemGrant()
@@ -1644,6 +1818,7 @@ namespace AdminModels
 		std::string ItemInstanceId;
 		std::string Annotation;
 		bool Result;
+		std::string CharacterId;
 	
         ItemGrantResult() :
 			PlayFabBaseModel(),
@@ -1651,7 +1826,8 @@ namespace AdminModels
 			ItemId(),
 			ItemInstanceId(),
 			Annotation(),
-			Result(false)
+			Result(false),
+			CharacterId()
 			{}
 		
 		ItemGrantResult(const ItemGrantResult& src) :
@@ -1660,7 +1836,8 @@ namespace AdminModels
 			ItemId(src.ItemId),
 			ItemInstanceId(src.ItemInstanceId),
 			Annotation(src.Annotation),
-			Result(src.Result)
+			Result(src.Result),
+			CharacterId(src.CharacterId)
 			{}
 			
 		ItemGrantResult(const rapidjson::Value& obj) : ItemGrantResult()

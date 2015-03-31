@@ -41,14 +41,19 @@ namespace PlayFab
 		typedef void(*SetTitleDataCallback)(ServerModels::SetTitleDataResult& result, void* userData);
 		typedef void(*AddUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
 		typedef void(*GetUserInventoryCallback)(ServerModels::GetUserInventoryResult& result, void* userData);
+		typedef void(*GrantItemsToCharacterCallback)(ServerModels::GrantItemsToCharacterResult& result, void* userData);
 		typedef void(*GrantItemsToUserCallback)(ServerModels::GrantItemsToUserResult& result, void* userData);
 		typedef void(*GrantItemsToUsersCallback)(ServerModels::GrantItemsToUsersResult& result, void* userData);
 		typedef void(*ModifyItemUsesCallback)(ServerModels::ModifyItemUsesResult& result, void* userData);
+		typedef void(*MoveItemToCharacterFromCharacterCallback)(ServerModels::MoveItemToCharacterFromCharacterResult& result, void* userData);
+		typedef void(*MoveItemToCharacterFromUserCallback)(ServerModels::MoveItemToCharacterFromUserResult& result, void* userData);
+		typedef void(*MoveItemToUserFromCharacterCallback)(ServerModels::MoveItemToUserFromCharacterResult& result, void* userData);
 		typedef void(*ReportPlayerCallback)(ServerModels::ReportPlayerServerResult& result, void* userData);
 		typedef void(*SubtractUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
 		typedef void(*NotifyMatchmakerPlayerLeftCallback)(ServerModels::NotifyMatchmakerPlayerLeftResult& result, void* userData);
 		typedef void(*RedeemMatchmakerTicketCallback)(ServerModels::RedeemMatchmakerTicketResult& result, void* userData);
 		typedef void(*AwardSteamAchievementCallback)(ServerModels::AwardSteamAchievementResult& result, void* userData);
+		typedef void(*LogEventCallback)(ServerModels::LogEventResult& result, void* userData);
 		typedef void(*AddSharedGroupMembersCallback)(ServerModels::AddSharedGroupMembersResult& result, void* userData);
 		typedef void(*CreateSharedGroupCallback)(ServerModels::CreateSharedGroupResult& result, void* userData);
 		typedef void(*DeleteSharedGroupCallback)(ServerModels::EmptyResult& result, void* userData);
@@ -57,6 +62,21 @@ namespace PlayFab
 		typedef void(*RemoveSharedGroupMembersCallback)(ServerModels::RemoveSharedGroupMembersResult& result, void* userData);
 		typedef void(*SetPublisherDataCallback)(ServerModels::SetPublisherDataResult& result, void* userData);
 		typedef void(*UpdateSharedGroupDataCallback)(ServerModels::UpdateSharedGroupDataResult& result, void* userData);
+		typedef void(*GetContentDownloadUrlCallback)(ServerModels::GetContentDownloadUrlResult& result, void* userData);
+		typedef void(*DeleteCharacterFromUserCallback)(ServerModels::DeleteCharacterFromUserResult& result, void* userData);
+		typedef void(*GetAllUsersCharactersCallback)(ServerModels::ListUsersCharactersResult& result, void* userData);
+		typedef void(*GetCharacterLeaderboardCallback)(ServerModels::GetCharacterLeaderboardResult& result, void* userData);
+		typedef void(*GetCharacterStatisticsCallback)(ServerModels::GetCharacterStatisticsResult& result, void* userData);
+		typedef void(*GetLeaderboardAroundCharacterCallback)(ServerModels::GetLeaderboardAroundCharacterResult& result, void* userData);
+		typedef void(*GetLeaderboardForUserCharactersCallback)(ServerModels::GetLeaderboardForUsersCharactersResult& result, void* userData);
+		typedef void(*GrantCharacterToUserCallback)(ServerModels::GrantCharacterToUserResult& result, void* userData);
+		typedef void(*UpdateCharacterStatisticsCallback)(ServerModels::UpdateCharacterStatisticsResult& result, void* userData);
+		typedef void(*GetCharacterDataCallback)(ServerModels::GetCharacterDataResult& result, void* userData);
+		typedef void(*GetCharacterInternalDataCallback)(ServerModels::GetCharacterDataResult& result, void* userData);
+		typedef void(*GetCharacterReadOnlyDataCallback)(ServerModels::GetCharacterDataResult& result, void* userData);
+		typedef void(*UpdateCharacterDataCallback)(ServerModels::UpdateCharacterDataResult& result, void* userData);
+		typedef void(*UpdateCharacterInternalDataCallback)(ServerModels::UpdateCharacterDataResult& result, void* userData);
+		typedef void(*UpdateCharacterReadOnlyDataCallback)(ServerModels::UpdateCharacterDataResult& result, void* userData);
 		
 	
         PlayFabServerAPI();
@@ -116,11 +136,19 @@ namespace PlayFab
 		
 		void GetUserInventory(ServerModels::GetUserInventoryRequest& request, GetUserInventoryCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void GrantItemsToCharacter(ServerModels::GrantItemsToCharacterRequest& request, GrantItemsToCharacterCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void GrantItemsToUser(ServerModels::GrantItemsToUserRequest& request, GrantItemsToUserCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GrantItemsToUsers(ServerModels::GrantItemsToUsersRequest& request, GrantItemsToUsersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void ModifyItemUses(ServerModels::ModifyItemUsesRequest& request, ModifyItemUsesCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void MoveItemToCharacterFromCharacter(ServerModels::MoveItemToCharacterFromCharacterRequest& request, MoveItemToCharacterFromCharacterCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void MoveItemToCharacterFromUser(ServerModels::MoveItemToCharacterFromUserRequest& request, MoveItemToCharacterFromUserCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void MoveItemToUserFromCharacter(ServerModels::MoveItemToUserFromCharacterRequest& request, MoveItemToUserFromCharacterCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void ReportPlayer(ServerModels::ReportPlayerServerRequest& request, ReportPlayerCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -131,6 +159,8 @@ namespace PlayFab
 		void RedeemMatchmakerTicket(ServerModels::RedeemMatchmakerTicketRequest& request, RedeemMatchmakerTicketCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void AwardSteamAchievement(ServerModels::AwardSteamAchievementRequest& request, AwardSteamAchievementCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void LogEvent(ServerModels::LogEventRequest& request, LogEventCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void AddSharedGroupMembers(ServerModels::AddSharedGroupMembersRequest& request, AddSharedGroupMembersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -147,6 +177,36 @@ namespace PlayFab
 		void SetPublisherData(ServerModels::SetPublisherDataRequest& request, SetPublisherDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateSharedGroupData(ServerModels::UpdateSharedGroupDataRequest& request, UpdateSharedGroupDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetContentDownloadUrl(ServerModels::GetContentDownloadUrlRequest& request, GetContentDownloadUrlCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void DeleteCharacterFromUser(ServerModels::DeleteCharacterFromUserRequest& request, DeleteCharacterFromUserCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetAllUsersCharacters(ServerModels::ListUsersCharactersRequest& request, GetAllUsersCharactersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetCharacterLeaderboard(ServerModels::GetCharacterLeaderboardRequest& request, GetCharacterLeaderboardCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetCharacterStatistics(ServerModels::GetCharacterStatisticsRequest& request, GetCharacterStatisticsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetLeaderboardAroundCharacter(ServerModels::GetLeaderboardAroundCharacterRequest& request, GetLeaderboardAroundCharacterCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetLeaderboardForUserCharacters(ServerModels::GetLeaderboardForUsersCharactersRequest& request, GetLeaderboardForUserCharactersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GrantCharacterToUser(ServerModels::GrantCharacterToUserRequest& request, GrantCharacterToUserCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UpdateCharacterStatistics(ServerModels::UpdateCharacterStatisticsRequest& request, UpdateCharacterStatisticsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetCharacterData(ServerModels::GetCharacterDataRequest& request, GetCharacterDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetCharacterInternalData(ServerModels::GetCharacterDataRequest& request, GetCharacterInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetCharacterReadOnlyData(ServerModels::GetCharacterDataRequest& request, GetCharacterReadOnlyDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UpdateCharacterData(ServerModels::UpdateCharacterDataRequest& request, UpdateCharacterDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UpdateCharacterInternalData(ServerModels::UpdateCharacterDataRequest& request, UpdateCharacterInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UpdateCharacterReadOnlyData(ServerModels::UpdateCharacterDataRequest& request, UpdateCharacterReadOnlyDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 
     private:
@@ -201,11 +261,19 @@ namespace PlayFab
 		
 		static void OnGetUserInventoryResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnGrantItemsToCharacterResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnGrantItemsToUserResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGrantItemsToUsersResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnModifyItemUsesResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnMoveItemToCharacterFromCharacterResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnMoveItemToCharacterFromUserResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnMoveItemToUserFromCharacterResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnReportPlayerResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -216,6 +284,8 @@ namespace PlayFab
 		static void OnRedeemMatchmakerTicketResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnAwardSteamAchievementResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnLogEventResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnAddSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -232,6 +302,36 @@ namespace PlayFab
 		static void OnSetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetContentDownloadUrlResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnDeleteCharacterFromUserResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetAllUsersCharactersResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCharacterLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCharacterStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetLeaderboardAroundCharacterResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetLeaderboardForUserCharactersResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGrantCharacterToUserResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUpdateCharacterStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCharacterInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUpdateCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUpdateCharacterInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUpdateCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
  
         bool mOwnsRequester;
