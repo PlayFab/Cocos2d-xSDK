@@ -211,15 +211,18 @@ namespace ServerModels
     {
 		
 		std::string FacebookId;
+		std::string FullName;
 	
         UserFacebookInfo() :
 			PlayFabBaseModel(),
-			FacebookId()
+			FacebookId(),
+			FullName()
 			{}
 		
 		UserFacebookInfo(const UserFacebookInfo& src) :
 			PlayFabBaseModel(),
-			FacebookId(src.FacebookId)
+			FacebookId(src.FacebookId),
+			FullName(src.FullName)
 			{}
 			
 		UserFacebookInfo(const rapidjson::Value& obj) : UserFacebookInfo()
@@ -2444,18 +2447,24 @@ namespace ServerModels
 	struct ModifyUserVirtualCurrencyResult : public PlayFabBaseModel
     {
 		
+		std::string PlayFabId;
 		std::string VirtualCurrency;
+		Int32 BalanceChange;
 		Int32 Balance;
 	
         ModifyUserVirtualCurrencyResult() :
 			PlayFabBaseModel(),
+			PlayFabId(),
 			VirtualCurrency(),
+			BalanceChange(0),
 			Balance(0)
 			{}
 		
 		ModifyUserVirtualCurrencyResult(const ModifyUserVirtualCurrencyResult& src) :
 			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
 			VirtualCurrency(src.VirtualCurrency),
+			BalanceChange(src.BalanceChange),
 			Balance(src.Balance)
 			{}
 			

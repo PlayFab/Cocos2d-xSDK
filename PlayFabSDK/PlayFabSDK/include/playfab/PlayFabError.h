@@ -145,7 +145,9 @@ namespace PlayFab
 		PlayFabErrorInvalidCharacterStatistics = 1138,
 		PlayFabErrorPhotonNotEnabledForTitle = 1139,
 		PlayFabErrorPhotonApplicationNotFound = 1140,
-		PlayFabErrorPhotonApplicationNotAssociatedWithTitle = 1141
+		PlayFabErrorPhotonApplicationNotAssociatedWithTitle = 1141,
+		PlayFabErrorInvalidEmailOrPassword = 1142,
+		PlayFabErrorFacebookAPIError = 1143
     };
 
     struct PlayFabError

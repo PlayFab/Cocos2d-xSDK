@@ -928,15 +928,18 @@ namespace ClientModels
     {
 		
 		std::string FacebookId;
+		std::string FullName;
 	
         UserFacebookInfo() :
 			PlayFabBaseModel(),
-			FacebookId()
+			FacebookId(),
+			FullName()
 			{}
 		
 		UserFacebookInfo(const UserFacebookInfo& src) :
 			PlayFabBaseModel(),
-			FacebookId(src.FacebookId)
+			FacebookId(src.FacebookId),
+			FullName(src.FullName)
 			{}
 			
 		UserFacebookInfo(const rapidjson::Value& obj) : UserFacebookInfo()
@@ -1461,7 +1464,6 @@ namespace ClientModels
 	struct GetCharacterLeaderboardRequest : public PlayFabBaseModel
     {
 		
-		std::string CharacterId;
 		std::string CharacterType;
 		std::string StatisticName;
 		Int32 StartPosition;
@@ -1469,7 +1471,6 @@ namespace ClientModels
 	
         GetCharacterLeaderboardRequest() :
 			PlayFabBaseModel(),
-			CharacterId(),
 			CharacterType(),
 			StatisticName(),
 			StartPosition(0),
@@ -1478,7 +1479,6 @@ namespace ClientModels
 		
 		GetCharacterLeaderboardRequest(const GetCharacterLeaderboardRequest& src) :
 			PlayFabBaseModel(),
-			CharacterId(src.CharacterId),
 			CharacterType(src.CharacterType),
 			StatisticName(src.StatisticName),
 			StartPosition(src.StartPosition),
@@ -1671,15 +1671,18 @@ namespace ClientModels
     {
 		
 		OptionalBool IncludeSteamFriends;
+		OptionalBool IncludeFacebookFriends;
 	
         GetFriendsListRequest() :
 			PlayFabBaseModel(),
-			IncludeSteamFriends()
+			IncludeSteamFriends(),
+			IncludeFacebookFriends()
 			{}
 		
 		GetFriendsListRequest(const GetFriendsListRequest& src) :
 			PlayFabBaseModel(),
-			IncludeSteamFriends(src.IncludeSteamFriends)
+			IncludeSteamFriends(src.IncludeSteamFriends),
+			IncludeFacebookFriends(src.IncludeFacebookFriends)
 			{}
 			
 		GetFriendsListRequest(const rapidjson::Value& obj) : GetFriendsListRequest()
@@ -2801,14 +2804,12 @@ namespace ClientModels
     {
 		
 		std::string CatalogVersion;
-		std::string PlayFabId;
 		std::string ItemId;
 		std::string CharacterName;
 	
         GrantCharacterToUserRequest() :
 			PlayFabBaseModel(),
 			CatalogVersion(),
-			PlayFabId(),
 			ItemId(),
 			CharacterName()
 			{}
@@ -2816,7 +2817,6 @@ namespace ClientModels
 		GrantCharacterToUserRequest(const GrantCharacterToUserRequest& src) :
 			PlayFabBaseModel(),
 			CatalogVersion(src.CatalogVersion),
-			PlayFabId(src.PlayFabId),
 			ItemId(src.ItemId),
 			CharacterName(src.CharacterName)
 			{}
@@ -3623,18 +3623,24 @@ namespace ClientModels
 	struct ModifyUserVirtualCurrencyResult : public PlayFabBaseModel
     {
 		
+		std::string PlayFabId;
 		std::string VirtualCurrency;
+		Int32 BalanceChange;
 		Int32 Balance;
 	
         ModifyUserVirtualCurrencyResult() :
 			PlayFabBaseModel(),
+			PlayFabId(),
 			VirtualCurrency(),
+			BalanceChange(0),
 			Balance(0)
 			{}
 		
 		ModifyUserVirtualCurrencyResult(const ModifyUserVirtualCurrencyResult& src) :
 			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
 			VirtualCurrency(src.VirtualCurrency),
+			BalanceChange(src.BalanceChange),
 			Balance(src.Balance)
 			{}
 			

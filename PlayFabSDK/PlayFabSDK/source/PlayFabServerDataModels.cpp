@@ -283,6 +283,8 @@ void UserFacebookInfo::writeJSON(PFStringJsonWriter& writer)
 	
 	if(FacebookId.length() > 0) { writer.String("FacebookId"); writer.String(FacebookId.c_str()); }
 	
+	if(FullName.length() > 0) { writer.String("FullName"); writer.String(FullName.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -292,6 +294,9 @@ bool UserFacebookInfo::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* FacebookId_member = obj.FindMember("FacebookId");
 	if (FacebookId_member != NULL) FacebookId = FacebookId_member->value.GetString();
+	
+	const Value::Member* FullName_member = obj.FindMember("FullName");
+	if (FullName_member != NULL) FullName = FullName_member->value.GetString();
 	
 	
 	return true;
@@ -3340,7 +3345,11 @@ void ModifyUserVirtualCurrencyResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
+	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+	
 	if(VirtualCurrency.length() > 0) { writer.String("VirtualCurrency"); writer.String(VirtualCurrency.c_str()); }
+	
+	writer.String("BalanceChange"); writer.Int(BalanceChange);
 	
 	writer.String("Balance"); writer.Int(Balance);
 	
@@ -3351,8 +3360,14 @@ void ModifyUserVirtualCurrencyResult::writeJSON(PFStringJsonWriter& writer)
 bool ModifyUserVirtualCurrencyResult::readFromValue(const rapidjson::Value& obj)
 {
 	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
 	const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
 	if (VirtualCurrency_member != NULL) VirtualCurrency = VirtualCurrency_member->value.GetString();
+	
+	const Value::Member* BalanceChange_member = obj.FindMember("BalanceChange");
+	if (BalanceChange_member != NULL) BalanceChange = BalanceChange_member->value.GetInt();
 	
 	const Value::Member* Balance_member = obj.FindMember("Balance");
 	if (Balance_member != NULL) Balance = Balance_member->value.GetInt();

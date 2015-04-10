@@ -1339,6 +1339,8 @@ void UserFacebookInfo::writeJSON(PFStringJsonWriter& writer)
 	
 	if(FacebookId.length() > 0) { writer.String("FacebookId"); writer.String(FacebookId.c_str()); }
 	
+	if(FullName.length() > 0) { writer.String("FullName"); writer.String(FullName.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -1348,6 +1350,9 @@ bool UserFacebookInfo::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* FacebookId_member = obj.FindMember("FacebookId");
 	if (FacebookId_member != NULL) FacebookId = FacebookId_member->value.GetString();
+	
+	const Value::Member* FullName_member = obj.FindMember("FullName");
+	if (FullName_member != NULL) FullName = FullName_member->value.GetString();
 	
 	
 	return true;
@@ -2052,8 +2057,6 @@ void GetCharacterLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	writer.String("CharacterId"); writer.String(CharacterId.c_str());
-	
 	if(CharacterType.length() > 0) { writer.String("CharacterType"); writer.String(CharacterType.c_str()); }
 	
 	writer.String("StatisticName"); writer.String(StatisticName.c_str());
@@ -2068,9 +2071,6 @@ void GetCharacterLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetCharacterLeaderboardRequest::readFromValue(const rapidjson::Value& obj)
 {
-	
-	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
-	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
 	
 	const Value::Member* CharacterType_member = obj.FindMember("CharacterType");
 	if (CharacterType_member != NULL) CharacterType = CharacterType_member->value.GetString();
@@ -2300,6 +2300,8 @@ void GetFriendsListRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
 	
+	if(IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
+	
 	
 	writer.EndObject();
 }
@@ -2309,6 +2311,9 @@ bool GetFriendsListRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* IncludeSteamFriends_member = obj.FindMember("IncludeSteamFriends");
 	if (IncludeSteamFriends_member != NULL) IncludeSteamFriends = IncludeSteamFriends_member->value.GetBool();
+	
+	const Value::Member* IncludeFacebookFriends_member = obj.FindMember("IncludeFacebookFriends");
+	if (IncludeFacebookFriends_member != NULL) IncludeFacebookFriends = IncludeFacebookFriends_member->value.GetBool();
 	
 	
 	return true;
@@ -3903,8 +3908,6 @@ void GrantCharacterToUserRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
 	
-	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-	
 	writer.String("ItemId"); writer.String(ItemId.c_str());
 	
 	writer.String("CharacterName"); writer.String(CharacterName.c_str());
@@ -3918,9 +3921,6 @@ bool GrantCharacterToUserRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
 	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
-	
-	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
 	
 	const Value::Member* ItemId_member = obj.FindMember("ItemId");
 	if (ItemId_member != NULL) ItemId = ItemId_member->value.GetString();
@@ -4894,7 +4894,11 @@ void ModifyUserVirtualCurrencyResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
+	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+	
 	if(VirtualCurrency.length() > 0) { writer.String("VirtualCurrency"); writer.String(VirtualCurrency.c_str()); }
+	
+	writer.String("BalanceChange"); writer.Int(BalanceChange);
 	
 	writer.String("Balance"); writer.Int(Balance);
 	
@@ -4905,8 +4909,14 @@ void ModifyUserVirtualCurrencyResult::writeJSON(PFStringJsonWriter& writer)
 bool ModifyUserVirtualCurrencyResult::readFromValue(const rapidjson::Value& obj)
 {
 	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
 	const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
 	if (VirtualCurrency_member != NULL) VirtualCurrency = VirtualCurrency_member->value.GetString();
+	
+	const Value::Member* BalanceChange_member = obj.FindMember("BalanceChange");
+	if (BalanceChange_member != NULL) BalanceChange = BalanceChange_member->value.GetInt();
 	
 	const Value::Member* Balance_member = obj.FindMember("Balance");
 	if (Balance_member != NULL) Balance = Balance_member->value.GetInt();
