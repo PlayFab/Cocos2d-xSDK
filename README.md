@@ -1,18 +1,24 @@
-Cocos2d-xSDK
-============
+Cocos2d-xSDK README
+========
+1. Overview:
+----
+PlayFab SDKs for c++ based Cocos2d-x game development.
 
-PlayFab SDKs for c++ based Cocos2d-x game development
+2. Prerequisites:
+----
+* Users should be very familiar with the topics covered in our [getting started guide](https://playfab.com/getting-started).
 
-# SDKs
-
+3. Source Code & Key Repository Components:
+----
 This package contains three different versions of the PlayFab SDK. 
 
-PlayFabClientSDK - This version contains only client libraries and is designed for integration with your game client
-PlayFabServerSDK - Contains server and admin APIs designed to be called from your custom logic server or build process
-PlayFabSDK - Contains all APIs in one SDK.
+1. PlayFabClientSDK - This version contains only client libraries and is designed for integration with your game client
+2. PlayFabServerSDK - Contains server and admin APIs designed to be called from your custom logic server or build process
+3. PlayFabSDK - Contains all APIs in one SDK.
 
-# Integration
-
+4. Installation & Configuration Instructions:
+----
+#### Installation:
 To integrate the PlayFab SDK into your cocos2d-x project, follow these steps. First, determine which version of the SDK you need for your project. From that version, copy the PlayFabSDK directory into your Cocos2d-x project folder. Next you must add the source files, headers and dependencies into your project. Here is the general overview for all Cocos2d-x platforms:
 
 1. Link against libcurl
@@ -20,9 +26,10 @@ To integrate the PlayFab SDK into your cocos2d-x project, follow these steps. Fi
 3. Add the PlayFabSDK/include directory to your project's header search path
 4. Add all the source files from playFabSDK/source to your project.
 
+#### Configuration:
 The specifics of how to do this vary by platform:
 
-## Visual Studios 2013
+##### Visual Studios 2013
 
 Open your project's property page, and navigate to "Configuration Properties\Linker\Input". At the top of the dialog, change the Configuration drop-down menu to "All Configurations"
 
@@ -38,7 +45,7 @@ Close the properties. Now right click your project, and select "Add\New Filter..
 
 Compile!
 
-## Android
+##### Android
 
 Edit the file YOURGAME/proj.android/jni/Android.mk
 
@@ -71,7 +78,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocos_network_static
 $(call import-module,network)
 ```
 
-## XCode
+##### XCode
 
 Open up your game's project file in Xcode. 
 
@@ -91,7 +98,27 @@ Under Targets, pick your project's iOS Target. Find "Search Paths/Header Search 
 
 Compile and enjoy!
 
-# API Docs
+5. Troubleshooting:
+----
+For a complete list of available APIs, check out the [online documentation](http://api.playfab.com/Documentation/).
 
-Please see http://api.playfab.com/Documentation/ for complete documentation of all PlayFab SDK calls.
+#### Contact Us
+We love to hear from our developer community! 
+Do you have ideas on how we can make our products and services better? 
 
+Our Developer Success Team can assist with answering any questions as well as process any feedback you have about PlayFab services.
+
+[Forums, Support and Knowlage Base](https://support.playfab.com/support/home)
+
+
+6. Copyright and Licensing Information:
+----
+  Apache License -- 
+  Version 2.0, January 2004
+  http://www.apache.org/licenses/
+
+  Full details available within the LICENSE file.
+
+7. Version History:
+----
+* (v1.2.4) -- Initial upload
