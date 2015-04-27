@@ -45,6 +45,7 @@ namespace PlayFab
 		typedef void(*SetCatalogItemsCallback)(AdminModels::UpdateCatalogItemsResult& result, void* userData);
 		typedef void(*SetStoreItemsCallback)(AdminModels::UpdateStoreItemsResult& result, void* userData);
 		typedef void(*SetTitleDataCallback)(AdminModels::SetTitleDataResult& result, void* userData);
+		typedef void(*SetupPushNotificationCallback)(AdminModels::SetupPushNotificationResult& result, void* userData);
 		typedef void(*UpdateCatalogItemsCallback)(AdminModels::UpdateCatalogItemsResult& result, void* userData);
 		typedef void(*UpdateRandomResultTablesCallback)(AdminModels::UpdateRandomResultTablesResult& result, void* userData);
 		typedef void(*UpdateStoreItemsCallback)(AdminModels::UpdateStoreItemsResult& result, void* userData);
@@ -137,6 +138,8 @@ namespace PlayFab
 		void SetStoreItems(AdminModels::UpdateStoreItemsRequest& request, SetStoreItemsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void SetTitleData(AdminModels::SetTitleDataRequest& request, SetTitleDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void SetupPushNotification(AdminModels::SetupPushNotificationRequest& request, SetupPushNotificationCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateCatalogItems(AdminModels::UpdateCatalogItemsRequest& request, UpdateCatalogItemsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -250,6 +253,8 @@ namespace PlayFab
 		static void OnSetStoreItemsResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnSetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnSetupPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
 		

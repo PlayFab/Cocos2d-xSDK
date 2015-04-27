@@ -9,6 +9,41 @@ namespace ServerModels
 {
 
 	
+	struct AddCharacterVirtualCurrencyRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string CharacterId;
+		std::string VirtualCurrency;
+		Int32 Amount;
+	
+        AddCharacterVirtualCurrencyRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			VirtualCurrency(),
+			Amount(0)
+			{}
+		
+		AddCharacterVirtualCurrencyRequest(const AddCharacterVirtualCurrencyRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			VirtualCurrency(src.VirtualCurrency),
+			Amount(src.Amount)
+			{}
+			
+		AddCharacterVirtualCurrencyRequest(const rapidjson::Value& obj) : AddCharacterVirtualCurrencyRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~AddCharacterVirtualCurrencyRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct AddSharedGroupMembersRequest : public PlayFabBaseModel
     {
 		
@@ -597,6 +632,7 @@ namespace ServerModels
 		CatalogItemConsumableInfo* Consumable;
 		CatalogItemContainerInfo* Container;
 		CatalogItemBundleInfo* Bundle;
+		bool CanBecomeCharacter;
 	
         CatalogItem() :
 			PlayFabBaseModel(),
@@ -612,7 +648,8 @@ namespace ServerModels
 			GrantedIfPlayerHas(),
 			Consumable(NULL),
 			Container(NULL),
-			Bundle(NULL)
+			Bundle(NULL),
+			CanBecomeCharacter(false)
 			{}
 		
 		CatalogItem(const CatalogItem& src) :
@@ -629,7 +666,8 @@ namespace ServerModels
 			GrantedIfPlayerHas(src.GrantedIfPlayerHas),
 			Consumable(src.Consumable ? new CatalogItemConsumableInfo(*src.Consumable) : NULL),
 			Container(src.Container ? new CatalogItemContainerInfo(*src.Container) : NULL),
-			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL)
+			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL),
+			CanBecomeCharacter(src.CanBecomeCharacter)
 			{}
 			
 		CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -1025,6 +1063,117 @@ namespace ServerModels
         }
 		
 		~GetCharacterDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCharacterInventoryRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string CharacterId;
+		std::string CatalogVersion;
+	
+        GetCharacterInventoryRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			CatalogVersion()
+			{}
+		
+		GetCharacterInventoryRequest(const GetCharacterInventoryRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			CatalogVersion(src.CatalogVersion)
+			{}
+			
+		GetCharacterInventoryRequest(const rapidjson::Value& obj) : GetCharacterInventoryRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCharacterInventoryRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ItemInstance : public PlayFabBaseModel
+    {
+		
+		std::string ItemId;
+		std::string ItemInstanceId;
+		std::string ItemClass;
+		OptionalTime PurchaseDate;
+		OptionalTime Expiration;
+		OptionalInt32 RemainingUses;
+		std::string Annotation;
+		std::string CatalogVersion;
+		std::string BundleParent;
+	
+        ItemInstance() :
+			PlayFabBaseModel(),
+			ItemId(),
+			ItemInstanceId(),
+			ItemClass(),
+			PurchaseDate(),
+			Expiration(),
+			RemainingUses(),
+			Annotation(),
+			CatalogVersion(),
+			BundleParent()
+			{}
+		
+		ItemInstance(const ItemInstance& src) :
+			PlayFabBaseModel(),
+			ItemId(src.ItemId),
+			ItemInstanceId(src.ItemInstanceId),
+			ItemClass(src.ItemClass),
+			PurchaseDate(src.PurchaseDate),
+			Expiration(src.Expiration),
+			RemainingUses(src.RemainingUses),
+			Annotation(src.Annotation),
+			CatalogVersion(src.CatalogVersion),
+			BundleParent(src.BundleParent)
+			{}
+			
+		ItemInstance(const rapidjson::Value& obj) : ItemInstance()
+        {
+            readFromValue(obj);
+        }
+		
+		~ItemInstance();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCharacterInventoryResult : public PlayFabBaseModel
+    {
+		
+		std::list<ItemInstance> Inventory;
+		std::map<std::string, Int32> VirtualCurrency;
+	
+        GetCharacterInventoryResult() :
+			PlayFabBaseModel(),
+			Inventory(),
+			VirtualCurrency()
+			{}
+		
+		GetCharacterInventoryResult(const GetCharacterInventoryResult& src) :
+			PlayFabBaseModel(),
+			Inventory(src.Inventory),
+			VirtualCurrency(src.VirtualCurrency)
+			{}
+			
+		GetCharacterInventoryResult(const rapidjson::Value& obj) : GetCharacterInventoryResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCharacterInventoryResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1819,51 +1968,30 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	struct ItemInstance : public PlayFabBaseModel
+	struct VirtualCurrencyRechargeTime : public PlayFabBaseModel
     {
 		
-		std::string ItemId;
-		std::string ItemInstanceId;
-		std::string ItemClass;
-		OptionalTime PurchaseDate;
-		OptionalTime Expiration;
-		OptionalInt32 RemainingUses;
-		std::string Annotation;
-		std::string CatalogVersion;
-		std::string BundleParent;
+		Int32 SecondsToRecharge;
+		time_t RechargeTime;
 	
-        ItemInstance() :
+        VirtualCurrencyRechargeTime() :
 			PlayFabBaseModel(),
-			ItemId(),
-			ItemInstanceId(),
-			ItemClass(),
-			PurchaseDate(),
-			Expiration(),
-			RemainingUses(),
-			Annotation(),
-			CatalogVersion(),
-			BundleParent()
+			SecondsToRecharge(0),
+			RechargeTime(0)
 			{}
 		
-		ItemInstance(const ItemInstance& src) :
+		VirtualCurrencyRechargeTime(const VirtualCurrencyRechargeTime& src) :
 			PlayFabBaseModel(),
-			ItemId(src.ItemId),
-			ItemInstanceId(src.ItemInstanceId),
-			ItemClass(src.ItemClass),
-			PurchaseDate(src.PurchaseDate),
-			Expiration(src.Expiration),
-			RemainingUses(src.RemainingUses),
-			Annotation(src.Annotation),
-			CatalogVersion(src.CatalogVersion),
-			BundleParent(src.BundleParent)
+			SecondsToRecharge(src.SecondsToRecharge),
+			RechargeTime(src.RechargeTime)
 			{}
 			
-		ItemInstance(const rapidjson::Value& obj) : ItemInstance()
+		VirtualCurrencyRechargeTime(const rapidjson::Value& obj) : VirtualCurrencyRechargeTime()
         {
             readFromValue(obj);
         }
 		
-		~ItemInstance();
+		~VirtualCurrencyRechargeTime();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1874,17 +2002,20 @@ namespace ServerModels
 		
 		std::list<ItemInstance> Inventory;
 		std::map<std::string, Int32> VirtualCurrency;
+		std::map<std::string, VirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes;
 	
         GetUserInventoryResult() :
 			PlayFabBaseModel(),
 			Inventory(),
-			VirtualCurrency()
+			VirtualCurrency(),
+			VirtualCurrencyRechargeTimes()
 			{}
 		
 		GetUserInventoryResult(const GetUserInventoryResult& src) :
 			PlayFabBaseModel(),
 			Inventory(src.Inventory),
-			VirtualCurrency(src.VirtualCurrency)
+			VirtualCurrency(src.VirtualCurrency),
+			VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes)
 			{}
 			
 		GetUserInventoryResult(const rapidjson::Value& obj) : GetUserInventoryResult()
@@ -2378,6 +2509,35 @@ namespace ServerModels
         }
 		
 		~LogEventResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ModifyCharacterVirtualCurrencyResult : public PlayFabBaseModel
+    {
+		
+		std::string VirtualCurrency;
+		Int32 Balance;
+	
+        ModifyCharacterVirtualCurrencyResult() :
+			PlayFabBaseModel(),
+			VirtualCurrency(),
+			Balance(0)
+			{}
+		
+		ModifyCharacterVirtualCurrencyResult(const ModifyCharacterVirtualCurrencyResult& src) :
+			PlayFabBaseModel(),
+			VirtualCurrency(src.VirtualCurrency),
+			Balance(src.Balance)
+			{}
+			
+		ModifyCharacterVirtualCurrencyResult(const rapidjson::Value& obj) : ModifyCharacterVirtualCurrencyResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~ModifyCharacterVirtualCurrencyResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -3046,6 +3206,41 @@ namespace ServerModels
         }
 		
 		~SetTitleDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct SubtractCharacterVirtualCurrencyRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string CharacterId;
+		std::string VirtualCurrency;
+		Int32 Amount;
+	
+        SubtractCharacterVirtualCurrencyRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			VirtualCurrency(),
+			Amount(0)
+			{}
+		
+		SubtractCharacterVirtualCurrencyRequest(const SubtractCharacterVirtualCurrencyRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			VirtualCurrency(src.VirtualCurrency),
+			Amount(src.Amount)
+			{}
+			
+		SubtractCharacterVirtualCurrencyRequest(const rapidjson::Value& obj) : SubtractCharacterVirtualCurrencyRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~SubtractCharacterVirtualCurrencyRequest();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

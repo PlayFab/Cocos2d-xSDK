@@ -432,6 +432,7 @@ namespace ClientModels
 		CatalogItemConsumableInfo* Consumable;
 		CatalogItemContainerInfo* Container;
 		CatalogItemBundleInfo* Bundle;
+		bool CanBecomeCharacter;
 	
         CatalogItem() :
 			PlayFabBaseModel(),
@@ -447,7 +448,8 @@ namespace ClientModels
 			GrantedIfPlayerHas(),
 			Consumable(NULL),
 			Container(NULL),
-			Bundle(NULL)
+			Bundle(NULL),
+			CanBecomeCharacter(false)
 			{}
 		
 		CatalogItem(const CatalogItem& src) :
@@ -464,7 +466,8 @@ namespace ClientModels
 			GrantedIfPlayerHas(src.GrantedIfPlayerHas),
 			Consumable(src.Consumable ? new CatalogItemConsumableInfo(*src.Consumable) : NULL),
 			Container(src.Container ? new CatalogItemContainerInfo(*src.Container) : NULL),
-			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL)
+			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL),
+			CanBecomeCharacter(src.CanBecomeCharacter)
 			{}
 			
 		CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -1435,19 +1438,64 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	enum UserDataPermission
+	{
+		UserDataPermissionPrivate,
+		UserDataPermissionPublic
+	};
+	
+	void writeUserDataPermissionEnumJSON(UserDataPermission enumVal, PFStringJsonWriter& writer);
+	UserDataPermission readUserDataPermissionFromValue(const rapidjson::Value& obj);
+	
+	
+	struct UserDataRecord : public PlayFabBaseModel
+    {
+		
+		std::string Value;
+		time_t LastUpdated;
+		Boxed<UserDataPermission> Permission;
+	
+        UserDataRecord() :
+			PlayFabBaseModel(),
+			Value(),
+			LastUpdated(0),
+			Permission()
+			{}
+		
+		UserDataRecord(const UserDataRecord& src) :
+			PlayFabBaseModel(),
+			Value(src.Value),
+			LastUpdated(src.LastUpdated),
+			Permission(src.Permission)
+			{}
+			
+		UserDataRecord(const rapidjson::Value& obj) : UserDataRecord()
+        {
+            readFromValue(obj);
+        }
+		
+		~UserDataRecord();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetCharacterDataResult : public PlayFabBaseModel
     {
 		
 		std::string CharacterId;
+		std::map<std::string, UserDataRecord> Data;
 	
         GetCharacterDataResult() :
 			PlayFabBaseModel(),
-			CharacterId()
+			CharacterId(),
+			Data()
 			{}
 		
 		GetCharacterDataResult(const GetCharacterDataResult& src) :
 			PlayFabBaseModel(),
-			CharacterId(src.CharacterId)
+			CharacterId(src.CharacterId),
+			Data(src.Data)
 			{}
 			
 		GetCharacterDataResult(const rapidjson::Value& obj) : GetCharacterDataResult()
@@ -1456,6 +1504,117 @@ namespace ClientModels
         }
 		
 		~GetCharacterDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCharacterInventoryRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string CharacterId;
+		std::string CatalogVersion;
+	
+        GetCharacterInventoryRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			CatalogVersion()
+			{}
+		
+		GetCharacterInventoryRequest(const GetCharacterInventoryRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			CatalogVersion(src.CatalogVersion)
+			{}
+			
+		GetCharacterInventoryRequest(const rapidjson::Value& obj) : GetCharacterInventoryRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCharacterInventoryRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ItemInstance : public PlayFabBaseModel
+    {
+		
+		std::string ItemId;
+		std::string ItemInstanceId;
+		std::string ItemClass;
+		OptionalTime PurchaseDate;
+		OptionalTime Expiration;
+		OptionalInt32 RemainingUses;
+		std::string Annotation;
+		std::string CatalogVersion;
+		std::string BundleParent;
+	
+        ItemInstance() :
+			PlayFabBaseModel(),
+			ItemId(),
+			ItemInstanceId(),
+			ItemClass(),
+			PurchaseDate(),
+			Expiration(),
+			RemainingUses(),
+			Annotation(),
+			CatalogVersion(),
+			BundleParent()
+			{}
+		
+		ItemInstance(const ItemInstance& src) :
+			PlayFabBaseModel(),
+			ItemId(src.ItemId),
+			ItemInstanceId(src.ItemInstanceId),
+			ItemClass(src.ItemClass),
+			PurchaseDate(src.PurchaseDate),
+			Expiration(src.Expiration),
+			RemainingUses(src.RemainingUses),
+			Annotation(src.Annotation),
+			CatalogVersion(src.CatalogVersion),
+			BundleParent(src.BundleParent)
+			{}
+			
+		ItemInstance(const rapidjson::Value& obj) : ItemInstance()
+        {
+            readFromValue(obj);
+        }
+		
+		~ItemInstance();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetCharacterInventoryResult : public PlayFabBaseModel
+    {
+		
+		std::list<ItemInstance> Inventory;
+		std::map<std::string, Int32> VirtualCurrency;
+	
+        GetCharacterInventoryResult() :
+			PlayFabBaseModel(),
+			Inventory(),
+			VirtualCurrency()
+			{}
+		
+		GetCharacterInventoryResult(const GetCharacterInventoryResult& src) :
+			PlayFabBaseModel(),
+			Inventory(src.Inventory),
+			VirtualCurrency(src.VirtualCurrency)
+			{}
+			
+		GetCharacterInventoryResult(const rapidjson::Value& obj) : GetCharacterInventoryResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetCharacterInventoryResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -2177,16 +2336,6 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	enum UserDataPermission
-	{
-		UserDataPermissionPrivate,
-		UserDataPermissionPublic
-	};
-	
-	void writeUserDataPermissionEnumJSON(UserDataPermission enumVal, PFStringJsonWriter& writer);
-	UserDataPermission readUserDataPermissionFromValue(const rapidjson::Value& obj);
-	
-	
 	struct SharedGroupDataRecord : public PlayFabBaseModel
     {
 		
@@ -2521,83 +2670,30 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	struct ItemInstance : public PlayFabBaseModel
+	struct VirtualCurrencyRechargeTime : public PlayFabBaseModel
     {
 		
-		std::string ItemId;
-		std::string ItemInstanceId;
-		std::string ItemClass;
-		OptionalTime PurchaseDate;
-		OptionalTime Expiration;
-		OptionalInt32 RemainingUses;
-		std::string Annotation;
-		std::string CatalogVersion;
-		std::string BundleParent;
+		Int32 SecondsToRecharge;
+		time_t RechargeTime;
 	
-        ItemInstance() :
+        VirtualCurrencyRechargeTime() :
 			PlayFabBaseModel(),
-			ItemId(),
-			ItemInstanceId(),
-			ItemClass(),
-			PurchaseDate(),
-			Expiration(),
-			RemainingUses(),
-			Annotation(),
-			CatalogVersion(),
-			BundleParent()
+			SecondsToRecharge(0),
+			RechargeTime(0)
 			{}
 		
-		ItemInstance(const ItemInstance& src) :
+		VirtualCurrencyRechargeTime(const VirtualCurrencyRechargeTime& src) :
 			PlayFabBaseModel(),
-			ItemId(src.ItemId),
-			ItemInstanceId(src.ItemInstanceId),
-			ItemClass(src.ItemClass),
-			PurchaseDate(src.PurchaseDate),
-			Expiration(src.Expiration),
-			RemainingUses(src.RemainingUses),
-			Annotation(src.Annotation),
-			CatalogVersion(src.CatalogVersion),
-			BundleParent(src.BundleParent)
+			SecondsToRecharge(src.SecondsToRecharge),
+			RechargeTime(src.RechargeTime)
 			{}
 			
-		ItemInstance(const rapidjson::Value& obj) : ItemInstance()
+		VirtualCurrencyRechargeTime(const rapidjson::Value& obj) : VirtualCurrencyRechargeTime()
         {
             readFromValue(obj);
         }
 		
-		~ItemInstance();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct UserDataRecord : public PlayFabBaseModel
-    {
-		
-		std::string Value;
-		time_t LastUpdated;
-		Boxed<UserDataPermission> Permission;
-	
-        UserDataRecord() :
-			PlayFabBaseModel(),
-			Value(),
-			LastUpdated(0),
-			Permission()
-			{}
-		
-		UserDataRecord(const UserDataRecord& src) :
-			PlayFabBaseModel(),
-			Value(src.Value),
-			LastUpdated(src.LastUpdated),
-			Permission(src.Permission)
-			{}
-			
-		UserDataRecord(const rapidjson::Value& obj) : UserDataRecord()
-        {
-            readFromValue(obj);
-        }
-		
-		~UserDataRecord();
+		~VirtualCurrencyRechargeTime();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -2610,6 +2706,7 @@ namespace ClientModels
 		UserAccountInfo* AccountInfo;
 		std::list<ItemInstance> Inventory;
 		std::map<std::string, Int32> VirtualCurrency;
+		std::map<std::string, VirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes;
 		std::map<std::string, UserDataRecord> Data;
 		std::map<std::string, UserDataRecord> ReadOnlyData;
 	
@@ -2619,6 +2716,7 @@ namespace ClientModels
 			AccountInfo(NULL),
 			Inventory(),
 			VirtualCurrency(),
+			VirtualCurrencyRechargeTimes(),
 			Data(),
 			ReadOnlyData()
 			{}
@@ -2629,6 +2727,7 @@ namespace ClientModels
 			AccountInfo(src.AccountInfo ? new UserAccountInfo(*src.AccountInfo) : NULL),
 			Inventory(src.Inventory),
 			VirtualCurrency(src.VirtualCurrency),
+			VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes),
 			Data(src.Data),
 			ReadOnlyData(src.ReadOnlyData)
 			{}
@@ -2727,17 +2826,20 @@ namespace ClientModels
 		
 		std::list<ItemInstance> Inventory;
 		std::map<std::string, Int32> VirtualCurrency;
+		std::map<std::string, VirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes;
 	
         GetUserInventoryResult() :
 			PlayFabBaseModel(),
 			Inventory(),
-			VirtualCurrency()
+			VirtualCurrency(),
+			VirtualCurrencyRechargeTimes()
 			{}
 		
 		GetUserInventoryResult(const GetUserInventoryResult& src) :
 			PlayFabBaseModel(),
 			Inventory(src.Inventory),
-			VirtualCurrency(src.VirtualCurrency)
+			VirtualCurrency(src.VirtualCurrency),
+			VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes)
 			{}
 			
 		GetUserInventoryResult(const rapidjson::Value& obj) : GetUserInventoryResult()
@@ -3534,6 +3636,8 @@ namespace ClientModels
 		Boxed<Region> Region;
 		std::string GameMode;
 		std::string LobbyId;
+		std::string StatisticName;
+		std::string CharacterId;
 		OptionalBool EnableQueue;
 	
         MatchmakeRequest() :
@@ -3542,6 +3646,8 @@ namespace ClientModels
 			Region(),
 			GameMode(),
 			LobbyId(),
+			StatisticName(),
+			CharacterId(),
 			EnableQueue()
 			{}
 		
@@ -3551,6 +3657,8 @@ namespace ClientModels
 			Region(src.Region),
 			GameMode(src.GameMode),
 			LobbyId(src.LobbyId),
+			StatisticName(src.StatisticName),
+			CharacterId(src.CharacterId),
 			EnableQueue(src.EnableQueue)
 			{}
 			
@@ -4465,6 +4573,8 @@ namespace ClientModels
 		std::string BuildVersion;
 		Region Region;
 		std::string GameMode;
+		std::string StatisticName;
+		std::string CharacterId;
 		std::string CustomCommandLineData;
 	
         StartGameRequest() :
@@ -4472,6 +4582,8 @@ namespace ClientModels
 			BuildVersion(),
 			Region(),
 			GameMode(),
+			StatisticName(),
+			CharacterId(),
 			CustomCommandLineData()
 			{}
 		
@@ -4480,6 +4592,8 @@ namespace ClientModels
 			BuildVersion(src.BuildVersion),
 			Region(src.Region),
 			GameMode(src.GameMode),
+			StatisticName(src.StatisticName),
+			CharacterId(src.CharacterId),
 			CustomCommandLineData(src.CustomCommandLineData)
 			{}
 			

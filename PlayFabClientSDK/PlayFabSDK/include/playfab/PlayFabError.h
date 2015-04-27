@@ -147,7 +147,10 @@ namespace PlayFab
 		PlayFabErrorPhotonApplicationNotFound = 1140,
 		PlayFabErrorPhotonApplicationNotAssociatedWithTitle = 1141,
 		PlayFabErrorInvalidEmailOrPassword = 1142,
-		PlayFabErrorFacebookAPIError = 1143
+		PlayFabErrorFacebookAPIError = 1143,
+		PlayFabErrorInvalidContentType = 1144,
+		PlayFabErrorKeyLengthExceeded = 1145,
+		PlayFabErrorDataLengthExceeded = 1146
     };
 
     struct PlayFabError

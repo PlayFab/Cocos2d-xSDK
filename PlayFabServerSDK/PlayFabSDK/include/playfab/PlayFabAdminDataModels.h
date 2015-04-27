@@ -420,6 +420,7 @@ namespace AdminModels
 		CatalogItemConsumableInfo* Consumable;
 		CatalogItemContainerInfo* Container;
 		CatalogItemBundleInfo* Bundle;
+		bool CanBecomeCharacter;
 	
         CatalogItem() :
 			PlayFabBaseModel(),
@@ -435,7 +436,8 @@ namespace AdminModels
 			GrantedIfPlayerHas(),
 			Consumable(NULL),
 			Container(NULL),
-			Bundle(NULL)
+			Bundle(NULL),
+			CanBecomeCharacter(false)
 			{}
 		
 		CatalogItem(const CatalogItem& src) :
@@ -452,7 +454,8 @@ namespace AdminModels
 			GrantedIfPlayerHas(src.GrantedIfPlayerHas),
 			Consumable(src.Consumable ? new CatalogItemConsumableInfo(*src.Consumable) : NULL),
 			Container(src.Container ? new CatalogItemContainerInfo(*src.Container) : NULL),
-			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL)
+			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL),
+			CanBecomeCharacter(src.CanBecomeCharacter)
 			{}
 			
 		CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -1717,22 +1720,54 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct VirtualCurrencyRechargeTime : public PlayFabBaseModel
+    {
+		
+		Int32 SecondsToRecharge;
+		time_t RechargeTime;
+	
+        VirtualCurrencyRechargeTime() :
+			PlayFabBaseModel(),
+			SecondsToRecharge(0),
+			RechargeTime(0)
+			{}
+		
+		VirtualCurrencyRechargeTime(const VirtualCurrencyRechargeTime& src) :
+			PlayFabBaseModel(),
+			SecondsToRecharge(src.SecondsToRecharge),
+			RechargeTime(src.RechargeTime)
+			{}
+			
+		VirtualCurrencyRechargeTime(const rapidjson::Value& obj) : VirtualCurrencyRechargeTime()
+        {
+            readFromValue(obj);
+        }
+		
+		~VirtualCurrencyRechargeTime();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetUserInventoryResult : public PlayFabBaseModel
     {
 		
 		std::list<ItemInstance> Inventory;
 		std::map<std::string, Int32> VirtualCurrency;
+		std::map<std::string, VirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes;
 	
         GetUserInventoryResult() :
 			PlayFabBaseModel(),
 			Inventory(),
-			VirtualCurrency()
+			VirtualCurrency(),
+			VirtualCurrencyRechargeTimes()
 			{}
 		
 		GetUserInventoryResult(const GetUserInventoryResult& src) :
 			PlayFabBaseModel(),
 			Inventory(src.Inventory),
-			VirtualCurrency(src.VirtualCurrency)
+			VirtualCurrency(src.VirtualCurrency),
+			VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes)
 			{}
 			
 		GetUserInventoryResult(const rapidjson::Value& obj) : GetUserInventoryResult()

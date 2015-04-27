@@ -7,6 +7,48 @@ using namespace rapidjson;
 
 
 
+AddCharacterVirtualCurrencyRequest::~AddCharacterVirtualCurrencyRequest()
+{
+	
+}
+
+void AddCharacterVirtualCurrencyRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	writer.String("VirtualCurrency"); writer.String(VirtualCurrency.c_str());
+	
+	writer.String("Amount"); writer.Int(Amount);
+	
+	
+	writer.EndObject();
+}
+
+bool AddCharacterVirtualCurrencyRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
+	if (VirtualCurrency_member != NULL) VirtualCurrency = VirtualCurrency_member->value.GetString();
+	
+	const Value::Member* Amount_member = obj.FindMember("Amount");
+	if (Amount_member != NULL) Amount = Amount_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
 AddSharedGroupMembersRequest::~AddSharedGroupMembersRequest()
 {
 	
@@ -902,6 +944,8 @@ void CatalogItem::writeJSON(PFStringJsonWriter& writer)
 	
 	if(Bundle != NULL) { writer.String("Bundle"); Bundle->writeJSON(writer); }
 	
+	writer.String("CanBecomeCharacter"); writer.Bool(CanBecomeCharacter);
+	
 	
 	writer.EndObject();
 }
@@ -965,6 +1009,9 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* Bundle_member = obj.FindMember("Bundle");
 	if (Bundle_member != NULL) Bundle = new CatalogItemBundleInfo(Bundle_member->value);
+	
+	const Value::Member* CanBecomeCharacter_member = obj.FindMember("CanBecomeCharacter");
+	if (CanBecomeCharacter_member != NULL) CanBecomeCharacter = CanBecomeCharacter_member->value.GetBool();
 	
 	
 	return true;
@@ -1436,6 +1483,165 @@ bool GetCharacterDataResult::readFromValue(const rapidjson::Value& obj)
 	if (Data_member != NULL) {
 		for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
 			Data[iter->name.GetString()] = UserDataRecord(iter->value);
+		}
+	}
+	
+	
+	return true;
+}
+
+
+GetCharacterInventoryRequest::~GetCharacterInventoryRequest()
+{
+	
+}
+
+void GetCharacterInventoryRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetCharacterInventoryRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
+	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+ItemInstance::~ItemInstance()
+{
+	
+}
+
+void ItemInstance::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(ItemId.length() > 0) { writer.String("ItemId"); writer.String(ItemId.c_str()); }
+	
+	if(ItemInstanceId.length() > 0) { writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str()); }
+	
+	if(ItemClass.length() > 0) { writer.String("ItemClass"); writer.String(ItemClass.c_str()); }
+	
+	if(PurchaseDate.notNull()) { writer.String("PurchaseDate"); writeDatetime(PurchaseDate, writer); }
+	
+	if(Expiration.notNull()) { writer.String("Expiration"); writeDatetime(Expiration, writer); }
+	
+	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Int(RemainingUses); }
+	
+	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
+	
+	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+	
+	if(BundleParent.length() > 0) { writer.String("BundleParent"); writer.String(BundleParent.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool ItemInstance::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* ItemId_member = obj.FindMember("ItemId");
+	if (ItemId_member != NULL) ItemId = ItemId_member->value.GetString();
+	
+	const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+	if (ItemInstanceId_member != NULL) ItemInstanceId = ItemInstanceId_member->value.GetString();
+	
+	const Value::Member* ItemClass_member = obj.FindMember("ItemClass");
+	if (ItemClass_member != NULL) ItemClass = ItemClass_member->value.GetString();
+	
+	const Value::Member* PurchaseDate_member = obj.FindMember("PurchaseDate");
+	if (PurchaseDate_member != NULL) PurchaseDate = readDatetime(PurchaseDate_member->value);
+	
+	const Value::Member* Expiration_member = obj.FindMember("Expiration");
+	if (Expiration_member != NULL) Expiration = readDatetime(Expiration_member->value);
+	
+	const Value::Member* RemainingUses_member = obj.FindMember("RemainingUses");
+	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetInt();
+	
+	const Value::Member* Annotation_member = obj.FindMember("Annotation");
+	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
+	
+	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
+	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
+	
+	const Value::Member* BundleParent_member = obj.FindMember("BundleParent");
+	if (BundleParent_member != NULL) BundleParent = BundleParent_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+GetCharacterInventoryResult::~GetCharacterInventoryResult()
+{
+	
+}
+
+void GetCharacterInventoryResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!Inventory.empty()) {
+	writer.String("Inventory");
+	writer.StartArray();
+	for (std::list<ItemInstance>::iterator iter = Inventory.begin(); iter != Inventory.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	if(!VirtualCurrency.empty()) {
+	writer.String("VirtualCurrency");
+	writer.StartObject();
+	for (std::map<std::string, Int32>::iterator iter = VirtualCurrency.begin(); iter != VirtualCurrency.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.Int(iter->second);
+	}
+	writer.EndObject();
+	}
+	
+	
+	writer.EndObject();
+}
+
+bool GetCharacterInventoryResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Inventory_member = obj.FindMember("Inventory");
+	if (Inventory_member != NULL) {
+		const rapidjson::Value& memberList = Inventory_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Inventory.push_back(ItemInstance(memberList[i]));
+		}
+	}
+	
+	const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
+	if (VirtualCurrency_member != NULL) {
+		for (Value::ConstMemberIterator iter = VirtualCurrency_member->value.MemberBegin(); iter != VirtualCurrency_member->value.MemberEnd(); ++iter) {
+			VirtualCurrency[iter->name.GetString()] = iter->value.GetInt();
 		}
 	}
 	
@@ -2492,67 +2698,32 @@ bool GetUserInventoryRequest::readFromValue(const rapidjson::Value& obj)
 }
 
 
-ItemInstance::~ItemInstance()
+VirtualCurrencyRechargeTime::~VirtualCurrencyRechargeTime()
 {
 	
 }
 
-void ItemInstance::writeJSON(PFStringJsonWriter& writer)
+void VirtualCurrencyRechargeTime::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
 	
-	if(ItemId.length() > 0) { writer.String("ItemId"); writer.String(ItemId.c_str()); }
+	writer.String("SecondsToRecharge"); writer.Int(SecondsToRecharge);
 	
-	if(ItemInstanceId.length() > 0) { writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str()); }
-	
-	if(ItemClass.length() > 0) { writer.String("ItemClass"); writer.String(ItemClass.c_str()); }
-	
-	if(PurchaseDate.notNull()) { writer.String("PurchaseDate"); writeDatetime(PurchaseDate, writer); }
-	
-	if(Expiration.notNull()) { writer.String("Expiration"); writeDatetime(Expiration, writer); }
-	
-	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Int(RemainingUses); }
-	
-	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
-	
-	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
-	
-	if(BundleParent.length() > 0) { writer.String("BundleParent"); writer.String(BundleParent.c_str()); }
+	writer.String("RechargeTime"); writeDatetime(RechargeTime, writer);
 	
 	
 	writer.EndObject();
 }
 
-bool ItemInstance::readFromValue(const rapidjson::Value& obj)
+bool VirtualCurrencyRechargeTime::readFromValue(const rapidjson::Value& obj)
 {
 	
-	const Value::Member* ItemId_member = obj.FindMember("ItemId");
-	if (ItemId_member != NULL) ItemId = ItemId_member->value.GetString();
+	const Value::Member* SecondsToRecharge_member = obj.FindMember("SecondsToRecharge");
+	if (SecondsToRecharge_member != NULL) SecondsToRecharge = SecondsToRecharge_member->value.GetInt();
 	
-	const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
-	if (ItemInstanceId_member != NULL) ItemInstanceId = ItemInstanceId_member->value.GetString();
-	
-	const Value::Member* ItemClass_member = obj.FindMember("ItemClass");
-	if (ItemClass_member != NULL) ItemClass = ItemClass_member->value.GetString();
-	
-	const Value::Member* PurchaseDate_member = obj.FindMember("PurchaseDate");
-	if (PurchaseDate_member != NULL) PurchaseDate = readDatetime(PurchaseDate_member->value);
-	
-	const Value::Member* Expiration_member = obj.FindMember("Expiration");
-	if (Expiration_member != NULL) Expiration = readDatetime(Expiration_member->value);
-	
-	const Value::Member* RemainingUses_member = obj.FindMember("RemainingUses");
-	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetInt();
-	
-	const Value::Member* Annotation_member = obj.FindMember("Annotation");
-	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
-	
-	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
-	
-	const Value::Member* BundleParent_member = obj.FindMember("BundleParent");
-	if (BundleParent_member != NULL) BundleParent = BundleParent_member->value.GetString();
+	const Value::Member* RechargeTime_member = obj.FindMember("RechargeTime");
+	if (RechargeTime_member != NULL) RechargeTime = readDatetime(RechargeTime_member->value);
 	
 	
 	return true;
@@ -2587,6 +2758,15 @@ void GetUserInventoryResult::writeJSON(PFStringJsonWriter& writer)
 	writer.EndObject();
 	}
 	
+	if(!VirtualCurrencyRechargeTimes.empty()) {
+	writer.String("VirtualCurrencyRechargeTimes");
+	writer.StartObject();
+	for (std::map<std::string, VirtualCurrencyRechargeTime>::iterator iter = VirtualCurrencyRechargeTimes.begin(); iter != VirtualCurrencyRechargeTimes.end(); ++iter) {
+		writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+	}
+	writer.EndObject();
+	}
+	
 	
 	writer.EndObject();
 }
@@ -2606,6 +2786,13 @@ bool GetUserInventoryResult::readFromValue(const rapidjson::Value& obj)
 	if (VirtualCurrency_member != NULL) {
 		for (Value::ConstMemberIterator iter = VirtualCurrency_member->value.MemberBegin(); iter != VirtualCurrency_member->value.MemberEnd(); ++iter) {
 			VirtualCurrency[iter->name.GetString()] = iter->value.GetInt();
+		}
+	}
+	
+	const Value::Member* VirtualCurrencyRechargeTimes_member = obj.FindMember("VirtualCurrencyRechargeTimes");
+	if (VirtualCurrencyRechargeTimes_member != NULL) {
+		for (Value::ConstMemberIterator iter = VirtualCurrencyRechargeTimes_member->value.MemberBegin(); iter != VirtualCurrencyRechargeTimes_member->value.MemberEnd(); ++iter) {
+			VirtualCurrencyRechargeTimes[iter->name.GetString()] = VirtualCurrencyRechargeTime(iter->value);
 		}
 	}
 	
@@ -3260,6 +3447,38 @@ void LogEventResult::writeJSON(PFStringJsonWriter& writer)
 
 bool LogEventResult::readFromValue(const rapidjson::Value& obj)
 {
+	
+	
+	return true;
+}
+
+
+ModifyCharacterVirtualCurrencyResult::~ModifyCharacterVirtualCurrencyResult()
+{
+	
+}
+
+void ModifyCharacterVirtualCurrencyResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(VirtualCurrency.length() > 0) { writer.String("VirtualCurrency"); writer.String(VirtualCurrency.c_str()); }
+	
+	writer.String("Balance"); writer.Int(Balance);
+	
+	
+	writer.EndObject();
+}
+
+bool ModifyCharacterVirtualCurrencyResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
+	if (VirtualCurrency_member != NULL) VirtualCurrency = VirtualCurrency_member->value.GetString();
+	
+	const Value::Member* Balance_member = obj.FindMember("Balance");
+	if (Balance_member != NULL) Balance = Balance_member->value.GetInt();
 	
 	
 	return true;
@@ -4020,6 +4239,48 @@ void SetTitleDataResult::writeJSON(PFStringJsonWriter& writer)
 
 bool SetTitleDataResult::readFromValue(const rapidjson::Value& obj)
 {
+	
+	
+	return true;
+}
+
+
+SubtractCharacterVirtualCurrencyRequest::~SubtractCharacterVirtualCurrencyRequest()
+{
+	
+}
+
+void SubtractCharacterVirtualCurrencyRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("CharacterId"); writer.String(CharacterId.c_str());
+	
+	writer.String("VirtualCurrency"); writer.String(VirtualCurrency.c_str());
+	
+	writer.String("Amount"); writer.Int(Amount);
+	
+	
+	writer.EndObject();
+}
+
+bool SubtractCharacterVirtualCurrencyRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	
+	const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
+	if (VirtualCurrency_member != NULL) VirtualCurrency = VirtualCurrency_member->value.GetString();
+	
+	const Value::Member* Amount_member = obj.FindMember("Amount");
+	if (Amount_member != NULL) Amount = Amount_member->value.GetInt();
 	
 	
 	return true;
