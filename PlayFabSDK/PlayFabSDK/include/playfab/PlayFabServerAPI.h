@@ -31,6 +31,7 @@ namespace PlayFab
 		typedef void(*GetUserStatisticsCallback)(ServerModels::GetUserStatisticsResult& result, void* userData);
 		typedef void(*UpdateUserDataCallback)(ServerModels::UpdateUserDataResult& result, void* userData);
 		typedef void(*UpdateUserInternalDataCallback)(ServerModels::UpdateUserDataResult& result, void* userData);
+		typedef void(*UpdateUserInventoryItemCustomDataCallback)(ServerModels::UpdateUserInventoryItemDataResult& result, void* userData);
 		typedef void(*UpdateUserPublisherDataCallback)(ServerModels::UpdateUserDataResult& result, void* userData);
 		typedef void(*UpdateUserPublisherInternalDataCallback)(ServerModels::UpdateUserDataResult& result, void* userData);
 		typedef void(*UpdateUserPublisherReadOnlyDataCallback)(ServerModels::UpdateUserDataResult& result, void* userData);
@@ -38,7 +39,9 @@ namespace PlayFab
 		typedef void(*UpdateUserStatisticsCallback)(ServerModels::UpdateUserStatisticsResult& result, void* userData);
 		typedef void(*GetCatalogItemsCallback)(ServerModels::GetCatalogItemsResult& result, void* userData);
 		typedef void(*GetTitleDataCallback)(ServerModels::GetTitleDataResult& result, void* userData);
+		typedef void(*GetTitleInternalDataCallback)(ServerModels::GetTitleDataResult& result, void* userData);
 		typedef void(*SetTitleDataCallback)(ServerModels::SetTitleDataResult& result, void* userData);
+		typedef void(*SetTitleInternalDataCallback)(ServerModels::SetTitleDataResult& result, void* userData);
 		typedef void(*AddCharacterVirtualCurrencyCallback)(ServerModels::ModifyCharacterVirtualCurrencyResult& result, void* userData);
 		typedef void(*AddUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
 		typedef void(*GetCharacterInventoryCallback)(ServerModels::GetCharacterInventoryResult& result, void* userData);
@@ -119,6 +122,8 @@ namespace PlayFab
 		
 		void UpdateUserInternalData(ServerModels::UpdateUserInternalDataRequest& request, UpdateUserInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void UpdateUserInventoryItemCustomData(ServerModels::UpdateUserInventoryItemDataRequest& request, UpdateUserInventoryItemCustomDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void UpdateUserPublisherData(ServerModels::UpdateUserDataRequest& request, UpdateUserPublisherDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateUserPublisherInternalData(ServerModels::UpdateUserInternalDataRequest& request, UpdateUserPublisherInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
@@ -133,7 +138,11 @@ namespace PlayFab
 		
 		void GetTitleData(ServerModels::GetTitleDataRequest& request, GetTitleDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void GetTitleInternalData(ServerModels::GetTitleDataRequest& request, GetTitleInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void SetTitleData(ServerModels::SetTitleDataRequest& request, SetTitleDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void SetTitleInternalData(ServerModels::SetTitleDataRequest& request, SetTitleInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void AddCharacterVirtualCurrency(ServerModels::AddCharacterVirtualCurrencyRequest& request, AddCharacterVirtualCurrencyCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -250,6 +259,8 @@ namespace PlayFab
 		
 		static void OnUpdateUserInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnUpdateUserInventoryItemCustomDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnUpdateUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateUserPublisherInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
@@ -264,7 +275,11 @@ namespace PlayFab
 		
 		static void OnGetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnGetTitleInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnSetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnSetTitleInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnAddCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
 		

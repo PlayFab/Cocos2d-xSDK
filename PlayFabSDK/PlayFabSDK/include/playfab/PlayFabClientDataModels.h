@@ -433,6 +433,7 @@ namespace ClientModels
 		CatalogItemContainerInfo* Container;
 		CatalogItemBundleInfo* Bundle;
 		bool CanBecomeCharacter;
+		bool IsStackable;
 	
         CatalogItem() :
 			PlayFabBaseModel(),
@@ -449,7 +450,8 @@ namespace ClientModels
 			Consumable(NULL),
 			Container(NULL),
 			Bundle(NULL),
-			CanBecomeCharacter(false)
+			CanBecomeCharacter(false),
+			IsStackable(false)
 			{}
 		
 		CatalogItem(const CatalogItem& src) :
@@ -467,7 +469,8 @@ namespace ClientModels
 			Consumable(src.Consumable ? new CatalogItemConsumableInfo(*src.Consumable) : NULL),
 			Container(src.Container ? new CatalogItemContainerInfo(*src.Container) : NULL),
 			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL),
-			CanBecomeCharacter(src.CanBecomeCharacter)
+			CanBecomeCharacter(src.CanBecomeCharacter),
+			IsStackable(src.IsStackable)
 			{}
 			
 		CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -1553,6 +1556,7 @@ namespace ClientModels
 		std::string Annotation;
 		std::string CatalogVersion;
 		std::string BundleParent;
+		std::map<std::string, std::string> CustomData;
 	
         ItemInstance() :
 			PlayFabBaseModel(),
@@ -1564,7 +1568,8 @@ namespace ClientModels
 			RemainingUses(),
 			Annotation(),
 			CatalogVersion(),
-			BundleParent()
+			BundleParent(),
+			CustomData()
 			{}
 		
 		ItemInstance(const ItemInstance& src) :
@@ -1577,7 +1582,8 @@ namespace ClientModels
 			RemainingUses(src.RemainingUses),
 			Annotation(src.Annotation),
 			CatalogVersion(src.CatalogVersion),
-			BundleParent(src.BundleParent)
+			BundleParent(src.BundleParent),
+			CustomData(src.CustomData)
 			{}
 			
 		ItemInstance(const rapidjson::Value& obj) : ItemInstance()
@@ -3163,6 +3169,58 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct LinkGoogleAccountRequest : public PlayFabBaseModel
+    {
+		
+		std::string AccessToken;
+		std::string PublisherId;
+	
+        LinkGoogleAccountRequest() :
+			PlayFabBaseModel(),
+			AccessToken(),
+			PublisherId()
+			{}
+		
+		LinkGoogleAccountRequest(const LinkGoogleAccountRequest& src) :
+			PlayFabBaseModel(),
+			AccessToken(src.AccessToken),
+			PublisherId(src.PublisherId)
+			{}
+			
+		LinkGoogleAccountRequest(const rapidjson::Value& obj) : LinkGoogleAccountRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~LinkGoogleAccountRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct LinkGoogleAccountResult : public PlayFabBaseModel
+    {
+		
+	
+        LinkGoogleAccountResult() :
+			PlayFabBaseModel()
+			{}
+		
+		LinkGoogleAccountResult(const LinkGoogleAccountResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		LinkGoogleAccountResult(const rapidjson::Value& obj) : LinkGoogleAccountResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~LinkGoogleAccountResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct LinkIOSDeviceIDRequest : public PlayFabBaseModel
     {
 		
@@ -3636,8 +3694,6 @@ namespace ClientModels
 		Boxed<Region> Region;
 		std::string GameMode;
 		std::string LobbyId;
-		std::string StatisticName;
-		std::string CharacterId;
 		OptionalBool EnableQueue;
 	
         MatchmakeRequest() :
@@ -3646,8 +3702,6 @@ namespace ClientModels
 			Region(),
 			GameMode(),
 			LobbyId(),
-			StatisticName(),
-			CharacterId(),
 			EnableQueue()
 			{}
 		
@@ -3657,8 +3711,6 @@ namespace ClientModels
 			Region(src.Region),
 			GameMode(src.GameMode),
 			LobbyId(src.LobbyId),
-			StatisticName(src.StatisticName),
-			CharacterId(src.CharacterId),
 			EnableQueue(src.EnableQueue)
 			{}
 			
@@ -3810,6 +3862,8 @@ namespace ClientModels
 		TransactionStatusRevoked,
 		TransactionStatusTradePending,
 		TransactionStatusUpgraded,
+		TransactionStatusStackPending,
+		TransactionStatusStacked,
 		TransactionStatusOther,
 		TransactionStatusFailed
 	};
@@ -4573,8 +4627,6 @@ namespace ClientModels
 		std::string BuildVersion;
 		Region Region;
 		std::string GameMode;
-		std::string StatisticName;
-		std::string CharacterId;
 		std::string CustomCommandLineData;
 	
         StartGameRequest() :
@@ -4582,8 +4634,6 @@ namespace ClientModels
 			BuildVersion(),
 			Region(),
 			GameMode(),
-			StatisticName(),
-			CharacterId(),
 			CustomCommandLineData()
 			{}
 		
@@ -4592,8 +4642,6 @@ namespace ClientModels
 			BuildVersion(src.BuildVersion),
 			Region(src.Region),
 			GameMode(src.GameMode),
-			StatisticName(src.StatisticName),
-			CharacterId(src.CharacterId),
 			CustomCommandLineData(src.CustomCommandLineData)
 			{}
 			
@@ -4878,6 +4926,52 @@ namespace ClientModels
         }
 		
 		~UnlinkGameCenterAccountResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UnlinkGoogleAccountRequest : public PlayFabBaseModel
+    {
+		
+	
+        UnlinkGoogleAccountRequest() :
+			PlayFabBaseModel()
+			{}
+		
+		UnlinkGoogleAccountRequest(const UnlinkGoogleAccountRequest& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UnlinkGoogleAccountRequest(const rapidjson::Value& obj) : UnlinkGoogleAccountRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UnlinkGoogleAccountRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UnlinkGoogleAccountResult : public PlayFabBaseModel
+    {
+		
+	
+        UnlinkGoogleAccountResult() :
+			PlayFabBaseModel()
+			{}
+		
+		UnlinkGoogleAccountResult(const UnlinkGoogleAccountResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UnlinkGoogleAccountResult(const rapidjson::Value& obj) : UnlinkGoogleAccountResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~UnlinkGoogleAccountResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

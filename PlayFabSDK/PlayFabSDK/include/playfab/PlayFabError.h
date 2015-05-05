@@ -150,7 +150,8 @@ namespace PlayFab
 		PlayFabErrorFacebookAPIError = 1143,
 		PlayFabErrorInvalidContentType = 1144,
 		PlayFabErrorKeyLengthExceeded = 1145,
-		PlayFabErrorDataLengthExceeded = 1146
+		PlayFabErrorDataLengthExceeded = 1146,
+		PlayFabErrorTooManyKeys = 1147
     };
 
     struct PlayFabError

@@ -421,6 +421,7 @@ namespace AdminModels
 		CatalogItemContainerInfo* Container;
 		CatalogItemBundleInfo* Bundle;
 		bool CanBecomeCharacter;
+		bool IsStackable;
 	
         CatalogItem() :
 			PlayFabBaseModel(),
@@ -437,7 +438,8 @@ namespace AdminModels
 			Consumable(NULL),
 			Container(NULL),
 			Bundle(NULL),
-			CanBecomeCharacter(false)
+			CanBecomeCharacter(false),
+			IsStackable(false)
 			{}
 		
 		CatalogItem(const CatalogItem& src) :
@@ -455,7 +457,8 @@ namespace AdminModels
 			Consumable(src.Consumable ? new CatalogItemConsumableInfo(*src.Consumable) : NULL),
 			Container(src.Container ? new CatalogItemContainerInfo(*src.Container) : NULL),
 			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL),
-			CanBecomeCharacter(src.CanBecomeCharacter)
+			CanBecomeCharacter(src.CanBecomeCharacter),
+			IsStackable(src.IsStackable)
 			{}
 			
 		CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -1682,6 +1685,7 @@ namespace AdminModels
 		std::string Annotation;
 		std::string CatalogVersion;
 		std::string BundleParent;
+		std::map<std::string, std::string> CustomData;
 	
         ItemInstance() :
 			PlayFabBaseModel(),
@@ -1693,7 +1697,8 @@ namespace AdminModels
 			RemainingUses(),
 			Annotation(),
 			CatalogVersion(),
-			BundleParent()
+			BundleParent(),
+			CustomData()
 			{}
 		
 		ItemInstance(const ItemInstance& src) :
@@ -1706,7 +1711,8 @@ namespace AdminModels
 			RemainingUses(src.RemainingUses),
 			Annotation(src.Annotation),
 			CatalogVersion(src.CatalogVersion),
-			BundleParent(src.BundleParent)
+			BundleParent(src.BundleParent),
+			CustomData(src.CustomData)
 			{}
 			
 		ItemInstance(const rapidjson::Value& obj) : ItemInstance()

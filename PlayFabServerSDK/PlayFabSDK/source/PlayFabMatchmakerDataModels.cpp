@@ -94,6 +94,15 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 	
 	if(BundleParent.length() > 0) { writer.String("BundleParent"); writer.String(BundleParent.c_str()); }
 	
+	if(!CustomData.empty()) {
+	writer.String("CustomData");
+	writer.StartObject();
+	for (std::map<std::string, std::string>::iterator iter = CustomData.begin(); iter != CustomData.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+	}
+	writer.EndObject();
+	}
+	
 	
 	writer.EndObject();
 }
@@ -127,6 +136,13 @@ bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* BundleParent_member = obj.FindMember("BundleParent");
 	if (BundleParent_member != NULL) BundleParent = BundleParent_member->value.GetString();
+	
+	const Value::Member* CustomData_member = obj.FindMember("CustomData");
+	if (CustomData_member != NULL) {
+		for (Value::ConstMemberIterator iter = CustomData_member->value.MemberBegin(); iter != CustomData_member->value.MemberEnd(); ++iter) {
+			CustomData[iter->name.GetString()] = iter->value.GetString();
+		}
+	}
 	
 	
 	return true;

@@ -633,6 +633,7 @@ namespace ServerModels
 		CatalogItemContainerInfo* Container;
 		CatalogItemBundleInfo* Bundle;
 		bool CanBecomeCharacter;
+		bool IsStackable;
 	
         CatalogItem() :
 			PlayFabBaseModel(),
@@ -649,7 +650,8 @@ namespace ServerModels
 			Consumable(NULL),
 			Container(NULL),
 			Bundle(NULL),
-			CanBecomeCharacter(false)
+			CanBecomeCharacter(false),
+			IsStackable(false)
 			{}
 		
 		CatalogItem(const CatalogItem& src) :
@@ -667,7 +669,8 @@ namespace ServerModels
 			Consumable(src.Consumable ? new CatalogItemConsumableInfo(*src.Consumable) : NULL),
 			Container(src.Container ? new CatalogItemContainerInfo(*src.Container) : NULL),
 			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL),
-			CanBecomeCharacter(src.CanBecomeCharacter)
+			CanBecomeCharacter(src.CanBecomeCharacter),
+			IsStackable(src.IsStackable)
 			{}
 			
 		CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -1112,6 +1115,7 @@ namespace ServerModels
 		std::string Annotation;
 		std::string CatalogVersion;
 		std::string BundleParent;
+		std::map<std::string, std::string> CustomData;
 	
         ItemInstance() :
 			PlayFabBaseModel(),
@@ -1123,7 +1127,8 @@ namespace ServerModels
 			RemainingUses(),
 			Annotation(),
 			CatalogVersion(),
-			BundleParent()
+			BundleParent(),
+			CustomData()
 			{}
 		
 		ItemInstance(const ItemInstance& src) :
@@ -1136,7 +1141,8 @@ namespace ServerModels
 			RemainingUses(src.RemainingUses),
 			Annotation(src.Annotation),
 			CatalogVersion(src.CatalogVersion),
-			BundleParent(src.BundleParent)
+			BundleParent(src.BundleParent),
+			CustomData(src.CustomData)
 			{}
 			
 		ItemInstance(const rapidjson::Value& obj) : ItemInstance()
@@ -3525,6 +3531,61 @@ namespace ServerModels
         }
 		
 		~UpdateUserInternalDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateUserInventoryItemDataRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string ItemInstanceId;
+		std::map<std::string, std::string> Data;
+	
+        UpdateUserInventoryItemDataRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			ItemInstanceId(),
+			Data()
+			{}
+		
+		UpdateUserInventoryItemDataRequest(const UpdateUserInventoryItemDataRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			ItemInstanceId(src.ItemInstanceId),
+			Data(src.Data)
+			{}
+			
+		UpdateUserInventoryItemDataRequest(const rapidjson::Value& obj) : UpdateUserInventoryItemDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateUserInventoryItemDataRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UpdateUserInventoryItemDataResult : public PlayFabBaseModel
+    {
+		
+	
+        UpdateUserInventoryItemDataResult() :
+			PlayFabBaseModel()
+			{}
+		
+		UpdateUserInventoryItemDataResult(const UpdateUserInventoryItemDataResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UpdateUserInventoryItemDataResult(const rapidjson::Value& obj) : UpdateUserInventoryItemDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~UpdateUserInventoryItemDataResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

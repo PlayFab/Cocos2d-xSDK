@@ -76,6 +76,7 @@ namespace MatchmakerModels
 		std::string Annotation;
 		std::string CatalogVersion;
 		std::string BundleParent;
+		std::map<std::string, std::string> CustomData;
 	
         ItemInstance() :
 			PlayFabBaseModel(),
@@ -87,7 +88,8 @@ namespace MatchmakerModels
 			RemainingUses(),
 			Annotation(),
 			CatalogVersion(),
-			BundleParent()
+			BundleParent(),
+			CustomData()
 			{}
 		
 		ItemInstance(const ItemInstance& src) :
@@ -100,7 +102,8 @@ namespace MatchmakerModels
 			RemainingUses(src.RemainingUses),
 			Annotation(src.Annotation),
 			CatalogVersion(src.CatalogVersion),
-			BundleParent(src.BundleParent)
+			BundleParent(src.BundleParent),
+			CustomData(src.CustomData)
 			{}
 			
 		ItemInstance(const rapidjson::Value& obj) : ItemInstance()

@@ -946,6 +946,8 @@ void CatalogItem::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("CanBecomeCharacter"); writer.Bool(CanBecomeCharacter);
 	
+	writer.String("IsStackable"); writer.Bool(IsStackable);
+	
 	
 	writer.EndObject();
 }
@@ -1012,6 +1014,9 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* CanBecomeCharacter_member = obj.FindMember("CanBecomeCharacter");
 	if (CanBecomeCharacter_member != NULL) CanBecomeCharacter = CanBecomeCharacter_member->value.GetBool();
+	
+	const Value::Member* IsStackable_member = obj.FindMember("IsStackable");
+	if (IsStackable_member != NULL) IsStackable = IsStackable_member->value.GetBool();
 	
 	
 	return true;
@@ -1556,6 +1561,15 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 	
 	if(BundleParent.length() > 0) { writer.String("BundleParent"); writer.String(BundleParent.c_str()); }
 	
+	if(!CustomData.empty()) {
+	writer.String("CustomData");
+	writer.StartObject();
+	for (std::map<std::string, std::string>::iterator iter = CustomData.begin(); iter != CustomData.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+	}
+	writer.EndObject();
+	}
+	
 	
 	writer.EndObject();
 }
@@ -1589,6 +1603,13 @@ bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* BundleParent_member = obj.FindMember("BundleParent");
 	if (BundleParent_member != NULL) BundleParent = BundleParent_member->value.GetString();
+	
+	const Value::Member* CustomData_member = obj.FindMember("CustomData");
+	if (CustomData_member != NULL) {
+		for (Value::ConstMemberIterator iter = CustomData_member->value.MemberBegin(); iter != CustomData_member->value.MemberEnd(); ++iter) {
+			CustomData[iter->name.GetString()] = iter->value.GetString();
+		}
+	}
 	
 	
 	return true;
@@ -4646,6 +4667,76 @@ bool UpdateUserInternalDataRequest::readFromValue(const rapidjson::Value& obj)
 			Data[iter->name.GetString()] = iter->value.GetString();
 		}
 	}
+	
+	
+	return true;
+}
+
+
+UpdateUserInventoryItemDataRequest::~UpdateUserInventoryItemDataRequest()
+{
+	
+}
+
+void UpdateUserInventoryItemDataRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+	
+	writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str());
+	
+	if(!Data.empty()) {
+	writer.String("Data");
+	writer.StartObject();
+	for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+	}
+	writer.EndObject();
+	}
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateUserInventoryItemDataRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+	if (ItemInstanceId_member != NULL) ItemInstanceId = ItemInstanceId_member->value.GetString();
+	
+	const Value::Member* Data_member = obj.FindMember("Data");
+	if (Data_member != NULL) {
+		for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
+			Data[iter->name.GetString()] = iter->value.GetString();
+		}
+	}
+	
+	
+	return true;
+}
+
+
+UpdateUserInventoryItemDataResult::~UpdateUserInventoryItemDataResult()
+{
+	
+}
+
+void UpdateUserInventoryItemDataResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool UpdateUserInventoryItemDataResult::readFromValue(const rapidjson::Value& obj)
+{
 	
 	
 	return true;

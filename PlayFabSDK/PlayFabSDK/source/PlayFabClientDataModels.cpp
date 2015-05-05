@@ -657,6 +657,8 @@ void CatalogItem::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("CanBecomeCharacter"); writer.Bool(CanBecomeCharacter);
 	
+	writer.String("IsStackable"); writer.Bool(IsStackable);
+	
 	
 	writer.EndObject();
 }
@@ -723,6 +725,9 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* CanBecomeCharacter_member = obj.FindMember("CanBecomeCharacter");
 	if (CanBecomeCharacter_member != NULL) CanBecomeCharacter = CanBecomeCharacter_member->value.GetBool();
+	
+	const Value::Member* IsStackable_member = obj.FindMember("IsStackable");
+	if (IsStackable_member != NULL) IsStackable = IsStackable_member->value.GetBool();
 	
 	
 	return true;
@@ -2192,6 +2197,15 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 	
 	if(BundleParent.length() > 0) { writer.String("BundleParent"); writer.String(BundleParent.c_str()); }
 	
+	if(!CustomData.empty()) {
+	writer.String("CustomData");
+	writer.StartObject();
+	for (std::map<std::string, std::string>::iterator iter = CustomData.begin(); iter != CustomData.end(); ++iter) {
+		writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+	}
+	writer.EndObject();
+	}
+	
 	
 	writer.EndObject();
 }
@@ -2225,6 +2239,13 @@ bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* BundleParent_member = obj.FindMember("BundleParent");
 	if (BundleParent_member != NULL) BundleParent = BundleParent_member->value.GetString();
+	
+	const Value::Member* CustomData_member = obj.FindMember("CustomData");
+	if (CustomData_member != NULL) {
+		for (Value::ConstMemberIterator iter = CustomData_member->value.MemberBegin(); iter != CustomData_member->value.MemberEnd(); ++iter) {
+			CustomData[iter->name.GetString()] = iter->value.GetString();
+		}
+	}
 	
 	
 	return true;
@@ -4373,6 +4394,60 @@ bool LinkGameCenterAccountResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+LinkGoogleAccountRequest::~LinkGoogleAccountRequest()
+{
+	
+}
+
+void LinkGoogleAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("AccessToken"); writer.String(AccessToken.c_str());
+	
+	if(PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+	
+	
+	writer.EndObject();
+}
+
+bool LinkGoogleAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* AccessToken_member = obj.FindMember("AccessToken");
+	if (AccessToken_member != NULL) AccessToken = AccessToken_member->value.GetString();
+	
+	const Value::Member* PublisherId_member = obj.FindMember("PublisherId");
+	if (PublisherId_member != NULL) PublisherId = PublisherId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+LinkGoogleAccountResult::~LinkGoogleAccountResult()
+{
+	
+}
+
+void LinkGoogleAccountResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool LinkGoogleAccountResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
 LinkIOSDeviceIDRequest::~LinkIOSDeviceIDRequest()
 {
 	
@@ -4950,10 +5025,6 @@ void MatchmakeRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(LobbyId.length() > 0) { writer.String("LobbyId"); writer.String(LobbyId.c_str()); }
 	
-	if(StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-	
-	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
-	
 	if(EnableQueue.notNull()) { writer.String("EnableQueue"); writer.Bool(EnableQueue); }
 	
 	
@@ -4974,12 +5045,6 @@ bool MatchmakeRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* LobbyId_member = obj.FindMember("LobbyId");
 	if (LobbyId_member != NULL) LobbyId = LobbyId_member->value.GetString();
-	
-	const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
-	if (StatisticName_member != NULL) StatisticName = StatisticName_member->value.GetString();
-	
-	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
-	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
 	
 	const Value::Member* EnableQueue_member = obj.FindMember("EnableQueue");
 	if (EnableQueue_member != NULL) EnableQueue = EnableQueue_member->value.GetBool();
@@ -5168,6 +5233,8 @@ void PlayFab::ClientModels::writeTransactionStatusEnumJSON(TransactionStatus enu
 		case TransactionStatusRevoked: writer.String("Revoked"); break;
 		case TransactionStatusTradePending: writer.String("TradePending"); break;
 		case TransactionStatusUpgraded: writer.String("Upgraded"); break;
+		case TransactionStatusStackPending: writer.String("StackPending"); break;
+		case TransactionStatusStacked: writer.String("Stacked"); break;
 		case TransactionStatusOther: writer.String("Other"); break;
 		case TransactionStatusFailed: writer.String("Failed"); break;
 	}
@@ -5202,6 +5269,10 @@ TransactionStatus PlayFab::ClientModels::readTransactionStatusFromValue(const ra
 		return TransactionStatusTradePending;
 	else if(enumStr == "Upgraded")
 		return TransactionStatusUpgraded;
+	else if(enumStr == "StackPending")
+		return TransactionStatusStackPending;
+	else if(enumStr == "Stacked")
+		return TransactionStatusStacked;
 	else if(enumStr == "Other")
 		return TransactionStatusOther;
 	else if(enumStr == "Failed")
@@ -6136,10 +6207,6 @@ void StartGameRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("GameMode"); writer.String(GameMode.c_str());
 	
-	if(StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-	
-	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
-	
 	if(CustomCommandLineData.length() > 0) { writer.String("CustomCommandLineData"); writer.String(CustomCommandLineData.c_str()); }
 	
 	
@@ -6157,12 +6224,6 @@ bool StartGameRequest::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* GameMode_member = obj.FindMember("GameMode");
 	if (GameMode_member != NULL) GameMode = GameMode_member->value.GetString();
-	
-	const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
-	if (StatisticName_member != NULL) StatisticName = StatisticName_member->value.GetString();
-	
-	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
-	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
 	
 	const Value::Member* CustomCommandLineData_member = obj.FindMember("CustomCommandLineData");
 	if (CustomCommandLineData_member != NULL) CustomCommandLineData = CustomCommandLineData_member->value.GetString();
@@ -6506,6 +6567,50 @@ void UnlinkGameCenterAccountResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool UnlinkGameCenterAccountResult::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
+UnlinkGoogleAccountRequest::~UnlinkGoogleAccountRequest()
+{
+	
+}
+
+void UnlinkGoogleAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool UnlinkGoogleAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	
+	return true;
+}
+
+
+UnlinkGoogleAccountResult::~UnlinkGoogleAccountResult()
+{
+	
+}
+
+void UnlinkGoogleAccountResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	
+	writer.EndObject();
+}
+
+bool UnlinkGoogleAccountResult::readFromValue(const rapidjson::Value& obj)
 {
 	
 	
