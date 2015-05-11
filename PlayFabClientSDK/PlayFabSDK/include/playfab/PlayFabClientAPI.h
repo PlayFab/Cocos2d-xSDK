@@ -60,6 +60,7 @@ namespace PlayFab
 		typedef void(*AddUserVirtualCurrencyCallback)(ClientModels::ModifyUserVirtualCurrencyResult& result, void* userData);
 		typedef void(*ConfirmPurchaseCallback)(ClientModels::ConfirmPurchaseResult& result, void* userData);
 		typedef void(*ConsumeItemCallback)(ClientModels::ConsumeItemResult& result, void* userData);
+		typedef void(*GetCharacterInventoryCallback)(ClientModels::GetCharacterInventoryResult& result, void* userData);
 		typedef void(*GetUserInventoryCallback)(ClientModels::GetUserInventoryResult& result, void* userData);
 		typedef void(*PayForPurchaseCallback)(ClientModels::PayForPurchaseResult& result, void* userData);
 		typedef void(*PurchaseItemCallback)(ClientModels::PurchaseItemResult& result, void* userData);
@@ -195,6 +196,8 @@ namespace PlayFab
 		void ConfirmPurchase(ClientModels::ConfirmPurchaseRequest& request, ConfirmPurchaseCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void ConsumeItem(ClientModels::ConsumeItemRequest& request, ConsumeItemCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetCharacterInventory(ClientModels::GetCharacterInventoryRequest& request, GetCharacterInventoryCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetUserInventory(GetUserInventoryCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -364,6 +367,8 @@ namespace PlayFab
 		static void OnConfirmPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnConsumeItemResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCharacterInventoryResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetUserInventoryResult(int httpStatus, HttpRequest* request, void* userData);
 		

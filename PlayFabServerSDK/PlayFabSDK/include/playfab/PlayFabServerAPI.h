@@ -39,7 +39,9 @@ namespace PlayFab
 		typedef void(*GetCatalogItemsCallback)(ServerModels::GetCatalogItemsResult& result, void* userData);
 		typedef void(*GetTitleDataCallback)(ServerModels::GetTitleDataResult& result, void* userData);
 		typedef void(*SetTitleDataCallback)(ServerModels::SetTitleDataResult& result, void* userData);
+		typedef void(*AddCharacterVirtualCurrencyCallback)(ServerModels::ModifyCharacterVirtualCurrencyResult& result, void* userData);
 		typedef void(*AddUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
+		typedef void(*GetCharacterInventoryCallback)(ServerModels::GetCharacterInventoryResult& result, void* userData);
 		typedef void(*GetUserInventoryCallback)(ServerModels::GetUserInventoryResult& result, void* userData);
 		typedef void(*GrantItemsToCharacterCallback)(ServerModels::GrantItemsToCharacterResult& result, void* userData);
 		typedef void(*GrantItemsToUserCallback)(ServerModels::GrantItemsToUserResult& result, void* userData);
@@ -49,6 +51,7 @@ namespace PlayFab
 		typedef void(*MoveItemToCharacterFromUserCallback)(ServerModels::MoveItemToCharacterFromUserResult& result, void* userData);
 		typedef void(*MoveItemToUserFromCharacterCallback)(ServerModels::MoveItemToUserFromCharacterResult& result, void* userData);
 		typedef void(*ReportPlayerCallback)(ServerModels::ReportPlayerServerResult& result, void* userData);
+		typedef void(*SubtractCharacterVirtualCurrencyCallback)(ServerModels::ModifyCharacterVirtualCurrencyResult& result, void* userData);
 		typedef void(*SubtractUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
 		typedef void(*NotifyMatchmakerPlayerLeftCallback)(ServerModels::NotifyMatchmakerPlayerLeftResult& result, void* userData);
 		typedef void(*RedeemMatchmakerTicketCallback)(ServerModels::RedeemMatchmakerTicketResult& result, void* userData);
@@ -132,7 +135,11 @@ namespace PlayFab
 		
 		void SetTitleData(ServerModels::SetTitleDataRequest& request, SetTitleDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void AddCharacterVirtualCurrency(ServerModels::AddCharacterVirtualCurrencyRequest& request, AddCharacterVirtualCurrencyCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void AddUserVirtualCurrency(ServerModels::AddUserVirtualCurrencyRequest& request, AddUserVirtualCurrencyCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetCharacterInventory(ServerModels::GetCharacterInventoryRequest& request, GetCharacterInventoryCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetUserInventory(ServerModels::GetUserInventoryRequest& request, GetUserInventoryCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -151,6 +158,8 @@ namespace PlayFab
 		void MoveItemToUserFromCharacter(ServerModels::MoveItemToUserFromCharacterRequest& request, MoveItemToUserFromCharacterCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void ReportPlayer(ServerModels::ReportPlayerServerRequest& request, ReportPlayerCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void SubtractCharacterVirtualCurrency(ServerModels::SubtractCharacterVirtualCurrencyRequest& request, SubtractCharacterVirtualCurrencyCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void SubtractUserVirtualCurrency(ServerModels::SubtractUserVirtualCurrencyRequest& request, SubtractUserVirtualCurrencyCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -257,7 +266,11 @@ namespace PlayFab
 		
 		static void OnSetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnAddCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnAddUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetCharacterInventoryResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetUserInventoryResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -276,6 +289,8 @@ namespace PlayFab
 		static void OnMoveItemToUserFromCharacterResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnReportPlayerResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnSubtractCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
 		

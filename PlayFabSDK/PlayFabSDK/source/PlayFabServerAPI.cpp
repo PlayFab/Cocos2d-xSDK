@@ -1314,6 +1314,63 @@ void PlayFabServerAPI::OnSetTitleDataResult(int httpStatus, HttpRequest* request
 }
 
 
+void PlayFabServerAPI::AddCharacterVirtualCurrency(
+    AddCharacterVirtualCurrencyRequest& request,
+    AddCharacterVirtualCurrencyCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/AddCharacterVirtualCurrency"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+	
+    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnAddCharacterVirtualCurrencyResult, this);
+}
+
+void PlayFabServerAPI::OnAddCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ModifyCharacterVirtualCurrencyResult outResult;
+    PlayFabError errorResult;
+
+    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
+
+    if (success)
+    {
+        
+
+        if (request->GetResultCallback() != NULL)
+        {
+            AddCharacterVirtualCurrencyCallback successCallback = (AddCharacterVirtualCurrencyCallback)(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != NULL)
+        {
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        }
+
+        if (request->GetErrorCallback() != NULL)
+        {
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+        }
+    }
+
+    delete request;
+}
+
+
 void PlayFabServerAPI::AddUserVirtualCurrency(
     AddUserVirtualCurrencyRequest& request,
     AddUserVirtualCurrencyCallback callback,
@@ -1351,6 +1408,63 @@ void PlayFabServerAPI::OnAddUserVirtualCurrencyResult(int httpStatus, HttpReques
         if (request->GetResultCallback() != NULL)
         {
             AddUserVirtualCurrencyCallback successCallback = (AddUserVirtualCurrencyCallback)(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != NULL)
+        {
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        }
+
+        if (request->GetErrorCallback() != NULL)
+        {
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+        }
+    }
+
+    delete request;
+}
+
+
+void PlayFabServerAPI::GetCharacterInventory(
+    GetCharacterInventoryRequest& request,
+    GetCharacterInventoryCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/GetCharacterInventory"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+	
+    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetCharacterInventoryResult, this);
+}
+
+void PlayFabServerAPI::OnGetCharacterInventoryResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetCharacterInventoryResult outResult;
+    PlayFabError errorResult;
+
+    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
+
+    if (success)
+    {
+        
+
+        if (request->GetResultCallback() != NULL)
+        {
+            GetCharacterInventoryCallback successCallback = (GetCharacterInventoryCallback)(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1864,6 +1978,63 @@ void PlayFabServerAPI::OnReportPlayerResult(int httpStatus, HttpRequest* request
         if (request->GetResultCallback() != NULL)
         {
             ReportPlayerCallback successCallback = (ReportPlayerCallback)(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != NULL)
+        {
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        }
+
+        if (request->GetErrorCallback() != NULL)
+        {
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+        }
+    }
+
+    delete request;
+}
+
+
+void PlayFabServerAPI::SubtractCharacterVirtualCurrency(
+    SubtractCharacterVirtualCurrencyRequest& request,
+    SubtractCharacterVirtualCurrencyCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/SubtractCharacterVirtualCurrency"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+	
+    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnSubtractCharacterVirtualCurrencyResult, this);
+}
+
+void PlayFabServerAPI::OnSubtractCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ModifyCharacterVirtualCurrencyResult outResult;
+    PlayFabError errorResult;
+
+    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
+
+    if (success)
+    {
+        
+
+        if (request->GetResultCallback() != NULL)
+        {
+            SubtractCharacterVirtualCurrencyCallback successCallback = (SubtractCharacterVirtualCurrencyCallback)(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

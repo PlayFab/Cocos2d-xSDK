@@ -394,6 +394,38 @@ bool UserInfoRequest::readFromValue(const rapidjson::Value& obj)
 }
 
 
+VirtualCurrencyRechargeTime::~VirtualCurrencyRechargeTime()
+{
+	
+}
+
+void VirtualCurrencyRechargeTime::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("SecondsToRecharge"); writer.Int(SecondsToRecharge);
+	
+	writer.String("RechargeTime"); writeDatetime(RechargeTime, writer);
+	
+	
+	writer.EndObject();
+}
+
+bool VirtualCurrencyRechargeTime::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* SecondsToRecharge_member = obj.FindMember("SecondsToRecharge");
+	if (SecondsToRecharge_member != NULL) SecondsToRecharge = SecondsToRecharge_member->value.GetInt();
+	
+	const Value::Member* RechargeTime_member = obj.FindMember("RechargeTime");
+	if (RechargeTime_member != NULL) RechargeTime = readDatetime(RechargeTime_member->value);
+	
+	
+	return true;
+}
+
+
 UserInfoResponse::~UserInfoResponse()
 {
 	
@@ -424,6 +456,15 @@ void UserInfoResponse::writeJSON(PFStringJsonWriter& writer)
 	writer.StartObject();
 	for (std::map<std::string, Int32>::iterator iter = VirtualCurrency.begin(); iter != VirtualCurrency.end(); ++iter) {
 		writer.String(iter->first.c_str()); writer.Int(iter->second);
+	}
+	writer.EndObject();
+	}
+	
+	if(!VirtualCurrencyRechargeTimes.empty()) {
+	writer.String("VirtualCurrencyRechargeTimes");
+	writer.StartObject();
+	for (std::map<std::string, VirtualCurrencyRechargeTime>::iterator iter = VirtualCurrencyRechargeTimes.begin(); iter != VirtualCurrencyRechargeTimes.end(); ++iter) {
+		writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
 	}
 	writer.EndObject();
 	}
@@ -460,6 +501,13 @@ bool UserInfoResponse::readFromValue(const rapidjson::Value& obj)
 	if (VirtualCurrency_member != NULL) {
 		for (Value::ConstMemberIterator iter = VirtualCurrency_member->value.MemberBegin(); iter != VirtualCurrency_member->value.MemberEnd(); ++iter) {
 			VirtualCurrency[iter->name.GetString()] = iter->value.GetInt();
+		}
+	}
+	
+	const Value::Member* VirtualCurrencyRechargeTimes_member = obj.FindMember("VirtualCurrencyRechargeTimes");
+	if (VirtualCurrencyRechargeTimes_member != NULL) {
+		for (Value::ConstMemberIterator iter = VirtualCurrencyRechargeTimes_member->value.MemberBegin(); iter != VirtualCurrencyRechargeTimes_member->value.MemberEnd(); ++iter) {
+			VirtualCurrencyRechargeTimes[iter->name.GetString()] = VirtualCurrencyRechargeTime(iter->value);
 		}
 	}
 	

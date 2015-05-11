@@ -332,6 +332,35 @@ namespace MatchmakerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct VirtualCurrencyRechargeTime : public PlayFabBaseModel
+    {
+		
+		Int32 SecondsToRecharge;
+		time_t RechargeTime;
+	
+        VirtualCurrencyRechargeTime() :
+			PlayFabBaseModel(),
+			SecondsToRecharge(0),
+			RechargeTime(0)
+			{}
+		
+		VirtualCurrencyRechargeTime(const VirtualCurrencyRechargeTime& src) :
+			PlayFabBaseModel(),
+			SecondsToRecharge(src.SecondsToRecharge),
+			RechargeTime(src.RechargeTime)
+			{}
+			
+		VirtualCurrencyRechargeTime(const rapidjson::Value& obj) : VirtualCurrencyRechargeTime()
+        {
+            readFromValue(obj);
+        }
+		
+		~VirtualCurrencyRechargeTime();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct UserInfoResponse : public PlayFabBaseModel
     {
 		
@@ -340,6 +369,7 @@ namespace MatchmakerModels
 		std::string TitleDisplayName;
 		std::list<ItemInstance> Inventory;
 		std::map<std::string, Int32> VirtualCurrency;
+		std::map<std::string, VirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes;
 		bool IsDeveloper;
 		std::string SteamId;
 	
@@ -350,6 +380,7 @@ namespace MatchmakerModels
 			TitleDisplayName(),
 			Inventory(),
 			VirtualCurrency(),
+			VirtualCurrencyRechargeTimes(),
 			IsDeveloper(false),
 			SteamId()
 			{}
@@ -361,6 +392,7 @@ namespace MatchmakerModels
 			TitleDisplayName(src.TitleDisplayName),
 			Inventory(src.Inventory),
 			VirtualCurrency(src.VirtualCurrency),
+			VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes),
 			IsDeveloper(src.IsDeveloper),
 			SteamId(src.SteamId)
 			{}
