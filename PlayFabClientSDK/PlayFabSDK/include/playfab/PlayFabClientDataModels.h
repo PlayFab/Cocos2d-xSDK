@@ -16,15 +16,13 @@ namespace ClientModels
 		std::string FriendUsername;
 		std::string FriendEmail;
 		std::string FriendTitleDisplayName;
-		std::string PublisherId;
 	
         AddFriendRequest() :
 			PlayFabBaseModel(),
 			FriendPlayFabId(),
 			FriendUsername(),
 			FriendEmail(),
-			FriendTitleDisplayName(),
-			PublisherId()
+			FriendTitleDisplayName()
 			{}
 		
 		AddFriendRequest(const AddFriendRequest& src) :
@@ -32,8 +30,7 @@ namespace ClientModels
 			FriendPlayFabId(src.FriendPlayFabId),
 			FriendUsername(src.FriendUsername),
 			FriendEmail(src.FriendEmail),
-			FriendTitleDisplayName(src.FriendTitleDisplayName),
-			PublisherId(src.PublisherId)
+			FriendTitleDisplayName(src.FriendTitleDisplayName)
 			{}
 			
 		AddFriendRequest(const rapidjson::Value& obj) : AddFriendRequest()
@@ -131,22 +128,19 @@ namespace ClientModels
 		std::string Username;
 		std::string Email;
 		std::string Password;
-		std::string PublisherId;
 	
         AddUsernamePasswordRequest() :
 			PlayFabBaseModel(),
 			Username(),
 			Email(),
-			Password(),
-			PublisherId()
+			Password()
 			{}
 		
 		AddUsernamePasswordRequest(const AddUsernamePasswordRequest& src) :
 			PlayFabBaseModel(),
 			Username(src.Username),
 			Email(src.Email),
-			Password(src.Password),
-			PublisherId(src.PublisherId)
+			Password(src.Password)
 			{}
 			
 		AddUsernamePasswordRequest(const rapidjson::Value& obj) : AddUsernamePasswordRequest()
@@ -775,17 +769,23 @@ namespace ClientModels
 		
 		Boxed<Region> Region;
 		std::string BuildVersion;
+		std::string GameMode;
+		std::string StatisticName;
 	
         CurrentGamesRequest() :
 			PlayFabBaseModel(),
 			Region(),
-			BuildVersion()
+			BuildVersion(),
+			GameMode(),
+			StatisticName()
 			{}
 		
 		CurrentGamesRequest(const CurrentGamesRequest& src) :
 			PlayFabBaseModel(),
 			Region(src.Region),
-			BuildVersion(src.BuildVersion)
+			BuildVersion(src.BuildVersion),
+			GameMode(src.GameMode),
+			StatisticName(src.StatisticName)
 			{}
 			
 		CurrentGamesRequest(const rapidjson::Value& obj) : CurrentGamesRequest()
@@ -806,6 +806,7 @@ namespace ClientModels
 		std::string LobbyID;
 		std::string BuildVersion;
 		std::string GameMode;
+		std::string StatisticName;
 		OptionalInt32 MaxPlayers;
 		std::list<std::string> PlayerUserIds;
 		Uint32 RunTime;
@@ -817,6 +818,7 @@ namespace ClientModels
 			LobbyID(),
 			BuildVersion(),
 			GameMode(),
+			StatisticName(),
 			MaxPlayers(),
 			PlayerUserIds(),
 			RunTime(0),
@@ -829,6 +831,7 @@ namespace ClientModels
 			LobbyID(src.LobbyID),
 			BuildVersion(src.BuildVersion),
 			GameMode(src.GameMode),
+			StatisticName(src.StatisticName),
 			MaxPlayers(src.MaxPlayers),
 			PlayerUserIds(src.PlayerUserIds),
 			RunTime(src.RunTime),
@@ -1174,15 +1177,24 @@ namespace ClientModels
     {
 		
 		std::string PlayFabId;
+		std::string Username;
+		std::string Email;
+		std::string TitleDisplayName;
 	
         GetAccountInfoRequest() :
 			PlayFabBaseModel(),
-			PlayFabId()
+			PlayFabId(),
+			Username(),
+			Email(),
+			TitleDisplayName()
 			{}
 		
 		GetAccountInfoRequest(const GetAccountInfoRequest& src) :
 			PlayFabBaseModel(),
-			PlayFabId(src.PlayFabId)
+			PlayFabId(src.PlayFabId),
+			Username(src.Username),
+			Email(src.Email),
+			TitleDisplayName(src.TitleDisplayName)
 			{}
 			
 		GetAccountInfoRequest(const rapidjson::Value& obj) : GetAccountInfoRequest()
@@ -2207,18 +2219,15 @@ namespace ClientModels
     {
 		
 		std::list<std::string> FacebookIDs;
-		std::string PublisherId;
 	
         GetPlayFabIDsFromFacebookIDsRequest() :
 			PlayFabBaseModel(),
-			FacebookIDs(),
-			PublisherId()
+			FacebookIDs()
 			{}
 		
 		GetPlayFabIDsFromFacebookIDsRequest(const GetPlayFabIDsFromFacebookIDsRequest& src) :
 			PlayFabBaseModel(),
-			FacebookIDs(src.FacebookIDs),
-			PublisherId(src.PublisherId)
+			FacebookIDs(src.FacebookIDs)
 			{}
 			
 		GetPlayFabIDsFromFacebookIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromFacebookIDsRequest()
@@ -2633,6 +2642,9 @@ namespace ClientModels
     {
 		
 		std::string PlayFabId;
+		std::string Username;
+		std::string Email;
+		std::string TitleDisplayName;
 		OptionalBool GetAccountInfo;
 		OptionalBool GetInventory;
 		OptionalBool GetVirtualCurrency;
@@ -2644,6 +2656,9 @@ namespace ClientModels
         GetUserCombinedInfoRequest() :
 			PlayFabBaseModel(),
 			PlayFabId(),
+			Username(),
+			Email(),
+			TitleDisplayName(),
 			GetAccountInfo(),
 			GetInventory(),
 			GetVirtualCurrency(),
@@ -2656,6 +2671,9 @@ namespace ClientModels
 		GetUserCombinedInfoRequest(const GetUserCombinedInfoRequest& src) :
 			PlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
+			Username(src.Username),
+			Email(src.Email),
+			TitleDisplayName(src.TitleDisplayName),
 			GetAccountInfo(src.GetAccountInfo),
 			GetInventory(src.GetInventory),
 			GetVirtualCurrency(src.GetVirtualCurrency),
@@ -2681,17 +2699,20 @@ namespace ClientModels
 		
 		Int32 SecondsToRecharge;
 		time_t RechargeTime;
+		Int32 RechargeMax;
 	
         VirtualCurrencyRechargeTime() :
 			PlayFabBaseModel(),
 			SecondsToRecharge(0),
-			RechargeTime(0)
+			RechargeTime(0),
+			RechargeMax(0)
 			{}
 		
 		VirtualCurrencyRechargeTime(const VirtualCurrencyRechargeTime& src) :
 			PlayFabBaseModel(),
 			SecondsToRecharge(src.SecondsToRecharge),
-			RechargeTime(src.RechargeTime)
+			RechargeTime(src.RechargeTime),
+			RechargeMax(src.RechargeMax)
 			{}
 			
 		VirtualCurrencyRechargeTime(const rapidjson::Value& obj) : VirtualCurrencyRechargeTime()
@@ -3011,14 +3032,12 @@ namespace ClientModels
     {
 		
 		std::string AndroidDeviceId;
-		std::string PublisherId;
 		std::string OS;
 		std::string AndroidDevice;
 	
         LinkAndroidDeviceIDRequest() :
 			PlayFabBaseModel(),
 			AndroidDeviceId(),
-			PublisherId(),
 			OS(),
 			AndroidDevice()
 			{}
@@ -3026,7 +3045,6 @@ namespace ClientModels
 		LinkAndroidDeviceIDRequest(const LinkAndroidDeviceIDRequest& src) :
 			PlayFabBaseModel(),
 			AndroidDeviceId(src.AndroidDeviceId),
-			PublisherId(src.PublisherId),
 			OS(src.OS),
 			AndroidDevice(src.AndroidDevice)
 			{}
@@ -3069,18 +3087,15 @@ namespace ClientModels
     {
 		
 		std::string AccessToken;
-		std::string PublisherId;
 	
         LinkFacebookAccountRequest() :
 			PlayFabBaseModel(),
-			AccessToken(),
-			PublisherId()
+			AccessToken()
 			{}
 		
 		LinkFacebookAccountRequest(const LinkFacebookAccountRequest& src) :
 			PlayFabBaseModel(),
-			AccessToken(src.AccessToken),
-			PublisherId(src.PublisherId)
+			AccessToken(src.AccessToken)
 			{}
 			
 		LinkFacebookAccountRequest(const rapidjson::Value& obj) : LinkFacebookAccountRequest()
@@ -3121,18 +3136,15 @@ namespace ClientModels
     {
 		
 		std::string GameCenterId;
-		std::string PublisherId;
 	
         LinkGameCenterAccountRequest() :
 			PlayFabBaseModel(),
-			GameCenterId(),
-			PublisherId()
+			GameCenterId()
 			{}
 		
 		LinkGameCenterAccountRequest(const LinkGameCenterAccountRequest& src) :
 			PlayFabBaseModel(),
-			GameCenterId(src.GameCenterId),
-			PublisherId(src.PublisherId)
+			GameCenterId(src.GameCenterId)
 			{}
 			
 		LinkGameCenterAccountRequest(const rapidjson::Value& obj) : LinkGameCenterAccountRequest()
@@ -3173,18 +3185,15 @@ namespace ClientModels
     {
 		
 		std::string AccessToken;
-		std::string PublisherId;
 	
         LinkGoogleAccountRequest() :
 			PlayFabBaseModel(),
-			AccessToken(),
-			PublisherId()
+			AccessToken()
 			{}
 		
 		LinkGoogleAccountRequest(const LinkGoogleAccountRequest& src) :
 			PlayFabBaseModel(),
-			AccessToken(src.AccessToken),
-			PublisherId(src.PublisherId)
+			AccessToken(src.AccessToken)
 			{}
 			
 		LinkGoogleAccountRequest(const rapidjson::Value& obj) : LinkGoogleAccountRequest()
@@ -3227,22 +3236,19 @@ namespace ClientModels
 		std::string DeviceId;
 		std::string OS;
 		std::string DeviceModel;
-		std::string PublisherId;
 	
         LinkIOSDeviceIDRequest() :
 			PlayFabBaseModel(),
 			DeviceId(),
 			OS(),
-			DeviceModel(),
-			PublisherId()
+			DeviceModel()
 			{}
 		
 		LinkIOSDeviceIDRequest(const LinkIOSDeviceIDRequest& src) :
 			PlayFabBaseModel(),
 			DeviceId(src.DeviceId),
 			OS(src.OS),
-			DeviceModel(src.DeviceModel),
-			PublisherId(src.PublisherId)
+			DeviceModel(src.DeviceModel)
 			{}
 			
 		LinkIOSDeviceIDRequest(const rapidjson::Value& obj) : LinkIOSDeviceIDRequest()
@@ -3283,18 +3289,15 @@ namespace ClientModels
     {
 		
 		std::string SteamTicket;
-		std::string PublisherId;
 	
         LinkSteamAccountRequest() :
 			PlayFabBaseModel(),
-			SteamTicket(),
-			PublisherId()
+			SteamTicket()
 			{}
 		
 		LinkSteamAccountRequest(const LinkSteamAccountRequest& src) :
 			PlayFabBaseModel(),
-			SteamTicket(src.SteamTicket),
-			PublisherId(src.PublisherId)
+			SteamTicket(src.SteamTicket)
 			{}
 			
 		LinkSteamAccountRequest(const rapidjson::Value& obj) : LinkSteamAccountRequest()
@@ -3334,9 +3337,6 @@ namespace ClientModels
 	struct LogEventRequest : public PlayFabBaseModel
     {
 		
-		std::string PlayFabId;
-		std::string EntityId;
-		std::string EntityType;
 		OptionalTime Timestamp;
 		std::string EventName;
 		std::map<std::string, MultitypeVar> Body;
@@ -3344,9 +3344,6 @@ namespace ClientModels
 	
         LogEventRequest() :
 			PlayFabBaseModel(),
-			PlayFabId(),
-			EntityId(),
-			EntityType(),
 			Timestamp(),
 			EventName(),
 			Body(),
@@ -3355,9 +3352,6 @@ namespace ClientModels
 		
 		LogEventRequest(const LogEventRequest& src) :
 			PlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			EntityId(src.EntityId),
-			EntityType(src.EntityType),
 			Timestamp(src.Timestamp),
 			EventName(src.EventName),
 			Body(src.Body),
@@ -3434,7 +3428,6 @@ namespace ClientModels
     {
 		
 		std::string TitleId;
-		std::string PublisherId;
 		std::string AndroidDeviceId;
 		std::string OS;
 		std::string AndroidDevice;
@@ -3443,7 +3436,6 @@ namespace ClientModels
         LoginWithAndroidDeviceIDRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
-			PublisherId(),
 			AndroidDeviceId(),
 			OS(),
 			AndroidDevice(),
@@ -3453,7 +3445,6 @@ namespace ClientModels
 		LoginWithAndroidDeviceIDRequest(const LoginWithAndroidDeviceIDRequest& src) :
 			PlayFabBaseModel(),
 			TitleId(src.TitleId),
-			PublisherId(src.PublisherId),
 			AndroidDeviceId(src.AndroidDeviceId),
 			OS(src.OS),
 			AndroidDevice(src.AndroidDevice),
@@ -3477,22 +3468,19 @@ namespace ClientModels
 		std::string TitleId;
 		std::string Email;
 		std::string Password;
-		std::string PublisherId;
 	
         LoginWithEmailAddressRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
 			Email(),
-			Password(),
-			PublisherId()
+			Password()
 			{}
 		
 		LoginWithEmailAddressRequest(const LoginWithEmailAddressRequest& src) :
 			PlayFabBaseModel(),
 			TitleId(src.TitleId),
 			Email(src.Email),
-			Password(src.Password),
-			PublisherId(src.PublisherId)
+			Password(src.Password)
 			{}
 			
 		LoginWithEmailAddressRequest(const rapidjson::Value& obj) : LoginWithEmailAddressRequest()
@@ -3512,22 +3500,19 @@ namespace ClientModels
 		std::string TitleId;
 		std::string AccessToken;
 		OptionalBool CreateAccount;
-		std::string PublisherId;
 	
         LoginWithFacebookRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
 			AccessToken(),
-			CreateAccount(),
-			PublisherId()
+			CreateAccount()
 			{}
 		
 		LoginWithFacebookRequest(const LoginWithFacebookRequest& src) :
 			PlayFabBaseModel(),
 			TitleId(src.TitleId),
 			AccessToken(src.AccessToken),
-			CreateAccount(src.CreateAccount),
-			PublisherId(src.PublisherId)
+			CreateAccount(src.CreateAccount)
 			{}
 			
 		LoginWithFacebookRequest(const rapidjson::Value& obj) : LoginWithFacebookRequest()
@@ -3584,7 +3569,6 @@ namespace ClientModels
 		std::string OS;
 		std::string DeviceModel;
 		OptionalBool CreateAccount;
-		std::string PublisherId;
 	
         LoginWithIOSDeviceIDRequest() :
 			PlayFabBaseModel(),
@@ -3592,8 +3576,7 @@ namespace ClientModels
 			DeviceId(),
 			OS(),
 			DeviceModel(),
-			CreateAccount(),
-			PublisherId()
+			CreateAccount()
 			{}
 		
 		LoginWithIOSDeviceIDRequest(const LoginWithIOSDeviceIDRequest& src) :
@@ -3602,8 +3585,7 @@ namespace ClientModels
 			DeviceId(src.DeviceId),
 			OS(src.OS),
 			DeviceModel(src.DeviceModel),
-			CreateAccount(src.CreateAccount),
-			PublisherId(src.PublisherId)
+			CreateAccount(src.CreateAccount)
 			{}
 			
 		LoginWithIOSDeviceIDRequest(const rapidjson::Value& obj) : LoginWithIOSDeviceIDRequest()
@@ -3623,22 +3605,19 @@ namespace ClientModels
 		std::string TitleId;
 		std::string Username;
 		std::string Password;
-		std::string PublisherId;
 	
         LoginWithPlayFabRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
 			Username(),
-			Password(),
-			PublisherId()
+			Password()
 			{}
 		
 		LoginWithPlayFabRequest(const LoginWithPlayFabRequest& src) :
 			PlayFabBaseModel(),
 			TitleId(src.TitleId),
 			Username(src.Username),
-			Password(src.Password),
-			PublisherId(src.PublisherId)
+			Password(src.Password)
 			{}
 			
 		LoginWithPlayFabRequest(const rapidjson::Value& obj) : LoginWithPlayFabRequest()
@@ -3658,22 +3637,19 @@ namespace ClientModels
 		std::string TitleId;
 		std::string SteamTicket;
 		OptionalBool CreateAccount;
-		std::string PublisherId;
 	
         LoginWithSteamRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
 			SteamTicket(),
-			CreateAccount(),
-			PublisherId()
+			CreateAccount()
 			{}
 		
 		LoginWithSteamRequest(const LoginWithSteamRequest& src) :
 			PlayFabBaseModel(),
 			TitleId(src.TitleId),
 			SteamTicket(src.SteamTicket),
-			CreateAccount(src.CreateAccount),
-			PublisherId(src.PublisherId)
+			CreateAccount(src.CreateAccount)
 			{}
 			
 		LoginWithSteamRequest(const rapidjson::Value& obj) : LoginWithSteamRequest()
@@ -3694,6 +3670,8 @@ namespace ClientModels
 		Boxed<Region> Region;
 		std::string GameMode;
 		std::string LobbyId;
+		std::string StatisticName;
+		std::string CharacterId;
 		OptionalBool EnableQueue;
 	
         MatchmakeRequest() :
@@ -3702,6 +3680,8 @@ namespace ClientModels
 			Region(),
 			GameMode(),
 			LobbyId(),
+			StatisticName(),
+			CharacterId(),
 			EnableQueue()
 			{}
 		
@@ -3711,6 +3691,8 @@ namespace ClientModels
 			Region(src.Region),
 			GameMode(src.GameMode),
 			LobbyId(src.LobbyId),
+			StatisticName(src.StatisticName),
+			CharacterId(src.CharacterId),
 			EnableQueue(src.EnableQueue)
 			{}
 			
@@ -4165,7 +4147,6 @@ namespace ClientModels
 		std::string Email;
 		std::string Password;
 		std::string Origination;
-		std::string PublisherId;
 	
         RegisterPlayFabUserRequest() :
 			PlayFabBaseModel(),
@@ -4173,8 +4154,7 @@ namespace ClientModels
 			Username(),
 			Email(),
 			Password(),
-			Origination(),
-			PublisherId()
+			Origination()
 			{}
 		
 		RegisterPlayFabUserRequest(const RegisterPlayFabUserRequest& src) :
@@ -4183,8 +4163,7 @@ namespace ClientModels
 			Username(src.Username),
 			Email(src.Email),
 			Password(src.Password),
-			Origination(src.Origination),
-			PublisherId(src.PublisherId)
+			Origination(src.Origination)
 			{}
 			
 		RegisterPlayFabUserRequest(const rapidjson::Value& obj) : RegisterPlayFabUserRequest()
@@ -4627,6 +4606,8 @@ namespace ClientModels
 		std::string BuildVersion;
 		Region Region;
 		std::string GameMode;
+		std::string StatisticName;
+		std::string CharacterId;
 		std::string CustomCommandLineData;
 	
         StartGameRequest() :
@@ -4634,6 +4615,8 @@ namespace ClientModels
 			BuildVersion(),
 			Region(),
 			GameMode(),
+			StatisticName(),
+			CharacterId(),
 			CustomCommandLineData()
 			{}
 		
@@ -4642,6 +4625,8 @@ namespace ClientModels
 			BuildVersion(src.BuildVersion),
 			Region(src.Region),
 			GameMode(src.GameMode),
+			StatisticName(src.StatisticName),
+			CharacterId(src.CharacterId),
 			CustomCommandLineData(src.CustomCommandLineData)
 			{}
 			
@@ -4796,13 +4781,16 @@ namespace ClientModels
 	struct UnlinkAndroidDeviceIDRequest : public PlayFabBaseModel
     {
 		
+		std::string AndroidDeviceId;
 	
         UnlinkAndroidDeviceIDRequest() :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			AndroidDeviceId()
 			{}
 		
 		UnlinkAndroidDeviceIDRequest(const UnlinkAndroidDeviceIDRequest& src) :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			AndroidDeviceId(src.AndroidDeviceId)
 			{}
 			
 		UnlinkAndroidDeviceIDRequest(const rapidjson::Value& obj) : UnlinkAndroidDeviceIDRequest()
@@ -4980,13 +4968,16 @@ namespace ClientModels
 	struct UnlinkIOSDeviceIDRequest : public PlayFabBaseModel
     {
 		
+		std::string DeviceId;
 	
         UnlinkIOSDeviceIDRequest() :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			DeviceId()
 			{}
 		
 		UnlinkIOSDeviceIDRequest(const UnlinkIOSDeviceIDRequest& src) :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			DeviceId(src.DeviceId)
 			{}
 			
 		UnlinkIOSDeviceIDRequest(const rapidjson::Value& obj) : UnlinkIOSDeviceIDRequest()

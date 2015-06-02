@@ -151,7 +151,8 @@ namespace PlayFab
 		PlayFabErrorInvalidContentType = 1144,
 		PlayFabErrorKeyLengthExceeded = 1145,
 		PlayFabErrorDataLengthExceeded = 1146,
-		PlayFabErrorTooManyKeys = 1147
+		PlayFabErrorTooManyKeys = 1147,
+		PlayFabErrorFreeTierCannotHaveVirtualCurrency = 1148
     };
 
     struct PlayFabError

@@ -340,17 +340,20 @@ namespace MatchmakerModels
 		
 		Int32 SecondsToRecharge;
 		time_t RechargeTime;
+		Int32 RechargeMax;
 	
         VirtualCurrencyRechargeTime() :
 			PlayFabBaseModel(),
 			SecondsToRecharge(0),
-			RechargeTime(0)
+			RechargeTime(0),
+			RechargeMax(0)
 			{}
 		
 		VirtualCurrencyRechargeTime(const VirtualCurrencyRechargeTime& src) :
 			PlayFabBaseModel(),
 			SecondsToRecharge(src.SecondsToRecharge),
-			RechargeTime(src.RechargeTime)
+			RechargeTime(src.RechargeTime),
+			RechargeMax(src.RechargeMax)
 			{}
 			
 		VirtualCurrencyRechargeTime(const rapidjson::Value& obj) : VirtualCurrencyRechargeTime()

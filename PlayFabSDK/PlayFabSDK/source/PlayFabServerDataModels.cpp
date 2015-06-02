@@ -2733,6 +2733,8 @@ void VirtualCurrencyRechargeTime::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("RechargeTime"); writeDatetime(RechargeTime, writer);
 	
+	writer.String("RechargeMax"); writer.Int(RechargeMax);
+	
 	
 	writer.EndObject();
 }
@@ -2745,6 +2747,9 @@ bool VirtualCurrencyRechargeTime::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* RechargeTime_member = obj.FindMember("RechargeTime");
 	if (RechargeTime_member != NULL) RechargeTime = readDatetime(RechargeTime_member->value);
+	
+	const Value::Member* RechargeMax_member = obj.FindMember("RechargeMax");
+	if (RechargeMax_member != NULL) RechargeMax = RechargeMax_member->value.GetInt();
 	
 	
 	return true;
@@ -3113,18 +3118,17 @@ void GrantItemsToUserRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
 	
-	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
 	
 	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
 	
-	if(!ItemIds.empty()) {
 	writer.String("ItemIds");
 	writer.StartArray();
 	for (std::list<std::string>::iterator iter = ItemIds.begin(); iter != ItemIds.end(); iter++) {
 		writer.String(iter->c_str());
 	}
 	writer.EndArray();
-	 }
+	
 	
 	
 	writer.EndObject();
@@ -4683,6 +4687,8 @@ void UpdateUserInventoryItemDataRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
+	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+	
 	writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
 	
 	writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str());
@@ -4702,6 +4708,9 @@ void UpdateUserInventoryItemDataRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateUserInventoryItemDataRequest::readFromValue(const rapidjson::Value& obj)
 {
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
 	
 	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
 	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();

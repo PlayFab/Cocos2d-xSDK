@@ -1217,7 +1217,7 @@ void PlayFabClientAPI::OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequ
 
 
 void PlayFabClientAPI::UnlinkAndroidDeviceID(
-    
+    UnlinkAndroidDeviceIDRequest& request,
     UnlinkAndroidDeviceIDCallback callback,
     ErrorCallback errorCallback,
     void* userData
@@ -1233,7 +1233,7 @@ void PlayFabClientAPI::UnlinkAndroidDeviceID(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     mHttpRequester->AddRequest(httpRequest, OnUnlinkAndroidDeviceIDResult, this);
@@ -1445,7 +1445,7 @@ void PlayFabClientAPI::OnUnlinkGoogleAccountResult(int httpStatus, HttpRequest* 
 
 
 void PlayFabClientAPI::UnlinkIOSDeviceID(
-    
+    UnlinkIOSDeviceIDRequest& request,
     UnlinkIOSDeviceIDCallback callback,
     ErrorCallback errorCallback,
     void* userData
@@ -1461,7 +1461,7 @@ void PlayFabClientAPI::UnlinkIOSDeviceID(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     mHttpRequester->AddRequest(httpRequest, OnUnlinkIOSDeviceIDResult, this);

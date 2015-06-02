@@ -153,7 +153,7 @@ namespace PlayFab
 		
 		void SendAccountRecoveryEmail(ClientModels::SendAccountRecoveryEmailRequest& request, SendAccountRecoveryEmailCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
-		void UnlinkAndroidDeviceID(UnlinkAndroidDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		void UnlinkAndroidDeviceID(ClientModels::UnlinkAndroidDeviceIDRequest& request, UnlinkAndroidDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UnlinkFacebookAccount(UnlinkFacebookAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -161,7 +161,7 @@ namespace PlayFab
 		
 		void UnlinkGoogleAccount(UnlinkGoogleAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
-		void UnlinkIOSDeviceID(UnlinkIOSDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		void UnlinkIOSDeviceID(ClientModels::UnlinkIOSDeviceIDRequest& request, UnlinkIOSDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UnlinkSteamAccount(UnlinkSteamAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		

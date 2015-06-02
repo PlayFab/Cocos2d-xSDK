@@ -424,6 +424,8 @@ void VirtualCurrencyRechargeTime::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("RechargeTime"); writeDatetime(RechargeTime, writer);
 	
+	writer.String("RechargeMax"); writer.Int(RechargeMax);
+	
 	
 	writer.EndObject();
 }
@@ -436,6 +438,9 @@ bool VirtualCurrencyRechargeTime::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* RechargeTime_member = obj.FindMember("RechargeTime");
 	if (RechargeTime_member != NULL) RechargeTime = readDatetime(RechargeTime_member->value);
+	
+	const Value::Member* RechargeMax_member = obj.FindMember("RechargeMax");
+	if (RechargeMax_member != NULL) RechargeMax = RechargeMax_member->value.GetInt();
 	
 	
 	return true;
