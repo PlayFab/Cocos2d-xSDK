@@ -125,7 +125,7 @@ namespace PlayFab
 		
 		void GetCatalogItems(AdminModels::GetCatalogItemsRequest& request, GetCatalogItemsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
-		void GetRandomResultTables(GetRandomResultTablesCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		void GetRandomResultTables(AdminModels::GetRandomResultTablesRequest& request, GetRandomResultTablesCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetStoreItems(AdminModels::GetStoreItemsRequest& request, GetStoreItemsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		

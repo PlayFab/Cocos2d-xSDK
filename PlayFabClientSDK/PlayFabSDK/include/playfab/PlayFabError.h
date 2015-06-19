@@ -152,7 +152,14 @@ namespace PlayFab
 		PlayFabErrorKeyLengthExceeded = 1145,
 		PlayFabErrorDataLengthExceeded = 1146,
 		PlayFabErrorTooManyKeys = 1147,
-		PlayFabErrorFreeTierCannotHaveVirtualCurrency = 1148
+		PlayFabErrorFreeTierCannotHaveVirtualCurrency = 1148,
+		PlayFabErrorMissingAmazonSharedKey = 1149,
+		PlayFabErrorAmazonValidationError = 1150,
+		PlayFabErrorInvalidPSNIssuerId = 1151,
+		PlayFabErrorPSNInaccessible = 1152,
+		PlayFabErrorExpiredAuthToken = 1153,
+		PlayFabErrorFailedToGetEntitlements = 1154,
+		PlayFabErrorFailedToConsumeEntitlement = 1155
     };
 
     struct PlayFabError

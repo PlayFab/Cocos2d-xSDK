@@ -29,6 +29,9 @@ namespace PlayFab
 		typedef void(*AddUsernamePasswordCallback)(ClientModels::AddUsernamePasswordResult& result, void* userData);
 		typedef void(*GetAccountInfoCallback)(ClientModels::GetAccountInfoResult& result, void* userData);
 		typedef void(*GetPlayFabIDsFromFacebookIDsCallback)(ClientModels::GetPlayFabIDsFromFacebookIDsResult& result, void* userData);
+		typedef void(*GetPlayFabIDsFromGameCenterIDsCallback)(ClientModels::GetPlayFabIDsFromGameCenterIDsResult& result, void* userData);
+		typedef void(*GetPlayFabIDsFromGoogleIDsCallback)(ClientModels::GetPlayFabIDsFromGoogleIDsResult& result, void* userData);
+		typedef void(*GetPlayFabIDsFromSteamIDsCallback)(ClientModels::GetPlayFabIDsFromSteamIDsResult& result, void* userData);
 		typedef void(*GetUserCombinedInfoCallback)(ClientModels::GetUserCombinedInfoResult& result, void* userData);
 		typedef void(*LinkAndroidDeviceIDCallback)(ClientModels::LinkAndroidDeviceIDResult& result, void* userData);
 		typedef void(*LinkFacebookAccountCallback)(ClientModels::LinkFacebookAccountResult& result, void* userData);
@@ -91,7 +94,6 @@ namespace PlayFab
 		typedef void(*GetSharedGroupDataCallback)(ClientModels::GetSharedGroupDataResult& result, void* userData);
 		typedef void(*RemoveSharedGroupMembersCallback)(ClientModels::RemoveSharedGroupMembersResult& result, void* userData);
 		typedef void(*UpdateSharedGroupDataCallback)(ClientModels::UpdateSharedGroupDataResult& result, void* userData);
-		typedef void(*RefreshPSNAuthTokenCallback)(ClientModels::EmptyResult& result, void* userData);
 		typedef void(*GetCloudScriptUrlCallback)(ClientModels::GetCloudScriptUrlResult& result, void* userData);
 		typedef void(*RunCloudScriptCallback)(ClientModels::RunCloudScriptResult& result, void* userData);
 		typedef void(*GetContentDownloadUrlCallback)(ClientModels::GetContentDownloadUrlResult& result, void* userData);
@@ -136,6 +138,12 @@ namespace PlayFab
 		void GetAccountInfo(ClientModels::GetAccountInfoRequest& request, GetAccountInfoCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetPlayFabIDsFromFacebookIDs(ClientModels::GetPlayFabIDsFromFacebookIDsRequest& request, GetPlayFabIDsFromFacebookIDsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetPlayFabIDsFromGameCenterIDs(ClientModels::GetPlayFabIDsFromGameCenterIDsRequest& request, GetPlayFabIDsFromGameCenterIDsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetPlayFabIDsFromGoogleIDs(ClientModels::GetPlayFabIDsFromGoogleIDsRequest& request, GetPlayFabIDsFromGoogleIDsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetPlayFabIDsFromSteamIDs(ClientModels::GetPlayFabIDsFromSteamIDsRequest& request, GetPlayFabIDsFromSteamIDsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetUserCombinedInfo(ClientModels::GetUserCombinedInfoRequest& request, GetUserCombinedInfoCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -261,8 +269,6 @@ namespace PlayFab
 		
 		void UpdateSharedGroupData(ClientModels::UpdateSharedGroupDataRequest& request, UpdateSharedGroupDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
-		void RefreshPSNAuthToken(ClientModels::RefreshPSNAuthTokenRequest& request, RefreshPSNAuthTokenCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
-		
 		void GetCloudScriptUrl(ClientModels::GetCloudScriptUrlRequest& request, GetCloudScriptUrlCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void RunCloudScript(ClientModels::RunCloudScriptRequest& request, RunCloudScriptCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
@@ -311,6 +317,12 @@ namespace PlayFab
 		static void OnGetAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetPlayFabIDsFromGameCenterIDsResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetPlayFabIDsFromGoogleIDsResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetUserCombinedInfoResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -435,8 +447,6 @@ namespace PlayFab
 		static void OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
-		
-		static void OnRefreshPSNAuthTokenResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetCloudScriptUrlResult(int httpStatus, HttpRequest* request, void* userData);
 		

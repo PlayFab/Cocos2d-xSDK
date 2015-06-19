@@ -1258,7 +1258,7 @@ void PlayFabAdminAPI::OnGetCatalogItemsResult(int httpStatus, HttpRequest* reque
 
 
 void PlayFabAdminAPI::GetRandomResultTables(
-    
+    GetRandomResultTablesRequest& request,
     GetRandomResultTablesCallback callback,
     ErrorCallback errorCallback,
     void* userData
@@ -1274,7 +1274,7 @@ void PlayFabAdminAPI::GetRandomResultTables(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     mHttpRequester->AddRequest(httpRequest, OnGetRandomResultTablesResult, this);

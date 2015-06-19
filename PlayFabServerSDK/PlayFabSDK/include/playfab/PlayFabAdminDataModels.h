@@ -1166,13 +1166,16 @@ namespace AdminModels
 	struct GetRandomResultTablesRequest : public PlayFabBaseModel
     {
 		
+		std::string CatalogVersion;
 	
         GetRandomResultTablesRequest() :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			CatalogVersion()
 			{}
 		
 		GetRandomResultTablesRequest(const GetRandomResultTablesRequest& src) :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			CatalogVersion(src.CatalogVersion)
 			{}
 			
 		GetRandomResultTablesRequest(const rapidjson::Value& obj) : GetRandomResultTablesRequest()
@@ -1186,72 +1189,27 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	enum ResultTableNodeType
-	{
-		ResultTableNodeTypeItemId,
-		ResultTableNodeTypeTableId
-	};
-	
-	void writeResultTableNodeTypeEnumJSON(ResultTableNodeType enumVal, PFStringJsonWriter& writer);
-	ResultTableNodeType readResultTableNodeTypeFromValue(const rapidjson::Value& obj);
-	
-	
-	struct ResultTableNode : public PlayFabBaseModel
+	struct RandomResultTableListing : public PlayFabBaseModel
     {
 		
-		ResultTableNodeType ResultItemType;
-		std::string ResultItem;
-		Int32 Weight;
+		std::string CatalogVersion;
 	
-        ResultTableNode() :
+        RandomResultTableListing() :
 			PlayFabBaseModel(),
-			ResultItemType(),
-			ResultItem(),
-			Weight(0)
+			CatalogVersion()
 			{}
 		
-		ResultTableNode(const ResultTableNode& src) :
+		RandomResultTableListing(const RandomResultTableListing& src) :
 			PlayFabBaseModel(),
-			ResultItemType(src.ResultItemType),
-			ResultItem(src.ResultItem),
-			Weight(src.Weight)
+			CatalogVersion(src.CatalogVersion)
 			{}
 			
-		ResultTableNode(const rapidjson::Value& obj) : ResultTableNode()
+		RandomResultTableListing(const rapidjson::Value& obj) : RandomResultTableListing()
         {
             readFromValue(obj);
         }
 		
-		~ResultTableNode();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct RandomResultTable : public PlayFabBaseModel
-    {
-		
-		std::string TableId;
-		std::list<ResultTableNode> Nodes;
-	
-        RandomResultTable() :
-			PlayFabBaseModel(),
-			TableId(),
-			Nodes()
-			{}
-		
-		RandomResultTable(const RandomResultTable& src) :
-			PlayFabBaseModel(),
-			TableId(src.TableId),
-			Nodes(src.Nodes)
-			{}
-			
-		RandomResultTable(const rapidjson::Value& obj) : RandomResultTable()
-        {
-            readFromValue(obj);
-        }
-		
-		~RandomResultTable();
+		~RandomResultTableListing();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1260,7 +1218,7 @@ namespace AdminModels
 	struct GetRandomResultTablesResult : public PlayFabBaseModel
     {
 		
-		std::map<std::string, RandomResultTable> Tables;
+		std::map<std::string, RandomResultTableListing> Tables;
 	
         GetRandomResultTablesResult() :
 			PlayFabBaseModel(),
@@ -1411,15 +1369,18 @@ namespace AdminModels
 	struct GetStoreItemsRequest : public PlayFabBaseModel
     {
 		
+		std::string CatalogVersion;
 		std::string StoreId;
 	
         GetStoreItemsRequest() :
 			PlayFabBaseModel(),
+			CatalogVersion(),
 			StoreId()
 			{}
 		
 		GetStoreItemsRequest(const GetStoreItemsRequest& src) :
 			PlayFabBaseModel(),
+			CatalogVersion(src.CatalogVersion),
 			StoreId(src.StoreId)
 			{}
 			
@@ -1549,17 +1510,20 @@ namespace AdminModels
 		
 		std::string PlayFabId;
 		std::list<std::string> Keys;
+		OptionalInt32 IfChangedFromDataVersion;
 	
         GetUserDataRequest() :
 			PlayFabBaseModel(),
 			PlayFabId(),
-			Keys()
+			Keys(),
+			IfChangedFromDataVersion()
 			{}
 		
 		GetUserDataRequest(const GetUserDataRequest& src) :
 			PlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
-			Keys(src.Keys)
+			Keys(src.Keys),
+			IfChangedFromDataVersion(src.IfChangedFromDataVersion)
 			{}
 			
 		GetUserDataRequest(const rapidjson::Value& obj) : GetUserDataRequest()
@@ -1619,17 +1583,20 @@ namespace AdminModels
     {
 		
 		std::string PlayFabId;
+		Uint32 DataVersion;
 		std::map<std::string, UserDataRecord> Data;
 	
         GetUserDataResult() :
 			PlayFabBaseModel(),
 			PlayFabId(),
+			DataVersion(0),
 			Data()
 			{}
 		
 		GetUserDataResult(const GetUserDataResult& src) :
 			PlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
+			DataVersion(src.DataVersion),
 			Data(src.Data)
 			{}
 			
@@ -2499,6 +2466,77 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	enum ResultTableNodeType
+	{
+		ResultTableNodeTypeItemId,
+		ResultTableNodeTypeTableId
+	};
+	
+	void writeResultTableNodeTypeEnumJSON(ResultTableNodeType enumVal, PFStringJsonWriter& writer);
+	ResultTableNodeType readResultTableNodeTypeFromValue(const rapidjson::Value& obj);
+	
+	
+	struct ResultTableNode : public PlayFabBaseModel
+    {
+		
+		ResultTableNodeType ResultItemType;
+		std::string ResultItem;
+		Int32 Weight;
+	
+        ResultTableNode() :
+			PlayFabBaseModel(),
+			ResultItemType(),
+			ResultItem(),
+			Weight(0)
+			{}
+		
+		ResultTableNode(const ResultTableNode& src) :
+			PlayFabBaseModel(),
+			ResultItemType(src.ResultItemType),
+			ResultItem(src.ResultItem),
+			Weight(src.Weight)
+			{}
+			
+		ResultTableNode(const rapidjson::Value& obj) : ResultTableNode()
+        {
+            readFromValue(obj);
+        }
+		
+		~ResultTableNode();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct RandomResultTable : public PlayFabBaseModel
+    {
+		
+		std::string TableId;
+		std::list<ResultTableNode> Nodes;
+	
+        RandomResultTable() :
+			PlayFabBaseModel(),
+			TableId(),
+			Nodes()
+			{}
+		
+		RandomResultTable(const RandomResultTable& src) :
+			PlayFabBaseModel(),
+			TableId(src.TableId),
+			Nodes(src.Nodes)
+			{}
+			
+		RandomResultTable(const rapidjson::Value& obj) : RandomResultTable()
+        {
+            readFromValue(obj);
+        }
+		
+		~RandomResultTable();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct RemoveServerBuildRequest : public PlayFabBaseModel
     {
 		
@@ -3118,15 +3156,18 @@ namespace AdminModels
 	struct UpdateRandomResultTablesRequest : public PlayFabBaseModel
     {
 		
+		std::string CatalogVersion;
 		std::list<RandomResultTable> Tables;
 	
         UpdateRandomResultTablesRequest() :
 			PlayFabBaseModel(),
+			CatalogVersion(),
 			Tables()
 			{}
 		
 		UpdateRandomResultTablesRequest(const UpdateRandomResultTablesRequest& src) :
 			PlayFabBaseModel(),
+			CatalogVersion(src.CatalogVersion),
 			Tables(src.Tables)
 			{}
 			
@@ -3167,17 +3208,20 @@ namespace AdminModels
 	struct UpdateStoreItemsRequest : public PlayFabBaseModel
     {
 		
+		std::string CatalogVersion;
 		std::string StoreId;
 		std::list<StoreItem> Store;
 	
         UpdateStoreItemsRequest() :
 			PlayFabBaseModel(),
+			CatalogVersion(),
 			StoreId(),
 			Store()
 			{}
 		
 		UpdateStoreItemsRequest(const UpdateStoreItemsRequest& src) :
 			PlayFabBaseModel(),
+			CatalogVersion(src.CatalogVersion),
 			StoreId(src.StoreId),
 			Store(src.Store)
 			{}
@@ -3251,13 +3295,16 @@ namespace AdminModels
 	struct UpdateUserDataResult : public PlayFabBaseModel
     {
 		
+		Uint32 DataVersion;
 	
         UpdateUserDataResult() :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			DataVersion(0)
 			{}
 		
 		UpdateUserDataResult(const UpdateUserDataResult& src) :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			DataVersion(src.DataVersion)
 			{}
 			
 		UpdateUserDataResult(const rapidjson::Value& obj) : UpdateUserDataResult()

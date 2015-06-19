@@ -1368,6 +1368,8 @@ void GetCharacterDataRequest::writeJSON(PFStringJsonWriter& writer)
 	writer.EndArray();
 	 }
 	
+	if(IfChangedFromDataVersion.notNull()) { writer.String("IfChangedFromDataVersion"); writer.Int(IfChangedFromDataVersion); }
+	
 	
 	writer.EndObject();
 }
@@ -1388,6 +1390,9 @@ bool GetCharacterDataRequest::readFromValue(const rapidjson::Value& obj)
 			Keys.push_back(memberList[i].GetString());
 		}
 	}
+	
+	const Value::Member* IfChangedFromDataVersion_member = obj.FindMember("IfChangedFromDataVersion");
+	if (IfChangedFromDataVersion_member != NULL) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetInt();
 	
 	
 	return true;
@@ -1463,7 +1468,9 @@ void GetCharacterDataResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
-	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+	
+	writer.String("DataVersion"); writer.Uint(DataVersion);
 	
 	if(!Data.empty()) {
 	writer.String("Data");
@@ -1474,6 +1481,8 @@ void GetCharacterDataResult::writeJSON(PFStringJsonWriter& writer)
 	writer.EndObject();
 	}
 	
+	if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -1481,8 +1490,11 @@ void GetCharacterDataResult::writeJSON(PFStringJsonWriter& writer)
 bool GetCharacterDataResult::readFromValue(const rapidjson::Value& obj)
 {
 	
-	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
-	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
+	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* DataVersion_member = obj.FindMember("DataVersion");
+	if (DataVersion_member != NULL) DataVersion = DataVersion_member->value.GetUint();
 	
 	const Value::Member* Data_member = obj.FindMember("Data");
 	if (Data_member != NULL) {
@@ -1490,6 +1502,9 @@ bool GetCharacterDataResult::readFromValue(const rapidjson::Value& obj)
 			Data[iter->name.GetString()] = UserDataRecord(iter->value);
 		}
 	}
+	
+	const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL) CharacterId = CharacterId_member->value.GetString();
 	
 	
 	return true;
@@ -2621,6 +2636,8 @@ void GetUserDataRequest::writeJSON(PFStringJsonWriter& writer)
 	writer.EndArray();
 	 }
 	
+	if(IfChangedFromDataVersion.notNull()) { writer.String("IfChangedFromDataVersion"); writer.Int(IfChangedFromDataVersion); }
+	
 	
 	writer.EndObject();
 }
@@ -2639,6 +2656,9 @@ bool GetUserDataRequest::readFromValue(const rapidjson::Value& obj)
 		}
 	}
 	
+	const Value::Member* IfChangedFromDataVersion_member = obj.FindMember("IfChangedFromDataVersion");
+	if (IfChangedFromDataVersion_member != NULL) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetInt();
+	
 	
 	return true;
 }
@@ -2655,6 +2675,8 @@ void GetUserDataResult::writeJSON(PFStringJsonWriter& writer)
 
 	
 	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+	
+	writer.String("DataVersion"); writer.Uint(DataVersion);
 	
 	if(!Data.empty()) {
 	writer.String("Data");
@@ -2674,6 +2696,9 @@ bool GetUserDataResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
 	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* DataVersion_member = obj.FindMember("DataVersion");
+	if (DataVersion_member != NULL) DataVersion = DataVersion_member->value.GetUint();
 	
 	const Value::Member* Data_member = obj.FindMember("Data");
 	if (Data_member != NULL) {
@@ -4412,12 +4437,17 @@ void UpdateCharacterDataResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
+	writer.String("DataVersion"); writer.Uint(DataVersion);
+	
 	
 	writer.EndObject();
 }
 
 bool UpdateCharacterDataResult::readFromValue(const rapidjson::Value& obj)
 {
+	
+	const Value::Member* DataVersion_member = obj.FindMember("DataVersion");
+	if (DataVersion_member != NULL) DataVersion = DataVersion_member->value.GetUint();
 	
 	
 	return true;
@@ -4622,12 +4652,17 @@ void UpdateUserDataResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
+	writer.String("DataVersion"); writer.Uint(DataVersion);
+	
 	
 	writer.EndObject();
 }
 
 bool UpdateUserDataResult::readFromValue(const rapidjson::Value& obj)
 {
+	
+	const Value::Member* DataVersion_member = obj.FindMember("DataVersion");
+	if (DataVersion_member != NULL) DataVersion = DataVersion_member->value.GetUint();
 	
 	
 	return true;

@@ -1650,6 +1650,8 @@ void GetRandomResultTablesRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
+	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+	
 	
 	writer.EndObject();
 }
@@ -1657,107 +1659,35 @@ void GetRandomResultTablesRequest::writeJSON(PFStringJsonWriter& writer)
 bool GetRandomResultTablesRequest::readFromValue(const rapidjson::Value& obj)
 {
 	
-	
-	return true;
-}
-
-
-void PlayFab::AdminModels::writeResultTableNodeTypeEnumJSON(ResultTableNodeType enumVal, PFStringJsonWriter& writer)
-{
-	switch(enumVal)
-	{
-		
-		case ResultTableNodeTypeItemId: writer.String("ItemId"); break;
-		case ResultTableNodeTypeTableId: writer.String("TableId"); break;
-	}
-}
-
-ResultTableNodeType PlayFab::AdminModels::readResultTableNodeTypeFromValue(const rapidjson::Value& obj)
-{
-	std::string enumStr = obj.GetString();
-	if(enumStr == "ItemId")
-		return ResultTableNodeTypeItemId;
-	else if(enumStr == "TableId")
-		return ResultTableNodeTypeTableId;
-	
-	return ResultTableNodeTypeItemId;
-}
-
-
-ResultTableNode::~ResultTableNode()
-{
-	
-}
-
-void ResultTableNode::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	writer.String("ResultItemType"); writeResultTableNodeTypeEnumJSON(ResultItemType, writer);
-	
-	writer.String("ResultItem"); writer.String(ResultItem.c_str());
-	
-	writer.String("Weight"); writer.Int(Weight);
-	
-	
-	writer.EndObject();
-}
-
-bool ResultTableNode::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* ResultItemType_member = obj.FindMember("ResultItemType");
-	if (ResultItemType_member != NULL) ResultItemType = readResultTableNodeTypeFromValue(ResultItemType_member->value);
-	
-	const Value::Member* ResultItem_member = obj.FindMember("ResultItem");
-	if (ResultItem_member != NULL) ResultItem = ResultItem_member->value.GetString();
-	
-	const Value::Member* Weight_member = obj.FindMember("Weight");
-	if (Weight_member != NULL) Weight = Weight_member->value.GetInt();
+	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
+	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
 	
 	
 	return true;
 }
 
 
-RandomResultTable::~RandomResultTable()
+RandomResultTableListing::~RandomResultTableListing()
 {
 	
 }
 
-void RandomResultTable::writeJSON(PFStringJsonWriter& writer)
+void RandomResultTableListing::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
 	
-	writer.String("TableId"); writer.String(TableId.c_str());
-	
-	writer.String("Nodes");
-	writer.StartArray();
-	for (std::list<ResultTableNode>::iterator iter = Nodes.begin(); iter != Nodes.end(); iter++) {
-		iter->writeJSON(writer);
-	}
-	writer.EndArray();
-	
+	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
 	
 	
 	writer.EndObject();
 }
 
-bool RandomResultTable::readFromValue(const rapidjson::Value& obj)
+bool RandomResultTableListing::readFromValue(const rapidjson::Value& obj)
 {
 	
-	const Value::Member* TableId_member = obj.FindMember("TableId");
-	if (TableId_member != NULL) TableId = TableId_member->value.GetString();
-	
-	const Value::Member* Nodes_member = obj.FindMember("Nodes");
-	if (Nodes_member != NULL) {
-		const rapidjson::Value& memberList = Nodes_member->value;
-		for (SizeType i = 0; i < memberList.Size(); i++) {
-			Nodes.push_back(ResultTableNode(memberList[i]));
-		}
-	}
+	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
+	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
 	
 	
 	return true;
@@ -1777,7 +1707,7 @@ void GetRandomResultTablesResult::writeJSON(PFStringJsonWriter& writer)
 	if(!Tables.empty()) {
 	writer.String("Tables");
 	writer.StartObject();
-	for (std::map<std::string, RandomResultTable>::iterator iter = Tables.begin(); iter != Tables.end(); ++iter) {
+	for (std::map<std::string, RandomResultTableListing>::iterator iter = Tables.begin(); iter != Tables.end(); ++iter) {
 		writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
 	}
 	writer.EndObject();
@@ -1793,7 +1723,7 @@ bool GetRandomResultTablesResult::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* Tables_member = obj.FindMember("Tables");
 	if (Tables_member != NULL) {
 		for (Value::ConstMemberIterator iter = Tables_member->value.MemberBegin(); iter != Tables_member->value.MemberEnd(); ++iter) {
-			Tables[iter->name.GetString()] = RandomResultTable(iter->value);
+			Tables[iter->name.GetString()] = RandomResultTableListing(iter->value);
 		}
 	}
 	
@@ -1967,6 +1897,8 @@ void GetStoreItemsRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
+	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+	
 	writer.String("StoreId"); writer.String(StoreId.c_str());
 	
 	
@@ -1975,6 +1907,9 @@ void GetStoreItemsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetStoreItemsRequest::readFromValue(const rapidjson::Value& obj)
 {
+	
+	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
+	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
 	
 	const Value::Member* StoreId_member = obj.FindMember("StoreId");
 	if (StoreId_member != NULL) StoreId = StoreId_member->value.GetString();
@@ -2179,6 +2114,8 @@ void GetUserDataRequest::writeJSON(PFStringJsonWriter& writer)
 	writer.EndArray();
 	 }
 	
+	if(IfChangedFromDataVersion.notNull()) { writer.String("IfChangedFromDataVersion"); writer.Int(IfChangedFromDataVersion); }
+	
 	
 	writer.EndObject();
 }
@@ -2196,6 +2133,9 @@ bool GetUserDataRequest::readFromValue(const rapidjson::Value& obj)
 			Keys.push_back(memberList[i].GetString());
 		}
 	}
+	
+	const Value::Member* IfChangedFromDataVersion_member = obj.FindMember("IfChangedFromDataVersion");
+	if (IfChangedFromDataVersion_member != NULL) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetInt();
 	
 	
 	return true;
@@ -2273,6 +2213,8 @@ void GetUserDataResult::writeJSON(PFStringJsonWriter& writer)
 	
 	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
 	
+	writer.String("DataVersion"); writer.Uint(DataVersion);
+	
 	if(!Data.empty()) {
 	writer.String("Data");
 	writer.StartObject();
@@ -2291,6 +2233,9 @@ bool GetUserDataResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
 	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
+	
+	const Value::Member* DataVersion_member = obj.FindMember("DataVersion");
+	if (DataVersion_member != NULL) DataVersion = DataVersion_member->value.GetUint();
 	
 	const Value::Member* Data_member = obj.FindMember("Data");
 	if (Data_member != NULL) {
@@ -3483,6 +3428,108 @@ bool ModifyUserVirtualCurrencyResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+void PlayFab::AdminModels::writeResultTableNodeTypeEnumJSON(ResultTableNodeType enumVal, PFStringJsonWriter& writer)
+{
+	switch(enumVal)
+	{
+		
+		case ResultTableNodeTypeItemId: writer.String("ItemId"); break;
+		case ResultTableNodeTypeTableId: writer.String("TableId"); break;
+	}
+}
+
+ResultTableNodeType PlayFab::AdminModels::readResultTableNodeTypeFromValue(const rapidjson::Value& obj)
+{
+	std::string enumStr = obj.GetString();
+	if(enumStr == "ItemId")
+		return ResultTableNodeTypeItemId;
+	else if(enumStr == "TableId")
+		return ResultTableNodeTypeTableId;
+	
+	return ResultTableNodeTypeItemId;
+}
+
+
+ResultTableNode::~ResultTableNode()
+{
+	
+}
+
+void ResultTableNode::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("ResultItemType"); writeResultTableNodeTypeEnumJSON(ResultItemType, writer);
+	
+	writer.String("ResultItem"); writer.String(ResultItem.c_str());
+	
+	writer.String("Weight"); writer.Int(Weight);
+	
+	
+	writer.EndObject();
+}
+
+bool ResultTableNode::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* ResultItemType_member = obj.FindMember("ResultItemType");
+	if (ResultItemType_member != NULL) ResultItemType = readResultTableNodeTypeFromValue(ResultItemType_member->value);
+	
+	const Value::Member* ResultItem_member = obj.FindMember("ResultItem");
+	if (ResultItem_member != NULL) ResultItem = ResultItem_member->value.GetString();
+	
+	const Value::Member* Weight_member = obj.FindMember("Weight");
+	if (Weight_member != NULL) Weight = Weight_member->value.GetInt();
+	
+	
+	return true;
+}
+
+
+RandomResultTable::~RandomResultTable()
+{
+	
+}
+
+void RandomResultTable::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("TableId"); writer.String(TableId.c_str());
+	
+	writer.String("Nodes");
+	writer.StartArray();
+	for (std::list<ResultTableNode>::iterator iter = Nodes.begin(); iter != Nodes.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	
+	
+	
+	writer.EndObject();
+}
+
+bool RandomResultTable::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* TableId_member = obj.FindMember("TableId");
+	if (TableId_member != NULL) TableId = TableId_member->value.GetString();
+	
+	const Value::Member* Nodes_member = obj.FindMember("Nodes");
+	if (Nodes_member != NULL) {
+		const rapidjson::Value& memberList = Nodes_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Nodes.push_back(ResultTableNode(memberList[i]));
+		}
+	}
+	
+	
+	return true;
+}
+
+
 RemoveServerBuildRequest::~RemoveServerBuildRequest()
 {
 	
@@ -4178,6 +4225,8 @@ void UpdateRandomResultTablesRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
+	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+	
 	if(!Tables.empty()) {
 	writer.String("Tables");
 	writer.StartArray();
@@ -4193,6 +4242,9 @@ void UpdateRandomResultTablesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateRandomResultTablesRequest::readFromValue(const rapidjson::Value& obj)
 {
+	
+	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
+	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
 	
 	const Value::Member* Tables_member = obj.FindMember("Tables");
 	if (Tables_member != NULL) {
@@ -4239,6 +4291,8 @@ void UpdateStoreItemsRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
+	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+	
 	writer.String("StoreId"); writer.String(StoreId.c_str());
 	
 	if(!Store.empty()) {
@@ -4256,6 +4310,9 @@ void UpdateStoreItemsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateStoreItemsRequest::readFromValue(const rapidjson::Value& obj)
 {
+	
+	const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
+	if (CatalogVersion_member != NULL) CatalogVersion = CatalogVersion_member->value.GetString();
 	
 	const Value::Member* StoreId_member = obj.FindMember("StoreId");
 	if (StoreId_member != NULL) StoreId = StoreId_member->value.GetString();
@@ -4353,12 +4410,17 @@ void UpdateUserDataResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
 	
+	writer.String("DataVersion"); writer.Uint(DataVersion);
+	
 	
 	writer.EndObject();
 }
 
 bool UpdateUserDataResult::readFromValue(const rapidjson::Value& obj)
 {
+	
+	const Value::Member* DataVersion_member = obj.FindMember("DataVersion");
+	if (DataVersion_member != NULL) DataVersion = DataVersion_member->value.GetUint();
 	
 	
 	return true;

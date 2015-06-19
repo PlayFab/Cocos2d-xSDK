@@ -974,19 +974,22 @@ namespace ServerModels
 		std::string PlayFabId;
 		std::string CharacterId;
 		std::list<std::string> Keys;
+		OptionalInt32 IfChangedFromDataVersion;
 	
         GetCharacterDataRequest() :
 			PlayFabBaseModel(),
 			PlayFabId(),
 			CharacterId(),
-			Keys()
+			Keys(),
+			IfChangedFromDataVersion()
 			{}
 		
 		GetCharacterDataRequest(const GetCharacterDataRequest& src) :
 			PlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
 			CharacterId(src.CharacterId),
-			Keys(src.Keys)
+			Keys(src.Keys),
+			IfChangedFromDataVersion(src.IfChangedFromDataVersion)
 			{}
 			
 		GetCharacterDataRequest(const rapidjson::Value& obj) : GetCharacterDataRequest()
@@ -1045,19 +1048,25 @@ namespace ServerModels
 	struct GetCharacterDataResult : public PlayFabBaseModel
     {
 		
-		std::string CharacterId;
+		std::string PlayFabId;
+		Uint32 DataVersion;
 		std::map<std::string, UserDataRecord> Data;
+		std::string CharacterId;
 	
         GetCharacterDataResult() :
 			PlayFabBaseModel(),
-			CharacterId(),
-			Data()
+			PlayFabId(),
+			DataVersion(0),
+			Data(),
+			CharacterId()
 			{}
 		
 		GetCharacterDataResult(const GetCharacterDataResult& src) :
 			PlayFabBaseModel(),
-			CharacterId(src.CharacterId),
-			Data(src.Data)
+			PlayFabId(src.PlayFabId),
+			DataVersion(src.DataVersion),
+			Data(src.Data),
+			CharacterId(src.CharacterId)
 			{}
 			
 		GetCharacterDataResult(const rapidjson::Value& obj) : GetCharacterDataResult()
@@ -1892,17 +1901,20 @@ namespace ServerModels
 		
 		std::string PlayFabId;
 		std::list<std::string> Keys;
+		OptionalInt32 IfChangedFromDataVersion;
 	
         GetUserDataRequest() :
 			PlayFabBaseModel(),
 			PlayFabId(),
-			Keys()
+			Keys(),
+			IfChangedFromDataVersion()
 			{}
 		
 		GetUserDataRequest(const GetUserDataRequest& src) :
 			PlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
-			Keys(src.Keys)
+			Keys(src.Keys),
+			IfChangedFromDataVersion(src.IfChangedFromDataVersion)
 			{}
 			
 		GetUserDataRequest(const rapidjson::Value& obj) : GetUserDataRequest()
@@ -1920,17 +1932,20 @@ namespace ServerModels
     {
 		
 		std::string PlayFabId;
+		Uint32 DataVersion;
 		std::map<std::string, UserDataRecord> Data;
 	
         GetUserDataResult() :
 			PlayFabBaseModel(),
 			PlayFabId(),
+			DataVersion(0),
 			Data()
 			{}
 		
 		GetUserDataResult(const GetUserDataResult& src) :
 			PlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
+			DataVersion(src.DataVersion),
 			Data(src.Data)
 			{}
 			
@@ -3325,13 +3340,16 @@ namespace ServerModels
 	struct UpdateCharacterDataResult : public PlayFabBaseModel
     {
 		
+		Uint32 DataVersion;
 	
         UpdateCharacterDataResult() :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			DataVersion(0)
 			{}
 		
 		UpdateCharacterDataResult(const UpdateCharacterDataResult& src) :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			DataVersion(src.DataVersion)
 			{}
 			
 		UpdateCharacterDataResult(const rapidjson::Value& obj) : UpdateCharacterDataResult()
@@ -3490,13 +3508,16 @@ namespace ServerModels
 	struct UpdateUserDataResult : public PlayFabBaseModel
     {
 		
+		Uint32 DataVersion;
 	
         UpdateUserDataResult() :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			DataVersion(0)
 			{}
 		
 		UpdateUserDataResult(const UpdateUserDataResult& src) :
-			PlayFabBaseModel()
+			PlayFabBaseModel(),
+			DataVersion(src.DataVersion)
 			{}
 			
 		UpdateUserDataResult(const rapidjson::Value& obj) : UpdateUserDataResult()
