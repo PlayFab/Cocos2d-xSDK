@@ -7,6 +7,267 @@ using namespace rapidjson;
 
 
 
+AcceptTradeRequest::~AcceptTradeRequest()
+{
+	
+}
+
+void AcceptTradeRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("OfferingPlayerId"); writer.String(OfferingPlayerId.c_str());
+	
+	writer.String("TradeId"); writer.String(TradeId.c_str());
+	
+	if(!AcceptedInventoryInstanceIds.empty()) {
+	writer.String("AcceptedInventoryInstanceIds");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = AcceptedInventoryInstanceIds.begin(); iter != AcceptedInventoryInstanceIds.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool AcceptTradeRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* OfferingPlayerId_member = obj.FindMember("OfferingPlayerId");
+	if (OfferingPlayerId_member != NULL) OfferingPlayerId = OfferingPlayerId_member->value.GetString();
+	
+	const Value::Member* TradeId_member = obj.FindMember("TradeId");
+	if (TradeId_member != NULL) TradeId = TradeId_member->value.GetString();
+	
+	const Value::Member* AcceptedInventoryInstanceIds_member = obj.FindMember("AcceptedInventoryInstanceIds");
+	if (AcceptedInventoryInstanceIds_member != NULL) {
+		const rapidjson::Value& memberList = AcceptedInventoryInstanceIds_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			AcceptedInventoryInstanceIds.push_back(memberList[i].GetString());
+		}
+	}
+	
+	
+	return true;
+}
+
+
+void PlayFab::ClientModels::writeTradeStatusEnumJSON(TradeStatus enumVal, PFStringJsonWriter& writer)
+{
+	switch(enumVal)
+	{
+		
+		case TradeStatusInvalid: writer.String("Invalid"); break;
+		case TradeStatusOpening: writer.String("Opening"); break;
+		case TradeStatusOpen: writer.String("Open"); break;
+		case TradeStatusAccepting: writer.String("Accepting"); break;
+		case TradeStatusAccepted: writer.String("Accepted"); break;
+		case TradeStatusFilled: writer.String("Filled"); break;
+		case TradeStatusCancelled: writer.String("Cancelled"); break;
+	}
+}
+
+TradeStatus PlayFab::ClientModels::readTradeStatusFromValue(const rapidjson::Value& obj)
+{
+	std::string enumStr = obj.GetString();
+	if(enumStr == "Invalid")
+		return TradeStatusInvalid;
+	else if(enumStr == "Opening")
+		return TradeStatusOpening;
+	else if(enumStr == "Open")
+		return TradeStatusOpen;
+	else if(enumStr == "Accepting")
+		return TradeStatusAccepting;
+	else if(enumStr == "Accepted")
+		return TradeStatusAccepted;
+	else if(enumStr == "Filled")
+		return TradeStatusFilled;
+	else if(enumStr == "Cancelled")
+		return TradeStatusCancelled;
+	
+	return TradeStatusInvalid;
+}
+
+
+TradeInfo::~TradeInfo()
+{
+	
+}
+
+void TradeInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Status.notNull()) { writer.String("Status"); writeTradeStatusEnumJSON(Status, writer); }
+	
+	if(TradeId.length() > 0) { writer.String("TradeId"); writer.String(TradeId.c_str()); }
+	
+	if(OfferingPlayerId.length() > 0) { writer.String("OfferingPlayerId"); writer.String(OfferingPlayerId.c_str()); }
+	
+	if(!OfferedInventoryInstanceIds.empty()) {
+	writer.String("OfferedInventoryInstanceIds");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = OfferedInventoryInstanceIds.begin(); iter != OfferedInventoryInstanceIds.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
+	
+	if(!OfferedCatalogItemIds.empty()) {
+	writer.String("OfferedCatalogItemIds");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = OfferedCatalogItemIds.begin(); iter != OfferedCatalogItemIds.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
+	
+	if(!RequestedCatalogItemIds.empty()) {
+	writer.String("RequestedCatalogItemIds");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = RequestedCatalogItemIds.begin(); iter != RequestedCatalogItemIds.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
+	
+	if(!AllowedPlayerIds.empty()) {
+	writer.String("AllowedPlayerIds");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = AllowedPlayerIds.begin(); iter != AllowedPlayerIds.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
+	
+	if(AcceptedPlayerId.length() > 0) { writer.String("AcceptedPlayerId"); writer.String(AcceptedPlayerId.c_str()); }
+	
+	if(!AcceptedInventoryInstanceIds.empty()) {
+	writer.String("AcceptedInventoryInstanceIds");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = AcceptedInventoryInstanceIds.begin(); iter != AcceptedInventoryInstanceIds.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
+	
+	if(OpenedAt.notNull()) { writer.String("OpenedAt"); writeDatetime(OpenedAt, writer); }
+	
+	if(FilledAt.notNull()) { writer.String("FilledAt"); writeDatetime(FilledAt, writer); }
+	
+	if(CancelledAt.notNull()) { writer.String("CancelledAt"); writeDatetime(CancelledAt, writer); }
+	
+	if(InvalidatedAt.notNull()) { writer.String("InvalidatedAt"); writeDatetime(InvalidatedAt, writer); }
+	
+	
+	writer.EndObject();
+}
+
+bool TradeInfo::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Status_member = obj.FindMember("Status");
+	if (Status_member != NULL) Status = readTradeStatusFromValue(Status_member->value);
+	
+	const Value::Member* TradeId_member = obj.FindMember("TradeId");
+	if (TradeId_member != NULL) TradeId = TradeId_member->value.GetString();
+	
+	const Value::Member* OfferingPlayerId_member = obj.FindMember("OfferingPlayerId");
+	if (OfferingPlayerId_member != NULL) OfferingPlayerId = OfferingPlayerId_member->value.GetString();
+	
+	const Value::Member* OfferedInventoryInstanceIds_member = obj.FindMember("OfferedInventoryInstanceIds");
+	if (OfferedInventoryInstanceIds_member != NULL) {
+		const rapidjson::Value& memberList = OfferedInventoryInstanceIds_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			OfferedInventoryInstanceIds.push_back(memberList[i].GetString());
+		}
+	}
+	
+	const Value::Member* OfferedCatalogItemIds_member = obj.FindMember("OfferedCatalogItemIds");
+	if (OfferedCatalogItemIds_member != NULL) {
+		const rapidjson::Value& memberList = OfferedCatalogItemIds_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			OfferedCatalogItemIds.push_back(memberList[i].GetString());
+		}
+	}
+	
+	const Value::Member* RequestedCatalogItemIds_member = obj.FindMember("RequestedCatalogItemIds");
+	if (RequestedCatalogItemIds_member != NULL) {
+		const rapidjson::Value& memberList = RequestedCatalogItemIds_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			RequestedCatalogItemIds.push_back(memberList[i].GetString());
+		}
+	}
+	
+	const Value::Member* AllowedPlayerIds_member = obj.FindMember("AllowedPlayerIds");
+	if (AllowedPlayerIds_member != NULL) {
+		const rapidjson::Value& memberList = AllowedPlayerIds_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			AllowedPlayerIds.push_back(memberList[i].GetString());
+		}
+	}
+	
+	const Value::Member* AcceptedPlayerId_member = obj.FindMember("AcceptedPlayerId");
+	if (AcceptedPlayerId_member != NULL) AcceptedPlayerId = AcceptedPlayerId_member->value.GetString();
+	
+	const Value::Member* AcceptedInventoryInstanceIds_member = obj.FindMember("AcceptedInventoryInstanceIds");
+	if (AcceptedInventoryInstanceIds_member != NULL) {
+		const rapidjson::Value& memberList = AcceptedInventoryInstanceIds_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			AcceptedInventoryInstanceIds.push_back(memberList[i].GetString());
+		}
+	}
+	
+	const Value::Member* OpenedAt_member = obj.FindMember("OpenedAt");
+	if (OpenedAt_member != NULL) OpenedAt = readDatetime(OpenedAt_member->value);
+	
+	const Value::Member* FilledAt_member = obj.FindMember("FilledAt");
+	if (FilledAt_member != NULL) FilledAt = readDatetime(FilledAt_member->value);
+	
+	const Value::Member* CancelledAt_member = obj.FindMember("CancelledAt");
+	if (CancelledAt_member != NULL) CancelledAt = readDatetime(CancelledAt_member->value);
+	
+	const Value::Member* InvalidatedAt_member = obj.FindMember("InvalidatedAt");
+	if (InvalidatedAt_member != NULL) InvalidatedAt = readDatetime(InvalidatedAt_member->value);
+	
+	
+	return true;
+}
+
+
+AcceptTradeResponse::~AcceptTradeResponse()
+{
+	if(Trade != NULL) delete Trade;
+	
+}
+
+void AcceptTradeResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Trade != NULL) { writer.String("Trade"); Trade->writeJSON(writer); }
+	
+	
+	writer.EndObject();
+}
+
+bool AcceptTradeResponse::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Trade_member = obj.FindMember("Trade");
+	if (Trade_member != NULL) Trade = new TradeInfo(Trade_member->value);
+	
+	
+	return true;
+}
+
+
 AddFriendRequest::~AddFriendRequest()
 {
 	
@@ -88,14 +349,13 @@ void AddSharedGroupMembersRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("SharedGroupId"); writer.String(SharedGroupId.c_str());
 	
-	if(!PlayFabIds.empty()) {
 	writer.String("PlayFabIds");
 	writer.StartArray();
 	for (std::list<std::string>::iterator iter = PlayFabIds.begin(); iter != PlayFabIds.end(); iter++) {
 		writer.String(iter->c_str());
 	}
 	writer.EndArray();
-	 }
+	
 	
 	
 	writer.EndObject();
@@ -291,6 +551,61 @@ void AndroidDevicePushNotificationRegistrationResult::writeJSON(PFStringJsonWrit
 
 bool AndroidDevicePushNotificationRegistrationResult::readFromValue(const rapidjson::Value& obj)
 {
+	
+	
+	return true;
+}
+
+
+CancelTradeRequest::~CancelTradeRequest()
+{
+	
+}
+
+void CancelTradeRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("TradeId"); writer.String(TradeId.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool CancelTradeRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* TradeId_member = obj.FindMember("TradeId");
+	if (TradeId_member != NULL) TradeId = TradeId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+CancelTradeResponse::~CancelTradeResponse()
+{
+	if(Trade != NULL) delete Trade;
+	
+}
+
+void CancelTradeResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Trade != NULL) { writer.String("Trade"); Trade->writeJSON(writer); }
+	
+	
+	writer.EndObject();
+}
+
+bool CancelTradeResponse::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Trade_member = obj.FindMember("Trade");
+	if (Trade_member != NULL) Trade = new TradeInfo(Trade_member->value);
 	
 	
 	return true;
@@ -1282,28 +1597,6 @@ bool CurrentGamesResult::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* GameCount_member = obj.FindMember("GameCount");
 	if (GameCount_member != NULL) GameCount = GameCount_member->value.GetInt();
-	
-	
-	return true;
-}
-
-
-EmptyResult::~EmptyResult()
-{
-	
-}
-
-void EmptyResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	
-	writer.EndObject();
-}
-
-bool EmptyResult::readFromValue(const rapidjson::Value& obj)
-{
 	
 	
 	return true;
@@ -3086,6 +3379,89 @@ bool GetPhotonAuthenticationTokenResult::readFromValue(const rapidjson::Value& o
 }
 
 
+GetPlayerTradesRequest::~GetPlayerTradesRequest()
+{
+	
+}
+
+void GetPlayerTradesRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(StatusFilter.notNull()) { writer.String("StatusFilter"); writeTradeStatusEnumJSON(StatusFilter, writer); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetPlayerTradesRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* StatusFilter_member = obj.FindMember("StatusFilter");
+	if (StatusFilter_member != NULL) StatusFilter = readTradeStatusFromValue(StatusFilter_member->value);
+	
+	
+	return true;
+}
+
+
+GetPlayerTradesResponse::~GetPlayerTradesResponse()
+{
+	
+}
+
+void GetPlayerTradesResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!OpenedTrades.empty()) {
+	writer.String("OpenedTrades");
+	writer.StartArray();
+	for (std::list<TradeInfo>::iterator iter = OpenedTrades.begin(); iter != OpenedTrades.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	if(!AcceptedTrades.empty()) {
+	writer.String("AcceptedTrades");
+	writer.StartArray();
+	for (std::list<TradeInfo>::iterator iter = AcceptedTrades.begin(); iter != AcceptedTrades.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool GetPlayerTradesResponse::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* OpenedTrades_member = obj.FindMember("OpenedTrades");
+	if (OpenedTrades_member != NULL) {
+		const rapidjson::Value& memberList = OpenedTrades_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			OpenedTrades.push_back(TradeInfo(memberList[i]));
+		}
+	}
+	
+	const Value::Member* AcceptedTrades_member = obj.FindMember("AcceptedTrades");
+	if (AcceptedTrades_member != NULL) {
+		const rapidjson::Value& memberList = AcceptedTrades_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			AcceptedTrades.push_back(TradeInfo(memberList[i]));
+		}
+	}
+	
+	
+	return true;
+}
+
+
 GetPlayFabIDsFromFacebookIDsRequest::~GetPlayFabIDsFromFacebookIDsRequest()
 {
 	
@@ -3341,120 +3717,6 @@ bool GetPlayFabIDsFromGoogleIDsResult::readFromValue(const rapidjson::Value& obj
 		const rapidjson::Value& memberList = Data_member->value;
 		for (SizeType i = 0; i < memberList.Size(); i++) {
 			Data.push_back(GooglePlayFabIdPair(memberList[i]));
-		}
-	}
-	
-	
-	return true;
-}
-
-
-GetPlayFabIDsFromPSNAccountIDsRequest::~GetPlayFabIDsFromPSNAccountIDsRequest()
-{
-	
-}
-
-void GetPlayFabIDsFromPSNAccountIDsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	writer.String("PSNAccountIDs");
-	writer.StartArray();
-	for (std::list<std::string>::iterator iter = PSNAccountIDs.begin(); iter != PSNAccountIDs.end(); iter++) {
-		writer.String(iter->c_str());
-	}
-	writer.EndArray();
-	
-	
-	if(IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
-	
-	
-	writer.EndObject();
-}
-
-bool GetPlayFabIDsFromPSNAccountIDsRequest::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* PSNAccountIDs_member = obj.FindMember("PSNAccountIDs");
-	if (PSNAccountIDs_member != NULL) {
-		const rapidjson::Value& memberList = PSNAccountIDs_member->value;
-		for (SizeType i = 0; i < memberList.Size(); i++) {
-			PSNAccountIDs.push_back(memberList[i].GetString());
-		}
-	}
-	
-	const Value::Member* IssuerId_member = obj.FindMember("IssuerId");
-	if (IssuerId_member != NULL) IssuerId = IssuerId_member->value.GetInt();
-	
-	
-	return true;
-}
-
-
-PSNAccountPlayFabIdPair::~PSNAccountPlayFabIdPair()
-{
-	
-}
-
-void PSNAccountPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	if(PSNAccountId.length() > 0) { writer.String("PSNAccountId"); writer.String(PSNAccountId.c_str()); }
-	
-	if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
-	
-	
-	writer.EndObject();
-}
-
-bool PSNAccountPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* PSNAccountId_member = obj.FindMember("PSNAccountId");
-	if (PSNAccountId_member != NULL) PSNAccountId = PSNAccountId_member->value.GetString();
-	
-	const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-	if (PlayFabId_member != NULL) PlayFabId = PlayFabId_member->value.GetString();
-	
-	
-	return true;
-}
-
-
-GetPlayFabIDsFromPSNAccountIDsResult::~GetPlayFabIDsFromPSNAccountIDsResult()
-{
-	
-}
-
-void GetPlayFabIDsFromPSNAccountIDsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	if(!Data.empty()) {
-	writer.String("Data");
-	writer.StartArray();
-	for (std::list<PSNAccountPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
-		iter->writeJSON(writer);
-	}
-	writer.EndArray();
-	 }
-	
-	
-	writer.EndObject();
-}
-
-bool GetPlayFabIDsFromPSNAccountIDsResult::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* Data_member = obj.FindMember("Data");
-	if (Data_member != NULL) {
-		const rapidjson::Value& memberList = Data_member->value;
-		for (SizeType i = 0; i < memberList.Size(); i++) {
-			Data.push_back(PSNAccountPlayFabIdPair(memberList[i]));
 		}
 	}
 	
@@ -4102,6 +4364,66 @@ bool GetTitleNewsResult::readFromValue(const rapidjson::Value& obj)
 			News.push_back(TitleNewsItem(memberList[i]));
 		}
 	}
+	
+	
+	return true;
+}
+
+
+GetTradeStatusRequest::~GetTradeStatusRequest()
+{
+	
+}
+
+void GetTradeStatusRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	writer.String("OfferingPlayerId"); writer.String(OfferingPlayerId.c_str());
+	
+	writer.String("TradeId"); writer.String(TradeId.c_str());
+	
+	
+	writer.EndObject();
+}
+
+bool GetTradeStatusRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* OfferingPlayerId_member = obj.FindMember("OfferingPlayerId");
+	if (OfferingPlayerId_member != NULL) OfferingPlayerId = OfferingPlayerId_member->value.GetString();
+	
+	const Value::Member* TradeId_member = obj.FindMember("TradeId");
+	if (TradeId_member != NULL) TradeId = TradeId_member->value.GetString();
+	
+	
+	return true;
+}
+
+
+GetTradeStatusResponse::~GetTradeStatusResponse()
+{
+	if(Trade != NULL) delete Trade;
+	
+}
+
+void GetTradeStatusResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Trade != NULL) { writer.String("Trade"); Trade->writeJSON(writer); }
+	
+	
+	writer.EndObject();
+}
+
+bool GetTradeStatusResponse::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Trade_member = obj.FindMember("Trade");
+	if (Trade_member != NULL) Trade = new TradeInfo(Trade_member->value);
 	
 	
 	return true;
@@ -5634,6 +5956,107 @@ bool ModifyUserVirtualCurrencyResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+OpenTradeRequest::~OpenTradeRequest()
+{
+	
+}
+
+void OpenTradeRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(!OfferedInventoryInstanceIds.empty()) {
+	writer.String("OfferedInventoryInstanceIds");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = OfferedInventoryInstanceIds.begin(); iter != OfferedInventoryInstanceIds.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
+	
+	if(!RequestedCatalogItemIds.empty()) {
+	writer.String("RequestedCatalogItemIds");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = RequestedCatalogItemIds.begin(); iter != RequestedCatalogItemIds.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
+	
+	if(!AllowedPlayerIds.empty()) {
+	writer.String("AllowedPlayerIds");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = AllowedPlayerIds.begin(); iter != AllowedPlayerIds.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
+	
+	
+	writer.EndObject();
+}
+
+bool OpenTradeRequest::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* OfferedInventoryInstanceIds_member = obj.FindMember("OfferedInventoryInstanceIds");
+	if (OfferedInventoryInstanceIds_member != NULL) {
+		const rapidjson::Value& memberList = OfferedInventoryInstanceIds_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			OfferedInventoryInstanceIds.push_back(memberList[i].GetString());
+		}
+	}
+	
+	const Value::Member* RequestedCatalogItemIds_member = obj.FindMember("RequestedCatalogItemIds");
+	if (RequestedCatalogItemIds_member != NULL) {
+		const rapidjson::Value& memberList = RequestedCatalogItemIds_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			RequestedCatalogItemIds.push_back(memberList[i].GetString());
+		}
+	}
+	
+	const Value::Member* AllowedPlayerIds_member = obj.FindMember("AllowedPlayerIds");
+	if (AllowedPlayerIds_member != NULL) {
+		const rapidjson::Value& memberList = AllowedPlayerIds_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			AllowedPlayerIds.push_back(memberList[i].GetString());
+		}
+	}
+	
+	
+	return true;
+}
+
+
+OpenTradeResponse::~OpenTradeResponse()
+{
+	if(Trade != NULL) delete Trade;
+	
+}
+
+void OpenTradeResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+	
+	if(Trade != NULL) { writer.String("Trade"); Trade->writeJSON(writer); }
+	
+	
+	writer.EndObject();
+}
+
+bool OpenTradeResponse::readFromValue(const rapidjson::Value& obj)
+{
+	
+	const Value::Member* Trade_member = obj.FindMember("Trade");
+	if (Trade_member != NULL) Trade = new TradeInfo(Trade_member->value);
+	
+	
+	return true;
+}
+
+
 PayForPurchaseRequest::~PayForPurchaseRequest()
 {
 	
@@ -5688,6 +6111,7 @@ void PlayFab::ClientModels::writeTransactionStatusEnumJSON(TransactionStatus enu
 		case TransactionStatusFailedByUber: writer.String("FailedByUber"); break;
 		case TransactionStatusRevoked: writer.String("Revoked"); break;
 		case TransactionStatusTradePending: writer.String("TradePending"); break;
+		case TransactionStatusTraded: writer.String("Traded"); break;
 		case TransactionStatusUpgraded: writer.String("Upgraded"); break;
 		case TransactionStatusStackPending: writer.String("StackPending"); break;
 		case TransactionStatusStacked: writer.String("Stacked"); break;
@@ -5723,6 +6147,8 @@ TransactionStatus PlayFab::ClientModels::readTransactionStatusFromValue(const ra
 		return TransactionStatusRevoked;
 	else if(enumStr == "TradePending")
 		return TransactionStatusTradePending;
+	else if(enumStr == "Traded")
+		return TransactionStatusTraded;
 	else if(enumStr == "Upgraded")
 		return TransactionStatusUpgraded;
 	else if(enumStr == "StackPending")
@@ -6026,43 +6452,6 @@ bool RedeemCouponResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
-RefreshPSNAuthTokenRequest::~RefreshPSNAuthTokenRequest()
-{
-	
-}
-
-void RefreshPSNAuthTokenRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-	
-	writer.String("AuthCode"); writer.String(AuthCode.c_str());
-	
-	writer.String("RedirectUri"); writer.String(RedirectUri.c_str());
-	
-	if(IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
-	
-	
-	writer.EndObject();
-}
-
-bool RefreshPSNAuthTokenRequest::readFromValue(const rapidjson::Value& obj)
-{
-	
-	const Value::Member* AuthCode_member = obj.FindMember("AuthCode");
-	if (AuthCode_member != NULL) AuthCode = AuthCode_member->value.GetString();
-	
-	const Value::Member* RedirectUri_member = obj.FindMember("RedirectUri");
-	if (RedirectUri_member != NULL) RedirectUri = RedirectUri_member->value.GetString();
-	
-	const Value::Member* IssuerId_member = obj.FindMember("IssuerId");
-	if (IssuerId_member != NULL) IssuerId = IssuerId_member->value.GetInt();
-	
-	
-	return true;
-}
-
-
 RegisterForIOSPushNotificationRequest::~RegisterForIOSPushNotificationRequest()
 {
 	
@@ -6267,14 +6656,13 @@ void RemoveSharedGroupMembersRequest::writeJSON(PFStringJsonWriter& writer)
 	
 	writer.String("SharedGroupId"); writer.String(SharedGroupId.c_str());
 	
-	if(!PlayFabIds.empty()) {
 	writer.String("PlayFabIds");
 	writer.StartArray();
 	for (std::list<std::string>::iterator iter = PlayFabIds.begin(); iter != PlayFabIds.end(); iter++) {
 		writer.String(iter->c_str());
 	}
 	writer.EndArray();
-	 }
+	
 	
 	
 	writer.EndObject();

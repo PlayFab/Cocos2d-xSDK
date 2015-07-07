@@ -159,7 +159,27 @@ namespace PlayFab
 		PlayFabErrorPSNInaccessible = 1152,
 		PlayFabErrorExpiredAuthToken = 1153,
 		PlayFabErrorFailedToGetEntitlements = 1154,
-		PlayFabErrorFailedToConsumeEntitlement = 1155
+		PlayFabErrorFailedToConsumeEntitlement = 1155,
+		PlayFabErrorTradeAcceptingUserNotAllowed = 1156,
+		PlayFabErrorTradeInventoryItemIsAssignedToCharacter = 1157,
+		PlayFabErrorTradeInventoryItemIsBundle = 1158,
+		PlayFabErrorTradeStatusNotValidForCancelling = 1159,
+		PlayFabErrorTradeStatusNotValidForAccepting = 1160,
+		PlayFabErrorTradeDoesNotExist = 1161,
+		PlayFabErrorTradeCancelled = 1162,
+		PlayFabErrorTradeAlreadyFilled = 1163,
+		PlayFabErrorTradeWaitForStatusTimeout = 1164,
+		PlayFabErrorTradeInventoryItemExpired = 1165,
+		PlayFabErrorTradeMissingOfferedAndAcceptedItems = 1166,
+		PlayFabErrorTradeAcceptedItemIsBundle = 1167,
+		PlayFabErrorTradeAcceptedItemIsStackable = 1168,
+		PlayFabErrorTradeInventoryItemInvalidStatus = 1169,
+		PlayFabErrorTradeAcceptedCatalogItemInvalid = 1170,
+		PlayFabErrorTradeAllowedUsersInvalid = 1171,
+		PlayFabErrorTradeInventoryItemDoesNotExist = 1172,
+		PlayFabErrorTradeInventoryItemIsConsumed = 1173,
+		PlayFabErrorTradeInventoryItemIsStackable = 1174,
+		PlayFabErrorTradeAcceptedItemsMismatch = 1175
     };
 
     struct PlayFabError

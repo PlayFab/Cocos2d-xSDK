@@ -9,6 +9,141 @@ namespace ClientModels
 {
 
 	
+	struct AcceptTradeRequest : public PlayFabBaseModel
+    {
+		
+		std::string OfferingPlayerId;
+		std::string TradeId;
+		std::list<std::string> AcceptedInventoryInstanceIds;
+	
+        AcceptTradeRequest() :
+			PlayFabBaseModel(),
+			OfferingPlayerId(),
+			TradeId(),
+			AcceptedInventoryInstanceIds()
+			{}
+		
+		AcceptTradeRequest(const AcceptTradeRequest& src) :
+			PlayFabBaseModel(),
+			OfferingPlayerId(src.OfferingPlayerId),
+			TradeId(src.TradeId),
+			AcceptedInventoryInstanceIds(src.AcceptedInventoryInstanceIds)
+			{}
+			
+		AcceptTradeRequest(const rapidjson::Value& obj) : AcceptTradeRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~AcceptTradeRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	enum TradeStatus
+	{
+		TradeStatusInvalid,
+		TradeStatusOpening,
+		TradeStatusOpen,
+		TradeStatusAccepting,
+		TradeStatusAccepted,
+		TradeStatusFilled,
+		TradeStatusCancelled
+	};
+	
+	void writeTradeStatusEnumJSON(TradeStatus enumVal, PFStringJsonWriter& writer);
+	TradeStatus readTradeStatusFromValue(const rapidjson::Value& obj);
+	
+	
+	struct TradeInfo : public PlayFabBaseModel
+    {
+		
+		Boxed<TradeStatus> Status;
+		std::string TradeId;
+		std::string OfferingPlayerId;
+		std::list<std::string> OfferedInventoryInstanceIds;
+		std::list<std::string> OfferedCatalogItemIds;
+		std::list<std::string> RequestedCatalogItemIds;
+		std::list<std::string> AllowedPlayerIds;
+		std::string AcceptedPlayerId;
+		std::list<std::string> AcceptedInventoryInstanceIds;
+		OptionalTime OpenedAt;
+		OptionalTime FilledAt;
+		OptionalTime CancelledAt;
+		OptionalTime InvalidatedAt;
+	
+        TradeInfo() :
+			PlayFabBaseModel(),
+			Status(),
+			TradeId(),
+			OfferingPlayerId(),
+			OfferedInventoryInstanceIds(),
+			OfferedCatalogItemIds(),
+			RequestedCatalogItemIds(),
+			AllowedPlayerIds(),
+			AcceptedPlayerId(),
+			AcceptedInventoryInstanceIds(),
+			OpenedAt(),
+			FilledAt(),
+			CancelledAt(),
+			InvalidatedAt()
+			{}
+		
+		TradeInfo(const TradeInfo& src) :
+			PlayFabBaseModel(),
+			Status(src.Status),
+			TradeId(src.TradeId),
+			OfferingPlayerId(src.OfferingPlayerId),
+			OfferedInventoryInstanceIds(src.OfferedInventoryInstanceIds),
+			OfferedCatalogItemIds(src.OfferedCatalogItemIds),
+			RequestedCatalogItemIds(src.RequestedCatalogItemIds),
+			AllowedPlayerIds(src.AllowedPlayerIds),
+			AcceptedPlayerId(src.AcceptedPlayerId),
+			AcceptedInventoryInstanceIds(src.AcceptedInventoryInstanceIds),
+			OpenedAt(src.OpenedAt),
+			FilledAt(src.FilledAt),
+			CancelledAt(src.CancelledAt),
+			InvalidatedAt(src.InvalidatedAt)
+			{}
+			
+		TradeInfo(const rapidjson::Value& obj) : TradeInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~TradeInfo();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct AcceptTradeResponse : public PlayFabBaseModel
+    {
+		
+		TradeInfo* Trade;
+	
+        AcceptTradeResponse() :
+			PlayFabBaseModel(),
+			Trade(NULL)
+			{}
+		
+		AcceptTradeResponse(const AcceptTradeResponse& src) :
+			PlayFabBaseModel(),
+			Trade(src.Trade ? new TradeInfo(*src.Trade) : NULL)
+			{}
+			
+		AcceptTradeResponse(const rapidjson::Value& obj) : AcceptTradeResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~AcceptTradeResponse();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct AddFriendRequest : public PlayFabBaseModel
     {
 		
@@ -259,6 +394,58 @@ namespace ClientModels
         }
 		
 		~AndroidDevicePushNotificationRegistrationResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct CancelTradeRequest : public PlayFabBaseModel
+    {
+		
+		std::string TradeId;
+	
+        CancelTradeRequest() :
+			PlayFabBaseModel(),
+			TradeId()
+			{}
+		
+		CancelTradeRequest(const CancelTradeRequest& src) :
+			PlayFabBaseModel(),
+			TradeId(src.TradeId)
+			{}
+			
+		CancelTradeRequest(const rapidjson::Value& obj) : CancelTradeRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~CancelTradeRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct CancelTradeResponse : public PlayFabBaseModel
+    {
+		
+		TradeInfo* Trade;
+	
+        CancelTradeResponse() :
+			PlayFabBaseModel(),
+			Trade(NULL)
+			{}
+		
+		CancelTradeResponse(const CancelTradeResponse& src) :
+			PlayFabBaseModel(),
+			Trade(src.Trade ? new TradeInfo(*src.Trade) : NULL)
+			{}
+			
+		CancelTradeResponse(const rapidjson::Value& obj) : CancelTradeResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~CancelTradeResponse();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -876,29 +1063,6 @@ namespace ClientModels
         }
 		
 		~CurrentGamesResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct EmptyResult : public PlayFabBaseModel
-    {
-		
-	
-        EmptyResult() :
-			PlayFabBaseModel()
-			{}
-		
-		EmptyResult(const EmptyResult& src) :
-			PlayFabBaseModel()
-			{}
-			
-		EmptyResult(const rapidjson::Value& obj) : EmptyResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~EmptyResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -2256,6 +2420,61 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GetPlayerTradesRequest : public PlayFabBaseModel
+    {
+		
+		Boxed<TradeStatus> StatusFilter;
+	
+        GetPlayerTradesRequest() :
+			PlayFabBaseModel(),
+			StatusFilter()
+			{}
+		
+		GetPlayerTradesRequest(const GetPlayerTradesRequest& src) :
+			PlayFabBaseModel(),
+			StatusFilter(src.StatusFilter)
+			{}
+			
+		GetPlayerTradesRequest(const rapidjson::Value& obj) : GetPlayerTradesRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetPlayerTradesRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetPlayerTradesResponse : public PlayFabBaseModel
+    {
+		
+		std::list<TradeInfo> OpenedTrades;
+		std::list<TradeInfo> AcceptedTrades;
+	
+        GetPlayerTradesResponse() :
+			PlayFabBaseModel(),
+			OpenedTrades(),
+			AcceptedTrades()
+			{}
+		
+		GetPlayerTradesResponse(const GetPlayerTradesResponse& src) :
+			PlayFabBaseModel(),
+			OpenedTrades(src.OpenedTrades),
+			AcceptedTrades(src.AcceptedTrades)
+			{}
+			
+		GetPlayerTradesResponse(const rapidjson::Value& obj) : GetPlayerTradesResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetPlayerTradesResponse();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetPlayFabIDsFromFacebookIDsRequest : public PlayFabBaseModel
     {
 		
@@ -2436,90 +2655,6 @@ namespace ClientModels
         }
 		
 		~GetPlayFabIDsFromGoogleIDsResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct GetPlayFabIDsFromPSNAccountIDsRequest : public PlayFabBaseModel
-    {
-		
-		std::list<std::string> PSNAccountIDs;
-		OptionalInt32 IssuerId;
-	
-        GetPlayFabIDsFromPSNAccountIDsRequest() :
-			PlayFabBaseModel(),
-			PSNAccountIDs(),
-			IssuerId()
-			{}
-		
-		GetPlayFabIDsFromPSNAccountIDsRequest(const GetPlayFabIDsFromPSNAccountIDsRequest& src) :
-			PlayFabBaseModel(),
-			PSNAccountIDs(src.PSNAccountIDs),
-			IssuerId(src.IssuerId)
-			{}
-			
-		GetPlayFabIDsFromPSNAccountIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromPSNAccountIDsRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~GetPlayFabIDsFromPSNAccountIDsRequest();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct PSNAccountPlayFabIdPair : public PlayFabBaseModel
-    {
-		
-		std::string PSNAccountId;
-		std::string PlayFabId;
-	
-        PSNAccountPlayFabIdPair() :
-			PlayFabBaseModel(),
-			PSNAccountId(),
-			PlayFabId()
-			{}
-		
-		PSNAccountPlayFabIdPair(const PSNAccountPlayFabIdPair& src) :
-			PlayFabBaseModel(),
-			PSNAccountId(src.PSNAccountId),
-			PlayFabId(src.PlayFabId)
-			{}
-			
-		PSNAccountPlayFabIdPair(const rapidjson::Value& obj) : PSNAccountPlayFabIdPair()
-        {
-            readFromValue(obj);
-        }
-		
-		~PSNAccountPlayFabIdPair();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct GetPlayFabIDsFromPSNAccountIDsResult : public PlayFabBaseModel
-    {
-		
-		std::list<PSNAccountPlayFabIdPair> Data;
-	
-        GetPlayFabIDsFromPSNAccountIDsResult() :
-			PlayFabBaseModel(),
-			Data()
-			{}
-		
-		GetPlayFabIDsFromPSNAccountIDsResult(const GetPlayFabIDsFromPSNAccountIDsResult& src) :
-			PlayFabBaseModel(),
-			Data(src.Data)
-			{}
-			
-		GetPlayFabIDsFromPSNAccountIDsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromPSNAccountIDsResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~GetPlayFabIDsFromPSNAccountIDsResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -2975,6 +3110,61 @@ namespace ClientModels
         }
 		
 		~GetTitleNewsResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetTradeStatusRequest : public PlayFabBaseModel
+    {
+		
+		std::string OfferingPlayerId;
+		std::string TradeId;
+	
+        GetTradeStatusRequest() :
+			PlayFabBaseModel(),
+			OfferingPlayerId(),
+			TradeId()
+			{}
+		
+		GetTradeStatusRequest(const GetTradeStatusRequest& src) :
+			PlayFabBaseModel(),
+			OfferingPlayerId(src.OfferingPlayerId),
+			TradeId(src.TradeId)
+			{}
+			
+		GetTradeStatusRequest(const rapidjson::Value& obj) : GetTradeStatusRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetTradeStatusRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetTradeStatusResponse : public PlayFabBaseModel
+    {
+		
+		TradeInfo* Trade;
+	
+        GetTradeStatusResponse() :
+			PlayFabBaseModel(),
+			Trade(NULL)
+			{}
+		
+		GetTradeStatusResponse(const GetTradeStatusResponse& src) :
+			PlayFabBaseModel(),
+			Trade(src.Trade ? new TradeInfo(*src.Trade) : NULL)
+			{}
+			
+		GetTradeStatusResponse(const rapidjson::Value& obj) : GetTradeStatusResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetTradeStatusResponse();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -4151,6 +4341,64 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct OpenTradeRequest : public PlayFabBaseModel
+    {
+		
+		std::list<std::string> OfferedInventoryInstanceIds;
+		std::list<std::string> RequestedCatalogItemIds;
+		std::list<std::string> AllowedPlayerIds;
+	
+        OpenTradeRequest() :
+			PlayFabBaseModel(),
+			OfferedInventoryInstanceIds(),
+			RequestedCatalogItemIds(),
+			AllowedPlayerIds()
+			{}
+		
+		OpenTradeRequest(const OpenTradeRequest& src) :
+			PlayFabBaseModel(),
+			OfferedInventoryInstanceIds(src.OfferedInventoryInstanceIds),
+			RequestedCatalogItemIds(src.RequestedCatalogItemIds),
+			AllowedPlayerIds(src.AllowedPlayerIds)
+			{}
+			
+		OpenTradeRequest(const rapidjson::Value& obj) : OpenTradeRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~OpenTradeRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct OpenTradeResponse : public PlayFabBaseModel
+    {
+		
+		TradeInfo* Trade;
+	
+        OpenTradeResponse() :
+			PlayFabBaseModel(),
+			Trade(NULL)
+			{}
+		
+		OpenTradeResponse(const OpenTradeResponse& src) :
+			PlayFabBaseModel(),
+			Trade(src.Trade ? new TradeInfo(*src.Trade) : NULL)
+			{}
+			
+		OpenTradeResponse(const rapidjson::Value& obj) : OpenTradeResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~OpenTradeResponse();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct PayForPurchaseRequest : public PlayFabBaseModel
     {
 		
@@ -4197,6 +4445,7 @@ namespace ClientModels
 		TransactionStatusFailedByUber,
 		TransactionStatusRevoked,
 		TransactionStatusTradePending,
+		TransactionStatusTraded,
 		TransactionStatusUpgraded,
 		TransactionStatusStackPending,
 		TransactionStatusStacked,
@@ -4407,38 +4656,6 @@ namespace ClientModels
         }
 		
 		~RedeemCouponResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
-	struct RefreshPSNAuthTokenRequest : public PlayFabBaseModel
-    {
-		
-		std::string AuthCode;
-		std::string RedirectUri;
-		OptionalInt32 IssuerId;
-	
-        RefreshPSNAuthTokenRequest() :
-			PlayFabBaseModel(),
-			AuthCode(),
-			RedirectUri(),
-			IssuerId()
-			{}
-		
-		RefreshPSNAuthTokenRequest(const RefreshPSNAuthTokenRequest& src) :
-			PlayFabBaseModel(),
-			AuthCode(src.AuthCode),
-			RedirectUri(src.RedirectUri),
-			IssuerId(src.IssuerId)
-			{}
-			
-		RefreshPSNAuthTokenRequest(const rapidjson::Value& obj) : RefreshPSNAuthTokenRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~RefreshPSNAuthTokenRequest();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

@@ -104,6 +104,11 @@ namespace PlayFab
 		typedef void(*GetCharacterDataCallback)(ClientModels::GetCharacterDataResult& result, void* userData);
 		typedef void(*GetCharacterReadOnlyDataCallback)(ClientModels::GetCharacterDataResult& result, void* userData);
 		typedef void(*UpdateCharacterDataCallback)(ClientModels::UpdateCharacterDataResult& result, void* userData);
+		typedef void(*AcceptTradeCallback)(ClientModels::AcceptTradeResponse& result, void* userData);
+		typedef void(*CancelTradeCallback)(ClientModels::CancelTradeResponse& result, void* userData);
+		typedef void(*GetPlayerTradesCallback)(ClientModels::GetPlayerTradesResponse& result, void* userData);
+		typedef void(*GetTradeStatusCallback)(ClientModels::GetTradeStatusResponse& result, void* userData);
+		typedef void(*OpenTradeCallback)(ClientModels::OpenTradeResponse& result, void* userData);
 		
 	
         PlayFabClientAPI();
@@ -289,6 +294,16 @@ namespace PlayFab
 		
 		void UpdateCharacterData(ClientModels::UpdateCharacterDataRequest& request, UpdateCharacterDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void AcceptTrade(ClientModels::AcceptTradeRequest& request, AcceptTradeCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void CancelTrade(ClientModels::CancelTradeRequest& request, CancelTradeCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetPlayerTrades(ClientModels::GetPlayerTradesRequest& request, GetPlayerTradesCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetTradeStatus(ClientModels::GetTradeStatusRequest& request, GetTradeStatusCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void OpenTrade(ClientModels::OpenTradeRequest& request, OpenTradeCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 
     private:
 
@@ -467,6 +482,16 @@ namespace PlayFab
 		static void OnGetCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnAcceptTradeResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnCancelTradeResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetPlayerTradesResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetTradeStatusResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnOpenTradeResult(int httpStatus, HttpRequest* request, void* userData);
 		
  
         bool mOwnsRequester;
