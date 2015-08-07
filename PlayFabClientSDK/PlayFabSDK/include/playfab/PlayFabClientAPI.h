@@ -23,6 +23,7 @@ namespace PlayFab
 		typedef void(*LoginWithFacebookCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithGoogleAccountCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithIOSDeviceIDCallback)(ClientModels::LoginResult& result, void* userData);
+		typedef void(*LoginWithKongregateCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithPlayFabCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*LoginWithSteamCallback)(ClientModels::LoginResult& result, void* userData);
 		typedef void(*RegisterPlayFabUserCallback)(ClientModels::RegisterPlayFabUserResult& result, void* userData);
@@ -38,6 +39,7 @@ namespace PlayFab
 		typedef void(*LinkGameCenterAccountCallback)(ClientModels::LinkGameCenterAccountResult& result, void* userData);
 		typedef void(*LinkGoogleAccountCallback)(ClientModels::LinkGoogleAccountResult& result, void* userData);
 		typedef void(*LinkIOSDeviceIDCallback)(ClientModels::LinkIOSDeviceIDResult& result, void* userData);
+		typedef void(*LinkKongregateCallback)(ClientModels::LinkKongregateAccountResult& result, void* userData);
 		typedef void(*LinkSteamAccountCallback)(ClientModels::LinkSteamAccountResult& result, void* userData);
 		typedef void(*SendAccountRecoveryEmailCallback)(ClientModels::SendAccountRecoveryEmailResult& result, void* userData);
 		typedef void(*UnlinkAndroidDeviceIDCallback)(ClientModels::UnlinkAndroidDeviceIDResult& result, void* userData);
@@ -45,6 +47,7 @@ namespace PlayFab
 		typedef void(*UnlinkGameCenterAccountCallback)(ClientModels::UnlinkGameCenterAccountResult& result, void* userData);
 		typedef void(*UnlinkGoogleAccountCallback)(ClientModels::UnlinkGoogleAccountResult& result, void* userData);
 		typedef void(*UnlinkIOSDeviceIDCallback)(ClientModels::UnlinkIOSDeviceIDResult& result, void* userData);
+		typedef void(*UnlinkKongregateCallback)(ClientModels::UnlinkKongregateAccountResult& result, void* userData);
 		typedef void(*UnlinkSteamAccountCallback)(ClientModels::UnlinkSteamAccountResult& result, void* userData);
 		typedef void(*UpdateUserTitleDisplayNameCallback)(ClientModels::UpdateUserTitleDisplayNameResult& result, void* userData);
 		typedef void(*GetFriendLeaderboardCallback)(ClientModels::GetLeaderboardResult& result, void* userData);
@@ -66,6 +69,7 @@ namespace PlayFab
 		typedef void(*ConfirmPurchaseCallback)(ClientModels::ConfirmPurchaseResult& result, void* userData);
 		typedef void(*ConsumeItemCallback)(ClientModels::ConsumeItemResult& result, void* userData);
 		typedef void(*GetCharacterInventoryCallback)(ClientModels::GetCharacterInventoryResult& result, void* userData);
+		typedef void(*GetPurchaseCallback)(ClientModels::GetPurchaseResult& result, void* userData);
 		typedef void(*GetUserInventoryCallback)(ClientModels::GetUserInventoryResult& result, void* userData);
 		typedef void(*PayForPurchaseCallback)(ClientModels::PayForPurchaseResult& result, void* userData);
 		typedef void(*PurchaseItemCallback)(ClientModels::PurchaseItemResult& result, void* userData);
@@ -132,6 +136,8 @@ namespace PlayFab
 		
 		void LoginWithIOSDeviceID(ClientModels::LoginWithIOSDeviceIDRequest& request, LoginWithIOSDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void LoginWithKongregate(ClientModels::LoginWithKongregateRequest& request, LoginWithKongregateCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void LoginWithPlayFab(ClientModels::LoginWithPlayFabRequest& request, LoginWithPlayFabCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void LoginWithSteam(ClientModels::LoginWithSteamRequest& request, LoginWithSteamCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
@@ -162,6 +168,8 @@ namespace PlayFab
 		
 		void LinkIOSDeviceID(ClientModels::LinkIOSDeviceIDRequest& request, LinkIOSDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void LinkKongregate(ClientModels::LinkKongregateAccountRequest& request, LinkKongregateCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void LinkSteamAccount(ClientModels::LinkSteamAccountRequest& request, LinkSteamAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void SendAccountRecoveryEmail(ClientModels::SendAccountRecoveryEmailRequest& request, SendAccountRecoveryEmailCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
@@ -175,6 +183,8 @@ namespace PlayFab
 		void UnlinkGoogleAccount(UnlinkGoogleAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UnlinkIOSDeviceID(ClientModels::UnlinkIOSDeviceIDRequest& request, UnlinkIOSDeviceIDCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void UnlinkKongregate(UnlinkKongregateCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UnlinkSteamAccount(UnlinkSteamAccountCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -217,6 +227,8 @@ namespace PlayFab
 		void ConsumeItem(ClientModels::ConsumeItemRequest& request, ConsumeItemCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetCharacterInventory(ClientModels::GetCharacterInventoryRequest& request, GetCharacterInventoryCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetPurchase(ClientModels::GetPurchaseRequest& request, GetPurchaseCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetUserInventory(GetUserInventoryCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -321,6 +333,8 @@ namespace PlayFab
 		
 		static void OnLoginWithIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnLoginWithKongregateResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnLoginWithPlayFabResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnLoginWithSteamResult(int httpStatus, HttpRequest* request, void* userData);
@@ -351,6 +365,8 @@ namespace PlayFab
 		
 		static void OnLinkIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnLinkKongregateResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnLinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
@@ -364,6 +380,8 @@ namespace PlayFab
 		static void OnUnlinkGoogleAccountResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUnlinkIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnUnlinkKongregateResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUnlinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData);
 		
@@ -406,6 +424,8 @@ namespace PlayFab
 		static void OnConsumeItemResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetCharacterInventoryResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetUserInventoryResult(int httpStatus, HttpRequest* request, void* userData);
 		
