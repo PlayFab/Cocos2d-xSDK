@@ -73,9 +73,14 @@ namespace MatchmakerModels
 		OptionalTime PurchaseDate;
 		OptionalTime Expiration;
 		OptionalInt32 RemainingUses;
+		OptionalInt32 UsesIncrementedBy;
 		std::string Annotation;
 		std::string CatalogVersion;
 		std::string BundleParent;
+		std::string DisplayName;
+		std::string UnitCurrency;
+		Uint32 UnitPrice;
+		std::list<std::string> BundleContents;
 		std::map<std::string, std::string> CustomData;
 	
         ItemInstance() :
@@ -86,9 +91,14 @@ namespace MatchmakerModels
 			PurchaseDate(),
 			Expiration(),
 			RemainingUses(),
+			UsesIncrementedBy(),
 			Annotation(),
 			CatalogVersion(),
 			BundleParent(),
+			DisplayName(),
+			UnitCurrency(),
+			UnitPrice(0),
+			BundleContents(),
 			CustomData()
 			{}
 		
@@ -100,9 +110,14 @@ namespace MatchmakerModels
 			PurchaseDate(src.PurchaseDate),
 			Expiration(src.Expiration),
 			RemainingUses(src.RemainingUses),
+			UsesIncrementedBy(src.UsesIncrementedBy),
 			Annotation(src.Annotation),
 			CatalogVersion(src.CatalogVersion),
 			BundleParent(src.BundleParent),
+			DisplayName(src.DisplayName),
+			UnitCurrency(src.UnitCurrency),
+			UnitPrice(src.UnitPrice),
+			BundleContents(src.BundleContents),
 			CustomData(src.CustomData)
 			{}
 			

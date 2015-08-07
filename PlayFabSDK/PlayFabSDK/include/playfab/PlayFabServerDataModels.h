@@ -44,6 +44,44 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct AddFriendRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string FriendPlayFabId;
+		std::string FriendUsername;
+		std::string FriendEmail;
+		std::string FriendTitleDisplayName;
+	
+        AddFriendRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			FriendPlayFabId(),
+			FriendUsername(),
+			FriendEmail(),
+			FriendTitleDisplayName()
+			{}
+		
+		AddFriendRequest(const AddFriendRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			FriendPlayFabId(src.FriendPlayFabId),
+			FriendUsername(src.FriendUsername),
+			FriendEmail(src.FriendEmail),
+			FriendTitleDisplayName(src.FriendTitleDisplayName)
+			{}
+			
+		AddFriendRequest(const rapidjson::Value& obj) : AddFriendRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~AddFriendRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct AddSharedGroupMembersRequest : public PlayFabBaseModel
     {
 		
@@ -628,12 +666,12 @@ namespace ServerModels
 		std::map<std::string, Uint32> RealCurrencyPrices;
 		std::list<std::string> Tags;
 		std::string CustomData;
-		std::list<std::string> GrantedIfPlayerHas;
 		CatalogItemConsumableInfo* Consumable;
 		CatalogItemContainerInfo* Container;
 		CatalogItemBundleInfo* Bundle;
 		bool CanBecomeCharacter;
 		bool IsStackable;
+		bool IsTradable;
 	
         CatalogItem() :
 			PlayFabBaseModel(),
@@ -646,12 +684,12 @@ namespace ServerModels
 			RealCurrencyPrices(),
 			Tags(),
 			CustomData(),
-			GrantedIfPlayerHas(),
 			Consumable(NULL),
 			Container(NULL),
 			Bundle(NULL),
 			CanBecomeCharacter(false),
-			IsStackable(false)
+			IsStackable(false),
+			IsTradable(false)
 			{}
 		
 		CatalogItem(const CatalogItem& src) :
@@ -665,12 +703,12 @@ namespace ServerModels
 			RealCurrencyPrices(src.RealCurrencyPrices),
 			Tags(src.Tags),
 			CustomData(src.CustomData),
-			GrantedIfPlayerHas(src.GrantedIfPlayerHas),
 			Consumable(src.Consumable ? new CatalogItemConsumableInfo(*src.Consumable) : NULL),
 			Container(src.Container ? new CatalogItemContainerInfo(*src.Container) : NULL),
 			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL),
 			CanBecomeCharacter(src.CanBecomeCharacter),
-			IsStackable(src.IsStackable)
+			IsStackable(src.IsStackable),
+			IsTradable(src.IsTradable)
 			{}
 			
 		CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -916,6 +954,53 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct FriendInfo : public PlayFabBaseModel
+    {
+		
+		std::string FriendPlayFabId;
+		std::string Username;
+		std::string TitleDisplayName;
+		std::list<std::string> Tags;
+		std::string CurrentMatchmakerLobbyId;
+		UserFacebookInfo* FacebookInfo;
+		UserSteamInfo* SteamInfo;
+		UserGameCenterInfo* GameCenterInfo;
+	
+        FriendInfo() :
+			PlayFabBaseModel(),
+			FriendPlayFabId(),
+			Username(),
+			TitleDisplayName(),
+			Tags(),
+			CurrentMatchmakerLobbyId(),
+			FacebookInfo(NULL),
+			SteamInfo(NULL),
+			GameCenterInfo(NULL)
+			{}
+		
+		FriendInfo(const FriendInfo& src) :
+			PlayFabBaseModel(),
+			FriendPlayFabId(src.FriendPlayFabId),
+			Username(src.Username),
+			TitleDisplayName(src.TitleDisplayName),
+			Tags(src.Tags),
+			CurrentMatchmakerLobbyId(src.CurrentMatchmakerLobbyId),
+			FacebookInfo(src.FacebookInfo ? new UserFacebookInfo(*src.FacebookInfo) : NULL),
+			SteamInfo(src.SteamInfo ? new UserSteamInfo(*src.SteamInfo) : NULL),
+			GameCenterInfo(src.GameCenterInfo ? new UserGameCenterInfo(*src.GameCenterInfo) : NULL)
+			{}
+			
+		FriendInfo(const rapidjson::Value& obj) : FriendInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FriendInfo();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetCatalogItemsRequest : public PlayFabBaseModel
     {
 		
@@ -1121,9 +1206,14 @@ namespace ServerModels
 		OptionalTime PurchaseDate;
 		OptionalTime Expiration;
 		OptionalInt32 RemainingUses;
+		OptionalInt32 UsesIncrementedBy;
 		std::string Annotation;
 		std::string CatalogVersion;
 		std::string BundleParent;
+		std::string DisplayName;
+		std::string UnitCurrency;
+		Uint32 UnitPrice;
+		std::list<std::string> BundleContents;
 		std::map<std::string, std::string> CustomData;
 	
         ItemInstance() :
@@ -1134,9 +1224,14 @@ namespace ServerModels
 			PurchaseDate(),
 			Expiration(),
 			RemainingUses(),
+			UsesIncrementedBy(),
 			Annotation(),
 			CatalogVersion(),
 			BundleParent(),
+			DisplayName(),
+			UnitCurrency(),
+			UnitPrice(0),
+			BundleContents(),
 			CustomData()
 			{}
 		
@@ -1148,9 +1243,14 @@ namespace ServerModels
 			PurchaseDate(src.PurchaseDate),
 			Expiration(src.Expiration),
 			RemainingUses(src.RemainingUses),
+			UsesIncrementedBy(src.UsesIncrementedBy),
 			Annotation(src.Annotation),
 			CatalogVersion(src.CatalogVersion),
 			BundleParent(src.BundleParent),
+			DisplayName(src.DisplayName),
+			UnitCurrency(src.UnitCurrency),
+			UnitPrice(src.UnitPrice),
+			BundleContents(src.BundleContents),
 			CustomData(src.CustomData)
 			{}
 			
@@ -1366,6 +1466,64 @@ namespace ServerModels
         }
 		
 		~GetContentDownloadUrlResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetFriendsListRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		OptionalBool IncludeSteamFriends;
+		OptionalBool IncludeFacebookFriends;
+	
+        GetFriendsListRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			IncludeSteamFriends(),
+			IncludeFacebookFriends()
+			{}
+		
+		GetFriendsListRequest(const GetFriendsListRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			IncludeSteamFriends(src.IncludeSteamFriends),
+			IncludeFacebookFriends(src.IncludeFacebookFriends)
+			{}
+			
+		GetFriendsListRequest(const rapidjson::Value& obj) : GetFriendsListRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetFriendsListRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetFriendsListResult : public PlayFabBaseModel
+    {
+		
+		std::list<FriendInfo> Friends;
+	
+        GetFriendsListResult() :
+			PlayFabBaseModel(),
+			Friends()
+			{}
+		
+		GetFriendsListResult(const GetFriendsListResult& src) :
+			PlayFabBaseModel(),
+			Friends(src.Friends)
+			{}
+			
+		GetFriendsListResult(const rapidjson::Value& obj) : GetFriendsListResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetFriendsListResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -1964,18 +2122,15 @@ namespace ServerModels
     {
 		
 		std::string PlayFabId;
-		std::string CatalogVersion;
 	
         GetUserInventoryRequest() :
 			PlayFabBaseModel(),
-			PlayFabId(),
-			CatalogVersion()
+			PlayFabId()
 			{}
 		
 		GetUserInventoryRequest(const GetUserInventoryRequest& src) :
 			PlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			CatalogVersion(src.CatalogVersion)
+			PlayFabId(src.PlayFabId)
 			{}
 			
 		GetUserInventoryRequest(const rapidjson::Value& obj) : GetUserInventoryRequest()
@@ -2163,6 +2318,83 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GrantedItemInstance : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string CharacterId;
+		bool Result;
+		std::string ItemId;
+		std::string ItemInstanceId;
+		std::string ItemClass;
+		OptionalTime PurchaseDate;
+		OptionalTime Expiration;
+		OptionalInt32 RemainingUses;
+		OptionalInt32 UsesIncrementedBy;
+		std::string Annotation;
+		std::string CatalogVersion;
+		std::string BundleParent;
+		std::string DisplayName;
+		std::string UnitCurrency;
+		Uint32 UnitPrice;
+		std::list<std::string> BundleContents;
+		std::map<std::string, std::string> CustomData;
+	
+        GrantedItemInstance() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			Result(false),
+			ItemId(),
+			ItemInstanceId(),
+			ItemClass(),
+			PurchaseDate(),
+			Expiration(),
+			RemainingUses(),
+			UsesIncrementedBy(),
+			Annotation(),
+			CatalogVersion(),
+			BundleParent(),
+			DisplayName(),
+			UnitCurrency(),
+			UnitPrice(0),
+			BundleContents(),
+			CustomData()
+			{}
+		
+		GrantedItemInstance(const GrantedItemInstance& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			Result(src.Result),
+			ItemId(src.ItemId),
+			ItemInstanceId(src.ItemInstanceId),
+			ItemClass(src.ItemClass),
+			PurchaseDate(src.PurchaseDate),
+			Expiration(src.Expiration),
+			RemainingUses(src.RemainingUses),
+			UsesIncrementedBy(src.UsesIncrementedBy),
+			Annotation(src.Annotation),
+			CatalogVersion(src.CatalogVersion),
+			BundleParent(src.BundleParent),
+			DisplayName(src.DisplayName),
+			UnitCurrency(src.UnitCurrency),
+			UnitPrice(src.UnitPrice),
+			BundleContents(src.BundleContents),
+			CustomData(src.CustomData)
+			{}
+			
+		GrantedItemInstance(const rapidjson::Value& obj) : GrantedItemInstance()
+        {
+            readFromValue(obj);
+        }
+		
+		~GrantedItemInstance();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GrantItemsToCharacterRequest : public PlayFabBaseModel
     {
 		
@@ -2201,51 +2433,10 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	struct ItemGrantResult : public PlayFabBaseModel
-    {
-		
-		std::string PlayFabId;
-		std::string ItemId;
-		std::string ItemInstanceId;
-		std::string Annotation;
-		bool Result;
-		std::string CharacterId;
-	
-        ItemGrantResult() :
-			PlayFabBaseModel(),
-			PlayFabId(),
-			ItemId(),
-			ItemInstanceId(),
-			Annotation(),
-			Result(false),
-			CharacterId()
-			{}
-		
-		ItemGrantResult(const ItemGrantResult& src) :
-			PlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			ItemId(src.ItemId),
-			ItemInstanceId(src.ItemInstanceId),
-			Annotation(src.Annotation),
-			Result(src.Result),
-			CharacterId(src.CharacterId)
-			{}
-			
-		ItemGrantResult(const rapidjson::Value& obj) : ItemGrantResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~ItemGrantResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
 	struct GrantItemsToCharacterResult : public PlayFabBaseModel
     {
 		
-		std::list<ItemGrantResult> ItemGrantResults;
+		std::list<GrantedItemInstance> ItemGrantResults;
 	
         GrantItemsToCharacterResult() :
 			PlayFabBaseModel(),
@@ -2306,7 +2497,7 @@ namespace ServerModels
 	struct GrantItemsToUserResult : public PlayFabBaseModel
     {
 		
-		std::list<ItemGrantResult> ItemGrantResults;
+		std::list<GrantedItemInstance> ItemGrantResults;
 	
         GrantItemsToUserResult() :
 			PlayFabBaseModel(),
@@ -2396,7 +2587,7 @@ namespace ServerModels
 	struct GrantItemsToUsersResult : public PlayFabBaseModel
     {
 		
-		std::list<ItemGrantResult> ItemGrantResults;
+		std::list<GrantedItemInstance> ItemGrantResults;
 	
         GrantItemsToUsersResult() :
 			PlayFabBaseModel(),
