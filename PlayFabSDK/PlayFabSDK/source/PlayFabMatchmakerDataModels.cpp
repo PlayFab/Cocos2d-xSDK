@@ -88,11 +88,28 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 	
 	if(RemainingUses.notNull()) { writer.String("RemainingUses"); writer.Int(RemainingUses); }
 	
+	if(UsesIncrementedBy.notNull()) { writer.String("UsesIncrementedBy"); writer.Int(UsesIncrementedBy); }
+	
 	if(Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
 	
 	if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
 	
 	if(BundleParent.length() > 0) { writer.String("BundleParent"); writer.String(BundleParent.c_str()); }
+	
+	if(DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
+	
+	if(UnitCurrency.length() > 0) { writer.String("UnitCurrency"); writer.String(UnitCurrency.c_str()); }
+	
+	writer.String("UnitPrice"); writer.Uint(UnitPrice);
+	
+	if(!BundleContents.empty()) {
+	writer.String("BundleContents");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = BundleContents.begin(); iter != BundleContents.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	 }
 	
 	if(!CustomData.empty()) {
 	writer.String("CustomData");
@@ -128,6 +145,9 @@ bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 	const Value::Member* RemainingUses_member = obj.FindMember("RemainingUses");
 	if (RemainingUses_member != NULL) RemainingUses = RemainingUses_member->value.GetInt();
 	
+	const Value::Member* UsesIncrementedBy_member = obj.FindMember("UsesIncrementedBy");
+	if (UsesIncrementedBy_member != NULL) UsesIncrementedBy = UsesIncrementedBy_member->value.GetInt();
+	
 	const Value::Member* Annotation_member = obj.FindMember("Annotation");
 	if (Annotation_member != NULL) Annotation = Annotation_member->value.GetString();
 	
@@ -136,6 +156,23 @@ bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 	
 	const Value::Member* BundleParent_member = obj.FindMember("BundleParent");
 	if (BundleParent_member != NULL) BundleParent = BundleParent_member->value.GetString();
+	
+	const Value::Member* DisplayName_member = obj.FindMember("DisplayName");
+	if (DisplayName_member != NULL) DisplayName = DisplayName_member->value.GetString();
+	
+	const Value::Member* UnitCurrency_member = obj.FindMember("UnitCurrency");
+	if (UnitCurrency_member != NULL) UnitCurrency = UnitCurrency_member->value.GetString();
+	
+	const Value::Member* UnitPrice_member = obj.FindMember("UnitPrice");
+	if (UnitPrice_member != NULL) UnitPrice = UnitPrice_member->value.GetUint();
+	
+	const Value::Member* BundleContents_member = obj.FindMember("BundleContents");
+	if (BundleContents_member != NULL) {
+		const rapidjson::Value& memberList = BundleContents_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			BundleContents.push_back(memberList[i].GetString());
+		}
+	}
 	
 	const Value::Member* CustomData_member = obj.FindMember("CustomData");
 	if (CustomData_member != NULL) {
