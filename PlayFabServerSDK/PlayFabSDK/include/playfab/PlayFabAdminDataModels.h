@@ -416,12 +416,12 @@ namespace AdminModels
 		std::map<std::string, Uint32> RealCurrencyPrices;
 		std::list<std::string> Tags;
 		std::string CustomData;
-		std::list<std::string> GrantedIfPlayerHas;
 		CatalogItemConsumableInfo* Consumable;
 		CatalogItemContainerInfo* Container;
 		CatalogItemBundleInfo* Bundle;
 		bool CanBecomeCharacter;
 		bool IsStackable;
+		bool IsTradable;
 	
         CatalogItem() :
 			PlayFabBaseModel(),
@@ -434,12 +434,12 @@ namespace AdminModels
 			RealCurrencyPrices(),
 			Tags(),
 			CustomData(),
-			GrantedIfPlayerHas(),
 			Consumable(NULL),
 			Container(NULL),
 			Bundle(NULL),
 			CanBecomeCharacter(false),
-			IsStackable(false)
+			IsStackable(false),
+			IsTradable(false)
 			{}
 		
 		CatalogItem(const CatalogItem& src) :
@@ -453,12 +453,12 @@ namespace AdminModels
 			RealCurrencyPrices(src.RealCurrencyPrices),
 			Tags(src.Tags),
 			CustomData(src.CustomData),
-			GrantedIfPlayerHas(src.GrantedIfPlayerHas),
 			Consumable(src.Consumable ? new CatalogItemConsumableInfo(*src.Consumable) : NULL),
 			Container(src.Container ? new CatalogItemContainerInfo(*src.Container) : NULL),
 			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL),
 			CanBecomeCharacter(src.CanBecomeCharacter),
-			IsStackable(src.IsStackable)
+			IsStackable(src.IsStackable),
+			IsTradable(src.IsTradable)
 			{}
 			
 		CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -1189,19 +1189,67 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	enum ResultTableNodeType
+	{
+		ResultTableNodeTypeItemId,
+		ResultTableNodeTypeTableId
+	};
+	
+	void writeResultTableNodeTypeEnumJSON(ResultTableNodeType enumVal, PFStringJsonWriter& writer);
+	ResultTableNodeType readResultTableNodeTypeFromValue(const rapidjson::Value& obj);
+	
+	
+	struct ResultTableNode : public PlayFabBaseModel
+    {
+		
+		ResultTableNodeType ResultItemType;
+		std::string ResultItem;
+		Int32 Weight;
+	
+        ResultTableNode() :
+			PlayFabBaseModel(),
+			ResultItemType(),
+			ResultItem(),
+			Weight(0)
+			{}
+		
+		ResultTableNode(const ResultTableNode& src) :
+			PlayFabBaseModel(),
+			ResultItemType(src.ResultItemType),
+			ResultItem(src.ResultItem),
+			Weight(src.Weight)
+			{}
+			
+		ResultTableNode(const rapidjson::Value& obj) : ResultTableNode()
+        {
+            readFromValue(obj);
+        }
+		
+		~ResultTableNode();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct RandomResultTableListing : public PlayFabBaseModel
     {
 		
 		std::string CatalogVersion;
+		std::string TableId;
+		std::list<ResultTableNode> Nodes;
 	
         RandomResultTableListing() :
 			PlayFabBaseModel(),
-			CatalogVersion()
+			CatalogVersion(),
+			TableId(),
+			Nodes()
 			{}
 		
 		RandomResultTableListing(const RandomResultTableListing& src) :
 			PlayFabBaseModel(),
-			CatalogVersion(src.CatalogVersion)
+			CatalogVersion(src.CatalogVersion),
+			TableId(src.TableId),
+			Nodes(src.Nodes)
 			{}
 			
 		RandomResultTableListing(const rapidjson::Value& obj) : RandomResultTableListing()
@@ -1615,18 +1663,15 @@ namespace AdminModels
     {
 		
 		std::string PlayFabId;
-		std::string CatalogVersion;
 	
         GetUserInventoryRequest() :
 			PlayFabBaseModel(),
-			PlayFabId(),
-			CatalogVersion()
+			PlayFabId()
 			{}
 		
 		GetUserInventoryRequest(const GetUserInventoryRequest& src) :
 			PlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			CatalogVersion(src.CatalogVersion)
+			PlayFabId(src.PlayFabId)
 			{}
 			
 		GetUserInventoryRequest(const rapidjson::Value& obj) : GetUserInventoryRequest()
@@ -1649,9 +1694,14 @@ namespace AdminModels
 		OptionalTime PurchaseDate;
 		OptionalTime Expiration;
 		OptionalInt32 RemainingUses;
+		OptionalInt32 UsesIncrementedBy;
 		std::string Annotation;
 		std::string CatalogVersion;
 		std::string BundleParent;
+		std::string DisplayName;
+		std::string UnitCurrency;
+		Uint32 UnitPrice;
+		std::list<std::string> BundleContents;
 		std::map<std::string, std::string> CustomData;
 	
         ItemInstance() :
@@ -1662,9 +1712,14 @@ namespace AdminModels
 			PurchaseDate(),
 			Expiration(),
 			RemainingUses(),
+			UsesIncrementedBy(),
 			Annotation(),
 			CatalogVersion(),
 			BundleParent(),
+			DisplayName(),
+			UnitCurrency(),
+			UnitPrice(0),
+			BundleContents(),
 			CustomData()
 			{}
 		
@@ -1676,9 +1731,14 @@ namespace AdminModels
 			PurchaseDate(src.PurchaseDate),
 			Expiration(src.Expiration),
 			RemainingUses(src.RemainingUses),
+			UsesIncrementedBy(src.UsesIncrementedBy),
 			Annotation(src.Annotation),
 			CatalogVersion(src.CatalogVersion),
 			BundleParent(src.BundleParent),
+			DisplayName(src.DisplayName),
+			UnitCurrency(src.UnitCurrency),
+			UnitPrice(src.UnitPrice),
+			BundleContents(src.BundleContents),
 			CustomData(src.CustomData)
 			{}
 			
@@ -1757,6 +1817,83 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GrantedItemInstance : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string CharacterId;
+		bool Result;
+		std::string ItemId;
+		std::string ItemInstanceId;
+		std::string ItemClass;
+		OptionalTime PurchaseDate;
+		OptionalTime Expiration;
+		OptionalInt32 RemainingUses;
+		OptionalInt32 UsesIncrementedBy;
+		std::string Annotation;
+		std::string CatalogVersion;
+		std::string BundleParent;
+		std::string DisplayName;
+		std::string UnitCurrency;
+		Uint32 UnitPrice;
+		std::list<std::string> BundleContents;
+		std::map<std::string, std::string> CustomData;
+	
+        GrantedItemInstance() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			Result(false),
+			ItemId(),
+			ItemInstanceId(),
+			ItemClass(),
+			PurchaseDate(),
+			Expiration(),
+			RemainingUses(),
+			UsesIncrementedBy(),
+			Annotation(),
+			CatalogVersion(),
+			BundleParent(),
+			DisplayName(),
+			UnitCurrency(),
+			UnitPrice(0),
+			BundleContents(),
+			CustomData()
+			{}
+		
+		GrantedItemInstance(const GrantedItemInstance& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			Result(src.Result),
+			ItemId(src.ItemId),
+			ItemInstanceId(src.ItemInstanceId),
+			ItemClass(src.ItemClass),
+			PurchaseDate(src.PurchaseDate),
+			Expiration(src.Expiration),
+			RemainingUses(src.RemainingUses),
+			UsesIncrementedBy(src.UsesIncrementedBy),
+			Annotation(src.Annotation),
+			CatalogVersion(src.CatalogVersion),
+			BundleParent(src.BundleParent),
+			DisplayName(src.DisplayName),
+			UnitCurrency(src.UnitCurrency),
+			UnitPrice(src.UnitPrice),
+			BundleContents(src.BundleContents),
+			CustomData(src.CustomData)
+			{}
+			
+		GrantedItemInstance(const rapidjson::Value& obj) : GrantedItemInstance()
+        {
+            readFromValue(obj);
+        }
+		
+		~GrantedItemInstance();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct ItemGrant : public PlayFabBaseModel
     {
 		
@@ -1821,51 +1958,10 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	struct ItemGrantResult : public PlayFabBaseModel
-    {
-		
-		std::string PlayFabId;
-		std::string ItemId;
-		std::string ItemInstanceId;
-		std::string Annotation;
-		bool Result;
-		std::string CharacterId;
-	
-        ItemGrantResult() :
-			PlayFabBaseModel(),
-			PlayFabId(),
-			ItemId(),
-			ItemInstanceId(),
-			Annotation(),
-			Result(false),
-			CharacterId()
-			{}
-		
-		ItemGrantResult(const ItemGrantResult& src) :
-			PlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			ItemId(src.ItemId),
-			ItemInstanceId(src.ItemInstanceId),
-			Annotation(src.Annotation),
-			Result(src.Result),
-			CharacterId(src.CharacterId)
-			{}
-			
-		ItemGrantResult(const rapidjson::Value& obj) : ItemGrantResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~ItemGrantResult();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
 	struct GrantItemsToUsersResult : public PlayFabBaseModel
     {
 		
-		std::list<ItemGrantResult> ItemGrantResults;
+		std::list<GrantedItemInstance> ItemGrantResults;
 	
         GrantItemsToUsersResult() :
 			PlayFabBaseModel(),
@@ -2466,48 +2562,6 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	enum ResultTableNodeType
-	{
-		ResultTableNodeTypeItemId,
-		ResultTableNodeTypeTableId
-	};
-	
-	void writeResultTableNodeTypeEnumJSON(ResultTableNodeType enumVal, PFStringJsonWriter& writer);
-	ResultTableNodeType readResultTableNodeTypeFromValue(const rapidjson::Value& obj);
-	
-	
-	struct ResultTableNode : public PlayFabBaseModel
-    {
-		
-		ResultTableNodeType ResultItemType;
-		std::string ResultItem;
-		Int32 Weight;
-	
-        ResultTableNode() :
-			PlayFabBaseModel(),
-			ResultItemType(),
-			ResultItem(),
-			Weight(0)
-			{}
-		
-		ResultTableNode(const ResultTableNode& src) :
-			PlayFabBaseModel(),
-			ResultItemType(src.ResultItemType),
-			ResultItem(src.ResultItem),
-			Weight(src.Weight)
-			{}
-			
-		ResultTableNode(const rapidjson::Value& obj) : ResultTableNode()
-        {
-            readFromValue(obj);
-        }
-		
-		~ResultTableNode();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
 	struct RandomResultTable : public PlayFabBaseModel
     {
 		
@@ -2581,6 +2635,58 @@ namespace AdminModels
         }
 		
 		~RemoveServerBuildResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ResetCharacterStatisticsRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string CharacterId;
+	
+        ResetCharacterStatisticsRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId()
+			{}
+		
+		ResetCharacterStatisticsRequest(const ResetCharacterStatisticsRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId)
+			{}
+			
+		ResetCharacterStatisticsRequest(const rapidjson::Value& obj) : ResetCharacterStatisticsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~ResetCharacterStatisticsRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ResetCharacterStatisticsResult : public PlayFabBaseModel
+    {
+		
+	
+        ResetCharacterStatisticsResult() :
+			PlayFabBaseModel()
+			{}
+		
+		ResetCharacterStatisticsResult(const ResetCharacterStatisticsResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		ResetCharacterStatisticsResult(const rapidjson::Value& obj) : ResetCharacterStatisticsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~ResetCharacterStatisticsResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
