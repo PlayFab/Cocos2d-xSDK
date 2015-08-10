@@ -179,7 +179,15 @@ namespace PlayFab
 		PlayFabErrorTradeInventoryItemDoesNotExist = 1172,
 		PlayFabErrorTradeInventoryItemIsConsumed = 1173,
 		PlayFabErrorTradeInventoryItemIsStackable = 1174,
-		PlayFabErrorTradeAcceptedItemsMismatch = 1175
+		PlayFabErrorTradeAcceptedItemsMismatch = 1175,
+		PlayFabErrorInvalidKongregateToken = 1176,
+		PlayFabErrorFeatureNotConfiguredForTitle = 1177,
+		PlayFabErrorNoMatchingCatalogItemForReceipt = 1178,
+		PlayFabErrorInvalidCurrencyCode = 1179,
+		PlayFabErrorNoRealMoneyPriceForCatalogItem = 1180,
+		PlayFabErrorTradeInventoryItemIsNotTradable = 1181,
+		PlayFabErrorTradeAcceptedCatalogItemIsNotTradable = 1182,
+		PlayFabErrorUsersAlreadyFriends = 1183
     };
 
     struct PlayFabError
