@@ -120,7 +120,9 @@ namespace PlayFab
         ~PlayFabClientAPI();
 
         IHttpRequester* GetRequester(bool relinquishOwnership = false);
-        void Update();
+        size_t Update();
+
+		bool IsClientLoggedIn();
 
         // ------------ Generated API calls
 		

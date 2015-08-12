@@ -51,12 +51,19 @@ IHttpRequester* PlayFabClientAPI::GetRequester(bool relinquishOwnership /* = fal
     return mHttpRequester;
 }
 
-void PlayFabClientAPI::Update()
+size_t PlayFabClientAPI::Update()
 {
     if(mHttpRequester != NULL)
     {
-        mHttpRequester->UpdateRequests();
+        return mHttpRequester->UpdateRequests();
     }
+
+	return 0;
+}
+
+bool PlayFabClientAPI::IsClientLoggedIn()
+{
+	return !mUserSessionTicket.empty();
 }
 
 

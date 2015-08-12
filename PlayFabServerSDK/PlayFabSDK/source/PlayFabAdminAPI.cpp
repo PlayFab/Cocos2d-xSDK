@@ -51,13 +51,17 @@ IHttpRequester* PlayFabAdminAPI::GetRequester(bool relinquishOwnership /* = fals
     return mHttpRequester;
 }
 
-void PlayFabAdminAPI::Update()
+size_t PlayFabAdminAPI::Update()
 {
     if(mHttpRequester != NULL)
     {
-        mHttpRequester->UpdateRequests();
+        return mHttpRequester->UpdateRequests();
     }
+
+	return 0;
 }
+
+
 
 
 void PlayFabAdminAPI::GetUserAccountInfo(

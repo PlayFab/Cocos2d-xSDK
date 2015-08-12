@@ -29,7 +29,9 @@ namespace PlayFab
         ~PlayFabMatchmakerAPI();
 
         IHttpRequester* GetRequester(bool relinquishOwnership = false);
-        void Update();
+        size_t Update();
+
+		
 
         // ------------ Generated API calls
 		

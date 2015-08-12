@@ -51,13 +51,17 @@ IHttpRequester* PlayFabMatchmakerAPI::GetRequester(bool relinquishOwnership /* =
     return mHttpRequester;
 }
 
-void PlayFabMatchmakerAPI::Update()
+size_t PlayFabMatchmakerAPI::Update()
 {
     if(mHttpRequester != NULL)
     {
-        mHttpRequester->UpdateRequests();
+        return mHttpRequester->UpdateRequests();
     }
+
+	return 0;
 }
+
+
 
 
 void PlayFabMatchmakerAPI::AuthUser(
