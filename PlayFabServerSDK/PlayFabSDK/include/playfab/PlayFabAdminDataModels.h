@@ -567,13 +567,168 @@ namespace AdminModels
 	
 	enum Currency
 	{
-		CurrencyUSD,
-		CurrencyGBP,
-		CurrencyEUR,
-		CurrencyRUB,
+		CurrencyAED,
+		CurrencyAFN,
+		CurrencyALL,
+		CurrencyAMD,
+		CurrencyANG,
+		CurrencyAOA,
+		CurrencyARS,
+		CurrencyAUD,
+		CurrencyAWG,
+		CurrencyAZN,
+		CurrencyBAM,
+		CurrencyBBD,
+		CurrencyBDT,
+		CurrencyBGN,
+		CurrencyBHD,
+		CurrencyBIF,
+		CurrencyBMD,
+		CurrencyBND,
+		CurrencyBOB,
 		CurrencyBRL,
-		CurrencyCIS,
-		CurrencyCAD
+		CurrencyBSD,
+		CurrencyBTN,
+		CurrencyBWP,
+		CurrencyBYR,
+		CurrencyBZD,
+		CurrencyCAD,
+		CurrencyCDF,
+		CurrencyCHF,
+		CurrencyCLP,
+		CurrencyCNY,
+		CurrencyCOP,
+		CurrencyCRC,
+		CurrencyCUC,
+		CurrencyCUP,
+		CurrencyCVE,
+		CurrencyCZK,
+		CurrencyDJF,
+		CurrencyDKK,
+		CurrencyDOP,
+		CurrencyDZD,
+		CurrencyEGP,
+		CurrencyERN,
+		CurrencyETB,
+		CurrencyEUR,
+		CurrencyFJD,
+		CurrencyFKP,
+		CurrencyGBP,
+		CurrencyGEL,
+		CurrencyGGP,
+		CurrencyGHS,
+		CurrencyGIP,
+		CurrencyGMD,
+		CurrencyGNF,
+		CurrencyGTQ,
+		CurrencyGYD,
+		CurrencyHKD,
+		CurrencyHNL,
+		CurrencyHRK,
+		CurrencyHTG,
+		CurrencyHUF,
+		CurrencyIDR,
+		CurrencyILS,
+		CurrencyIMP,
+		CurrencyINR,
+		CurrencyIQD,
+		CurrencyIRR,
+		CurrencyISK,
+		CurrencyJEP,
+		CurrencyJMD,
+		CurrencyJOD,
+		CurrencyJPY,
+		CurrencyKES,
+		CurrencyKGS,
+		CurrencyKHR,
+		CurrencyKMF,
+		CurrencyKPW,
+		CurrencyKRW,
+		CurrencyKWD,
+		CurrencyKYD,
+		CurrencyKZT,
+		CurrencyLAK,
+		CurrencyLBP,
+		CurrencyLKR,
+		CurrencyLRD,
+		CurrencyLSL,
+		CurrencyLYD,
+		CurrencyMAD,
+		CurrencyMDL,
+		CurrencyMGA,
+		CurrencyMKD,
+		CurrencyMMK,
+		CurrencyMNT,
+		CurrencyMOP,
+		CurrencyMRO,
+		CurrencyMUR,
+		CurrencyMVR,
+		CurrencyMWK,
+		CurrencyMXN,
+		CurrencyMYR,
+		CurrencyMZN,
+		CurrencyNAD,
+		CurrencyNGN,
+		CurrencyNIO,
+		CurrencyNOK,
+		CurrencyNPR,
+		CurrencyNZD,
+		CurrencyOMR,
+		CurrencyPAB,
+		CurrencyPEN,
+		CurrencyPGK,
+		CurrencyPHP,
+		CurrencyPKR,
+		CurrencyPLN,
+		CurrencyPYG,
+		CurrencyQAR,
+		CurrencyRON,
+		CurrencyRSD,
+		CurrencyRUB,
+		CurrencyRWF,
+		CurrencySAR,
+		CurrencySBD,
+		CurrencySCR,
+		CurrencySDG,
+		CurrencySEK,
+		CurrencySGD,
+		CurrencySHP,
+		CurrencySLL,
+		CurrencySOS,
+		CurrencySPL,
+		CurrencySRD,
+		CurrencySTD,
+		CurrencySVC,
+		CurrencySYP,
+		CurrencySZL,
+		CurrencyTHB,
+		CurrencyTJS,
+		CurrencyTMT,
+		CurrencyTND,
+		CurrencyTOP,
+		CurrencyTRY,
+		CurrencyTTD,
+		CurrencyTVD,
+		CurrencyTWD,
+		CurrencyTZS,
+		CurrencyUAH,
+		CurrencyUGX,
+		CurrencyUSD,
+		CurrencyUYU,
+		CurrencyUZS,
+		CurrencyVEF,
+		CurrencyVND,
+		CurrencyVUV,
+		CurrencyWST,
+		CurrencyXAF,
+		CurrencyXCD,
+		CurrencyXDR,
+		CurrencyXOF,
+		CurrencyXPF,
+		CurrencyYER,
+		CurrencyZAR,
+		CurrencyZMW,
+		CurrencyZWD
 	};
 	
 	void writeCurrencyEnumJSON(Currency enumVal, PFStringJsonWriter& writer);
@@ -601,6 +756,58 @@ namespace AdminModels
         }
 		
 		~DeleteContentRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct DeleteUsersRequest : public PlayFabBaseModel
+    {
+		
+		std::list<std::string> PlayFabIds;
+		std::string TitleId;
+	
+        DeleteUsersRequest() :
+			PlayFabBaseModel(),
+			PlayFabIds(),
+			TitleId()
+			{}
+		
+		DeleteUsersRequest(const DeleteUsersRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabIds(src.PlayFabIds),
+			TitleId(src.TitleId)
+			{}
+			
+		DeleteUsersRequest(const rapidjson::Value& obj) : DeleteUsersRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~DeleteUsersRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct DeleteUsersResult : public PlayFabBaseModel
+    {
+		
+	
+        DeleteUsersResult() :
+			PlayFabBaseModel()
+			{}
+		
+		DeleteUsersResult(const DeleteUsersResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		DeleteUsersResult(const rapidjson::Value& obj) : DeleteUsersResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~DeleteUsersResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -2131,7 +2338,8 @@ namespace AdminModels
 		UserOriginationLoadTest,
 		UserOriginationAndroid,
 		UserOriginationPSN,
-		UserOriginationGameCenter
+		UserOriginationGameCenter,
+		UserOriginationCustomId
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
@@ -2591,6 +2799,64 @@ namespace AdminModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct RefundPurchaseRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string OrderId;
+		std::string Reason;
+	
+        RefundPurchaseRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			OrderId(),
+			Reason()
+			{}
+		
+		RefundPurchaseRequest(const RefundPurchaseRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			OrderId(src.OrderId),
+			Reason(src.Reason)
+			{}
+			
+		RefundPurchaseRequest(const rapidjson::Value& obj) : RefundPurchaseRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~RefundPurchaseRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct RefundPurchaseResponse : public PlayFabBaseModel
+    {
+		
+		std::string PurchaseStatus;
+	
+        RefundPurchaseResponse() :
+			PlayFabBaseModel(),
+			PurchaseStatus()
+			{}
+		
+		RefundPurchaseResponse(const RefundPurchaseResponse& src) :
+			PlayFabBaseModel(),
+			PurchaseStatus(src.PurchaseStatus)
+			{}
+			
+		RefundPurchaseResponse(const rapidjson::Value& obj) : RefundPurchaseResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~RefundPurchaseResponse();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct RemoveServerBuildRequest : public PlayFabBaseModel
     {
 		
@@ -2791,6 +3057,78 @@ namespace AdminModels
         }
 		
 		~ResetUserStatisticsResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	enum ResolutionOutcome
+	{
+		ResolutionOutcomeRevoke,
+		ResolutionOutcomeReinstate,
+		ResolutionOutcomeManual
+	};
+	
+	void writeResolutionOutcomeEnumJSON(ResolutionOutcome enumVal, PFStringJsonWriter& writer);
+	ResolutionOutcome readResolutionOutcomeFromValue(const rapidjson::Value& obj);
+	
+	
+	struct ResolvePurchaseDisputeRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+		std::string OrderId;
+		std::string Reason;
+		ResolutionOutcome Outcome;
+	
+        ResolvePurchaseDisputeRequest() :
+			PlayFabBaseModel(),
+			PlayFabId(),
+			OrderId(),
+			Reason(),
+			Outcome()
+			{}
+		
+		ResolvePurchaseDisputeRequest(const ResolvePurchaseDisputeRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			OrderId(src.OrderId),
+			Reason(src.Reason),
+			Outcome(src.Outcome)
+			{}
+			
+		ResolvePurchaseDisputeRequest(const rapidjson::Value& obj) : ResolvePurchaseDisputeRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~ResolvePurchaseDisputeRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ResolvePurchaseDisputeResponse : public PlayFabBaseModel
+    {
+		
+		std::string PurchaseStatus;
+	
+        ResolvePurchaseDisputeResponse() :
+			PlayFabBaseModel(),
+			PurchaseStatus()
+			{}
+		
+		ResolvePurchaseDisputeResponse(const ResolvePurchaseDisputeResponse& src) :
+			PlayFabBaseModel(),
+			PurchaseStatus(src.PurchaseStatus)
+			{}
+			
+		ResolvePurchaseDisputeResponse(const rapidjson::Value& obj) : ResolvePurchaseDisputeResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~ResolvePurchaseDisputeResponse();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
