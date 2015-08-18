@@ -1002,13 +1002,168 @@ namespace ClientModels
 	
 	enum Currency
 	{
-		CurrencyUSD,
-		CurrencyGBP,
-		CurrencyEUR,
-		CurrencyRUB,
+		CurrencyAED,
+		CurrencyAFN,
+		CurrencyALL,
+		CurrencyAMD,
+		CurrencyANG,
+		CurrencyAOA,
+		CurrencyARS,
+		CurrencyAUD,
+		CurrencyAWG,
+		CurrencyAZN,
+		CurrencyBAM,
+		CurrencyBBD,
+		CurrencyBDT,
+		CurrencyBGN,
+		CurrencyBHD,
+		CurrencyBIF,
+		CurrencyBMD,
+		CurrencyBND,
+		CurrencyBOB,
 		CurrencyBRL,
-		CurrencyCIS,
-		CurrencyCAD
+		CurrencyBSD,
+		CurrencyBTN,
+		CurrencyBWP,
+		CurrencyBYR,
+		CurrencyBZD,
+		CurrencyCAD,
+		CurrencyCDF,
+		CurrencyCHF,
+		CurrencyCLP,
+		CurrencyCNY,
+		CurrencyCOP,
+		CurrencyCRC,
+		CurrencyCUC,
+		CurrencyCUP,
+		CurrencyCVE,
+		CurrencyCZK,
+		CurrencyDJF,
+		CurrencyDKK,
+		CurrencyDOP,
+		CurrencyDZD,
+		CurrencyEGP,
+		CurrencyERN,
+		CurrencyETB,
+		CurrencyEUR,
+		CurrencyFJD,
+		CurrencyFKP,
+		CurrencyGBP,
+		CurrencyGEL,
+		CurrencyGGP,
+		CurrencyGHS,
+		CurrencyGIP,
+		CurrencyGMD,
+		CurrencyGNF,
+		CurrencyGTQ,
+		CurrencyGYD,
+		CurrencyHKD,
+		CurrencyHNL,
+		CurrencyHRK,
+		CurrencyHTG,
+		CurrencyHUF,
+		CurrencyIDR,
+		CurrencyILS,
+		CurrencyIMP,
+		CurrencyINR,
+		CurrencyIQD,
+		CurrencyIRR,
+		CurrencyISK,
+		CurrencyJEP,
+		CurrencyJMD,
+		CurrencyJOD,
+		CurrencyJPY,
+		CurrencyKES,
+		CurrencyKGS,
+		CurrencyKHR,
+		CurrencyKMF,
+		CurrencyKPW,
+		CurrencyKRW,
+		CurrencyKWD,
+		CurrencyKYD,
+		CurrencyKZT,
+		CurrencyLAK,
+		CurrencyLBP,
+		CurrencyLKR,
+		CurrencyLRD,
+		CurrencyLSL,
+		CurrencyLYD,
+		CurrencyMAD,
+		CurrencyMDL,
+		CurrencyMGA,
+		CurrencyMKD,
+		CurrencyMMK,
+		CurrencyMNT,
+		CurrencyMOP,
+		CurrencyMRO,
+		CurrencyMUR,
+		CurrencyMVR,
+		CurrencyMWK,
+		CurrencyMXN,
+		CurrencyMYR,
+		CurrencyMZN,
+		CurrencyNAD,
+		CurrencyNGN,
+		CurrencyNIO,
+		CurrencyNOK,
+		CurrencyNPR,
+		CurrencyNZD,
+		CurrencyOMR,
+		CurrencyPAB,
+		CurrencyPEN,
+		CurrencyPGK,
+		CurrencyPHP,
+		CurrencyPKR,
+		CurrencyPLN,
+		CurrencyPYG,
+		CurrencyQAR,
+		CurrencyRON,
+		CurrencyRSD,
+		CurrencyRUB,
+		CurrencyRWF,
+		CurrencySAR,
+		CurrencySBD,
+		CurrencySCR,
+		CurrencySDG,
+		CurrencySEK,
+		CurrencySGD,
+		CurrencySHP,
+		CurrencySLL,
+		CurrencySOS,
+		CurrencySPL,
+		CurrencySRD,
+		CurrencySTD,
+		CurrencySVC,
+		CurrencySYP,
+		CurrencySZL,
+		CurrencyTHB,
+		CurrencyTJS,
+		CurrencyTMT,
+		CurrencyTND,
+		CurrencyTOP,
+		CurrencyTRY,
+		CurrencyTTD,
+		CurrencyTVD,
+		CurrencyTWD,
+		CurrencyTZS,
+		CurrencyUAH,
+		CurrencyUGX,
+		CurrencyUSD,
+		CurrencyUYU,
+		CurrencyUZS,
+		CurrencyVEF,
+		CurrencyVND,
+		CurrencyVUV,
+		CurrencyWST,
+		CurrencyXAF,
+		CurrencyXCD,
+		CurrencyXDR,
+		CurrencyXOF,
+		CurrencyXPF,
+		CurrencyYER,
+		CurrencyZAR,
+		CurrencyZMW,
+		CurrencyZWD
 	};
 	
 	void writeCurrencyEnumJSON(Currency enumVal, PFStringJsonWriter& writer);
@@ -1517,7 +1672,8 @@ namespace ClientModels
 		UserOriginationLoadTest,
 		UserOriginationAndroid,
 		UserOriginationPSN,
-		UserOriginationGameCenter
+		UserOriginationGameCenter,
+		UserOriginationCustomId
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
@@ -3827,6 +3983,55 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct LinkCustomIDRequest : public PlayFabBaseModel
+    {
+		
+		std::string CustomId;
+	
+        LinkCustomIDRequest() :
+			PlayFabBaseModel(),
+			CustomId()
+			{}
+		
+		LinkCustomIDRequest(const LinkCustomIDRequest& src) :
+			PlayFabBaseModel(),
+			CustomId(src.CustomId)
+			{}
+			
+		LinkCustomIDRequest(const rapidjson::Value& obj) : LinkCustomIDRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~LinkCustomIDRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct LinkCustomIDResult : public PlayFabBaseModel
+    {
+		
+	
+        LinkCustomIDResult() :
+			PlayFabBaseModel()
+			{}
+		
+		LinkCustomIDResult(const LinkCustomIDResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		LinkCustomIDResult(const rapidjson::Value& obj) : LinkCustomIDResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~LinkCustomIDResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct LinkFacebookAccountRequest : public PlayFabBaseModel
     {
 		
@@ -4313,6 +4518,38 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct LoginWithCustomIDRequest : public PlayFabBaseModel
+    {
+		
+		std::string TitleId;
+		std::string CustomId;
+		OptionalBool CreateAccount;
+	
+        LoginWithCustomIDRequest() :
+			PlayFabBaseModel(),
+			TitleId(),
+			CustomId(),
+			CreateAccount()
+			{}
+		
+		LoginWithCustomIDRequest(const LoginWithCustomIDRequest& src) :
+			PlayFabBaseModel(),
+			TitleId(src.TitleId),
+			CustomId(src.CustomId),
+			CreateAccount(src.CreateAccount)
+			{}
+			
+		LoginWithCustomIDRequest(const rapidjson::Value& obj) : LoginWithCustomIDRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~LoginWithCustomIDRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct LoginWithEmailAddressRequest : public PlayFabBaseModel
     {
 		
@@ -4785,19 +5022,22 @@ namespace ClientModels
 		std::string OrderId;
 		std::string ProviderName;
 		std::string Currency;
+		std::string ProviderTransactionId;
 	
         PayForPurchaseRequest() :
 			PlayFabBaseModel(),
 			OrderId(),
 			ProviderName(),
-			Currency()
+			Currency(),
+			ProviderTransactionId()
 			{}
 		
 		PayForPurchaseRequest(const PayForPurchaseRequest& src) :
 			PlayFabBaseModel(),
 			OrderId(src.OrderId),
 			ProviderName(src.ProviderName),
-			Currency(src.Currency)
+			Currency(src.Currency),
+			ProviderTransactionId(src.ProviderTransactionId)
 			{}
 			
 		PayForPurchaseRequest(const rapidjson::Value& obj) : PayForPurchaseRequest()
@@ -4818,6 +5058,7 @@ namespace ClientModels
 		TransactionStatusApproved,
 		TransactionStatusSucceeded,
 		TransactionStatusFailedByProvider,
+		TransactionStatusDisputePending,
 		TransactionStatusRefundPending,
 		TransactionStatusRefunded,
 		TransactionStatusRefundFailed,
@@ -5135,6 +5376,8 @@ namespace ClientModels
 		std::string Username;
 		std::string Email;
 		std::string Password;
+		OptionalBool RequireBothUsernameAndEmail;
+		std::string DisplayName;
 		std::string Origination;
 	
         RegisterPlayFabUserRequest() :
@@ -5143,6 +5386,8 @@ namespace ClientModels
 			Username(),
 			Email(),
 			Password(),
+			RequireBothUsernameAndEmail(),
+			DisplayName(),
 			Origination()
 			{}
 		
@@ -5152,6 +5397,8 @@ namespace ClientModels
 			Username(src.Username),
 			Email(src.Email),
 			Password(src.Password),
+			RequireBothUsernameAndEmail(src.RequireBothUsernameAndEmail),
+			DisplayName(src.DisplayName),
 			Origination(src.Origination)
 			{}
 			
@@ -5811,6 +6058,55 @@ namespace ClientModels
         }
 		
 		~UnlinkAndroidDeviceIDResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UnlinkCustomIDRequest : public PlayFabBaseModel
+    {
+		
+		std::string CustomId;
+	
+        UnlinkCustomIDRequest() :
+			PlayFabBaseModel(),
+			CustomId()
+			{}
+		
+		UnlinkCustomIDRequest(const UnlinkCustomIDRequest& src) :
+			PlayFabBaseModel(),
+			CustomId(src.CustomId)
+			{}
+			
+		UnlinkCustomIDRequest(const rapidjson::Value& obj) : UnlinkCustomIDRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~UnlinkCustomIDRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct UnlinkCustomIDResult : public PlayFabBaseModel
+    {
+		
+	
+        UnlinkCustomIDResult() :
+			PlayFabBaseModel()
+			{}
+		
+		UnlinkCustomIDResult(const UnlinkCustomIDResult& src) :
+			PlayFabBaseModel()
+			{}
+			
+		UnlinkCustomIDResult(const rapidjson::Value& obj) : UnlinkCustomIDResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~UnlinkCustomIDResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);
@@ -6540,17 +6836,23 @@ namespace ClientModels
 		
 		std::string ReceiptJson;
 		std::string Signature;
+		std::string CurrencyCode;
+		OptionalUint32 PurchasePrice;
 	
         ValidateGooglePlayPurchaseRequest() :
 			PlayFabBaseModel(),
 			ReceiptJson(),
-			Signature()
+			Signature(),
+			CurrencyCode(),
+			PurchasePrice()
 			{}
 		
 		ValidateGooglePlayPurchaseRequest(const ValidateGooglePlayPurchaseRequest& src) :
 			PlayFabBaseModel(),
 			ReceiptJson(src.ReceiptJson),
-			Signature(src.Signature)
+			Signature(src.Signature),
+			CurrencyCode(src.CurrencyCode),
+			PurchasePrice(src.PurchasePrice)
 			{}
 			
 		ValidateGooglePlayPurchaseRequest(const rapidjson::Value& obj) : ValidateGooglePlayPurchaseRequest()

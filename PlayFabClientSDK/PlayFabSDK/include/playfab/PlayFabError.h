@@ -187,7 +187,9 @@ namespace PlayFab
 		PlayFabErrorNoRealMoneyPriceForCatalogItem = 1180,
 		PlayFabErrorTradeInventoryItemIsNotTradable = 1181,
 		PlayFabErrorTradeAcceptedCatalogItemIsNotTradable = 1182,
-		PlayFabErrorUsersAlreadyFriends = 1183
+		PlayFabErrorUsersAlreadyFriends = 1183,
+		PlayFabErrorLinkedIdentifierAlreadyClaimed = 1184,
+		PlayFabErrorCustomIdNotLinked = 1185
     };
 
     struct PlayFabError

@@ -21,6 +21,7 @@ namespace PlayFab
 		typedef void(*ResetUsersCallback)(AdminModels::BlankResult& result, void* userData);
 		typedef void(*SendAccountRecoveryEmailCallback)(AdminModels::SendAccountRecoveryEmailResult& result, void* userData);
 		typedef void(*UpdateUserTitleDisplayNameCallback)(AdminModels::UpdateUserTitleDisplayNameResult& result, void* userData);
+		typedef void(*DeleteUsersCallback)(AdminModels::DeleteUsersResult& result, void* userData);
 		typedef void(*GetDataReportCallback)(AdminModels::GetDataReportResult& result, void* userData);
 		typedef void(*GetUserDataCallback)(AdminModels::GetUserDataResult& result, void* userData);
 		typedef void(*GetUserInternalDataCallback)(AdminModels::GetUserDataResult& result, void* userData);
@@ -93,6 +94,8 @@ namespace PlayFab
 		void SendAccountRecoveryEmail(AdminModels::SendAccountRecoveryEmailRequest& request, SendAccountRecoveryEmailCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void UpdateUserTitleDisplayName(AdminModels::UpdateUserTitleDisplayNameRequest& request, UpdateUserTitleDisplayNameCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void DeleteUsers(AdminModels::DeleteUsersRequest& request, DeleteUsersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetDataReport(AdminModels::GetDataReportRequest& request, GetDataReportCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -210,6 +213,8 @@ namespace PlayFab
 		static void OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetDataReportResult(int httpStatus, HttpRequest* request, void* userData);
 		
