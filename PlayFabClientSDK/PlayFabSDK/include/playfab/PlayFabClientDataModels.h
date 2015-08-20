@@ -1188,14 +1188,14 @@ namespace ClientModels
 	struct CurrentGamesRequest : public PlayFabBaseModel
     {
 		
-		Boxed<Region> Region;
+		Boxed<Region> pfRegion;
 		std::string BuildVersion;
 		std::string GameMode;
 		std::string StatisticName;
 	
         CurrentGamesRequest() :
 			PlayFabBaseModel(),
-			Region(),
+			pfRegion(),
 			BuildVersion(),
 			GameMode(),
 			StatisticName()
@@ -1203,7 +1203,7 @@ namespace ClientModels
 		
 		CurrentGamesRequest(const CurrentGamesRequest& src) :
 			PlayFabBaseModel(),
-			Region(src.Region),
+			pfRegion(src.pfRegion),
 			BuildVersion(src.BuildVersion),
 			GameMode(src.GameMode),
 			StatisticName(src.StatisticName)
@@ -1223,7 +1223,7 @@ namespace ClientModels
 	struct GameInfo : public PlayFabBaseModel
     {
 		
-		Boxed<Region> Region;
+		Boxed<Region> pfRegion;
 		std::string LobbyID;
 		std::string BuildVersion;
 		std::string GameMode;
@@ -1235,7 +1235,7 @@ namespace ClientModels
 	
         GameInfo() :
 			PlayFabBaseModel(),
-			Region(),
+			pfRegion(),
 			LobbyID(),
 			BuildVersion(),
 			GameMode(),
@@ -1248,7 +1248,7 @@ namespace ClientModels
 		
 		GameInfo(const GameInfo& src) :
 			PlayFabBaseModel(),
-			Region(src.Region),
+			pfRegion(src.pfRegion),
 			LobbyID(src.LobbyID),
 			BuildVersion(src.BuildVersion),
 			GameMode(src.GameMode),
@@ -1565,14 +1565,14 @@ namespace ClientModels
 	struct RegionInfo : public PlayFabBaseModel
     {
 		
-		Boxed<Region> Region;
+		Boxed<Region> pfRegion;
 		std::string Name;
 		bool Available;
 		std::string PingUrl;
 	
         RegionInfo() :
 			PlayFabBaseModel(),
-			Region(),
+			pfRegion(),
 			Name(),
 			Available(false),
 			PingUrl()
@@ -1580,7 +1580,7 @@ namespace ClientModels
 		
 		RegionInfo(const RegionInfo& src) :
 			PlayFabBaseModel(),
-			Region(src.Region),
+			pfRegion(src.pfRegion),
 			Name(src.Name),
 			Available(src.Available),
 			PingUrl(src.PingUrl)
@@ -4828,7 +4828,7 @@ namespace ClientModels
     {
 		
 		std::string BuildVersion;
-		Boxed<Region> Region;
+		Boxed<Region> pfRegion;
 		std::string GameMode;
 		std::string LobbyId;
 		std::string StatisticName;
@@ -4838,7 +4838,7 @@ namespace ClientModels
         MatchmakeRequest() :
 			PlayFabBaseModel(),
 			BuildVersion(),
-			Region(),
+			pfRegion(),
 			GameMode(),
 			LobbyId(),
 			StatisticName(),
@@ -4849,7 +4849,7 @@ namespace ClientModels
 		MatchmakeRequest(const MatchmakeRequest& src) :
 			PlayFabBaseModel(),
 			BuildVersion(src.BuildVersion),
-			Region(src.Region),
+			pfRegion(src.pfRegion),
 			GameMode(src.GameMode),
 			LobbyId(src.LobbyId),
 			StatisticName(src.StatisticName),
@@ -5840,7 +5840,7 @@ namespace ClientModels
     {
 		
 		std::string BuildVersion;
-		Region Region;
+		Region pfRegion;
 		std::string GameMode;
 		std::string StatisticName;
 		std::string CharacterId;
@@ -5849,7 +5849,7 @@ namespace ClientModels
         StartGameRequest() :
 			PlayFabBaseModel(),
 			BuildVersion(),
-			Region(),
+			pfRegion(),
 			GameMode(),
 			StatisticName(),
 			CharacterId(),
@@ -5859,7 +5859,7 @@ namespace ClientModels
 		StartGameRequest(const StartGameRequest& src) :
 			PlayFabBaseModel(),
 			BuildVersion(src.BuildVersion),
-			Region(src.Region),
+			pfRegion(src.pfRegion),
 			GameMode(src.GameMode),
 			StatisticName(src.StatisticName),
 			CharacterId(src.CharacterId),

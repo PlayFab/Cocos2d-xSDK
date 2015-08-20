@@ -1869,7 +1869,7 @@ void CurrentGamesRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
-    if(Region.notNull()) { writer.String("Region"); writeRegionEnumJSON(Region, writer); }
+    if(pfRegion.notNull()) { writer.String("Region"); writeRegionEnumJSON(pfRegion, writer); }
     
     if(BuildVersion.length() > 0) { writer.String("BuildVersion"); writer.String(BuildVersion.c_str()); }
     
@@ -1885,7 +1885,7 @@ bool CurrentGamesRequest::readFromValue(const rapidjson::Value& obj)
 {
     
     const Value::Member* Region_member = obj.FindMember("Region");
-	if (Region_member != NULL && !Region_member->value.IsNull()) Region = readRegionFromValue(Region_member->value);
+	if (Region_member != NULL && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
     
     const Value::Member* BuildVersion_member = obj.FindMember("BuildVersion");
 	if (BuildVersion_member != NULL && !BuildVersion_member->value.IsNull()) BuildVersion = BuildVersion_member->value.GetString();
@@ -1911,7 +1911,7 @@ void GameInfo::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
-    if(Region.notNull()) { writer.String("Region"); writeRegionEnumJSON(Region, writer); }
+    if(pfRegion.notNull()) { writer.String("Region"); writeRegionEnumJSON(pfRegion, writer); }
     
     if(LobbyID.length() > 0) { writer.String("LobbyID"); writer.String(LobbyID.c_str()); }
     
@@ -1944,7 +1944,7 @@ bool GameInfo::readFromValue(const rapidjson::Value& obj)
 {
     
     const Value::Member* Region_member = obj.FindMember("Region");
-	if (Region_member != NULL && !Region_member->value.IsNull()) Region = readRegionFromValue(Region_member->value);
+	if (Region_member != NULL && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
     
     const Value::Member* LobbyID_member = obj.FindMember("LobbyID");
 	if (LobbyID_member != NULL && !LobbyID_member->value.IsNull()) LobbyID = LobbyID_member->value.GetString();
@@ -2370,7 +2370,7 @@ void RegionInfo::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
-    if(Region.notNull()) { writer.String("Region"); writeRegionEnumJSON(Region, writer); }
+    if(pfRegion.notNull()) { writer.String("Region"); writeRegionEnumJSON(pfRegion, writer); }
     
     if(Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
     
@@ -2386,7 +2386,7 @@ bool RegionInfo::readFromValue(const rapidjson::Value& obj)
 {
     
     const Value::Member* Region_member = obj.FindMember("Region");
-	if (Region_member != NULL && !Region_member->value.IsNull()) Region = readRegionFromValue(Region_member->value);
+	if (Region_member != NULL && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
     
     const Value::Member* Name_member = obj.FindMember("Name");
 	if (Name_member != NULL && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
@@ -6654,7 +6654,7 @@ void MatchmakeRequest::writeJSON(PFStringJsonWriter& writer)
     
     if(BuildVersion.length() > 0) { writer.String("BuildVersion"); writer.String(BuildVersion.c_str()); }
     
-    if(Region.notNull()) { writer.String("Region"); writeRegionEnumJSON(Region, writer); }
+    if(pfRegion.notNull()) { writer.String("Region"); writeRegionEnumJSON(pfRegion, writer); }
     
     if(GameMode.length() > 0) { writer.String("GameMode"); writer.String(GameMode.c_str()); }
     
@@ -6677,7 +6677,7 @@ bool MatchmakeRequest::readFromValue(const rapidjson::Value& obj)
 	if (BuildVersion_member != NULL && !BuildVersion_member->value.IsNull()) BuildVersion = BuildVersion_member->value.GetString();
     
     const Value::Member* Region_member = obj.FindMember("Region");
-	if (Region_member != NULL && !Region_member->value.IsNull()) Region = readRegionFromValue(Region_member->value);
+	if (Region_member != NULL && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
     
     const Value::Member* GameMode_member = obj.FindMember("GameMode");
 	if (GameMode_member != NULL && !GameMode_member->value.IsNull()) GameMode = GameMode_member->value.GetString();
@@ -7970,7 +7970,7 @@ void StartGameRequest::writeJSON(PFStringJsonWriter& writer)
     
     writer.String("BuildVersion"); writer.String(BuildVersion.c_str());
     
-    writer.String("Region"); writeRegionEnumJSON(Region, writer);
+    writer.String("Region"); writeRegionEnumJSON(pfRegion, writer);
     
     writer.String("GameMode"); writer.String(GameMode.c_str());
     
@@ -7991,7 +7991,7 @@ bool StartGameRequest::readFromValue(const rapidjson::Value& obj)
 	if (BuildVersion_member != NULL && !BuildVersion_member->value.IsNull()) BuildVersion = BuildVersion_member->value.GetString();
     
     const Value::Member* Region_member = obj.FindMember("Region");
-	if (Region_member != NULL && !Region_member->value.IsNull()) Region = readRegionFromValue(Region_member->value);
+	if (Region_member != NULL && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
     
     const Value::Member* GameMode_member = obj.FindMember("GameMode");
 	if (GameMode_member != NULL && !GameMode_member->value.IsNull()) GameMode = GameMode_member->value.GetString();

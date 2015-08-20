@@ -1222,7 +1222,7 @@ namespace AdminModels
 		OptionalTime EndTime;
 		std::string Mode;
 		std::string BuildVersion;
-		Boxed<Region> Region;
+		Boxed<Region> pfRegion;
 		std::list<std::string> Players;
 		std::string ServerAddress;
 		Uint32 ServerPort;
@@ -1235,7 +1235,7 @@ namespace AdminModels
 			EndTime(),
 			Mode(),
 			BuildVersion(),
-			Region(),
+			pfRegion(),
 			Players(),
 			ServerAddress(),
 			ServerPort(0)
@@ -1249,7 +1249,7 @@ namespace AdminModels
 			EndTime(src.EndTime),
 			Mode(src.Mode),
 			BuildVersion(src.BuildVersion),
-			Region(src.Region),
+			pfRegion(src.pfRegion),
 			Players(src.Players),
 			ServerAddress(src.ServerAddress),
 			ServerPort(src.ServerPort)

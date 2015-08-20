@@ -1807,7 +1807,7 @@ void GetMatchmakerGameInfoResult::writeJSON(PFStringJsonWriter& writer)
     
     if(BuildVersion.length() > 0) { writer.String("BuildVersion"); writer.String(BuildVersion.c_str()); }
     
-    if(Region.notNull()) { writer.String("Region"); writeRegionEnumJSON(Region, writer); }
+    if(pfRegion.notNull()) { writer.String("Region"); writeRegionEnumJSON(pfRegion, writer); }
     
     if(!Players.empty()) {
 	writer.String("Players");
@@ -1848,7 +1848,7 @@ bool GetMatchmakerGameInfoResult::readFromValue(const rapidjson::Value& obj)
 	if (BuildVersion_member != NULL && !BuildVersion_member->value.IsNull()) BuildVersion = BuildVersion_member->value.GetString();
     
     const Value::Member* Region_member = obj.FindMember("Region");
-	if (Region_member != NULL && !Region_member->value.IsNull()) Region = readRegionFromValue(Region_member->value);
+	if (Region_member != NULL && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
     
     const Value::Member* Players_member = obj.FindMember("Players");
 	if (Players_member != NULL) {
