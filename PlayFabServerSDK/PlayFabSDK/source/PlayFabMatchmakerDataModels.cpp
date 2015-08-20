@@ -345,7 +345,7 @@ void StartGameRequest::writeJSON(PFStringJsonWriter& writer)
     
     writer.String("Build"); writer.String(Build.c_str());
     
-    writer.String("Region"); writeRegionEnumJSON(Region, writer);
+    writer.String("Region"); writeRegionEnumJSON(pfRegion, writer);
     
     writer.String("GameMode"); writer.String(GameMode.c_str());
     
@@ -364,7 +364,7 @@ bool StartGameRequest::readFromValue(const rapidjson::Value& obj)
 	if (Build_member != NULL && !Build_member->value.IsNull()) Build = Build_member->value.GetString();
     
     const Value::Member* Region_member = obj.FindMember("Region");
-	if (Region_member != NULL && !Region_member->value.IsNull()) Region = readRegionFromValue(Region_member->value);
+	if (Region_member != NULL && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
     
     const Value::Member* GameMode_member = obj.FindMember("GameMode");
 	if (GameMode_member != NULL && !GameMode_member->value.IsNull()) GameMode = GameMode_member->value.GetString();

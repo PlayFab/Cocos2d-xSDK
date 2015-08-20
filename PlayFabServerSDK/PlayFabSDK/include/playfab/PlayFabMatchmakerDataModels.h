@@ -255,7 +255,7 @@ namespace MatchmakerModels
     {
 		
 		std::string Build;
-		Region Region;
+		Region pfRegion;
 		std::string GameMode;
 		std::string CustomCommandLineData;
 		std::string ExternalMatchmakerEventEndpoint;
@@ -263,7 +263,7 @@ namespace MatchmakerModels
         StartGameRequest() :
 			PlayFabBaseModel(),
 			Build(),
-			Region(),
+			pfRegion(),
 			GameMode(),
 			CustomCommandLineData(),
 			ExternalMatchmakerEventEndpoint()
@@ -272,7 +272,7 @@ namespace MatchmakerModels
 		StartGameRequest(const StartGameRequest& src) :
 			PlayFabBaseModel(),
 			Build(src.Build),
-			Region(src.Region),
+			pfRegion(src.pfRegion),
 			GameMode(src.GameMode),
 			CustomCommandLineData(src.CustomCommandLineData),
 			ExternalMatchmakerEventEndpoint(src.ExternalMatchmakerEventEndpoint)
