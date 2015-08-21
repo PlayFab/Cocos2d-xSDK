@@ -3,6 +3,7 @@ Cocos2d-xSDK README
 1. Overview:
 ----
 PlayFab SDKs for c++ based Cocos2d-x game development.
+Please note that this SDK does not work correctly for android development.  We are attempting to resolve this issue internally, and it will be solved as soon as possible.
 
 2. Prerequisites:
 ----
