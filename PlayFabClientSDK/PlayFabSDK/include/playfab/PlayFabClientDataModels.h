@@ -2016,17 +2016,23 @@ namespace ClientModels
 	struct GetCharacterInventoryResult : public PlayFabBaseModel
     {
 		
+		std::string PlayFabId;
+		std::string CharacterId;
 		std::list<ItemInstance> Inventory;
 		std::map<std::string, Int32> VirtualCurrency;
 	
         GetCharacterInventoryResult() :
 			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
 			Inventory(),
 			VirtualCurrency()
 			{}
 		
 		GetCharacterInventoryResult(const GetCharacterInventoryResult& src) :
 			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
 			Inventory(src.Inventory),
 			VirtualCurrency(src.VirtualCurrency)
 			{}
