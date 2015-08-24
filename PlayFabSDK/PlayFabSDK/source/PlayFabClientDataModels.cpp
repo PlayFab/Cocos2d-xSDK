@@ -2991,6 +2991,10 @@ void GetCharacterInventoryResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
+    if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    
+    if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    
     if(!Inventory.empty()) {
 	writer.String("Inventory");
 	writer.StartArray();
@@ -3015,6 +3019,12 @@ void GetCharacterInventoryResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetCharacterInventoryResult::readFromValue(const rapidjson::Value& obj)
 {
+    
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    
+    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
     
     const Value::Member* Inventory_member = obj.FindMember("Inventory");
 	if (Inventory_member != NULL) {
@@ -4775,13 +4785,14 @@ void GetTitleDataRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
-    writer.String("Keys");
+    if(!Keys.empty()) {
+	writer.String("Keys");
 	writer.StartArray();
 	for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
 		writer.String(iter->c_str());
 	}
 	writer.EndArray();
-	
+	 }
     
     
     writer.EndObject();

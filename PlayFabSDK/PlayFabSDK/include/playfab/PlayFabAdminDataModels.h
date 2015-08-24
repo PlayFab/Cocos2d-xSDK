@@ -1995,12 +1995,14 @@ namespace AdminModels
 	struct GetUserInventoryResult : public PlayFabBaseModel
     {
 		
+		std::string PlayFabId;
 		std::list<ItemInstance> Inventory;
 		std::map<std::string, Int32> VirtualCurrency;
 		std::map<std::string, VirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes;
 	
         GetUserInventoryResult() :
 			PlayFabBaseModel(),
+			PlayFabId(),
 			Inventory(),
 			VirtualCurrency(),
 			VirtualCurrencyRechargeTimes()
@@ -2008,6 +2010,7 @@ namespace AdminModels
 		
 		GetUserInventoryResult(const GetUserInventoryResult& src) :
 			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
 			Inventory(src.Inventory),
 			VirtualCurrency(src.VirtualCurrency),
 			VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes)
