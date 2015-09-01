@@ -1954,7 +1954,7 @@ void GetCharacterInventoryRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
-    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     
     writer.String("CharacterId"); writer.String(CharacterId.c_str());
     
