@@ -1086,6 +1086,43 @@ bool CharacterLeaderboardEntry::readFromValue(const rapidjson::Value& obj)
 }
 
 
+CharacterResult::~CharacterResult()
+{
+    
+}
+
+void CharacterResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    
+    if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    
+    if(CharacterName.length() > 0) { writer.String("CharacterName"); writer.String(CharacterName.c_str()); }
+    
+    if(CharacterType.length() > 0) { writer.String("CharacterType"); writer.String(CharacterType.c_str()); }
+    
+    
+    writer.EndObject();
+}
+
+bool CharacterResult::readFromValue(const rapidjson::Value& obj)
+{
+    
+    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    
+    const Value::Member* CharacterName_member = obj.FindMember("CharacterName");
+	if (CharacterName_member != NULL && !CharacterName_member->value.IsNull()) CharacterName = CharacterName_member->value.GetString();
+    
+    const Value::Member* CharacterType_member = obj.FindMember("CharacterType");
+	if (CharacterType_member != NULL && !CharacterType_member->value.IsNull()) CharacterType = CharacterType_member->value.GetString();
+    
+    
+    return true;
+}
+
+
 ConfirmPurchaseRequest::~ConfirmPurchaseRequest()
 {
     
@@ -1296,6 +1333,8 @@ void ConsumeItemRequest::writeJSON(PFStringJsonWriter& writer)
     
     writer.String("ConsumeCount"); writer.Int(ConsumeCount);
     
+    if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    
     
     writer.EndObject();
 }
@@ -1308,6 +1347,9 @@ bool ConsumeItemRequest::readFromValue(const rapidjson::Value& obj)
     
     const Value::Member* ConsumeCount_member = obj.FindMember("ConsumeCount");
 	if (ConsumeCount_member != NULL && !ConsumeCount_member->value.IsNull()) ConsumeCount = ConsumeCount_member->value.GetInt();
+    
+    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
     
     
     return true;
@@ -2954,7 +2996,7 @@ void GetCharacterInventoryRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
-    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     
     writer.String("CharacterId"); writer.String(CharacterId.c_str());
     
@@ -6131,6 +6173,72 @@ bool LinkSteamAccountResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+ListUsersCharactersRequest::~ListUsersCharactersRequest()
+{
+    
+}
+
+void ListUsersCharactersRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    
+    if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    
+    
+    writer.EndObject();
+}
+
+bool ListUsersCharactersRequest::readFromValue(const rapidjson::Value& obj)
+{
+    
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    
+    
+    return true;
+}
+
+
+ListUsersCharactersResult::~ListUsersCharactersResult()
+{
+    
+}
+
+void ListUsersCharactersResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    
+    if(!Characters.empty()) {
+	writer.String("Characters");
+	writer.StartArray();
+	for (std::list<CharacterResult>::iterator iter = Characters.begin(); iter != Characters.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+    
+    
+    writer.EndObject();
+}
+
+bool ListUsersCharactersResult::readFromValue(const rapidjson::Value& obj)
+{
+    
+    const Value::Member* Characters_member = obj.FindMember("Characters");
+	if (Characters_member != NULL) {
+		const rapidjson::Value& memberList = Characters_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Characters.push_back(CharacterResult(memberList[i]));
+		}
+	}
+    
+    
+    return true;
+}
+
+
 LogEventRequest::~LogEventRequest()
 {
     
@@ -7197,6 +7305,8 @@ void PurchaseItemRequest::writeJSON(PFStringJsonWriter& writer)
     
     if(StoreId.length() > 0) { writer.String("StoreId"); writer.String(StoreId.c_str()); }
     
+    if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    
     
     writer.EndObject();
 }
@@ -7218,6 +7328,9 @@ bool PurchaseItemRequest::readFromValue(const rapidjson::Value& obj)
     
     const Value::Member* StoreId_member = obj.FindMember("StoreId");
 	if (StoreId_member != NULL && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
+    
+    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
     
     
     return true;
@@ -8655,6 +8768,8 @@ void UnlockContainerItemRequest::writeJSON(PFStringJsonWriter& writer)
     
     if(CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     
+    if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    
     
     writer.EndObject();
 }
@@ -8667,6 +8782,9 @@ bool UnlockContainerItemRequest::readFromValue(const rapidjson::Value& obj)
     
     const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
 	if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    
+    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
     
     
     return true;

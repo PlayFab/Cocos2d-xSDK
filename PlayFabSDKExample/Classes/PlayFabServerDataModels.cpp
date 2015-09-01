@@ -1954,7 +1954,7 @@ void GetCharacterInventoryRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
-    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     
     writer.String("CharacterId"); writer.String(CharacterId.c_str());
     
@@ -2111,6 +2111,10 @@ void GetCharacterInventoryResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
+    if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    
+    if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    
     if(!Inventory.empty()) {
 	writer.String("Inventory");
 	writer.StartArray();
@@ -2135,6 +2139,12 @@ void GetCharacterInventoryResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetCharacterInventoryResult::readFromValue(const rapidjson::Value& obj)
 {
+    
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    
+    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
     
     const Value::Member* Inventory_member = obj.FindMember("Inventory");
 	if (Inventory_member != NULL) {
@@ -2284,6 +2294,10 @@ void GetCharacterStatisticsResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
+    if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    
+    if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    
     if(!CharacterStatistics.empty()) {
 	writer.String("CharacterStatistics");
 	writer.StartObject();
@@ -2299,6 +2313,12 @@ void GetCharacterStatisticsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetCharacterStatisticsResult::readFromValue(const rapidjson::Value& obj)
 {
+    
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    
+    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
     
     const Value::Member* CharacterStatistics_member = obj.FindMember("CharacterStatistics");
 	if (CharacterStatistics_member != NULL) {
@@ -3092,13 +3112,14 @@ void GetTitleDataRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
-    writer.String("Keys");
+    if(!Keys.empty()) {
+	writer.String("Keys");
 	writer.StartArray();
 	for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
 		writer.String(iter->c_str());
 	}
 	writer.EndArray();
-	
+	 }
     
     
     writer.EndObject();
@@ -3384,6 +3405,8 @@ void GetUserInventoryResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
+    if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    
     if(!Inventory.empty()) {
 	writer.String("Inventory");
 	writer.StartArray();
@@ -3417,6 +3440,9 @@ void GetUserInventoryResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetUserInventoryResult::readFromValue(const rapidjson::Value& obj)
 {
+    
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
     
     const Value::Member* Inventory_member = obj.FindMember("Inventory");
 	if (Inventory_member != NULL) {
@@ -3482,6 +3508,8 @@ void GetUserStatisticsResult::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
+    if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    
     if(!UserStatistics.empty()) {
 	writer.String("UserStatistics");
 	writer.StartObject();
@@ -3497,6 +3525,9 @@ void GetUserStatisticsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetUserStatisticsResult::readFromValue(const rapidjson::Value& obj)
 {
+    
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
     
     const Value::Member* UserStatistics_member = obj.FindMember("UserStatistics");
 	if (UserStatistics_member != NULL) {

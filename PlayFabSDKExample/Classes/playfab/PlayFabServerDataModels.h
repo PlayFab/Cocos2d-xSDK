@@ -1424,17 +1424,23 @@ namespace ServerModels
 	struct GetCharacterInventoryResult : public PlayFabBaseModel
     {
 		
+		std::string PlayFabId;
+		std::string CharacterId;
 		std::list<ItemInstance> Inventory;
 		std::map<std::string, Int32> VirtualCurrency;
 	
         GetCharacterInventoryResult() :
 			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
 			Inventory(),
 			VirtualCurrency()
 			{}
 		
 		GetCharacterInventoryResult(const GetCharacterInventoryResult& src) :
 			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
 			Inventory(src.Inventory),
 			VirtualCurrency(src.VirtualCurrency)
 			{}
@@ -1546,15 +1552,21 @@ namespace ServerModels
 	struct GetCharacterStatisticsResult : public PlayFabBaseModel
     {
 		
+		std::string PlayFabId;
+		std::string CharacterId;
 		std::map<std::string, Int32> CharacterStatistics;
 	
         GetCharacterStatisticsResult() :
 			PlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
 			CharacterStatistics()
 			{}
 		
 		GetCharacterStatisticsResult(const GetCharacterStatisticsResult& src) :
 			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
 			CharacterStatistics(src.CharacterStatistics)
 			{}
 			
@@ -2376,12 +2388,14 @@ namespace ServerModels
 	struct GetUserInventoryResult : public PlayFabBaseModel
     {
 		
+		std::string PlayFabId;
 		std::list<ItemInstance> Inventory;
 		std::map<std::string, Int32> VirtualCurrency;
 		std::map<std::string, VirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes;
 	
         GetUserInventoryResult() :
 			PlayFabBaseModel(),
+			PlayFabId(),
 			Inventory(),
 			VirtualCurrency(),
 			VirtualCurrencyRechargeTimes()
@@ -2389,6 +2403,7 @@ namespace ServerModels
 		
 		GetUserInventoryResult(const GetUserInventoryResult& src) :
 			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
 			Inventory(src.Inventory),
 			VirtualCurrency(src.VirtualCurrency),
 			VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes)
@@ -2434,15 +2449,18 @@ namespace ServerModels
 	struct GetUserStatisticsResult : public PlayFabBaseModel
     {
 		
+		std::string PlayFabId;
 		std::map<std::string, Int32> UserStatistics;
 	
         GetUserStatisticsResult() :
 			PlayFabBaseModel(),
+			PlayFabId(),
 			UserStatistics()
 			{}
 		
 		GetUserStatisticsResult(const GetUserStatisticsResult& src) :
 			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
 			UserStatistics(src.UserStatistics)
 			{}
 			

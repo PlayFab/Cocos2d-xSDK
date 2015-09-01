@@ -5047,6 +5047,63 @@ void PlayFabClientAPI::OnGetContentDownloadUrlResult(int httpStatus, HttpRequest
 }
 
 
+void PlayFabClientAPI::GetAllUsersCharacters(
+    ListUsersCharactersRequest& request,
+    GetAllUsersCharactersCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetAllUsersCharacters"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+	httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+	
+    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetAllUsersCharactersResult, this);
+}
+
+void PlayFabClientAPI::OnGetAllUsersCharactersResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ListUsersCharactersResult outResult;
+    PlayFabError errorResult;
+
+    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
+
+    if (success)
+    {
+        
+
+        if (request->GetResultCallback() != NULL)
+        {
+            GetAllUsersCharactersCallback successCallback = (GetAllUsersCharactersCallback)(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != NULL)
+        {
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        }
+
+        if (request->GetErrorCallback() != NULL)
+        {
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+        }
+    }
+
+    delete request;
+}
+
+
 void PlayFabClientAPI::GetCharacterLeaderboard(
     GetCharacterLeaderboardRequest& request,
     GetCharacterLeaderboardCallback callback,

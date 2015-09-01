@@ -104,6 +104,7 @@ namespace PlayFab
 		typedef void(*GetCloudScriptUrlCallback)(ClientModels::GetCloudScriptUrlResult& result, void* userData);
 		typedef void(*RunCloudScriptCallback)(ClientModels::RunCloudScriptResult& result, void* userData);
 		typedef void(*GetContentDownloadUrlCallback)(ClientModels::GetContentDownloadUrlResult& result, void* userData);
+		typedef void(*GetAllUsersCharactersCallback)(ClientModels::ListUsersCharactersResult& result, void* userData);
 		typedef void(*GetCharacterLeaderboardCallback)(ClientModels::GetCharacterLeaderboardResult& result, void* userData);
 		typedef void(*GetLeaderboardAroundCharacterCallback)(ClientModels::GetLeaderboardAroundCharacterResult& result, void* userData);
 		typedef void(*GetLeaderboardForUserCharactersCallback)(ClientModels::GetLeaderboardForUsersCharactersResult& result, void* userData);
@@ -302,6 +303,8 @@ namespace PlayFab
 		void RunCloudScript(ClientModels::RunCloudScriptRequest& request, RunCloudScriptCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetContentDownloadUrl(ClientModels::GetContentDownloadUrlRequest& request, GetContentDownloadUrlCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetAllUsersCharacters(ClientModels::ListUsersCharactersRequest& request, GetAllUsersCharactersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetCharacterLeaderboard(ClientModels::GetCharacterLeaderboardRequest& request, GetCharacterLeaderboardCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -505,6 +508,8 @@ namespace PlayFab
 		static void OnRunCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetContentDownloadUrlResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetAllUsersCharactersResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetCharacterLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
 		

@@ -709,6 +709,38 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct CharacterResult : public PlayFabBaseModel
+    {
+		
+		std::string CharacterId;
+		std::string CharacterName;
+		std::string CharacterType;
+	
+        CharacterResult() :
+			PlayFabBaseModel(),
+			CharacterId(),
+			CharacterName(),
+			CharacterType()
+			{}
+		
+		CharacterResult(const CharacterResult& src) :
+			PlayFabBaseModel(),
+			CharacterId(src.CharacterId),
+			CharacterName(src.CharacterName),
+			CharacterType(src.CharacterType)
+			{}
+			
+		CharacterResult(const rapidjson::Value& obj) : CharacterResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~CharacterResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct ConfirmPurchaseRequest : public PlayFabBaseModel
     {
 		
@@ -840,17 +872,20 @@ namespace ClientModels
 		
 		std::string ItemInstanceId;
 		Int32 ConsumeCount;
+		std::string CharacterId;
 	
         ConsumeItemRequest() :
 			PlayFabBaseModel(),
 			ItemInstanceId(),
-			ConsumeCount(0)
+			ConsumeCount(0),
+			CharacterId()
 			{}
 		
 		ConsumeItemRequest(const ConsumeItemRequest& src) :
 			PlayFabBaseModel(),
 			ItemInstanceId(src.ItemInstanceId),
-			ConsumeCount(src.ConsumeCount)
+			ConsumeCount(src.ConsumeCount),
+			CharacterId(src.CharacterId)
 			{}
 			
 		ConsumeItemRequest(const rapidjson::Value& obj) : ConsumeItemRequest()
@@ -4396,6 +4431,58 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct ListUsersCharactersRequest : public PlayFabBaseModel
+    {
+		
+		std::string PlayFabId;
+	
+        ListUsersCharactersRequest() :
+			PlayFabBaseModel(),
+			PlayFabId()
+			{}
+		
+		ListUsersCharactersRequest(const ListUsersCharactersRequest& src) :
+			PlayFabBaseModel(),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		ListUsersCharactersRequest(const rapidjson::Value& obj) : ListUsersCharactersRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~ListUsersCharactersRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct ListUsersCharactersResult : public PlayFabBaseModel
+    {
+		
+		std::list<CharacterResult> Characters;
+	
+        ListUsersCharactersResult() :
+			PlayFabBaseModel(),
+			Characters()
+			{}
+		
+		ListUsersCharactersResult(const ListUsersCharactersResult& src) :
+			PlayFabBaseModel(),
+			Characters(src.Characters)
+			{}
+			
+		ListUsersCharactersResult(const rapidjson::Value& obj) : ListUsersCharactersResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~ListUsersCharactersResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct LogEventRequest : public PlayFabBaseModel
     {
 		
@@ -5177,6 +5264,7 @@ namespace ClientModels
 		Int32 Price;
 		std::string CatalogVersion;
 		std::string StoreId;
+		std::string CharacterId;
 	
         PurchaseItemRequest() :
 			PlayFabBaseModel(),
@@ -5184,7 +5272,8 @@ namespace ClientModels
 			VirtualCurrency(),
 			Price(0),
 			CatalogVersion(),
-			StoreId()
+			StoreId(),
+			CharacterId()
 			{}
 		
 		PurchaseItemRequest(const PurchaseItemRequest& src) :
@@ -5193,7 +5282,8 @@ namespace ClientModels
 			VirtualCurrency(src.VirtualCurrency),
 			Price(src.Price),
 			CatalogVersion(src.CatalogVersion),
-			StoreId(src.StoreId)
+			StoreId(src.StoreId),
+			CharacterId(src.CharacterId)
 			{}
 			
 		PurchaseItemRequest(const rapidjson::Value& obj) : PurchaseItemRequest()
@@ -6448,17 +6538,20 @@ namespace ClientModels
 		
 		std::string ContainerItemId;
 		std::string CatalogVersion;
+		std::string CharacterId;
 	
         UnlockContainerItemRequest() :
 			PlayFabBaseModel(),
 			ContainerItemId(),
-			CatalogVersion()
+			CatalogVersion(),
+			CharacterId()
 			{}
 		
 		UnlockContainerItemRequest(const UnlockContainerItemRequest& src) :
 			PlayFabBaseModel(),
 			ContainerItemId(src.ContainerItemId),
-			CatalogVersion(src.CatalogVersion)
+			CatalogVersion(src.CatalogVersion),
+			CharacterId(src.CharacterId)
 			{}
 			
 		UnlockContainerItemRequest(const rapidjson::Value& obj) : UnlockContainerItemRequest()
