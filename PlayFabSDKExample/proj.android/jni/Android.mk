@@ -12,7 +12,22 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../Classes/HelloWorldScene.cpp
+                   ../../Classes/HelloWorldScene.cpp \
+                   ../../Classes/core/PlayFabSettings.cpp \
+                   ../../Classes/HttpRequest.cpp \
+                   ../../Classes/HttpRequesterCURL.cpp \
+                   ../../Classes/PlayFabAdminAPI.cpp \
+                   ../../Classes/PlayFabAdminDataModels.cpp \
+                   ../../Classes/PlayFabApiTest.cpp \
+                   ../../Classes/PlayFabBaseModel.cpp \
+                   ../../Classes/PlayFabClientAPI.cpp \
+                   ../../Classes/PlayFabClientDataModels.cpp \
+                   ../../Classes/PlayFabMatchmakerAPI.cpp \
+                   ../../Classes/PlayFabMatchmakerDataModels.cpp \
+                   ../../Classes/PlayFabResultHandler.cpp \
+                   ../../Classes/PlayFabServerAPI.cpp \
+                   ../../Classes/PlayFabServerDataModels.cpp \
+                   ../../Classes/PlayFabVersion.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
