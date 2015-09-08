@@ -121,6 +121,63 @@ void PlayFabServerAPI::OnAuthenticateSessionTicketResult(int httpStatus, HttpReq
 }
 
 
+void PlayFabServerAPI::GetPlayFabIDsFromFacebookIDs(
+    GetPlayFabIDsFromFacebookIDsRequest& request,
+    GetPlayFabIDsFromFacebookIDsCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/GetPlayFabIDsFromFacebookIDs"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+	
+    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromFacebookIDsResult, this);
+}
+
+void PlayFabServerAPI::OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPlayFabIDsFromFacebookIDsResult outResult;
+    PlayFabError errorResult;
+
+    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
+
+    if (success)
+    {
+        
+
+        if (request->GetResultCallback() != NULL)
+        {
+            GetPlayFabIDsFromFacebookIDsCallback successCallback = (GetPlayFabIDsFromFacebookIDsCallback)(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != NULL)
+        {
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        }
+
+        if (request->GetErrorCallback() != NULL)
+        {
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+        }
+    }
+
+    delete request;
+}
+
+
 void PlayFabServerAPI::GetUserAccountInfo(
     GetUserAccountInfoRequest& request,
     GetUserAccountInfoCallback callback,
@@ -1298,6 +1355,63 @@ void PlayFabServerAPI::OnGetTitleInternalDataResult(int httpStatus, HttpRequest*
         if (request->GetResultCallback() != NULL)
         {
             GetTitleInternalDataCallback successCallback = (GetTitleInternalDataCallback)(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != NULL)
+        {
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        }
+
+        if (request->GetErrorCallback() != NULL)
+        {
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+        }
+    }
+
+    delete request;
+}
+
+
+void PlayFabServerAPI::GetTitleNews(
+    GetTitleNewsRequest& request,
+    GetTitleNewsCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/GetTitleNews"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+	
+    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetTitleNewsResult, this);
+}
+
+void PlayFabServerAPI::OnGetTitleNewsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetTitleNewsResult outResult;
+    PlayFabError errorResult;
+
+    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
+
+    if (success)
+    {
+        
+
+        if (request->GetResultCallback() != NULL)
+        {
+            GetTitleNewsCallback successCallback = (GetTitleNewsCallback)(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

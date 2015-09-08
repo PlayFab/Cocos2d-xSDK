@@ -1628,6 +1628,38 @@ bool EmptyResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+FacebookPlayFabIdPair::~FacebookPlayFabIdPair()
+{
+    
+}
+
+void FacebookPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    
+    if(FacebookId.length() > 0) { writer.String("FacebookId"); writer.String(FacebookId.c_str()); }
+    
+    if(PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    
+    
+    writer.EndObject();
+}
+
+bool FacebookPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
+{
+    
+    const Value::Member* FacebookId_member = obj.FindMember("FacebookId");
+	if (FacebookId_member != NULL && !FacebookId_member->value.IsNull()) FacebookId = FacebookId_member->value.GetString();
+    
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+	if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    
+    
+    return true;
+}
+
+
 FriendInfo::~FriendInfo()
 {
     if(FacebookInfo != NULL) delete FacebookInfo;
@@ -2880,6 +2912,83 @@ bool GetLeaderboardResult::readFromValue(const rapidjson::Value& obj)
 }
 
 
+GetPlayFabIDsFromFacebookIDsRequest::~GetPlayFabIDsFromFacebookIDsRequest()
+{
+    
+}
+
+void GetPlayFabIDsFromFacebookIDsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    
+    writer.String("FacebookIDs");
+	writer.StartArray();
+	for (std::list<std::string>::iterator iter = FacebookIDs.begin(); iter != FacebookIDs.end(); iter++) {
+		writer.String(iter->c_str());
+	}
+	writer.EndArray();
+	
+    
+    
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromFacebookIDsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    
+    const Value::Member* FacebookIDs_member = obj.FindMember("FacebookIDs");
+	if (FacebookIDs_member != NULL) {
+		const rapidjson::Value& memberList = FacebookIDs_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			FacebookIDs.push_back(memberList[i].GetString());
+		}
+	}
+    
+    
+    return true;
+}
+
+
+GetPlayFabIDsFromFacebookIDsResult::~GetPlayFabIDsFromFacebookIDsResult()
+{
+    
+}
+
+void GetPlayFabIDsFromFacebookIDsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    
+    if(!Data.empty()) {
+	writer.String("Data");
+	writer.StartArray();
+	for (std::list<FacebookPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+    
+    
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromFacebookIDsResult::readFromValue(const rapidjson::Value& obj)
+{
+    
+    const Value::Member* Data_member = obj.FindMember("Data");
+	if (Data_member != NULL) {
+		const rapidjson::Value& memberList = Data_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			Data.push_back(FacebookPlayFabIdPair(memberList[i]));
+		}
+	}
+    
+    
+    return true;
+}
+
+
 GetPublisherDataRequest::~GetPublisherDataRequest()
 {
     
@@ -3171,6 +3280,114 @@ bool GetTitleDataResult::readFromValue(const rapidjson::Value& obj)
 	if (Data_member != NULL) {
 		for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
 			Data[iter->name.GetString()] = iter->value.GetString();
+		}
+	}
+    
+    
+    return true;
+}
+
+
+GetTitleNewsRequest::~GetTitleNewsRequest()
+{
+    
+}
+
+void GetTitleNewsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    
+    if(Count.notNull()) { writer.String("Count"); writer.Int(Count); }
+    
+    
+    writer.EndObject();
+}
+
+bool GetTitleNewsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    
+    const Value::Member* Count_member = obj.FindMember("Count");
+	if (Count_member != NULL && !Count_member->value.IsNull()) Count = Count_member->value.GetInt();
+    
+    
+    return true;
+}
+
+
+TitleNewsItem::~TitleNewsItem()
+{
+    
+}
+
+void TitleNewsItem::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    
+    writer.String("Timestamp"); writeDatetime(Timestamp, writer);
+    
+    if(NewsId.length() > 0) { writer.String("NewsId"); writer.String(NewsId.c_str()); }
+    
+    if(Title.length() > 0) { writer.String("Title"); writer.String(Title.c_str()); }
+    
+    if(Body.length() > 0) { writer.String("Body"); writer.String(Body.c_str()); }
+    
+    
+    writer.EndObject();
+}
+
+bool TitleNewsItem::readFromValue(const rapidjson::Value& obj)
+{
+    
+    const Value::Member* Timestamp_member = obj.FindMember("Timestamp");
+	if (Timestamp_member != NULL && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+    
+    const Value::Member* NewsId_member = obj.FindMember("NewsId");
+	if (NewsId_member != NULL && !NewsId_member->value.IsNull()) NewsId = NewsId_member->value.GetString();
+    
+    const Value::Member* Title_member = obj.FindMember("Title");
+	if (Title_member != NULL && !Title_member->value.IsNull()) Title = Title_member->value.GetString();
+    
+    const Value::Member* Body_member = obj.FindMember("Body");
+	if (Body_member != NULL && !Body_member->value.IsNull()) Body = Body_member->value.GetString();
+    
+    
+    return true;
+}
+
+
+GetTitleNewsResult::~GetTitleNewsResult()
+{
+    
+}
+
+void GetTitleNewsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    
+    if(!News.empty()) {
+	writer.String("News");
+	writer.StartArray();
+	for (std::list<TitleNewsItem>::iterator iter = News.begin(); iter != News.end(); iter++) {
+		iter->writeJSON(writer);
+	}
+	writer.EndArray();
+	 }
+    
+    
+    writer.EndObject();
+}
+
+bool GetTitleNewsResult::readFromValue(const rapidjson::Value& obj)
+{
+    
+    const Value::Member* News_member = obj.FindMember("News");
+	if (News_member != NULL) {
+		const rapidjson::Value& memberList = News_member->value;
+		for (SizeType i = 0; i < memberList.Size(); i++) {
+			News.push_back(TitleNewsItem(memberList[i]));
 		}
 	}
     
