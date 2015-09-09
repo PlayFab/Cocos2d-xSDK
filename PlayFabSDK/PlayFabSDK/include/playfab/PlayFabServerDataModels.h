@@ -1110,6 +1110,35 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct FacebookPlayFabIdPair : public PlayFabBaseModel
+    {
+		
+		std::string FacebookId;
+		std::string PlayFabId;
+	
+        FacebookPlayFabIdPair() :
+			PlayFabBaseModel(),
+			FacebookId(),
+			PlayFabId()
+			{}
+		
+		FacebookPlayFabIdPair(const FacebookPlayFabIdPair& src) :
+			PlayFabBaseModel(),
+			FacebookId(src.FacebookId),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FacebookPlayFabIdPair(const rapidjson::Value& obj) : FacebookPlayFabIdPair()
+        {
+            readFromValue(obj);
+        }
+		
+		~FacebookPlayFabIdPair();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct FriendInfo : public PlayFabBaseModel
     {
 		
@@ -2011,6 +2040,58 @@ namespace ServerModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct GetPlayFabIDsFromFacebookIDsRequest : public PlayFabBaseModel
+    {
+		
+		std::list<std::string> FacebookIDs;
+	
+        GetPlayFabIDsFromFacebookIDsRequest() :
+			PlayFabBaseModel(),
+			FacebookIDs()
+			{}
+		
+		GetPlayFabIDsFromFacebookIDsRequest(const GetPlayFabIDsFromFacebookIDsRequest& src) :
+			PlayFabBaseModel(),
+			FacebookIDs(src.FacebookIDs)
+			{}
+			
+		GetPlayFabIDsFromFacebookIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromFacebookIDsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetPlayFabIDsFromFacebookIDsRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetPlayFabIDsFromFacebookIDsResult : public PlayFabBaseModel
+    {
+		
+		std::list<FacebookPlayFabIdPair> Data;
+	
+        GetPlayFabIDsFromFacebookIDsResult() :
+			PlayFabBaseModel(),
+			Data()
+			{}
+		
+		GetPlayFabIDsFromFacebookIDsResult(const GetPlayFabIDsFromFacebookIDsResult& src) :
+			PlayFabBaseModel(),
+			Data(src.Data)
+			{}
+			
+		GetPlayFabIDsFromFacebookIDsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromFacebookIDsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetPlayFabIDsFromFacebookIDsResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetPublisherDataRequest : public PlayFabBaseModel
     {
 		
@@ -2206,6 +2287,93 @@ namespace ServerModels
         }
 		
 		~GetTitleDataResult();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetTitleNewsRequest : public PlayFabBaseModel
+    {
+		
+		OptionalInt32 Count;
+	
+        GetTitleNewsRequest() :
+			PlayFabBaseModel(),
+			Count()
+			{}
+		
+		GetTitleNewsRequest(const GetTitleNewsRequest& src) :
+			PlayFabBaseModel(),
+			Count(src.Count)
+			{}
+			
+		GetTitleNewsRequest(const rapidjson::Value& obj) : GetTitleNewsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetTitleNewsRequest();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct TitleNewsItem : public PlayFabBaseModel
+    {
+		
+		time_t Timestamp;
+		std::string NewsId;
+		std::string Title;
+		std::string Body;
+	
+        TitleNewsItem() :
+			PlayFabBaseModel(),
+			Timestamp(0),
+			NewsId(),
+			Title(),
+			Body()
+			{}
+		
+		TitleNewsItem(const TitleNewsItem& src) :
+			PlayFabBaseModel(),
+			Timestamp(src.Timestamp),
+			NewsId(src.NewsId),
+			Title(src.Title),
+			Body(src.Body)
+			{}
+			
+		TitleNewsItem(const rapidjson::Value& obj) : TitleNewsItem()
+        {
+            readFromValue(obj);
+        }
+		
+		~TitleNewsItem();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
+	struct GetTitleNewsResult : public PlayFabBaseModel
+    {
+		
+		std::list<TitleNewsItem> News;
+	
+        GetTitleNewsResult() :
+			PlayFabBaseModel(),
+			News()
+			{}
+		
+		GetTitleNewsResult(const GetTitleNewsResult& src) :
+			PlayFabBaseModel(),
+			News(src.News)
+			{}
+			
+		GetTitleNewsResult(const rapidjson::Value& obj) : GetTitleNewsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~GetTitleNewsResult();
 		
         void writeJSON(PFStringJsonWriter& writer);
         bool readFromValue(const rapidjson::Value& obj);

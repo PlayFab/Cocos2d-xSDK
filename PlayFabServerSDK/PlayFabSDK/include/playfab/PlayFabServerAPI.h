@@ -18,6 +18,7 @@ namespace PlayFab
     public:
 		
 		typedef void(*AuthenticateSessionTicketCallback)(ServerModels::AuthenticateSessionTicketResult& result, void* userData);
+		typedef void(*GetPlayFabIDsFromFacebookIDsCallback)(ServerModels::GetPlayFabIDsFromFacebookIDsResult& result, void* userData);
 		typedef void(*GetUserAccountInfoCallback)(ServerModels::GetUserAccountInfoResult& result, void* userData);
 		typedef void(*SendPushNotificationCallback)(ServerModels::SendPushNotificationResult& result, void* userData);
 		typedef void(*GetLeaderboardCallback)(ServerModels::GetLeaderboardResult& result, void* userData);
@@ -39,6 +40,7 @@ namespace PlayFab
 		typedef void(*GetCatalogItemsCallback)(ServerModels::GetCatalogItemsResult& result, void* userData);
 		typedef void(*GetTitleDataCallback)(ServerModels::GetTitleDataResult& result, void* userData);
 		typedef void(*GetTitleInternalDataCallback)(ServerModels::GetTitleDataResult& result, void* userData);
+		typedef void(*GetTitleNewsCallback)(ServerModels::GetTitleNewsResult& result, void* userData);
 		typedef void(*SetTitleDataCallback)(ServerModels::SetTitleDataResult& result, void* userData);
 		typedef void(*SetTitleInternalDataCallback)(ServerModels::SetTitleDataResult& result, void* userData);
 		typedef void(*AddCharacterVirtualCurrencyCallback)(ServerModels::ModifyCharacterVirtualCurrencyResult& result, void* userData);
@@ -98,6 +100,8 @@ namespace PlayFab
 		
 		void AuthenticateSessionTicket(ServerModels::AuthenticateSessionTicketRequest& request, AuthenticateSessionTicketCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void GetPlayFabIDsFromFacebookIDs(ServerModels::GetPlayFabIDsFromFacebookIDsRequest& request, GetPlayFabIDsFromFacebookIDsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 		void GetUserAccountInfo(ServerModels::GetUserAccountInfoRequest& request, GetUserAccountInfoCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void SendPushNotification(ServerModels::SendPushNotificationRequest& request, SendPushNotificationCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
@@ -139,6 +143,8 @@ namespace PlayFab
 		void GetTitleData(ServerModels::GetTitleDataRequest& request, GetTitleDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetTitleInternalData(ServerModels::GetTitleDataRequest& request, GetTitleInternalDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void GetTitleNews(ServerModels::GetTitleNewsRequest& request, GetTitleNewsCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void SetTitleData(ServerModels::SetTitleDataRequest& request, SetTitleDataCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -235,6 +241,8 @@ namespace PlayFab
 		
 		static void OnAuthenticateSessionTicketResult(int httpStatus, HttpRequest* request, void* userData);
 		
+		static void OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, HttpRequest* request, void* userData);
+		
 		static void OnGetUserAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnSendPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
@@ -276,6 +284,8 @@ namespace PlayFab
 		static void OnGetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetTitleInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnGetTitleNewsResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnSetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
 		
