@@ -959,6 +959,8 @@ void CatalogItem::writeJSON(PFStringJsonWriter& writer)
     
     writer.String("IsTradable"); writer.Bool(IsTradable);
     
+    if(ItemImageUrl.length() > 0) { writer.String("ItemImageUrl"); writer.String(ItemImageUrl.c_str()); }
+    
     
     writer.EndObject();
 }
@@ -1023,6 +1025,9 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
     
     const Value::Member* IsTradable_member = obj.FindMember("IsTradable");
 	if (IsTradable_member != NULL && !IsTradable_member->value.IsNull()) IsTradable = IsTradable_member->value.GetBool();
+    
+    const Value::Member* ItemImageUrl_member = obj.FindMember("ItemImageUrl");
+	if (ItemImageUrl_member != NULL && !ItemImageUrl_member->value.IsNull()) ItemImageUrl = ItemImageUrl_member->value.GetString();
     
     
     return true;
@@ -3023,6 +3028,43 @@ bool GetCharacterInventoryRequest::readFromValue(const rapidjson::Value& obj)
 }
 
 
+VirtualCurrencyRechargeTime::~VirtualCurrencyRechargeTime()
+{
+    
+}
+
+void VirtualCurrencyRechargeTime::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    
+    writer.String("SecondsToRecharge"); writer.Int(SecondsToRecharge);
+    
+    writer.String("RechargeTime"); writeDatetime(RechargeTime, writer);
+    
+    writer.String("RechargeMax"); writer.Int(RechargeMax);
+    
+    
+    writer.EndObject();
+}
+
+bool VirtualCurrencyRechargeTime::readFromValue(const rapidjson::Value& obj)
+{
+    
+    const Value::Member* SecondsToRecharge_member = obj.FindMember("SecondsToRecharge");
+	if (SecondsToRecharge_member != NULL && !SecondsToRecharge_member->value.IsNull()) SecondsToRecharge = SecondsToRecharge_member->value.GetInt();
+    
+    const Value::Member* RechargeTime_member = obj.FindMember("RechargeTime");
+	if (RechargeTime_member != NULL && !RechargeTime_member->value.IsNull()) RechargeTime = readDatetime(RechargeTime_member->value);
+    
+    const Value::Member* RechargeMax_member = obj.FindMember("RechargeMax");
+	if (RechargeMax_member != NULL && !RechargeMax_member->value.IsNull()) RechargeMax = RechargeMax_member->value.GetInt();
+    
+    
+    return true;
+}
+
+
 GetCharacterInventoryResult::~GetCharacterInventoryResult()
 {
     
@@ -3055,6 +3097,15 @@ void GetCharacterInventoryResult::writeJSON(PFStringJsonWriter& writer)
 	writer.EndObject();
 	}
     
+    if(!VirtualCurrencyRechargeTimes.empty()) {
+	writer.String("VirtualCurrencyRechargeTimes");
+	writer.StartObject();
+	for (std::map<std::string, VirtualCurrencyRechargeTime>::iterator iter = VirtualCurrencyRechargeTimes.begin(); iter != VirtualCurrencyRechargeTimes.end(); ++iter) {
+		writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+	}
+	writer.EndObject();
+	}
+    
     
     writer.EndObject();
 }
@@ -3080,6 +3131,13 @@ bool GetCharacterInventoryResult::readFromValue(const rapidjson::Value& obj)
 	if (VirtualCurrency_member != NULL) {
 		for (Value::ConstMemberIterator iter = VirtualCurrency_member->value.MemberBegin(); iter != VirtualCurrency_member->value.MemberEnd(); ++iter) {
 			VirtualCurrency[iter->name.GetString()] = iter->value.GetInt();
+		}
+	}
+    
+    const Value::Member* VirtualCurrencyRechargeTimes_member = obj.FindMember("VirtualCurrencyRechargeTimes");
+	if (VirtualCurrencyRechargeTimes_member != NULL) {
+		for (Value::ConstMemberIterator iter = VirtualCurrencyRechargeTimes_member->value.MemberBegin(); iter != VirtualCurrencyRechargeTimes_member->value.MemberEnd(); ++iter) {
+			VirtualCurrencyRechargeTimes[iter->name.GetString()] = VirtualCurrencyRechargeTime(iter->value);
 		}
 	}
     
@@ -5163,43 +5221,6 @@ bool GetUserCombinedInfoRequest::readFromValue(const rapidjson::Value& obj)
 }
 
 
-VirtualCurrencyRechargeTime::~VirtualCurrencyRechargeTime()
-{
-    
-}
-
-void VirtualCurrencyRechargeTime::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    
-    writer.String("SecondsToRecharge"); writer.Int(SecondsToRecharge);
-    
-    writer.String("RechargeTime"); writeDatetime(RechargeTime, writer);
-    
-    writer.String("RechargeMax"); writer.Int(RechargeMax);
-    
-    
-    writer.EndObject();
-}
-
-bool VirtualCurrencyRechargeTime::readFromValue(const rapidjson::Value& obj)
-{
-    
-    const Value::Member* SecondsToRecharge_member = obj.FindMember("SecondsToRecharge");
-	if (SecondsToRecharge_member != NULL && !SecondsToRecharge_member->value.IsNull()) SecondsToRecharge = SecondsToRecharge_member->value.GetInt();
-    
-    const Value::Member* RechargeTime_member = obj.FindMember("RechargeTime");
-	if (RechargeTime_member != NULL && !RechargeTime_member->value.IsNull()) RechargeTime = readDatetime(RechargeTime_member->value);
-    
-    const Value::Member* RechargeMax_member = obj.FindMember("RechargeMax");
-	if (RechargeMax_member != NULL && !RechargeMax_member->value.IsNull()) RechargeMax = RechargeMax_member->value.GetInt();
-    
-    
-    return true;
-}
-
-
 GetUserCombinedInfoResult::~GetUserCombinedInfoResult()
 {
     if(AccountInfo != NULL) delete AccountInfo;
@@ -5817,6 +5838,8 @@ void LinkFacebookAccountRequest::writeJSON(PFStringJsonWriter& writer)
     
     writer.String("AccessToken"); writer.String(AccessToken.c_str());
     
+    if(ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
+    
     
     writer.EndObject();
 }
@@ -5826,6 +5849,9 @@ bool LinkFacebookAccountRequest::readFromValue(const rapidjson::Value& obj)
     
     const Value::Member* AccessToken_member = obj.FindMember("AccessToken");
 	if (AccessToken_member != NULL && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
+    
+    const Value::Member* ForceLink_member = obj.FindMember("ForceLink");
+	if (ForceLink_member != NULL && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
     
     
     return true;
@@ -6021,7 +6047,7 @@ void LinkKongregateAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     
-    writer.String("KongregateId"); writer.Uint64(KongregateId);
+    writer.String("KongregateId"); writer.String(KongregateId.c_str());
     
     writer.String("AuthTicket"); writer.String(AuthTicket.c_str());
     
@@ -6033,7 +6059,7 @@ bool LinkKongregateAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     
     const Value::Member* KongregateId_member = obj.FindMember("KongregateId");
-	if (KongregateId_member != NULL && !KongregateId_member->value.IsNull()) KongregateId = KongregateId_member->value.GetUint64();
+	if (KongregateId_member != NULL && !KongregateId_member->value.IsNull()) KongregateId = KongregateId_member->value.GetString();
     
     const Value::Member* AuthTicket_member = obj.FindMember("AuthTicket");
 	if (AuthTicket_member != NULL && !AuthTicket_member->value.IsNull()) AuthTicket = AuthTicket_member->value.GetString();
@@ -6610,7 +6636,7 @@ void LoginWithKongregateRequest::writeJSON(PFStringJsonWriter& writer)
     
     writer.String("TitleId"); writer.String(TitleId.c_str());
     
-    writer.String("KongregateId"); writer.Uint64(KongregateId);
+    writer.String("KongregateId"); writer.String(KongregateId.c_str());
     
     writer.String("AuthTicket"); writer.String(AuthTicket.c_str());
     
@@ -6627,7 +6653,7 @@ bool LoginWithKongregateRequest::readFromValue(const rapidjson::Value& obj)
 	if (TitleId_member != NULL && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
     
     const Value::Member* KongregateId_member = obj.FindMember("KongregateId");
-	if (KongregateId_member != NULL && !KongregateId_member->value.IsNull()) KongregateId = KongregateId_member->value.GetUint64();
+	if (KongregateId_member != NULL && !KongregateId_member->value.IsNull()) KongregateId = KongregateId_member->value.GetString();
     
     const Value::Member* AuthTicket_member = obj.FindMember("AuthTicket");
 	if (AuthTicket_member != NULL && !AuthTicket_member->value.IsNull()) AuthTicket = AuthTicket_member->value.GetString();

@@ -682,6 +682,8 @@ void CatalogItem::writeJSON(PFStringJsonWriter& writer)
     
     writer.String("IsTradable"); writer.Bool(IsTradable);
     
+    if(ItemImageUrl.length() > 0) { writer.String("ItemImageUrl"); writer.String(ItemImageUrl.c_str()); }
+    
     
     writer.EndObject();
 }
@@ -746,6 +748,9 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
     
     const Value::Member* IsTradable_member = obj.FindMember("IsTradable");
 	if (IsTradable_member != NULL && !IsTradable_member->value.IsNull()) IsTradable = IsTradable_member->value.GetBool();
+    
+    const Value::Member* ItemImageUrl_member = obj.FindMember("ItemImageUrl");
+	if (ItemImageUrl_member != NULL && !ItemImageUrl_member->value.IsNull()) ItemImageUrl = ItemImageUrl_member->value.GetString();
     
     
     return true;

@@ -615,6 +615,7 @@ namespace ClientModels
 		bool CanBecomeCharacter;
 		bool IsStackable;
 		bool IsTradable;
+		std::string ItemImageUrl;
 	
         CatalogItem() :
 			PlayFabBaseModel(),
@@ -632,7 +633,8 @@ namespace ClientModels
 			Bundle(NULL),
 			CanBecomeCharacter(false),
 			IsStackable(false),
-			IsTradable(false)
+			IsTradable(false),
+			ItemImageUrl()
 			{}
 		
 		CatalogItem(const CatalogItem& src) :
@@ -651,7 +653,8 @@ namespace ClientModels
 			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL),
 			CanBecomeCharacter(src.CanBecomeCharacter),
 			IsStackable(src.IsStackable),
-			IsTradable(src.IsTradable)
+			IsTradable(src.IsTradable),
+			ItemImageUrl(src.ItemImageUrl)
 			{}
 			
 		CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -2048,6 +2051,38 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
+	struct VirtualCurrencyRechargeTime : public PlayFabBaseModel
+    {
+		
+		Int32 SecondsToRecharge;
+		time_t RechargeTime;
+		Int32 RechargeMax;
+	
+        VirtualCurrencyRechargeTime() :
+			PlayFabBaseModel(),
+			SecondsToRecharge(0),
+			RechargeTime(0),
+			RechargeMax(0)
+			{}
+		
+		VirtualCurrencyRechargeTime(const VirtualCurrencyRechargeTime& src) :
+			PlayFabBaseModel(),
+			SecondsToRecharge(src.SecondsToRecharge),
+			RechargeTime(src.RechargeTime),
+			RechargeMax(src.RechargeMax)
+			{}
+			
+		VirtualCurrencyRechargeTime(const rapidjson::Value& obj) : VirtualCurrencyRechargeTime()
+        {
+            readFromValue(obj);
+        }
+		
+		~VirtualCurrencyRechargeTime();
+		
+        void writeJSON(PFStringJsonWriter& writer);
+        bool readFromValue(const rapidjson::Value& obj);
+    };
+	
 	struct GetCharacterInventoryResult : public PlayFabBaseModel
     {
 		
@@ -2055,13 +2090,15 @@ namespace ClientModels
 		std::string CharacterId;
 		std::list<ItemInstance> Inventory;
 		std::map<std::string, Int32> VirtualCurrency;
+		std::map<std::string, VirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes;
 	
         GetCharacterInventoryResult() :
 			PlayFabBaseModel(),
 			PlayFabId(),
 			CharacterId(),
 			Inventory(),
-			VirtualCurrency()
+			VirtualCurrency(),
+			VirtualCurrencyRechargeTimes()
 			{}
 		
 		GetCharacterInventoryResult(const GetCharacterInventoryResult& src) :
@@ -2069,7 +2106,8 @@ namespace ClientModels
 			PlayFabId(src.PlayFabId),
 			CharacterId(src.CharacterId),
 			Inventory(src.Inventory),
-			VirtualCurrency(src.VirtualCurrency)
+			VirtualCurrency(src.VirtualCurrency),
+			VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes)
 			{}
 			
 		GetCharacterInventoryResult(const rapidjson::Value& obj) : GetCharacterInventoryResult()
@@ -3623,38 +3661,6 @@ namespace ClientModels
         bool readFromValue(const rapidjson::Value& obj);
     };
 	
-	struct VirtualCurrencyRechargeTime : public PlayFabBaseModel
-    {
-		
-		Int32 SecondsToRecharge;
-		time_t RechargeTime;
-		Int32 RechargeMax;
-	
-        VirtualCurrencyRechargeTime() :
-			PlayFabBaseModel(),
-			SecondsToRecharge(0),
-			RechargeTime(0),
-			RechargeMax(0)
-			{}
-		
-		VirtualCurrencyRechargeTime(const VirtualCurrencyRechargeTime& src) :
-			PlayFabBaseModel(),
-			SecondsToRecharge(src.SecondsToRecharge),
-			RechargeTime(src.RechargeTime),
-			RechargeMax(src.RechargeMax)
-			{}
-			
-		VirtualCurrencyRechargeTime(const rapidjson::Value& obj) : VirtualCurrencyRechargeTime()
-        {
-            readFromValue(obj);
-        }
-		
-		~VirtualCurrencyRechargeTime();
-		
-        void writeJSON(PFStringJsonWriter& writer);
-        bool readFromValue(const rapidjson::Value& obj);
-    };
-	
 	struct GetUserCombinedInfoResult : public PlayFabBaseModel
     {
 		
@@ -4077,15 +4083,18 @@ namespace ClientModels
     {
 		
 		std::string AccessToken;
+		OptionalBool ForceLink;
 	
         LinkFacebookAccountRequest() :
 			PlayFabBaseModel(),
-			AccessToken()
+			AccessToken(),
+			ForceLink()
 			{}
 		
 		LinkFacebookAccountRequest(const LinkFacebookAccountRequest& src) :
 			PlayFabBaseModel(),
-			AccessToken(src.AccessToken)
+			AccessToken(src.AccessToken),
+			ForceLink(src.ForceLink)
 			{}
 			
 		LinkFacebookAccountRequest(const rapidjson::Value& obj) : LinkFacebookAccountRequest()
@@ -4278,12 +4287,12 @@ namespace ClientModels
 	struct LinkKongregateAccountRequest : public PlayFabBaseModel
     {
 		
-		Uint64 KongregateId;
+		std::string KongregateId;
 		std::string AuthTicket;
 	
         LinkKongregateAccountRequest() :
 			PlayFabBaseModel(),
-			KongregateId(0),
+			KongregateId(),
 			AuthTicket()
 			{}
 		
@@ -4784,14 +4793,14 @@ namespace ClientModels
     {
 		
 		std::string TitleId;
-		Uint64 KongregateId;
+		std::string KongregateId;
 		std::string AuthTicket;
 		OptionalBool CreateAccount;
 	
         LoginWithKongregateRequest() :
 			PlayFabBaseModel(),
 			TitleId(),
-			KongregateId(0),
+			KongregateId(),
 			AuthTicket(),
 			CreateAccount()
 			{}

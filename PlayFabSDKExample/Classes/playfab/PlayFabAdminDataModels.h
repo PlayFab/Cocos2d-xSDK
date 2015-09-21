@@ -422,6 +422,7 @@ namespace AdminModels
 		bool CanBecomeCharacter;
 		bool IsStackable;
 		bool IsTradable;
+		std::string ItemImageUrl;
 	
         CatalogItem() :
 			PlayFabBaseModel(),
@@ -439,7 +440,8 @@ namespace AdminModels
 			Bundle(NULL),
 			CanBecomeCharacter(false),
 			IsStackable(false),
-			IsTradable(false)
+			IsTradable(false),
+			ItemImageUrl()
 			{}
 		
 		CatalogItem(const CatalogItem& src) :
@@ -458,7 +460,8 @@ namespace AdminModels
 			Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL),
 			CanBecomeCharacter(src.CanBecomeCharacter),
 			IsStackable(src.IsStackable),
-			IsTradable(src.IsTradable)
+			IsTradable(src.IsTradable),
+			ItemImageUrl(src.ItemImageUrl)
 			{}
 			
 		CatalogItem(const rapidjson::Value& obj) : CatalogItem()
