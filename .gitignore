@@ -1,0 +1,9 @@
+Debug.win32/
+
+*.suo
+*.sdf
+*.opensdf
+*.obj
+*.log
+*.tlog
+*.idb
