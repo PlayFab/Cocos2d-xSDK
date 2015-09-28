@@ -4462,6 +4462,8 @@ void RevokeInventoryItemRequest::writeJSON(PFStringJsonWriter& writer)
     
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     
+    if(CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    
     writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str());
     
     
@@ -4473,6 +4475,9 @@ bool RevokeInventoryItemRequest::readFromValue(const rapidjson::Value& obj)
     
     const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
 	if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    
+    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
+	if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
     
     const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
 	if (ItemInstanceId_member != NULL && !ItemInstanceId_member->value.IsNull()) ItemInstanceId = ItemInstanceId_member->value.GetString();
