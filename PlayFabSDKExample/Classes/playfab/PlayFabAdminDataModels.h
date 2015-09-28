@@ -3144,17 +3144,20 @@ namespace AdminModels
     {
 		
 		std::string PlayFabId;
+		std::string CharacterId;
 		std::string ItemInstanceId;
 	
         RevokeInventoryItemRequest() :
 			PlayFabBaseModel(),
 			PlayFabId(),
+			CharacterId(),
 			ItemInstanceId()
 			{}
 		
 		RevokeInventoryItemRequest(const RevokeInventoryItemRequest& src) :
 			PlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
 			ItemInstanceId(src.ItemInstanceId)
 			{}
 			
