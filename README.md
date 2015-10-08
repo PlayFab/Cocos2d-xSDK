@@ -7,7 +7,7 @@ Please note that this SDK does not work correctly for android development.  We a
 
 2. Prerequisites:
 ----
-* Users should be very familiar with the topics covered in our [getting started guide](https://playfab.com/getting-started).
+* Users should be very familiar with the topics covered in our [getting started guide](https://playfab.com/docs/getting-started-guide/).
 
 To connect to the PlayFab service, your machine must be running TLS v1.2 or better.
 * For Windows, this means Windows 7 and above
