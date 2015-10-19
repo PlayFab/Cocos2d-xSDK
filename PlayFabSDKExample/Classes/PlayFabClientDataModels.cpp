@@ -7133,6 +7133,7 @@ void PlayFab::ClientModels::writeTransactionStatusEnumJSON(TransactionStatus enu
         case TransactionStatusRefundFailed: writer.String("RefundFailed"); break;
         case TransactionStatusChargedBack: writer.String("ChargedBack"); break;
         case TransactionStatusFailedByUber: writer.String("FailedByUber"); break;
+        case TransactionStatusFailedByPlayFab: writer.String("FailedByPlayFab"); break;
         case TransactionStatusRevoked: writer.String("Revoked"); break;
         case TransactionStatusTradePending: writer.String("TradePending"); break;
         case TransactionStatusTraded: writer.String("Traded"); break;
@@ -7161,6 +7162,7 @@ TransactionStatus PlayFab::ClientModels::readTransactionStatusFromValue(const ra
         _TransactionStatusMap["RefundFailed"] = TransactionStatusRefundFailed;
         _TransactionStatusMap["ChargedBack"] = TransactionStatusChargedBack;
         _TransactionStatusMap["FailedByUber"] = TransactionStatusFailedByUber;
+        _TransactionStatusMap["FailedByPlayFab"] = TransactionStatusFailedByPlayFab;
         _TransactionStatusMap["Revoked"] = TransactionStatusRevoked;
         _TransactionStatusMap["TradePending"] = TransactionStatusTradePending;
         _TransactionStatusMap["Traded"] = TransactionStatusTraded;

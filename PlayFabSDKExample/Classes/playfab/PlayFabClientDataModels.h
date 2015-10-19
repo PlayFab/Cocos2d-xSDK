@@ -5166,6 +5166,7 @@ namespace ClientModels
 		TransactionStatusRefundFailed,
 		TransactionStatusChargedBack,
 		TransactionStatusFailedByUber,
+		TransactionStatusFailedByPlayFab,
 		TransactionStatusRevoked,
 		TransactionStatusTradePending,
 		TransactionStatusTraded,
