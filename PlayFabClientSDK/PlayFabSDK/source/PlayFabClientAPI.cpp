@@ -132,7 +132,7 @@ void PlayFabClientAPI::LoginWithAndroidDeviceID(
     )
 {
     if (PlayFabSettings::titleId.length() > 0)
-		request.TitleId = PlayFabSettings::titleId;
+        request.TitleId = PlayFabSettings::titleId;
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithAndroidDeviceID"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
@@ -158,7 +158,7 @@ void PlayFabClientAPI::OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequ
     if (success)
     {
         if (outResult.SessionTicket.length() > 0)
-			(static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
 
         if (request->GetResultCallback() != NULL)
         {
@@ -191,7 +191,7 @@ void PlayFabClientAPI::LoginWithCustomID(
     )
 {
     if (PlayFabSettings::titleId.length() > 0)
-		request.TitleId = PlayFabSettings::titleId;
+        request.TitleId = PlayFabSettings::titleId;
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithCustomID"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
@@ -217,7 +217,7 @@ void PlayFabClientAPI::OnLoginWithCustomIDResult(int httpStatus, HttpRequest* re
     if (success)
     {
         if (outResult.SessionTicket.length() > 0)
-			(static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
 
         if (request->GetResultCallback() != NULL)
         {
@@ -250,7 +250,7 @@ void PlayFabClientAPI::LoginWithEmailAddress(
     )
 {
     if (PlayFabSettings::titleId.length() > 0)
-		request.TitleId = PlayFabSettings::titleId;
+        request.TitleId = PlayFabSettings::titleId;
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithEmailAddress"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
@@ -276,7 +276,7 @@ void PlayFabClientAPI::OnLoginWithEmailAddressResult(int httpStatus, HttpRequest
     if (success)
     {
         if (outResult.SessionTicket.length() > 0)
-			(static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
 
         if (request->GetResultCallback() != NULL)
         {
@@ -309,7 +309,7 @@ void PlayFabClientAPI::LoginWithFacebook(
     )
 {
     if (PlayFabSettings::titleId.length() > 0)
-		request.TitleId = PlayFabSettings::titleId;
+        request.TitleId = PlayFabSettings::titleId;
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithFacebook"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
@@ -335,7 +335,7 @@ void PlayFabClientAPI::OnLoginWithFacebookResult(int httpStatus, HttpRequest* re
     if (success)
     {
         if (outResult.SessionTicket.length() > 0)
-			(static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
 
         if (request->GetResultCallback() != NULL)
         {
@@ -368,7 +368,7 @@ void PlayFabClientAPI::LoginWithGoogleAccount(
     )
 {
     if (PlayFabSettings::titleId.length() > 0)
-		request.TitleId = PlayFabSettings::titleId;
+        request.TitleId = PlayFabSettings::titleId;
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithGoogleAccount"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
@@ -394,7 +394,7 @@ void PlayFabClientAPI::OnLoginWithGoogleAccountResult(int httpStatus, HttpReques
     if (success)
     {
         if (outResult.SessionTicket.length() > 0)
-			(static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
 
         if (request->GetResultCallback() != NULL)
         {
@@ -427,7 +427,7 @@ void PlayFabClientAPI::LoginWithIOSDeviceID(
     )
 {
     if (PlayFabSettings::titleId.length() > 0)
-		request.TitleId = PlayFabSettings::titleId;
+        request.TitleId = PlayFabSettings::titleId;
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithIOSDeviceID"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
@@ -453,7 +453,7 @@ void PlayFabClientAPI::OnLoginWithIOSDeviceIDResult(int httpStatus, HttpRequest*
     if (success)
     {
         if (outResult.SessionTicket.length() > 0)
-			(static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
 
         if (request->GetResultCallback() != NULL)
         {
@@ -486,7 +486,7 @@ void PlayFabClientAPI::LoginWithKongregate(
     )
 {
     if (PlayFabSettings::titleId.length() > 0)
-		request.TitleId = PlayFabSettings::titleId;
+        request.TitleId = PlayFabSettings::titleId;
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithKongregate"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
@@ -512,7 +512,7 @@ void PlayFabClientAPI::OnLoginWithKongregateResult(int httpStatus, HttpRequest* 
     if (success)
     {
         if (outResult.SessionTicket.length() > 0)
-			(static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
 
         if (request->GetResultCallback() != NULL)
         {
@@ -545,7 +545,7 @@ void PlayFabClientAPI::LoginWithPlayFab(
     )
 {
     if (PlayFabSettings::titleId.length() > 0)
-		request.TitleId = PlayFabSettings::titleId;
+        request.TitleId = PlayFabSettings::titleId;
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithPlayFab"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
@@ -571,7 +571,7 @@ void PlayFabClientAPI::OnLoginWithPlayFabResult(int httpStatus, HttpRequest* req
     if (success)
     {
         if (outResult.SessionTicket.length() > 0)
-			(static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
 
         if (request->GetResultCallback() != NULL)
         {
@@ -604,7 +604,7 @@ void PlayFabClientAPI::LoginWithSteam(
     )
 {
     if (PlayFabSettings::titleId.length() > 0)
-		request.TitleId = PlayFabSettings::titleId;
+        request.TitleId = PlayFabSettings::titleId;
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithSteam"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
@@ -630,7 +630,7 @@ void PlayFabClientAPI::OnLoginWithSteamResult(int httpStatus, HttpRequest* reque
     if (success)
     {
         if (outResult.SessionTicket.length() > 0)
-			(static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
 
         if (request->GetResultCallback() != NULL)
         {
@@ -663,7 +663,7 @@ void PlayFabClientAPI::RegisterPlayFabUser(
     )
 {
     if (PlayFabSettings::titleId.length() > 0)
-		request.TitleId = PlayFabSettings::titleId;
+        request.TitleId = PlayFabSettings::titleId;
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/RegisterPlayFabUser"));
     httpRequest->SetHeader("Content-Type", "application/json");
 	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
@@ -689,7 +689,7 @@ void PlayFabClientAPI::OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* 
     if (success)
     {
         if (outResult.SessionTicket.length() > 0)
-			(static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
 
         if (request->GetResultCallback() != NULL)
         {
@@ -4908,7 +4908,7 @@ void PlayFabClientAPI::OnGetCloudScriptUrlResult(int httpStatus, HttpRequest* re
     if (success)
     {
         if (outResult.Url.length() > 0)
-			PlayFabSettings::logicServerURL = outResult.Url;
+            PlayFabSettings::logicServerURL = outResult.Url;
 
         if (request->GetResultCallback() != NULL)
         {

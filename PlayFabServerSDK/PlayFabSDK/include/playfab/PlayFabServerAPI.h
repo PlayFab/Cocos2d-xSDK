@@ -54,6 +54,7 @@ namespace PlayFab
 		typedef void(*MoveItemToCharacterFromCharacterCallback)(ServerModels::MoveItemToCharacterFromCharacterResult& result, void* userData);
 		typedef void(*MoveItemToCharacterFromUserCallback)(ServerModels::MoveItemToCharacterFromUserResult& result, void* userData);
 		typedef void(*MoveItemToUserFromCharacterCallback)(ServerModels::MoveItemToUserFromCharacterResult& result, void* userData);
+		typedef void(*RedeemCouponCallback)(ServerModels::RedeemCouponResult& result, void* userData);
 		typedef void(*ReportPlayerCallback)(ServerModels::ReportPlayerServerResult& result, void* userData);
 		typedef void(*SubtractCharacterVirtualCurrencyCallback)(ServerModels::ModifyCharacterVirtualCurrencyResult& result, void* userData);
 		typedef void(*SubtractUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
@@ -171,6 +172,8 @@ namespace PlayFab
 		void MoveItemToCharacterFromUser(ServerModels::MoveItemToCharacterFromUserRequest& request, MoveItemToCharacterFromUserCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void MoveItemToUserFromCharacter(ServerModels::MoveItemToUserFromCharacterRequest& request, MoveItemToUserFromCharacterCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void RedeemCoupon(ServerModels::RedeemCouponRequest& request, RedeemCouponCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void ReportPlayer(ServerModels::ReportPlayerServerRequest& request, ReportPlayerCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -312,6 +315,8 @@ namespace PlayFab
 		static void OnMoveItemToCharacterFromUserResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnMoveItemToUserFromCharacterResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnRedeemCouponResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnReportPlayerResult(int httpStatus, HttpRequest* request, void* userData);
 		
