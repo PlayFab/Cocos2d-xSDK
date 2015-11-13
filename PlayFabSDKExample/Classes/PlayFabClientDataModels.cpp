@@ -2097,6 +2097,7 @@ void PlayFab::ClientModels::writeUserOriginationEnumJSON(UserOrigination enumVal
     case UserOriginationPSN: writer.String("PSN"); break;
     case UserOriginationGameCenter: writer.String("GameCenter"); break;
     case UserOriginationCustomId: writer.String("CustomId"); break;
+    case UserOriginationXboxLive: writer.String("XboxLive"); break;
 
     }
 }
@@ -2121,6 +2122,7 @@ UserOrigination PlayFab::ClientModels::readUserOriginationFromValue(const rapidj
         _UserOriginationMap["PSN"] = UserOriginationPSN;
         _UserOriginationMap["GameCenter"] = UserOriginationGameCenter;
         _UserOriginationMap["CustomId"] = UserOriginationCustomId;
+        _UserOriginationMap["XboxLive"] = UserOriginationXboxLive;
 
     }
 
@@ -5084,6 +5086,47 @@ bool LinkSteamAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+LinkXboxAccountRequest::~LinkXboxAccountRequest()
+{
+
+}
+
+void LinkXboxAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("XboxToken"); writer.String(XboxToken.c_str());
+
+    writer.EndObject();
+}
+
+bool LinkXboxAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* XboxToken_member = obj.FindMember("XboxToken");
+    if (XboxToken_member != NULL && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
+
+    return true;
+}
+
+LinkXboxAccountResult::~LinkXboxAccountResult()
+{
+
+}
+
+void LinkXboxAccountResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool LinkXboxAccountResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 ListUsersCharactersRequest::~ListUsersCharactersRequest()
 {
 
@@ -5527,6 +5570,34 @@ bool LoginWithSteamRequest::readFromValue(const rapidjson::Value& obj)
     if (TitleId_member != NULL && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
     const Value::Member* SteamTicket_member = obj.FindMember("SteamTicket");
     if (SteamTicket_member != NULL && !SteamTicket_member->value.IsNull()) SteamTicket = SteamTicket_member->value.GetString();
+    const Value::Member* CreateAccount_member = obj.FindMember("CreateAccount");
+    if (CreateAccount_member != NULL && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
+
+    return true;
+}
+
+LoginWithXboxRequest::~LoginWithXboxRequest()
+{
+
+}
+
+void LoginWithXboxRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("TitleId"); writer.String(TitleId.c_str());
+    writer.String("XboxToken"); writer.String(XboxToken.c_str());
+    if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
+
+    writer.EndObject();
+}
+
+bool LoginWithXboxRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != NULL && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::Member* XboxToken_member = obj.FindMember("XboxToken");
+    if (XboxToken_member != NULL && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
     const Value::Member* CreateAccount_member = obj.FindMember("CreateAccount");
     if (CreateAccount_member != NULL && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
 
@@ -7133,6 +7204,47 @@ void UnlinkSteamAccountResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool UnlinkSteamAccountResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+UnlinkXboxAccountRequest::~UnlinkXboxAccountRequest()
+{
+
+}
+
+void UnlinkXboxAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("XboxToken"); writer.String(XboxToken.c_str());
+
+    writer.EndObject();
+}
+
+bool UnlinkXboxAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* XboxToken_member = obj.FindMember("XboxToken");
+    if (XboxToken_member != NULL && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
+
+    return true;
+}
+
+UnlinkXboxAccountResult::~UnlinkXboxAccountResult()
+{
+
+}
+
+void UnlinkXboxAccountResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool UnlinkXboxAccountResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;

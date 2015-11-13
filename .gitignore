@@ -7,3 +7,4 @@ Debug.win32/
 *.log
 *.tlog
 *.idb
+UpgradeLog*.htm
