@@ -2,7 +2,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x v3.7 Release Notes](#cocos2d-x-v37-release-notes)
+- [Cocos2d-x v3.8.1 Release Notes](#cocos2d-x-v381-release-notes)
 - [Misc Information](#misc-information)
 - [Requirements](#requirements)
   - [Runtime Requirements](#runtime-requirements)
@@ -14,25 +14,22 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.7](#v37)
-  - [Highlights of v3.7](#highlights-of-v37)
+- [v3.8.1](#v38)
+  - [Highlights and API changes of v3.8.1](#highlights-and-api-changes-of-v381)
   - [Download](#download)
   - [The main features in detail:](#the-main-features-in-detail)
-    - [3D Physics](#3d-physics)
-    - [3D Navigation mesh](#3d-navigation-mesh)
-    - [Material system](#material-system)
-    - [All in one Cocos2d-x](#all-in-one-cocos2d-x)
-    - [Enhanced Polygon Sprite](#enhanced-polygon-sprite)
-    - [WebView and VideoPlayer in JS (native and web)](#webview-and-videoplayer-in-js-native-and-web)
-    - [Nine Patch format support](#nine-patch-format-support)
-    - [Android Studio support](#android-studio-support)
-    - [Samsung Enhanced API support](#samsung-enhanced-api-support)
-    - [SDKBOX](#sdkbox)
-  - [The Next Step](#the-next-step)
+    - [3D Module](#3d-module)
+    - [UI System](#ui-system)
+    - [AudioEngine](#audioengine)
+    - [FileUtils](#fileutils)
+    - [Others](#others)
+  - [Other changes](#other-changes)
+  - [New APIs](#new-apis)
+- [The Next Step](#the-next-step)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x v3.7 Release Notes #
+# Cocos2d-x v3.8.1 Release Notes #
 
 # Misc Information
 
@@ -47,6 +44,7 @@
 * OS X 10.7 or newer
 * Windows 7 or newer
 * Windows Phone 8.1
+* Windows 10 UWP
 * Linux Ubuntu 14.04 or newer
 * Mordern browsers and IE 9+ (On mobile platforms, only iOS and Android 5 activated WebGL support)
 
@@ -56,7 +54,8 @@
 * gcc 4.9 or newer for Linux
 * ndk-r10c for Android
 * Visual Studio 2013 or newer for Windows (win32)
-* Visual Studio 2013 update4 or newer for Windows Phone 8
+* Visual Studio 2013 update4 or newer for Windows 8.1 universal Apps
+* Visual Studio 2015 RC or newer and Windows 10.0 (build 10074 or higher) for Windows 10.0 UWP Apps
 
 ## How to run tests
 
@@ -86,8 +85,8 @@ cocos run -p android -m release
 
 ### Mac OSX & iOS
 
-* Enter `cocos2d-x/build` folder, open `cocos2d_test.xcodeproj` or `cocos2d_js_tests.xcodeproj` (For JS test, we will merge these two project in v3.8)
-* Select `iOS` or `OS X` target in scheme toolbar
+* Enter `cocos2d-x/build` folder, open `cocos2d_test.xcodeproj`
+* Select `cpp-tests`, `lua-tests`, `js-tests` for `iOS` or `OS X` target in scheme toolbar
 * Click `run` button
 
 ### Android
@@ -119,8 +118,9 @@ Then
 
 ### Windows
 
-* For win32 project, enter `cocos2d-x/build`, and open `cocos2d-win32.sln` or `cocos2d-js-win32.sln`
-* For win 8.1 project, enter `cocos2d-x/build`, and open `cocos2d-win8.1-universal.sln` or `cocos2d-js-win8.1-universal.sln`
+* For win32 project, enter `cocos2d-x/build`, and open `cocos2d-win32.sln`
+* For win 8.1 project, enter `cocos2d-x/build`, and open `cocos2d-win8.1-universal.sln`
+* For win 10 project, enter `cocos2d-x/build`, and open `cocos2d-win10.sln`
 * Select running target
 * Click run button
 
@@ -147,119 +147,383 @@ Run
 Use Cocos Console to create a new game:
 
 ```
-cocos new -l cpp|js|lua MyGame
+cocos new -l cpp|js|lua MyNewGame
 ```
 
-# v3.7
+# v3.8.1
 
-## Highlights of v3.7
+## Highlights and API changes of v3.8.1
 
-1. Cocos2d-x will only publish the final versions publicly in the future, all alpha, beta, rc versions will be exclusively published in the community. By that I mean in the English and Chinese forum, in developers QQ groups, by the github tags. The final versions will be published with the all in one Cocos.
+As promised, Cocos2d-x v3.8 have greatly improved the stability and API friendliness. On one side, we continue to improve 3D capacity by providing 3D physics collider, skybox background brush and key frame event callback in Animate3D. On another side, we have refined several core modules, including UI system, AudioEngine, FileUtils, Bindings Generator, etc.
 
-2. Cocos2d-JS is merged into Cocos2d-x in v3.7, from now on, developers won't get confused about which product they should use. With Cocos2d-x, you can work with C++/Lua/JS and publish to Windows/WP8.1/Android/Mac/iOS/Linux and Web if you use JS. For a smooth transition, we will still announce two products in v3.7, Cocos2d-x v3.7 and Cocos2d-JS v3.7, but they share exactly the same package. In the future versions, there will be only one package. For reference, this have been discussed in [another thread](http://discuss.cocos2d-x.org/t/discuss-the-next-step-of-cocos2d-x/21182/)
+Here is some highlighted improvments and API changes:
 
-* 3d: Added Physics3d support (JS/Lua ready)
-* 3d: Added NavMesh support (JS/Lua ready)
-* core: Added Material system (JS/Lua ready)
-* sprite: Supportted polygon sprite with AutoPolygon generator (JS/Lua ready)
-* Scale9Sprite: Added Android 9-patch image support (JS/Lua ready)
-* platform: Added Windows 10.0 Universal App(UWP) support
-* platform: Add Samsung Enhanced API on Android for cocos
-* C++: Added Android Studio support
-* JS: Merged JSB and web engine into Cocos2d-x for a All-in-one engine
-* JS: Added `ccui.VideoPlayer` and `ccui.WebView` for iOS/Android/Web
-* console: Supported build & run Android Studio project with cocos console
-* SDKBOX: super EASY way to integrate 3rd party SDKs into cocos2d-x
+1. Xcode 7 support
+2. 3D Module
+    - Added 3D physics collider
+    - Supported setting camera background brushes with color/depth/skybox 
+    - Added key frame event Callback in Animate3D
+    - Added light map support in Terrain
+3. UI System
+    - Reimplemented and enhanced EditBox on Android
+    - Added ScrollViewBar for displaying a scroll bar at the side of ScrollView (JSB/Lua ready)
+    - Added RadioButton widget (JSB/Lua ready)
+    - Added HANYI FullType font support
+4. AudioEngine
+    - AudioEngine supported audio preloading
+    - Bound new AudioEngine in JSB
+5. FileUtils
+    - Added a set of file writing APIs: writeStringToFile, writeDataToFile, writeValueMapToFile, writeValueVectorToFile
+6. Others
+    - Improved Bindings Generator tool
+    - Merged JSB test project into cocos2d test project
+    - framework: Support generate prebuilt libs of engine with debug mode
+    - console: Supported new portrait projects from templates
 
 ## Download
 
-[Cocos2d-x v3.7](http://www.cocos2d-x.org/filedown/cocos2d-x-3.7.zip) including : C++, Lua & JS
+[Cocos2d-x v3.8.1](http://www.cocos2d-x.org/filedown/cocos2d-x-3.8.1.zip) including : C++, Lua & JS
 
 ## The main features in detail:
 
-### 3D Physics
+### 3D Module
 
-It's the physics engine we provided for providing 3D physics game capability, it works great with our current 3D modules, like 3D sprites, 3D Terrain, etc. We used [bullet](http://bulletphysics.org/wordpress/) library as base of 3D physics, encapsulate it into our Cocos 3D physics APIs. You can refer to Physics3DTest test case for its API and usage, we will add documentation into [programmers guide](http://cocos2d-x.org/programmersguide) lately.
+1. 3D physics collider
 
-![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_348f31ee628da2b.png)
+    3D physics collider is a new type of physics object. It can be used as both trigger and collider. 
 
-### 3D Navigation mesh
+    Trigger is a region defined by physics shapes and  can get callback when other physics objects enter or leave. Its usage is described in the following code:
+    
+    ```cpp
+    //create a collider using colliderDes
+    Physics3DColliderDes colliderDes;
+    colliderDes.shape = Physics3DShape::createSphere(10.0f);
+    colliderDes.isTrigger = true;
+    auto collider = Physics3DCollider::create(&colliderDes);
+    auto component = Physics3DComponent::create(collider);
+    auto node = Node::create();
+    addChild(node);
+    node->addComponent(component);
 
-The navigation mesh system provides simple to use API to find path in a complexe 3D world, you can add mesh with a triangles list, add obstacles. Then you will add agents which can perform a path finding task and move your 3D sprites to a certain place following the path. You can refer to NavmeshTest test case for its API and usage, we will add documentation into [programmers guide](http://cocos2d-x.org/programmersguide) lately.
+    collider->onTriggerEnter = [=](Physics3DObject *otherObject){
+      //some body entering
+    };
+    collider->onTriggerExit = [=](Physics3DObject *otherObject){
+      //some one leaving
+    }; 
+    ```
 
-![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_6589cbf376a639b.png)
+    Collider is similar to rigid body, it can give force to the rigid body that collides with it. However, it is static and has better performance than rigid body. It is proper to represent a static scene or objects using collider and dynamic part using rigid body. You can set colliderDes.isTrigger to false when you want to make it collider.
 
-### Material system
+2. Camera background brushes
 
-Material system is an advanced system which defines all visual informations (it may contain aural or physical informations in the future) of an object. Instead of just plain an simple texture, you can have more than one texture, and much more features like multi-pass rendering. Refer to [the documentation](https://github.com/chukong/programmers-guide/blob/v3.7/chapters/14.md#shaders-and-materials) for more details.
+    Different with previous versions, in v3.8, developers can choose to erase the camera’s background with 4 types of brush: none, color, depth, skybox. None brush means do nothing; Color brush erases background using given color and depth; depth brush erases background using given depth; skybox brush erases background using given skybox with 6 texture faces. The default brush is depth brush. The usage of brushes is showing below:
 
-![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_a94a91aeeaf401d.png)
+    ```cpp
+    // Using none brush
+    _camera->setBackgroundBrush(CameraBackgroundBrush::createNoneBrush());
+    // Using depth brush, clear depth with 1.0
+    _camera->setBackgroundBrush(CameraBackgroundBrush::createDepthBrush(1.f));
+    // Using color brush, clear color is (1,0,0,1), depth is 1
+    _camera->setBackgroundBrush(CameraBackgroundBrush::createColorBrush(Color4F(1.f, 0.f, 0.f, 1.f), 1.f));
+    // SkyBox brush
+    _camera->setBackgroundBrush(CameraBackgroundBrush::createSkyboxBrush("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg","Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg","Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg"));
+    ```
 
-### All in one Cocos2d-x
+3. Animate3D key frame event callback
 
-After merged Cocos2d-JS into Cocos2d-x, nothing have changed for C++ and Lua developers, but the engine structure may look very strange to JS developers. Don't worry, the upgrade is still very simple, because the project structure remains the same as before. Refer to [this discussion](http://discuss.cocos2d-x.org/t/cocos2d-js-v3-6-1-hot-fix-for-remote-debugger/21524/2) for more informations.
+    Similar to 2d AnimationFrame callback, frame event callback is supported in Animated3D now. It allows developer to set a callback to be invoked when specific frame is played. Sample code:
 
-### Enhanced Polygon Sprite
+    ```cpp
+    auto animation = Animation3D::create(“XX.c3b”);
+    auto animate = Animate3D::create(animation);
+    ValueMap valuemap0;//you can add some user data here, it can be used in the frame event callback
+    //add a callback when frame 275 is played
+    animate->setKeyFrameUserInfo(275, valuemap0);
+            
+    auto listener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
+    {
+        auto info = (Animate3D::Animate3DDisplayedEventInfo*)event->getUserData();
+        
+        //frame 275 is played, you can add some code here
+        cocos2d::log(“frame %d”, info->frame);
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
+    ```
 
-As it's not very easy to used in the previous version, we have refactored the API for Polygon Sprite. It's now becoming a internal feature of 2d Sprite, you can use AutoPolygon to generate polygons for a sprite, then use it to create the sprite directly, very simple to use.
+4. Light map support in Terrain
 
-```
-auto pinfo = AutoPolygon::generatePolygon("filename.png");
-auto spp = Sprite::create(pinfo);
-```
+    Terrain with light map is supported in v3.8, which means you can add a light map texture baked from other tools to the terrain. The light map texture contains light info, so that the terrain seems to be lighted with several lights. Terrain with light map can be created like this,
 
-Although it do takes time to generate the polygons information, you can cache and reuse it, we also plan to support the polygons information generation in the editor in the future.
+    ```cpp
+    //create a normal terrain as before
+    Terrain::DetailMap r(“TerrainTest/dirt.jpg”),g(“TerrainTest/Grass2.jpg”),b(“TerrainTest/road.jpg”),a(“TerrainTest/GreenSkin.jpg”);
+    Terrain::TerrainData data(“TerrainTest/heightmap16.jpg”,”TerrainTest/alphamap.png”,r,g,b,a);
+    _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
+    _terrain->setLODDistance(3.2f,6.4f,9.6f);
+    _terrain->setMaxDetailMapAmount(4);
+    _terrain->setDrawWire(false);
+    //set light map for the terrain
+    _terrain->setLightMap(“TerrainTest/Lightmap.png”);
+    ```
 
-![](http://cdn.cocimg.com/bbs/attachment/Fid_41/41_300874_7b5ef9b52f054f3.png)
+### UI System
 
-### WebView and VideoPlayer in JS (native and web)
+1. Reimplemented EditBox
 
-The WebView and VideoPlayer have finally been ported to JS, and it supports iOS, Android and Web browsers. You can refer to its usage in the test case: [WebViewTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/js-tests/src/GUITest/UIWebViewTest/UIWebViewTest.js) and [VideoPlayerTest](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/js-tests/src/GUITest/UIVideoPlayerTest/UIVideoPlayerTest.js).
+    The usage of EditBox is the same as before, but we have reimplemented it for Android platform. The use experience is highly improved, important improvements are: 
 
-### Nine Patch format support
+    - Display cursor in EditBox
+    - Support copy, cut, paste and select actions in EditBox
+    - Support multi-line input, you should set InputMode to `ANY` to enable multi-line input
+    - EditBox won't be masked by the keyboard UI anymore
 
-The Nine Patch image is a stretchable bitmap image which can be used as the texture of Scale9Sprite. Now Cocos2d-x support creating the Scale9Sprite node directly with a Nine Patch file. More informations about the [Nine Patch format](http://developer.android.com/guide/topics/graphics/2d-graphics.html#nine-patch) and [its tool](http://developer.android.com/tools/help/draw9patch.html). You can also refer to our test case for its usage: [C++](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/cpp-tests/Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp#L857), [Lua](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/lua-tests/src/CocoStudioTest/CocoStudioGUITest/CocoStudioGUITest.lua#L4020), [JS](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/js-tests/src/GUITest/UIS9NinePatchTest/UIS9NinePatchTest.js)
+2. ScrollViewBar
+    
+    In the previous versions, the ScrollView doesn't have any visual notification for the current location in view. In v3.8, we have added a scroll bar attached to the ScrollView. You could tweak the the opacity, color, width and the duration for auto hiding the scroll bar. Speical thanks to @neokim.
 
-### Android Studio support
+    Usage:
 
-Cocos console now supports compilation and package with Android Studio 1.2, use it with a `--android-studio` flag
+    ```cpp
+    ui::ScrollView* scrollView = ui::ScrollView::create();
+    scrollView->setScrollBarWidth(4);
+    scrollView->setScrollBarPositionFromCorner(Vec2(2, 2));
+    scrollView->setScrollBarColor(Color3B::WHITE);
+    this->addChild(scrollView);
+    ```
 
-```
-cocos run/compile -p android --android-studio
-```
+3. RadioButton widget
 
-### Samsung Enhanced API support
+    RadioButton is a specific type of two-states button that is similar to CheckBox.
 
-Samsung have provided a series of Enhanced API to optimize Cocos2d-x games for Samsung products with Android 5.0+ system. It include some very cool features like: Boost Up API, Power Saving Mode API, Dynamic FPS API, etc. The current API can be found in [this header file](https://github.com/cocos2d/cocos2d-x/blob/v3/cocos/platform/android/CCEnhanceAPI-android.h), we will provide a detailed documentation later.
+    Additionally, it can be used together with RadioButtonGroup to interact with other radio buttons.
 
-### Win32 platform resource name become case sensitive
+    There is only one RadioButton in checked state at the same time within a RadioButtonGroup. Special thanks to @neokim who have contributed the implementation of this new widget.
 
-In the previous versions, the resources file name's case is ignored on win32 platform, but not ignored in other platforms. This will lead to some unexpected issues, especially when user develop with win32 platform and pulish to other platforms like Android. In win32, the file name may be found without matching the case, but on other platforms it won't be found. So we decided to make win32 platform's resources case sensitive. Please make sure you are using the correct file name for your resources.
+    Usage: 
 
-### SDKBOX
+    ```cpp
+    //create a RadioButtonGroup
+    auto radioButtonGroup = RadioButtonGroup::create();
+    this->addChild(radioButtonGroup);
 
-SDKBOX is a project that's built by part of the cocos2d-x team, in order to makes integrating 3rd party SDKs super EASY.
-With SDKBOX you can integrate services like In App Purchase with one command
+    //create a RadioButton
+    RadioButton* radioButton1 = RadioButton::create("radio_button_off.png", "radio_button_on.png");
+    radioButton1->setPosition(Vec2(100,100);
+    this->addChild(radioButton1);
 
-```
-sdkbox import -b iap
-```
+    //create another RadioButton
+    RadioButton* radioButton2 = RadioButton::create("radio_button_off.png", "radio_button_on.png");
+    radioButton2->setPosition(Vec2(100,100);
+    this->addChild(radioButton2);
 
-Currently supported service including
+    //add the RadioButtons into RadioButtonGroup
+    radioButtonGroup->addRadioButton(radioButton1);
+    radioButtonGroup->addRadioButton(radioButton2);
+    ```
 
-* [Tune](http://cocos2d-x.org/sdkbox/tune)
-* [In App Purchase](http://cocos2d-x.org/sdkbox/iap)
-* [AdColony](http://cocos2d-x.org/sdkbox/adcolony)
-* [Vungle](http://cocos2d-x.org/sdkbox/vungle)
-* [Chartboost](http://cocos2d-x.org/sdkbox/chartboost)
-* [Kochava](http://cocos2d-x.org/sdkbox/kochava)
-* [Google Analytics](http://cocos2d-x.org/sdkbox/googleanalytics)
-* [Flurry Analytics](http://cocos2d-x.org/sdkbox/flurryanalytics)
+### AudioEngine
 
-## The Next Step
+1. Audio preloading
 
-As you can see, in v3.7, we have enhanced our 2d rendering with material system and integrated polygon sprite. More importantly, our 3d features become more and more complete, 3d Physics and Navigation Mesh with the previous Camera, 3d Sprite, 3d Particle System, 3d Light, 3d Terrain, Skybox, now you can really start to use Cocos to make a 3d game.
+    AudioEngine now supports preload audio files before playing it. For some large audio file, this feature can smooth the audio playing experience in user's games. Sample code: 
 
-In v3.8, we won't do much more features, but we'd like to slow down and refine our current 3D and 2D modules.
+    ```cpp
+    //Use it with callback
+    AudioEngine::preload("audio1.mp3",[](bool isSuccess){
+        //...
+    });
+    //Use it without callback
+    AudioEngine::preload("audio2.mp3");
+    ```
 
-[The v3.8 milestone tasks](https://github.com/cocos2d/cocos2d-x/milestones/v3.8)
+2. JSB new AudioEngine
+
+    In JSB, the default audio engine was SimpleAudioEngine (renamed to cc.audioEngine). It was the old audio engine provided since v2, and it have some inconvenience like delay time, no event support, etc. So we decided to provide new AudioEngine in JSB, the API remains the same as C++ API, and its usage can be found in [its test case](https://github.com/cocos2d/cocos2d-x/blob/v3/tests/js-tests/src/NativeTest/AudioEngineTest.js).
+
+### FileUtils
+
+1. New file writing APIs
+
+    In v3.8, we have provided a bunch of file writing APIs in FileUtils. Now you can use very simple APIs to write string, binary data, value map, and value vector into a file in user's file system. Each API is demonstrated in the following sample code:
+
+    ```cpp
+    std::string writablePath = FileUtils::getInstance()->getWritablePath();
+
+    // FileUtils::writeStringToFile
+    std::string writeDataStr = "the string data will be write into a file";
+    std::string fullPath = writablePath + "writeStringTest.txt";
+    FileUtils::getInstance()->writeStringToFile(writeDataStr, fullPath.c_str());
+
+    // FileUtils::writeDataToFile
+    std::string writeDataStr = "the binary data will be write into a file";
+    Data writeData;
+    writeData.copy((unsigned char *)writeDataStr.c_str(), writeDataStr.size());
+    std::string fullPath = writablePath + "writeDataTest.txt";
+    FileUtils::getInstance()->writeDataToFile(writeData, fullPath.c_str()));
+
+    // FileUtils::writeValueMapToFile
+    std::string fullPath = writablePath + "testWriteValueMap.plist";
+    FileUtils::getInstance()->writeValueMapToFile(valueMap, fullPath.c_str());
+
+    // FileUtils::writeValueVectorToFile
+    std::string fullPath = writablePath + "testWriteValueVector.plist";
+    FileUtils::getInstance()->writeValueVectorToFile(valueVector, fullPath.c_str());
+    ```
+
+    Besides, you can retrieve the extension (in lower case) of a file with `FileUtils::getFileExtension` API.
+
+### Others
+
+1. Bindings Generator
+
+    In v3.8, we also improved our bindings generator tool, now it's even more powerful and be able to bind almost all kind of C++ APIs to script. Here is a detailed list about improvement in bindings generator.
+
+    - Supported generating auto bindings code for public member variables
+    - Avoid memory leak of non-Ref classes instance by controlling C++ object memory with JS object
+    - Made JSB classes automatically extendable if configured in classes_need_extend list
+    - Improved support for Lambda functions in JS auto bindings
+
+2. JSB test project
+
+    In v3.8, JSB test project have been merged into C++ test project. That means cocos2d_js_tests.xcodeproj, cocos2d-js-win32.sln, cocos2d-js-win8.1-universal.sln have been removed. You can find jsb test targets in cocos2d_test.xcodeproj, cocos2d-win32.sln and cocos2d-win8.1-universal.sln.
+
+3. Compile custom framework in debug mode
+
+    From v3.7, you was able to generate customized Cocos Framework from cocos2d-x. We have improved this ability in v3.8, now  you will be able to generate framework in debug mode. Here is the some documentation about it:
+
+    - [Framework compile documentation](http://www.cocos2d-x.org/wiki/Cocos_gen-libs).
+    - [How to customize Cocos Framework](http://www.cocos2d-x.org/docs/manual/studio/v4/chapter3/HowToCode/CustomizeFramework-v3.8/en)
+    - [How to generate Cocos Simulator](http://www.cocos2d-x.org/wiki/Cocos_gen-simulator)
+
+4. Portrait projects support
+
+    From v3.8, you can generate portrait oriented games with Cocos Console:
+
+    ```
+    cocos new -l cpp|lua|js --portrait MyPortraitGame
+    ```
+
+    More details can be found in [Cocos new command](http://www.cocos2d-x.org/wiki/Cocos_new) and [Cocos Console general documentation](http://www.cocos2d-x.org/wiki/Cocos2d-console)
+
+## Other changes
+
+- [NEW]           UI: Enhanced ScrollView with easing out scrolling
+- [NEW]           UI: Added PageView vertical scroll support
+- [NEW]           UI: Added PageView::JumpToPage API
+- [NEW]           UI: Added a setter for line width in DrawNode
+- [NEW]           Action: Permitted setting bitwise flags to action
+- [NEW]           Animate: Added Animate's getCurrentFrameIndex function
+- [NEW]           FileUtils: Added FileUtils::getFileExtension for getting file's extension name
+- [NEW]           Device: Added vibrate support to enable vibration for a duration
+- [NEW]           UserDefault: Supported removing key pairs from UserDefault
+- [NEW]           spine: Supported Spine runtime 2.3 (Both native and web engine)
+- [NEW]           console: Moved the framework-compile tools into cocos2d-console
+- [NEW]           network: Upgrade SocketIO support to v1.x
+
+- [REFINE]        3D: Supported composite 2D/3D scene by moving UI and camera far away
+- [REFINE]        3D: Improved Particle3D performance
+- [REFINE]        Label: Supported adding child nodes in Label
+- [REFINE]        UI: Improved Slider's precision
+- [REFINE]        UI: Refined scroll event dispatching for ScrollView
+- [REFINE]        UI: Improved event handling in TextField
+- [REFINE]        Label: Supported auto batch with bitmap font or char map
+- [REFINE]        studio: Added BlendFrame support to Skeleton Animation
+- [REFINE]        studio: Enabled blendfunc cascade to the skin of BoneNode
+- [REFINE]        utils: Made utils::captureScreen saving file in another thread to improve the performance
+- [REFINE]        3rd party: Update Nibiru SDK to 2.6
+- [REFINE]        JS: Supported new construction for 3d classes in JS
+- [REFINE]        JS: Refine performance for Cocos Studio JSON parser for 2.x
+- [REFINE]        web: Avoid re-bake the content when the parent node's position get changed
+- [REFINE]        web: Solved repeat loading same resource issue when parsing cocos studio project
+- [REFINE]        web: Optimized resources automatic loading in JSON parser
+- [REFINE]        web: Avoid cc.loader resource loading being terminated while encounter errors
+- [REFINE]        web: Suspended the video player when the browser is minimized
+
+You can also take a look at [the full changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
+
+## New APIs
+
+In the above changes, there are some new APIs introduced in v3.8, they are listed here:
+
+1. PageView vertical scroll support
+
+    ```
+    PageView* pageView = PageView::create();
+    pageView->setContentSize(Size(240.0f, 130.0f));
+    pageView->setDirection(ui::PageView::Direction::VERTICAL);
+    ```
+
+2. Setter for line width in DrawNode
+
+    ```
+    DrawNode* drawNode = DrawNode::create();
+    drawNode->setLineWidth(5.0f);
+    ```
+
+3. Bitwise flags of action
+
+    ```
+    enum Flags {
+        FRAME = 1,
+        COLOR = 2,
+        OPACITY = 4,
+        POSITION = 8,
+        SCALE = 16,
+        ROTATION = 32,
+        SKEW = 64
+    };
+
+    auto action = RepeatForever::create(Sequence::create(FadeTo::create( 0.1f, 155), TintTo::create(0.1f, 255,0,0), nullptr));
+    // Since opacity and color will be modified in this action, it can be flagged as opacity and color action
+    action->setFlags(Flags::OPACITY|Flags::COLOR);
+
+    auto action2 = RepeatForever::create(Sequence::create(MoveBy::create(0.3f, Vec2(5, 0)), nullptr));
+    // Since position will be modified in this action, it can be flagged as position action
+    action->setFlags(Flags::POSITION);
+    ```
+
+4. Get current frame index in animation
+
+    ```
+    auto action = RepeatForever::create( Animate::create(animation);
+    sprite->runAction(action);
+    sprite->scheduleOnce([=](float){
+        int index = action->getCurrentFrameIndex();
+        // ...
+    }, 1.0f, "get-current-frame");
+    
+    ```
+
+5. File's extension name getter
+
+    ```
+    std::string extension = FileUtils::getInstance()->getFileExtension("grossini.png");
+    ```
+
+6. Vibration support
+
+    ```
+    // Virate the device for 0.5 second
+    Device::vibrate(0.5f);
+    ```
+
+7. Remove key pairs from UserDefault
+
+    ```
+    // Remove value referenced by "some key"
+    UserDefault::getInstance()->deleteValueForKey("some key");
+    ```
+
+# The Next Step
+
+In v3.9, we will continue to improve our framework, several important tasks are: 
+
+1. We are about to provide a script based component system.
+2. Improve ScrollView, ListView performance in both native and web engine.
+3. Improve 2D particle system performance.
+4. Improve web engine renderer logic and performance.
+5. Support Action inheritance in JSB.
+6. Remove libcurl dependency on iOS and Android.
+
+[The v3.9 milestone tasks](https://github.com/cocos2d/cocos2d-x/milestones/v3.9) (It's still being reviewing and will be updated)

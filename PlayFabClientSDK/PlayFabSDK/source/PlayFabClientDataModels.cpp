@@ -4594,6 +4594,50 @@ bool GetUserStatisticsResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetXboxEntitlementsRequest::~GetXboxEntitlementsRequest()
+{
+
+}
+
+void GetXboxEntitlementsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("XboxToken"); writer.String(XboxToken.c_str());
+
+    writer.EndObject();
+}
+
+bool GetXboxEntitlementsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* XboxToken_member = obj.FindMember("XboxToken");
+    if (XboxToken_member != NULL && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
+
+    return true;
+}
+
+GetXboxEntitlementsResult::~GetXboxEntitlementsResult()
+{
+
+}
+
+void GetXboxEntitlementsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Entitlements.length() > 0) { writer.String("Entitlements"); writer.String(Entitlements.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetXboxEntitlementsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* Entitlements_member = obj.FindMember("Entitlements");
+    if (Entitlements_member != NULL && !Entitlements_member->value.IsNull()) Entitlements = Entitlements_member->value.GetString();
+
+    return true;
+}
+
 GrantCharacterToUserRequest::~GrantCharacterToUserRequest()
 {
 

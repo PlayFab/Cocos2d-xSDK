@@ -3753,6 +3753,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetXboxEntitlementsRequest : public PlayFabBaseModel
+        {
+            std::string XboxToken;
+
+            GetXboxEntitlementsRequest() :
+                PlayFabBaseModel(),
+                XboxToken()
+            {}
+
+            GetXboxEntitlementsRequest(const GetXboxEntitlementsRequest& src) :
+                PlayFabBaseModel(),
+                XboxToken(src.XboxToken)
+            {}
+
+            GetXboxEntitlementsRequest(const rapidjson::Value& obj) : GetXboxEntitlementsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetXboxEntitlementsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetXboxEntitlementsResult : public PlayFabBaseModel
+        {
+            std::string Entitlements;
+
+            GetXboxEntitlementsResult() :
+                PlayFabBaseModel(),
+                Entitlements()
+            {}
+
+            GetXboxEntitlementsResult(const GetXboxEntitlementsResult& src) :
+                PlayFabBaseModel(),
+                Entitlements(src.Entitlements)
+            {}
+
+            GetXboxEntitlementsResult(const rapidjson::Value& obj) : GetXboxEntitlementsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetXboxEntitlementsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GrantCharacterToUserRequest : public PlayFabBaseModel
         {
             std::string CatalogVersion;

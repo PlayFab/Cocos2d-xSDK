@@ -192,7 +192,8 @@ namespace PlayFab
 		PlayFabErrorCustomIdNotLinked = 1185,
 		PlayFabErrorTotalDataSizeExceeded = 1186,
 		PlayFabErrorDeleteKeyConflict = 1187,
-		PlayFabErrorInvalidXboxLiveToken = 1188
+		PlayFabErrorInvalidXboxLiveToken = 1188,
+		PlayFabErrorExpiredXboxLiveToken = 1189
     };
 
     struct PlayFabError

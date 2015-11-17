@@ -19,8 +19,11 @@ UIHelper.cpp \
 UIListView.cpp \
 UIPageView.cpp \
 UIScrollView.cpp \
+UIScrollViewBar.cpp \
 UIButton.cpp \
+UIAbstractCheckButton.cpp \
 UICheckBox.cpp \
+UIRadioButton.cpp \
 UIImageView.cpp \
 UIText.cpp \
 UITextAtlas.cpp \
@@ -39,6 +42,7 @@ UIWebView.cpp \
 UIWebViewImpl-android.cpp \
 UIEditBox/UIEditBox.cpp \
 UIEditBox/UIEditBoxImpl-android.cpp \
+UIEditBox/UIEditBoxImpl-common.cpp \
 UILayoutComponent.cpp \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../editor-support
