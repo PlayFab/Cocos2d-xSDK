@@ -4402,24 +4402,52 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UserSettings : public PlayFabBaseModel
+        {
+            bool NeedsAttribution;
+
+            UserSettings() :
+                PlayFabBaseModel(),
+                NeedsAttribution(false)
+            {}
+
+            UserSettings(const UserSettings& src) :
+                PlayFabBaseModel(),
+                NeedsAttribution(src.NeedsAttribution)
+            {}
+
+            UserSettings(const rapidjson::Value& obj) : UserSettings()
+            {
+                readFromValue(obj);
+            }
+
+            ~UserSettings();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct LoginResult : public PlayFabBaseModel
         {
             std::string SessionTicket;
             std::string PlayFabId;
             bool NewlyCreated;
+            UserSettings* pfUserSettings;
 
             LoginResult() :
                 PlayFabBaseModel(),
                 SessionTicket(),
                 PlayFabId(),
-                NewlyCreated(false)
+                NewlyCreated(false),
+                pfUserSettings(NULL)
             {}
 
             LoginResult(const LoginResult& src) :
                 PlayFabBaseModel(),
                 SessionTicket(src.SessionTicket),
                 PlayFabId(src.PlayFabId),
-                NewlyCreated(src.NewlyCreated)
+                NewlyCreated(src.NewlyCreated),
+                pfUserSettings(src.pfUserSettings ? new UserSettings(*src.pfUserSettings) : NULL)
             {}
 
             LoginResult(const rapidjson::Value& obj) : LoginResult()
@@ -5347,19 +5375,22 @@ namespace PlayFab
             std::string PlayFabId;
             std::string SessionTicket;
             std::string Username;
+            UserSettings* pfUserSettings;
 
             RegisterPlayFabUserResult() :
                 PlayFabBaseModel(),
                 PlayFabId(),
                 SessionTicket(),
-                Username()
+                Username(),
+                pfUserSettings(NULL)
             {}
 
             RegisterPlayFabUserResult(const RegisterPlayFabUserResult& src) :
                 PlayFabBaseModel(),
                 PlayFabId(src.PlayFabId),
                 SessionTicket(src.SessionTicket),
-                Username(src.Username)
+                Username(src.Username),
+                pfUserSettings(src.pfUserSettings ? new UserSettings(*src.pfUserSettings) : NULL)
             {}
 
             RegisterPlayFabUserResult(const rapidjson::Value& obj) : RegisterPlayFabUserResult()
