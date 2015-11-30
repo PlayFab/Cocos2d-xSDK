@@ -194,7 +194,9 @@ namespace PlayFab
 		PlayFabErrorDeleteKeyConflict = 1187,
 		PlayFabErrorInvalidXboxLiveToken = 1188,
 		PlayFabErrorExpiredXboxLiveToken = 1189,
-		PlayFabErrorResettableStatisticVersionRequired = 1190
+		PlayFabErrorResettableStatisticVersionRequired = 1190,
+		PlayFabErrorNotAuthorizedByTitle = 1191,
+		PlayFabErrorNoPartnerEnabled = 1192
     };
 
     struct PlayFabError
