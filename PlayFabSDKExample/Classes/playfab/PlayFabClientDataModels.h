@@ -4432,14 +4432,14 @@ namespace PlayFab
             std::string SessionTicket;
             std::string PlayFabId;
             bool NewlyCreated;
-            UserSettings* pfUserSettings;
+            UserSettings* SettingsForUser;
 
             LoginResult() :
                 PlayFabBaseModel(),
                 SessionTicket(),
                 PlayFabId(),
                 NewlyCreated(false),
-                pfUserSettings(NULL)
+                SettingsForUser(NULL)
             {}
 
             LoginResult(const LoginResult& src) :
@@ -4447,7 +4447,7 @@ namespace PlayFab
                 SessionTicket(src.SessionTicket),
                 PlayFabId(src.PlayFabId),
                 NewlyCreated(src.NewlyCreated),
-                pfUserSettings(src.pfUserSettings ? new UserSettings(*src.pfUserSettings) : NULL)
+                SettingsForUser(src.SettingsForUser ? new UserSettings(*src.SettingsForUser) : NULL)
             {}
 
             LoginResult(const rapidjson::Value& obj) : LoginResult()
@@ -5375,14 +5375,14 @@ namespace PlayFab
             std::string PlayFabId;
             std::string SessionTicket;
             std::string Username;
-            UserSettings* pfUserSettings;
+            UserSettings* SettingsForUser;
 
             RegisterPlayFabUserResult() :
                 PlayFabBaseModel(),
                 PlayFabId(),
                 SessionTicket(),
                 Username(),
-                pfUserSettings(NULL)
+                SettingsForUser(NULL)
             {}
 
             RegisterPlayFabUserResult(const RegisterPlayFabUserResult& src) :
@@ -5390,7 +5390,7 @@ namespace PlayFab
                 PlayFabId(src.PlayFabId),
                 SessionTicket(src.SessionTicket),
                 Username(src.Username),
-                pfUserSettings(src.pfUserSettings ? new UserSettings(*src.pfUserSettings) : NULL)
+                SettingsForUser(src.SettingsForUser ? new UserSettings(*src.SettingsForUser) : NULL)
             {}
 
             RegisterPlayFabUserResult(const rapidjson::Value& obj) : RegisterPlayFabUserResult()

@@ -5227,7 +5227,7 @@ bool UserSettings::readFromValue(const rapidjson::Value& obj)
 
 LoginResult::~LoginResult()
 {
-    if (UserSettings != NULL) delete UserSettings;
+    if (SettingsForUser != NULL) delete SettingsForUser;
 
 }
 
@@ -5238,7 +5238,7 @@ void LoginResult::writeJSON(PFStringJsonWriter& writer)
     if (SessionTicket.length() > 0) { writer.String("SessionTicket"); writer.String(SessionTicket.c_str()); }
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     writer.String("NewlyCreated"); writer.Bool(NewlyCreated);
-    if (pfUserSettings != NULL) { writer.String("UserSettings"); pfUserSettings->writeJSON(writer); }
+    if (SettingsForUser != NULL) { writer.String("SettingsForUser"); SettingsForUser->writeJSON(writer); }
 
     writer.EndObject();
 }
@@ -5251,8 +5251,8 @@ bool LoginResult::readFromValue(const rapidjson::Value& obj)
     if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
     const Value::Member* NewlyCreated_member = obj.FindMember("NewlyCreated");
     if (NewlyCreated_member != NULL && !NewlyCreated_member->value.IsNull()) NewlyCreated = NewlyCreated_member->value.GetBool();
-    const Value::Member* UserSettings_member = obj.FindMember("UserSettings");
-    if (UserSettings_member != NULL && !UserSettings_member->value.IsNull()) pfUserSettings = new UserSettings(UserSettings_member->value);
+    const Value::Member* SettingsForUser_member = obj.FindMember("SettingsForUser");
+    if (SettingsForUser_member != NULL && !SettingsForUser_member->value.IsNull()) SettingsForUser = new UserSettings(SettingsForUser_member->value);
 
     return true;
 }
@@ -6228,7 +6228,7 @@ bool RegisterPlayFabUserRequest::readFromValue(const rapidjson::Value& obj)
 
 RegisterPlayFabUserResult::~RegisterPlayFabUserResult()
 {
-    if (UserSettings != NULL) delete UserSettings;
+    if (SettingsForUser != NULL) delete SettingsForUser;
 
 }
 
@@ -6239,7 +6239,7 @@ void RegisterPlayFabUserResult::writeJSON(PFStringJsonWriter& writer)
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (SessionTicket.length() > 0) { writer.String("SessionTicket"); writer.String(SessionTicket.c_str()); }
     if (Username.length() > 0) { writer.String("Username"); writer.String(Username.c_str()); }
-    if (pfUserSettings != NULL) { writer.String("UserSettings"); pfUserSettings->writeJSON(writer); }
+    if (SettingsForUser != NULL) { writer.String("SettingsForUser"); SettingsForUser->writeJSON(writer); }
 
     writer.EndObject();
 }
@@ -6252,8 +6252,8 @@ bool RegisterPlayFabUserResult::readFromValue(const rapidjson::Value& obj)
     if (SessionTicket_member != NULL && !SessionTicket_member->value.IsNull()) SessionTicket = SessionTicket_member->value.GetString();
     const Value::Member* Username_member = obj.FindMember("Username");
     if (Username_member != NULL && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
-    const Value::Member* UserSettings_member = obj.FindMember("UserSettings");
-    if (UserSettings_member != NULL && !UserSettings_member->value.IsNull()) pfUserSettings = new UserSettings(UserSettings_member->value);
+    const Value::Member* SettingsForUser_member = obj.FindMember("SettingsForUser");
+    if (SettingsForUser_member != NULL && !SettingsForUser_member->value.IsNull()) SettingsForUser = new UserSettings(SettingsForUser_member->value);
 
     return true;
 }
