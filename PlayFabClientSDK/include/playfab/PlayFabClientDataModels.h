@@ -2226,6 +2226,99 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetFriendLeaderboardAroundCurrentUserRequest : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+            Int32 MaxResultsCount;
+            OptionalBool IncludeSteamFriends;
+            OptionalBool IncludeFacebookFriends;
+
+            GetFriendLeaderboardAroundCurrentUserRequest() :
+                PlayFabBaseModel(),
+                StatisticName(),
+                MaxResultsCount(0),
+                IncludeSteamFriends(),
+                IncludeFacebookFriends()
+            {}
+
+            GetFriendLeaderboardAroundCurrentUserRequest(const GetFriendLeaderboardAroundCurrentUserRequest& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName),
+                MaxResultsCount(src.MaxResultsCount),
+                IncludeSteamFriends(src.IncludeSteamFriends),
+                IncludeFacebookFriends(src.IncludeFacebookFriends)
+            {}
+
+            GetFriendLeaderboardAroundCurrentUserRequest(const rapidjson::Value& obj) : GetFriendLeaderboardAroundCurrentUserRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetFriendLeaderboardAroundCurrentUserRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct PlayerLeaderboardEntry : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string DisplayName;
+            Int32 StatValue;
+            Int32 Position;
+
+            PlayerLeaderboardEntry() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                DisplayName(),
+                StatValue(0),
+                Position(0)
+            {}
+
+            PlayerLeaderboardEntry(const PlayerLeaderboardEntry& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                DisplayName(src.DisplayName),
+                StatValue(src.StatValue),
+                Position(src.Position)
+            {}
+
+            PlayerLeaderboardEntry(const rapidjson::Value& obj) : PlayerLeaderboardEntry()
+            {
+                readFromValue(obj);
+            }
+
+            ~PlayerLeaderboardEntry();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetFriendLeaderboardAroundCurrentUserResult : public PlayFabBaseModel
+        {
+            std::list<PlayerLeaderboardEntry> Leaderboard;
+
+            GetFriendLeaderboardAroundCurrentUserResult() :
+                PlayFabBaseModel(),
+                Leaderboard()
+            {}
+
+            GetFriendLeaderboardAroundCurrentUserResult(const GetFriendLeaderboardAroundCurrentUserResult& src) :
+                PlayFabBaseModel(),
+                Leaderboard(src.Leaderboard)
+            {}
+
+            GetFriendLeaderboardAroundCurrentUserResult(const rapidjson::Value& obj) : GetFriendLeaderboardAroundCurrentUserResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetFriendLeaderboardAroundCurrentUserResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetFriendLeaderboardRequest : public PlayFabBaseModel
         {
             std::string StatisticName;
@@ -2398,40 +2491,6 @@ namespace PlayFab
             }
 
             ~GetLeaderboardAroundCurrentUserRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct PlayerLeaderboardEntry : public PlayFabBaseModel
-        {
-            std::string PlayFabId;
-            std::string DisplayName;
-            Int32 StatValue;
-            Int32 Position;
-
-            PlayerLeaderboardEntry() :
-                PlayFabBaseModel(),
-                PlayFabId(),
-                DisplayName(),
-                StatValue(0),
-                Position(0)
-            {}
-
-            PlayerLeaderboardEntry(const PlayerLeaderboardEntry& src) :
-                PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                DisplayName(src.DisplayName),
-                StatValue(src.StatValue),
-                Position(src.Position)
-            {}
-
-            PlayerLeaderboardEntry(const rapidjson::Value& obj) : PlayerLeaderboardEntry()
-            {
-                readFromValue(obj);
-            }
-
-            ~PlayerLeaderboardEntry();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -4586,6 +4645,37 @@ namespace PlayFab
             }
 
             ~LoginWithFacebookRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LoginWithGameCenterRequest : public PlayFabBaseModel
+        {
+            std::string TitleId;
+            std::string PlayerId;
+            OptionalBool CreateAccount;
+
+            LoginWithGameCenterRequest() :
+                PlayFabBaseModel(),
+                TitleId(),
+                PlayerId(),
+                CreateAccount()
+            {}
+
+            LoginWithGameCenterRequest(const LoginWithGameCenterRequest& src) :
+                PlayFabBaseModel(),
+                TitleId(src.TitleId),
+                PlayerId(src.PlayerId),
+                CreateAccount(src.CreateAccount)
+            {}
+
+            LoginWithGameCenterRequest(const rapidjson::Value& obj) : LoginWithGameCenterRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LoginWithGameCenterRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
