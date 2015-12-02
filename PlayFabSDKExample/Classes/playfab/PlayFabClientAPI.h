@@ -119,6 +119,7 @@ namespace PlayFab
 		typedef void(*GetPlayerTradesCallback)(ClientModels::GetPlayerTradesResponse& result, void* userData);
 		typedef void(*GetTradeStatusCallback)(ClientModels::GetTradeStatusResponse& result, void* userData);
 		typedef void(*OpenTradeCallback)(ClientModels::OpenTradeResponse& result, void* userData);
+		typedef void(*AttributeInstallCallback)(ClientModels::AttributeInstallResult& result, void* userData);
 		
 	
         PlayFabClientAPI();
@@ -336,6 +337,8 @@ namespace PlayFab
 		
 		void OpenTrade(ClientModels::OpenTradeRequest& request, OpenTradeCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
+		void AttributeInstall(ClientModels::AttributeInstallRequest& request, AttributeInstallCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
 
     private:
 
@@ -544,6 +547,8 @@ namespace PlayFab
 		static void OnGetTradeStatusResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnOpenTradeResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnAttributeInstallResult(int httpStatus, HttpRequest* request, void* userData);
 		
  
         bool mOwnsRequester;

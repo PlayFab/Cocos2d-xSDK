@@ -384,6 +384,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct AttributeInstallRequest : public PlayFabBaseModel
+        {
+            std::string Idfa;
+            std::string Android_Id;
+
+            AttributeInstallRequest() :
+                PlayFabBaseModel(),
+                Idfa(),
+                Android_Id()
+            {}
+
+            AttributeInstallRequest(const AttributeInstallRequest& src) :
+                PlayFabBaseModel(),
+                Idfa(src.Idfa),
+                Android_Id(src.Android_Id)
+            {}
+
+            AttributeInstallRequest(const rapidjson::Value& obj) : AttributeInstallRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~AttributeInstallRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct AttributeInstallResult : public PlayFabBaseModel
+        {
+
+            AttributeInstallResult() :
+                PlayFabBaseModel()
+            {}
+
+            AttributeInstallResult(const AttributeInstallResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            AttributeInstallResult(const rapidjson::Value& obj) : AttributeInstallResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~AttributeInstallResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CancelTradeRequest : public PlayFabBaseModel
         {
             std::string TradeId;

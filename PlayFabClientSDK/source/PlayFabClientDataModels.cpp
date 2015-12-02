@@ -453,6 +453,50 @@ bool AndroidDevicePushNotificationRegistrationResult::readFromValue(const rapidj
     return true;
 }
 
+AttributeInstallRequest::~AttributeInstallRequest()
+{
+
+}
+
+void AttributeInstallRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Idfa.length() > 0) { writer.String("Idfa"); writer.String(Idfa.c_str()); }
+    if (Android_Id.length() > 0) { writer.String("Android_Id"); writer.String(Android_Id.c_str()); }
+
+    writer.EndObject();
+}
+
+bool AttributeInstallRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* Idfa_member = obj.FindMember("Idfa");
+    if (Idfa_member != NULL && !Idfa_member->value.IsNull()) Idfa = Idfa_member->value.GetString();
+    const Value::Member* Android_Id_member = obj.FindMember("Android_Id");
+    if (Android_Id_member != NULL && !Android_Id_member->value.IsNull()) Android_Id = Android_Id_member->value.GetString();
+
+    return true;
+}
+
+AttributeInstallResult::~AttributeInstallResult()
+{
+
+}
+
+void AttributeInstallResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool AttributeInstallResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 CancelTradeRequest::~CancelTradeRequest()
 {
 

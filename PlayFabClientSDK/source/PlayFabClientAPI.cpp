@@ -5904,5 +5904,62 @@ void PlayFabClientAPI::OnOpenTradeResult(int httpStatus, HttpRequest* request, v
 }
 
 
+void PlayFabClientAPI::AttributeInstall(
+    AttributeInstallRequest& request,
+    AttributeInstallCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/AttributeInstall"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+	httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+	
+    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnAttributeInstallResult, this);
+}
+
+void PlayFabClientAPI::OnAttributeInstallResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    AttributeInstallResult outResult;
+    PlayFabError errorResult;
+
+    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
+
+    if (success)
+    {
+        
+
+        if (request->GetResultCallback() != NULL)
+        {
+            AttributeInstallCallback successCallback = (AttributeInstallCallback)(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != NULL)
+        {
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        }
+
+        if (request->GetErrorCallback() != NULL)
+        {
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+        }
+    }
+
+    delete request;
+}
+
+
 
 
