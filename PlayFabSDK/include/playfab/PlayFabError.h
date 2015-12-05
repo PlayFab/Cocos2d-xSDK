@@ -197,7 +197,8 @@ namespace PlayFab
 		PlayFabErrorResettableStatisticVersionRequired = 1190,
 		PlayFabErrorNotAuthorizedByTitle = 1191,
 		PlayFabErrorNoPartnerEnabled = 1192,
-		PlayFabErrorInvalidPartnerResponse = 1193
+		PlayFabErrorInvalidPartnerResponse = 1193,
+		PlayFabErrorAPINotEnabledForGameServerAccess = 1194
     };
 
     struct PlayFabError

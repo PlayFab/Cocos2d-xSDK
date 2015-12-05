@@ -21,6 +21,7 @@ namespace PlayFab
 		typedef void(*GetPlayFabIDsFromFacebookIDsCallback)(ServerModels::GetPlayFabIDsFromFacebookIDsResult& result, void* userData);
 		typedef void(*GetUserAccountInfoCallback)(ServerModels::GetUserAccountInfoResult& result, void* userData);
 		typedef void(*SendPushNotificationCallback)(ServerModels::SendPushNotificationResult& result, void* userData);
+		typedef void(*DeleteUsersCallback)(ServerModels::DeleteUsersResult& result, void* userData);
 		typedef void(*GetLeaderboardCallback)(ServerModels::GetLeaderboardResult& result, void* userData);
 		typedef void(*GetLeaderboardAroundUserCallback)(ServerModels::GetLeaderboardAroundUserResult& result, void* userData);
 		typedef void(*GetUserDataCallback)(ServerModels::GetUserDataResult& result, void* userData);
@@ -106,6 +107,8 @@ namespace PlayFab
 		void GetUserAccountInfo(ServerModels::GetUserAccountInfoRequest& request, GetUserAccountInfoCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void SendPushNotification(ServerModels::SendPushNotificationRequest& request, SendPushNotificationCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
+		
+		void DeleteUsers(ServerModels::DeleteUsersRequest& request, DeleteUsersCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
 		void GetLeaderboard(ServerModels::GetLeaderboardRequest& request, GetLeaderboardCallback callback, ErrorCallback errorCallback = NULL, void* userData = NULL);
 		
@@ -249,6 +252,8 @@ namespace PlayFab
 		static void OnGetUserAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnSendPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
+		
+		static void OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData);
 		
 		static void OnGetLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
 		

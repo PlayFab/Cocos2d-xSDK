@@ -1354,6 +1354,61 @@ bool DeleteSharedGroupRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeleteUsersRequest::~DeleteUsersRequest()
+{
+
+}
+
+void DeleteUsersRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabIds");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = PlayFabIds.begin(); iter != PlayFabIds.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    
+    writer.String("TitleId"); writer.String(TitleId.c_str());
+
+    writer.EndObject();
+}
+
+bool DeleteUsersRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* PlayFabIds_member = obj.FindMember("PlayFabIds");
+    if (PlayFabIds_member != NULL) {
+        const rapidjson::Value& memberList = PlayFabIds_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            PlayFabIds.push_back(memberList[i].GetString());
+        }
+    }
+    const Value::Member* TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != NULL && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+
+    return true;
+}
+
+DeleteUsersResult::~DeleteUsersResult()
+{
+
+}
+
+void DeleteUsersResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool DeleteUsersResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 EmptyResult::~EmptyResult()
 {
 
