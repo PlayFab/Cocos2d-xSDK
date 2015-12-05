@@ -4,65 +4,19 @@
 #include "playfab/PlayFabResultHandler.h"
 #include "playfab/HttpRequesterCURL.h"
 #include "playfab/PlayFabVersion.h"
-
 #include <string>
-
 
 using namespace PlayFab;
 using namespace PlayFab::MatchmakerModels;
 
-PlayFabMatchmakerAPI::PlayFabMatchmakerAPI()
-    : PlayFabMatchmakerAPI(NULL, false)
-{
-   
-}
+IHttpRequester* PlayFabMatchmakerAPI::mHttpRequester = new HttpRequesterCURL();
 
-PlayFabMatchmakerAPI::PlayFabMatchmakerAPI(IHttpRequester* requester, bool ownRequester)
-    : mHttpRequester(requester), mOwnsRequester(ownRequester)
-{
-    if(mHttpRequester == NULL)
-    {
-        mOwnsRequester = true;
-        mHttpRequester = new HttpRequesterCURL();
-    }
-
-}
-
-
-
-PlayFabMatchmakerAPI::~PlayFabMatchmakerAPI()
-{
-    if(mOwnsRequester && mHttpRequester != NULL)
-    {
-        delete mHttpRequester;
-        mOwnsRequester = false;
-        mHttpRequester = NULL;
-    }
-}
-
-
-
-IHttpRequester* PlayFabMatchmakerAPI::GetRequester(bool relinquishOwnership /* = false*/)
-{
-    if(relinquishOwnership)
-    {
-        mOwnsRequester = false;
-    }
-    return mHttpRequester;
-}
+PlayFabMatchmakerAPI::PlayFabMatchmakerAPI() {}
 
 size_t PlayFabMatchmakerAPI::Update()
 {
-    if(mHttpRequester != NULL)
-    {
-        return mHttpRequester->UpdateRequests();
-    }
-
-	return 0;
+    return mHttpRequester->UpdateRequests();
 }
-
-
-
 
 void PlayFabMatchmakerAPI::AuthUser(
     AuthUserRequest& request,
@@ -74,17 +28,17 @@ void PlayFabMatchmakerAPI::AuthUser(
     
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Matchmaker/AuthUser"));
     httpRequest->SetHeader("Content-Type", "application/json");
-	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
-	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
-	
-    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(static_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnAuthUserResult, this);
+    mHttpRequester->AddRequest(httpRequest, OnAuthUserResult, nullptr);
 }
 
 void PlayFabMatchmakerAPI::OnAuthUserResult(int httpStatus, HttpRequest* request, void* userData)
@@ -92,34 +46,25 @@ void PlayFabMatchmakerAPI::OnAuthUserResult(int httpStatus, HttpRequest* request
     AuthUserResponse outResult;
     PlayFabError errorResult;
 
-    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
-
-    if (success)
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        
 
-        if (request->GetResultCallback() != NULL)
+        if (request->GetResultCallback() != nullptr)
         {
-            AuthUserCallback successCallback = (AuthUserCallback)(request->GetResultCallback());
+            AuthUserCallback successCallback = static_cast<AuthUserCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
     else
     {
-        if (PlayFabSettings::globalErrorHandler != NULL)
-        {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
             PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        }
-
-        if (request->GetErrorCallback() != NULL)
-        {
+        if (request->GetErrorCallback() != nullptr)
             request->GetErrorCallback()(errorResult, request->GetUserData());
-        }
     }
 
     delete request;
 }
-
 
 void PlayFabMatchmakerAPI::PlayerJoined(
     PlayerJoinedRequest& request,
@@ -131,17 +76,17 @@ void PlayFabMatchmakerAPI::PlayerJoined(
     
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Matchmaker/PlayerJoined"));
     httpRequest->SetHeader("Content-Type", "application/json");
-	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
-	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
-	
-    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(static_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnPlayerJoinedResult, this);
+    mHttpRequester->AddRequest(httpRequest, OnPlayerJoinedResult, nullptr);
 }
 
 void PlayFabMatchmakerAPI::OnPlayerJoinedResult(int httpStatus, HttpRequest* request, void* userData)
@@ -149,34 +94,25 @@ void PlayFabMatchmakerAPI::OnPlayerJoinedResult(int httpStatus, HttpRequest* req
     PlayerJoinedResponse outResult;
     PlayFabError errorResult;
 
-    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
-
-    if (success)
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        
 
-        if (request->GetResultCallback() != NULL)
+        if (request->GetResultCallback() != nullptr)
         {
-            PlayerJoinedCallback successCallback = (PlayerJoinedCallback)(request->GetResultCallback());
+            PlayerJoinedCallback successCallback = static_cast<PlayerJoinedCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
     else
     {
-        if (PlayFabSettings::globalErrorHandler != NULL)
-        {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
             PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        }
-
-        if (request->GetErrorCallback() != NULL)
-        {
+        if (request->GetErrorCallback() != nullptr)
             request->GetErrorCallback()(errorResult, request->GetUserData());
-        }
     }
 
     delete request;
 }
-
 
 void PlayFabMatchmakerAPI::PlayerLeft(
     PlayerLeftRequest& request,
@@ -188,17 +124,17 @@ void PlayFabMatchmakerAPI::PlayerLeft(
     
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Matchmaker/PlayerLeft"));
     httpRequest->SetHeader("Content-Type", "application/json");
-	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
-	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
-	
-    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(static_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnPlayerLeftResult, this);
+    mHttpRequester->AddRequest(httpRequest, OnPlayerLeftResult, nullptr);
 }
 
 void PlayFabMatchmakerAPI::OnPlayerLeftResult(int httpStatus, HttpRequest* request, void* userData)
@@ -206,34 +142,25 @@ void PlayFabMatchmakerAPI::OnPlayerLeftResult(int httpStatus, HttpRequest* reque
     PlayerLeftResponse outResult;
     PlayFabError errorResult;
 
-    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
-
-    if (success)
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        
 
-        if (request->GetResultCallback() != NULL)
+        if (request->GetResultCallback() != nullptr)
         {
-            PlayerLeftCallback successCallback = (PlayerLeftCallback)(request->GetResultCallback());
+            PlayerLeftCallback successCallback = static_cast<PlayerLeftCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
     else
     {
-        if (PlayFabSettings::globalErrorHandler != NULL)
-        {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
             PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        }
-
-        if (request->GetErrorCallback() != NULL)
-        {
+        if (request->GetErrorCallback() != nullptr)
             request->GetErrorCallback()(errorResult, request->GetUserData());
-        }
     }
 
     delete request;
 }
-
 
 void PlayFabMatchmakerAPI::StartGame(
     StartGameRequest& request,
@@ -245,17 +172,17 @@ void PlayFabMatchmakerAPI::StartGame(
     
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Matchmaker/StartGame"));
     httpRequest->SetHeader("Content-Type", "application/json");
-	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
-	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
-	
-    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(static_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnStartGameResult, this);
+    mHttpRequester->AddRequest(httpRequest, OnStartGameResult, nullptr);
 }
 
 void PlayFabMatchmakerAPI::OnStartGameResult(int httpStatus, HttpRequest* request, void* userData)
@@ -263,34 +190,25 @@ void PlayFabMatchmakerAPI::OnStartGameResult(int httpStatus, HttpRequest* reques
     StartGameResponse outResult;
     PlayFabError errorResult;
 
-    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
-
-    if (success)
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        
 
-        if (request->GetResultCallback() != NULL)
+        if (request->GetResultCallback() != nullptr)
         {
-            StartGameCallback successCallback = (StartGameCallback)(request->GetResultCallback());
+            StartGameCallback successCallback = static_cast<StartGameCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
     else
     {
-        if (PlayFabSettings::globalErrorHandler != NULL)
-        {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
             PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        }
-
-        if (request->GetErrorCallback() != NULL)
-        {
+        if (request->GetErrorCallback() != nullptr)
             request->GetErrorCallback()(errorResult, request->GetUserData());
-        }
     }
 
     delete request;
 }
-
 
 void PlayFabMatchmakerAPI::UserInfo(
     UserInfoRequest& request,
@@ -302,17 +220,17 @@ void PlayFabMatchmakerAPI::UserInfo(
     
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Matchmaker/UserInfo"));
     httpRequest->SetHeader("Content-Type", "application/json");
-	httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
-	httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
-	
-    httpRequest->SetResultCallback((void*)callback);
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(static_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUserInfoResult, this);
+    mHttpRequester->AddRequest(httpRequest, OnUserInfoResult, nullptr);
 }
 
 void PlayFabMatchmakerAPI::OnUserInfoResult(int httpStatus, HttpRequest* request, void* userData)
@@ -320,34 +238,24 @@ void PlayFabMatchmakerAPI::OnUserInfoResult(int httpStatus, HttpRequest* request
     UserInfoResponse outResult;
     PlayFabError errorResult;
 
-    bool success = PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult);
-
-    if (success)
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        
 
-        if (request->GetResultCallback() != NULL)
+        if (request->GetResultCallback() != nullptr)
         {
-            UserInfoCallback successCallback = (UserInfoCallback)(request->GetResultCallback());
+            UserInfoCallback successCallback = static_cast<UserInfoCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
     else
     {
-        if (PlayFabSettings::globalErrorHandler != NULL)
-        {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
             PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        }
-
-        if (request->GetErrorCallback() != NULL)
-        {
+        if (request->GetErrorCallback() != nullptr)
             request->GetErrorCallback()(errorResult, request->GetUserData());
-        }
     }
 
     delete request;
 }
-
-
 
 
