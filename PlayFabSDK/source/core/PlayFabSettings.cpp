@@ -14,7 +14,7 @@ namespace PlayFab
     std::string PlayFabSettings::advertisingIdType = "";
     std::string PlayFabSettings::advertisingIdValue = "";
 
-    bool PlayFabSettings::disableAdvertising = "";
+    bool PlayFabSettings::disableAdvertising = false;
     const std::string PlayFabSettings::AD_TYPE_IDFA = "Idfa";
     const std::string PlayFabSettings::AD_TYPE_ANDROID_ID = "Android_Id";
 }

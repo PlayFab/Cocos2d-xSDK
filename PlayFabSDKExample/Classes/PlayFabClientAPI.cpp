@@ -100,7 +100,7 @@ void PlayFabClientAPI::OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequ
     {
         if (outResult.SessionTicket.length() > 0)
             (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
-        PlayFabClientAPI::MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
         {
@@ -152,7 +152,7 @@ void PlayFabClientAPI::OnLoginWithCustomIDResult(int httpStatus, HttpRequest* re
     {
         if (outResult.SessionTicket.length() > 0)
             (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
-        PlayFabClientAPI::MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
         {
@@ -204,7 +204,7 @@ void PlayFabClientAPI::OnLoginWithEmailAddressResult(int httpStatus, HttpRequest
     {
         if (outResult.SessionTicket.length() > 0)
             (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
-        PlayFabClientAPI::MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
         {
@@ -256,7 +256,7 @@ void PlayFabClientAPI::OnLoginWithFacebookResult(int httpStatus, HttpRequest* re
     {
         if (outResult.SessionTicket.length() > 0)
             (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
-        PlayFabClientAPI::MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
         {
@@ -308,7 +308,7 @@ void PlayFabClientAPI::OnLoginWithGameCenterResult(int httpStatus, HttpRequest* 
     {
         if (outResult.SessionTicket.length() > 0)
             (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
-        PlayFabClientAPI::MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
         {
@@ -360,7 +360,7 @@ void PlayFabClientAPI::OnLoginWithGoogleAccountResult(int httpStatus, HttpReques
     {
         if (outResult.SessionTicket.length() > 0)
             (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
-        PlayFabClientAPI::MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
         {
@@ -412,7 +412,7 @@ void PlayFabClientAPI::OnLoginWithIOSDeviceIDResult(int httpStatus, HttpRequest*
     {
         if (outResult.SessionTicket.length() > 0)
             (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
-        PlayFabClientAPI::MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
         {
@@ -464,7 +464,7 @@ void PlayFabClientAPI::OnLoginWithKongregateResult(int httpStatus, HttpRequest* 
     {
         if (outResult.SessionTicket.length() > 0)
             (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
-        PlayFabClientAPI::MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
         {
@@ -516,7 +516,7 @@ void PlayFabClientAPI::OnLoginWithPlayFabResult(int httpStatus, HttpRequest* req
     {
         if (outResult.SessionTicket.length() > 0)
             (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
-        PlayFabClientAPI::MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
         {
@@ -568,7 +568,7 @@ void PlayFabClientAPI::OnLoginWithSteamResult(int httpStatus, HttpRequest* reque
     {
         if (outResult.SessionTicket.length() > 0)
             (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
-        PlayFabClientAPI::MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
         {
@@ -620,7 +620,7 @@ void PlayFabClientAPI::OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* 
     {
         if (outResult.SessionTicket.length() > 0)
             (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
-        PlayFabClientAPI::MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
         {
@@ -4990,6 +4990,7 @@ void PlayFabClientAPI::OnAttributeInstallResult(int httpStatus, HttpRequest* req
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
+        PlayFabSettings::advertisingIdType += "_Successful";
 
         if (request->GetResultCallback() != nullptr)
         {
