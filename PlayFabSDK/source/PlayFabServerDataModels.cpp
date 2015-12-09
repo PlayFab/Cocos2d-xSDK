@@ -2484,6 +2484,108 @@ bool GetLeaderboardResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetPlayerStatisticsRequest::~GetPlayerStatisticsRequest()
+{
+
+}
+
+void GetPlayerStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if (!StatisticNames.empty()) {
+    writer.String("StatisticNames");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = StatisticNames.begin(); iter != StatisticNames.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPlayerStatisticsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::Member* StatisticNames_member = obj.FindMember("StatisticNames");
+    if (StatisticNames_member != NULL) {
+        const rapidjson::Value& memberList = StatisticNames_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            StatisticNames.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
+StatisticValue::~StatisticValue()
+{
+
+}
+
+void StatisticValue::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
+    writer.String("Value"); writer.Int(Value);
+    if (Version.length() > 0) { writer.String("Version"); writer.String(Version.c_str()); }
+
+    writer.EndObject();
+}
+
+bool StatisticValue::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::Member* Value_member = obj.FindMember("Value");
+    if (Value_member != NULL && !Value_member->value.IsNull()) Value = Value_member->value.GetInt();
+    const Value::Member* Version_member = obj.FindMember("Version");
+    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetString();
+
+    return true;
+}
+
+GetPlayerStatisticsResult::~GetPlayerStatisticsResult()
+{
+
+}
+
+void GetPlayerStatisticsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    if (!Statistics.empty()) {
+    writer.String("Statistics");
+    writer.StartArray();
+    for (std::list<StatisticValue>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPlayerStatisticsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::Member* Statistics_member = obj.FindMember("Statistics");
+    if (Statistics_member != NULL) {
+        const rapidjson::Value& memberList = Statistics_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Statistics.push_back(StatisticValue(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 GetPlayFabIDsFromFacebookIDsRequest::~GetPlayFabIDsFromFacebookIDsRequest()
 {
 
@@ -4409,6 +4511,34 @@ bool SetTitleDataResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+StatisticUpdate::~StatisticUpdate()
+{
+
+}
+
+void StatisticUpdate::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
+    if (Version.length() > 0) { writer.String("Version"); writer.String(Version.c_str()); }
+    writer.String("Value"); writer.Int(Value);
+
+    writer.EndObject();
+}
+
+bool StatisticUpdate::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::Member* Version_member = obj.FindMember("Version");
+    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetString();
+    const Value::Member* Value_member = obj.FindMember("Value");
+    if (Value_member != NULL && !Value_member->value.IsNull()) Value = Value_member->value.GetInt();
+
+    return true;
+}
+
 SubtractCharacterVirtualCurrencyRequest::~SubtractCharacterVirtualCurrencyRequest()
 {
 
@@ -4600,6 +4730,62 @@ void UpdateCharacterStatisticsResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool UpdateCharacterStatisticsResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+UpdatePlayerStatisticsRequest::~UpdatePlayerStatisticsRequest()
+{
+
+}
+
+void UpdatePlayerStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if (!Statistics.empty()) {
+    writer.String("Statistics");
+    writer.StartArray();
+    for (std::list<StatisticUpdate>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool UpdatePlayerStatisticsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::Member* Statistics_member = obj.FindMember("Statistics");
+    if (Statistics_member != NULL) {
+        const rapidjson::Value& memberList = Statistics_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Statistics.push_back(StatisticUpdate(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+UpdatePlayerStatisticsResult::~UpdatePlayerStatisticsResult()
+{
+
+}
+
+void UpdatePlayerStatisticsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool UpdatePlayerStatisticsResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;

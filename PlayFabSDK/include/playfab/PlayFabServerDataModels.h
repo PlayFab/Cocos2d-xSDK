@@ -2066,6 +2066,93 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayerStatisticsRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::list<std::string> StatisticNames;
+
+            GetPlayerStatisticsRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                StatisticNames()
+            {}
+
+            GetPlayerStatisticsRequest(const GetPlayerStatisticsRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                StatisticNames(src.StatisticNames)
+            {}
+
+            GetPlayerStatisticsRequest(const rapidjson::Value& obj) : GetPlayerStatisticsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerStatisticsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct StatisticValue : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+            Int32 Value;
+            std::string Version;
+
+            StatisticValue() :
+                PlayFabBaseModel(),
+                StatisticName(),
+                Value(0),
+                Version()
+            {}
+
+            StatisticValue(const StatisticValue& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName),
+                Value(src.Value),
+                Version(src.Version)
+            {}
+
+            StatisticValue(const rapidjson::Value& obj) : StatisticValue()
+            {
+                readFromValue(obj);
+            }
+
+            ~StatisticValue();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerStatisticsResult : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::list<StatisticValue> Statistics;
+
+            GetPlayerStatisticsResult() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                Statistics()
+            {}
+
+            GetPlayerStatisticsResult(const GetPlayerStatisticsResult& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                Statistics(src.Statistics)
+            {}
+
+            GetPlayerStatisticsResult(const rapidjson::Value& obj) : GetPlayerStatisticsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerStatisticsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetPlayFabIDsFromFacebookIDsRequest : public PlayFabBaseModel
         {
             std::list<std::string> FacebookIDs;
@@ -3828,6 +3915,37 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct StatisticUpdate : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+            std::string Version;
+            Int32 Value;
+
+            StatisticUpdate() :
+                PlayFabBaseModel(),
+                StatisticName(),
+                Version(),
+                Value(0)
+            {}
+
+            StatisticUpdate(const StatisticUpdate& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName),
+                Version(src.Version),
+                Value(src.Value)
+            {}
+
+            StatisticUpdate(const rapidjson::Value& obj) : StatisticUpdate()
+            {
+                readFromValue(obj);
+            }
+
+            ~StatisticUpdate();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct SubtractCharacterVirtualCurrencyRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -4003,6 +4121,56 @@ namespace PlayFab
             }
 
             ~UpdateCharacterStatisticsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdatePlayerStatisticsRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::list<StatisticUpdate> Statistics;
+
+            UpdatePlayerStatisticsRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                Statistics()
+            {}
+
+            UpdatePlayerStatisticsRequest(const UpdatePlayerStatisticsRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                Statistics(src.Statistics)
+            {}
+
+            UpdatePlayerStatisticsRequest(const rapidjson::Value& obj) : UpdatePlayerStatisticsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdatePlayerStatisticsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdatePlayerStatisticsResult : public PlayFabBaseModel
+        {
+
+            UpdatePlayerStatisticsResult() :
+                PlayFabBaseModel()
+            {}
+
+            UpdatePlayerStatisticsResult(const UpdatePlayerStatisticsResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            UpdatePlayerStatisticsResult(const rapidjson::Value& obj) : UpdatePlayerStatisticsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdatePlayerStatisticsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
