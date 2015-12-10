@@ -3920,16 +3920,16 @@ namespace PlayFab
 
         struct GetUserStatisticsResult : public PlayFabBaseModel
         {
-            std::map<std::string, Int32> Statistics;
+            std::map<std::string, Int32> UserStatistics;
 
             GetUserStatisticsResult() :
                 PlayFabBaseModel(),
-                Statistics()
+                UserStatistics()
             {}
 
             GetUserStatisticsResult(const GetUserStatisticsResult& src) :
                 PlayFabBaseModel(),
-                Statistics(src.Statistics)
+                UserStatistics(src.UserStatistics)
             {}
 
             GetUserStatisticsResult(const rapidjson::Value& obj) : GetUserStatisticsResult()

@@ -4775,10 +4775,10 @@ void GetUserStatisticsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    if (!Statistics.empty()) {
-    writer.String("Statistics");
+    if (!UserStatistics.empty()) {
+    writer.String("UserStatistics");
     writer.StartObject();
-    for (std::map<std::string, Int32>::iterator iter = Statistics.begin(); iter != Statistics.end(); ++iter) {
+    for (std::map<std::string, Int32>::iterator iter = UserStatistics.begin(); iter != UserStatistics.end(); ++iter) {
         writer.String(iter->first.c_str()); writer.Int(iter->second);
     }
     writer.EndObject();
@@ -4789,10 +4789,10 @@ void GetUserStatisticsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetUserStatisticsResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Statistics_member = obj.FindMember("Statistics");
-    if (Statistics_member != NULL) {
-        for (Value::ConstMemberIterator iter = Statistics_member->value.MemberBegin(); iter != Statistics_member->value.MemberEnd(); ++iter) {
-            Statistics[iter->name.GetString()] = iter->value.GetInt();
+    const Value::Member* UserStatistics_member = obj.FindMember("UserStatistics");
+    if (UserStatistics_member != NULL) {
+        for (Value::ConstMemberIterator iter = UserStatistics_member->value.MemberBegin(); iter != UserStatistics_member->value.MemberEnd(); ++iter) {
+            UserStatistics[iter->name.GetString()] = iter->value.GetInt();
         }
     }
 
