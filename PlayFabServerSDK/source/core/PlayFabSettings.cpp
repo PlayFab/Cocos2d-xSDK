@@ -1,5 +1,4 @@
 #include "playfab/PlayFabSettings.h"
-
 #include <string>
 
 namespace PlayFab
@@ -9,6 +8,6 @@ namespace PlayFab
     std::string PlayFabSettings::developmentEnvironmentURL = ".playfabsandbox.com";
     std::string PlayFabSettings::productionEnvironmentURL = ".playfabapi.com";
     std::string PlayFabSettings::titleId;
-    ErrorCallback PlayFabSettings::globalErrorHandler = NULL;
+    ErrorCallback PlayFabSettings::globalErrorHandler = nullptr;
     std::string PlayFabSettings::developerSecretKey;
 }

@@ -687,6 +687,113 @@ bool ContentInfo::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::AdminModels::writeIntervalEnumJSON(Interval enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case IntervalHour: writer.String("Hour"); break;
+    case IntervalDay: writer.String("Day"); break;
+    case IntervalWeek: writer.String("Week"); break;
+    case IntervalMonth: writer.String("Month"); break;
+
+    }
+}
+
+Interval PlayFab::AdminModels::readIntervalFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, Interval> _IntervalMap;
+    if (_IntervalMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _IntervalMap["Hour"] = IntervalHour;
+        _IntervalMap["Day"] = IntervalDay;
+        _IntervalMap["Week"] = IntervalWeek;
+        _IntervalMap["Month"] = IntervalMonth;
+
+    }
+
+    auto output = _IntervalMap.find(obj.GetString());
+    if (output != _IntervalMap.end())
+        return output->second;
+
+    return IntervalHour; // Basically critical fail
+}
+
+CreatePlayerStatisticDefinitionRequest::~CreatePlayerStatisticDefinitionRequest()
+{
+
+}
+
+void CreatePlayerStatisticDefinitionRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Name"); writer.String(Name.c_str());
+    if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+
+    writer.EndObject();
+}
+
+bool CreatePlayerStatisticDefinitionRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* Name_member = obj.FindMember("Name");
+    if (Name_member != NULL && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::Member* VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
+    if (VersionChangeInterval_member != NULL && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
+
+    return true;
+}
+
+PlayerStatisticDefinition::~PlayerStatisticDefinition()
+{
+
+}
+
+void PlayerStatisticDefinition::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
+    if (CurrentVersion.length() > 0) { writer.String("CurrentVersion"); writer.String(CurrentVersion.c_str()); }
+    if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+
+    writer.EndObject();
+}
+
+bool PlayerStatisticDefinition::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::Member* CurrentVersion_member = obj.FindMember("CurrentVersion");
+    if (CurrentVersion_member != NULL && !CurrentVersion_member->value.IsNull()) CurrentVersion = CurrentVersion_member->value.GetString();
+    const Value::Member* VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
+    if (VersionChangeInterval_member != NULL && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
+
+    return true;
+}
+
+CreatePlayerStatisticDefinitionResult::~CreatePlayerStatisticDefinitionResult()
+{
+    if (Statistic != NULL) delete Statistic;
+
+}
+
+void CreatePlayerStatisticDefinitionResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Statistic != NULL) { writer.String("Statistic"); Statistic->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool CreatePlayerStatisticDefinitionResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* Statistic_member = obj.FindMember("Statistic");
+    if (Statistic_member != NULL && !Statistic_member->value.IsNull()) Statistic = new PlayerStatisticDefinition(Statistic_member->value);
+
+    return true;
+}
 void PlayFab::AdminModels::writeCurrencyEnumJSON(Currency enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -1615,6 +1722,185 @@ bool GetMatchmakerGameModesResult::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = GameModes_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             GameModes.push_back(GameModeInfo(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetPlayerStatisticDefinitionsRequest::~GetPlayerStatisticDefinitionsRequest()
+{
+
+}
+
+void GetPlayerStatisticDefinitionsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool GetPlayerStatisticDefinitionsRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+GetPlayerStatisticDefinitionsResult::~GetPlayerStatisticDefinitionsResult()
+{
+
+}
+
+void GetPlayerStatisticDefinitionsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Statistics.empty()) {
+    writer.String("Statistics");
+    writer.StartArray();
+    for (std::list<PlayerStatisticDefinition>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPlayerStatisticDefinitionsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* Statistics_member = obj.FindMember("Statistics");
+    if (Statistics_member != NULL) {
+        const rapidjson::Value& memberList = Statistics_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Statistics.push_back(PlayerStatisticDefinition(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetPlayerStatisticVersionsRequest::~GetPlayerStatisticVersionsRequest()
+{
+
+}
+
+void GetPlayerStatisticVersionsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetPlayerStatisticVersionsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+
+    return true;
+}
+void PlayFab::AdminModels::writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case StatisticVersionArchivalStatusNotScheduled: writer.String("NotScheduled"); break;
+    case StatisticVersionArchivalStatusScheduled: writer.String("Scheduled"); break;
+    case StatisticVersionArchivalStatusInProgress: writer.String("InProgress"); break;
+    case StatisticVersionArchivalStatusFailed: writer.String("Failed"); break;
+    case StatisticVersionArchivalStatusComplete: writer.String("Complete"); break;
+
+    }
+}
+
+StatisticVersionArchivalStatus PlayFab::AdminModels::readStatisticVersionArchivalStatusFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, StatisticVersionArchivalStatus> _StatisticVersionArchivalStatusMap;
+    if (_StatisticVersionArchivalStatusMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _StatisticVersionArchivalStatusMap["NotScheduled"] = StatisticVersionArchivalStatusNotScheduled;
+        _StatisticVersionArchivalStatusMap["Scheduled"] = StatisticVersionArchivalStatusScheduled;
+        _StatisticVersionArchivalStatusMap["InProgress"] = StatisticVersionArchivalStatusInProgress;
+        _StatisticVersionArchivalStatusMap["Failed"] = StatisticVersionArchivalStatusFailed;
+        _StatisticVersionArchivalStatusMap["Complete"] = StatisticVersionArchivalStatusComplete;
+
+    }
+
+    auto output = _StatisticVersionArchivalStatusMap.find(obj.GetString());
+    if (output != _StatisticVersionArchivalStatusMap.end())
+        return output->second;
+
+    return StatisticVersionArchivalStatusNotScheduled; // Basically critical fail
+}
+
+PlayerStatisticVersion::~PlayerStatisticVersion()
+{
+
+}
+
+void PlayerStatisticVersion::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
+    if (Version.length() > 0) { writer.String("Version"); writer.String(Version.c_str()); }
+    if (ScheduledVersionChangeIntervalTime.notNull()) { writer.String("ScheduledVersionChangeIntervalTime"); writeDatetime(ScheduledVersionChangeIntervalTime, writer); }
+    writer.String("CreatedTime"); writeDatetime(CreatedTime, writer);
+    if (ArchivalStatus.notNull()) { writer.String("ArchivalStatus"); writeStatisticVersionArchivalStatusEnumJSON(ArchivalStatus, writer); }
+    if (ResetInterval.notNull()) { writer.String("ResetInterval"); writeIntervalEnumJSON(ResetInterval, writer); }
+
+    writer.EndObject();
+}
+
+bool PlayerStatisticVersion::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::Member* Version_member = obj.FindMember("Version");
+    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetString();
+    const Value::Member* ScheduledVersionChangeIntervalTime_member = obj.FindMember("ScheduledVersionChangeIntervalTime");
+    if (ScheduledVersionChangeIntervalTime_member != NULL && !ScheduledVersionChangeIntervalTime_member->value.IsNull()) ScheduledVersionChangeIntervalTime = readDatetime(ScheduledVersionChangeIntervalTime_member->value);
+    const Value::Member* CreatedTime_member = obj.FindMember("CreatedTime");
+    if (CreatedTime_member != NULL && !CreatedTime_member->value.IsNull()) CreatedTime = readDatetime(CreatedTime_member->value);
+    const Value::Member* ArchivalStatus_member = obj.FindMember("ArchivalStatus");
+    if (ArchivalStatus_member != NULL && !ArchivalStatus_member->value.IsNull()) ArchivalStatus = readStatisticVersionArchivalStatusFromValue(ArchivalStatus_member->value);
+    const Value::Member* ResetInterval_member = obj.FindMember("ResetInterval");
+    if (ResetInterval_member != NULL && !ResetInterval_member->value.IsNull()) ResetInterval = readIntervalFromValue(ResetInterval_member->value);
+
+    return true;
+}
+
+GetPlayerStatisticVersionsResult::~GetPlayerStatisticVersionsResult()
+{
+
+}
+
+void GetPlayerStatisticVersionsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!StatisticVersions.empty()) {
+    writer.String("StatisticVersions");
+    writer.StartArray();
+    for (std::list<PlayerStatisticVersion>::iterator iter = StatisticVersions.begin(); iter != StatisticVersions.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPlayerStatisticVersionsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* StatisticVersions_member = obj.FindMember("StatisticVersions");
+    if (StatisticVersions_member != NULL) {
+        const rapidjson::Value& memberList = StatisticVersions_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            StatisticVersions.push_back(PlayerStatisticVersion(memberList[i]));
         }
     }
 
@@ -2662,6 +2948,51 @@ bool GrantItemsToUsersResult::readFromValue(const rapidjson::Value& obj)
             ItemGrantResults.push_back(GrantedItemInstance(memberList[i]));
         }
     }
+
+    return true;
+}
+
+IncrementPlayerStatisticVersionRequest::~IncrementPlayerStatisticVersionRequest()
+{
+
+}
+
+void IncrementPlayerStatisticVersionRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
+
+    writer.EndObject();
+}
+
+bool IncrementPlayerStatisticVersionRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+
+    return true;
+}
+
+IncrementPlayerStatisticVersionResult::~IncrementPlayerStatisticVersionResult()
+{
+    if (StatisticVersion != NULL) delete StatisticVersion;
+
+}
+
+void IncrementPlayerStatisticVersionResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (StatisticVersion != NULL) { writer.String("StatisticVersion"); StatisticVersion->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool IncrementPlayerStatisticVersionResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* StatisticVersion_member = obj.FindMember("StatisticVersion");
+    if (StatisticVersion_member != NULL && !StatisticVersion_member->value.IsNull()) StatisticVersion = new PlayerStatisticVersion(StatisticVersion_member->value);
 
     return true;
 }
@@ -4062,6 +4393,54 @@ bool UpdateCloudScriptResult::readFromValue(const rapidjson::Value& obj)
     if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
     const Value::Member* Revision_member = obj.FindMember("Revision");
     if (Revision_member != NULL && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
+
+    return true;
+}
+
+UpdatePlayerStatisticDefinitionRequest::~UpdatePlayerStatisticDefinitionRequest()
+{
+
+}
+
+void UpdatePlayerStatisticDefinitionRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
+    if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+
+    writer.EndObject();
+}
+
+bool UpdatePlayerStatisticDefinitionRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::Member* VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
+    if (VersionChangeInterval_member != NULL && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
+
+    return true;
+}
+
+UpdatePlayerStatisticDefinitionResult::~UpdatePlayerStatisticDefinitionResult()
+{
+    if (Statistic != NULL) delete Statistic;
+
+}
+
+void UpdatePlayerStatisticDefinitionResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Statistic != NULL) { writer.String("Statistic"); Statistic->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool UpdatePlayerStatisticDefinitionResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* Statistic_member = obj.FindMember("Statistic");
+    if (Statistic_member != NULL && !Statistic_member->value.IsNull()) Statistic = new PlayerStatisticDefinition(Statistic_member->value);
 
     return true;
 }

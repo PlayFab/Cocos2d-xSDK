@@ -549,6 +549,101 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum Interval
+        {
+            IntervalHour,
+            IntervalDay,
+            IntervalWeek,
+            IntervalMonth
+        };
+
+        void writeIntervalEnumJSON(Interval enumVal, PFStringJsonWriter& writer);
+        Interval readIntervalFromValue(const rapidjson::Value& obj);
+
+        struct CreatePlayerStatisticDefinitionRequest : public PlayFabBaseModel
+        {
+            std::string Name;
+            Boxed<Interval> VersionChangeInterval;
+
+            CreatePlayerStatisticDefinitionRequest() :
+                PlayFabBaseModel(),
+                Name(),
+                VersionChangeInterval()
+            {}
+
+            CreatePlayerStatisticDefinitionRequest(const CreatePlayerStatisticDefinitionRequest& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                VersionChangeInterval(src.VersionChangeInterval)
+            {}
+
+            CreatePlayerStatisticDefinitionRequest(const rapidjson::Value& obj) : CreatePlayerStatisticDefinitionRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreatePlayerStatisticDefinitionRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct PlayerStatisticDefinition : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+            std::string CurrentVersion;
+            Boxed<Interval> VersionChangeInterval;
+
+            PlayerStatisticDefinition() :
+                PlayFabBaseModel(),
+                StatisticName(),
+                CurrentVersion(),
+                VersionChangeInterval()
+            {}
+
+            PlayerStatisticDefinition(const PlayerStatisticDefinition& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName),
+                CurrentVersion(src.CurrentVersion),
+                VersionChangeInterval(src.VersionChangeInterval)
+            {}
+
+            PlayerStatisticDefinition(const rapidjson::Value& obj) : PlayerStatisticDefinition()
+            {
+                readFromValue(obj);
+            }
+
+            ~PlayerStatisticDefinition();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreatePlayerStatisticDefinitionResult : public PlayFabBaseModel
+        {
+            PlayerStatisticDefinition* Statistic;
+
+            CreatePlayerStatisticDefinitionResult() :
+                PlayFabBaseModel(),
+                Statistic(NULL)
+            {}
+
+            CreatePlayerStatisticDefinitionResult(const CreatePlayerStatisticDefinitionResult& src) :
+                PlayFabBaseModel(),
+                Statistic(src.Statistic ? new PlayerStatisticDefinition(*src.Statistic) : NULL)
+            {}
+
+            CreatePlayerStatisticDefinitionResult(const rapidjson::Value& obj) : CreatePlayerStatisticDefinitionResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreatePlayerStatisticDefinitionResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum Currency
         {
             CurrencyAED,
@@ -1276,6 +1371,155 @@ namespace PlayFab
             }
 
             ~GetMatchmakerGameModesResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerStatisticDefinitionsRequest : public PlayFabBaseModel
+        {
+
+            GetPlayerStatisticDefinitionsRequest() :
+                PlayFabBaseModel()
+            {}
+
+            GetPlayerStatisticDefinitionsRequest(const GetPlayerStatisticDefinitionsRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            GetPlayerStatisticDefinitionsRequest(const rapidjson::Value& obj) : GetPlayerStatisticDefinitionsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerStatisticDefinitionsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerStatisticDefinitionsResult : public PlayFabBaseModel
+        {
+            std::list<PlayerStatisticDefinition> Statistics;
+
+            GetPlayerStatisticDefinitionsResult() :
+                PlayFabBaseModel(),
+                Statistics()
+            {}
+
+            GetPlayerStatisticDefinitionsResult(const GetPlayerStatisticDefinitionsResult& src) :
+                PlayFabBaseModel(),
+                Statistics(src.Statistics)
+            {}
+
+            GetPlayerStatisticDefinitionsResult(const rapidjson::Value& obj) : GetPlayerStatisticDefinitionsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerStatisticDefinitionsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerStatisticVersionsRequest : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+
+            GetPlayerStatisticVersionsRequest() :
+                PlayFabBaseModel(),
+                StatisticName()
+            {}
+
+            GetPlayerStatisticVersionsRequest(const GetPlayerStatisticVersionsRequest& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName)
+            {}
+
+            GetPlayerStatisticVersionsRequest(const rapidjson::Value& obj) : GetPlayerStatisticVersionsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerStatisticVersionsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum StatisticVersionArchivalStatus
+        {
+            StatisticVersionArchivalStatusNotScheduled,
+            StatisticVersionArchivalStatusScheduled,
+            StatisticVersionArchivalStatusInProgress,
+            StatisticVersionArchivalStatusFailed,
+            StatisticVersionArchivalStatusComplete
+        };
+
+        void writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, PFStringJsonWriter& writer);
+        StatisticVersionArchivalStatus readStatisticVersionArchivalStatusFromValue(const rapidjson::Value& obj);
+
+        struct PlayerStatisticVersion : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+            std::string Version;
+            OptionalTime ScheduledVersionChangeIntervalTime;
+            time_t CreatedTime;
+            Boxed<StatisticVersionArchivalStatus> ArchivalStatus;
+            Boxed<Interval> ResetInterval;
+
+            PlayerStatisticVersion() :
+                PlayFabBaseModel(),
+                StatisticName(),
+                Version(),
+                ScheduledVersionChangeIntervalTime(),
+                CreatedTime(0),
+                ArchivalStatus(),
+                ResetInterval()
+            {}
+
+            PlayerStatisticVersion(const PlayerStatisticVersion& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName),
+                Version(src.Version),
+                ScheduledVersionChangeIntervalTime(src.ScheduledVersionChangeIntervalTime),
+                CreatedTime(src.CreatedTime),
+                ArchivalStatus(src.ArchivalStatus),
+                ResetInterval(src.ResetInterval)
+            {}
+
+            PlayerStatisticVersion(const rapidjson::Value& obj) : PlayerStatisticVersion()
+            {
+                readFromValue(obj);
+            }
+
+            ~PlayerStatisticVersion();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerStatisticVersionsResult : public PlayFabBaseModel
+        {
+            std::list<PlayerStatisticVersion> StatisticVersions;
+
+            GetPlayerStatisticVersionsResult() :
+                PlayFabBaseModel(),
+                StatisticVersions()
+            {}
+
+            GetPlayerStatisticVersionsResult(const GetPlayerStatisticVersionsResult& src) :
+                PlayFabBaseModel(),
+                StatisticVersions(src.StatisticVersions)
+            {}
+
+            GetPlayerStatisticVersionsResult(const rapidjson::Value& obj) : GetPlayerStatisticVersionsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerStatisticVersionsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -2124,6 +2368,56 @@ namespace PlayFab
             }
 
             ~GrantItemsToUsersResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct IncrementPlayerStatisticVersionRequest : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+
+            IncrementPlayerStatisticVersionRequest() :
+                PlayFabBaseModel(),
+                StatisticName()
+            {}
+
+            IncrementPlayerStatisticVersionRequest(const IncrementPlayerStatisticVersionRequest& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName)
+            {}
+
+            IncrementPlayerStatisticVersionRequest(const rapidjson::Value& obj) : IncrementPlayerStatisticVersionRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~IncrementPlayerStatisticVersionRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct IncrementPlayerStatisticVersionResult : public PlayFabBaseModel
+        {
+            PlayerStatisticVersion* StatisticVersion;
+
+            IncrementPlayerStatisticVersionResult() :
+                PlayFabBaseModel(),
+                StatisticVersion(NULL)
+            {}
+
+            IncrementPlayerStatisticVersionResult(const IncrementPlayerStatisticVersionResult& src) :
+                PlayFabBaseModel(),
+                StatisticVersion(src.StatisticVersion ? new PlayerStatisticVersion(*src.StatisticVersion) : NULL)
+            {}
+
+            IncrementPlayerStatisticVersionResult(const rapidjson::Value& obj) : IncrementPlayerStatisticVersionResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~IncrementPlayerStatisticVersionResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -3484,6 +3778,59 @@ namespace PlayFab
             }
 
             ~UpdateCloudScriptResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdatePlayerStatisticDefinitionRequest : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+            Boxed<Interval> VersionChangeInterval;
+
+            UpdatePlayerStatisticDefinitionRequest() :
+                PlayFabBaseModel(),
+                StatisticName(),
+                VersionChangeInterval()
+            {}
+
+            UpdatePlayerStatisticDefinitionRequest(const UpdatePlayerStatisticDefinitionRequest& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName),
+                VersionChangeInterval(src.VersionChangeInterval)
+            {}
+
+            UpdatePlayerStatisticDefinitionRequest(const rapidjson::Value& obj) : UpdatePlayerStatisticDefinitionRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdatePlayerStatisticDefinitionRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdatePlayerStatisticDefinitionResult : public PlayFabBaseModel
+        {
+            PlayerStatisticDefinition* Statistic;
+
+            UpdatePlayerStatisticDefinitionResult() :
+                PlayFabBaseModel(),
+                Statistic(NULL)
+            {}
+
+            UpdatePlayerStatisticDefinitionResult(const UpdatePlayerStatisticDefinitionResult& src) :
+                PlayFabBaseModel(),
+                Statistic(src.Statistic ? new PlayerStatisticDefinition(*src.Statistic) : NULL)
+            {}
+
+            UpdatePlayerStatisticDefinitionResult(const rapidjson::Value& obj) : UpdatePlayerStatisticDefinitionResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdatePlayerStatisticDefinitionResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
