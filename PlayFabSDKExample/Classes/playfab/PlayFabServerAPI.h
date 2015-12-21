@@ -17,10 +17,8 @@ namespace PlayFab
         typedef void(*GetUserAccountInfoCallback)(ServerModels::GetUserAccountInfoResult& result, void* userData);
         typedef void(*SendPushNotificationCallback)(ServerModels::SendPushNotificationResult& result, void* userData);
         typedef void(*DeleteUsersCallback)(ServerModels::DeleteUsersResult& result, void* userData);
-        typedef void(*GetFriendLeaderboardCallback)(ServerModels::GetLeaderboardResult& result, void* userData);
         typedef void(*GetLeaderboardCallback)(ServerModels::GetLeaderboardResult& result, void* userData);
         typedef void(*GetLeaderboardAroundUserCallback)(ServerModels::GetLeaderboardAroundUserResult& result, void* userData);
-        typedef void(*GetPlayerStatisticsCallback)(ServerModels::GetPlayerStatisticsResult& result, void* userData);
         typedef void(*GetUserDataCallback)(ServerModels::GetUserDataResult& result, void* userData);
         typedef void(*GetUserInternalDataCallback)(ServerModels::GetUserDataResult& result, void* userData);
         typedef void(*GetUserPublisherDataCallback)(ServerModels::GetUserDataResult& result, void* userData);
@@ -28,7 +26,6 @@ namespace PlayFab
         typedef void(*GetUserPublisherReadOnlyDataCallback)(ServerModels::GetUserDataResult& result, void* userData);
         typedef void(*GetUserReadOnlyDataCallback)(ServerModels::GetUserDataResult& result, void* userData);
         typedef void(*GetUserStatisticsCallback)(ServerModels::GetUserStatisticsResult& result, void* userData);
-        typedef void(*UpdatePlayerStatisticsCallback)(ServerModels::UpdatePlayerStatisticsResult& result, void* userData);
         typedef void(*UpdateUserDataCallback)(ServerModels::UpdateUserDataResult& result, void* userData);
         typedef void(*UpdateUserInternalDataCallback)(ServerModels::UpdateUserDataResult& result, void* userData);
         typedef void(*UpdateUserPublisherDataCallback)(ServerModels::UpdateUserDataResult& result, void* userData);
@@ -58,9 +55,6 @@ namespace PlayFab
         typedef void(*SubtractCharacterVirtualCurrencyCallback)(ServerModels::ModifyCharacterVirtualCurrencyResult& result, void* userData);
         typedef void(*SubtractUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
         typedef void(*UpdateUserInventoryItemCustomDataCallback)(ServerModels::UpdateUserInventoryItemDataResult& result, void* userData);
-        typedef void(*AddFriendCallback)(ServerModels::EmptyResult& result, void* userData);
-        typedef void(*GetFriendsListCallback)(ServerModels::GetFriendsListResult& result, void* userData);
-        typedef void(*RemoveFriendCallback)(ServerModels::EmptyResult& result, void* userData);
         typedef void(*NotifyMatchmakerPlayerLeftCallback)(ServerModels::NotifyMatchmakerPlayerLeftResult& result, void* userData);
         typedef void(*RedeemMatchmakerTicketCallback)(ServerModels::RedeemMatchmakerTicketResult& result, void* userData);
         typedef void(*AwardSteamAchievementCallback)(ServerModels::AwardSteamAchievementResult& result, void* userData);
@@ -97,10 +91,8 @@ namespace PlayFab
         static void GetUserAccountInfo(ServerModels::GetUserAccountInfoRequest& request, GetUserAccountInfoCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendPushNotification(ServerModels::SendPushNotificationRequest& request, SendPushNotificationCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteUsers(ServerModels::DeleteUsersRequest& request, DeleteUsersCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetFriendLeaderboard(ServerModels::GetFriendLeaderboardRequest& request, GetFriendLeaderboardCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboard(ServerModels::GetLeaderboardRequest& request, GetLeaderboardCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboardAroundUser(ServerModels::GetLeaderboardAroundUserRequest& request, GetLeaderboardAroundUserCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetPlayerStatistics(ServerModels::GetPlayerStatisticsRequest& request, GetPlayerStatisticsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserData(ServerModels::GetUserDataRequest& request, GetUserDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserInternalData(ServerModels::GetUserDataRequest& request, GetUserInternalDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserPublisherData(ServerModels::GetUserDataRequest& request, GetUserPublisherDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -108,7 +100,6 @@ namespace PlayFab
         static void GetUserPublisherReadOnlyData(ServerModels::GetUserDataRequest& request, GetUserPublisherReadOnlyDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserReadOnlyData(ServerModels::GetUserDataRequest& request, GetUserReadOnlyDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserStatistics(ServerModels::GetUserStatisticsRequest& request, GetUserStatisticsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UpdatePlayerStatistics(ServerModels::UpdatePlayerStatisticsRequest& request, UpdatePlayerStatisticsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserData(ServerModels::UpdateUserDataRequest& request, UpdateUserDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserInternalData(ServerModels::UpdateUserInternalDataRequest& request, UpdateUserInternalDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserPublisherData(ServerModels::UpdateUserDataRequest& request, UpdateUserPublisherDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -138,9 +129,6 @@ namespace PlayFab
         static void SubtractCharacterVirtualCurrency(ServerModels::SubtractCharacterVirtualCurrencyRequest& request, SubtractCharacterVirtualCurrencyCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractUserVirtualCurrency(ServerModels::SubtractUserVirtualCurrencyRequest& request, SubtractUserVirtualCurrencyCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserInventoryItemCustomData(ServerModels::UpdateUserInventoryItemDataRequest& request, UpdateUserInventoryItemCustomDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void AddFriend(ServerModels::AddFriendRequest& request, AddFriendCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetFriendsList(ServerModels::GetFriendsListRequest& request, GetFriendsListCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void RemoveFriend(ServerModels::RemoveFriendRequest& request, RemoveFriendCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void NotifyMatchmakerPlayerLeft(ServerModels::NotifyMatchmakerPlayerLeftRequest& request, NotifyMatchmakerPlayerLeftCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RedeemMatchmakerTicket(ServerModels::RedeemMatchmakerTicketRequest& request, RedeemMatchmakerTicketCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AwardSteamAchievement(ServerModels::AwardSteamAchievementRequest& request, AwardSteamAchievementCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -179,10 +167,8 @@ namespace PlayFab
         static void OnGetUserAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetFriendLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardAroundUserResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetPlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
@@ -190,7 +176,6 @@ namespace PlayFab
         static void OnGetUserPublisherReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnUpdatePlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
@@ -220,9 +205,6 @@ namespace PlayFab
         static void OnSubtractCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserInventoryItemCustomDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnAddFriendResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetFriendsListResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnRemoveFriendResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnNotifyMatchmakerPlayerLeftResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRedeemMatchmakerTicketResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAwardSteamAchievementResult(int httpStatus, HttpRequest* request, void* userData);
