@@ -5097,7 +5097,7 @@ namespace PlayFab
         struct MatchmakeRequest : public PlayFabBaseModel
         {
             std::string BuildVersion;
-            Boxed<Region> pfRegion;
+            Region pfRegion;
             std::string GameMode;
             std::string LobbyId;
             std::string StatisticName;
