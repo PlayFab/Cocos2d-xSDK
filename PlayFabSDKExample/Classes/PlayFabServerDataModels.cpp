@@ -4521,7 +4521,7 @@ void StatisticUpdate::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-    if (Version.length() > 0) { writer.String("Version"); writer.String(Version.c_str()); }
+    if (Version.notNull()) { writer.String("Version"); writer.Uint(Version); }
     writer.String("Value"); writer.Int(Value);
 
     writer.EndObject();
@@ -4532,7 +4532,7 @@ bool StatisticUpdate::readFromValue(const rapidjson::Value& obj)
     const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
     if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
     const Value::Member* Version_member = obj.FindMember("Version");
-    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetString();
+    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetUint();
     const Value::Member* Value_member = obj.FindMember("Value");
     if (Value_member != NULL && !Value_member->value.IsNull()) Value = Value_member->value.GetInt();
 

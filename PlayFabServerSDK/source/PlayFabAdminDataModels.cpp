@@ -754,7 +754,7 @@ void PlayerStatisticDefinition::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-    if (CurrentVersion.length() > 0) { writer.String("CurrentVersion"); writer.String(CurrentVersion.c_str()); }
+    writer.String("CurrentVersion"); writer.Uint(CurrentVersion);
     if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeIntervalEnumJSON(VersionChangeInterval, writer); }
 
     writer.EndObject();
@@ -765,7 +765,7 @@ bool PlayerStatisticDefinition::readFromValue(const rapidjson::Value& obj)
     const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
     if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
     const Value::Member* CurrentVersion_member = obj.FindMember("CurrentVersion");
-    if (CurrentVersion_member != NULL && !CurrentVersion_member->value.IsNull()) CurrentVersion = CurrentVersion_member->value.GetString();
+    if (CurrentVersion_member != NULL && !CurrentVersion_member->value.IsNull()) CurrentVersion = CurrentVersion_member->value.GetUint();
     const Value::Member* VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
     if (VersionChangeInterval_member != NULL && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
 
@@ -1808,8 +1808,8 @@ void PlayFab::AdminModels::writeStatisticVersionArchivalStatusEnumJSON(Statistic
     {
     case StatisticVersionArchivalStatusNotScheduled: writer.String("NotScheduled"); break;
     case StatisticVersionArchivalStatusScheduled: writer.String("Scheduled"); break;
+    case StatisticVersionArchivalStatusQueued: writer.String("Queued"); break;
     case StatisticVersionArchivalStatusInProgress: writer.String("InProgress"); break;
-    case StatisticVersionArchivalStatusFailed: writer.String("Failed"); break;
     case StatisticVersionArchivalStatusComplete: writer.String("Complete"); break;
 
     }
@@ -1823,8 +1823,8 @@ StatisticVersionArchivalStatus PlayFab::AdminModels::readStatisticVersionArchiva
         // Auto-generate the map on the first use
         _StatisticVersionArchivalStatusMap["NotScheduled"] = StatisticVersionArchivalStatusNotScheduled;
         _StatisticVersionArchivalStatusMap["Scheduled"] = StatisticVersionArchivalStatusScheduled;
+        _StatisticVersionArchivalStatusMap["Queued"] = StatisticVersionArchivalStatusQueued;
         _StatisticVersionArchivalStatusMap["InProgress"] = StatisticVersionArchivalStatusInProgress;
-        _StatisticVersionArchivalStatusMap["Failed"] = StatisticVersionArchivalStatusFailed;
         _StatisticVersionArchivalStatusMap["Complete"] = StatisticVersionArchivalStatusComplete;
 
     }
@@ -1846,11 +1846,13 @@ void PlayerStatisticVersion::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-    if (Version.length() > 0) { writer.String("Version"); writer.String(Version.c_str()); }
-    if (ScheduledVersionChangeIntervalTime.notNull()) { writer.String("ScheduledVersionChangeIntervalTime"); writeDatetime(ScheduledVersionChangeIntervalTime, writer); }
-    writer.String("CreatedTime"); writeDatetime(CreatedTime, writer);
+    writer.String("Version"); writer.Uint(Version);
+    if (ScheduledActivationTime.notNull()) { writer.String("ScheduledActivationTime"); writeDatetime(ScheduledActivationTime, writer); }
+    writer.String("ActivationTime"); writeDatetime(ActivationTime, writer);
+    if (ScheduledDeactivationTime.notNull()) { writer.String("ScheduledDeactivationTime"); writeDatetime(ScheduledDeactivationTime, writer); }
+    if (DeactivationTime.notNull()) { writer.String("DeactivationTime"); writeDatetime(DeactivationTime, writer); }
     if (ArchivalStatus.notNull()) { writer.String("ArchivalStatus"); writeStatisticVersionArchivalStatusEnumJSON(ArchivalStatus, writer); }
-    if (ResetInterval.notNull()) { writer.String("ResetInterval"); writeIntervalEnumJSON(ResetInterval, writer); }
+    if (ArchiveDownloadUrl.length() > 0) { writer.String("ArchiveDownloadUrl"); writer.String(ArchiveDownloadUrl.c_str()); }
 
     writer.EndObject();
 }
@@ -1860,15 +1862,19 @@ bool PlayerStatisticVersion::readFromValue(const rapidjson::Value& obj)
     const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
     if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
     const Value::Member* Version_member = obj.FindMember("Version");
-    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetString();
-    const Value::Member* ScheduledVersionChangeIntervalTime_member = obj.FindMember("ScheduledVersionChangeIntervalTime");
-    if (ScheduledVersionChangeIntervalTime_member != NULL && !ScheduledVersionChangeIntervalTime_member->value.IsNull()) ScheduledVersionChangeIntervalTime = readDatetime(ScheduledVersionChangeIntervalTime_member->value);
-    const Value::Member* CreatedTime_member = obj.FindMember("CreatedTime");
-    if (CreatedTime_member != NULL && !CreatedTime_member->value.IsNull()) CreatedTime = readDatetime(CreatedTime_member->value);
+    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetUint();
+    const Value::Member* ScheduledActivationTime_member = obj.FindMember("ScheduledActivationTime");
+    if (ScheduledActivationTime_member != NULL && !ScheduledActivationTime_member->value.IsNull()) ScheduledActivationTime = readDatetime(ScheduledActivationTime_member->value);
+    const Value::Member* ActivationTime_member = obj.FindMember("ActivationTime");
+    if (ActivationTime_member != NULL && !ActivationTime_member->value.IsNull()) ActivationTime = readDatetime(ActivationTime_member->value);
+    const Value::Member* ScheduledDeactivationTime_member = obj.FindMember("ScheduledDeactivationTime");
+    if (ScheduledDeactivationTime_member != NULL && !ScheduledDeactivationTime_member->value.IsNull()) ScheduledDeactivationTime = readDatetime(ScheduledDeactivationTime_member->value);
+    const Value::Member* DeactivationTime_member = obj.FindMember("DeactivationTime");
+    if (DeactivationTime_member != NULL && !DeactivationTime_member->value.IsNull()) DeactivationTime = readDatetime(DeactivationTime_member->value);
     const Value::Member* ArchivalStatus_member = obj.FindMember("ArchivalStatus");
     if (ArchivalStatus_member != NULL && !ArchivalStatus_member->value.IsNull()) ArchivalStatus = readStatisticVersionArchivalStatusFromValue(ArchivalStatus_member->value);
-    const Value::Member* ResetInterval_member = obj.FindMember("ResetInterval");
-    if (ResetInterval_member != NULL && !ResetInterval_member->value.IsNull()) ResetInterval = readIntervalFromValue(ResetInterval_member->value);
+    const Value::Member* ArchiveDownloadUrl_member = obj.FindMember("ArchiveDownloadUrl");
+    if (ArchiveDownloadUrl_member != NULL && !ArchiveDownloadUrl_member->value.IsNull()) ArchiveDownloadUrl = ArchiveDownloadUrl_member->value.GetString();
 
     return true;
 }
