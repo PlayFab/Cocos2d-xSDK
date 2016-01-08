@@ -1,4 +1,6 @@
 Debug.win32/
+bin/
+build/
 
 *.suo
 *.sdf
