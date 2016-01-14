@@ -2636,7 +2636,7 @@ void GetCharacterLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
     if (CharacterType.length() > 0) { writer.String("CharacterType"); writer.String(CharacterType.c_str()); }
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     writer.String("StartPosition"); writer.Int(StartPosition);
-    writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+    if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
 
     writer.EndObject();
 }
@@ -2796,7 +2796,7 @@ void GetFriendLeaderboardAroundCurrentUserRequest::writeJSON(PFStringJsonWriter&
     writer.StartObject();
 
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
-    writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+    if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
     if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
     if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
 
@@ -2882,6 +2882,74 @@ bool GetFriendLeaderboardAroundCurrentUserResult::readFromValue(const rapidjson:
     return true;
 }
 
+GetFriendLeaderboardAroundPlayerRequest::~GetFriendLeaderboardAroundPlayerRequest()
+{
+
+}
+
+void GetFriendLeaderboardAroundPlayerRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("StatisticName"); writer.String(StatisticName.c_str());
+    if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
+    if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
+
+    writer.EndObject();
+}
+
+bool GetFriendLeaderboardAroundPlayerRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::Member* MaxResultsCount_member = obj.FindMember("MaxResultsCount");
+    if (MaxResultsCount_member != NULL && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::Member* IncludeSteamFriends_member = obj.FindMember("IncludeSteamFriends");
+    if (IncludeSteamFriends_member != NULL && !IncludeSteamFriends_member->value.IsNull()) IncludeSteamFriends = IncludeSteamFriends_member->value.GetBool();
+    const Value::Member* IncludeFacebookFriends_member = obj.FindMember("IncludeFacebookFriends");
+    if (IncludeFacebookFriends_member != NULL && !IncludeFacebookFriends_member->value.IsNull()) IncludeFacebookFriends = IncludeFacebookFriends_member->value.GetBool();
+
+    return true;
+}
+
+GetFriendLeaderboardAroundPlayerResult::~GetFriendLeaderboardAroundPlayerResult()
+{
+
+}
+
+void GetFriendLeaderboardAroundPlayerResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Leaderboard.empty()) {
+    writer.String("Leaderboard");
+    writer.StartArray();
+    for (std::list<PlayerLeaderboardEntry>::iterator iter = Leaderboard.begin(); iter != Leaderboard.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetFriendLeaderboardAroundPlayerResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* Leaderboard_member = obj.FindMember("Leaderboard");
+    if (Leaderboard_member != NULL) {
+        const rapidjson::Value& memberList = Leaderboard_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Leaderboard.push_back(PlayerLeaderboardEntry(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 GetFriendLeaderboardRequest::~GetFriendLeaderboardRequest()
 {
 
@@ -2893,7 +2961,7 @@ void GetFriendLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
 
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     writer.String("StartPosition"); writer.Int(StartPosition);
-    writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+    if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
     if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
     if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
 
@@ -2987,7 +3055,7 @@ void GetLeaderboardAroundCharacterRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     writer.String("CharacterId"); writer.String(CharacterId.c_str());
     if (CharacterType.length() > 0) { writer.String("CharacterType"); writer.String(CharacterType.c_str()); }
-    writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+    if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
 
     writer.EndObject();
 }
@@ -3050,7 +3118,7 @@ void GetLeaderboardAroundCurrentUserRequest::writeJSON(PFStringJsonWriter& write
     writer.StartObject();
 
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
-    writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+    if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
 
     writer.EndObject();
 }
@@ -3087,6 +3155,68 @@ void GetLeaderboardAroundCurrentUserResult::writeJSON(PFStringJsonWriter& writer
 }
 
 bool GetLeaderboardAroundCurrentUserResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* Leaderboard_member = obj.FindMember("Leaderboard");
+    if (Leaderboard_member != NULL) {
+        const rapidjson::Value& memberList = Leaderboard_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Leaderboard.push_back(PlayerLeaderboardEntry(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetLeaderboardAroundPlayerRequest::~GetLeaderboardAroundPlayerRequest()
+{
+
+}
+
+void GetLeaderboardAroundPlayerRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    writer.String("StatisticName"); writer.String(StatisticName.c_str());
+    if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
+
+    writer.EndObject();
+}
+
+bool GetLeaderboardAroundPlayerRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::Member* MaxResultsCount_member = obj.FindMember("MaxResultsCount");
+    if (MaxResultsCount_member != NULL && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
+
+    return true;
+}
+
+GetLeaderboardAroundPlayerResult::~GetLeaderboardAroundPlayerResult()
+{
+
+}
+
+void GetLeaderboardAroundPlayerResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Leaderboard.empty()) {
+    writer.String("Leaderboard");
+    writer.StartArray();
+    for (std::list<PlayerLeaderboardEntry>::iterator iter = Leaderboard.begin(); iter != Leaderboard.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetLeaderboardAroundPlayerResult::readFromValue(const rapidjson::Value& obj)
 {
     const Value::Member* Leaderboard_member = obj.FindMember("Leaderboard");
     if (Leaderboard_member != NULL) {
@@ -3169,7 +3299,7 @@ void GetLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
 
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     writer.String("StartPosition"); writer.Int(StartPosition);
-    writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+    if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
 
     writer.EndObject();
 }

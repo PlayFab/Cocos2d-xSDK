@@ -58,8 +58,10 @@ namespace PlayFab
         typedef void(*UpdateUserTitleDisplayNameCallback)(ClientModels::UpdateUserTitleDisplayNameResult& result, void* userData);
         typedef void(*GetFriendLeaderboardCallback)(ClientModels::GetLeaderboardResult& result, void* userData);
         typedef void(*GetFriendLeaderboardAroundCurrentUserCallback)(ClientModels::GetFriendLeaderboardAroundCurrentUserResult& result, void* userData);
+        typedef void(*GetFriendLeaderboardAroundPlayerCallback)(ClientModels::GetFriendLeaderboardAroundPlayerResult& result, void* userData);
         typedef void(*GetLeaderboardCallback)(ClientModels::GetLeaderboardResult& result, void* userData);
         typedef void(*GetLeaderboardAroundCurrentUserCallback)(ClientModels::GetLeaderboardAroundCurrentUserResult& result, void* userData);
+        typedef void(*GetLeaderboardAroundPlayerCallback)(ClientModels::GetLeaderboardAroundPlayerResult& result, void* userData);
         typedef void(*GetUserDataCallback)(ClientModels::GetUserDataResult& result, void* userData);
         typedef void(*GetUserPublisherDataCallback)(ClientModels::GetUserDataResult& result, void* userData);
         typedef void(*GetUserPublisherReadOnlyDataCallback)(ClientModels::GetUserDataResult& result, void* userData);
@@ -179,8 +181,10 @@ namespace PlayFab
         static void UpdateUserTitleDisplayName(ClientModels::UpdateUserTitleDisplayNameRequest& request, UpdateUserTitleDisplayNameCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetFriendLeaderboard(ClientModels::GetFriendLeaderboardRequest& request, GetFriendLeaderboardCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetFriendLeaderboardAroundCurrentUser(ClientModels::GetFriendLeaderboardAroundCurrentUserRequest& request, GetFriendLeaderboardAroundCurrentUserCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetFriendLeaderboardAroundPlayer(ClientModels::GetFriendLeaderboardAroundPlayerRequest& request, GetFriendLeaderboardAroundPlayerCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboard(ClientModels::GetLeaderboardRequest& request, GetLeaderboardCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboardAroundCurrentUser(ClientModels::GetLeaderboardAroundCurrentUserRequest& request, GetLeaderboardAroundCurrentUserCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetLeaderboardAroundPlayer(ClientModels::GetLeaderboardAroundPlayerRequest& request, GetLeaderboardAroundPlayerCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserData(ClientModels::GetUserDataRequest& request, GetUserDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserPublisherData(ClientModels::GetUserDataRequest& request, GetUserPublisherDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserPublisherReadOnlyData(ClientModels::GetUserDataRequest& request, GetUserPublisherReadOnlyDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -298,8 +302,10 @@ namespace PlayFab
         static void OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetFriendLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetFriendLeaderboardAroundCurrentUserResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetFriendLeaderboardAroundPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardAroundCurrentUserResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetLeaderboardAroundPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserPublisherReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);

@@ -2279,6 +2279,54 @@ void PlayFabClientAPI::OnGetFriendLeaderboardAroundCurrentUserResult(int httpSta
     delete request;
 }
 
+void PlayFabClientAPI::GetFriendLeaderboardAroundPlayer(
+    GetFriendLeaderboardAroundPlayerRequest& request,
+    GetFriendLeaderboardAroundPlayerCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetFriendLeaderboardAroundPlayer"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(static_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetFriendLeaderboardAroundPlayerResult, nullptr);
+}
+
+void PlayFabClientAPI::OnGetFriendLeaderboardAroundPlayerResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetFriendLeaderboardAroundPlayerResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            GetFriendLeaderboardAroundPlayerCallback successCallback = static_cast<GetFriendLeaderboardAroundPlayerCallback>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::GetLeaderboard(
     GetLeaderboardRequest& request,
     GetLeaderboardCallback callback,
@@ -2361,6 +2409,54 @@ void PlayFabClientAPI::OnGetLeaderboardAroundCurrentUserResult(int httpStatus, H
         if (request->GetResultCallback() != nullptr)
         {
             GetLeaderboardAroundCurrentUserCallback successCallback = static_cast<GetLeaderboardAroundCurrentUserCallback>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::GetLeaderboardAroundPlayer(
+    GetLeaderboardAroundPlayerRequest& request,
+    GetLeaderboardAroundPlayerCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetLeaderboardAroundPlayer"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(static_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetLeaderboardAroundPlayerResult, nullptr);
+}
+
+void PlayFabClientAPI::OnGetLeaderboardAroundPlayerResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetLeaderboardAroundPlayerResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            GetLeaderboardAroundPlayerCallback successCallback = static_cast<GetLeaderboardAroundPlayerCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
