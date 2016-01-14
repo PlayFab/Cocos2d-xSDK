@@ -6002,9 +6002,9 @@ void MatchmakeRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    writer.String("BuildVersion"); writer.String(BuildVersion.c_str());
-    writer.String("Region"); writeRegionEnumJSON(pfRegion, writer);
-    writer.String("GameMode"); writer.String(GameMode.c_str());
+    if (BuildVersion.length() > 0) { writer.String("BuildVersion"); writer.String(BuildVersion.c_str()); }
+    if (pfRegion.notNull()) { writer.String("Region"); writeRegionEnumJSON(pfRegion, writer); }
+    if (GameMode.length() > 0) { writer.String("GameMode"); writer.String(GameMode.c_str()); }
     if (LobbyId.length() > 0) { writer.String("LobbyId"); writer.String(LobbyId.c_str()); }
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
     if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
