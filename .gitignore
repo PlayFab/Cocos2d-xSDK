@@ -4,6 +4,7 @@ build/
 
 *.suo
 *.sdf
+*.user
 *.opensdf
 *.obj
 *.log
