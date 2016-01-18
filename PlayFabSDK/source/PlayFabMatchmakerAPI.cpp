@@ -31,7 +31,7 @@ void PlayFabMatchmakerAPI::AuthUser(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
-    httpRequest->SetResultCallback(static_cast<void*>(callback));
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -51,7 +51,7 @@ void PlayFabMatchmakerAPI::OnAuthUserResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            AuthUserCallback successCallback = static_cast<AuthUserCallback>(request->GetResultCallback());
+            AuthUserCallback successCallback = reinterpret_cast<AuthUserCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -79,7 +79,7 @@ void PlayFabMatchmakerAPI::PlayerJoined(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
-    httpRequest->SetResultCallback(static_cast<void*>(callback));
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -99,7 +99,7 @@ void PlayFabMatchmakerAPI::OnPlayerJoinedResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            PlayerJoinedCallback successCallback = static_cast<PlayerJoinedCallback>(request->GetResultCallback());
+            PlayerJoinedCallback successCallback = reinterpret_cast<PlayerJoinedCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -127,7 +127,7 @@ void PlayFabMatchmakerAPI::PlayerLeft(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
-    httpRequest->SetResultCallback(static_cast<void*>(callback));
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -147,7 +147,7 @@ void PlayFabMatchmakerAPI::OnPlayerLeftResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            PlayerLeftCallback successCallback = static_cast<PlayerLeftCallback>(request->GetResultCallback());
+            PlayerLeftCallback successCallback = reinterpret_cast<PlayerLeftCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -175,7 +175,7 @@ void PlayFabMatchmakerAPI::StartGame(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
-    httpRequest->SetResultCallback(static_cast<void*>(callback));
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -195,7 +195,7 @@ void PlayFabMatchmakerAPI::OnStartGameResult(int httpStatus, HttpRequest* reques
 
         if (request->GetResultCallback() != nullptr)
         {
-            StartGameCallback successCallback = static_cast<StartGameCallback>(request->GetResultCallback());
+            StartGameCallback successCallback = reinterpret_cast<StartGameCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -223,7 +223,7 @@ void PlayFabMatchmakerAPI::UserInfo(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
-    httpRequest->SetResultCallback(static_cast<void*>(callback));
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -243,7 +243,7 @@ void PlayFabMatchmakerAPI::OnUserInfoResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            UserInfoCallback successCallback = static_cast<UserInfoCallback>(request->GetResultCallback());
+            UserInfoCallback successCallback = reinterpret_cast<UserInfoCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

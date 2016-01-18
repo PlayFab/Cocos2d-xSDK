@@ -3918,7 +3918,7 @@ namespace PlayFab
         struct StatisticUpdate : public PlayFabBaseModel
         {
             std::string StatisticName;
-            std::string Version;
+            OptionalUint32 Version;
             Int32 Value;
 
             StatisticUpdate() :

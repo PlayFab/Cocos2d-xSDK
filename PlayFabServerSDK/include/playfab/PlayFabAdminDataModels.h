@@ -591,13 +591,13 @@ namespace PlayFab
         struct PlayerStatisticDefinition : public PlayFabBaseModel
         {
             std::string StatisticName;
-            std::string CurrentVersion;
+            Uint32 CurrentVersion;
             Boxed<Interval> VersionChangeInterval;
 
             PlayerStatisticDefinition() :
                 PlayFabBaseModel(),
                 StatisticName(),
-                CurrentVersion(),
+                CurrentVersion(0),
                 VersionChangeInterval()
             {}
 
@@ -1452,8 +1452,8 @@ namespace PlayFab
         {
             StatisticVersionArchivalStatusNotScheduled,
             StatisticVersionArchivalStatusScheduled,
+            StatisticVersionArchivalStatusQueued,
             StatisticVersionArchivalStatusInProgress,
-            StatisticVersionArchivalStatusFailed,
             StatisticVersionArchivalStatusComplete
         };
 
@@ -1463,30 +1463,36 @@ namespace PlayFab
         struct PlayerStatisticVersion : public PlayFabBaseModel
         {
             std::string StatisticName;
-            std::string Version;
-            OptionalTime ScheduledVersionChangeIntervalTime;
-            time_t CreatedTime;
+            Uint32 Version;
+            OptionalTime ScheduledActivationTime;
+            time_t ActivationTime;
+            OptionalTime ScheduledDeactivationTime;
+            OptionalTime DeactivationTime;
             Boxed<StatisticVersionArchivalStatus> ArchivalStatus;
-            Boxed<Interval> ResetInterval;
+            std::string ArchiveDownloadUrl;
 
             PlayerStatisticVersion() :
                 PlayFabBaseModel(),
                 StatisticName(),
-                Version(),
-                ScheduledVersionChangeIntervalTime(),
-                CreatedTime(0),
+                Version(0),
+                ScheduledActivationTime(),
+                ActivationTime(0),
+                ScheduledDeactivationTime(),
+                DeactivationTime(),
                 ArchivalStatus(),
-                ResetInterval()
+                ArchiveDownloadUrl()
             {}
 
             PlayerStatisticVersion(const PlayerStatisticVersion& src) :
                 PlayFabBaseModel(),
                 StatisticName(src.StatisticName),
                 Version(src.Version),
-                ScheduledVersionChangeIntervalTime(src.ScheduledVersionChangeIntervalTime),
-                CreatedTime(src.CreatedTime),
+                ScheduledActivationTime(src.ScheduledActivationTime),
+                ActivationTime(src.ActivationTime),
+                ScheduledDeactivationTime(src.ScheduledDeactivationTime),
+                DeactivationTime(src.DeactivationTime),
                 ArchivalStatus(src.ArchivalStatus),
-                ResetInterval(src.ResetInterval)
+                ArchiveDownloadUrl(src.ArchiveDownloadUrl)
             {}
 
             PlayerStatisticVersion(const rapidjson::Value& obj) : PlayerStatisticVersion()

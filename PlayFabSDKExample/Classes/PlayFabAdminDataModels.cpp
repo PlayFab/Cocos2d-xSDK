@@ -23,12 +23,12 @@ void AddNewsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool AddNewsRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Timestamp_member = obj.FindMember("Timestamp");
-    if (Timestamp_member != NULL && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
-    const Value::Member* Title_member = obj.FindMember("Title");
-    if (Title_member != NULL && !Title_member->value.IsNull()) Title = Title_member->value.GetString();
-    const Value::Member* Body_member = obj.FindMember("Body");
-    if (Body_member != NULL && !Body_member->value.IsNull()) Body = Body_member->value.GetString();
+    const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
+    if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+    const Value::ConstMemberIterator Title_member = obj.FindMember("Title");
+    if (Title_member != obj.MemberEnd() && !Title_member->value.IsNull()) Title = Title_member->value.GetString();
+    const Value::ConstMemberIterator Body_member = obj.FindMember("Body");
+    if (Body_member != obj.MemberEnd() && !Body_member->value.IsNull()) Body = Body_member->value.GetString();
 
     return true;
 }
@@ -49,8 +49,8 @@ void AddNewsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool AddNewsResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* NewsId_member = obj.FindMember("NewsId");
-    if (NewsId_member != NULL && !NewsId_member->value.IsNull()) NewsId = NewsId_member->value.GetString();
+    const Value::ConstMemberIterator NewsId_member = obj.FindMember("NewsId");
+    if (NewsId_member != obj.MemberEnd() && !NewsId_member->value.IsNull()) NewsId = NewsId_member->value.GetString();
 
     return true;
 }
@@ -120,23 +120,23 @@ void AddServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool AddServerBuildRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* BuildId_member = obj.FindMember("BuildId");
-    if (BuildId_member != NULL && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
-    const Value::Member* CommandLineTemplate_member = obj.FindMember("CommandLineTemplate");
-    if (CommandLineTemplate_member != NULL && !CommandLineTemplate_member->value.IsNull()) CommandLineTemplate = CommandLineTemplate_member->value.GetString();
-    const Value::Member* ExecutablePath_member = obj.FindMember("ExecutablePath");
-    if (ExecutablePath_member != NULL && !ExecutablePath_member->value.IsNull()) ExecutablePath = ExecutablePath_member->value.GetString();
-    const Value::Member* ActiveRegions_member = obj.FindMember("ActiveRegions");
-    if (ActiveRegions_member != NULL) {
+    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
+    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CommandLineTemplate_member = obj.FindMember("CommandLineTemplate");
+    if (CommandLineTemplate_member != obj.MemberEnd() && !CommandLineTemplate_member->value.IsNull()) CommandLineTemplate = CommandLineTemplate_member->value.GetString();
+    const Value::ConstMemberIterator ExecutablePath_member = obj.FindMember("ExecutablePath");
+    if (ExecutablePath_member != obj.MemberEnd() && !ExecutablePath_member->value.IsNull()) ExecutablePath = ExecutablePath_member->value.GetString();
+    const Value::ConstMemberIterator ActiveRegions_member = obj.FindMember("ActiveRegions");
+    if (ActiveRegions_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = ActiveRegions_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ActiveRegions.push_back(readRegionFromValue(memberList[i]));
         }
     }
-    const Value::Member* Comment_member = obj.FindMember("Comment");
-    if (Comment_member != NULL && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
-    const Value::Member* MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
-    if (MaxGamesPerHost_member != NULL && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+    const Value::ConstMemberIterator Comment_member = obj.FindMember("Comment");
+    if (Comment_member != obj.MemberEnd() && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
+    const Value::ConstMemberIterator MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
+    if (MaxGamesPerHost_member != obj.MemberEnd() && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
 
     return true;
 }
@@ -205,29 +205,29 @@ void AddServerBuildResult::writeJSON(PFStringJsonWriter& writer)
 
 bool AddServerBuildResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* BuildId_member = obj.FindMember("BuildId");
-    if (BuildId_member != NULL && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
-    const Value::Member* ActiveRegions_member = obj.FindMember("ActiveRegions");
-    if (ActiveRegions_member != NULL) {
+    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
+    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator ActiveRegions_member = obj.FindMember("ActiveRegions");
+    if (ActiveRegions_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = ActiveRegions_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ActiveRegions.push_back(readRegionFromValue(memberList[i]));
         }
     }
-    const Value::Member* MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
-    if (MaxGamesPerHost_member != NULL && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
-    const Value::Member* CommandLineTemplate_member = obj.FindMember("CommandLineTemplate");
-    if (CommandLineTemplate_member != NULL && !CommandLineTemplate_member->value.IsNull()) CommandLineTemplate = CommandLineTemplate_member->value.GetString();
-    const Value::Member* ExecutablePath_member = obj.FindMember("ExecutablePath");
-    if (ExecutablePath_member != NULL && !ExecutablePath_member->value.IsNull()) ExecutablePath = ExecutablePath_member->value.GetString();
-    const Value::Member* Comment_member = obj.FindMember("Comment");
-    if (Comment_member != NULL && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
-    const Value::Member* Timestamp_member = obj.FindMember("Timestamp");
-    if (Timestamp_member != NULL && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
-    const Value::Member* TitleId_member = obj.FindMember("TitleId");
-    if (TitleId_member != NULL && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
-    const Value::Member* Status_member = obj.FindMember("Status");
-    if (Status_member != NULL && !Status_member->value.IsNull()) Status = readGameBuildStatusFromValue(Status_member->value);
+    const Value::ConstMemberIterator MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
+    if (MaxGamesPerHost_member != obj.MemberEnd() && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+    const Value::ConstMemberIterator CommandLineTemplate_member = obj.FindMember("CommandLineTemplate");
+    if (CommandLineTemplate_member != obj.MemberEnd() && !CommandLineTemplate_member->value.IsNull()) CommandLineTemplate = CommandLineTemplate_member->value.GetString();
+    const Value::ConstMemberIterator ExecutablePath_member = obj.FindMember("ExecutablePath");
+    if (ExecutablePath_member != obj.MemberEnd() && !ExecutablePath_member->value.IsNull()) ExecutablePath = ExecutablePath_member->value.GetString();
+    const Value::ConstMemberIterator Comment_member = obj.FindMember("Comment");
+    if (Comment_member != obj.MemberEnd() && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
+    const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
+    if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
+    if (Status_member != obj.MemberEnd() && !Status_member->value.IsNull()) Status = readGameBuildStatusFromValue(Status_member->value);
 
     return true;
 }
@@ -250,12 +250,12 @@ void AddUserVirtualCurrencyRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool AddUserVirtualCurrencyRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
-    if (VirtualCurrency_member != NULL && !VirtualCurrency_member->value.IsNull()) VirtualCurrency = VirtualCurrency_member->value.GetString();
-    const Value::Member* Amount_member = obj.FindMember("Amount");
-    if (Amount_member != NULL && !Amount_member->value.IsNull()) Amount = Amount_member->value.GetInt();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator VirtualCurrency_member = obj.FindMember("VirtualCurrency");
+    if (VirtualCurrency_member != obj.MemberEnd() && !VirtualCurrency_member->value.IsNull()) VirtualCurrency = VirtualCurrency_member->value.GetString();
+    const Value::ConstMemberIterator Amount_member = obj.FindMember("Amount");
+    if (Amount_member != obj.MemberEnd() && !Amount_member->value.IsNull()) Amount = Amount_member->value.GetInt();
 
     return true;
 }
@@ -280,16 +280,16 @@ void VirtualCurrencyData::writeJSON(PFStringJsonWriter& writer)
 
 bool VirtualCurrencyData::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* CurrencyCode_member = obj.FindMember("CurrencyCode");
-    if (CurrencyCode_member != NULL && !CurrencyCode_member->value.IsNull()) CurrencyCode = CurrencyCode_member->value.GetString();
-    const Value::Member* DisplayName_member = obj.FindMember("DisplayName");
-    if (DisplayName_member != NULL && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
-    const Value::Member* InitialDeposit_member = obj.FindMember("InitialDeposit");
-    if (InitialDeposit_member != NULL && !InitialDeposit_member->value.IsNull()) InitialDeposit = InitialDeposit_member->value.GetInt();
-    const Value::Member* RechargeRate_member = obj.FindMember("RechargeRate");
-    if (RechargeRate_member != NULL && !RechargeRate_member->value.IsNull()) RechargeRate = RechargeRate_member->value.GetInt();
-    const Value::Member* RechargeMax_member = obj.FindMember("RechargeMax");
-    if (RechargeMax_member != NULL && !RechargeMax_member->value.IsNull()) RechargeMax = RechargeMax_member->value.GetInt();
+    const Value::ConstMemberIterator CurrencyCode_member = obj.FindMember("CurrencyCode");
+    if (CurrencyCode_member != obj.MemberEnd() && !CurrencyCode_member->value.IsNull()) CurrencyCode = CurrencyCode_member->value.GetString();
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator InitialDeposit_member = obj.FindMember("InitialDeposit");
+    if (InitialDeposit_member != obj.MemberEnd() && !InitialDeposit_member->value.IsNull()) InitialDeposit = InitialDeposit_member->value.GetInt();
+    const Value::ConstMemberIterator RechargeRate_member = obj.FindMember("RechargeRate");
+    if (RechargeRate_member != obj.MemberEnd() && !RechargeRate_member->value.IsNull()) RechargeRate = RechargeRate_member->value.GetInt();
+    const Value::ConstMemberIterator RechargeMax_member = obj.FindMember("RechargeMax");
+    if (RechargeMax_member != obj.MemberEnd() && !RechargeMax_member->value.IsNull()) RechargeMax = RechargeMax_member->value.GetInt();
 
     return true;
 }
@@ -316,8 +316,8 @@ void AddVirtualCurrencyTypesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool AddVirtualCurrencyTypesRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* VirtualCurrencies_member = obj.FindMember("VirtualCurrencies");
-    if (VirtualCurrencies_member != NULL) {
+    const Value::ConstMemberIterator VirtualCurrencies_member = obj.FindMember("VirtualCurrencies");
+    if (VirtualCurrencies_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = VirtualCurrencies_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             VirtualCurrencies.push_back(VirtualCurrencyData(memberList[i]));
@@ -364,12 +364,12 @@ void CatalogItemConsumableInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool CatalogItemConsumableInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* UsageCount_member = obj.FindMember("UsageCount");
-    if (UsageCount_member != NULL && !UsageCount_member->value.IsNull()) UsageCount = UsageCount_member->value.GetUint();
-    const Value::Member* UsagePeriod_member = obj.FindMember("UsagePeriod");
-    if (UsagePeriod_member != NULL && !UsagePeriod_member->value.IsNull()) UsagePeriod = UsagePeriod_member->value.GetUint();
-    const Value::Member* UsagePeriodGroup_member = obj.FindMember("UsagePeriodGroup");
-    if (UsagePeriodGroup_member != NULL && !UsagePeriodGroup_member->value.IsNull()) UsagePeriodGroup = UsagePeriodGroup_member->value.GetString();
+    const Value::ConstMemberIterator UsageCount_member = obj.FindMember("UsageCount");
+    if (UsageCount_member != obj.MemberEnd() && !UsageCount_member->value.IsNull()) UsageCount = UsageCount_member->value.GetUint();
+    const Value::ConstMemberIterator UsagePeriod_member = obj.FindMember("UsagePeriod");
+    if (UsagePeriod_member != obj.MemberEnd() && !UsagePeriod_member->value.IsNull()) UsagePeriod = UsagePeriod_member->value.GetUint();
+    const Value::ConstMemberIterator UsagePeriodGroup_member = obj.FindMember("UsagePeriodGroup");
+    if (UsagePeriodGroup_member != obj.MemberEnd() && !UsagePeriodGroup_member->value.IsNull()) UsagePeriodGroup = UsagePeriodGroup_member->value.GetString();
 
     return true;
 }
@@ -414,24 +414,24 @@ void CatalogItemContainerInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool CatalogItemContainerInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* KeyItemId_member = obj.FindMember("KeyItemId");
-    if (KeyItemId_member != NULL && !KeyItemId_member->value.IsNull()) KeyItemId = KeyItemId_member->value.GetString();
-    const Value::Member* ItemContents_member = obj.FindMember("ItemContents");
-    if (ItemContents_member != NULL) {
+    const Value::ConstMemberIterator KeyItemId_member = obj.FindMember("KeyItemId");
+    if (KeyItemId_member != obj.MemberEnd() && !KeyItemId_member->value.IsNull()) KeyItemId = KeyItemId_member->value.GetString();
+    const Value::ConstMemberIterator ItemContents_member = obj.FindMember("ItemContents");
+    if (ItemContents_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = ItemContents_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ItemContents.push_back(memberList[i].GetString());
         }
     }
-    const Value::Member* ResultTableContents_member = obj.FindMember("ResultTableContents");
-    if (ResultTableContents_member != NULL) {
+    const Value::ConstMemberIterator ResultTableContents_member = obj.FindMember("ResultTableContents");
+    if (ResultTableContents_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = ResultTableContents_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ResultTableContents.push_back(memberList[i].GetString());
         }
     }
-    const Value::Member* VirtualCurrencyContents_member = obj.FindMember("VirtualCurrencyContents");
-    if (VirtualCurrencyContents_member != NULL) {
+    const Value::ConstMemberIterator VirtualCurrencyContents_member = obj.FindMember("VirtualCurrencyContents");
+    if (VirtualCurrencyContents_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = VirtualCurrencyContents_member->value.MemberBegin(); iter != VirtualCurrencyContents_member->value.MemberEnd(); ++iter) {
             VirtualCurrencyContents[iter->name.GetString()] = iter->value.GetUint();
         }
@@ -479,22 +479,22 @@ void CatalogItemBundleInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool CatalogItemBundleInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* BundledItems_member = obj.FindMember("BundledItems");
-    if (BundledItems_member != NULL) {
+    const Value::ConstMemberIterator BundledItems_member = obj.FindMember("BundledItems");
+    if (BundledItems_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = BundledItems_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             BundledItems.push_back(memberList[i].GetString());
         }
     }
-    const Value::Member* BundledResultTables_member = obj.FindMember("BundledResultTables");
-    if (BundledResultTables_member != NULL) {
+    const Value::ConstMemberIterator BundledResultTables_member = obj.FindMember("BundledResultTables");
+    if (BundledResultTables_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = BundledResultTables_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             BundledResultTables.push_back(memberList[i].GetString());
         }
     }
-    const Value::Member* BundledVirtualCurrencies_member = obj.FindMember("BundledVirtualCurrencies");
-    if (BundledVirtualCurrencies_member != NULL) {
+    const Value::ConstMemberIterator BundledVirtualCurrencies_member = obj.FindMember("BundledVirtualCurrencies");
+    if (BundledVirtualCurrencies_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = BundledVirtualCurrencies_member->value.MemberBegin(); iter != BundledVirtualCurrencies_member->value.MemberEnd(); ++iter) {
             BundledVirtualCurrencies[iter->name.GetString()] = iter->value.GetUint();
         }
@@ -558,51 +558,51 @@ void CatalogItem::writeJSON(PFStringJsonWriter& writer)
 
 bool CatalogItem::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* ItemId_member = obj.FindMember("ItemId");
-    if (ItemId_member != NULL && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
-    const Value::Member* ItemClass_member = obj.FindMember("ItemClass");
-    if (ItemClass_member != NULL && !ItemClass_member->value.IsNull()) ItemClass = ItemClass_member->value.GetString();
-    const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::Member* DisplayName_member = obj.FindMember("DisplayName");
-    if (DisplayName_member != NULL && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
-    const Value::Member* Description_member = obj.FindMember("Description");
-    if (Description_member != NULL && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
-    const Value::Member* VirtualCurrencyPrices_member = obj.FindMember("VirtualCurrencyPrices");
-    if (VirtualCurrencyPrices_member != NULL) {
+    const Value::ConstMemberIterator ItemId_member = obj.FindMember("ItemId");
+    if (ItemId_member != obj.MemberEnd() && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
+    const Value::ConstMemberIterator ItemClass_member = obj.FindMember("ItemClass");
+    if (ItemClass_member != obj.MemberEnd() && !ItemClass_member->value.IsNull()) ItemClass = ItemClass_member->value.GetString();
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator VirtualCurrencyPrices_member = obj.FindMember("VirtualCurrencyPrices");
+    if (VirtualCurrencyPrices_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = VirtualCurrencyPrices_member->value.MemberBegin(); iter != VirtualCurrencyPrices_member->value.MemberEnd(); ++iter) {
             VirtualCurrencyPrices[iter->name.GetString()] = iter->value.GetUint();
         }
     }
-    const Value::Member* RealCurrencyPrices_member = obj.FindMember("RealCurrencyPrices");
-    if (RealCurrencyPrices_member != NULL) {
+    const Value::ConstMemberIterator RealCurrencyPrices_member = obj.FindMember("RealCurrencyPrices");
+    if (RealCurrencyPrices_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = RealCurrencyPrices_member->value.MemberBegin(); iter != RealCurrencyPrices_member->value.MemberEnd(); ++iter) {
             RealCurrencyPrices[iter->name.GetString()] = iter->value.GetUint();
         }
     }
-    const Value::Member* Tags_member = obj.FindMember("Tags");
-    if (Tags_member != NULL) {
+    const Value::ConstMemberIterator Tags_member = obj.FindMember("Tags");
+    if (Tags_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Tags_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Tags.push_back(memberList[i].GetString());
         }
     }
-    const Value::Member* CustomData_member = obj.FindMember("CustomData");
-    if (CustomData_member != NULL && !CustomData_member->value.IsNull()) CustomData = CustomData_member->value.GetString();
-    const Value::Member* Consumable_member = obj.FindMember("Consumable");
-    if (Consumable_member != NULL && !Consumable_member->value.IsNull()) Consumable = new CatalogItemConsumableInfo(Consumable_member->value);
-    const Value::Member* Container_member = obj.FindMember("Container");
-    if (Container_member != NULL && !Container_member->value.IsNull()) Container = new CatalogItemContainerInfo(Container_member->value);
-    const Value::Member* Bundle_member = obj.FindMember("Bundle");
-    if (Bundle_member != NULL && !Bundle_member->value.IsNull()) Bundle = new CatalogItemBundleInfo(Bundle_member->value);
-    const Value::Member* CanBecomeCharacter_member = obj.FindMember("CanBecomeCharacter");
-    if (CanBecomeCharacter_member != NULL && !CanBecomeCharacter_member->value.IsNull()) CanBecomeCharacter = CanBecomeCharacter_member->value.GetBool();
-    const Value::Member* IsStackable_member = obj.FindMember("IsStackable");
-    if (IsStackable_member != NULL && !IsStackable_member->value.IsNull()) IsStackable = IsStackable_member->value.GetBool();
-    const Value::Member* IsTradable_member = obj.FindMember("IsTradable");
-    if (IsTradable_member != NULL && !IsTradable_member->value.IsNull()) IsTradable = IsTradable_member->value.GetBool();
-    const Value::Member* ItemImageUrl_member = obj.FindMember("ItemImageUrl");
-    if (ItemImageUrl_member != NULL && !ItemImageUrl_member->value.IsNull()) ItemImageUrl = ItemImageUrl_member->value.GetString();
+    const Value::ConstMemberIterator CustomData_member = obj.FindMember("CustomData");
+    if (CustomData_member != obj.MemberEnd() && !CustomData_member->value.IsNull()) CustomData = CustomData_member->value.GetString();
+    const Value::ConstMemberIterator Consumable_member = obj.FindMember("Consumable");
+    if (Consumable_member != obj.MemberEnd() && !Consumable_member->value.IsNull()) Consumable = new CatalogItemConsumableInfo(Consumable_member->value);
+    const Value::ConstMemberIterator Container_member = obj.FindMember("Container");
+    if (Container_member != obj.MemberEnd() && !Container_member->value.IsNull()) Container = new CatalogItemContainerInfo(Container_member->value);
+    const Value::ConstMemberIterator Bundle_member = obj.FindMember("Bundle");
+    if (Bundle_member != obj.MemberEnd() && !Bundle_member->value.IsNull()) Bundle = new CatalogItemBundleInfo(Bundle_member->value);
+    const Value::ConstMemberIterator CanBecomeCharacter_member = obj.FindMember("CanBecomeCharacter");
+    if (CanBecomeCharacter_member != obj.MemberEnd() && !CanBecomeCharacter_member->value.IsNull()) CanBecomeCharacter = CanBecomeCharacter_member->value.GetBool();
+    const Value::ConstMemberIterator IsStackable_member = obj.FindMember("IsStackable");
+    if (IsStackable_member != obj.MemberEnd() && !IsStackable_member->value.IsNull()) IsStackable = IsStackable_member->value.GetBool();
+    const Value::ConstMemberIterator IsTradable_member = obj.FindMember("IsTradable");
+    if (IsTradable_member != obj.MemberEnd() && !IsTradable_member->value.IsNull()) IsTradable = IsTradable_member->value.GetBool();
+    const Value::ConstMemberIterator ItemImageUrl_member = obj.FindMember("ItemImageUrl");
+    if (ItemImageUrl_member != obj.MemberEnd() && !ItemImageUrl_member->value.IsNull()) ItemImageUrl = ItemImageUrl_member->value.GetString();
 
     return true;
 }
@@ -624,10 +624,10 @@ void CloudScriptFile::writeJSON(PFStringJsonWriter& writer)
 
 bool CloudScriptFile::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Filename_member = obj.FindMember("Filename");
-    if (Filename_member != NULL && !Filename_member->value.IsNull()) Filename = Filename_member->value.GetString();
-    const Value::Member* FileContents_member = obj.FindMember("FileContents");
-    if (FileContents_member != NULL && !FileContents_member->value.IsNull()) FileContents = FileContents_member->value.GetString();
+    const Value::ConstMemberIterator Filename_member = obj.FindMember("Filename");
+    if (Filename_member != obj.MemberEnd() && !Filename_member->value.IsNull()) Filename = Filename_member->value.GetString();
+    const Value::ConstMemberIterator FileContents_member = obj.FindMember("FileContents");
+    if (FileContents_member != obj.MemberEnd() && !FileContents_member->value.IsNull()) FileContents = FileContents_member->value.GetString();
 
     return true;
 }
@@ -650,12 +650,12 @@ void CloudScriptVersionStatus::writeJSON(PFStringJsonWriter& writer)
 
 bool CloudScriptVersionStatus::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Version_member = obj.FindMember("Version");
-    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
-    const Value::Member* PublishedRevision_member = obj.FindMember("PublishedRevision");
-    if (PublishedRevision_member != NULL && !PublishedRevision_member->value.IsNull()) PublishedRevision = PublishedRevision_member->value.GetInt();
-    const Value::Member* LatestRevision_member = obj.FindMember("LatestRevision");
-    if (LatestRevision_member != NULL && !LatestRevision_member->value.IsNull()) LatestRevision = LatestRevision_member->value.GetInt();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator PublishedRevision_member = obj.FindMember("PublishedRevision");
+    if (PublishedRevision_member != obj.MemberEnd() && !PublishedRevision_member->value.IsNull()) PublishedRevision = PublishedRevision_member->value.GetInt();
+    const Value::ConstMemberIterator LatestRevision_member = obj.FindMember("LatestRevision");
+    if (LatestRevision_member != obj.MemberEnd() && !LatestRevision_member->value.IsNull()) LatestRevision = LatestRevision_member->value.GetInt();
 
     return true;
 }
@@ -678,12 +678,12 @@ void ContentInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool ContentInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Key_member = obj.FindMember("Key");
-    if (Key_member != NULL && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
-    const Value::Member* Size_member = obj.FindMember("Size");
-    if (Size_member != NULL && !Size_member->value.IsNull()) Size = Size_member->value.GetInt64();
-    const Value::Member* LastModified_member = obj.FindMember("LastModified");
-    if (LastModified_member != NULL && !LastModified_member->value.IsNull()) LastModified = readDatetime(LastModified_member->value);
+    const Value::ConstMemberIterator Key_member = obj.FindMember("Key");
+    if (Key_member != obj.MemberEnd() && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
+    const Value::ConstMemberIterator Size_member = obj.FindMember("Size");
+    if (Size_member != obj.MemberEnd() && !Size_member->value.IsNull()) Size = Size_member->value.GetInt64();
+    const Value::ConstMemberIterator LastModified_member = obj.FindMember("LastModified");
+    if (LastModified_member != obj.MemberEnd() && !LastModified_member->value.IsNull()) LastModified = readDatetime(LastModified_member->value);
 
     return true;
 }
@@ -736,10 +736,10 @@ void CreatePlayerStatisticDefinitionRequest::writeJSON(PFStringJsonWriter& write
 
 bool CreatePlayerStatisticDefinitionRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Name_member = obj.FindMember("Name");
-    if (Name_member != NULL && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-    const Value::Member* VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
-    if (VersionChangeInterval_member != NULL && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
+    if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
 
     return true;
 }
@@ -754,7 +754,7 @@ void PlayerStatisticDefinition::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-    if (CurrentVersion.length() > 0) { writer.String("CurrentVersion"); writer.String(CurrentVersion.c_str()); }
+    writer.String("CurrentVersion"); writer.Uint(CurrentVersion);
     if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeIntervalEnumJSON(VersionChangeInterval, writer); }
 
     writer.EndObject();
@@ -762,12 +762,12 @@ void PlayerStatisticDefinition::writeJSON(PFStringJsonWriter& writer)
 
 bool PlayerStatisticDefinition::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-    const Value::Member* CurrentVersion_member = obj.FindMember("CurrentVersion");
-    if (CurrentVersion_member != NULL && !CurrentVersion_member->value.IsNull()) CurrentVersion = CurrentVersion_member->value.GetString();
-    const Value::Member* VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
-    if (VersionChangeInterval_member != NULL && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
+    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::ConstMemberIterator CurrentVersion_member = obj.FindMember("CurrentVersion");
+    if (CurrentVersion_member != obj.MemberEnd() && !CurrentVersion_member->value.IsNull()) CurrentVersion = CurrentVersion_member->value.GetUint();
+    const Value::ConstMemberIterator VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
+    if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
 
     return true;
 }
@@ -789,8 +789,8 @@ void CreatePlayerStatisticDefinitionResult::writeJSON(PFStringJsonWriter& writer
 
 bool CreatePlayerStatisticDefinitionResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Statistic_member = obj.FindMember("Statistic");
-    if (Statistic_member != NULL && !Statistic_member->value.IsNull()) Statistic = new PlayerStatisticDefinition(Statistic_member->value);
+    const Value::ConstMemberIterator Statistic_member = obj.FindMember("Statistic");
+    if (Statistic_member != obj.MemberEnd() && !Statistic_member->value.IsNull()) Statistic = new PlayerStatisticDefinition(Statistic_member->value);
 
     return true;
 }
@@ -1158,8 +1158,8 @@ void DeleteContentRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool DeleteContentRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Key_member = obj.FindMember("Key");
-    if (Key_member != NULL && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
+    const Value::ConstMemberIterator Key_member = obj.FindMember("Key");
+    if (Key_member != obj.MemberEnd() && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
 
     return true;
 }
@@ -1187,15 +1187,15 @@ void DeleteUsersRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool DeleteUsersRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabIds_member = obj.FindMember("PlayFabIds");
-    if (PlayFabIds_member != NULL) {
+    const Value::ConstMemberIterator PlayFabIds_member = obj.FindMember("PlayFabIds");
+    if (PlayFabIds_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = PlayFabIds_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             PlayFabIds.push_back(memberList[i].GetString());
         }
     }
-    const Value::Member* TitleId_member = obj.FindMember("TitleId");
-    if (TitleId_member != NULL && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
 
     return true;
 }
@@ -1237,12 +1237,12 @@ void GameModeInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool GameModeInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Gamemode_member = obj.FindMember("Gamemode");
-    if (Gamemode_member != NULL && !Gamemode_member->value.IsNull()) Gamemode = Gamemode_member->value.GetString();
-    const Value::Member* MinPlayerCount_member = obj.FindMember("MinPlayerCount");
-    if (MinPlayerCount_member != NULL && !MinPlayerCount_member->value.IsNull()) MinPlayerCount = MinPlayerCount_member->value.GetUint();
-    const Value::Member* MaxPlayerCount_member = obj.FindMember("MaxPlayerCount");
-    if (MaxPlayerCount_member != NULL && !MaxPlayerCount_member->value.IsNull()) MaxPlayerCount = MaxPlayerCount_member->value.GetUint();
+    const Value::ConstMemberIterator Gamemode_member = obj.FindMember("Gamemode");
+    if (Gamemode_member != obj.MemberEnd() && !Gamemode_member->value.IsNull()) Gamemode = Gamemode_member->value.GetString();
+    const Value::ConstMemberIterator MinPlayerCount_member = obj.FindMember("MinPlayerCount");
+    if (MinPlayerCount_member != obj.MemberEnd() && !MinPlayerCount_member->value.IsNull()) MinPlayerCount = MinPlayerCount_member->value.GetUint();
+    const Value::ConstMemberIterator MaxPlayerCount_member = obj.FindMember("MaxPlayerCount");
+    if (MaxPlayerCount_member != obj.MemberEnd() && !MaxPlayerCount_member->value.IsNull()) MaxPlayerCount = MaxPlayerCount_member->value.GetUint();
 
     return true;
 }
@@ -1263,8 +1263,8 @@ void GetCatalogItemsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetCatalogItemsRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
 
     return true;
 }
@@ -1292,8 +1292,8 @@ void GetCatalogItemsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetCatalogItemsResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Catalog_member = obj.FindMember("Catalog");
-    if (Catalog_member != NULL) {
+    const Value::ConstMemberIterator Catalog_member = obj.FindMember("Catalog");
+    if (Catalog_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Catalog_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Catalog.push_back(CatalogItem(memberList[i]));
@@ -1320,10 +1320,10 @@ void GetCloudScriptRevisionRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetCloudScriptRevisionRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Version_member = obj.FindMember("Version");
-    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
-    const Value::Member* Revision_member = obj.FindMember("Revision");
-    if (Revision_member != NULL && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator Revision_member = obj.FindMember("Revision");
+    if (Revision_member != obj.MemberEnd() && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
 
     return true;
 }
@@ -1355,21 +1355,21 @@ void GetCloudScriptRevisionResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetCloudScriptRevisionResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Version_member = obj.FindMember("Version");
-    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
-    const Value::Member* Revision_member = obj.FindMember("Revision");
-    if (Revision_member != NULL && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
-    const Value::Member* CreatedAt_member = obj.FindMember("CreatedAt");
-    if (CreatedAt_member != NULL && !CreatedAt_member->value.IsNull()) CreatedAt = readDatetime(CreatedAt_member->value);
-    const Value::Member* Files_member = obj.FindMember("Files");
-    if (Files_member != NULL) {
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator Revision_member = obj.FindMember("Revision");
+    if (Revision_member != obj.MemberEnd() && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
+    const Value::ConstMemberIterator CreatedAt_member = obj.FindMember("CreatedAt");
+    if (CreatedAt_member != obj.MemberEnd() && !CreatedAt_member->value.IsNull()) CreatedAt = readDatetime(CreatedAt_member->value);
+    const Value::ConstMemberIterator Files_member = obj.FindMember("Files");
+    if (Files_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Files_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Files.push_back(CloudScriptFile(memberList[i]));
         }
     }
-    const Value::Member* IsPublished_member = obj.FindMember("IsPublished");
-    if (IsPublished_member != NULL && !IsPublished_member->value.IsNull()) IsPublished = IsPublished_member->value.GetBool();
+    const Value::ConstMemberIterator IsPublished_member = obj.FindMember("IsPublished");
+    if (IsPublished_member != obj.MemberEnd() && !IsPublished_member->value.IsNull()) IsPublished = IsPublished_member->value.GetBool();
 
     return true;
 }
@@ -1416,8 +1416,8 @@ void GetCloudScriptVersionsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetCloudScriptVersionsResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Versions_member = obj.FindMember("Versions");
-    if (Versions_member != NULL) {
+    const Value::ConstMemberIterator Versions_member = obj.FindMember("Versions");
+    if (Versions_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Versions_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Versions.push_back(CloudScriptVersionStatus(memberList[i]));
@@ -1443,8 +1443,8 @@ void GetContentListRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetContentListRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Prefix_member = obj.FindMember("Prefix");
-    if (Prefix_member != NULL && !Prefix_member->value.IsNull()) Prefix = Prefix_member->value.GetString();
+    const Value::ConstMemberIterator Prefix_member = obj.FindMember("Prefix");
+    if (Prefix_member != obj.MemberEnd() && !Prefix_member->value.IsNull()) Prefix = Prefix_member->value.GetString();
 
     return true;
 }
@@ -1474,12 +1474,12 @@ void GetContentListResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetContentListResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* ItemCount_member = obj.FindMember("ItemCount");
-    if (ItemCount_member != NULL && !ItemCount_member->value.IsNull()) ItemCount = ItemCount_member->value.GetInt64();
-    const Value::Member* TotalSize_member = obj.FindMember("TotalSize");
-    if (TotalSize_member != NULL && !TotalSize_member->value.IsNull()) TotalSize = TotalSize_member->value.GetInt64();
-    const Value::Member* Contents_member = obj.FindMember("Contents");
-    if (Contents_member != NULL) {
+    const Value::ConstMemberIterator ItemCount_member = obj.FindMember("ItemCount");
+    if (ItemCount_member != obj.MemberEnd() && !ItemCount_member->value.IsNull()) ItemCount = ItemCount_member->value.GetInt64();
+    const Value::ConstMemberIterator TotalSize_member = obj.FindMember("TotalSize");
+    if (TotalSize_member != obj.MemberEnd() && !TotalSize_member->value.IsNull()) TotalSize = TotalSize_member->value.GetInt64();
+    const Value::ConstMemberIterator Contents_member = obj.FindMember("Contents");
+    if (Contents_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Contents_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Contents.push_back(ContentInfo(memberList[i]));
@@ -1506,10 +1506,10 @@ void GetContentUploadUrlRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetContentUploadUrlRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Key_member = obj.FindMember("Key");
-    if (Key_member != NULL && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
-    const Value::Member* ContentType_member = obj.FindMember("ContentType");
-    if (ContentType_member != NULL && !ContentType_member->value.IsNull()) ContentType = ContentType_member->value.GetString();
+    const Value::ConstMemberIterator Key_member = obj.FindMember("Key");
+    if (Key_member != obj.MemberEnd() && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
+    const Value::ConstMemberIterator ContentType_member = obj.FindMember("ContentType");
+    if (ContentType_member != obj.MemberEnd() && !ContentType_member->value.IsNull()) ContentType = ContentType_member->value.GetString();
 
     return true;
 }
@@ -1530,8 +1530,8 @@ void GetContentUploadUrlResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetContentUploadUrlResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* URL_member = obj.FindMember("URL");
-    if (URL_member != NULL && !URL_member->value.IsNull()) URL = URL_member->value.GetString();
+    const Value::ConstMemberIterator URL_member = obj.FindMember("URL");
+    if (URL_member != obj.MemberEnd() && !URL_member->value.IsNull()) URL = URL_member->value.GetString();
 
     return true;
 }
@@ -1555,14 +1555,14 @@ void GetDataReportRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetDataReportRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* ReportName_member = obj.FindMember("ReportName");
-    if (ReportName_member != NULL && !ReportName_member->value.IsNull()) ReportName = ReportName_member->value.GetString();
-    const Value::Member* Year_member = obj.FindMember("Year");
-    if (Year_member != NULL && !Year_member->value.IsNull()) Year = Year_member->value.GetInt();
-    const Value::Member* Month_member = obj.FindMember("Month");
-    if (Month_member != NULL && !Month_member->value.IsNull()) Month = Month_member->value.GetInt();
-    const Value::Member* Day_member = obj.FindMember("Day");
-    if (Day_member != NULL && !Day_member->value.IsNull()) Day = Day_member->value.GetInt();
+    const Value::ConstMemberIterator ReportName_member = obj.FindMember("ReportName");
+    if (ReportName_member != obj.MemberEnd() && !ReportName_member->value.IsNull()) ReportName = ReportName_member->value.GetString();
+    const Value::ConstMemberIterator Year_member = obj.FindMember("Year");
+    if (Year_member != obj.MemberEnd() && !Year_member->value.IsNull()) Year = Year_member->value.GetInt();
+    const Value::ConstMemberIterator Month_member = obj.FindMember("Month");
+    if (Month_member != obj.MemberEnd() && !Month_member->value.IsNull()) Month = Month_member->value.GetInt();
+    const Value::ConstMemberIterator Day_member = obj.FindMember("Day");
+    if (Day_member != obj.MemberEnd() && !Day_member->value.IsNull()) Day = Day_member->value.GetInt();
 
     return true;
 }
@@ -1583,8 +1583,8 @@ void GetDataReportResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetDataReportResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* DownloadUrl_member = obj.FindMember("DownloadUrl");
-    if (DownloadUrl_member != NULL && !DownloadUrl_member->value.IsNull()) DownloadUrl = DownloadUrl_member->value.GetString();
+    const Value::ConstMemberIterator DownloadUrl_member = obj.FindMember("DownloadUrl");
+    if (DownloadUrl_member != obj.MemberEnd() && !DownloadUrl_member->value.IsNull()) DownloadUrl = DownloadUrl_member->value.GetString();
 
     return true;
 }
@@ -1605,8 +1605,8 @@ void GetMatchmakerGameInfoRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetMatchmakerGameInfoRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* LobbyId_member = obj.FindMember("LobbyId");
-    if (LobbyId_member != NULL && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
+    const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
+    if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
 
     return true;
 }
@@ -1643,31 +1643,31 @@ void GetMatchmakerGameInfoResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetMatchmakerGameInfoResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* LobbyId_member = obj.FindMember("LobbyId");
-    if (LobbyId_member != NULL && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
-    const Value::Member* TitleId_member = obj.FindMember("TitleId");
-    if (TitleId_member != NULL && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
-    const Value::Member* StartTime_member = obj.FindMember("StartTime");
-    if (StartTime_member != NULL && !StartTime_member->value.IsNull()) StartTime = readDatetime(StartTime_member->value);
-    const Value::Member* EndTime_member = obj.FindMember("EndTime");
-    if (EndTime_member != NULL && !EndTime_member->value.IsNull()) EndTime = readDatetime(EndTime_member->value);
-    const Value::Member* Mode_member = obj.FindMember("Mode");
-    if (Mode_member != NULL && !Mode_member->value.IsNull()) Mode = Mode_member->value.GetString();
-    const Value::Member* BuildVersion_member = obj.FindMember("BuildVersion");
-    if (BuildVersion_member != NULL && !BuildVersion_member->value.IsNull()) BuildVersion = BuildVersion_member->value.GetString();
-    const Value::Member* Region_member = obj.FindMember("Region");
-    if (Region_member != NULL && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
-    const Value::Member* Players_member = obj.FindMember("Players");
-    if (Players_member != NULL) {
+    const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
+    if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator StartTime_member = obj.FindMember("StartTime");
+    if (StartTime_member != obj.MemberEnd() && !StartTime_member->value.IsNull()) StartTime = readDatetime(StartTime_member->value);
+    const Value::ConstMemberIterator EndTime_member = obj.FindMember("EndTime");
+    if (EndTime_member != obj.MemberEnd() && !EndTime_member->value.IsNull()) EndTime = readDatetime(EndTime_member->value);
+    const Value::ConstMemberIterator Mode_member = obj.FindMember("Mode");
+    if (Mode_member != obj.MemberEnd() && !Mode_member->value.IsNull()) Mode = Mode_member->value.GetString();
+    const Value::ConstMemberIterator BuildVersion_member = obj.FindMember("BuildVersion");
+    if (BuildVersion_member != obj.MemberEnd() && !BuildVersion_member->value.IsNull()) BuildVersion = BuildVersion_member->value.GetString();
+    const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
+    if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
+    const Value::ConstMemberIterator Players_member = obj.FindMember("Players");
+    if (Players_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Players_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Players.push_back(memberList[i].GetString());
         }
     }
-    const Value::Member* ServerAddress_member = obj.FindMember("ServerAddress");
-    if (ServerAddress_member != NULL && !ServerAddress_member->value.IsNull()) ServerAddress = ServerAddress_member->value.GetString();
-    const Value::Member* ServerPort_member = obj.FindMember("ServerPort");
-    if (ServerPort_member != NULL && !ServerPort_member->value.IsNull()) ServerPort = ServerPort_member->value.GetUint();
+    const Value::ConstMemberIterator ServerAddress_member = obj.FindMember("ServerAddress");
+    if (ServerAddress_member != obj.MemberEnd() && !ServerAddress_member->value.IsNull()) ServerAddress = ServerAddress_member->value.GetString();
+    const Value::ConstMemberIterator ServerPort_member = obj.FindMember("ServerPort");
+    if (ServerPort_member != obj.MemberEnd() && !ServerPort_member->value.IsNull()) ServerPort = ServerPort_member->value.GetUint();
 
     return true;
 }
@@ -1688,8 +1688,8 @@ void GetMatchmakerGameModesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetMatchmakerGameModesRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* BuildVersion_member = obj.FindMember("BuildVersion");
-    if (BuildVersion_member != NULL && !BuildVersion_member->value.IsNull()) BuildVersion = BuildVersion_member->value.GetString();
+    const Value::ConstMemberIterator BuildVersion_member = obj.FindMember("BuildVersion");
+    if (BuildVersion_member != obj.MemberEnd() && !BuildVersion_member->value.IsNull()) BuildVersion = BuildVersion_member->value.GetString();
 
     return true;
 }
@@ -1717,8 +1717,8 @@ void GetMatchmakerGameModesResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetMatchmakerGameModesResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* GameModes_member = obj.FindMember("GameModes");
-    if (GameModes_member != NULL) {
+    const Value::ConstMemberIterator GameModes_member = obj.FindMember("GameModes");
+    if (GameModes_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = GameModes_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             GameModes.push_back(GameModeInfo(memberList[i]));
@@ -1770,8 +1770,8 @@ void GetPlayerStatisticDefinitionsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetPlayerStatisticDefinitionsResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Statistics_member = obj.FindMember("Statistics");
-    if (Statistics_member != NULL) {
+    const Value::ConstMemberIterator Statistics_member = obj.FindMember("Statistics");
+    if (Statistics_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Statistics_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Statistics.push_back(PlayerStatisticDefinition(memberList[i]));
@@ -1797,8 +1797,8 @@ void GetPlayerStatisticVersionsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetPlayerStatisticVersionsRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
 
     return true;
 }
@@ -1808,8 +1808,8 @@ void PlayFab::AdminModels::writeStatisticVersionArchivalStatusEnumJSON(Statistic
     {
     case StatisticVersionArchivalStatusNotScheduled: writer.String("NotScheduled"); break;
     case StatisticVersionArchivalStatusScheduled: writer.String("Scheduled"); break;
+    case StatisticVersionArchivalStatusQueued: writer.String("Queued"); break;
     case StatisticVersionArchivalStatusInProgress: writer.String("InProgress"); break;
-    case StatisticVersionArchivalStatusFailed: writer.String("Failed"); break;
     case StatisticVersionArchivalStatusComplete: writer.String("Complete"); break;
 
     }
@@ -1823,8 +1823,8 @@ StatisticVersionArchivalStatus PlayFab::AdminModels::readStatisticVersionArchiva
         // Auto-generate the map on the first use
         _StatisticVersionArchivalStatusMap["NotScheduled"] = StatisticVersionArchivalStatusNotScheduled;
         _StatisticVersionArchivalStatusMap["Scheduled"] = StatisticVersionArchivalStatusScheduled;
+        _StatisticVersionArchivalStatusMap["Queued"] = StatisticVersionArchivalStatusQueued;
         _StatisticVersionArchivalStatusMap["InProgress"] = StatisticVersionArchivalStatusInProgress;
-        _StatisticVersionArchivalStatusMap["Failed"] = StatisticVersionArchivalStatusFailed;
         _StatisticVersionArchivalStatusMap["Complete"] = StatisticVersionArchivalStatusComplete;
 
     }
@@ -1846,29 +1846,35 @@ void PlayerStatisticVersion::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-    if (Version.length() > 0) { writer.String("Version"); writer.String(Version.c_str()); }
-    if (ScheduledVersionChangeIntervalTime.notNull()) { writer.String("ScheduledVersionChangeIntervalTime"); writeDatetime(ScheduledVersionChangeIntervalTime, writer); }
-    writer.String("CreatedTime"); writeDatetime(CreatedTime, writer);
+    writer.String("Version"); writer.Uint(Version);
+    if (ScheduledActivationTime.notNull()) { writer.String("ScheduledActivationTime"); writeDatetime(ScheduledActivationTime, writer); }
+    writer.String("ActivationTime"); writeDatetime(ActivationTime, writer);
+    if (ScheduledDeactivationTime.notNull()) { writer.String("ScheduledDeactivationTime"); writeDatetime(ScheduledDeactivationTime, writer); }
+    if (DeactivationTime.notNull()) { writer.String("DeactivationTime"); writeDatetime(DeactivationTime, writer); }
     if (ArchivalStatus.notNull()) { writer.String("ArchivalStatus"); writeStatisticVersionArchivalStatusEnumJSON(ArchivalStatus, writer); }
-    if (ResetInterval.notNull()) { writer.String("ResetInterval"); writeIntervalEnumJSON(ResetInterval, writer); }
+    if (ArchiveDownloadUrl.length() > 0) { writer.String("ArchiveDownloadUrl"); writer.String(ArchiveDownloadUrl.c_str()); }
 
     writer.EndObject();
 }
 
 bool PlayerStatisticVersion::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-    const Value::Member* Version_member = obj.FindMember("Version");
-    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetString();
-    const Value::Member* ScheduledVersionChangeIntervalTime_member = obj.FindMember("ScheduledVersionChangeIntervalTime");
-    if (ScheduledVersionChangeIntervalTime_member != NULL && !ScheduledVersionChangeIntervalTime_member->value.IsNull()) ScheduledVersionChangeIntervalTime = readDatetime(ScheduledVersionChangeIntervalTime_member->value);
-    const Value::Member* CreatedTime_member = obj.FindMember("CreatedTime");
-    if (CreatedTime_member != NULL && !CreatedTime_member->value.IsNull()) CreatedTime = readDatetime(CreatedTime_member->value);
-    const Value::Member* ArchivalStatus_member = obj.FindMember("ArchivalStatus");
-    if (ArchivalStatus_member != NULL && !ArchivalStatus_member->value.IsNull()) ArchivalStatus = readStatisticVersionArchivalStatusFromValue(ArchivalStatus_member->value);
-    const Value::Member* ResetInterval_member = obj.FindMember("ResetInterval");
-    if (ResetInterval_member != NULL && !ResetInterval_member->value.IsNull()) ResetInterval = readIntervalFromValue(ResetInterval_member->value);
+    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetUint();
+    const Value::ConstMemberIterator ScheduledActivationTime_member = obj.FindMember("ScheduledActivationTime");
+    if (ScheduledActivationTime_member != obj.MemberEnd() && !ScheduledActivationTime_member->value.IsNull()) ScheduledActivationTime = readDatetime(ScheduledActivationTime_member->value);
+    const Value::ConstMemberIterator ActivationTime_member = obj.FindMember("ActivationTime");
+    if (ActivationTime_member != obj.MemberEnd() && !ActivationTime_member->value.IsNull()) ActivationTime = readDatetime(ActivationTime_member->value);
+    const Value::ConstMemberIterator ScheduledDeactivationTime_member = obj.FindMember("ScheduledDeactivationTime");
+    if (ScheduledDeactivationTime_member != obj.MemberEnd() && !ScheduledDeactivationTime_member->value.IsNull()) ScheduledDeactivationTime = readDatetime(ScheduledDeactivationTime_member->value);
+    const Value::ConstMemberIterator DeactivationTime_member = obj.FindMember("DeactivationTime");
+    if (DeactivationTime_member != obj.MemberEnd() && !DeactivationTime_member->value.IsNull()) DeactivationTime = readDatetime(DeactivationTime_member->value);
+    const Value::ConstMemberIterator ArchivalStatus_member = obj.FindMember("ArchivalStatus");
+    if (ArchivalStatus_member != obj.MemberEnd() && !ArchivalStatus_member->value.IsNull()) ArchivalStatus = readStatisticVersionArchivalStatusFromValue(ArchivalStatus_member->value);
+    const Value::ConstMemberIterator ArchiveDownloadUrl_member = obj.FindMember("ArchiveDownloadUrl");
+    if (ArchiveDownloadUrl_member != obj.MemberEnd() && !ArchiveDownloadUrl_member->value.IsNull()) ArchiveDownloadUrl = ArchiveDownloadUrl_member->value.GetString();
 
     return true;
 }
@@ -1896,8 +1902,8 @@ void GetPlayerStatisticVersionsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetPlayerStatisticVersionsResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* StatisticVersions_member = obj.FindMember("StatisticVersions");
-    if (StatisticVersions_member != NULL) {
+    const Value::ConstMemberIterator StatisticVersions_member = obj.FindMember("StatisticVersions");
+    if (StatisticVersions_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = StatisticVersions_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             StatisticVersions.push_back(PlayerStatisticVersion(memberList[i]));
@@ -1929,8 +1935,8 @@ void GetPublisherDataRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetPublisherDataRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Keys_member = obj.FindMember("Keys");
-    if (Keys_member != NULL) {
+    const Value::ConstMemberIterator Keys_member = obj.FindMember("Keys");
+    if (Keys_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Keys_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Keys.push_back(memberList[i].GetString());
@@ -1963,8 +1969,8 @@ void GetPublisherDataResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetPublisherDataResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Data_member = obj.FindMember("Data");
-    if (Data_member != NULL) {
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
             Data[iter->name.GetString()] = iter->value.GetString();
         }
@@ -1989,8 +1995,8 @@ void GetRandomResultTablesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetRandomResultTablesRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
 
     return true;
 }
@@ -2040,12 +2046,12 @@ void ResultTableNode::writeJSON(PFStringJsonWriter& writer)
 
 bool ResultTableNode::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* ResultItemType_member = obj.FindMember("ResultItemType");
-    if (ResultItemType_member != NULL && !ResultItemType_member->value.IsNull()) ResultItemType = readResultTableNodeTypeFromValue(ResultItemType_member->value);
-    const Value::Member* ResultItem_member = obj.FindMember("ResultItem");
-    if (ResultItem_member != NULL && !ResultItem_member->value.IsNull()) ResultItem = ResultItem_member->value.GetString();
-    const Value::Member* Weight_member = obj.FindMember("Weight");
-    if (Weight_member != NULL && !Weight_member->value.IsNull()) Weight = Weight_member->value.GetInt();
+    const Value::ConstMemberIterator ResultItemType_member = obj.FindMember("ResultItemType");
+    if (ResultItemType_member != obj.MemberEnd() && !ResultItemType_member->value.IsNull()) ResultItemType = readResultTableNodeTypeFromValue(ResultItemType_member->value);
+    const Value::ConstMemberIterator ResultItem_member = obj.FindMember("ResultItem");
+    if (ResultItem_member != obj.MemberEnd() && !ResultItem_member->value.IsNull()) ResultItem = ResultItem_member->value.GetString();
+    const Value::ConstMemberIterator Weight_member = obj.FindMember("Weight");
+    if (Weight_member != obj.MemberEnd() && !Weight_member->value.IsNull()) Weight = Weight_member->value.GetInt();
 
     return true;
 }
@@ -2074,12 +2080,12 @@ void RandomResultTableListing::writeJSON(PFStringJsonWriter& writer)
 
 bool RandomResultTableListing::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::Member* TableId_member = obj.FindMember("TableId");
-    if (TableId_member != NULL && !TableId_member->value.IsNull()) TableId = TableId_member->value.GetString();
-    const Value::Member* Nodes_member = obj.FindMember("Nodes");
-    if (Nodes_member != NULL) {
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator TableId_member = obj.FindMember("TableId");
+    if (TableId_member != obj.MemberEnd() && !TableId_member->value.IsNull()) TableId = TableId_member->value.GetString();
+    const Value::ConstMemberIterator Nodes_member = obj.FindMember("Nodes");
+    if (Nodes_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Nodes_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Nodes.push_back(ResultTableNode(memberList[i]));
@@ -2112,8 +2118,8 @@ void GetRandomResultTablesResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetRandomResultTablesResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Tables_member = obj.FindMember("Tables");
-    if (Tables_member != NULL) {
+    const Value::ConstMemberIterator Tables_member = obj.FindMember("Tables");
+    if (Tables_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Tables_member->value.MemberBegin(); iter != Tables_member->value.MemberEnd(); ++iter) {
             Tables[iter->name.GetString()] = RandomResultTableListing(iter->value);
         }
@@ -2138,8 +2144,8 @@ void GetServerBuildInfoRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetServerBuildInfoRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* BuildId_member = obj.FindMember("BuildId");
-    if (BuildId_member != NULL && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
+    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
 
     return true;
 }
@@ -2174,27 +2180,27 @@ void GetServerBuildInfoResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetServerBuildInfoResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* BuildId_member = obj.FindMember("BuildId");
-    if (BuildId_member != NULL && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
-    const Value::Member* ActiveRegions_member = obj.FindMember("ActiveRegions");
-    if (ActiveRegions_member != NULL) {
+    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
+    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator ActiveRegions_member = obj.FindMember("ActiveRegions");
+    if (ActiveRegions_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = ActiveRegions_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ActiveRegions.push_back(readRegionFromValue(memberList[i]));
         }
     }
-    const Value::Member* MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
-    if (MaxGamesPerHost_member != NULL && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
-    const Value::Member* Comment_member = obj.FindMember("Comment");
-    if (Comment_member != NULL && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
-    const Value::Member* Timestamp_member = obj.FindMember("Timestamp");
-    if (Timestamp_member != NULL && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
-    const Value::Member* TitleId_member = obj.FindMember("TitleId");
-    if (TitleId_member != NULL && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
-    const Value::Member* Status_member = obj.FindMember("Status");
-    if (Status_member != NULL && !Status_member->value.IsNull()) Status = readGameBuildStatusFromValue(Status_member->value);
-    const Value::Member* ErrorMessage_member = obj.FindMember("ErrorMessage");
-    if (ErrorMessage_member != NULL && !ErrorMessage_member->value.IsNull()) ErrorMessage = ErrorMessage_member->value.GetString();
+    const Value::ConstMemberIterator MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
+    if (MaxGamesPerHost_member != obj.MemberEnd() && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+    const Value::ConstMemberIterator Comment_member = obj.FindMember("Comment");
+    if (Comment_member != obj.MemberEnd() && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
+    const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
+    if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
+    if (Status_member != obj.MemberEnd() && !Status_member->value.IsNull()) Status = readGameBuildStatusFromValue(Status_member->value);
+    const Value::ConstMemberIterator ErrorMessage_member = obj.FindMember("ErrorMessage");
+    if (ErrorMessage_member != obj.MemberEnd() && !ErrorMessage_member->value.IsNull()) ErrorMessage = ErrorMessage_member->value.GetString();
 
     return true;
 }
@@ -2215,8 +2221,8 @@ void GetServerBuildUploadURLRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetServerBuildUploadURLRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* BuildId_member = obj.FindMember("BuildId");
-    if (BuildId_member != NULL && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
+    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
 
     return true;
 }
@@ -2237,8 +2243,8 @@ void GetServerBuildUploadURLResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetServerBuildUploadURLResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* URL_member = obj.FindMember("URL");
-    if (URL_member != NULL && !URL_member->value.IsNull()) URL = URL_member->value.GetString();
+    const Value::ConstMemberIterator URL_member = obj.FindMember("URL");
+    if (URL_member != obj.MemberEnd() && !URL_member->value.IsNull()) URL = URL_member->value.GetString();
 
     return true;
 }
@@ -2260,10 +2266,10 @@ void GetStoreItemsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetStoreItemsRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::Member* StoreId_member = obj.FindMember("StoreId");
-    if (StoreId_member != NULL && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator StoreId_member = obj.FindMember("StoreId");
+    if (StoreId_member != obj.MemberEnd() && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
 
     return true;
 }
@@ -2300,16 +2306,16 @@ void StoreItem::writeJSON(PFStringJsonWriter& writer)
 
 bool StoreItem::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* ItemId_member = obj.FindMember("ItemId");
-    if (ItemId_member != NULL && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
-    const Value::Member* VirtualCurrencyPrices_member = obj.FindMember("VirtualCurrencyPrices");
-    if (VirtualCurrencyPrices_member != NULL) {
+    const Value::ConstMemberIterator ItemId_member = obj.FindMember("ItemId");
+    if (ItemId_member != obj.MemberEnd() && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
+    const Value::ConstMemberIterator VirtualCurrencyPrices_member = obj.FindMember("VirtualCurrencyPrices");
+    if (VirtualCurrencyPrices_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = VirtualCurrencyPrices_member->value.MemberBegin(); iter != VirtualCurrencyPrices_member->value.MemberEnd(); ++iter) {
             VirtualCurrencyPrices[iter->name.GetString()] = iter->value.GetUint();
         }
     }
-    const Value::Member* RealCurrencyPrices_member = obj.FindMember("RealCurrencyPrices");
-    if (RealCurrencyPrices_member != NULL) {
+    const Value::ConstMemberIterator RealCurrencyPrices_member = obj.FindMember("RealCurrencyPrices");
+    if (RealCurrencyPrices_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = RealCurrencyPrices_member->value.MemberBegin(); iter != RealCurrencyPrices_member->value.MemberEnd(); ++iter) {
             RealCurrencyPrices[iter->name.GetString()] = iter->value.GetUint();
         }
@@ -2341,8 +2347,8 @@ void GetStoreItemsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetStoreItemsResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Store_member = obj.FindMember("Store");
-    if (Store_member != NULL) {
+    const Value::ConstMemberIterator Store_member = obj.FindMember("Store");
+    if (Store_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Store_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Store.push_back(StoreItem(memberList[i]));
@@ -2375,8 +2381,8 @@ void GetTitleDataRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetTitleDataRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Keys_member = obj.FindMember("Keys");
-    if (Keys_member != NULL) {
+    const Value::ConstMemberIterator Keys_member = obj.FindMember("Keys");
+    if (Keys_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Keys_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Keys.push_back(memberList[i].GetString());
@@ -2409,8 +2415,8 @@ void GetTitleDataResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetTitleDataResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Data_member = obj.FindMember("Data");
-    if (Data_member != NULL) {
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
             Data[iter->name.GetString()] = iter->value.GetString();
         }
@@ -2444,17 +2450,17 @@ void GetUserDataRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetUserDataRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* Keys_member = obj.FindMember("Keys");
-    if (Keys_member != NULL) {
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator Keys_member = obj.FindMember("Keys");
+    if (Keys_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Keys_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Keys.push_back(memberList[i].GetString());
         }
     }
-    const Value::Member* IfChangedFromDataVersion_member = obj.FindMember("IfChangedFromDataVersion");
-    if (IfChangedFromDataVersion_member != NULL && !IfChangedFromDataVersion_member->value.IsNull()) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetInt();
+    const Value::ConstMemberIterator IfChangedFromDataVersion_member = obj.FindMember("IfChangedFromDataVersion");
+    if (IfChangedFromDataVersion_member != obj.MemberEnd() && !IfChangedFromDataVersion_member->value.IsNull()) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetInt();
 
     return true;
 }
@@ -2504,12 +2510,12 @@ void UserDataRecord::writeJSON(PFStringJsonWriter& writer)
 
 bool UserDataRecord::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Value_member = obj.FindMember("Value");
-    if (Value_member != NULL && !Value_member->value.IsNull()) Value = Value_member->value.GetString();
-    const Value::Member* LastUpdated_member = obj.FindMember("LastUpdated");
-    if (LastUpdated_member != NULL && !LastUpdated_member->value.IsNull()) LastUpdated = readDatetime(LastUpdated_member->value);
-    const Value::Member* Permission_member = obj.FindMember("Permission");
-    if (Permission_member != NULL && !Permission_member->value.IsNull()) Permission = readUserDataPermissionFromValue(Permission_member->value);
+    const Value::ConstMemberIterator Value_member = obj.FindMember("Value");
+    if (Value_member != obj.MemberEnd() && !Value_member->value.IsNull()) Value = Value_member->value.GetString();
+    const Value::ConstMemberIterator LastUpdated_member = obj.FindMember("LastUpdated");
+    if (LastUpdated_member != obj.MemberEnd() && !LastUpdated_member->value.IsNull()) LastUpdated = readDatetime(LastUpdated_member->value);
+    const Value::ConstMemberIterator Permission_member = obj.FindMember("Permission");
+    if (Permission_member != obj.MemberEnd() && !Permission_member->value.IsNull()) Permission = readUserDataPermissionFromValue(Permission_member->value);
 
     return true;
 }
@@ -2539,12 +2545,12 @@ void GetUserDataResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetUserDataResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* DataVersion_member = obj.FindMember("DataVersion");
-    if (DataVersion_member != NULL && !DataVersion_member->value.IsNull()) DataVersion = DataVersion_member->value.GetUint();
-    const Value::Member* Data_member = obj.FindMember("Data");
-    if (Data_member != NULL) {
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator DataVersion_member = obj.FindMember("DataVersion");
+    if (DataVersion_member != obj.MemberEnd() && !DataVersion_member->value.IsNull()) DataVersion = DataVersion_member->value.GetUint();
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
             Data[iter->name.GetString()] = UserDataRecord(iter->value);
         }
@@ -2569,8 +2575,8 @@ void GetUserInventoryRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetUserInventoryRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
 
     return true;
 }
@@ -2619,41 +2625,41 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 
 bool ItemInstance::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* ItemId_member = obj.FindMember("ItemId");
-    if (ItemId_member != NULL && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
-    const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
-    if (ItemInstanceId_member != NULL && !ItemInstanceId_member->value.IsNull()) ItemInstanceId = ItemInstanceId_member->value.GetString();
-    const Value::Member* ItemClass_member = obj.FindMember("ItemClass");
-    if (ItemClass_member != NULL && !ItemClass_member->value.IsNull()) ItemClass = ItemClass_member->value.GetString();
-    const Value::Member* PurchaseDate_member = obj.FindMember("PurchaseDate");
-    if (PurchaseDate_member != NULL && !PurchaseDate_member->value.IsNull()) PurchaseDate = readDatetime(PurchaseDate_member->value);
-    const Value::Member* Expiration_member = obj.FindMember("Expiration");
-    if (Expiration_member != NULL && !Expiration_member->value.IsNull()) Expiration = readDatetime(Expiration_member->value);
-    const Value::Member* RemainingUses_member = obj.FindMember("RemainingUses");
-    if (RemainingUses_member != NULL && !RemainingUses_member->value.IsNull()) RemainingUses = RemainingUses_member->value.GetInt();
-    const Value::Member* UsesIncrementedBy_member = obj.FindMember("UsesIncrementedBy");
-    if (UsesIncrementedBy_member != NULL && !UsesIncrementedBy_member->value.IsNull()) UsesIncrementedBy = UsesIncrementedBy_member->value.GetInt();
-    const Value::Member* Annotation_member = obj.FindMember("Annotation");
-    if (Annotation_member != NULL && !Annotation_member->value.IsNull()) Annotation = Annotation_member->value.GetString();
-    const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::Member* BundleParent_member = obj.FindMember("BundleParent");
-    if (BundleParent_member != NULL && !BundleParent_member->value.IsNull()) BundleParent = BundleParent_member->value.GetString();
-    const Value::Member* DisplayName_member = obj.FindMember("DisplayName");
-    if (DisplayName_member != NULL && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
-    const Value::Member* UnitCurrency_member = obj.FindMember("UnitCurrency");
-    if (UnitCurrency_member != NULL && !UnitCurrency_member->value.IsNull()) UnitCurrency = UnitCurrency_member->value.GetString();
-    const Value::Member* UnitPrice_member = obj.FindMember("UnitPrice");
-    if (UnitPrice_member != NULL && !UnitPrice_member->value.IsNull()) UnitPrice = UnitPrice_member->value.GetUint();
-    const Value::Member* BundleContents_member = obj.FindMember("BundleContents");
-    if (BundleContents_member != NULL) {
+    const Value::ConstMemberIterator ItemId_member = obj.FindMember("ItemId");
+    if (ItemId_member != obj.MemberEnd() && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
+    const Value::ConstMemberIterator ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+    if (ItemInstanceId_member != obj.MemberEnd() && !ItemInstanceId_member->value.IsNull()) ItemInstanceId = ItemInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator ItemClass_member = obj.FindMember("ItemClass");
+    if (ItemClass_member != obj.MemberEnd() && !ItemClass_member->value.IsNull()) ItemClass = ItemClass_member->value.GetString();
+    const Value::ConstMemberIterator PurchaseDate_member = obj.FindMember("PurchaseDate");
+    if (PurchaseDate_member != obj.MemberEnd() && !PurchaseDate_member->value.IsNull()) PurchaseDate = readDatetime(PurchaseDate_member->value);
+    const Value::ConstMemberIterator Expiration_member = obj.FindMember("Expiration");
+    if (Expiration_member != obj.MemberEnd() && !Expiration_member->value.IsNull()) Expiration = readDatetime(Expiration_member->value);
+    const Value::ConstMemberIterator RemainingUses_member = obj.FindMember("RemainingUses");
+    if (RemainingUses_member != obj.MemberEnd() && !RemainingUses_member->value.IsNull()) RemainingUses = RemainingUses_member->value.GetInt();
+    const Value::ConstMemberIterator UsesIncrementedBy_member = obj.FindMember("UsesIncrementedBy");
+    if (UsesIncrementedBy_member != obj.MemberEnd() && !UsesIncrementedBy_member->value.IsNull()) UsesIncrementedBy = UsesIncrementedBy_member->value.GetInt();
+    const Value::ConstMemberIterator Annotation_member = obj.FindMember("Annotation");
+    if (Annotation_member != obj.MemberEnd() && !Annotation_member->value.IsNull()) Annotation = Annotation_member->value.GetString();
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator BundleParent_member = obj.FindMember("BundleParent");
+    if (BundleParent_member != obj.MemberEnd() && !BundleParent_member->value.IsNull()) BundleParent = BundleParent_member->value.GetString();
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator UnitCurrency_member = obj.FindMember("UnitCurrency");
+    if (UnitCurrency_member != obj.MemberEnd() && !UnitCurrency_member->value.IsNull()) UnitCurrency = UnitCurrency_member->value.GetString();
+    const Value::ConstMemberIterator UnitPrice_member = obj.FindMember("UnitPrice");
+    if (UnitPrice_member != obj.MemberEnd() && !UnitPrice_member->value.IsNull()) UnitPrice = UnitPrice_member->value.GetUint();
+    const Value::ConstMemberIterator BundleContents_member = obj.FindMember("BundleContents");
+    if (BundleContents_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = BundleContents_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             BundleContents.push_back(memberList[i].GetString());
         }
     }
-    const Value::Member* CustomData_member = obj.FindMember("CustomData");
-    if (CustomData_member != NULL) {
+    const Value::ConstMemberIterator CustomData_member = obj.FindMember("CustomData");
+    if (CustomData_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = CustomData_member->value.MemberBegin(); iter != CustomData_member->value.MemberEnd(); ++iter) {
             CustomData[iter->name.GetString()] = iter->value.GetString();
         }
@@ -2680,12 +2686,12 @@ void VirtualCurrencyRechargeTime::writeJSON(PFStringJsonWriter& writer)
 
 bool VirtualCurrencyRechargeTime::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* SecondsToRecharge_member = obj.FindMember("SecondsToRecharge");
-    if (SecondsToRecharge_member != NULL && !SecondsToRecharge_member->value.IsNull()) SecondsToRecharge = SecondsToRecharge_member->value.GetInt();
-    const Value::Member* RechargeTime_member = obj.FindMember("RechargeTime");
-    if (RechargeTime_member != NULL && !RechargeTime_member->value.IsNull()) RechargeTime = readDatetime(RechargeTime_member->value);
-    const Value::Member* RechargeMax_member = obj.FindMember("RechargeMax");
-    if (RechargeMax_member != NULL && !RechargeMax_member->value.IsNull()) RechargeMax = RechargeMax_member->value.GetInt();
+    const Value::ConstMemberIterator SecondsToRecharge_member = obj.FindMember("SecondsToRecharge");
+    if (SecondsToRecharge_member != obj.MemberEnd() && !SecondsToRecharge_member->value.IsNull()) SecondsToRecharge = SecondsToRecharge_member->value.GetInt();
+    const Value::ConstMemberIterator RechargeTime_member = obj.FindMember("RechargeTime");
+    if (RechargeTime_member != obj.MemberEnd() && !RechargeTime_member->value.IsNull()) RechargeTime = readDatetime(RechargeTime_member->value);
+    const Value::ConstMemberIterator RechargeMax_member = obj.FindMember("RechargeMax");
+    if (RechargeMax_member != obj.MemberEnd() && !RechargeMax_member->value.IsNull()) RechargeMax = RechargeMax_member->value.GetInt();
 
     return true;
 }
@@ -2730,23 +2736,23 @@ void GetUserInventoryResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetUserInventoryResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* Inventory_member = obj.FindMember("Inventory");
-    if (Inventory_member != NULL) {
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator Inventory_member = obj.FindMember("Inventory");
+    if (Inventory_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Inventory_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Inventory.push_back(ItemInstance(memberList[i]));
         }
     }
-    const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
-    if (VirtualCurrency_member != NULL) {
+    const Value::ConstMemberIterator VirtualCurrency_member = obj.FindMember("VirtualCurrency");
+    if (VirtualCurrency_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = VirtualCurrency_member->value.MemberBegin(); iter != VirtualCurrency_member->value.MemberEnd(); ++iter) {
             VirtualCurrency[iter->name.GetString()] = iter->value.GetInt();
         }
     }
-    const Value::Member* VirtualCurrencyRechargeTimes_member = obj.FindMember("VirtualCurrencyRechargeTimes");
-    if (VirtualCurrencyRechargeTimes_member != NULL) {
+    const Value::ConstMemberIterator VirtualCurrencyRechargeTimes_member = obj.FindMember("VirtualCurrencyRechargeTimes");
+    if (VirtualCurrencyRechargeTimes_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = VirtualCurrencyRechargeTimes_member->value.MemberBegin(); iter != VirtualCurrencyRechargeTimes_member->value.MemberEnd(); ++iter) {
             VirtualCurrencyRechargeTimes[iter->name.GetString()] = VirtualCurrencyRechargeTime(iter->value);
         }
@@ -2802,47 +2808,47 @@ void GrantedItemInstance::writeJSON(PFStringJsonWriter& writer)
 
 bool GrantedItemInstance::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
-    if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
-    const Value::Member* Result_member = obj.FindMember("Result");
-    if (Result_member != NULL && !Result_member->value.IsNull()) Result = Result_member->value.GetBool();
-    const Value::Member* ItemId_member = obj.FindMember("ItemId");
-    if (ItemId_member != NULL && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
-    const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
-    if (ItemInstanceId_member != NULL && !ItemInstanceId_member->value.IsNull()) ItemInstanceId = ItemInstanceId_member->value.GetString();
-    const Value::Member* ItemClass_member = obj.FindMember("ItemClass");
-    if (ItemClass_member != NULL && !ItemClass_member->value.IsNull()) ItemClass = ItemClass_member->value.GetString();
-    const Value::Member* PurchaseDate_member = obj.FindMember("PurchaseDate");
-    if (PurchaseDate_member != NULL && !PurchaseDate_member->value.IsNull()) PurchaseDate = readDatetime(PurchaseDate_member->value);
-    const Value::Member* Expiration_member = obj.FindMember("Expiration");
-    if (Expiration_member != NULL && !Expiration_member->value.IsNull()) Expiration = readDatetime(Expiration_member->value);
-    const Value::Member* RemainingUses_member = obj.FindMember("RemainingUses");
-    if (RemainingUses_member != NULL && !RemainingUses_member->value.IsNull()) RemainingUses = RemainingUses_member->value.GetInt();
-    const Value::Member* UsesIncrementedBy_member = obj.FindMember("UsesIncrementedBy");
-    if (UsesIncrementedBy_member != NULL && !UsesIncrementedBy_member->value.IsNull()) UsesIncrementedBy = UsesIncrementedBy_member->value.GetInt();
-    const Value::Member* Annotation_member = obj.FindMember("Annotation");
-    if (Annotation_member != NULL && !Annotation_member->value.IsNull()) Annotation = Annotation_member->value.GetString();
-    const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::Member* BundleParent_member = obj.FindMember("BundleParent");
-    if (BundleParent_member != NULL && !BundleParent_member->value.IsNull()) BundleParent = BundleParent_member->value.GetString();
-    const Value::Member* DisplayName_member = obj.FindMember("DisplayName");
-    if (DisplayName_member != NULL && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
-    const Value::Member* UnitCurrency_member = obj.FindMember("UnitCurrency");
-    if (UnitCurrency_member != NULL && !UnitCurrency_member->value.IsNull()) UnitCurrency = UnitCurrency_member->value.GetString();
-    const Value::Member* UnitPrice_member = obj.FindMember("UnitPrice");
-    if (UnitPrice_member != NULL && !UnitPrice_member->value.IsNull()) UnitPrice = UnitPrice_member->value.GetUint();
-    const Value::Member* BundleContents_member = obj.FindMember("BundleContents");
-    if (BundleContents_member != NULL) {
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator Result_member = obj.FindMember("Result");
+    if (Result_member != obj.MemberEnd() && !Result_member->value.IsNull()) Result = Result_member->value.GetBool();
+    const Value::ConstMemberIterator ItemId_member = obj.FindMember("ItemId");
+    if (ItemId_member != obj.MemberEnd() && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
+    const Value::ConstMemberIterator ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+    if (ItemInstanceId_member != obj.MemberEnd() && !ItemInstanceId_member->value.IsNull()) ItemInstanceId = ItemInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator ItemClass_member = obj.FindMember("ItemClass");
+    if (ItemClass_member != obj.MemberEnd() && !ItemClass_member->value.IsNull()) ItemClass = ItemClass_member->value.GetString();
+    const Value::ConstMemberIterator PurchaseDate_member = obj.FindMember("PurchaseDate");
+    if (PurchaseDate_member != obj.MemberEnd() && !PurchaseDate_member->value.IsNull()) PurchaseDate = readDatetime(PurchaseDate_member->value);
+    const Value::ConstMemberIterator Expiration_member = obj.FindMember("Expiration");
+    if (Expiration_member != obj.MemberEnd() && !Expiration_member->value.IsNull()) Expiration = readDatetime(Expiration_member->value);
+    const Value::ConstMemberIterator RemainingUses_member = obj.FindMember("RemainingUses");
+    if (RemainingUses_member != obj.MemberEnd() && !RemainingUses_member->value.IsNull()) RemainingUses = RemainingUses_member->value.GetInt();
+    const Value::ConstMemberIterator UsesIncrementedBy_member = obj.FindMember("UsesIncrementedBy");
+    if (UsesIncrementedBy_member != obj.MemberEnd() && !UsesIncrementedBy_member->value.IsNull()) UsesIncrementedBy = UsesIncrementedBy_member->value.GetInt();
+    const Value::ConstMemberIterator Annotation_member = obj.FindMember("Annotation");
+    if (Annotation_member != obj.MemberEnd() && !Annotation_member->value.IsNull()) Annotation = Annotation_member->value.GetString();
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator BundleParent_member = obj.FindMember("BundleParent");
+    if (BundleParent_member != obj.MemberEnd() && !BundleParent_member->value.IsNull()) BundleParent = BundleParent_member->value.GetString();
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator UnitCurrency_member = obj.FindMember("UnitCurrency");
+    if (UnitCurrency_member != obj.MemberEnd() && !UnitCurrency_member->value.IsNull()) UnitCurrency = UnitCurrency_member->value.GetString();
+    const Value::ConstMemberIterator UnitPrice_member = obj.FindMember("UnitPrice");
+    if (UnitPrice_member != obj.MemberEnd() && !UnitPrice_member->value.IsNull()) UnitPrice = UnitPrice_member->value.GetUint();
+    const Value::ConstMemberIterator BundleContents_member = obj.FindMember("BundleContents");
+    if (BundleContents_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = BundleContents_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             BundleContents.push_back(memberList[i].GetString());
         }
     }
-    const Value::Member* CustomData_member = obj.FindMember("CustomData");
-    if (CustomData_member != NULL) {
+    const Value::ConstMemberIterator CustomData_member = obj.FindMember("CustomData");
+    if (CustomData_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = CustomData_member->value.MemberBegin(); iter != CustomData_member->value.MemberEnd(); ++iter) {
             CustomData[iter->name.GetString()] = iter->value.GetString();
         }
@@ -2870,14 +2876,14 @@ void ItemGrant::writeJSON(PFStringJsonWriter& writer)
 
 bool ItemGrant::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* ItemId_member = obj.FindMember("ItemId");
-    if (ItemId_member != NULL && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
-    const Value::Member* Annotation_member = obj.FindMember("Annotation");
-    if (Annotation_member != NULL && !Annotation_member->value.IsNull()) Annotation = Annotation_member->value.GetString();
-    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
-    if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator ItemId_member = obj.FindMember("ItemId");
+    if (ItemId_member != obj.MemberEnd() && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
+    const Value::ConstMemberIterator Annotation_member = obj.FindMember("Annotation");
+    if (Annotation_member != obj.MemberEnd() && !Annotation_member->value.IsNull()) Annotation = Annotation_member->value.GetString();
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
 
     return true;
 }
@@ -2905,10 +2911,10 @@ void GrantItemsToUsersRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GrantItemsToUsersRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::Member* ItemGrants_member = obj.FindMember("ItemGrants");
-    if (ItemGrants_member != NULL) {
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator ItemGrants_member = obj.FindMember("ItemGrants");
+    if (ItemGrants_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = ItemGrants_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ItemGrants.push_back(ItemGrant(memberList[i]));
@@ -2941,8 +2947,8 @@ void GrantItemsToUsersResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GrantItemsToUsersResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* ItemGrantResults_member = obj.FindMember("ItemGrantResults");
-    if (ItemGrantResults_member != NULL) {
+    const Value::ConstMemberIterator ItemGrantResults_member = obj.FindMember("ItemGrantResults");
+    if (ItemGrantResults_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = ItemGrantResults_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ItemGrantResults.push_back(GrantedItemInstance(memberList[i]));
@@ -2968,8 +2974,8 @@ void IncrementPlayerStatisticVersionRequest::writeJSON(PFStringJsonWriter& write
 
 bool IncrementPlayerStatisticVersionRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
 
     return true;
 }
@@ -2991,8 +2997,8 @@ void IncrementPlayerStatisticVersionResult::writeJSON(PFStringJsonWriter& writer
 
 bool IncrementPlayerStatisticVersionResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* StatisticVersion_member = obj.FindMember("StatisticVersion");
-    if (StatisticVersion_member != NULL && !StatisticVersion_member->value.IsNull()) StatisticVersion = new PlayerStatisticVersion(StatisticVersion_member->value);
+    const Value::ConstMemberIterator StatisticVersion_member = obj.FindMember("StatisticVersion");
+    if (StatisticVersion_member != obj.MemberEnd() && !StatisticVersion_member->value.IsNull()) StatisticVersion = new PlayerStatisticVersion(StatisticVersion_member->value);
 
     return true;
 }
@@ -3039,8 +3045,8 @@ void ListBuildsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool ListBuildsResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Builds_member = obj.FindMember("Builds");
-    if (Builds_member != NULL) {
+    const Value::ConstMemberIterator Builds_member = obj.FindMember("Builds");
+    if (Builds_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Builds_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Builds.push_back(GetServerBuildInfoResult(memberList[i]));
@@ -3092,8 +3098,8 @@ void ListVirtualCurrencyTypesResult::writeJSON(PFStringJsonWriter& writer)
 
 bool ListVirtualCurrencyTypesResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* VirtualCurrencies_member = obj.FindMember("VirtualCurrencies");
-    if (VirtualCurrencies_member != NULL) {
+    const Value::ConstMemberIterator VirtualCurrencies_member = obj.FindMember("VirtualCurrencies");
+    if (VirtualCurrencies_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = VirtualCurrencies_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             VirtualCurrencies.push_back(VirtualCurrencyData(memberList[i]));
@@ -3122,14 +3128,14 @@ void LookupUserAccountInfoRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool LookupUserAccountInfoRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* Email_member = obj.FindMember("Email");
-    if (Email_member != NULL && !Email_member->value.IsNull()) Email = Email_member->value.GetString();
-    const Value::Member* Username_member = obj.FindMember("Username");
-    if (Username_member != NULL && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
-    const Value::Member* TitleDisplayName_member = obj.FindMember("TitleDisplayName");
-    if (TitleDisplayName_member != NULL && !TitleDisplayName_member->value.IsNull()) TitleDisplayName = TitleDisplayName_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator Email_member = obj.FindMember("Email");
+    if (Email_member != obj.MemberEnd() && !Email_member->value.IsNull()) Email = Email_member->value.GetString();
+    const Value::ConstMemberIterator Username_member = obj.FindMember("Username");
+    if (Username_member != obj.MemberEnd() && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
+    const Value::ConstMemberIterator TitleDisplayName_member = obj.FindMember("TitleDisplayName");
+    if (TitleDisplayName_member != obj.MemberEnd() && !TitleDisplayName_member->value.IsNull()) TitleDisplayName = TitleDisplayName_member->value.GetString();
 
     return true;
 }
@@ -3208,18 +3214,18 @@ void UserTitleInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool UserTitleInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* DisplayName_member = obj.FindMember("DisplayName");
-    if (DisplayName_member != NULL && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
-    const Value::Member* Origination_member = obj.FindMember("Origination");
-    if (Origination_member != NULL && !Origination_member->value.IsNull()) Origination = readUserOriginationFromValue(Origination_member->value);
-    const Value::Member* Created_member = obj.FindMember("Created");
-    if (Created_member != NULL && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
-    const Value::Member* LastLogin_member = obj.FindMember("LastLogin");
-    if (LastLogin_member != NULL && !LastLogin_member->value.IsNull()) LastLogin = readDatetime(LastLogin_member->value);
-    const Value::Member* FirstLogin_member = obj.FindMember("FirstLogin");
-    if (FirstLogin_member != NULL && !FirstLogin_member->value.IsNull()) FirstLogin = readDatetime(FirstLogin_member->value);
-    const Value::Member* isBanned_member = obj.FindMember("isBanned");
-    if (isBanned_member != NULL && !isBanned_member->value.IsNull()) isBanned = isBanned_member->value.GetBool();
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator Origination_member = obj.FindMember("Origination");
+    if (Origination_member != obj.MemberEnd() && !Origination_member->value.IsNull()) Origination = readUserOriginationFromValue(Origination_member->value);
+    const Value::ConstMemberIterator Created_member = obj.FindMember("Created");
+    if (Created_member != obj.MemberEnd() && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
+    const Value::ConstMemberIterator LastLogin_member = obj.FindMember("LastLogin");
+    if (LastLogin_member != obj.MemberEnd() && !LastLogin_member->value.IsNull()) LastLogin = readDatetime(LastLogin_member->value);
+    const Value::ConstMemberIterator FirstLogin_member = obj.FindMember("FirstLogin");
+    if (FirstLogin_member != obj.MemberEnd() && !FirstLogin_member->value.IsNull()) FirstLogin = readDatetime(FirstLogin_member->value);
+    const Value::ConstMemberIterator isBanned_member = obj.FindMember("isBanned");
+    if (isBanned_member != obj.MemberEnd() && !isBanned_member->value.IsNull()) isBanned = isBanned_member->value.GetBool();
 
     return true;
 }
@@ -3240,8 +3246,8 @@ void UserPrivateAccountInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool UserPrivateAccountInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Email_member = obj.FindMember("Email");
-    if (Email_member != NULL && !Email_member->value.IsNull()) Email = Email_member->value.GetString();
+    const Value::ConstMemberIterator Email_member = obj.FindMember("Email");
+    if (Email_member != obj.MemberEnd() && !Email_member->value.IsNull()) Email = Email_member->value.GetString();
 
     return true;
 }
@@ -3263,10 +3269,10 @@ void UserFacebookInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool UserFacebookInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* FacebookId_member = obj.FindMember("FacebookId");
-    if (FacebookId_member != NULL && !FacebookId_member->value.IsNull()) FacebookId = FacebookId_member->value.GetString();
-    const Value::Member* FullName_member = obj.FindMember("FullName");
-    if (FullName_member != NULL && !FullName_member->value.IsNull()) FullName = FullName_member->value.GetString();
+    const Value::ConstMemberIterator FacebookId_member = obj.FindMember("FacebookId");
+    if (FacebookId_member != obj.MemberEnd() && !FacebookId_member->value.IsNull()) FacebookId = FacebookId_member->value.GetString();
+    const Value::ConstMemberIterator FullName_member = obj.FindMember("FullName");
+    if (FullName_member != obj.MemberEnd() && !FullName_member->value.IsNull()) FullName = FullName_member->value.GetString();
 
     return true;
 }
@@ -3323,14 +3329,14 @@ void UserSteamInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool UserSteamInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* SteamId_member = obj.FindMember("SteamId");
-    if (SteamId_member != NULL && !SteamId_member->value.IsNull()) SteamId = SteamId_member->value.GetString();
-    const Value::Member* SteamCountry_member = obj.FindMember("SteamCountry");
-    if (SteamCountry_member != NULL && !SteamCountry_member->value.IsNull()) SteamCountry = SteamCountry_member->value.GetString();
-    const Value::Member* SteamCurrency_member = obj.FindMember("SteamCurrency");
-    if (SteamCurrency_member != NULL && !SteamCurrency_member->value.IsNull()) SteamCurrency = readCurrencyFromValue(SteamCurrency_member->value);
-    const Value::Member* SteamActivationStatus_member = obj.FindMember("SteamActivationStatus");
-    if (SteamActivationStatus_member != NULL && !SteamActivationStatus_member->value.IsNull()) SteamActivationStatus = readTitleActivationStatusFromValue(SteamActivationStatus_member->value);
+    const Value::ConstMemberIterator SteamId_member = obj.FindMember("SteamId");
+    if (SteamId_member != obj.MemberEnd() && !SteamId_member->value.IsNull()) SteamId = SteamId_member->value.GetString();
+    const Value::ConstMemberIterator SteamCountry_member = obj.FindMember("SteamCountry");
+    if (SteamCountry_member != obj.MemberEnd() && !SteamCountry_member->value.IsNull()) SteamCountry = SteamCountry_member->value.GetString();
+    const Value::ConstMemberIterator SteamCurrency_member = obj.FindMember("SteamCurrency");
+    if (SteamCurrency_member != obj.MemberEnd() && !SteamCurrency_member->value.IsNull()) SteamCurrency = readCurrencyFromValue(SteamCurrency_member->value);
+    const Value::ConstMemberIterator SteamActivationStatus_member = obj.FindMember("SteamActivationStatus");
+    if (SteamActivationStatus_member != obj.MemberEnd() && !SteamActivationStatus_member->value.IsNull()) SteamActivationStatus = readTitleActivationStatusFromValue(SteamActivationStatus_member->value);
 
     return true;
 }
@@ -3351,8 +3357,8 @@ void UserGameCenterInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool UserGameCenterInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* GameCenterId_member = obj.FindMember("GameCenterId");
-    if (GameCenterId_member != NULL && !GameCenterId_member->value.IsNull()) GameCenterId = GameCenterId_member->value.GetString();
+    const Value::ConstMemberIterator GameCenterId_member = obj.FindMember("GameCenterId");
+    if (GameCenterId_member != obj.MemberEnd() && !GameCenterId_member->value.IsNull()) GameCenterId = GameCenterId_member->value.GetString();
 
     return true;
 }
@@ -3385,22 +3391,22 @@ void UserAccountInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool UserAccountInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* Created_member = obj.FindMember("Created");
-    if (Created_member != NULL && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
-    const Value::Member* Username_member = obj.FindMember("Username");
-    if (Username_member != NULL && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
-    const Value::Member* TitleInfo_member = obj.FindMember("TitleInfo");
-    if (TitleInfo_member != NULL && !TitleInfo_member->value.IsNull()) TitleInfo = new UserTitleInfo(TitleInfo_member->value);
-    const Value::Member* PrivateInfo_member = obj.FindMember("PrivateInfo");
-    if (PrivateInfo_member != NULL && !PrivateInfo_member->value.IsNull()) PrivateInfo = new UserPrivateAccountInfo(PrivateInfo_member->value);
-    const Value::Member* FacebookInfo_member = obj.FindMember("FacebookInfo");
-    if (FacebookInfo_member != NULL && !FacebookInfo_member->value.IsNull()) FacebookInfo = new UserFacebookInfo(FacebookInfo_member->value);
-    const Value::Member* SteamInfo_member = obj.FindMember("SteamInfo");
-    if (SteamInfo_member != NULL && !SteamInfo_member->value.IsNull()) SteamInfo = new UserSteamInfo(SteamInfo_member->value);
-    const Value::Member* GameCenterInfo_member = obj.FindMember("GameCenterInfo");
-    if (GameCenterInfo_member != NULL && !GameCenterInfo_member->value.IsNull()) GameCenterInfo = new UserGameCenterInfo(GameCenterInfo_member->value);
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator Created_member = obj.FindMember("Created");
+    if (Created_member != obj.MemberEnd() && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
+    const Value::ConstMemberIterator Username_member = obj.FindMember("Username");
+    if (Username_member != obj.MemberEnd() && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
+    const Value::ConstMemberIterator TitleInfo_member = obj.FindMember("TitleInfo");
+    if (TitleInfo_member != obj.MemberEnd() && !TitleInfo_member->value.IsNull()) TitleInfo = new UserTitleInfo(TitleInfo_member->value);
+    const Value::ConstMemberIterator PrivateInfo_member = obj.FindMember("PrivateInfo");
+    if (PrivateInfo_member != obj.MemberEnd() && !PrivateInfo_member->value.IsNull()) PrivateInfo = new UserPrivateAccountInfo(PrivateInfo_member->value);
+    const Value::ConstMemberIterator FacebookInfo_member = obj.FindMember("FacebookInfo");
+    if (FacebookInfo_member != obj.MemberEnd() && !FacebookInfo_member->value.IsNull()) FacebookInfo = new UserFacebookInfo(FacebookInfo_member->value);
+    const Value::ConstMemberIterator SteamInfo_member = obj.FindMember("SteamInfo");
+    if (SteamInfo_member != obj.MemberEnd() && !SteamInfo_member->value.IsNull()) SteamInfo = new UserSteamInfo(SteamInfo_member->value);
+    const Value::ConstMemberIterator GameCenterInfo_member = obj.FindMember("GameCenterInfo");
+    if (GameCenterInfo_member != obj.MemberEnd() && !GameCenterInfo_member->value.IsNull()) GameCenterInfo = new UserGameCenterInfo(GameCenterInfo_member->value);
 
     return true;
 }
@@ -3422,8 +3428,8 @@ void LookupUserAccountInfoResult::writeJSON(PFStringJsonWriter& writer)
 
 bool LookupUserAccountInfoResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* UserInfo_member = obj.FindMember("UserInfo");
-    if (UserInfo_member != NULL && !UserInfo_member->value.IsNull()) UserInfo = new UserAccountInfo(UserInfo_member->value);
+    const Value::ConstMemberIterator UserInfo_member = obj.FindMember("UserInfo");
+    if (UserInfo_member != obj.MemberEnd() && !UserInfo_member->value.IsNull()) UserInfo = new UserAccountInfo(UserInfo_member->value);
 
     return true;
 }
@@ -3451,10 +3457,10 @@ void ModifyMatchmakerGameModesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ModifyMatchmakerGameModesRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* BuildVersion_member = obj.FindMember("BuildVersion");
-    if (BuildVersion_member != NULL && !BuildVersion_member->value.IsNull()) BuildVersion = BuildVersion_member->value.GetString();
-    const Value::Member* GameModes_member = obj.FindMember("GameModes");
-    if (GameModes_member != NULL) {
+    const Value::ConstMemberIterator BuildVersion_member = obj.FindMember("BuildVersion");
+    if (BuildVersion_member != obj.MemberEnd() && !BuildVersion_member->value.IsNull()) BuildVersion = BuildVersion_member->value.GetString();
+    const Value::ConstMemberIterator GameModes_member = obj.FindMember("GameModes");
+    if (GameModes_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = GameModes_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             GameModes.push_back(GameModeInfo(memberList[i]));
@@ -3512,25 +3518,25 @@ void ModifyServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ModifyServerBuildRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* BuildId_member = obj.FindMember("BuildId");
-    if (BuildId_member != NULL && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
-    const Value::Member* Timestamp_member = obj.FindMember("Timestamp");
-    if (Timestamp_member != NULL && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
-    const Value::Member* ActiveRegions_member = obj.FindMember("ActiveRegions");
-    if (ActiveRegions_member != NULL) {
+    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
+    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
+    if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+    const Value::ConstMemberIterator ActiveRegions_member = obj.FindMember("ActiveRegions");
+    if (ActiveRegions_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = ActiveRegions_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ActiveRegions.push_back(readRegionFromValue(memberList[i]));
         }
     }
-    const Value::Member* MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
-    if (MaxGamesPerHost_member != NULL && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
-    const Value::Member* CommandLineTemplate_member = obj.FindMember("CommandLineTemplate");
-    if (CommandLineTemplate_member != NULL && !CommandLineTemplate_member->value.IsNull()) CommandLineTemplate = CommandLineTemplate_member->value.GetString();
-    const Value::Member* ExecutablePath_member = obj.FindMember("ExecutablePath");
-    if (ExecutablePath_member != NULL && !ExecutablePath_member->value.IsNull()) ExecutablePath = ExecutablePath_member->value.GetString();
-    const Value::Member* Comment_member = obj.FindMember("Comment");
-    if (Comment_member != NULL && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
+    const Value::ConstMemberIterator MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
+    if (MaxGamesPerHost_member != obj.MemberEnd() && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+    const Value::ConstMemberIterator CommandLineTemplate_member = obj.FindMember("CommandLineTemplate");
+    if (CommandLineTemplate_member != obj.MemberEnd() && !CommandLineTemplate_member->value.IsNull()) CommandLineTemplate = CommandLineTemplate_member->value.GetString();
+    const Value::ConstMemberIterator ExecutablePath_member = obj.FindMember("ExecutablePath");
+    if (ExecutablePath_member != obj.MemberEnd() && !ExecutablePath_member->value.IsNull()) ExecutablePath = ExecutablePath_member->value.GetString();
+    const Value::ConstMemberIterator Comment_member = obj.FindMember("Comment");
+    if (Comment_member != obj.MemberEnd() && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
 
     return true;
 }
@@ -3566,29 +3572,29 @@ void ModifyServerBuildResult::writeJSON(PFStringJsonWriter& writer)
 
 bool ModifyServerBuildResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* BuildId_member = obj.FindMember("BuildId");
-    if (BuildId_member != NULL && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
-    const Value::Member* ActiveRegions_member = obj.FindMember("ActiveRegions");
-    if (ActiveRegions_member != NULL) {
+    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
+    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator ActiveRegions_member = obj.FindMember("ActiveRegions");
+    if (ActiveRegions_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = ActiveRegions_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ActiveRegions.push_back(readRegionFromValue(memberList[i]));
         }
     }
-    const Value::Member* MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
-    if (MaxGamesPerHost_member != NULL && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
-    const Value::Member* CommandLineTemplate_member = obj.FindMember("CommandLineTemplate");
-    if (CommandLineTemplate_member != NULL && !CommandLineTemplate_member->value.IsNull()) CommandLineTemplate = CommandLineTemplate_member->value.GetString();
-    const Value::Member* ExecutablePath_member = obj.FindMember("ExecutablePath");
-    if (ExecutablePath_member != NULL && !ExecutablePath_member->value.IsNull()) ExecutablePath = ExecutablePath_member->value.GetString();
-    const Value::Member* Comment_member = obj.FindMember("Comment");
-    if (Comment_member != NULL && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
-    const Value::Member* Timestamp_member = obj.FindMember("Timestamp");
-    if (Timestamp_member != NULL && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
-    const Value::Member* TitleId_member = obj.FindMember("TitleId");
-    if (TitleId_member != NULL && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
-    const Value::Member* Status_member = obj.FindMember("Status");
-    if (Status_member != NULL && !Status_member->value.IsNull()) Status = readGameBuildStatusFromValue(Status_member->value);
+    const Value::ConstMemberIterator MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
+    if (MaxGamesPerHost_member != obj.MemberEnd() && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+    const Value::ConstMemberIterator CommandLineTemplate_member = obj.FindMember("CommandLineTemplate");
+    if (CommandLineTemplate_member != obj.MemberEnd() && !CommandLineTemplate_member->value.IsNull()) CommandLineTemplate = CommandLineTemplate_member->value.GetString();
+    const Value::ConstMemberIterator ExecutablePath_member = obj.FindMember("ExecutablePath");
+    if (ExecutablePath_member != obj.MemberEnd() && !ExecutablePath_member->value.IsNull()) ExecutablePath = ExecutablePath_member->value.GetString();
+    const Value::ConstMemberIterator Comment_member = obj.FindMember("Comment");
+    if (Comment_member != obj.MemberEnd() && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
+    const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
+    if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
+    if (Status_member != obj.MemberEnd() && !Status_member->value.IsNull()) Status = readGameBuildStatusFromValue(Status_member->value);
 
     return true;
 }
@@ -3612,14 +3618,14 @@ void ModifyUserVirtualCurrencyResult::writeJSON(PFStringJsonWriter& writer)
 
 bool ModifyUserVirtualCurrencyResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
-    if (VirtualCurrency_member != NULL && !VirtualCurrency_member->value.IsNull()) VirtualCurrency = VirtualCurrency_member->value.GetString();
-    const Value::Member* BalanceChange_member = obj.FindMember("BalanceChange");
-    if (BalanceChange_member != NULL && !BalanceChange_member->value.IsNull()) BalanceChange = BalanceChange_member->value.GetInt();
-    const Value::Member* Balance_member = obj.FindMember("Balance");
-    if (Balance_member != NULL && !Balance_member->value.IsNull()) Balance = Balance_member->value.GetInt();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator VirtualCurrency_member = obj.FindMember("VirtualCurrency");
+    if (VirtualCurrency_member != obj.MemberEnd() && !VirtualCurrency_member->value.IsNull()) VirtualCurrency = VirtualCurrency_member->value.GetString();
+    const Value::ConstMemberIterator BalanceChange_member = obj.FindMember("BalanceChange");
+    if (BalanceChange_member != obj.MemberEnd() && !BalanceChange_member->value.IsNull()) BalanceChange = BalanceChange_member->value.GetInt();
+    const Value::ConstMemberIterator Balance_member = obj.FindMember("Balance");
+    if (Balance_member != obj.MemberEnd() && !Balance_member->value.IsNull()) Balance = Balance_member->value.GetInt();
 
     return true;
 }
@@ -3647,10 +3653,10 @@ void RandomResultTable::writeJSON(PFStringJsonWriter& writer)
 
 bool RandomResultTable::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* TableId_member = obj.FindMember("TableId");
-    if (TableId_member != NULL && !TableId_member->value.IsNull()) TableId = TableId_member->value.GetString();
-    const Value::Member* Nodes_member = obj.FindMember("Nodes");
-    if (Nodes_member != NULL) {
+    const Value::ConstMemberIterator TableId_member = obj.FindMember("TableId");
+    if (TableId_member != obj.MemberEnd() && !TableId_member->value.IsNull()) TableId = TableId_member->value.GetString();
+    const Value::ConstMemberIterator Nodes_member = obj.FindMember("Nodes");
+    if (Nodes_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Nodes_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Nodes.push_back(ResultTableNode(memberList[i]));
@@ -3678,12 +3684,12 @@ void RefundPurchaseRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool RefundPurchaseRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* OrderId_member = obj.FindMember("OrderId");
-    if (OrderId_member != NULL && !OrderId_member->value.IsNull()) OrderId = OrderId_member->value.GetString();
-    const Value::Member* Reason_member = obj.FindMember("Reason");
-    if (Reason_member != NULL && !Reason_member->value.IsNull()) Reason = Reason_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator OrderId_member = obj.FindMember("OrderId");
+    if (OrderId_member != obj.MemberEnd() && !OrderId_member->value.IsNull()) OrderId = OrderId_member->value.GetString();
+    const Value::ConstMemberIterator Reason_member = obj.FindMember("Reason");
+    if (Reason_member != obj.MemberEnd() && !Reason_member->value.IsNull()) Reason = Reason_member->value.GetString();
 
     return true;
 }
@@ -3704,8 +3710,8 @@ void RefundPurchaseResponse::writeJSON(PFStringJsonWriter& writer)
 
 bool RefundPurchaseResponse::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PurchaseStatus_member = obj.FindMember("PurchaseStatus");
-    if (PurchaseStatus_member != NULL && !PurchaseStatus_member->value.IsNull()) PurchaseStatus = PurchaseStatus_member->value.GetString();
+    const Value::ConstMemberIterator PurchaseStatus_member = obj.FindMember("PurchaseStatus");
+    if (PurchaseStatus_member != obj.MemberEnd() && !PurchaseStatus_member->value.IsNull()) PurchaseStatus = PurchaseStatus_member->value.GetString();
 
     return true;
 }
@@ -3726,8 +3732,8 @@ void RemoveServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool RemoveServerBuildRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* BuildId_member = obj.FindMember("BuildId");
-    if (BuildId_member != NULL && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
+    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
 
     return true;
 }
@@ -3768,10 +3774,10 @@ void ResetCharacterStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ResetCharacterStatisticsRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
-    if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
 
     return true;
 }
@@ -3812,10 +3818,10 @@ void UserCredentials::writeJSON(PFStringJsonWriter& writer)
 
 bool UserCredentials::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Username_member = obj.FindMember("Username");
-    if (Username_member != NULL && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
-    const Value::Member* Password_member = obj.FindMember("Password");
-    if (Password_member != NULL && !Password_member->value.IsNull()) Password = Password_member->value.GetString();
+    const Value::ConstMemberIterator Username_member = obj.FindMember("Username");
+    if (Username_member != obj.MemberEnd() && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
+    const Value::ConstMemberIterator Password_member = obj.FindMember("Password");
+    if (Password_member != obj.MemberEnd() && !Password_member->value.IsNull()) Password = Password_member->value.GetString();
 
     return true;
 }
@@ -3842,8 +3848,8 @@ void ResetUsersRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ResetUsersRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Users_member = obj.FindMember("Users");
-    if (Users_member != NULL) {
+    const Value::ConstMemberIterator Users_member = obj.FindMember("Users");
+    if (Users_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Users_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Users.push_back(UserCredentials(memberList[i]));
@@ -3869,8 +3875,8 @@ void ResetUserStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ResetUserStatisticsRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
 
     return true;
 }
@@ -3942,14 +3948,14 @@ void ResolvePurchaseDisputeRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ResolvePurchaseDisputeRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* OrderId_member = obj.FindMember("OrderId");
-    if (OrderId_member != NULL && !OrderId_member->value.IsNull()) OrderId = OrderId_member->value.GetString();
-    const Value::Member* Reason_member = obj.FindMember("Reason");
-    if (Reason_member != NULL && !Reason_member->value.IsNull()) Reason = Reason_member->value.GetString();
-    const Value::Member* Outcome_member = obj.FindMember("Outcome");
-    if (Outcome_member != NULL && !Outcome_member->value.IsNull()) Outcome = readResolutionOutcomeFromValue(Outcome_member->value);
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator OrderId_member = obj.FindMember("OrderId");
+    if (OrderId_member != obj.MemberEnd() && !OrderId_member->value.IsNull()) OrderId = OrderId_member->value.GetString();
+    const Value::ConstMemberIterator Reason_member = obj.FindMember("Reason");
+    if (Reason_member != obj.MemberEnd() && !Reason_member->value.IsNull()) Reason = Reason_member->value.GetString();
+    const Value::ConstMemberIterator Outcome_member = obj.FindMember("Outcome");
+    if (Outcome_member != obj.MemberEnd() && !Outcome_member->value.IsNull()) Outcome = readResolutionOutcomeFromValue(Outcome_member->value);
 
     return true;
 }
@@ -3970,8 +3976,8 @@ void ResolvePurchaseDisputeResponse::writeJSON(PFStringJsonWriter& writer)
 
 bool ResolvePurchaseDisputeResponse::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PurchaseStatus_member = obj.FindMember("PurchaseStatus");
-    if (PurchaseStatus_member != NULL && !PurchaseStatus_member->value.IsNull()) PurchaseStatus = PurchaseStatus_member->value.GetString();
+    const Value::ConstMemberIterator PurchaseStatus_member = obj.FindMember("PurchaseStatus");
+    if (PurchaseStatus_member != obj.MemberEnd() && !PurchaseStatus_member->value.IsNull()) PurchaseStatus = PurchaseStatus_member->value.GetString();
 
     return true;
 }
@@ -3994,12 +4000,12 @@ void RevokeInventoryItemRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool RevokeInventoryItemRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* CharacterId_member = obj.FindMember("CharacterId");
-    if (CharacterId_member != NULL && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
-    const Value::Member* ItemInstanceId_member = obj.FindMember("ItemInstanceId");
-    if (ItemInstanceId_member != NULL && !ItemInstanceId_member->value.IsNull()) ItemInstanceId = ItemInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+    if (ItemInstanceId_member != obj.MemberEnd() && !ItemInstanceId_member->value.IsNull()) ItemInstanceId = ItemInstanceId_member->value.GetString();
 
     return true;
 }
@@ -4039,8 +4045,8 @@ void SendAccountRecoveryEmailRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool SendAccountRecoveryEmailRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Email_member = obj.FindMember("Email");
-    if (Email_member != NULL && !Email_member->value.IsNull()) Email = Email_member->value.GetString();
+    const Value::ConstMemberIterator Email_member = obj.FindMember("Email");
+    if (Email_member != obj.MemberEnd() && !Email_member->value.IsNull()) Email = Email_member->value.GetString();
 
     return true;
 }
@@ -4081,10 +4087,10 @@ void SetPublishedRevisionRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool SetPublishedRevisionRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Version_member = obj.FindMember("Version");
-    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
-    const Value::Member* Revision_member = obj.FindMember("Revision");
-    if (Revision_member != NULL && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator Revision_member = obj.FindMember("Revision");
+    if (Revision_member != obj.MemberEnd() && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
 
     return true;
 }
@@ -4125,10 +4131,10 @@ void SetPublisherDataRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool SetPublisherDataRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Key_member = obj.FindMember("Key");
-    if (Key_member != NULL && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
-    const Value::Member* Value_member = obj.FindMember("Value");
-    if (Value_member != NULL && !Value_member->value.IsNull()) Value = Value_member->value.GetString();
+    const Value::ConstMemberIterator Key_member = obj.FindMember("Key");
+    if (Key_member != obj.MemberEnd() && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
+    const Value::ConstMemberIterator Value_member = obj.FindMember("Value");
+    if (Value_member != obj.MemberEnd() && !Value_member->value.IsNull()) Value = Value_member->value.GetString();
 
     return true;
 }
@@ -4169,10 +4175,10 @@ void SetTitleDataRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool SetTitleDataRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Key_member = obj.FindMember("Key");
-    if (Key_member != NULL && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
-    const Value::Member* Value_member = obj.FindMember("Value");
-    if (Value_member != NULL && !Value_member->value.IsNull()) Value = Value_member->value.GetString();
+    const Value::ConstMemberIterator Key_member = obj.FindMember("Key");
+    if (Key_member != obj.MemberEnd() && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
+    const Value::ConstMemberIterator Value_member = obj.FindMember("Value");
+    if (Value_member != obj.MemberEnd() && !Value_member->value.IsNull()) Value = Value_member->value.GetString();
 
     return true;
 }
@@ -4216,16 +4222,16 @@ void SetupPushNotificationRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool SetupPushNotificationRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Name_member = obj.FindMember("Name");
-    if (Name_member != NULL && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-    const Value::Member* Platform_member = obj.FindMember("Platform");
-    if (Platform_member != NULL && !Platform_member->value.IsNull()) Platform = Platform_member->value.GetString();
-    const Value::Member* Key_member = obj.FindMember("Key");
-    if (Key_member != NULL && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
-    const Value::Member* Credential_member = obj.FindMember("Credential");
-    if (Credential_member != NULL && !Credential_member->value.IsNull()) Credential = Credential_member->value.GetString();
-    const Value::Member* OverwriteOldARN_member = obj.FindMember("OverwriteOldARN");
-    if (OverwriteOldARN_member != NULL && !OverwriteOldARN_member->value.IsNull()) OverwriteOldARN = OverwriteOldARN_member->value.GetBool();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Platform_member = obj.FindMember("Platform");
+    if (Platform_member != obj.MemberEnd() && !Platform_member->value.IsNull()) Platform = Platform_member->value.GetString();
+    const Value::ConstMemberIterator Key_member = obj.FindMember("Key");
+    if (Key_member != obj.MemberEnd() && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
+    const Value::ConstMemberIterator Credential_member = obj.FindMember("Credential");
+    if (Credential_member != obj.MemberEnd() && !Credential_member->value.IsNull()) Credential = Credential_member->value.GetString();
+    const Value::ConstMemberIterator OverwriteOldARN_member = obj.FindMember("OverwriteOldARN");
+    if (OverwriteOldARN_member != obj.MemberEnd() && !OverwriteOldARN_member->value.IsNull()) OverwriteOldARN = OverwriteOldARN_member->value.GetBool();
 
     return true;
 }
@@ -4246,8 +4252,8 @@ void SetupPushNotificationResult::writeJSON(PFStringJsonWriter& writer)
 
 bool SetupPushNotificationResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* ARN_member = obj.FindMember("ARN");
-    if (ARN_member != NULL && !ARN_member->value.IsNull()) ARN = ARN_member->value.GetString();
+    const Value::ConstMemberIterator ARN_member = obj.FindMember("ARN");
+    if (ARN_member != obj.MemberEnd() && !ARN_member->value.IsNull()) ARN = ARN_member->value.GetString();
 
     return true;
 }
@@ -4270,12 +4276,12 @@ void SubtractUserVirtualCurrencyRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool SubtractUserVirtualCurrencyRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* VirtualCurrency_member = obj.FindMember("VirtualCurrency");
-    if (VirtualCurrency_member != NULL && !VirtualCurrency_member->value.IsNull()) VirtualCurrency = VirtualCurrency_member->value.GetString();
-    const Value::Member* Amount_member = obj.FindMember("Amount");
-    if (Amount_member != NULL && !Amount_member->value.IsNull()) Amount = Amount_member->value.GetInt();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator VirtualCurrency_member = obj.FindMember("VirtualCurrency");
+    if (VirtualCurrency_member != obj.MemberEnd() && !VirtualCurrency_member->value.IsNull()) VirtualCurrency = VirtualCurrency_member->value.GetString();
+    const Value::ConstMemberIterator Amount_member = obj.FindMember("Amount");
+    if (Amount_member != obj.MemberEnd() && !Amount_member->value.IsNull()) Amount = Amount_member->value.GetInt();
 
     return true;
 }
@@ -4304,10 +4310,10 @@ void UpdateCatalogItemsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateCatalogItemsRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::Member* Catalog_member = obj.FindMember("Catalog");
-    if (Catalog_member != NULL) {
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator Catalog_member = obj.FindMember("Catalog");
+    if (Catalog_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Catalog_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Catalog.push_back(CatalogItem(memberList[i]));
@@ -4359,10 +4365,10 @@ void UpdateCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateCloudScriptRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Version_member = obj.FindMember("Version");
-    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
-    const Value::Member* Files_member = obj.FindMember("Files");
-    if (Files_member != NULL) {
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator Files_member = obj.FindMember("Files");
+    if (Files_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Files_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Files.push_back(CloudScriptFile(memberList[i]));
@@ -4389,10 +4395,10 @@ void UpdateCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateCloudScriptResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Version_member = obj.FindMember("Version");
-    if (Version_member != NULL && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
-    const Value::Member* Revision_member = obj.FindMember("Revision");
-    if (Revision_member != NULL && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator Revision_member = obj.FindMember("Revision");
+    if (Revision_member != obj.MemberEnd() && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
 
     return true;
 }
@@ -4414,10 +4420,10 @@ void UpdatePlayerStatisticDefinitionRequest::writeJSON(PFStringJsonWriter& write
 
 bool UpdatePlayerStatisticDefinitionRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != NULL && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-    const Value::Member* VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
-    if (VersionChangeInterval_member != NULL && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
+    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::ConstMemberIterator VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
+    if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
 
     return true;
 }
@@ -4439,8 +4445,8 @@ void UpdatePlayerStatisticDefinitionResult::writeJSON(PFStringJsonWriter& writer
 
 bool UpdatePlayerStatisticDefinitionResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* Statistic_member = obj.FindMember("Statistic");
-    if (Statistic_member != NULL && !Statistic_member->value.IsNull()) Statistic = new PlayerStatisticDefinition(Statistic_member->value);
+    const Value::ConstMemberIterator Statistic_member = obj.FindMember("Statistic");
+    if (Statistic_member != obj.MemberEnd() && !Statistic_member->value.IsNull()) Statistic = new PlayerStatisticDefinition(Statistic_member->value);
 
     return true;
 }
@@ -4469,10 +4475,10 @@ void UpdateRandomResultTablesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateRandomResultTablesRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::Member* Tables_member = obj.FindMember("Tables");
-    if (Tables_member != NULL) {
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator Tables_member = obj.FindMember("Tables");
+    if (Tables_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Tables_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Tables.push_back(RandomResultTable(memberList[i]));
@@ -4526,12 +4532,12 @@ void UpdateStoreItemsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateStoreItemsRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != NULL && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::Member* StoreId_member = obj.FindMember("StoreId");
-    if (StoreId_member != NULL && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
-    const Value::Member* Store_member = obj.FindMember("Store");
-    if (Store_member != NULL) {
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator StoreId_member = obj.FindMember("StoreId");
+    if (StoreId_member != obj.MemberEnd() && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
+    const Value::ConstMemberIterator Store_member = obj.FindMember("Store");
+    if (Store_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Store_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Store.push_back(StoreItem(memberList[i]));
@@ -4593,23 +4599,23 @@ void UpdateUserDataRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateUserDataRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* Data_member = obj.FindMember("Data");
-    if (Data_member != NULL) {
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
             Data[iter->name.GetString()] = iter->value.GetString();
         }
     }
-    const Value::Member* KeysToRemove_member = obj.FindMember("KeysToRemove");
-    if (KeysToRemove_member != NULL) {
+    const Value::ConstMemberIterator KeysToRemove_member = obj.FindMember("KeysToRemove");
+    if (KeysToRemove_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = KeysToRemove_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             KeysToRemove.push_back(memberList[i].GetString());
         }
     }
-    const Value::Member* Permission_member = obj.FindMember("Permission");
-    if (Permission_member != NULL && !Permission_member->value.IsNull()) Permission = readUserDataPermissionFromValue(Permission_member->value);
+    const Value::ConstMemberIterator Permission_member = obj.FindMember("Permission");
+    if (Permission_member != obj.MemberEnd() && !Permission_member->value.IsNull()) Permission = readUserDataPermissionFromValue(Permission_member->value);
 
     return true;
 }
@@ -4630,8 +4636,8 @@ void UpdateUserDataResult::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateUserDataResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* DataVersion_member = obj.FindMember("DataVersion");
-    if (DataVersion_member != NULL && !DataVersion_member->value.IsNull()) DataVersion = DataVersion_member->value.GetUint();
+    const Value::ConstMemberIterator DataVersion_member = obj.FindMember("DataVersion");
+    if (DataVersion_member != obj.MemberEnd() && !DataVersion_member->value.IsNull()) DataVersion = DataVersion_member->value.GetUint();
 
     return true;
 }
@@ -4668,16 +4674,16 @@ void UpdateUserInternalDataRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateUserInternalDataRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* Data_member = obj.FindMember("Data");
-    if (Data_member != NULL) {
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
             Data[iter->name.GetString()] = iter->value.GetString();
         }
     }
-    const Value::Member* KeysToRemove_member = obj.FindMember("KeysToRemove");
-    if (KeysToRemove_member != NULL) {
+    const Value::ConstMemberIterator KeysToRemove_member = obj.FindMember("KeysToRemove");
+    if (KeysToRemove_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = KeysToRemove_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             KeysToRemove.push_back(memberList[i].GetString());
@@ -4704,10 +4710,10 @@ void UpdateUserTitleDisplayNameRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateUserTitleDisplayNameRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != NULL && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::Member* DisplayName_member = obj.FindMember("DisplayName");
-    if (DisplayName_member != NULL && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
 
     return true;
 }
@@ -4728,8 +4734,8 @@ void UpdateUserTitleDisplayNameResult::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateUserTitleDisplayNameResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::Member* DisplayName_member = obj.FindMember("DisplayName");
-    if (DisplayName_member != NULL && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
 
     return true;
 }

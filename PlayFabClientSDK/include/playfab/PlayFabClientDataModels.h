@@ -2113,14 +2113,14 @@ namespace PlayFab
             std::string CharacterType;
             std::string StatisticName;
             Int32 StartPosition;
-            Int32 MaxResultsCount;
+            OptionalInt32 MaxResultsCount;
 
             GetCharacterLeaderboardRequest() :
                 PlayFabBaseModel(),
                 CharacterType(),
                 StatisticName(),
                 StartPosition(0),
-                MaxResultsCount(0)
+                MaxResultsCount()
             {}
 
             GetCharacterLeaderboardRequest(const GetCharacterLeaderboardRequest& src) :
@@ -2279,14 +2279,14 @@ namespace PlayFab
         struct GetFriendLeaderboardAroundCurrentUserRequest : public PlayFabBaseModel
         {
             std::string StatisticName;
-            Int32 MaxResultsCount;
+            OptionalInt32 MaxResultsCount;
             OptionalBool IncludeSteamFriends;
             OptionalBool IncludeFacebookFriends;
 
             GetFriendLeaderboardAroundCurrentUserRequest() :
                 PlayFabBaseModel(),
                 StatisticName(),
-                MaxResultsCount(0),
+                MaxResultsCount(),
                 IncludeSteamFriends(),
                 IncludeFacebookFriends()
             {}
@@ -2369,11 +2369,73 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetFriendLeaderboardAroundPlayerRequest : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+            OptionalInt32 MaxResultsCount;
+            std::string PlayFabId;
+            OptionalBool IncludeSteamFriends;
+            OptionalBool IncludeFacebookFriends;
+
+            GetFriendLeaderboardAroundPlayerRequest() :
+                PlayFabBaseModel(),
+                StatisticName(),
+                MaxResultsCount(),
+                PlayFabId(),
+                IncludeSteamFriends(),
+                IncludeFacebookFriends()
+            {}
+
+            GetFriendLeaderboardAroundPlayerRequest(const GetFriendLeaderboardAroundPlayerRequest& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName),
+                MaxResultsCount(src.MaxResultsCount),
+                PlayFabId(src.PlayFabId),
+                IncludeSteamFriends(src.IncludeSteamFriends),
+                IncludeFacebookFriends(src.IncludeFacebookFriends)
+            {}
+
+            GetFriendLeaderboardAroundPlayerRequest(const rapidjson::Value& obj) : GetFriendLeaderboardAroundPlayerRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetFriendLeaderboardAroundPlayerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetFriendLeaderboardAroundPlayerResult : public PlayFabBaseModel
+        {
+            std::list<PlayerLeaderboardEntry> Leaderboard;
+
+            GetFriendLeaderboardAroundPlayerResult() :
+                PlayFabBaseModel(),
+                Leaderboard()
+            {}
+
+            GetFriendLeaderboardAroundPlayerResult(const GetFriendLeaderboardAroundPlayerResult& src) :
+                PlayFabBaseModel(),
+                Leaderboard(src.Leaderboard)
+            {}
+
+            GetFriendLeaderboardAroundPlayerResult(const rapidjson::Value& obj) : GetFriendLeaderboardAroundPlayerResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetFriendLeaderboardAroundPlayerResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetFriendLeaderboardRequest : public PlayFabBaseModel
         {
             std::string StatisticName;
             Int32 StartPosition;
-            Int32 MaxResultsCount;
+            OptionalInt32 MaxResultsCount;
             OptionalBool IncludeSteamFriends;
             OptionalBool IncludeFacebookFriends;
 
@@ -2381,7 +2443,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 StatisticName(),
                 StartPosition(0),
-                MaxResultsCount(0),
+                MaxResultsCount(),
                 IncludeSteamFriends(),
                 IncludeFacebookFriends()
             {}
@@ -2464,14 +2526,14 @@ namespace PlayFab
             std::string StatisticName;
             std::string CharacterId;
             std::string CharacterType;
-            Int32 MaxResultsCount;
+            OptionalInt32 MaxResultsCount;
 
             GetLeaderboardAroundCharacterRequest() :
                 PlayFabBaseModel(),
                 StatisticName(),
                 CharacterId(),
                 CharacterType(),
-                MaxResultsCount(0)
+                MaxResultsCount()
             {}
 
             GetLeaderboardAroundCharacterRequest(const GetLeaderboardAroundCharacterRequest& src) :
@@ -2521,12 +2583,12 @@ namespace PlayFab
         struct GetLeaderboardAroundCurrentUserRequest : public PlayFabBaseModel
         {
             std::string StatisticName;
-            Int32 MaxResultsCount;
+            OptionalInt32 MaxResultsCount;
 
             GetLeaderboardAroundCurrentUserRequest() :
                 PlayFabBaseModel(),
                 StatisticName(),
-                MaxResultsCount(0)
+                MaxResultsCount()
             {}
 
             GetLeaderboardAroundCurrentUserRequest(const GetLeaderboardAroundCurrentUserRequest& src) :
@@ -2566,6 +2628,62 @@ namespace PlayFab
             }
 
             ~GetLeaderboardAroundCurrentUserResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetLeaderboardAroundPlayerRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string StatisticName;
+            OptionalInt32 MaxResultsCount;
+
+            GetLeaderboardAroundPlayerRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                StatisticName(),
+                MaxResultsCount()
+            {}
+
+            GetLeaderboardAroundPlayerRequest(const GetLeaderboardAroundPlayerRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                StatisticName(src.StatisticName),
+                MaxResultsCount(src.MaxResultsCount)
+            {}
+
+            GetLeaderboardAroundPlayerRequest(const rapidjson::Value& obj) : GetLeaderboardAroundPlayerRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetLeaderboardAroundPlayerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetLeaderboardAroundPlayerResult : public PlayFabBaseModel
+        {
+            std::list<PlayerLeaderboardEntry> Leaderboard;
+
+            GetLeaderboardAroundPlayerResult() :
+                PlayFabBaseModel(),
+                Leaderboard()
+            {}
+
+            GetLeaderboardAroundPlayerResult(const GetLeaderboardAroundPlayerResult& src) :
+                PlayFabBaseModel(),
+                Leaderboard(src.Leaderboard)
+            {}
+
+            GetLeaderboardAroundPlayerResult(const rapidjson::Value& obj) : GetLeaderboardAroundPlayerResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetLeaderboardAroundPlayerResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -2628,13 +2746,13 @@ namespace PlayFab
         {
             std::string StatisticName;
             Int32 StartPosition;
-            Int32 MaxResultsCount;
+            OptionalInt32 MaxResultsCount;
 
             GetLeaderboardRequest() :
                 PlayFabBaseModel(),
                 StatisticName(),
                 StartPosition(0),
-                MaxResultsCount(0)
+                MaxResultsCount()
             {}
 
             GetLeaderboardRequest(const GetLeaderboardRequest& src) :
@@ -6228,7 +6346,7 @@ namespace PlayFab
         struct StatisticUpdate : public PlayFabBaseModel
         {
             std::string StatisticName;
-            std::string Version;
+            OptionalUint32 Version;
             Int32 Value;
 
             StatisticUpdate() :
