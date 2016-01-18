@@ -3762,6 +3762,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct RevokeInventoryItemRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string CharacterId;
+            std::string ItemInstanceId;
+
+            RevokeInventoryItemRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                CharacterId(),
+                ItemInstanceId()
+            {}
+
+            RevokeInventoryItemRequest(const RevokeInventoryItemRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                CharacterId(src.CharacterId),
+                ItemInstanceId(src.ItemInstanceId)
+            {}
+
+            RevokeInventoryItemRequest(const rapidjson::Value& obj) : RevokeInventoryItemRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RevokeInventoryItemRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RevokeInventoryResult : public PlayFabBaseModel
+        {
+
+            RevokeInventoryResult() :
+                PlayFabBaseModel()
+            {}
+
+            RevokeInventoryResult(const RevokeInventoryResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            RevokeInventoryResult(const rapidjson::Value& obj) : RevokeInventoryResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RevokeInventoryResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct SendPushNotificationRequest : public PlayFabBaseModel
         {
             std::string Recipient;
