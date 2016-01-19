@@ -5615,6 +5615,7 @@ void LoginResult::writeJSON(PFStringJsonWriter& writer)
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     writer.String("NewlyCreated"); writer.Bool(NewlyCreated);
     if (SettingsForUser != NULL) { writer.String("SettingsForUser"); SettingsForUser->writeJSON(writer); }
+    if (LastLoginTime.notNull()) { writer.String("LastLoginTime"); writeDatetime(LastLoginTime, writer); }
 
     writer.EndObject();
 }
@@ -5629,6 +5630,8 @@ bool LoginResult::readFromValue(const rapidjson::Value& obj)
     if (NewlyCreated_member != obj.MemberEnd() && !NewlyCreated_member->value.IsNull()) NewlyCreated = NewlyCreated_member->value.GetBool();
     const Value::ConstMemberIterator SettingsForUser_member = obj.FindMember("SettingsForUser");
     if (SettingsForUser_member != obj.MemberEnd() && !SettingsForUser_member->value.IsNull()) SettingsForUser = new UserSettings(SettingsForUser_member->value);
+    const Value::ConstMemberIterator LastLoginTime_member = obj.FindMember("LastLoginTime");
+    if (LastLoginTime_member != obj.MemberEnd() && !LastLoginTime_member->value.IsNull()) LastLoginTime = readDatetime(LastLoginTime_member->value);
 
     return true;
 }

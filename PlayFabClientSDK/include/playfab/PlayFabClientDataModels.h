@@ -4788,13 +4788,15 @@ namespace PlayFab
             std::string PlayFabId;
             bool NewlyCreated;
             UserSettings* SettingsForUser;
+            OptionalTime LastLoginTime;
 
             LoginResult() :
                 PlayFabBaseModel(),
                 SessionTicket(),
                 PlayFabId(),
                 NewlyCreated(false),
-                SettingsForUser(NULL)
+                SettingsForUser(NULL),
+                LastLoginTime()
             {}
 
             LoginResult(const LoginResult& src) :
@@ -4802,7 +4804,8 @@ namespace PlayFab
                 SessionTicket(src.SessionTicket),
                 PlayFabId(src.PlayFabId),
                 NewlyCreated(src.NewlyCreated),
-                SettingsForUser(src.SettingsForUser ? new UserSettings(*src.SettingsForUser) : NULL)
+                SettingsForUser(src.SettingsForUser ? new UserSettings(*src.SettingsForUser) : NULL),
+                LastLoginTime(src.LastLoginTime)
             {}
 
             LoginResult(const rapidjson::Value& obj) : LoginResult()
