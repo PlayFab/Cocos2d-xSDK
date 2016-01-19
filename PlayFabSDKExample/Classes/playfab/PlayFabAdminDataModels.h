@@ -85,6 +85,7 @@ namespace PlayFab
             std::list<Region> ActiveRegions;
             std::string Comment;
             Int32 MaxGamesPerHost;
+            Int32 MinFreeGameSlots;
 
             AddServerBuildRequest() :
                 PlayFabBaseModel(),
@@ -93,7 +94,8 @@ namespace PlayFab
                 ExecutablePath(),
                 ActiveRegions(),
                 Comment(),
-                MaxGamesPerHost(0)
+                MaxGamesPerHost(0),
+                MinFreeGameSlots(0)
             {}
 
             AddServerBuildRequest(const AddServerBuildRequest& src) :
@@ -103,7 +105,8 @@ namespace PlayFab
                 ExecutablePath(src.ExecutablePath),
                 ActiveRegions(src.ActiveRegions),
                 Comment(src.Comment),
-                MaxGamesPerHost(src.MaxGamesPerHost)
+                MaxGamesPerHost(src.MaxGamesPerHost),
+                MinFreeGameSlots(src.MinFreeGameSlots)
             {}
 
             AddServerBuildRequest(const rapidjson::Value& obj) : AddServerBuildRequest()
@@ -134,6 +137,7 @@ namespace PlayFab
             std::string BuildId;
             std::list<Region> ActiveRegions;
             Int32 MaxGamesPerHost;
+            Int32 MinFreeGameSlots;
             std::string CommandLineTemplate;
             std::string ExecutablePath;
             std::string Comment;
@@ -146,6 +150,7 @@ namespace PlayFab
                 BuildId(),
                 ActiveRegions(),
                 MaxGamesPerHost(0),
+                MinFreeGameSlots(0),
                 CommandLineTemplate(),
                 ExecutablePath(),
                 Comment(),
@@ -159,6 +164,7 @@ namespace PlayFab
                 BuildId(src.BuildId),
                 ActiveRegions(src.ActiveRegions),
                 MaxGamesPerHost(src.MaxGamesPerHost),
+                MinFreeGameSlots(src.MinFreeGameSlots),
                 CommandLineTemplate(src.CommandLineTemplate),
                 ExecutablePath(src.ExecutablePath),
                 Comment(src.Comment),
@@ -1732,6 +1738,7 @@ namespace PlayFab
             std::string BuildId;
             std::list<Region> ActiveRegions;
             Int32 MaxGamesPerHost;
+            Int32 MinFreeGameSlots;
             std::string Comment;
             time_t Timestamp;
             std::string TitleId;
@@ -1743,6 +1750,7 @@ namespace PlayFab
                 BuildId(),
                 ActiveRegions(),
                 MaxGamesPerHost(0),
+                MinFreeGameSlots(0),
                 Comment(),
                 Timestamp(0),
                 TitleId(),
@@ -1755,6 +1763,7 @@ namespace PlayFab
                 BuildId(src.BuildId),
                 ActiveRegions(src.ActiveRegions),
                 MaxGamesPerHost(src.MaxGamesPerHost),
+                MinFreeGameSlots(src.MinFreeGameSlots),
                 Comment(src.Comment),
                 Timestamp(src.Timestamp),
                 TitleId(src.TitleId),
@@ -2870,6 +2879,7 @@ namespace PlayFab
             OptionalTime Timestamp;
             std::list<Region> ActiveRegions;
             Int32 MaxGamesPerHost;
+            Int32 MinFreeGameSlots;
             std::string CommandLineTemplate;
             std::string ExecutablePath;
             std::string Comment;
@@ -2880,6 +2890,7 @@ namespace PlayFab
                 Timestamp(),
                 ActiveRegions(),
                 MaxGamesPerHost(0),
+                MinFreeGameSlots(0),
                 CommandLineTemplate(),
                 ExecutablePath(),
                 Comment()
@@ -2891,6 +2902,7 @@ namespace PlayFab
                 Timestamp(src.Timestamp),
                 ActiveRegions(src.ActiveRegions),
                 MaxGamesPerHost(src.MaxGamesPerHost),
+                MinFreeGameSlots(src.MinFreeGameSlots),
                 CommandLineTemplate(src.CommandLineTemplate),
                 ExecutablePath(src.ExecutablePath),
                 Comment(src.Comment)
@@ -2912,6 +2924,7 @@ namespace PlayFab
             std::string BuildId;
             std::list<Region> ActiveRegions;
             Int32 MaxGamesPerHost;
+            Int32 MinFreeGameSlots;
             std::string CommandLineTemplate;
             std::string ExecutablePath;
             std::string Comment;
@@ -2924,6 +2937,7 @@ namespace PlayFab
                 BuildId(),
                 ActiveRegions(),
                 MaxGamesPerHost(0),
+                MinFreeGameSlots(0),
                 CommandLineTemplate(),
                 ExecutablePath(),
                 Comment(),
@@ -2937,6 +2951,7 @@ namespace PlayFab
                 BuildId(src.BuildId),
                 ActiveRegions(src.ActiveRegions),
                 MaxGamesPerHost(src.MaxGamesPerHost),
+                MinFreeGameSlots(src.MinFreeGameSlots),
                 CommandLineTemplate(src.CommandLineTemplate),
                 ExecutablePath(src.ExecutablePath),
                 Comment(src.Comment),

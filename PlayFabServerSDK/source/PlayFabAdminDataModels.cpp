@@ -114,6 +114,7 @@ void AddServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
      }
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
     writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
+    writer.String("MinFreeGameSlots"); writer.Int(MinFreeGameSlots);
 
     writer.EndObject();
 }
@@ -137,6 +138,8 @@ bool AddServerBuildRequest::readFromValue(const rapidjson::Value& obj)
     if (Comment_member != obj.MemberEnd() && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
     const Value::ConstMemberIterator MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
     if (MaxGamesPerHost_member != obj.MemberEnd() && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+    const Value::ConstMemberIterator MinFreeGameSlots_member = obj.FindMember("MinFreeGameSlots");
+    if (MinFreeGameSlots_member != obj.MemberEnd() && !MinFreeGameSlots_member->value.IsNull()) MinFreeGameSlots = MinFreeGameSlots_member->value.GetInt();
 
     return true;
 }
@@ -193,6 +196,7 @@ void AddServerBuildResult::writeJSON(PFStringJsonWriter& writer)
     writer.EndArray();
      }
     writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
+    writer.String("MinFreeGameSlots"); writer.Int(MinFreeGameSlots);
     if (CommandLineTemplate.length() > 0) { writer.String("CommandLineTemplate"); writer.String(CommandLineTemplate.c_str()); }
     if (ExecutablePath.length() > 0) { writer.String("ExecutablePath"); writer.String(ExecutablePath.c_str()); }
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
@@ -216,6 +220,8 @@ bool AddServerBuildResult::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
     if (MaxGamesPerHost_member != obj.MemberEnd() && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+    const Value::ConstMemberIterator MinFreeGameSlots_member = obj.FindMember("MinFreeGameSlots");
+    if (MinFreeGameSlots_member != obj.MemberEnd() && !MinFreeGameSlots_member->value.IsNull()) MinFreeGameSlots = MinFreeGameSlots_member->value.GetInt();
     const Value::ConstMemberIterator CommandLineTemplate_member = obj.FindMember("CommandLineTemplate");
     if (CommandLineTemplate_member != obj.MemberEnd() && !CommandLineTemplate_member->value.IsNull()) CommandLineTemplate = CommandLineTemplate_member->value.GetString();
     const Value::ConstMemberIterator ExecutablePath_member = obj.FindMember("ExecutablePath");
@@ -2169,6 +2175,7 @@ void GetServerBuildInfoResult::writeJSON(PFStringJsonWriter& writer)
     writer.EndArray();
      }
     writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
+    writer.String("MinFreeGameSlots"); writer.Int(MinFreeGameSlots);
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
     writer.String("Timestamp"); writeDatetime(Timestamp, writer);
     if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
@@ -2191,6 +2198,8 @@ bool GetServerBuildInfoResult::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
     if (MaxGamesPerHost_member != obj.MemberEnd() && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+    const Value::ConstMemberIterator MinFreeGameSlots_member = obj.FindMember("MinFreeGameSlots");
+    if (MinFreeGameSlots_member != obj.MemberEnd() && !MinFreeGameSlots_member->value.IsNull()) MinFreeGameSlots = MinFreeGameSlots_member->value.GetInt();
     const Value::ConstMemberIterator Comment_member = obj.FindMember("Comment");
     if (Comment_member != obj.MemberEnd() && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
     const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
@@ -3509,6 +3518,7 @@ void ModifyServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
     writer.EndArray();
      }
     writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
+    writer.String("MinFreeGameSlots"); writer.Int(MinFreeGameSlots);
     if (CommandLineTemplate.length() > 0) { writer.String("CommandLineTemplate"); writer.String(CommandLineTemplate.c_str()); }
     if (ExecutablePath.length() > 0) { writer.String("ExecutablePath"); writer.String(ExecutablePath.c_str()); }
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
@@ -3531,6 +3541,8 @@ bool ModifyServerBuildRequest::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
     if (MaxGamesPerHost_member != obj.MemberEnd() && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+    const Value::ConstMemberIterator MinFreeGameSlots_member = obj.FindMember("MinFreeGameSlots");
+    if (MinFreeGameSlots_member != obj.MemberEnd() && !MinFreeGameSlots_member->value.IsNull()) MinFreeGameSlots = MinFreeGameSlots_member->value.GetInt();
     const Value::ConstMemberIterator CommandLineTemplate_member = obj.FindMember("CommandLineTemplate");
     if (CommandLineTemplate_member != obj.MemberEnd() && !CommandLineTemplate_member->value.IsNull()) CommandLineTemplate = CommandLineTemplate_member->value.GetString();
     const Value::ConstMemberIterator ExecutablePath_member = obj.FindMember("ExecutablePath");
@@ -3560,6 +3572,7 @@ void ModifyServerBuildResult::writeJSON(PFStringJsonWriter& writer)
     writer.EndArray();
      }
     writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
+    writer.String("MinFreeGameSlots"); writer.Int(MinFreeGameSlots);
     if (CommandLineTemplate.length() > 0) { writer.String("CommandLineTemplate"); writer.String(CommandLineTemplate.c_str()); }
     if (ExecutablePath.length() > 0) { writer.String("ExecutablePath"); writer.String(ExecutablePath.c_str()); }
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
@@ -3583,6 +3596,8 @@ bool ModifyServerBuildResult::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator MaxGamesPerHost_member = obj.FindMember("MaxGamesPerHost");
     if (MaxGamesPerHost_member != obj.MemberEnd() && !MaxGamesPerHost_member->value.IsNull()) MaxGamesPerHost = MaxGamesPerHost_member->value.GetInt();
+    const Value::ConstMemberIterator MinFreeGameSlots_member = obj.FindMember("MinFreeGameSlots");
+    if (MinFreeGameSlots_member != obj.MemberEnd() && !MinFreeGameSlots_member->value.IsNull()) MinFreeGameSlots = MinFreeGameSlots_member->value.GetInt();
     const Value::ConstMemberIterator CommandLineTemplate_member = obj.FindMember("CommandLineTemplate");
     if (CommandLineTemplate_member != obj.MemberEnd() && !CommandLineTemplate_member->value.IsNull()) CommandLineTemplate = CommandLineTemplate_member->value.GetString();
     const Value::ConstMemberIterator ExecutablePath_member = obj.FindMember("ExecutablePath");
