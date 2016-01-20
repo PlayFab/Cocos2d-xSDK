@@ -2886,6 +2886,61 @@ bool GetCharacterLeaderboardResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetCharacterStatisticsRequest::~GetCharacterStatisticsRequest()
+{
+
+}
+
+void GetCharacterStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("CharacterId"); writer.String(CharacterId.c_str());
+
+    writer.EndObject();
+}
+
+bool GetCharacterStatisticsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+
+    return true;
+}
+
+GetCharacterStatisticsResult::~GetCharacterStatisticsResult()
+{
+
+}
+
+void GetCharacterStatisticsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!CharacterStatistics.empty()) {
+    writer.String("CharacterStatistics");
+    writer.StartObject();
+    for (std::map<std::string, Int32>::iterator iter = CharacterStatistics.begin(); iter != CharacterStatistics.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.Int(iter->second);
+    }
+    writer.EndObject();
+     }
+
+    writer.EndObject();
+}
+
+bool GetCharacterStatisticsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CharacterStatistics_member = obj.FindMember("CharacterStatistics");
+    if (CharacterStatistics_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CharacterStatistics_member->value.MemberBegin(); iter != CharacterStatistics_member->value.MemberEnd(); ++iter) {
+            CharacterStatistics[iter->name.GetString()] = iter->value.GetInt();
+        }
+    }
+
+    return true;
+}
+
 GetCloudScriptUrlRequest::~GetCloudScriptUrlRequest()
 {
 
@@ -8025,6 +8080,61 @@ bool UpdateCharacterDataResult::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator DataVersion_member = obj.FindMember("DataVersion");
     if (DataVersion_member != obj.MemberEnd() && !DataVersion_member->value.IsNull()) DataVersion = DataVersion_member->value.GetUint();
+
+    return true;
+}
+
+UpdateCharacterStatisticsRequest::~UpdateCharacterStatisticsRequest()
+{
+
+}
+
+void UpdateCharacterStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("CharacterId"); writer.String(CharacterId.c_str());
+    if (!CharacterStatistics.empty()) {
+    writer.String("CharacterStatistics");
+    writer.StartObject();
+    for (std::map<std::string, Int32>::iterator iter = CharacterStatistics.begin(); iter != CharacterStatistics.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.Int(iter->second);
+    }
+    writer.EndObject();
+     }
+
+    writer.EndObject();
+}
+
+bool UpdateCharacterStatisticsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator CharacterStatistics_member = obj.FindMember("CharacterStatistics");
+    if (CharacterStatistics_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CharacterStatistics_member->value.MemberBegin(); iter != CharacterStatistics_member->value.MemberEnd(); ++iter) {
+            CharacterStatistics[iter->name.GetString()] = iter->value.GetInt();
+        }
+    }
+
+    return true;
+}
+
+UpdateCharacterStatisticsResult::~UpdateCharacterStatisticsResult()
+{
+
+}
+
+void UpdateCharacterStatisticsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool UpdateCharacterStatisticsResult::readFromValue(const rapidjson::Value& obj)
+{
 
     return true;
 }

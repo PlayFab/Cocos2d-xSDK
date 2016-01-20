@@ -4968,6 +4968,54 @@ void PlayFabClientAPI::OnGetCharacterLeaderboardResult(int httpStatus, HttpReque
     delete request;
 }
 
+void PlayFabClientAPI::GetCharacterStatistics(
+    GetCharacterStatisticsRequest& request,
+    GetCharacterStatisticsCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetCharacterStatistics"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetCharacterStatisticsResult, nullptr);
+}
+
+void PlayFabClientAPI::OnGetCharacterStatisticsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetCharacterStatisticsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            GetCharacterStatisticsCallback successCallback = reinterpret_cast<GetCharacterStatisticsCallback>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::GetLeaderboardAroundCharacter(
     GetLeaderboardAroundCharacterRequest& request,
     GetLeaderboardAroundCharacterCallback callback,
@@ -5098,6 +5146,54 @@ void PlayFabClientAPI::OnGrantCharacterToUserResult(int httpStatus, HttpRequest*
         if (request->GetResultCallback() != nullptr)
         {
             GrantCharacterToUserCallback successCallback = reinterpret_cast<GrantCharacterToUserCallback>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::UpdateCharacterStatistics(
+    UpdateCharacterStatisticsRequest& request,
+    UpdateCharacterStatisticsCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/UpdateCharacterStatistics"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnUpdateCharacterStatisticsResult, nullptr);
+}
+
+void PlayFabClientAPI::OnUpdateCharacterStatisticsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    UpdateCharacterStatisticsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            UpdateCharacterStatisticsCallback successCallback = reinterpret_cast<UpdateCharacterStatisticsCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

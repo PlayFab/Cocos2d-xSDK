@@ -2378,6 +2378,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetCharacterStatisticsRequest : public PlayFabBaseModel
+        {
+            std::string CharacterId;
+
+            GetCharacterStatisticsRequest() :
+                PlayFabBaseModel(),
+                CharacterId()
+            {}
+
+            GetCharacterStatisticsRequest(const GetCharacterStatisticsRequest& src) :
+                PlayFabBaseModel(),
+                CharacterId(src.CharacterId)
+            {}
+
+            GetCharacterStatisticsRequest(const rapidjson::Value& obj) : GetCharacterStatisticsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetCharacterStatisticsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetCharacterStatisticsResult : public PlayFabBaseModel
+        {
+            std::map<std::string, Int32> CharacterStatistics;
+
+            GetCharacterStatisticsResult() :
+                PlayFabBaseModel(),
+                CharacterStatistics()
+            {}
+
+            GetCharacterStatisticsResult(const GetCharacterStatisticsResult& src) :
+                PlayFabBaseModel(),
+                CharacterStatistics(src.CharacterStatistics)
+            {}
+
+            GetCharacterStatisticsResult(const rapidjson::Value& obj) : GetCharacterStatisticsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetCharacterStatisticsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetCloudScriptUrlRequest : public PlayFabBaseModel
         {
             OptionalInt32 Version;
@@ -7187,6 +7237,56 @@ namespace PlayFab
             }
 
             ~UpdateCharacterDataResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdateCharacterStatisticsRequest : public PlayFabBaseModel
+        {
+            std::string CharacterId;
+            std::map<std::string, Int32> CharacterStatistics;
+
+            UpdateCharacterStatisticsRequest() :
+                PlayFabBaseModel(),
+                CharacterId(),
+                CharacterStatistics()
+            {}
+
+            UpdateCharacterStatisticsRequest(const UpdateCharacterStatisticsRequest& src) :
+                PlayFabBaseModel(),
+                CharacterId(src.CharacterId),
+                CharacterStatistics(src.CharacterStatistics)
+            {}
+
+            UpdateCharacterStatisticsRequest(const rapidjson::Value& obj) : UpdateCharacterStatisticsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdateCharacterStatisticsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdateCharacterStatisticsResult : public PlayFabBaseModel
+        {
+
+            UpdateCharacterStatisticsResult() :
+                PlayFabBaseModel()
+            {}
+
+            UpdateCharacterStatisticsResult(const UpdateCharacterStatisticsResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            UpdateCharacterStatisticsResult(const rapidjson::Value& obj) : UpdateCharacterStatisticsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdateCharacterStatisticsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
