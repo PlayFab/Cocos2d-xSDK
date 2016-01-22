@@ -5237,12 +5237,12 @@ bool GrantCharacterToUserResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-ItemPuchaseRequest::~ItemPuchaseRequest()
+ItemPurchaseRequest::~ItemPurchaseRequest()
 {
 
 }
 
-void ItemPuchaseRequest::writeJSON(PFStringJsonWriter& writer)
+void ItemPurchaseRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
@@ -5261,7 +5261,7 @@ void ItemPuchaseRequest::writeJSON(PFStringJsonWriter& writer)
     writer.EndObject();
 }
 
-bool ItemPuchaseRequest::readFromValue(const rapidjson::Value& obj)
+bool ItemPurchaseRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator ItemId_member = obj.FindMember("ItemId");
     if (ItemId_member != obj.MemberEnd() && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
@@ -7389,7 +7389,7 @@ void StartPurchaseRequest::writeJSON(PFStringJsonWriter& writer)
     if (StoreId.length() > 0) { writer.String("StoreId"); writer.String(StoreId.c_str()); }
     writer.String("Items");
     writer.StartArray();
-    for (std::list<ItemPuchaseRequest>::iterator iter = Items.begin(); iter != Items.end(); iter++) {
+    for (std::list<ItemPurchaseRequest>::iterator iter = Items.begin(); iter != Items.end(); iter++) {
         iter->writeJSON(writer);
     }
     writer.EndArray();
@@ -7408,7 +7408,7 @@ bool StartPurchaseRequest::readFromValue(const rapidjson::Value& obj)
     if (Items_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Items_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
-            Items.push_back(ItemPuchaseRequest(memberList[i]));
+            Items.push_back(ItemPurchaseRequest(memberList[i]));
         }
     }
 

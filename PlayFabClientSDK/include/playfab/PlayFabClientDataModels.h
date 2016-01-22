@@ -4384,14 +4384,14 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct ItemPuchaseRequest : public PlayFabBaseModel
+        struct ItemPurchaseRequest : public PlayFabBaseModel
         {
             std::string ItemId;
             Uint32 Quantity;
             std::string Annotation;
             std::list<std::string> UpgradeFromItems;
 
-            ItemPuchaseRequest() :
+            ItemPurchaseRequest() :
                 PlayFabBaseModel(),
                 ItemId(),
                 Quantity(0),
@@ -4399,7 +4399,7 @@ namespace PlayFab
                 UpgradeFromItems()
             {}
 
-            ItemPuchaseRequest(const ItemPuchaseRequest& src) :
+            ItemPurchaseRequest(const ItemPurchaseRequest& src) :
                 PlayFabBaseModel(),
                 ItemId(src.ItemId),
                 Quantity(src.Quantity),
@@ -4407,12 +4407,12 @@ namespace PlayFab
                 UpgradeFromItems(src.UpgradeFromItems)
             {}
 
-            ItemPuchaseRequest(const rapidjson::Value& obj) : ItemPuchaseRequest()
+            ItemPurchaseRequest(const rapidjson::Value& obj) : ItemPurchaseRequest()
             {
                 readFromValue(obj);
             }
 
-            ~ItemPuchaseRequest();
+            ~ItemPurchaseRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -6546,7 +6546,7 @@ namespace PlayFab
         {
             std::string CatalogVersion;
             std::string StoreId;
-            std::list<ItemPuchaseRequest> Items;
+            std::list<ItemPurchaseRequest> Items;
 
             StartPurchaseRequest() :
                 PlayFabBaseModel(),
