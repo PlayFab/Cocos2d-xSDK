@@ -4039,6 +4039,98 @@ bool GetPlayFabIDsFromGoogleIDsResult::readFromValue(const rapidjson::Value& obj
     return true;
 }
 
+GetPlayFabIDsFromKongregateIDsRequest::~GetPlayFabIDsFromKongregateIDsRequest()
+{
+
+}
+
+void GetPlayFabIDsFromKongregateIDsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("KongregateIDs");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = KongregateIDs.begin(); iter != KongregateIDs.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromKongregateIDsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator KongregateIDs_member = obj.FindMember("KongregateIDs");
+    if (KongregateIDs_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = KongregateIDs_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            KongregateIDs.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
+KongregatePlayFabIdPair::~KongregatePlayFabIdPair()
+{
+
+}
+
+void KongregatePlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (KongregateId.length() > 0) { writer.String("KongregateId"); writer.String(KongregateId.c_str()); }
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+
+    writer.EndObject();
+}
+
+bool KongregatePlayFabIdPair::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator KongregateId_member = obj.FindMember("KongregateId");
+    if (KongregateId_member != obj.MemberEnd() && !KongregateId_member->value.IsNull()) KongregateId = KongregateId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
+GetPlayFabIDsFromKongregateIDsResult::~GetPlayFabIDsFromKongregateIDsResult()
+{
+
+}
+
+void GetPlayFabIDsFromKongregateIDsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Data.empty()) {
+    writer.String("Data");
+    writer.StartArray();
+    for (std::list<KongregatePlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromKongregateIDsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Data_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Data.push_back(KongregatePlayFabIdPair(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 GetPlayFabIDsFromPSNAccountIDsRequest::~GetPlayFabIDsFromPSNAccountIDsRequest()
 {
 

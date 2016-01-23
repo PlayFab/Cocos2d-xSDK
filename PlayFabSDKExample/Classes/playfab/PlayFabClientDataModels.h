@@ -3421,6 +3421,84 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayFabIDsFromKongregateIDsRequest : public PlayFabBaseModel
+        {
+            std::list<std::string> KongregateIDs;
+
+            GetPlayFabIDsFromKongregateIDsRequest() :
+                PlayFabBaseModel(),
+                KongregateIDs()
+            {}
+
+            GetPlayFabIDsFromKongregateIDsRequest(const GetPlayFabIDsFromKongregateIDsRequest& src) :
+                PlayFabBaseModel(),
+                KongregateIDs(src.KongregateIDs)
+            {}
+
+            GetPlayFabIDsFromKongregateIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromKongregateIDsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromKongregateIDsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct KongregatePlayFabIdPair : public PlayFabBaseModel
+        {
+            std::string KongregateId;
+            std::string PlayFabId;
+
+            KongregatePlayFabIdPair() :
+                PlayFabBaseModel(),
+                KongregateId(),
+                PlayFabId()
+            {}
+
+            KongregatePlayFabIdPair(const KongregatePlayFabIdPair& src) :
+                PlayFabBaseModel(),
+                KongregateId(src.KongregateId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            KongregatePlayFabIdPair(const rapidjson::Value& obj) : KongregatePlayFabIdPair()
+            {
+                readFromValue(obj);
+            }
+
+            ~KongregatePlayFabIdPair();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromKongregateIDsResult : public PlayFabBaseModel
+        {
+            std::list<KongregatePlayFabIdPair> Data;
+
+            GetPlayFabIDsFromKongregateIDsResult() :
+                PlayFabBaseModel(),
+                Data()
+            {}
+
+            GetPlayFabIDsFromKongregateIDsResult(const GetPlayFabIDsFromKongregateIDsResult& src) :
+                PlayFabBaseModel(),
+                Data(src.Data)
+            {}
+
+            GetPlayFabIDsFromKongregateIDsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromKongregateIDsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromKongregateIDsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetPlayFabIDsFromPSNAccountIDsRequest : public PlayFabBaseModel
         {
             std::list<std::string> PSNAccountIDs;

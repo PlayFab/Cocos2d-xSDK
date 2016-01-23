@@ -31,6 +31,7 @@ namespace PlayFab
         typedef void(*GetPlayFabIDsFromFacebookIDsCallback)(ClientModels::GetPlayFabIDsFromFacebookIDsResult& result, void* userData);
         typedef void(*GetPlayFabIDsFromGameCenterIDsCallback)(ClientModels::GetPlayFabIDsFromGameCenterIDsResult& result, void* userData);
         typedef void(*GetPlayFabIDsFromGoogleIDsCallback)(ClientModels::GetPlayFabIDsFromGoogleIDsResult& result, void* userData);
+        typedef void(*GetPlayFabIDsFromKongregateIDsCallback)(ClientModels::GetPlayFabIDsFromKongregateIDsResult& result, void* userData);
         typedef void(*GetPlayFabIDsFromPSNAccountIDsCallback)(ClientModels::GetPlayFabIDsFromPSNAccountIDsResult& result, void* userData);
         typedef void(*GetPlayFabIDsFromSteamIDsCallback)(ClientModels::GetPlayFabIDsFromSteamIDsResult& result, void* userData);
         typedef void(*GetUserCombinedInfoCallback)(ClientModels::GetUserCombinedInfoResult& result, void* userData);
@@ -156,6 +157,7 @@ namespace PlayFab
         static void GetPlayFabIDsFromFacebookIDs(ClientModels::GetPlayFabIDsFromFacebookIDsRequest& request, GetPlayFabIDsFromFacebookIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromGameCenterIDs(ClientModels::GetPlayFabIDsFromGameCenterIDsRequest& request, GetPlayFabIDsFromGameCenterIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromGoogleIDs(ClientModels::GetPlayFabIDsFromGoogleIDsRequest& request, GetPlayFabIDsFromGoogleIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayFabIDsFromKongregateIDs(ClientModels::GetPlayFabIDsFromKongregateIDsRequest& request, GetPlayFabIDsFromKongregateIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromPSNAccountIDs(ClientModels::GetPlayFabIDsFromPSNAccountIDsRequest& request, GetPlayFabIDsFromPSNAccountIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromSteamIDs(ClientModels::GetPlayFabIDsFromSteamIDsRequest& request, GetPlayFabIDsFromSteamIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserCombinedInfo(ClientModels::GetUserCombinedInfoRequest& request, GetUserCombinedInfoCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -279,6 +281,7 @@ namespace PlayFab
         static void OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromGameCenterIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromGoogleIDsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayFabIDsFromKongregateIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromPSNAccountIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserCombinedInfoResult(int httpStatus, HttpRequest* request, void* userData);
