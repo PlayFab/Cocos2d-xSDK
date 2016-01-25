@@ -203,7 +203,9 @@ namespace PlayFab
 		PlayFabErrorStatisticNameConflict = 1196,
 		PlayFabErrorStatisticVersionClosedForWrites = 1197,
 		PlayFabErrorStatisticVersionInvalid = 1198,
-		PlayFabErrorAPIClientRequestRateLimitExceeded = 1199
+		PlayFabErrorAPIClientRequestRateLimitExceeded = 1199,
+		PlayFabErrorInvalidJSONContent = 1200,
+		PlayFabErrorInvalidDropTable = 1201
     };
 
     struct PlayFabError

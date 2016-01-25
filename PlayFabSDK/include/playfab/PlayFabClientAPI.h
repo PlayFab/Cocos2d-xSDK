@@ -31,6 +31,7 @@ namespace PlayFab
         typedef void(*GetPlayFabIDsFromFacebookIDsCallback)(ClientModels::GetPlayFabIDsFromFacebookIDsResult& result, void* userData);
         typedef void(*GetPlayFabIDsFromGameCenterIDsCallback)(ClientModels::GetPlayFabIDsFromGameCenterIDsResult& result, void* userData);
         typedef void(*GetPlayFabIDsFromGoogleIDsCallback)(ClientModels::GetPlayFabIDsFromGoogleIDsResult& result, void* userData);
+        typedef void(*GetPlayFabIDsFromKongregateIDsCallback)(ClientModels::GetPlayFabIDsFromKongregateIDsResult& result, void* userData);
         typedef void(*GetPlayFabIDsFromPSNAccountIDsCallback)(ClientModels::GetPlayFabIDsFromPSNAccountIDsResult& result, void* userData);
         typedef void(*GetPlayFabIDsFromSteamIDsCallback)(ClientModels::GetPlayFabIDsFromSteamIDsResult& result, void* userData);
         typedef void(*GetUserCombinedInfoCallback)(ClientModels::GetUserCombinedInfoResult& result, void* userData);
@@ -114,9 +115,11 @@ namespace PlayFab
         typedef void(*GetContentDownloadUrlCallback)(ClientModels::GetContentDownloadUrlResult& result, void* userData);
         typedef void(*GetAllUsersCharactersCallback)(ClientModels::ListUsersCharactersResult& result, void* userData);
         typedef void(*GetCharacterLeaderboardCallback)(ClientModels::GetCharacterLeaderboardResult& result, void* userData);
+        typedef void(*GetCharacterStatisticsCallback)(ClientModels::GetCharacterStatisticsResult& result, void* userData);
         typedef void(*GetLeaderboardAroundCharacterCallback)(ClientModels::GetLeaderboardAroundCharacterResult& result, void* userData);
         typedef void(*GetLeaderboardForUserCharactersCallback)(ClientModels::GetLeaderboardForUsersCharactersResult& result, void* userData);
         typedef void(*GrantCharacterToUserCallback)(ClientModels::GrantCharacterToUserResult& result, void* userData);
+        typedef void(*UpdateCharacterStatisticsCallback)(ClientModels::UpdateCharacterStatisticsResult& result, void* userData);
         typedef void(*GetCharacterDataCallback)(ClientModels::GetCharacterDataResult& result, void* userData);
         typedef void(*GetCharacterReadOnlyDataCallback)(ClientModels::GetCharacterDataResult& result, void* userData);
         typedef void(*UpdateCharacterDataCallback)(ClientModels::UpdateCharacterDataResult& result, void* userData);
@@ -154,6 +157,7 @@ namespace PlayFab
         static void GetPlayFabIDsFromFacebookIDs(ClientModels::GetPlayFabIDsFromFacebookIDsRequest& request, GetPlayFabIDsFromFacebookIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromGameCenterIDs(ClientModels::GetPlayFabIDsFromGameCenterIDsRequest& request, GetPlayFabIDsFromGameCenterIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromGoogleIDs(ClientModels::GetPlayFabIDsFromGoogleIDsRequest& request, GetPlayFabIDsFromGoogleIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayFabIDsFromKongregateIDs(ClientModels::GetPlayFabIDsFromKongregateIDsRequest& request, GetPlayFabIDsFromKongregateIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromPSNAccountIDs(ClientModels::GetPlayFabIDsFromPSNAccountIDsRequest& request, GetPlayFabIDsFromPSNAccountIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromSteamIDs(ClientModels::GetPlayFabIDsFromSteamIDsRequest& request, GetPlayFabIDsFromSteamIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserCombinedInfo(ClientModels::GetUserCombinedInfoRequest& request, GetUserCombinedInfoCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -237,9 +241,11 @@ namespace PlayFab
         static void GetContentDownloadUrl(ClientModels::GetContentDownloadUrlRequest& request, GetContentDownloadUrlCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAllUsersCharacters(ClientModels::ListUsersCharactersRequest& request, GetAllUsersCharactersCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCharacterLeaderboard(ClientModels::GetCharacterLeaderboardRequest& request, GetCharacterLeaderboardCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetCharacterStatistics(ClientModels::GetCharacterStatisticsRequest& request, GetCharacterStatisticsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboardAroundCharacter(ClientModels::GetLeaderboardAroundCharacterRequest& request, GetLeaderboardAroundCharacterCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboardForUserCharacters(ClientModels::GetLeaderboardForUsersCharactersRequest& request, GetLeaderboardForUserCharactersCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GrantCharacterToUser(ClientModels::GrantCharacterToUserRequest& request, GrantCharacterToUserCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UpdateCharacterStatistics(ClientModels::UpdateCharacterStatisticsRequest& request, UpdateCharacterStatisticsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCharacterData(ClientModels::GetCharacterDataRequest& request, GetCharacterDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCharacterReadOnlyData(ClientModels::GetCharacterDataRequest& request, GetCharacterReadOnlyDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateCharacterData(ClientModels::UpdateCharacterDataRequest& request, UpdateCharacterDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -275,6 +281,7 @@ namespace PlayFab
         static void OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromGameCenterIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromGoogleIDsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayFabIDsFromKongregateIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromPSNAccountIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserCombinedInfoResult(int httpStatus, HttpRequest* request, void* userData);
@@ -358,9 +365,11 @@ namespace PlayFab
         static void OnGetContentDownloadUrlResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAllUsersCharactersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCharacterLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetCharacterStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardAroundCharacterResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardForUserCharactersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGrantCharacterToUserResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUpdateCharacterStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);

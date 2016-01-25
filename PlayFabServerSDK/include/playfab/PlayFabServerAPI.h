@@ -52,6 +52,7 @@ namespace PlayFab
         typedef void(*MoveItemToUserFromCharacterCallback)(ServerModels::MoveItemToUserFromCharacterResult& result, void* userData);
         typedef void(*RedeemCouponCallback)(ServerModels::RedeemCouponResult& result, void* userData);
         typedef void(*ReportPlayerCallback)(ServerModels::ReportPlayerServerResult& result, void* userData);
+        typedef void(*RevokeInventoryItemCallback)(ServerModels::RevokeInventoryResult& result, void* userData);
         typedef void(*SubtractCharacterVirtualCurrencyCallback)(ServerModels::ModifyCharacterVirtualCurrencyResult& result, void* userData);
         typedef void(*SubtractUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
         typedef void(*UpdateUserInventoryItemCustomDataCallback)(ServerModels::UpdateUserInventoryItemDataResult& result, void* userData);
@@ -126,6 +127,7 @@ namespace PlayFab
         static void MoveItemToUserFromCharacter(ServerModels::MoveItemToUserFromCharacterRequest& request, MoveItemToUserFromCharacterCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RedeemCoupon(ServerModels::RedeemCouponRequest& request, RedeemCouponCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ReportPlayer(ServerModels::ReportPlayerServerRequest& request, ReportPlayerCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RevokeInventoryItem(ServerModels::RevokeInventoryItemRequest& request, RevokeInventoryItemCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractCharacterVirtualCurrency(ServerModels::SubtractCharacterVirtualCurrencyRequest& request, SubtractCharacterVirtualCurrencyCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractUserVirtualCurrency(ServerModels::SubtractUserVirtualCurrencyRequest& request, SubtractUserVirtualCurrencyCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserInventoryItemCustomData(ServerModels::UpdateUserInventoryItemDataRequest& request, UpdateUserInventoryItemCustomDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -202,6 +204,7 @@ namespace PlayFab
         static void OnMoveItemToUserFromCharacterResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRedeemCouponResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnReportPlayerResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRevokeInventoryItemResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserInventoryItemCustomDataResult(int httpStatus, HttpRequest* request, void* userData);
