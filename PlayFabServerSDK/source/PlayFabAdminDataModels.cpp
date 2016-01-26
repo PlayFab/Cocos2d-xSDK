@@ -697,6 +697,8 @@ void PlayFab::AdminModels::writeIntervalEnumJSON(Interval enumVal, PFStringJsonW
 {
     switch (enumVal)
     {
+    case IntervalFiveMinutes: writer.String("FiveMinutes"); break;
+    case IntervalFifteenMinutes: writer.String("FifteenMinutes"); break;
     case IntervalHour: writer.String("Hour"); break;
     case IntervalDay: writer.String("Day"); break;
     case IntervalWeek: writer.String("Week"); break;
@@ -711,6 +713,8 @@ Interval PlayFab::AdminModels::readIntervalFromValue(const rapidjson::Value& obj
     if (_IntervalMap.size() == 0)
     {
         // Auto-generate the map on the first use
+        _IntervalMap["FiveMinutes"] = IntervalFiveMinutes;
+        _IntervalMap["FifteenMinutes"] = IntervalFifteenMinutes;
         _IntervalMap["Hour"] = IntervalHour;
         _IntervalMap["Day"] = IntervalDay;
         _IntervalMap["Week"] = IntervalWeek;
@@ -722,7 +726,7 @@ Interval PlayFab::AdminModels::readIntervalFromValue(const rapidjson::Value& obj
     if (output != _IntervalMap.end())
         return output->second;
 
-    return IntervalHour; // Basically critical fail
+    return IntervalFiveMinutes; // Basically critical fail
 }
 
 CreatePlayerStatisticDefinitionRequest::~CreatePlayerStatisticDefinitionRequest()

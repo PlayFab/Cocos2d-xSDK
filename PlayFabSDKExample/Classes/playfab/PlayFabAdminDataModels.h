@@ -557,6 +557,8 @@ namespace PlayFab
 
         enum Interval
         {
+            IntervalFiveMinutes,
+            IntervalFifteenMinutes,
             IntervalHour,
             IntervalDay,
             IntervalWeek,
