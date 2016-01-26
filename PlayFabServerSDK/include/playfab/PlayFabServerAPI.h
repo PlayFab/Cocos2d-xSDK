@@ -41,6 +41,7 @@ namespace PlayFab
         typedef void(*SetTitleInternalDataCallback)(ServerModels::SetTitleDataResult& result, void* userData);
         typedef void(*AddCharacterVirtualCurrencyCallback)(ServerModels::ModifyCharacterVirtualCurrencyResult& result, void* userData);
         typedef void(*AddUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
+        typedef void(*ConsumeItemCallback)(ServerModels::ConsumeItemResult& result, void* userData);
         typedef void(*GetCharacterInventoryCallback)(ServerModels::GetCharacterInventoryResult& result, void* userData);
         typedef void(*GetUserInventoryCallback)(ServerModels::GetUserInventoryResult& result, void* userData);
         typedef void(*GrantItemsToCharacterCallback)(ServerModels::GrantItemsToCharacterResult& result, void* userData);
@@ -116,6 +117,7 @@ namespace PlayFab
         static void SetTitleInternalData(ServerModels::SetTitleDataRequest& request, SetTitleInternalDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddCharacterVirtualCurrency(ServerModels::AddCharacterVirtualCurrencyRequest& request, AddCharacterVirtualCurrencyCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddUserVirtualCurrency(ServerModels::AddUserVirtualCurrencyRequest& request, AddUserVirtualCurrencyCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ConsumeItem(ServerModels::ConsumeItemRequest& request, ConsumeItemCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCharacterInventory(ServerModels::GetCharacterInventoryRequest& request, GetCharacterInventoryCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserInventory(ServerModels::GetUserInventoryRequest& request, GetUserInventoryCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GrantItemsToCharacter(ServerModels::GrantItemsToCharacterRequest& request, GrantItemsToCharacterCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -193,6 +195,7 @@ namespace PlayFab
         static void OnSetTitleInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnConsumeItemResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCharacterInventoryResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserInventoryResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGrantItemsToCharacterResult(int httpStatus, HttpRequest* request, void* userData);
