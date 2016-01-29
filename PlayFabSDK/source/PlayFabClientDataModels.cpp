@@ -4237,8 +4237,8 @@ void GetPlayFabIDsFromSteamIDsRequest::writeJSON(PFStringJsonWriter& writer)
 
     writer.String("SteamIDs");
     writer.StartArray();
-    for (std::list<Uint64>::iterator iter = SteamIDs.begin(); iter != SteamIDs.end(); iter++) {
-        writer.Uint64(*iter);
+    for (std::list<Uint32>::iterator iter = SteamIDs.begin(); iter != SteamIDs.end(); iter++) {
+        writer.Uint(*iter);
     }
     writer.EndArray();
     
@@ -4252,7 +4252,7 @@ bool GetPlayFabIDsFromSteamIDsRequest::readFromValue(const rapidjson::Value& obj
     if (SteamIDs_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = SteamIDs_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
-            SteamIDs.push_back(memberList[i].GetUint64());
+            SteamIDs.push_back(memberList[i].GetUint());
         }
     }
 
@@ -4268,7 +4268,7 @@ void SteamPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    writer.String("SteamId"); writer.Uint64(SteamId);
+    writer.String("SteamId"); writer.Uint(SteamId);
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
 
     writer.EndObject();
@@ -4277,7 +4277,7 @@ void SteamPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
 bool SteamPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator SteamId_member = obj.FindMember("SteamId");
-    if (SteamId_member != obj.MemberEnd() && !SteamId_member->value.IsNull()) SteamId = SteamId_member->value.GetUint64();
+    if (SteamId_member != obj.MemberEnd() && !SteamId_member->value.IsNull()) SteamId = SteamId_member->value.GetUint();
     const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
     if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
 
