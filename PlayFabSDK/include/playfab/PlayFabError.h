@@ -205,7 +205,10 @@ namespace PlayFab
 		PlayFabErrorStatisticVersionInvalid = 1198,
 		PlayFabErrorAPIClientRequestRateLimitExceeded = 1199,
 		PlayFabErrorInvalidJSONContent = 1200,
-		PlayFabErrorInvalidDropTable = 1201
+		PlayFabErrorInvalidDropTable = 1201,
+		PlayFabErrorStatisticVersionAlreadyIncrementedForScheduledInterval = 1202,
+		PlayFabErrorStatisticCountLimitExceeded = 1203,
+		PlayFabErrorStatisticVersionIncrementRateExceeded = 1204
     };
 
     struct PlayFabError

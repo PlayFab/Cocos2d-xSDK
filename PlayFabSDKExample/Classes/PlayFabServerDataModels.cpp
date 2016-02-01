@@ -1438,6 +1438,62 @@ bool CharacterResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+ConsumeItemRequest::~ConsumeItemRequest()
+{
+
+}
+
+void ConsumeItemRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str());
+    writer.String("ConsumeCount"); writer.Int(ConsumeCount);
+    if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+
+    writer.EndObject();
+}
+
+bool ConsumeItemRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+    if (ItemInstanceId_member != obj.MemberEnd() && !ItemInstanceId_member->value.IsNull()) ItemInstanceId = ItemInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator ConsumeCount_member = obj.FindMember("ConsumeCount");
+    if (ConsumeCount_member != obj.MemberEnd() && !ConsumeCount_member->value.IsNull()) ConsumeCount = ConsumeCount_member->value.GetInt();
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+
+    return true;
+}
+
+ConsumeItemResult::~ConsumeItemResult()
+{
+
+}
+
+void ConsumeItemResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (ItemInstanceId.length() > 0) { writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str()); }
+    writer.String("RemainingUses"); writer.Int(RemainingUses);
+
+    writer.EndObject();
+}
+
+bool ConsumeItemResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+    if (ItemInstanceId_member != obj.MemberEnd() && !ItemInstanceId_member->value.IsNull()) ItemInstanceId = ItemInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator RemainingUses_member = obj.FindMember("RemainingUses");
+    if (RemainingUses_member != obj.MemberEnd() && !RemainingUses_member->value.IsNull()) RemainingUses = RemainingUses_member->value.GetInt();
+
+    return true;
+}
+
 CreateSharedGroupRequest::~CreateSharedGroupRequest()
 {
 

@@ -676,7 +676,7 @@ void ContentInfo::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     if (Key.length() > 0) { writer.String("Key"); writer.String(Key.c_str()); }
-    writer.String("Size"); writer.Int64(Size);
+    writer.String("Size"); writer.Uint(Size);
     writer.String("LastModified"); writeDatetime(LastModified, writer);
 
     writer.EndObject();
@@ -687,7 +687,7 @@ bool ContentInfo::readFromValue(const rapidjson::Value& obj)
     const Value::ConstMemberIterator Key_member = obj.FindMember("Key");
     if (Key_member != obj.MemberEnd() && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
     const Value::ConstMemberIterator Size_member = obj.FindMember("Size");
-    if (Size_member != obj.MemberEnd() && !Size_member->value.IsNull()) Size = Size_member->value.GetInt64();
+    if (Size_member != obj.MemberEnd() && !Size_member->value.IsNull()) Size = Size_member->value.GetUint();
     const Value::ConstMemberIterator LastModified_member = obj.FindMember("LastModified");
     if (LastModified_member != obj.MemberEnd() && !LastModified_member->value.IsNull()) LastModified = readDatetime(LastModified_member->value);
 
@@ -697,6 +697,8 @@ void PlayFab::AdminModels::writeIntervalEnumJSON(Interval enumVal, PFStringJsonW
 {
     switch (enumVal)
     {
+    case IntervalFiveMinutes: writer.String("FiveMinutes"); break;
+    case IntervalFifteenMinutes: writer.String("FifteenMinutes"); break;
     case IntervalHour: writer.String("Hour"); break;
     case IntervalDay: writer.String("Day"); break;
     case IntervalWeek: writer.String("Week"); break;
@@ -711,6 +713,8 @@ Interval PlayFab::AdminModels::readIntervalFromValue(const rapidjson::Value& obj
     if (_IntervalMap.size() == 0)
     {
         // Auto-generate the map on the first use
+        _IntervalMap["FiveMinutes"] = IntervalFiveMinutes;
+        _IntervalMap["FifteenMinutes"] = IntervalFifteenMinutes;
         _IntervalMap["Hour"] = IntervalHour;
         _IntervalMap["Day"] = IntervalDay;
         _IntervalMap["Week"] = IntervalWeek;
@@ -722,7 +726,7 @@ Interval PlayFab::AdminModels::readIntervalFromValue(const rapidjson::Value& obj
     if (output != _IntervalMap.end())
         return output->second;
 
-    return IntervalHour; // Basically critical fail
+    return IntervalFiveMinutes; // Basically critical fail
 }
 
 CreatePlayerStatisticDefinitionRequest::~CreatePlayerStatisticDefinitionRequest()
@@ -1464,8 +1468,8 @@ void GetContentListResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    writer.String("ItemCount"); writer.Int64(ItemCount);
-    writer.String("TotalSize"); writer.Int64(TotalSize);
+    writer.String("ItemCount"); writer.Int(ItemCount);
+    writer.String("TotalSize"); writer.Uint(TotalSize);
     if (!Contents.empty()) {
     writer.String("Contents");
     writer.StartArray();
@@ -1481,9 +1485,9 @@ void GetContentListResult::writeJSON(PFStringJsonWriter& writer)
 bool GetContentListResult::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator ItemCount_member = obj.FindMember("ItemCount");
-    if (ItemCount_member != obj.MemberEnd() && !ItemCount_member->value.IsNull()) ItemCount = ItemCount_member->value.GetInt64();
+    if (ItemCount_member != obj.MemberEnd() && !ItemCount_member->value.IsNull()) ItemCount = ItemCount_member->value.GetInt();
     const Value::ConstMemberIterator TotalSize_member = obj.FindMember("TotalSize");
-    if (TotalSize_member != obj.MemberEnd() && !TotalSize_member->value.IsNull()) TotalSize = TotalSize_member->value.GetInt64();
+    if (TotalSize_member != obj.MemberEnd() && !TotalSize_member->value.IsNull()) TotalSize = TotalSize_member->value.GetUint();
     const Value::ConstMemberIterator Contents_member = obj.FindMember("Contents");
     if (Contents_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Contents_member->value;

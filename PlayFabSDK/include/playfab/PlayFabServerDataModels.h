@@ -1142,6 +1142,68 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct ConsumeItemRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string ItemInstanceId;
+            Int32 ConsumeCount;
+            std::string CharacterId;
+
+            ConsumeItemRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                ItemInstanceId(),
+                ConsumeCount(0),
+                CharacterId()
+            {}
+
+            ConsumeItemRequest(const ConsumeItemRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                ItemInstanceId(src.ItemInstanceId),
+                ConsumeCount(src.ConsumeCount),
+                CharacterId(src.CharacterId)
+            {}
+
+            ConsumeItemRequest(const rapidjson::Value& obj) : ConsumeItemRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ConsumeItemRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ConsumeItemResult : public PlayFabBaseModel
+        {
+            std::string ItemInstanceId;
+            Int32 RemainingUses;
+
+            ConsumeItemResult() :
+                PlayFabBaseModel(),
+                ItemInstanceId(),
+                RemainingUses(0)
+            {}
+
+            ConsumeItemResult(const ConsumeItemResult& src) :
+                PlayFabBaseModel(),
+                ItemInstanceId(src.ItemInstanceId),
+                RemainingUses(src.RemainingUses)
+            {}
+
+            ConsumeItemResult(const rapidjson::Value& obj) : ConsumeItemResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~ConsumeItemResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CreateSharedGroupRequest : public PlayFabBaseModel
         {
             std::string SharedGroupId;

@@ -527,7 +527,7 @@ namespace PlayFab
         struct ContentInfo : public PlayFabBaseModel
         {
             std::string Key;
-            Int64 Size;
+            Uint32 Size;
             time_t LastModified;
 
             ContentInfo() :
@@ -557,6 +557,8 @@ namespace PlayFab
 
         enum Interval
         {
+            IntervalFiveMinutes,
+            IntervalFifteenMinutes,
             IntervalHour,
             IntervalDay,
             IntervalWeek,
@@ -1114,8 +1116,8 @@ namespace PlayFab
 
         struct GetContentListResult : public PlayFabBaseModel
         {
-            Int64 ItemCount;
-            Int64 TotalSize;
+            Int32 ItemCount;
+            Uint32 TotalSize;
             std::list<ContentInfo> Contents;
 
             GetContentListResult() :

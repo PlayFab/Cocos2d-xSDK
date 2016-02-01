@@ -5219,7 +5219,7 @@ void PlayFabClientAPI::UpdateCharacterStatistics(
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/UpdateCharacterStatistics"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
-    
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
     httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
