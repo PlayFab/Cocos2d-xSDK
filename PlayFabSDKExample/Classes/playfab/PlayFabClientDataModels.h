@@ -3582,7 +3582,7 @@ namespace PlayFab
 
         struct GetPlayFabIDsFromSteamIDsRequest : public PlayFabBaseModel
         {
-            std::list<Uint32> SteamIDs;
+            std::list<Uint64> SteamIDs;
 
             GetPlayFabIDsFromSteamIDsRequest() :
                 PlayFabBaseModel(),
@@ -3607,7 +3607,7 @@ namespace PlayFab
 
         struct SteamPlayFabIdPair : public PlayFabBaseModel
         {
-            Uint32 SteamId;
+            Uint64 SteamId;
             std::string PlayFabId;
 
             SteamPlayFabIdPair() :
