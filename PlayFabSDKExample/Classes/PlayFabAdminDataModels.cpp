@@ -693,40 +693,38 @@ bool ContentInfo::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
-void PlayFab::AdminModels::writeIntervalEnumJSON(Interval enumVal, PFStringJsonWriter& writer)
+void PlayFab::AdminModels::writeStatisticResetIntervalOptionEnumJSON(StatisticResetIntervalOption enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
     {
-    case IntervalFiveMinutes: writer.String("FiveMinutes"); break;
-    case IntervalFifteenMinutes: writer.String("FifteenMinutes"); break;
-    case IntervalHour: writer.String("Hour"); break;
-    case IntervalDay: writer.String("Day"); break;
-    case IntervalWeek: writer.String("Week"); break;
-    case IntervalMonth: writer.String("Month"); break;
+    case StatisticResetIntervalOptionNever: writer.String("Never"); break;
+    case StatisticResetIntervalOptionHour: writer.String("Hour"); break;
+    case StatisticResetIntervalOptionDay: writer.String("Day"); break;
+    case StatisticResetIntervalOptionWeek: writer.String("Week"); break;
+    case StatisticResetIntervalOptionMonth: writer.String("Month"); break;
 
     }
 }
 
-Interval PlayFab::AdminModels::readIntervalFromValue(const rapidjson::Value& obj)
+StatisticResetIntervalOption PlayFab::AdminModels::readStatisticResetIntervalOptionFromValue(const rapidjson::Value& obj)
 {
-    static std::map<std::string, Interval> _IntervalMap;
-    if (_IntervalMap.size() == 0)
+    static std::map<std::string, StatisticResetIntervalOption> _StatisticResetIntervalOptionMap;
+    if (_StatisticResetIntervalOptionMap.size() == 0)
     {
         // Auto-generate the map on the first use
-        _IntervalMap["FiveMinutes"] = IntervalFiveMinutes;
-        _IntervalMap["FifteenMinutes"] = IntervalFifteenMinutes;
-        _IntervalMap["Hour"] = IntervalHour;
-        _IntervalMap["Day"] = IntervalDay;
-        _IntervalMap["Week"] = IntervalWeek;
-        _IntervalMap["Month"] = IntervalMonth;
+        _StatisticResetIntervalOptionMap["Never"] = StatisticResetIntervalOptionNever;
+        _StatisticResetIntervalOptionMap["Hour"] = StatisticResetIntervalOptionHour;
+        _StatisticResetIntervalOptionMap["Day"] = StatisticResetIntervalOptionDay;
+        _StatisticResetIntervalOptionMap["Week"] = StatisticResetIntervalOptionWeek;
+        _StatisticResetIntervalOptionMap["Month"] = StatisticResetIntervalOptionMonth;
 
     }
 
-    auto output = _IntervalMap.find(obj.GetString());
-    if (output != _IntervalMap.end())
+    auto output = _StatisticResetIntervalOptionMap.find(obj.GetString());
+    if (output != _StatisticResetIntervalOptionMap.end())
         return output->second;
 
-    return IntervalFiveMinutes; // Basically critical fail
+    return StatisticResetIntervalOptionNever; // Basically critical fail
 }
 
 CreatePlayerStatisticDefinitionRequest::~CreatePlayerStatisticDefinitionRequest()
@@ -738,18 +736,18 @@ void CreatePlayerStatisticDefinitionRequest::writeJSON(PFStringJsonWriter& write
 {
     writer.StartObject();
 
-    writer.String("Name"); writer.String(Name.c_str());
-    if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+    writer.String("StatisticName"); writer.String(StatisticName.c_str());
+    if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
 
     writer.EndObject();
 }
 
 bool CreatePlayerStatisticDefinitionRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
-    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
     const Value::ConstMemberIterator VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
-    if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
+    if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readStatisticResetIntervalOptionFromValue(VersionChangeInterval_member->value);
 
     return true;
 }
@@ -765,7 +763,7 @@ void PlayerStatisticDefinition::writeJSON(PFStringJsonWriter& writer)
 
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
     writer.String("CurrentVersion"); writer.Uint(CurrentVersion);
-    if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+    if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
 
     writer.EndObject();
 }
@@ -777,7 +775,7 @@ bool PlayerStatisticDefinition::readFromValue(const rapidjson::Value& obj)
     const Value::ConstMemberIterator CurrentVersion_member = obj.FindMember("CurrentVersion");
     if (CurrentVersion_member != obj.MemberEnd() && !CurrentVersion_member->value.IsNull()) CurrentVersion = CurrentVersion_member->value.GetUint();
     const Value::ConstMemberIterator VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
-    if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
+    if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readStatisticResetIntervalOptionFromValue(VersionChangeInterval_member->value);
 
     return true;
 }
@@ -4629,7 +4627,7 @@ void UpdatePlayerStatisticDefinitionRequest::writeJSON(PFStringJsonWriter& write
     writer.StartObject();
 
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-    if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+    if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
 
     writer.EndObject();
 }
@@ -4639,7 +4637,7 @@ bool UpdatePlayerStatisticDefinitionRequest::readFromValue(const rapidjson::Valu
     const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
     if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
     const Value::ConstMemberIterator VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
-    if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readIntervalFromValue(VersionChangeInterval_member->value);
+    if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readStatisticResetIntervalOptionFromValue(VersionChangeInterval_member->value);
 
     return true;
 }
