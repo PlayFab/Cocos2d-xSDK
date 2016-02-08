@@ -7196,6 +7196,40 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UnlockContainerInstanceRequest : public PlayFabBaseModel
+        {
+            std::string CharacterId;
+            std::string ContainerItemInstanceId;
+            std::string KeyItemInstanceId;
+            std::string CatalogVersion;
+
+            UnlockContainerInstanceRequest() :
+                PlayFabBaseModel(),
+                CharacterId(),
+                ContainerItemInstanceId(),
+                KeyItemInstanceId(),
+                CatalogVersion()
+            {}
+
+            UnlockContainerInstanceRequest(const UnlockContainerInstanceRequest& src) :
+                PlayFabBaseModel(),
+                CharacterId(src.CharacterId),
+                ContainerItemInstanceId(src.ContainerItemInstanceId),
+                KeyItemInstanceId(src.KeyItemInstanceId),
+                CatalogVersion(src.CatalogVersion)
+            {}
+
+            UnlockContainerInstanceRequest(const rapidjson::Value& obj) : UnlockContainerInstanceRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlockContainerInstanceRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UnlockContainerItemRequest : public PlayFabBaseModel
         {
             std::string ContainerItemId;

@@ -8018,6 +8018,37 @@ bool UnlinkXboxAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UnlockContainerInstanceRequest::~UnlockContainerInstanceRequest()
+{
+
+}
+
+void UnlockContainerInstanceRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    writer.String("ContainerItemInstanceId"); writer.String(ContainerItemInstanceId.c_str());
+    if (KeyItemInstanceId.length() > 0) { writer.String("KeyItemInstanceId"); writer.String(KeyItemInstanceId.c_str()); }
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+
+    writer.EndObject();
+}
+
+bool UnlockContainerInstanceRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator ContainerItemInstanceId_member = obj.FindMember("ContainerItemInstanceId");
+    if (ContainerItemInstanceId_member != obj.MemberEnd() && !ContainerItemInstanceId_member->value.IsNull()) ContainerItemInstanceId = ContainerItemInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator KeyItemInstanceId_member = obj.FindMember("KeyItemInstanceId");
+    if (KeyItemInstanceId_member != obj.MemberEnd() && !KeyItemInstanceId_member->value.IsNull()) KeyItemInstanceId = KeyItemInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+
+    return true;
+}
+
 UnlockContainerItemRequest::~UnlockContainerItemRequest()
 {
 
@@ -8055,7 +8086,7 @@ void UnlockContainerItemResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    writer.String("UnlockedItemInstanceId"); writer.String(UnlockedItemInstanceId.c_str());
+    if (UnlockedItemInstanceId.length() > 0) { writer.String("UnlockedItemInstanceId"); writer.String(UnlockedItemInstanceId.c_str()); }
     if (UnlockedWithItemInstanceId.length() > 0) { writer.String("UnlockedWithItemInstanceId"); writer.String(UnlockedWithItemInstanceId.c_str()); }
     if (!GrantedItems.empty()) {
     writer.String("GrantedItems");

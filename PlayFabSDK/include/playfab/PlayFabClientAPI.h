@@ -87,6 +87,7 @@ namespace PlayFab
         typedef void(*ReportPlayerCallback)(ClientModels::ReportPlayerClientResult& result, void* userData);
         typedef void(*StartPurchaseCallback)(ClientModels::StartPurchaseResult& result, void* userData);
         typedef void(*SubtractUserVirtualCurrencyCallback)(ClientModels::ModifyUserVirtualCurrencyResult& result, void* userData);
+        typedef void(*UnlockContainerInstanceCallback)(ClientModels::UnlockContainerItemResult& result, void* userData);
         typedef void(*UnlockContainerItemCallback)(ClientModels::UnlockContainerItemResult& result, void* userData);
         typedef void(*AddFriendCallback)(ClientModels::AddFriendResult& result, void* userData);
         typedef void(*GetFriendsListCallback)(ClientModels::GetFriendsListResult& result, void* userData);
@@ -213,6 +214,7 @@ namespace PlayFab
         static void ReportPlayer(ClientModels::ReportPlayerClientRequest& request, ReportPlayerCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void StartPurchase(ClientModels::StartPurchaseRequest& request, StartPurchaseCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractUserVirtualCurrency(ClientModels::SubtractUserVirtualCurrencyRequest& request, SubtractUserVirtualCurrencyCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UnlockContainerInstance(ClientModels::UnlockContainerInstanceRequest& request, UnlockContainerInstanceCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlockContainerItem(ClientModels::UnlockContainerItemRequest& request, UnlockContainerItemCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddFriend(ClientModels::AddFriendRequest& request, AddFriendCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetFriendsList(ClientModels::GetFriendsListRequest& request, GetFriendsListCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -337,6 +339,7 @@ namespace PlayFab
         static void OnReportPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnStartPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUnlockContainerInstanceResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlockContainerItemResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddFriendResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetFriendsListResult(int httpStatus, HttpRequest* request, void* userData);
