@@ -208,7 +208,8 @@ namespace PlayFab
 		PlayFabErrorInvalidDropTable = 1201,
 		PlayFabErrorStatisticVersionAlreadyIncrementedForScheduledInterval = 1202,
 		PlayFabErrorStatisticCountLimitExceeded = 1203,
-		PlayFabErrorStatisticVersionIncrementRateExceeded = 1204
+		PlayFabErrorStatisticVersionIncrementRateExceeded = 1204,
+		PlayFabErrorContainerKeyInvalid = 1205
     };
 
     struct PlayFabError

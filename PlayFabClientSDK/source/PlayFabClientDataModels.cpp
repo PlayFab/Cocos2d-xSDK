@@ -4237,8 +4237,8 @@ void GetPlayFabIDsFromSteamIDsRequest::writeJSON(PFStringJsonWriter& writer)
 
     writer.String("SteamIDs");
     writer.StartArray();
-    for (std::list<Uint32>::iterator iter = SteamIDs.begin(); iter != SteamIDs.end(); iter++) {
-        writer.Uint(*iter);
+    for (std::list<Uint64>::iterator iter = SteamIDs.begin(); iter != SteamIDs.end(); iter++) {
+        writer.Uint64(*iter);
     }
     writer.EndArray();
     
@@ -4252,7 +4252,7 @@ bool GetPlayFabIDsFromSteamIDsRequest::readFromValue(const rapidjson::Value& obj
     if (SteamIDs_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = SteamIDs_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
-            SteamIDs.push_back(memberList[i].GetUint());
+            SteamIDs.push_back(memberList[i].GetUint64());
         }
     }
 
@@ -4268,7 +4268,7 @@ void SteamPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    writer.String("SteamId"); writer.Uint(SteamId);
+    writer.String("SteamId"); writer.Uint64(SteamId);
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
 
     writer.EndObject();
@@ -4277,7 +4277,7 @@ void SteamPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
 bool SteamPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator SteamId_member = obj.FindMember("SteamId");
-    if (SteamId_member != obj.MemberEnd() && !SteamId_member->value.IsNull()) SteamId = SteamId_member->value.GetUint();
+    if (SteamId_member != obj.MemberEnd() && !SteamId_member->value.IsNull()) SteamId = SteamId_member->value.GetUint64();
     const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
     if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
 
@@ -8018,6 +8018,37 @@ bool UnlinkXboxAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UnlockContainerInstanceRequest::~UnlockContainerInstanceRequest()
+{
+
+}
+
+void UnlockContainerInstanceRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    writer.String("ContainerItemInstanceId"); writer.String(ContainerItemInstanceId.c_str());
+    if (KeyItemInstanceId.length() > 0) { writer.String("KeyItemInstanceId"); writer.String(KeyItemInstanceId.c_str()); }
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+
+    writer.EndObject();
+}
+
+bool UnlockContainerInstanceRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator ContainerItemInstanceId_member = obj.FindMember("ContainerItemInstanceId");
+    if (ContainerItemInstanceId_member != obj.MemberEnd() && !ContainerItemInstanceId_member->value.IsNull()) ContainerItemInstanceId = ContainerItemInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator KeyItemInstanceId_member = obj.FindMember("KeyItemInstanceId");
+    if (KeyItemInstanceId_member != obj.MemberEnd() && !KeyItemInstanceId_member->value.IsNull()) KeyItemInstanceId = KeyItemInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+
+    return true;
+}
+
 UnlockContainerItemRequest::~UnlockContainerItemRequest()
 {
 
@@ -8055,7 +8086,7 @@ void UnlockContainerItemResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    writer.String("UnlockedItemInstanceId"); writer.String(UnlockedItemInstanceId.c_str());
+    if (UnlockedItemInstanceId.length() > 0) { writer.String("UnlockedItemInstanceId"); writer.String(UnlockedItemInstanceId.c_str()); }
     if (UnlockedWithItemInstanceId.length() > 0) { writer.String("UnlockedWithItemInstanceId"); writer.String(UnlockedWithItemInstanceId.c_str()); }
     if (!GrantedItems.empty()) {
     writer.String("GrantedItems");

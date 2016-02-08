@@ -3582,7 +3582,7 @@ namespace PlayFab
 
         struct GetPlayFabIDsFromSteamIDsRequest : public PlayFabBaseModel
         {
-            std::list<Uint32> SteamIDs;
+            std::list<Uint64> SteamIDs;
 
             GetPlayFabIDsFromSteamIDsRequest() :
                 PlayFabBaseModel(),
@@ -3607,7 +3607,7 @@ namespace PlayFab
 
         struct SteamPlayFabIdPair : public PlayFabBaseModel
         {
-            Uint32 SteamId;
+            Uint64 SteamId;
             std::string PlayFabId;
 
             SteamPlayFabIdPair() :
@@ -7191,6 +7191,40 @@ namespace PlayFab
             }
 
             ~UnlinkXboxAccountResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UnlockContainerInstanceRequest : public PlayFabBaseModel
+        {
+            std::string CharacterId;
+            std::string ContainerItemInstanceId;
+            std::string KeyItemInstanceId;
+            std::string CatalogVersion;
+
+            UnlockContainerInstanceRequest() :
+                PlayFabBaseModel(),
+                CharacterId(),
+                ContainerItemInstanceId(),
+                KeyItemInstanceId(),
+                CatalogVersion()
+            {}
+
+            UnlockContainerInstanceRequest(const UnlockContainerInstanceRequest& src) :
+                PlayFabBaseModel(),
+                CharacterId(src.CharacterId),
+                ContainerItemInstanceId(src.ContainerItemInstanceId),
+                KeyItemInstanceId(src.KeyItemInstanceId),
+                CatalogVersion(src.CatalogVersion)
+            {}
+
+            UnlockContainerInstanceRequest(const rapidjson::Value& obj) : UnlockContainerInstanceRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlockContainerInstanceRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

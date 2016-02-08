@@ -555,33 +555,32 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        enum Interval
+        enum StatisticResetIntervalOption
         {
-            IntervalFiveMinutes,
-            IntervalFifteenMinutes,
-            IntervalHour,
-            IntervalDay,
-            IntervalWeek,
-            IntervalMonth
+            StatisticResetIntervalOptionNever,
+            StatisticResetIntervalOptionHour,
+            StatisticResetIntervalOptionDay,
+            StatisticResetIntervalOptionWeek,
+            StatisticResetIntervalOptionMonth
         };
 
-        void writeIntervalEnumJSON(Interval enumVal, PFStringJsonWriter& writer);
-        Interval readIntervalFromValue(const rapidjson::Value& obj);
+        void writeStatisticResetIntervalOptionEnumJSON(StatisticResetIntervalOption enumVal, PFStringJsonWriter& writer);
+        StatisticResetIntervalOption readStatisticResetIntervalOptionFromValue(const rapidjson::Value& obj);
 
         struct CreatePlayerStatisticDefinitionRequest : public PlayFabBaseModel
         {
-            std::string Name;
-            Boxed<Interval> VersionChangeInterval;
+            std::string StatisticName;
+            Boxed<StatisticResetIntervalOption> VersionChangeInterval;
 
             CreatePlayerStatisticDefinitionRequest() :
                 PlayFabBaseModel(),
-                Name(),
+                StatisticName(),
                 VersionChangeInterval()
             {}
 
             CreatePlayerStatisticDefinitionRequest(const CreatePlayerStatisticDefinitionRequest& src) :
                 PlayFabBaseModel(),
-                Name(src.Name),
+                StatisticName(src.StatisticName),
                 VersionChangeInterval(src.VersionChangeInterval)
             {}
 
@@ -600,7 +599,7 @@ namespace PlayFab
         {
             std::string StatisticName;
             Uint32 CurrentVersion;
-            Boxed<Interval> VersionChangeInterval;
+            Boxed<StatisticResetIntervalOption> VersionChangeInterval;
 
             PlayerStatisticDefinition() :
                 PlayFabBaseModel(),
@@ -4020,7 +4019,7 @@ namespace PlayFab
         struct UpdatePlayerStatisticDefinitionRequest : public PlayFabBaseModel
         {
             std::string StatisticName;
-            Boxed<Interval> VersionChangeInterval;
+            Boxed<StatisticResetIntervalOption> VersionChangeInterval;
 
             UpdatePlayerStatisticDefinitionRequest() :
                 PlayFabBaseModel(),

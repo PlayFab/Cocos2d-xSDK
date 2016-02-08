@@ -4337,6 +4337,111 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UnlockContainerInstanceRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string CharacterId;
+            std::string ContainerItemInstanceId;
+            std::string KeyItemInstanceId;
+            std::string CatalogVersion;
+
+            UnlockContainerInstanceRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                CharacterId(),
+                ContainerItemInstanceId(),
+                KeyItemInstanceId(),
+                CatalogVersion()
+            {}
+
+            UnlockContainerInstanceRequest(const UnlockContainerInstanceRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                CharacterId(src.CharacterId),
+                ContainerItemInstanceId(src.ContainerItemInstanceId),
+                KeyItemInstanceId(src.KeyItemInstanceId),
+                CatalogVersion(src.CatalogVersion)
+            {}
+
+            UnlockContainerInstanceRequest(const rapidjson::Value& obj) : UnlockContainerInstanceRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlockContainerInstanceRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UnlockContainerItemRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string CharacterId;
+            std::string ContainerItemId;
+            std::string CatalogVersion;
+
+            UnlockContainerItemRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                CharacterId(),
+                ContainerItemId(),
+                CatalogVersion()
+            {}
+
+            UnlockContainerItemRequest(const UnlockContainerItemRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                CharacterId(src.CharacterId),
+                ContainerItemId(src.ContainerItemId),
+                CatalogVersion(src.CatalogVersion)
+            {}
+
+            UnlockContainerItemRequest(const rapidjson::Value& obj) : UnlockContainerItemRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlockContainerItemRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UnlockContainerItemResult : public PlayFabBaseModel
+        {
+            std::string UnlockedItemInstanceId;
+            std::string UnlockedWithItemInstanceId;
+            std::list<ItemInstance> GrantedItems;
+            std::map<std::string, Uint32> VirtualCurrency;
+
+            UnlockContainerItemResult() :
+                PlayFabBaseModel(),
+                UnlockedItemInstanceId(),
+                UnlockedWithItemInstanceId(),
+                GrantedItems(),
+                VirtualCurrency()
+            {}
+
+            UnlockContainerItemResult(const UnlockContainerItemResult& src) :
+                PlayFabBaseModel(),
+                UnlockedItemInstanceId(src.UnlockedItemInstanceId),
+                UnlockedWithItemInstanceId(src.UnlockedWithItemInstanceId),
+                GrantedItems(src.GrantedItems),
+                VirtualCurrency(src.VirtualCurrency)
+            {}
+
+            UnlockContainerItemResult(const rapidjson::Value& obj) : UnlockContainerItemResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlockContainerItemResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UpdateCharacterDataRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;

@@ -56,6 +56,8 @@ namespace PlayFab
         typedef void(*RevokeInventoryItemCallback)(ServerModels::RevokeInventoryResult& result, void* userData);
         typedef void(*SubtractCharacterVirtualCurrencyCallback)(ServerModels::ModifyCharacterVirtualCurrencyResult& result, void* userData);
         typedef void(*SubtractUserVirtualCurrencyCallback)(ServerModels::ModifyUserVirtualCurrencyResult& result, void* userData);
+        typedef void(*UnlockContainerInstanceCallback)(ServerModels::UnlockContainerItemResult& result, void* userData);
+        typedef void(*UnlockContainerItemCallback)(ServerModels::UnlockContainerItemResult& result, void* userData);
         typedef void(*UpdateUserInventoryItemCustomDataCallback)(ServerModels::UpdateUserInventoryItemDataResult& result, void* userData);
         typedef void(*NotifyMatchmakerPlayerLeftCallback)(ServerModels::NotifyMatchmakerPlayerLeftResult& result, void* userData);
         typedef void(*RedeemMatchmakerTicketCallback)(ServerModels::RedeemMatchmakerTicketResult& result, void* userData);
@@ -132,6 +134,8 @@ namespace PlayFab
         static void RevokeInventoryItem(ServerModels::RevokeInventoryItemRequest& request, RevokeInventoryItemCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractCharacterVirtualCurrency(ServerModels::SubtractCharacterVirtualCurrencyRequest& request, SubtractCharacterVirtualCurrencyCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractUserVirtualCurrency(ServerModels::SubtractUserVirtualCurrencyRequest& request, SubtractUserVirtualCurrencyCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UnlockContainerInstance(ServerModels::UnlockContainerInstanceRequest& request, UnlockContainerInstanceCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UnlockContainerItem(ServerModels::UnlockContainerItemRequest& request, UnlockContainerItemCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserInventoryItemCustomData(ServerModels::UpdateUserInventoryItemDataRequest& request, UpdateUserInventoryItemCustomDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void NotifyMatchmakerPlayerLeft(ServerModels::NotifyMatchmakerPlayerLeftRequest& request, NotifyMatchmakerPlayerLeftCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RedeemMatchmakerTicket(ServerModels::RedeemMatchmakerTicketRequest& request, RedeemMatchmakerTicketCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -210,6 +214,8 @@ namespace PlayFab
         static void OnRevokeInventoryItemResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUnlockContainerInstanceResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUnlockContainerItemResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserInventoryItemCustomDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnNotifyMatchmakerPlayerLeftResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRedeemMatchmakerTicketResult(int httpStatus, HttpRequest* request, void* userData);
