@@ -4235,13 +4235,22 @@ void GetPlayFabIDsFromSteamIDsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
+    if (!SteamIDs.empty()) {
     writer.String("SteamIDs");
     writer.StartArray();
     for (std::list<Uint64>::iterator iter = SteamIDs.begin(); iter != SteamIDs.end(); iter++) {
         writer.Uint64(*iter);
     }
     writer.EndArray();
-    
+     }
+    if (!SteamStringIDs.empty()) {
+    writer.String("SteamStringIDs");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = SteamStringIDs.begin(); iter != SteamStringIDs.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+     }
 
     writer.EndObject();
 }
@@ -4253,6 +4262,13 @@ bool GetPlayFabIDsFromSteamIDsRequest::readFromValue(const rapidjson::Value& obj
         const rapidjson::Value& memberList = SteamIDs_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             SteamIDs.push_back(memberList[i].GetUint64());
+        }
+    }
+    const Value::ConstMemberIterator SteamStringIDs_member = obj.FindMember("SteamStringIDs");
+    if (SteamStringIDs_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = SteamStringIDs_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            SteamStringIDs.push_back(memberList[i].GetString());
         }
     }
 
@@ -4269,6 +4285,7 @@ void SteamPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("SteamId"); writer.Uint64(SteamId);
+    if (SteamStringId.length() > 0) { writer.String("SteamStringId"); writer.String(SteamStringId.c_str()); }
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
 
     writer.EndObject();
@@ -4278,6 +4295,8 @@ bool SteamPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator SteamId_member = obj.FindMember("SteamId");
     if (SteamId_member != obj.MemberEnd() && !SteamId_member->value.IsNull()) SteamId = SteamId_member->value.GetUint64();
+    const Value::ConstMemberIterator SteamStringId_member = obj.FindMember("SteamStringId");
+    if (SteamStringId_member != obj.MemberEnd() && !SteamStringId_member->value.IsNull()) SteamStringId = SteamStringId_member->value.GetString();
     const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
     if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
 

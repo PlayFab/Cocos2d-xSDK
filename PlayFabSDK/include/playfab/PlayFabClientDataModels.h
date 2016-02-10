@@ -3583,15 +3583,18 @@ namespace PlayFab
         struct GetPlayFabIDsFromSteamIDsRequest : public PlayFabBaseModel
         {
             std::list<Uint64> SteamIDs;
+            std::list<std::string> SteamStringIDs;
 
             GetPlayFabIDsFromSteamIDsRequest() :
                 PlayFabBaseModel(),
-                SteamIDs()
+                SteamIDs(),
+                SteamStringIDs()
             {}
 
             GetPlayFabIDsFromSteamIDsRequest(const GetPlayFabIDsFromSteamIDsRequest& src) :
                 PlayFabBaseModel(),
-                SteamIDs(src.SteamIDs)
+                SteamIDs(src.SteamIDs),
+                SteamStringIDs(src.SteamStringIDs)
             {}
 
             GetPlayFabIDsFromSteamIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromSteamIDsRequest()
@@ -3608,17 +3611,20 @@ namespace PlayFab
         struct SteamPlayFabIdPair : public PlayFabBaseModel
         {
             Uint64 SteamId;
+            std::string SteamStringId;
             std::string PlayFabId;
 
             SteamPlayFabIdPair() :
                 PlayFabBaseModel(),
                 SteamId(0),
+                SteamStringId(),
                 PlayFabId()
             {}
 
             SteamPlayFabIdPair(const SteamPlayFabIdPair& src) :
                 PlayFabBaseModel(),
                 SteamId(src.SteamId),
+                SteamStringId(src.SteamStringId),
                 PlayFabId(src.PlayFabId)
             {}
 
