@@ -2142,6 +2142,7 @@ void PlayFab::ClientModels::writeUserOriginationEnumJSON(UserOrigination enumVal
     case UserOriginationGameCenter: writer.String("GameCenter"); break;
     case UserOriginationCustomId: writer.String("CustomId"); break;
     case UserOriginationXboxLive: writer.String("XboxLive"); break;
+    case UserOriginationParse: writer.String("Parse"); break;
 
     }
 }
@@ -2167,6 +2168,7 @@ UserOrigination PlayFab::ClientModels::readUserOriginationFromValue(const rapidj
         _UserOriginationMap["GameCenter"] = UserOriginationGameCenter;
         _UserOriginationMap["CustomId"] = UserOriginationCustomId;
         _UserOriginationMap["XboxLive"] = UserOriginationXboxLive;
+        _UserOriginationMap["Parse"] = UserOriginationParse;
 
     }
 

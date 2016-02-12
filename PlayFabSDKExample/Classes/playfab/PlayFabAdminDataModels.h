@@ -2583,7 +2583,8 @@ namespace PlayFab
             UserOriginationPSN,
             UserOriginationGameCenter,
             UserOriginationCustomId,
-            UserOriginationXboxLive
+            UserOriginationXboxLive,
+            UserOriginationParse
         };
 
         void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
