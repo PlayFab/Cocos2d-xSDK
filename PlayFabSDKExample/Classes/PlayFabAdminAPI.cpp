@@ -210,6 +210,54 @@ void PlayFabAdminAPI::OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpReq
     delete request;
 }
 
+void PlayFabAdminAPI::CreatePlayerStatisticDefinition(
+    CreatePlayerStatisticDefinitionRequest& request,
+    CreatePlayerStatisticDefinitionCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/CreatePlayerStatisticDefinition"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnCreatePlayerStatisticDefinitionResult, nullptr);
+}
+
+void PlayFabAdminAPI::OnCreatePlayerStatisticDefinitionResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    CreatePlayerStatisticDefinitionResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            CreatePlayerStatisticDefinitionCallback successCallback = reinterpret_cast<CreatePlayerStatisticDefinitionCallback>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabAdminAPI::DeleteUsers(
     DeleteUsersRequest& request,
     DeleteUsersCallback callback,
@@ -292,6 +340,102 @@ void PlayFabAdminAPI::OnGetDataReportResult(int httpStatus, HttpRequest* request
         if (request->GetResultCallback() != nullptr)
         {
             GetDataReportCallback successCallback = reinterpret_cast<GetDataReportCallback>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabAdminAPI::GetPlayerStatisticDefinitions(
+    
+    GetPlayerStatisticDefinitionsCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/GetPlayerStatisticDefinitions"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody("{}");
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetPlayerStatisticDefinitionsResult, nullptr);
+}
+
+void PlayFabAdminAPI::OnGetPlayerStatisticDefinitionsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPlayerStatisticDefinitionsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            GetPlayerStatisticDefinitionsCallback successCallback = reinterpret_cast<GetPlayerStatisticDefinitionsCallback>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabAdminAPI::GetPlayerStatisticVersions(
+    GetPlayerStatisticVersionsRequest& request,
+    GetPlayerStatisticVersionsCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/GetPlayerStatisticVersions"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetPlayerStatisticVersionsResult, nullptr);
+}
+
+void PlayFabAdminAPI::OnGetPlayerStatisticVersionsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPlayerStatisticVersionsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            GetPlayerStatisticVersionsCallback successCallback = reinterpret_cast<GetPlayerStatisticVersionsCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -594,6 +738,54 @@ void PlayFabAdminAPI::OnGetUserReadOnlyDataResult(int httpStatus, HttpRequest* r
     delete request;
 }
 
+void PlayFabAdminAPI::IncrementPlayerStatisticVersion(
+    IncrementPlayerStatisticVersionRequest& request,
+    IncrementPlayerStatisticVersionCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/IncrementPlayerStatisticVersion"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnIncrementPlayerStatisticVersionResult, nullptr);
+}
+
+void PlayFabAdminAPI::OnIncrementPlayerStatisticVersionResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    IncrementPlayerStatisticVersionResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            IncrementPlayerStatisticVersionCallback successCallback = reinterpret_cast<IncrementPlayerStatisticVersionCallback>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabAdminAPI::ResetUserStatistics(
     ResetUserStatisticsRequest& request,
     ResetUserStatisticsCallback callback,
@@ -628,6 +820,54 @@ void PlayFabAdminAPI::OnResetUserStatisticsResult(int httpStatus, HttpRequest* r
         if (request->GetResultCallback() != nullptr)
         {
             ResetUserStatisticsCallback successCallback = reinterpret_cast<ResetUserStatisticsCallback>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabAdminAPI::UpdatePlayerStatisticDefinition(
+    UpdatePlayerStatisticDefinitionRequest& request,
+    UpdatePlayerStatisticDefinitionCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/UpdatePlayerStatisticDefinition"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnUpdatePlayerStatisticDefinitionResult, nullptr);
+}
+
+void PlayFabAdminAPI::OnUpdatePlayerStatisticDefinitionResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    UpdatePlayerStatisticDefinitionResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            UpdatePlayerStatisticDefinitionCallback successCallback = reinterpret_cast<UpdatePlayerStatisticDefinitionCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

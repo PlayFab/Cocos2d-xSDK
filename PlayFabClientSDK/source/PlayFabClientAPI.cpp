@@ -2519,6 +2519,54 @@ void PlayFabClientAPI::OnGetLeaderboardAroundPlayerResult(int httpStatus, HttpRe
     delete request;
 }
 
+void PlayFabClientAPI::GetPlayerStatistics(
+    GetPlayerStatisticsRequest& request,
+    GetPlayerStatisticsCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetPlayerStatistics"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnGetPlayerStatisticsResult, nullptr);
+}
+
+void PlayFabClientAPI::OnGetPlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPlayerStatisticsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            GetPlayerStatisticsCallback successCallback = reinterpret_cast<GetPlayerStatisticsCallback>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::GetUserData(
     GetUserDataRequest& request,
     GetUserDataCallback callback,
@@ -2745,6 +2793,54 @@ void PlayFabClientAPI::OnGetUserStatisticsResult(int httpStatus, HttpRequest* re
         if (request->GetResultCallback() != nullptr)
         {
             GetUserStatisticsCallback successCallback = reinterpret_cast<GetUserStatisticsCallback>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::UpdatePlayerStatistics(
+    UpdatePlayerStatisticsRequest& request,
+    UpdatePlayerStatisticsCallback callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/UpdatePlayerStatistics"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnUpdatePlayerStatisticsResult, nullptr);
+}
+
+void PlayFabClientAPI::OnUpdatePlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    UpdatePlayerStatisticsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            UpdatePlayerStatisticsCallback successCallback = reinterpret_cast<UpdatePlayerStatisticsCallback>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
