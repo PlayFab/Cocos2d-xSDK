@@ -4628,7 +4628,7 @@ void UpdatePlayerStatisticDefinitionRequest::writeJSON(PFStringJsonWriter& write
 {
     writer.StartObject();
 
-    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
+    writer.String("StatisticName"); writer.String(StatisticName.c_str());
     if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
 
     writer.EndObject();

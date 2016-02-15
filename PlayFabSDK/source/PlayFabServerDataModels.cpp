@@ -4822,7 +4822,7 @@ void StatisticUpdate::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
+    writer.String("StatisticName"); writer.String(StatisticName.c_str());
     if (Version.notNull()) { writer.String("Version"); writer.Uint(Version); }
     writer.String("Value"); writer.Int(Value);
 
