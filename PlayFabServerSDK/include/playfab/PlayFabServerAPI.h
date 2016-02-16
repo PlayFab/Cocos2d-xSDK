@@ -14,6 +14,7 @@ namespace PlayFab
     public:
         typedef void(*AuthenticateSessionTicketCallback)(ServerModels::AuthenticateSessionTicketResult& result, void* userData);
         typedef void(*GetPlayFabIDsFromFacebookIDsCallback)(ServerModels::GetPlayFabIDsFromFacebookIDsResult& result, void* userData);
+        typedef void(*GetPlayFabIDsFromSteamIDsCallback)(ServerModels::GetPlayFabIDsFromSteamIDsResult& result, void* userData);
         typedef void(*GetUserAccountInfoCallback)(ServerModels::GetUserAccountInfoResult& result, void* userData);
         typedef void(*SendPushNotificationCallback)(ServerModels::SendPushNotificationResult& result, void* userData);
         typedef void(*DeleteUsersCallback)(ServerModels::DeleteUsersResult& result, void* userData);
@@ -92,6 +93,7 @@ namespace PlayFab
         // ------------ Generated API calls
         static void AuthenticateSessionTicket(ServerModels::AuthenticateSessionTicketRequest& request, AuthenticateSessionTicketCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromFacebookIDs(ServerModels::GetPlayFabIDsFromFacebookIDsRequest& request, GetPlayFabIDsFromFacebookIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayFabIDsFromSteamIDs(ServerModels::GetPlayFabIDsFromSteamIDsRequest& request, GetPlayFabIDsFromSteamIDsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserAccountInfo(ServerModels::GetUserAccountInfoRequest& request, GetUserAccountInfoCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendPushNotification(ServerModels::SendPushNotificationRequest& request, SendPushNotificationCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteUsers(ServerModels::DeleteUsersRequest& request, DeleteUsersCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -172,6 +174,7 @@ namespace PlayFab
         // ------------ Generated result handlers
         static void OnAuthenticateSessionTicketResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData);

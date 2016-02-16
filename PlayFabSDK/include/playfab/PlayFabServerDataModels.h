@@ -2477,6 +2477,90 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayFabIDsFromSteamIDsRequest : public PlayFabBaseModel
+        {
+            std::list<Uint64> SteamIDs;
+            std::list<std::string> SteamStringIDs;
+
+            GetPlayFabIDsFromSteamIDsRequest() :
+                PlayFabBaseModel(),
+                SteamIDs(),
+                SteamStringIDs()
+            {}
+
+            GetPlayFabIDsFromSteamIDsRequest(const GetPlayFabIDsFromSteamIDsRequest& src) :
+                PlayFabBaseModel(),
+                SteamIDs(src.SteamIDs),
+                SteamStringIDs(src.SteamStringIDs)
+            {}
+
+            GetPlayFabIDsFromSteamIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromSteamIDsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromSteamIDsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SteamPlayFabIdPair : public PlayFabBaseModel
+        {
+            Uint64 SteamId;
+            std::string SteamStringId;
+            std::string PlayFabId;
+
+            SteamPlayFabIdPair() :
+                PlayFabBaseModel(),
+                SteamId(0),
+                SteamStringId(),
+                PlayFabId()
+            {}
+
+            SteamPlayFabIdPair(const SteamPlayFabIdPair& src) :
+                PlayFabBaseModel(),
+                SteamId(src.SteamId),
+                SteamStringId(src.SteamStringId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            SteamPlayFabIdPair(const rapidjson::Value& obj) : SteamPlayFabIdPair()
+            {
+                readFromValue(obj);
+            }
+
+            ~SteamPlayFabIdPair();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromSteamIDsResult : public PlayFabBaseModel
+        {
+            std::list<SteamPlayFabIdPair> Data;
+
+            GetPlayFabIDsFromSteamIDsResult() :
+                PlayFabBaseModel(),
+                Data()
+            {}
+
+            GetPlayFabIDsFromSteamIDsResult(const GetPlayFabIDsFromSteamIDsResult& src) :
+                PlayFabBaseModel(),
+                Data(src.Data)
+            {}
+
+            GetPlayFabIDsFromSteamIDsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromSteamIDsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromSteamIDsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetPublisherDataRequest : public PlayFabBaseModel
         {
             std::list<std::string> Keys;
