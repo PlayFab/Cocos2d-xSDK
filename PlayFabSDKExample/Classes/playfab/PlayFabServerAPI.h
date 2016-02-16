@@ -20,6 +20,7 @@ namespace PlayFab
         typedef void(*DeleteUsersCallback)(ServerModels::DeleteUsersResult& result, void* userData);
         typedef void(*GetLeaderboardCallback)(ServerModels::GetLeaderboardResult& result, void* userData);
         typedef void(*GetLeaderboardAroundUserCallback)(ServerModels::GetLeaderboardAroundUserResult& result, void* userData);
+        typedef void(*GetPlayerStatisticsCallback)(ServerModels::GetPlayerStatisticsResult& result, void* userData);
         typedef void(*GetUserDataCallback)(ServerModels::GetUserDataResult& result, void* userData);
         typedef void(*GetUserInternalDataCallback)(ServerModels::GetUserDataResult& result, void* userData);
         typedef void(*GetUserPublisherDataCallback)(ServerModels::GetUserDataResult& result, void* userData);
@@ -27,6 +28,7 @@ namespace PlayFab
         typedef void(*GetUserPublisherReadOnlyDataCallback)(ServerModels::GetUserDataResult& result, void* userData);
         typedef void(*GetUserReadOnlyDataCallback)(ServerModels::GetUserDataResult& result, void* userData);
         typedef void(*GetUserStatisticsCallback)(ServerModels::GetUserStatisticsResult& result, void* userData);
+        typedef void(*UpdatePlayerStatisticsCallback)(ServerModels::UpdatePlayerStatisticsResult& result, void* userData);
         typedef void(*UpdateUserDataCallback)(ServerModels::UpdateUserDataResult& result, void* userData);
         typedef void(*UpdateUserInternalDataCallback)(ServerModels::UpdateUserDataResult& result, void* userData);
         typedef void(*UpdateUserPublisherDataCallback)(ServerModels::UpdateUserDataResult& result, void* userData);
@@ -99,6 +101,7 @@ namespace PlayFab
         static void DeleteUsers(ServerModels::DeleteUsersRequest& request, DeleteUsersCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboard(ServerModels::GetLeaderboardRequest& request, GetLeaderboardCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboardAroundUser(ServerModels::GetLeaderboardAroundUserRequest& request, GetLeaderboardAroundUserCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayerStatistics(ServerModels::GetPlayerStatisticsRequest& request, GetPlayerStatisticsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserData(ServerModels::GetUserDataRequest& request, GetUserDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserInternalData(ServerModels::GetUserDataRequest& request, GetUserInternalDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserPublisherData(ServerModels::GetUserDataRequest& request, GetUserPublisherDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -106,6 +109,7 @@ namespace PlayFab
         static void GetUserPublisherReadOnlyData(ServerModels::GetUserDataRequest& request, GetUserPublisherReadOnlyDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserReadOnlyData(ServerModels::GetUserDataRequest& request, GetUserReadOnlyDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserStatistics(ServerModels::GetUserStatisticsRequest& request, GetUserStatisticsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UpdatePlayerStatistics(ServerModels::UpdatePlayerStatisticsRequest& request, UpdatePlayerStatisticsCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserData(ServerModels::UpdateUserDataRequest& request, UpdateUserDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserInternalData(ServerModels::UpdateUserInternalDataRequest& request, UpdateUserInternalDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserPublisherData(ServerModels::UpdateUserDataRequest& request, UpdateUserPublisherDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -180,6 +184,7 @@ namespace PlayFab
         static void OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardAroundUserResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
@@ -187,6 +192,7 @@ namespace PlayFab
         static void OnGetUserPublisherReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUpdatePlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
