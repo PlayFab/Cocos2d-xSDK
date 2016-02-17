@@ -74,6 +74,8 @@ namespace PlayFab
         typedef void(*RemoveSharedGroupMembersCallback)(ServerModels::RemoveSharedGroupMembersResult& result, void* userData);
         typedef void(*SetPublisherDataCallback)(ServerModels::SetPublisherDataResult& result, void* userData);
         typedef void(*UpdateSharedGroupDataCallback)(ServerModels::UpdateSharedGroupDataResult& result, void* userData);
+        typedef void(*GetCloudScriptUrlCallback)(ServerModels::GetCloudScriptUrlResult& result, void* userData);
+        typedef void(*RunServerCloudScriptCallback)(ServerModels::RunCloudScriptResult& result, void* userData);
         typedef void(*GetContentDownloadUrlCallback)(ServerModels::GetContentDownloadUrlResult& result, void* userData);
         typedef void(*DeleteCharacterFromUserCallback)(ServerModels::DeleteCharacterFromUserResult& result, void* userData);
         typedef void(*GetAllUsersCharactersCallback)(ServerModels::ListUsersCharactersResult& result, void* userData);
@@ -155,6 +157,8 @@ namespace PlayFab
         static void RemoveSharedGroupMembers(ServerModels::RemoveSharedGroupMembersRequest& request, RemoveSharedGroupMembersCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetPublisherData(ServerModels::SetPublisherDataRequest& request, SetPublisherDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateSharedGroupData(ServerModels::UpdateSharedGroupDataRequest& request, UpdateSharedGroupDataCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetCloudScriptUrl(ServerModels::GetCloudScriptUrlRequest& request, GetCloudScriptUrlCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RunServerCloudScript(ServerModels::RunServerCloudScriptRequest& request, RunServerCloudScriptCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetContentDownloadUrl(ServerModels::GetContentDownloadUrlRequest& request, GetContentDownloadUrlCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteCharacterFromUser(ServerModels::DeleteCharacterFromUserRequest& request, DeleteCharacterFromUserCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAllUsersCharacters(ServerModels::ListUsersCharactersRequest& request, GetAllUsersCharactersCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -238,6 +242,8 @@ namespace PlayFab
         static void OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetCloudScriptUrlResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRunServerCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetContentDownloadUrlResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteCharacterFromUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAllUsersCharactersResult(int httpStatus, HttpRequest* request, void* userData);
