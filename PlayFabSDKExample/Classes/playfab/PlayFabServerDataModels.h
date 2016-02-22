@@ -1924,6 +1924,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetCloudScriptUrlRequest : public PlayFabBaseModel
+        {
+            OptionalInt32 Version;
+            OptionalBool Testing;
+
+            GetCloudScriptUrlRequest() :
+                PlayFabBaseModel(),
+                Version(),
+                Testing()
+            {}
+
+            GetCloudScriptUrlRequest(const GetCloudScriptUrlRequest& src) :
+                PlayFabBaseModel(),
+                Version(src.Version),
+                Testing(src.Testing)
+            {}
+
+            GetCloudScriptUrlRequest(const rapidjson::Value& obj) : GetCloudScriptUrlRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetCloudScriptUrlRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetCloudScriptUrlResult : public PlayFabBaseModel
+        {
+            std::string Url;
+
+            GetCloudScriptUrlResult() :
+                PlayFabBaseModel(),
+                Url()
+            {}
+
+            GetCloudScriptUrlResult(const GetCloudScriptUrlResult& src) :
+                PlayFabBaseModel(),
+                Url(src.Url)
+            {}
+
+            GetCloudScriptUrlResult(const rapidjson::Value& obj) : GetCloudScriptUrlResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetCloudScriptUrlResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetContentDownloadUrlRequest : public PlayFabBaseModel
         {
             std::string Key;
@@ -2472,6 +2525,90 @@ namespace PlayFab
             }
 
             ~GetPlayFabIDsFromFacebookIDsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromSteamIDsRequest : public PlayFabBaseModel
+        {
+            std::list<Uint64> SteamIDs;
+            std::list<std::string> SteamStringIDs;
+
+            GetPlayFabIDsFromSteamIDsRequest() :
+                PlayFabBaseModel(),
+                SteamIDs(),
+                SteamStringIDs()
+            {}
+
+            GetPlayFabIDsFromSteamIDsRequest(const GetPlayFabIDsFromSteamIDsRequest& src) :
+                PlayFabBaseModel(),
+                SteamIDs(src.SteamIDs),
+                SteamStringIDs(src.SteamStringIDs)
+            {}
+
+            GetPlayFabIDsFromSteamIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromSteamIDsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromSteamIDsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SteamPlayFabIdPair : public PlayFabBaseModel
+        {
+            Uint64 SteamId;
+            std::string SteamStringId;
+            std::string PlayFabId;
+
+            SteamPlayFabIdPair() :
+                PlayFabBaseModel(),
+                SteamId(0),
+                SteamStringId(),
+                PlayFabId()
+            {}
+
+            SteamPlayFabIdPair(const SteamPlayFabIdPair& src) :
+                PlayFabBaseModel(),
+                SteamId(src.SteamId),
+                SteamStringId(src.SteamStringId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            SteamPlayFabIdPair(const rapidjson::Value& obj) : SteamPlayFabIdPair()
+            {
+                readFromValue(obj);
+            }
+
+            ~SteamPlayFabIdPair();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromSteamIDsResult : public PlayFabBaseModel
+        {
+            std::list<SteamPlayFabIdPair> Data;
+
+            GetPlayFabIDsFromSteamIDsResult() :
+                PlayFabBaseModel(),
+                Data()
+            {}
+
+            GetPlayFabIDsFromSteamIDsResult(const GetPlayFabIDsFromSteamIDsResult& src) :
+                PlayFabBaseModel(),
+                Data(src.Data)
+            {}
+
+            GetPlayFabIDsFromSteamIDsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromSteamIDsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromSteamIDsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -4084,6 +4221,83 @@ namespace PlayFab
             }
 
             ~RevokeInventoryResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RunCloudScriptResult : public PlayFabBaseModel
+        {
+            std::string ActionId;
+            Int32 Version;
+            Int32 Revision;
+            MultitypeVar Results;
+            std::string ResultsEncoded;
+            std::string ActionLog;
+            double ExecutionTime;
+
+            RunCloudScriptResult() :
+                PlayFabBaseModel(),
+                ActionId(),
+                Version(0),
+                Revision(0),
+                Results(),
+                ResultsEncoded(),
+                ActionLog(),
+                ExecutionTime(0)
+            {}
+
+            RunCloudScriptResult(const RunCloudScriptResult& src) :
+                PlayFabBaseModel(),
+                ActionId(src.ActionId),
+                Version(src.Version),
+                Revision(src.Revision),
+                Results(src.Results),
+                ResultsEncoded(src.ResultsEncoded),
+                ActionLog(src.ActionLog),
+                ExecutionTime(src.ExecutionTime)
+            {}
+
+            RunCloudScriptResult(const rapidjson::Value& obj) : RunCloudScriptResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RunCloudScriptResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RunServerCloudScriptRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string ActionId;
+            MultitypeVar Params;
+            std::string ParamsEncoded;
+
+            RunServerCloudScriptRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                ActionId(),
+                Params(),
+                ParamsEncoded()
+            {}
+
+            RunServerCloudScriptRequest(const RunServerCloudScriptRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                ActionId(src.ActionId),
+                Params(src.Params),
+                ParamsEncoded(src.ParamsEncoded)
+            {}
+
+            RunServerCloudScriptRequest(const rapidjson::Value& obj) : RunServerCloudScriptRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RunServerCloudScriptRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

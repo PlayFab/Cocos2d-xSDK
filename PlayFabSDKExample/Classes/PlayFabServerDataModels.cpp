@@ -2305,6 +2305,53 @@ bool GetCharacterStatisticsResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetCloudScriptUrlRequest::~GetCloudScriptUrlRequest()
+{
+
+}
+
+void GetCloudScriptUrlRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
+    if (Testing.notNull()) { writer.String("Testing"); writer.Bool(Testing); }
+
+    writer.EndObject();
+}
+
+bool GetCloudScriptUrlRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator Testing_member = obj.FindMember("Testing");
+    if (Testing_member != obj.MemberEnd() && !Testing_member->value.IsNull()) Testing = Testing_member->value.GetBool();
+
+    return true;
+}
+
+GetCloudScriptUrlResult::~GetCloudScriptUrlResult()
+{
+
+}
+
+void GetCloudScriptUrlResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Url.length() > 0) { writer.String("Url"); writer.String(Url.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetCloudScriptUrlResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Url_member = obj.FindMember("Url");
+    if (Url_member != obj.MemberEnd() && !Url_member->value.IsNull()) Url = Url_member->value.GetString();
+
+    return true;
+}
+
 GetContentDownloadUrlRequest::~GetContentDownloadUrlRequest()
 {
 
@@ -2902,6 +2949,117 @@ bool GetPlayFabIDsFromFacebookIDsResult::readFromValue(const rapidjson::Value& o
         const rapidjson::Value& memberList = Data_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Data.push_back(FacebookPlayFabIdPair(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetPlayFabIDsFromSteamIDsRequest::~GetPlayFabIDsFromSteamIDsRequest()
+{
+
+}
+
+void GetPlayFabIDsFromSteamIDsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!SteamIDs.empty()) {
+    writer.String("SteamIDs");
+    writer.StartArray();
+    for (std::list<Uint64>::iterator iter = SteamIDs.begin(); iter != SteamIDs.end(); iter++) {
+        writer.Uint64(*iter);
+    }
+    writer.EndArray();
+     }
+    if (!SteamStringIDs.empty()) {
+    writer.String("SteamStringIDs");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = SteamStringIDs.begin(); iter != SteamStringIDs.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromSteamIDsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator SteamIDs_member = obj.FindMember("SteamIDs");
+    if (SteamIDs_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = SteamIDs_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            SteamIDs.push_back(memberList[i].GetUint64());
+        }
+    }
+    const Value::ConstMemberIterator SteamStringIDs_member = obj.FindMember("SteamStringIDs");
+    if (SteamStringIDs_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = SteamStringIDs_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            SteamStringIDs.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
+SteamPlayFabIdPair::~SteamPlayFabIdPair()
+{
+
+}
+
+void SteamPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("SteamId"); writer.Uint64(SteamId);
+    if (SteamStringId.length() > 0) { writer.String("SteamStringId"); writer.String(SteamStringId.c_str()); }
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+
+    writer.EndObject();
+}
+
+bool SteamPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator SteamId_member = obj.FindMember("SteamId");
+    if (SteamId_member != obj.MemberEnd() && !SteamId_member->value.IsNull()) SteamId = SteamId_member->value.GetUint64();
+    const Value::ConstMemberIterator SteamStringId_member = obj.FindMember("SteamStringId");
+    if (SteamStringId_member != obj.MemberEnd() && !SteamStringId_member->value.IsNull()) SteamStringId = SteamStringId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
+GetPlayFabIDsFromSteamIDsResult::~GetPlayFabIDsFromSteamIDsResult()
+{
+
+}
+
+void GetPlayFabIDsFromSteamIDsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Data.empty()) {
+    writer.String("Data");
+    writer.StartArray();
+    for (std::list<SteamPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromSteamIDsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Data_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Data.push_back(SteamPlayFabIdPair(memberList[i]));
         }
     }
 
@@ -4674,6 +4832,77 @@ void RevokeInventoryResult::writeJSON(PFStringJsonWriter& writer)
 
 bool RevokeInventoryResult::readFromValue(const rapidjson::Value& obj)
 {
+
+    return true;
+}
+
+RunCloudScriptResult::~RunCloudScriptResult()
+{
+
+}
+
+void RunCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (ActionId.length() > 0) { writer.String("ActionId"); writer.String(ActionId.c_str()); }
+    writer.String("Version"); writer.Int(Version);
+    writer.String("Revision"); writer.Int(Revision);
+    if (Results.notNull()) { writer.String("Results"); Results.writeJSON(writer); }
+    if (ResultsEncoded.length() > 0) { writer.String("ResultsEncoded"); writer.String(ResultsEncoded.c_str()); }
+    if (ActionLog.length() > 0) { writer.String("ActionLog"); writer.String(ActionLog.c_str()); }
+    writer.String("ExecutionTime"); writer.Double(ExecutionTime);
+
+    writer.EndObject();
+}
+
+bool RunCloudScriptResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ActionId_member = obj.FindMember("ActionId");
+    if (ActionId_member != obj.MemberEnd() && !ActionId_member->value.IsNull()) ActionId = ActionId_member->value.GetString();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator Revision_member = obj.FindMember("Revision");
+    if (Revision_member != obj.MemberEnd() && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
+    const Value::ConstMemberIterator Results_member = obj.FindMember("Results");
+    if (Results_member != obj.MemberEnd() && !Results_member->value.IsNull()) Results = MultitypeVar(Results_member->value);
+    const Value::ConstMemberIterator ResultsEncoded_member = obj.FindMember("ResultsEncoded");
+    if (ResultsEncoded_member != obj.MemberEnd() && !ResultsEncoded_member->value.IsNull()) ResultsEncoded = ResultsEncoded_member->value.GetString();
+    const Value::ConstMemberIterator ActionLog_member = obj.FindMember("ActionLog");
+    if (ActionLog_member != obj.MemberEnd() && !ActionLog_member->value.IsNull()) ActionLog = ActionLog_member->value.GetString();
+    const Value::ConstMemberIterator ExecutionTime_member = obj.FindMember("ExecutionTime");
+    if (ExecutionTime_member != obj.MemberEnd() && !ExecutionTime_member->value.IsNull()) ExecutionTime = ExecutionTime_member->value.GetDouble();
+
+    return true;
+}
+
+RunServerCloudScriptRequest::~RunServerCloudScriptRequest()
+{
+
+}
+
+void RunServerCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    writer.String("ActionId"); writer.String(ActionId.c_str());
+    if (Params.notNull()) { writer.String("Params"); Params.writeJSON(writer); }
+    if (ParamsEncoded.length() > 0) { writer.String("ParamsEncoded"); writer.String(ParamsEncoded.c_str()); }
+
+    writer.EndObject();
+}
+
+bool RunServerCloudScriptRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator ActionId_member = obj.FindMember("ActionId");
+    if (ActionId_member != obj.MemberEnd() && !ActionId_member->value.IsNull()) ActionId = ActionId_member->value.GetString();
+    const Value::ConstMemberIterator Params_member = obj.FindMember("Params");
+    if (Params_member != obj.MemberEnd() && !Params_member->value.IsNull()) Params = MultitypeVar(Params_member->value);
+    const Value::ConstMemberIterator ParamsEncoded_member = obj.FindMember("ParamsEncoded");
+    if (ParamsEncoded_member != obj.MemberEnd() && !ParamsEncoded_member->value.IsNull()) ParamsEncoded = ParamsEncoded_member->value.GetString();
 
     return true;
 }
