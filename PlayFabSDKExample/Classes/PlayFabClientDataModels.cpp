@@ -1149,65 +1149,6 @@ bool ConsumeItemResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-ConsumePSNEntitlementsRequest::~ConsumePSNEntitlementsRequest()
-{
-
-}
-
-void ConsumePSNEntitlementsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
-    writer.String("ServiceLabel"); writer.Int(ServiceLabel);
-
-    writer.EndObject();
-}
-
-bool ConsumePSNEntitlementsRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::ConstMemberIterator ServiceLabel_member = obj.FindMember("ServiceLabel");
-    if (ServiceLabel_member != obj.MemberEnd() && !ServiceLabel_member->value.IsNull()) ServiceLabel = ServiceLabel_member->value.GetInt();
-
-    return true;
-}
-
-ConsumePSNEntitlementsResult::~ConsumePSNEntitlementsResult()
-{
-
-}
-
-void ConsumePSNEntitlementsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!ItemsGranted.empty()) {
-    writer.String("ItemsGranted");
-    writer.StartArray();
-    for (std::list<ItemInstance>::iterator iter = ItemsGranted.begin(); iter != ItemsGranted.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool ConsumePSNEntitlementsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator ItemsGranted_member = obj.FindMember("ItemsGranted");
-    if (ItemsGranted_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = ItemsGranted_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            ItemsGranted.push_back(ItemInstance(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
 CreateSharedGroupRequest::~CreateSharedGroupRequest()
 {
 
@@ -4133,101 +4074,6 @@ bool GetPlayFabIDsFromKongregateIDsResult::readFromValue(const rapidjson::Value&
     return true;
 }
 
-GetPlayFabIDsFromPSNAccountIDsRequest::~GetPlayFabIDsFromPSNAccountIDsRequest()
-{
-
-}
-
-void GetPlayFabIDsFromPSNAccountIDsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("PSNAccountIDs");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = PSNAccountIDs.begin(); iter != PSNAccountIDs.end(); iter++) {
-        writer.String(iter->c_str());
-    }
-    writer.EndArray();
-    
-    if (IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
-
-    writer.EndObject();
-}
-
-bool GetPlayFabIDsFromPSNAccountIDsRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator PSNAccountIDs_member = obj.FindMember("PSNAccountIDs");
-    if (PSNAccountIDs_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = PSNAccountIDs_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            PSNAccountIDs.push_back(memberList[i].GetString());
-        }
-    }
-    const Value::ConstMemberIterator IssuerId_member = obj.FindMember("IssuerId");
-    if (IssuerId_member != obj.MemberEnd() && !IssuerId_member->value.IsNull()) IssuerId = IssuerId_member->value.GetInt();
-
-    return true;
-}
-
-PSNAccountPlayFabIdPair::~PSNAccountPlayFabIdPair()
-{
-
-}
-
-void PSNAccountPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (PSNAccountId.length() > 0) { writer.String("PSNAccountId"); writer.String(PSNAccountId.c_str()); }
-    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
-
-    writer.EndObject();
-}
-
-bool PSNAccountPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator PSNAccountId_member = obj.FindMember("PSNAccountId");
-    if (PSNAccountId_member != obj.MemberEnd() && !PSNAccountId_member->value.IsNull()) PSNAccountId = PSNAccountId_member->value.GetString();
-    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-
-    return true;
-}
-
-GetPlayFabIDsFromPSNAccountIDsResult::~GetPlayFabIDsFromPSNAccountIDsResult()
-{
-
-}
-
-void GetPlayFabIDsFromPSNAccountIDsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!Data.empty()) {
-    writer.String("Data");
-    writer.StartArray();
-    for (std::list<PSNAccountPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool GetPlayFabIDsFromPSNAccountIDsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
-    if (Data_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Data_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Data.push_back(PSNAccountPlayFabIdPair(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
 GetPlayFabIDsFromSteamIDsRequest::~GetPlayFabIDsFromSteamIDsRequest()
 {
 
@@ -5698,53 +5544,6 @@ bool LinkKongregateAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-LinkPSNAccountRequest::~LinkPSNAccountRequest()
-{
-
-}
-
-void LinkPSNAccountRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("AuthCode"); writer.String(AuthCode.c_str());
-    writer.String("RedirectUri"); writer.String(RedirectUri.c_str());
-    if (IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
-
-    writer.EndObject();
-}
-
-bool LinkPSNAccountRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator AuthCode_member = obj.FindMember("AuthCode");
-    if (AuthCode_member != obj.MemberEnd() && !AuthCode_member->value.IsNull()) AuthCode = AuthCode_member->value.GetString();
-    const Value::ConstMemberIterator RedirectUri_member = obj.FindMember("RedirectUri");
-    if (RedirectUri_member != obj.MemberEnd() && !RedirectUri_member->value.IsNull()) RedirectUri = RedirectUri_member->value.GetString();
-    const Value::ConstMemberIterator IssuerId_member = obj.FindMember("IssuerId");
-    if (IssuerId_member != obj.MemberEnd() && !IssuerId_member->value.IsNull()) IssuerId = IssuerId_member->value.GetInt();
-
-    return true;
-}
-
-LinkPSNAccountResult::~LinkPSNAccountResult()
-{
-
-}
-
-void LinkPSNAccountResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool LinkPSNAccountResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
 LinkSteamAccountRequest::~LinkSteamAccountRequest()
 {
 
@@ -5781,47 +5580,6 @@ void LinkSteamAccountResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool LinkSteamAccountResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-LinkXboxAccountRequest::~LinkXboxAccountRequest()
-{
-
-}
-
-void LinkXboxAccountRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("XboxToken"); writer.String(XboxToken.c_str());
-
-    writer.EndObject();
-}
-
-bool LinkXboxAccountRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator XboxToken_member = obj.FindMember("XboxToken");
-    if (XboxToken_member != obj.MemberEnd() && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
-
-    return true;
-}
-
-LinkXboxAccountResult::~LinkXboxAccountResult()
-{
-
-}
-
-void LinkXboxAccountResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool LinkXboxAccountResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
@@ -6271,40 +6029,6 @@ bool LoginWithPlayFabRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-LoginWithPSNRequest::~LoginWithPSNRequest()
-{
-
-}
-
-void LoginWithPSNRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("TitleId"); writer.String(TitleId.c_str());
-    writer.String("AuthCode"); writer.String(AuthCode.c_str());
-    writer.String("RedirectUri"); writer.String(RedirectUri.c_str());
-    if (IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
-    if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
-
-    writer.EndObject();
-}
-
-bool LoginWithPSNRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
-    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
-    const Value::ConstMemberIterator AuthCode_member = obj.FindMember("AuthCode");
-    if (AuthCode_member != obj.MemberEnd() && !AuthCode_member->value.IsNull()) AuthCode = AuthCode_member->value.GetString();
-    const Value::ConstMemberIterator RedirectUri_member = obj.FindMember("RedirectUri");
-    if (RedirectUri_member != obj.MemberEnd() && !RedirectUri_member->value.IsNull()) RedirectUri = RedirectUri_member->value.GetString();
-    const Value::ConstMemberIterator IssuerId_member = obj.FindMember("IssuerId");
-    if (IssuerId_member != obj.MemberEnd() && !IssuerId_member->value.IsNull()) IssuerId = IssuerId_member->value.GetInt();
-    const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
-    if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
-
-    return true;
-}
-
 LoginWithSteamRequest::~LoginWithSteamRequest()
 {
 
@@ -6327,34 +6051,6 @@ bool LoginWithSteamRequest::readFromValue(const rapidjson::Value& obj)
     if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
     const Value::ConstMemberIterator SteamTicket_member = obj.FindMember("SteamTicket");
     if (SteamTicket_member != obj.MemberEnd() && !SteamTicket_member->value.IsNull()) SteamTicket = SteamTicket_member->value.GetString();
-    const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
-    if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
-
-    return true;
-}
-
-LoginWithXboxRequest::~LoginWithXboxRequest()
-{
-
-}
-
-void LoginWithXboxRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("TitleId"); writer.String(TitleId.c_str());
-    writer.String("XboxToken"); writer.String(XboxToken.c_str());
-    if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
-
-    writer.EndObject();
-}
-
-bool LoginWithXboxRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
-    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
-    const Value::ConstMemberIterator XboxToken_member = obj.FindMember("XboxToken");
-    if (XboxToken_member != obj.MemberEnd() && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
     const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
     if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
 
@@ -6907,34 +6603,6 @@ bool RedeemCouponResult::readFromValue(const rapidjson::Value& obj)
             GrantedItems.push_back(ItemInstance(memberList[i]));
         }
     }
-
-    return true;
-}
-
-RefreshPSNAuthTokenRequest::~RefreshPSNAuthTokenRequest()
-{
-
-}
-
-void RefreshPSNAuthTokenRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("AuthCode"); writer.String(AuthCode.c_str());
-    writer.String("RedirectUri"); writer.String(RedirectUri.c_str());
-    if (IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
-
-    writer.EndObject();
-}
-
-bool RefreshPSNAuthTokenRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator AuthCode_member = obj.FindMember("AuthCode");
-    if (AuthCode_member != obj.MemberEnd() && !AuthCode_member->value.IsNull()) AuthCode = AuthCode_member->value.GetString();
-    const Value::ConstMemberIterator RedirectUri_member = obj.FindMember("RedirectUri");
-    if (RedirectUri_member != obj.MemberEnd() && !RedirectUri_member->value.IsNull()) RedirectUri = RedirectUri_member->value.GetString();
-    const Value::ConstMemberIterator IssuerId_member = obj.FindMember("IssuerId");
-    if (IssuerId_member != obj.MemberEnd() && !IssuerId_member->value.IsNull()) IssuerId = IssuerId_member->value.GetInt();
 
     return true;
 }
@@ -7922,44 +7590,6 @@ bool UnlinkKongregateAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-UnlinkPSNAccountRequest::~UnlinkPSNAccountRequest()
-{
-
-}
-
-void UnlinkPSNAccountRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool UnlinkPSNAccountRequest::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-UnlinkPSNAccountResult::~UnlinkPSNAccountResult()
-{
-
-}
-
-void UnlinkPSNAccountResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool UnlinkPSNAccountResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
 UnlinkSteamAccountRequest::~UnlinkSteamAccountRequest()
 {
 
@@ -7993,47 +7623,6 @@ void UnlinkSteamAccountResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool UnlinkSteamAccountResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-UnlinkXboxAccountRequest::~UnlinkXboxAccountRequest()
-{
-
-}
-
-void UnlinkXboxAccountRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("XboxToken"); writer.String(XboxToken.c_str());
-
-    writer.EndObject();
-}
-
-bool UnlinkXboxAccountRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator XboxToken_member = obj.FindMember("XboxToken");
-    if (XboxToken_member != obj.MemberEnd() && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
-
-    return true;
-}
-
-UnlinkXboxAccountResult::~UnlinkXboxAccountResult()
-{
-
-}
-
-void UnlinkXboxAccountResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool UnlinkXboxAccountResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
