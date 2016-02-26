@@ -4,7 +4,6 @@
 #include "playfab/IHttpRequester.h"
 #include "playfab/PlayFabError.h"
 #include "playfab/PlayFabMatchmakerDataModels.h"
-#include "playfab/PlayFabSettings.h"
 #include <string>
 
 namespace PlayFab
@@ -12,20 +11,16 @@ namespace PlayFab
     class PlayFabMatchmakerAPI
     {
     public:
-        typedef void(*AuthUserCallback)(MatchmakerModels::AuthUserResponse& result, void* userData);
-        typedef void(*PlayerJoinedCallback)(MatchmakerModels::PlayerJoinedResponse& result, void* userData);
-        typedef void(*PlayerLeftCallback)(MatchmakerModels::PlayerLeftResponse& result, void* userData);
-        typedef void(*StartGameCallback)(MatchmakerModels::StartGameResponse& result, void* userData);
-        typedef void(*UserInfoCallback)(MatchmakerModels::UserInfoResponse& result, void* userData);
+        template<typename ResType> using ProcessApiCallback = void(*)(ResType& result, void* userData);
 
         static size_t Update();
 
         // ------------ Generated API calls
-        static void AuthUser(MatchmakerModels::AuthUserRequest& request, AuthUserCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void PlayerJoined(MatchmakerModels::PlayerJoinedRequest& request, PlayerJoinedCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void PlayerLeft(MatchmakerModels::PlayerLeftRequest& request, PlayerLeftCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void StartGame(MatchmakerModels::StartGameRequest& request, StartGameCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UserInfo(MatchmakerModels::UserInfoRequest& request, UserInfoCallback callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void AuthUser(MatchmakerModels::AuthUserRequest& request, ProcessApiCallback<MatchmakerModels::AuthUserResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void PlayerJoined(MatchmakerModels::PlayerJoinedRequest& request, ProcessApiCallback<MatchmakerModels::PlayerJoinedResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void PlayerLeft(MatchmakerModels::PlayerLeftRequest& request, ProcessApiCallback<MatchmakerModels::PlayerLeftResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void StartGame(MatchmakerModels::StartGameRequest& request, ProcessApiCallback<MatchmakerModels::StartGameResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UserInfo(MatchmakerModels::UserInfoRequest& request, ProcessApiCallback<MatchmakerModels::UserInfoResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
