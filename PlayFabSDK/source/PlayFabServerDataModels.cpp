@@ -2653,31 +2653,6 @@ bool GetLeaderboardResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-StatisticNameVersion::~StatisticNameVersion()
-{
-
-}
-
-void StatisticNameVersion::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("StatisticName"); writer.String(StatisticName.c_str());
-    writer.String("Version"); writer.Uint(Version);
-
-    writer.EndObject();
-}
-
-bool StatisticNameVersion::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
-    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetUint();
-
-    return true;
-}
-
 GetPlayerStatisticsRequest::~GetPlayerStatisticsRequest()
 {
 
@@ -2696,14 +2671,6 @@ void GetPlayerStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
-    if (!StatisticNameVersions.empty()) {
-    writer.String("StatisticNameVersions");
-    writer.StartArray();
-    for (std::list<StatisticNameVersion>::iterator iter = StatisticNameVersions.begin(); iter != StatisticNameVersions.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
 
     writer.EndObject();
 }
@@ -2717,13 +2684,6 @@ bool GetPlayerStatisticsRequest::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = StatisticNames_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             StatisticNames.push_back(memberList[i].GetString());
-        }
-    }
-    const Value::ConstMemberIterator StatisticNameVersions_member = obj.FindMember("StatisticNameVersions");
-    if (StatisticNameVersions_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = StatisticNameVersions_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            StatisticNameVersions.push_back(StatisticNameVersion(memberList[i]));
         }
     }
 
@@ -2741,7 +2701,7 @@ void StatisticValue::writeJSON(PFStringJsonWriter& writer)
 
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
     writer.String("Value"); writer.Int(Value);
-    if (Version.length() > 0) { writer.String("Version"); writer.String(Version.c_str()); }
+    writer.String("Version"); writer.Uint(Version);
 
     writer.EndObject();
 }
@@ -2753,7 +2713,7 @@ bool StatisticValue::readFromValue(const rapidjson::Value& obj)
     const Value::ConstMemberIterator Value_member = obj.FindMember("Value");
     if (Value_member != obj.MemberEnd() && !Value_member->value.IsNull()) Value = Value_member->value.GetInt();
     const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
-    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetString();
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetUint();
 
     return true;
 }
@@ -2789,99 +2749,6 @@ bool GetPlayerStatisticsResult::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = Statistics_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Statistics.push_back(StatisticValue(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-GetPlayerStatisticVersionsRequest::~GetPlayerStatisticVersionsRequest()
-{
-
-}
-
-void GetPlayerStatisticVersionsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-
-    writer.EndObject();
-}
-
-bool GetPlayerStatisticVersionsRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-
-    return true;
-}
-
-PlayerStatisticVersion::~PlayerStatisticVersion()
-{
-
-}
-
-void PlayerStatisticVersion::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-    writer.String("Version"); writer.Uint(Version);
-    if (ScheduledActivationTime.notNull()) { writer.String("ScheduledActivationTime"); writeDatetime(ScheduledActivationTime, writer); }
-    writer.String("ActivationTime"); writeDatetime(ActivationTime, writer);
-    if (ScheduledDeactivationTime.notNull()) { writer.String("ScheduledDeactivationTime"); writeDatetime(ScheduledDeactivationTime, writer); }
-    if (DeactivationTime.notNull()) { writer.String("DeactivationTime"); writeDatetime(DeactivationTime, writer); }
-
-    writer.EndObject();
-}
-
-bool PlayerStatisticVersion::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
-    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetUint();
-    const Value::ConstMemberIterator ScheduledActivationTime_member = obj.FindMember("ScheduledActivationTime");
-    if (ScheduledActivationTime_member != obj.MemberEnd() && !ScheduledActivationTime_member->value.IsNull()) ScheduledActivationTime = readDatetime(ScheduledActivationTime_member->value);
-    const Value::ConstMemberIterator ActivationTime_member = obj.FindMember("ActivationTime");
-    if (ActivationTime_member != obj.MemberEnd() && !ActivationTime_member->value.IsNull()) ActivationTime = readDatetime(ActivationTime_member->value);
-    const Value::ConstMemberIterator ScheduledDeactivationTime_member = obj.FindMember("ScheduledDeactivationTime");
-    if (ScheduledDeactivationTime_member != obj.MemberEnd() && !ScheduledDeactivationTime_member->value.IsNull()) ScheduledDeactivationTime = readDatetime(ScheduledDeactivationTime_member->value);
-    const Value::ConstMemberIterator DeactivationTime_member = obj.FindMember("DeactivationTime");
-    if (DeactivationTime_member != obj.MemberEnd() && !DeactivationTime_member->value.IsNull()) DeactivationTime = readDatetime(DeactivationTime_member->value);
-
-    return true;
-}
-
-GetPlayerStatisticVersionsResult::~GetPlayerStatisticVersionsResult()
-{
-
-}
-
-void GetPlayerStatisticVersionsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!StatisticVersions.empty()) {
-    writer.String("StatisticVersions");
-    writer.StartArray();
-    for (std::list<PlayerStatisticVersion>::iterator iter = StatisticVersions.begin(); iter != StatisticVersions.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool GetPlayerStatisticVersionsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator StatisticVersions_member = obj.FindMember("StatisticVersions");
-    if (StatisticVersions_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = StatisticVersions_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            StatisticVersions.push_back(PlayerStatisticVersion(memberList[i]));
         }
     }
 
