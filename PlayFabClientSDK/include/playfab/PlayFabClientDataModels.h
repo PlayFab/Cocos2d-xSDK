@@ -952,59 +952,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct ConsumePSNEntitlementsRequest : public PlayFabBaseModel
-        {
-            std::string CatalogVersion;
-            Int32 ServiceLabel;
-
-            ConsumePSNEntitlementsRequest() :
-                PlayFabBaseModel(),
-                CatalogVersion(),
-                ServiceLabel(0)
-            {}
-
-            ConsumePSNEntitlementsRequest(const ConsumePSNEntitlementsRequest& src) :
-                PlayFabBaseModel(),
-                CatalogVersion(src.CatalogVersion),
-                ServiceLabel(src.ServiceLabel)
-            {}
-
-            ConsumePSNEntitlementsRequest(const rapidjson::Value& obj) : ConsumePSNEntitlementsRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~ConsumePSNEntitlementsRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct ConsumePSNEntitlementsResult : public PlayFabBaseModel
-        {
-            std::list<ItemInstance> ItemsGranted;
-
-            ConsumePSNEntitlementsResult() :
-                PlayFabBaseModel(),
-                ItemsGranted()
-            {}
-
-            ConsumePSNEntitlementsResult(const ConsumePSNEntitlementsResult& src) :
-                PlayFabBaseModel(),
-                ItemsGranted(src.ItemsGranted)
-            {}
-
-            ConsumePSNEntitlementsResult(const rapidjson::Value& obj) : ConsumePSNEntitlementsResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~ConsumePSNEntitlementsResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct CreateSharedGroupRequest : public PlayFabBaseModel
         {
             std::string SharedGroupId;
@@ -3110,18 +3057,49 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct StatisticNameVersion : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+            Uint32 Version;
+
+            StatisticNameVersion() :
+                PlayFabBaseModel(),
+                StatisticName(),
+                Version(0)
+            {}
+
+            StatisticNameVersion(const StatisticNameVersion& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName),
+                Version(src.Version)
+            {}
+
+            StatisticNameVersion(const rapidjson::Value& obj) : StatisticNameVersion()
+            {
+                readFromValue(obj);
+            }
+
+            ~StatisticNameVersion();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetPlayerStatisticsRequest : public PlayFabBaseModel
         {
             std::list<std::string> StatisticNames;
+            std::list<StatisticNameVersion> StatisticNameVersions;
 
             GetPlayerStatisticsRequest() :
                 PlayFabBaseModel(),
-                StatisticNames()
+                StatisticNames(),
+                StatisticNameVersions()
             {}
 
             GetPlayerStatisticsRequest(const GetPlayerStatisticsRequest& src) :
                 PlayFabBaseModel(),
-                StatisticNames(src.StatisticNames)
+                StatisticNames(src.StatisticNames),
+                StatisticNameVersions(src.StatisticNameVersions)
             {}
 
             GetPlayerStatisticsRequest(const rapidjson::Value& obj) : GetPlayerStatisticsRequest()
@@ -3139,13 +3117,13 @@ namespace PlayFab
         {
             std::string StatisticName;
             Int32 Value;
-            std::string Version;
+            Uint32 Version;
 
             StatisticValue() :
                 PlayFabBaseModel(),
                 StatisticName(),
                 Value(0),
-                Version()
+                Version(0)
             {}
 
             StatisticValue(const StatisticValue& src) :
@@ -3186,6 +3164,96 @@ namespace PlayFab
             }
 
             ~GetPlayerStatisticsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerStatisticVersionsRequest : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+
+            GetPlayerStatisticVersionsRequest() :
+                PlayFabBaseModel(),
+                StatisticName()
+            {}
+
+            GetPlayerStatisticVersionsRequest(const GetPlayerStatisticVersionsRequest& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName)
+            {}
+
+            GetPlayerStatisticVersionsRequest(const rapidjson::Value& obj) : GetPlayerStatisticVersionsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerStatisticVersionsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct PlayerStatisticVersion : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+            Uint32 Version;
+            OptionalTime ScheduledActivationTime;
+            time_t ActivationTime;
+            OptionalTime ScheduledDeactivationTime;
+            OptionalTime DeactivationTime;
+
+            PlayerStatisticVersion() :
+                PlayFabBaseModel(),
+                StatisticName(),
+                Version(0),
+                ScheduledActivationTime(),
+                ActivationTime(0),
+                ScheduledDeactivationTime(),
+                DeactivationTime()
+            {}
+
+            PlayerStatisticVersion(const PlayerStatisticVersion& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName),
+                Version(src.Version),
+                ScheduledActivationTime(src.ScheduledActivationTime),
+                ActivationTime(src.ActivationTime),
+                ScheduledDeactivationTime(src.ScheduledDeactivationTime),
+                DeactivationTime(src.DeactivationTime)
+            {}
+
+            PlayerStatisticVersion(const rapidjson::Value& obj) : PlayerStatisticVersion()
+            {
+                readFromValue(obj);
+            }
+
+            ~PlayerStatisticVersion();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerStatisticVersionsResult : public PlayFabBaseModel
+        {
+            std::list<PlayerStatisticVersion> StatisticVersions;
+
+            GetPlayerStatisticVersionsResult() :
+                PlayFabBaseModel(),
+                StatisticVersions()
+            {}
+
+            GetPlayerStatisticVersionsResult(const GetPlayerStatisticVersionsResult& src) :
+                PlayFabBaseModel(),
+                StatisticVersions(src.StatisticVersions)
+            {}
+
+            GetPlayerStatisticVersionsResult(const rapidjson::Value& obj) : GetPlayerStatisticVersionsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerStatisticVersionsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -3495,87 +3563,6 @@ namespace PlayFab
             }
 
             ~GetPlayFabIDsFromKongregateIDsResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct GetPlayFabIDsFromPSNAccountIDsRequest : public PlayFabBaseModel
-        {
-            std::list<std::string> PSNAccountIDs;
-            OptionalInt32 IssuerId;
-
-            GetPlayFabIDsFromPSNAccountIDsRequest() :
-                PlayFabBaseModel(),
-                PSNAccountIDs(),
-                IssuerId()
-            {}
-
-            GetPlayFabIDsFromPSNAccountIDsRequest(const GetPlayFabIDsFromPSNAccountIDsRequest& src) :
-                PlayFabBaseModel(),
-                PSNAccountIDs(src.PSNAccountIDs),
-                IssuerId(src.IssuerId)
-            {}
-
-            GetPlayFabIDsFromPSNAccountIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromPSNAccountIDsRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~GetPlayFabIDsFromPSNAccountIDsRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct PSNAccountPlayFabIdPair : public PlayFabBaseModel
-        {
-            std::string PSNAccountId;
-            std::string PlayFabId;
-
-            PSNAccountPlayFabIdPair() :
-                PlayFabBaseModel(),
-                PSNAccountId(),
-                PlayFabId()
-            {}
-
-            PSNAccountPlayFabIdPair(const PSNAccountPlayFabIdPair& src) :
-                PlayFabBaseModel(),
-                PSNAccountId(src.PSNAccountId),
-                PlayFabId(src.PlayFabId)
-            {}
-
-            PSNAccountPlayFabIdPair(const rapidjson::Value& obj) : PSNAccountPlayFabIdPair()
-            {
-                readFromValue(obj);
-            }
-
-            ~PSNAccountPlayFabIdPair();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct GetPlayFabIDsFromPSNAccountIDsResult : public PlayFabBaseModel
-        {
-            std::list<PSNAccountPlayFabIdPair> Data;
-
-            GetPlayFabIDsFromPSNAccountIDsResult() :
-                PlayFabBaseModel(),
-                Data()
-            {}
-
-            GetPlayFabIDsFromPSNAccountIDsResult(const GetPlayFabIDsFromPSNAccountIDsResult& src) :
-                PlayFabBaseModel(),
-                Data(src.Data)
-            {}
-
-            GetPlayFabIDsFromPSNAccountIDsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromPSNAccountIDsResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~GetPlayFabIDsFromPSNAccountIDsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -4850,59 +4837,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct LinkPSNAccountRequest : public PlayFabBaseModel
-        {
-            std::string AuthCode;
-            std::string RedirectUri;
-            OptionalInt32 IssuerId;
-
-            LinkPSNAccountRequest() :
-                PlayFabBaseModel(),
-                AuthCode(),
-                RedirectUri(),
-                IssuerId()
-            {}
-
-            LinkPSNAccountRequest(const LinkPSNAccountRequest& src) :
-                PlayFabBaseModel(),
-                AuthCode(src.AuthCode),
-                RedirectUri(src.RedirectUri),
-                IssuerId(src.IssuerId)
-            {}
-
-            LinkPSNAccountRequest(const rapidjson::Value& obj) : LinkPSNAccountRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~LinkPSNAccountRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct LinkPSNAccountResult : public PlayFabBaseModel
-        {
-
-            LinkPSNAccountResult() :
-                PlayFabBaseModel()
-            {}
-
-            LinkPSNAccountResult(const LinkPSNAccountResult& src) :
-                PlayFabBaseModel()
-            {}
-
-            LinkPSNAccountResult(const rapidjson::Value& obj) : LinkPSNAccountResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~LinkPSNAccountResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct LinkSteamAccountRequest : public PlayFabBaseModel
         {
             std::string SteamTicket;
@@ -4945,53 +4879,6 @@ namespace PlayFab
             }
 
             ~LinkSteamAccountResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct LinkXboxAccountRequest : public PlayFabBaseModel
-        {
-            std::string XboxToken;
-
-            LinkXboxAccountRequest() :
-                PlayFabBaseModel(),
-                XboxToken()
-            {}
-
-            LinkXboxAccountRequest(const LinkXboxAccountRequest& src) :
-                PlayFabBaseModel(),
-                XboxToken(src.XboxToken)
-            {}
-
-            LinkXboxAccountRequest(const rapidjson::Value& obj) : LinkXboxAccountRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~LinkXboxAccountRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct LinkXboxAccountResult : public PlayFabBaseModel
-        {
-
-            LinkXboxAccountResult() :
-                PlayFabBaseModel()
-            {}
-
-            LinkXboxAccountResult(const LinkXboxAccountResult& src) :
-                PlayFabBaseModel()
-            {}
-
-            LinkXboxAccountResult(const rapidjson::Value& obj) : LinkXboxAccountResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~LinkXboxAccountResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -5462,43 +5349,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct LoginWithPSNRequest : public PlayFabBaseModel
-        {
-            std::string TitleId;
-            std::string AuthCode;
-            std::string RedirectUri;
-            OptionalInt32 IssuerId;
-            OptionalBool CreateAccount;
-
-            LoginWithPSNRequest() :
-                PlayFabBaseModel(),
-                TitleId(),
-                AuthCode(),
-                RedirectUri(),
-                IssuerId(),
-                CreateAccount()
-            {}
-
-            LoginWithPSNRequest(const LoginWithPSNRequest& src) :
-                PlayFabBaseModel(),
-                TitleId(src.TitleId),
-                AuthCode(src.AuthCode),
-                RedirectUri(src.RedirectUri),
-                IssuerId(src.IssuerId),
-                CreateAccount(src.CreateAccount)
-            {}
-
-            LoginWithPSNRequest(const rapidjson::Value& obj) : LoginWithPSNRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~LoginWithPSNRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct LoginWithSteamRequest : public PlayFabBaseModel
         {
             std::string TitleId;
@@ -5525,37 +5375,6 @@ namespace PlayFab
             }
 
             ~LoginWithSteamRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct LoginWithXboxRequest : public PlayFabBaseModel
-        {
-            std::string TitleId;
-            std::string XboxToken;
-            OptionalBool CreateAccount;
-
-            LoginWithXboxRequest() :
-                PlayFabBaseModel(),
-                TitleId(),
-                XboxToken(),
-                CreateAccount()
-            {}
-
-            LoginWithXboxRequest(const LoginWithXboxRequest& src) :
-                PlayFabBaseModel(),
-                TitleId(src.TitleId),
-                XboxToken(src.XboxToken),
-                CreateAccount(src.CreateAccount)
-            {}
-
-            LoginWithXboxRequest(const rapidjson::Value& obj) : LoginWithXboxRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~LoginWithXboxRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -6004,37 +5823,6 @@ namespace PlayFab
             }
 
             ~RedeemCouponResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct RefreshPSNAuthTokenRequest : public PlayFabBaseModel
-        {
-            std::string AuthCode;
-            std::string RedirectUri;
-            OptionalInt32 IssuerId;
-
-            RefreshPSNAuthTokenRequest() :
-                PlayFabBaseModel(),
-                AuthCode(),
-                RedirectUri(),
-                IssuerId()
-            {}
-
-            RefreshPSNAuthTokenRequest(const RefreshPSNAuthTokenRequest& src) :
-                PlayFabBaseModel(),
-                AuthCode(src.AuthCode),
-                RedirectUri(src.RedirectUri),
-                IssuerId(src.IssuerId)
-            {}
-
-            RefreshPSNAuthTokenRequest(const rapidjson::Value& obj) : RefreshPSNAuthTokenRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~RefreshPSNAuthTokenRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -7068,50 +6856,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct UnlinkPSNAccountRequest : public PlayFabBaseModel
-        {
-
-            UnlinkPSNAccountRequest() :
-                PlayFabBaseModel()
-            {}
-
-            UnlinkPSNAccountRequest(const UnlinkPSNAccountRequest& src) :
-                PlayFabBaseModel()
-            {}
-
-            UnlinkPSNAccountRequest(const rapidjson::Value& obj) : UnlinkPSNAccountRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~UnlinkPSNAccountRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct UnlinkPSNAccountResult : public PlayFabBaseModel
-        {
-
-            UnlinkPSNAccountResult() :
-                PlayFabBaseModel()
-            {}
-
-            UnlinkPSNAccountResult(const UnlinkPSNAccountResult& src) :
-                PlayFabBaseModel()
-            {}
-
-            UnlinkPSNAccountResult(const rapidjson::Value& obj) : UnlinkPSNAccountResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~UnlinkPSNAccountResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct UnlinkSteamAccountRequest : public PlayFabBaseModel
         {
 
@@ -7151,53 +6895,6 @@ namespace PlayFab
             }
 
             ~UnlinkSteamAccountResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct UnlinkXboxAccountRequest : public PlayFabBaseModel
-        {
-            std::string XboxToken;
-
-            UnlinkXboxAccountRequest() :
-                PlayFabBaseModel(),
-                XboxToken()
-            {}
-
-            UnlinkXboxAccountRequest(const UnlinkXboxAccountRequest& src) :
-                PlayFabBaseModel(),
-                XboxToken(src.XboxToken)
-            {}
-
-            UnlinkXboxAccountRequest(const rapidjson::Value& obj) : UnlinkXboxAccountRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~UnlinkXboxAccountRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct UnlinkXboxAccountResult : public PlayFabBaseModel
-        {
-
-            UnlinkXboxAccountResult() :
-                PlayFabBaseModel()
-            {}
-
-            UnlinkXboxAccountResult(const UnlinkXboxAccountResult& src) :
-                PlayFabBaseModel()
-            {}
-
-            UnlinkXboxAccountResult(const rapidjson::Value& obj) : UnlinkXboxAccountResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~UnlinkXboxAccountResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

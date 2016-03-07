@@ -20,7 +20,7 @@ size_t PlayFabMatchmakerAPI::Update()
 
 void PlayFabMatchmakerAPI::AuthUser(
     AuthUserRequest& request,
-    AuthUserCallback callback,
+    ProcessApiCallback<AuthUserResponse> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -51,7 +51,7 @@ void PlayFabMatchmakerAPI::OnAuthUserResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            AuthUserCallback successCallback = reinterpret_cast<AuthUserCallback>(request->GetResultCallback());
+            ProcessApiCallback<AuthUserResponse> successCallback = reinterpret_cast<ProcessApiCallback<AuthUserResponse>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -68,7 +68,7 @@ void PlayFabMatchmakerAPI::OnAuthUserResult(int httpStatus, HttpRequest* request
 
 void PlayFabMatchmakerAPI::PlayerJoined(
     PlayerJoinedRequest& request,
-    PlayerJoinedCallback callback,
+    ProcessApiCallback<PlayerJoinedResponse> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -99,7 +99,7 @@ void PlayFabMatchmakerAPI::OnPlayerJoinedResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            PlayerJoinedCallback successCallback = reinterpret_cast<PlayerJoinedCallback>(request->GetResultCallback());
+            ProcessApiCallback<PlayerJoinedResponse> successCallback = reinterpret_cast<ProcessApiCallback<PlayerJoinedResponse>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -116,7 +116,7 @@ void PlayFabMatchmakerAPI::OnPlayerJoinedResult(int httpStatus, HttpRequest* req
 
 void PlayFabMatchmakerAPI::PlayerLeft(
     PlayerLeftRequest& request,
-    PlayerLeftCallback callback,
+    ProcessApiCallback<PlayerLeftResponse> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -147,7 +147,7 @@ void PlayFabMatchmakerAPI::OnPlayerLeftResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            PlayerLeftCallback successCallback = reinterpret_cast<PlayerLeftCallback>(request->GetResultCallback());
+            ProcessApiCallback<PlayerLeftResponse> successCallback = reinterpret_cast<ProcessApiCallback<PlayerLeftResponse>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -164,7 +164,7 @@ void PlayFabMatchmakerAPI::OnPlayerLeftResult(int httpStatus, HttpRequest* reque
 
 void PlayFabMatchmakerAPI::StartGame(
     StartGameRequest& request,
-    StartGameCallback callback,
+    ProcessApiCallback<StartGameResponse> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -195,7 +195,7 @@ void PlayFabMatchmakerAPI::OnStartGameResult(int httpStatus, HttpRequest* reques
 
         if (request->GetResultCallback() != nullptr)
         {
-            StartGameCallback successCallback = reinterpret_cast<StartGameCallback>(request->GetResultCallback());
+            ProcessApiCallback<StartGameResponse> successCallback = reinterpret_cast<ProcessApiCallback<StartGameResponse>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -212,7 +212,7 @@ void PlayFabMatchmakerAPI::OnStartGameResult(int httpStatus, HttpRequest* reques
 
 void PlayFabMatchmakerAPI::UserInfo(
     UserInfoRequest& request,
-    UserInfoCallback callback,
+    ProcessApiCallback<UserInfoResponse> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -243,7 +243,7 @@ void PlayFabMatchmakerAPI::OnUserInfoResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            UserInfoCallback successCallback = reinterpret_cast<UserInfoCallback>(request->GetResultCallback());
+            ProcessApiCallback<UserInfoResponse> successCallback = reinterpret_cast<ProcessApiCallback<UserInfoResponse>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

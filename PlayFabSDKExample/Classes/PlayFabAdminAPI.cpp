@@ -20,7 +20,7 @@ size_t PlayFabAdminAPI::Update()
 
 void PlayFabAdminAPI::GetUserAccountInfo(
     LookupUserAccountInfoRequest& request,
-    GetUserAccountInfoCallback callback,
+    ProcessApiCallback<LookupUserAccountInfoResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -51,7 +51,7 @@ void PlayFabAdminAPI::OnGetUserAccountInfoResult(int httpStatus, HttpRequest* re
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetUserAccountInfoCallback successCallback = reinterpret_cast<GetUserAccountInfoCallback>(request->GetResultCallback());
+            ProcessApiCallback<LookupUserAccountInfoResult> successCallback = reinterpret_cast<ProcessApiCallback<LookupUserAccountInfoResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -68,7 +68,7 @@ void PlayFabAdminAPI::OnGetUserAccountInfoResult(int httpStatus, HttpRequest* re
 
 void PlayFabAdminAPI::ResetUsers(
     ResetUsersRequest& request,
-    ResetUsersCallback callback,
+    ProcessApiCallback<BlankResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -99,7 +99,7 @@ void PlayFabAdminAPI::OnResetUsersResult(int httpStatus, HttpRequest* request, v
 
         if (request->GetResultCallback() != nullptr)
         {
-            ResetUsersCallback successCallback = reinterpret_cast<ResetUsersCallback>(request->GetResultCallback());
+            ProcessApiCallback<BlankResult> successCallback = reinterpret_cast<ProcessApiCallback<BlankResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -116,7 +116,7 @@ void PlayFabAdminAPI::OnResetUsersResult(int httpStatus, HttpRequest* request, v
 
 void PlayFabAdminAPI::SendAccountRecoveryEmail(
     SendAccountRecoveryEmailRequest& request,
-    SendAccountRecoveryEmailCallback callback,
+    ProcessApiCallback<SendAccountRecoveryEmailResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -147,7 +147,7 @@ void PlayFabAdminAPI::OnSendAccountRecoveryEmailResult(int httpStatus, HttpReque
 
         if (request->GetResultCallback() != nullptr)
         {
-            SendAccountRecoveryEmailCallback successCallback = reinterpret_cast<SendAccountRecoveryEmailCallback>(request->GetResultCallback());
+            ProcessApiCallback<SendAccountRecoveryEmailResult> successCallback = reinterpret_cast<ProcessApiCallback<SendAccountRecoveryEmailResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -164,7 +164,7 @@ void PlayFabAdminAPI::OnSendAccountRecoveryEmailResult(int httpStatus, HttpReque
 
 void PlayFabAdminAPI::UpdateUserTitleDisplayName(
     UpdateUserTitleDisplayNameRequest& request,
-    UpdateUserTitleDisplayNameCallback callback,
+    ProcessApiCallback<UpdateUserTitleDisplayNameResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -195,7 +195,7 @@ void PlayFabAdminAPI::OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpReq
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdateUserTitleDisplayNameCallback successCallback = reinterpret_cast<UpdateUserTitleDisplayNameCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateUserTitleDisplayNameResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserTitleDisplayNameResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -212,7 +212,7 @@ void PlayFabAdminAPI::OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpReq
 
 void PlayFabAdminAPI::CreatePlayerStatisticDefinition(
     CreatePlayerStatisticDefinitionRequest& request,
-    CreatePlayerStatisticDefinitionCallback callback,
+    ProcessApiCallback<CreatePlayerStatisticDefinitionResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -243,7 +243,7 @@ void PlayFabAdminAPI::OnCreatePlayerStatisticDefinitionResult(int httpStatus, Ht
 
         if (request->GetResultCallback() != nullptr)
         {
-            CreatePlayerStatisticDefinitionCallback successCallback = reinterpret_cast<CreatePlayerStatisticDefinitionCallback>(request->GetResultCallback());
+            ProcessApiCallback<CreatePlayerStatisticDefinitionResult> successCallback = reinterpret_cast<ProcessApiCallback<CreatePlayerStatisticDefinitionResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -260,7 +260,7 @@ void PlayFabAdminAPI::OnCreatePlayerStatisticDefinitionResult(int httpStatus, Ht
 
 void PlayFabAdminAPI::DeleteUsers(
     DeleteUsersRequest& request,
-    DeleteUsersCallback callback,
+    ProcessApiCallback<DeleteUsersResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -291,7 +291,7 @@ void PlayFabAdminAPI::OnDeleteUsersResult(int httpStatus, HttpRequest* request, 
 
         if (request->GetResultCallback() != nullptr)
         {
-            DeleteUsersCallback successCallback = reinterpret_cast<DeleteUsersCallback>(request->GetResultCallback());
+            ProcessApiCallback<DeleteUsersResult> successCallback = reinterpret_cast<ProcessApiCallback<DeleteUsersResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -308,7 +308,7 @@ void PlayFabAdminAPI::OnDeleteUsersResult(int httpStatus, HttpRequest* request, 
 
 void PlayFabAdminAPI::GetDataReport(
     GetDataReportRequest& request,
-    GetDataReportCallback callback,
+    ProcessApiCallback<GetDataReportResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -339,7 +339,7 @@ void PlayFabAdminAPI::OnGetDataReportResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetDataReportCallback successCallback = reinterpret_cast<GetDataReportCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetDataReportResult> successCallback = reinterpret_cast<ProcessApiCallback<GetDataReportResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -356,7 +356,7 @@ void PlayFabAdminAPI::OnGetDataReportResult(int httpStatus, HttpRequest* request
 
 void PlayFabAdminAPI::GetPlayerStatisticDefinitions(
     
-    GetPlayerStatisticDefinitionsCallback callback,
+    ProcessApiCallback<GetPlayerStatisticDefinitionsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -387,7 +387,7 @@ void PlayFabAdminAPI::OnGetPlayerStatisticDefinitionsResult(int httpStatus, Http
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetPlayerStatisticDefinitionsCallback successCallback = reinterpret_cast<GetPlayerStatisticDefinitionsCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetPlayerStatisticDefinitionsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayerStatisticDefinitionsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -404,7 +404,7 @@ void PlayFabAdminAPI::OnGetPlayerStatisticDefinitionsResult(int httpStatus, Http
 
 void PlayFabAdminAPI::GetPlayerStatisticVersions(
     GetPlayerStatisticVersionsRequest& request,
-    GetPlayerStatisticVersionsCallback callback,
+    ProcessApiCallback<GetPlayerStatisticVersionsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -435,7 +435,7 @@ void PlayFabAdminAPI::OnGetPlayerStatisticVersionsResult(int httpStatus, HttpReq
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetPlayerStatisticVersionsCallback successCallback = reinterpret_cast<GetPlayerStatisticVersionsCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetPlayerStatisticVersionsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayerStatisticVersionsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -452,7 +452,7 @@ void PlayFabAdminAPI::OnGetPlayerStatisticVersionsResult(int httpStatus, HttpReq
 
 void PlayFabAdminAPI::GetUserData(
     GetUserDataRequest& request,
-    GetUserDataCallback callback,
+    ProcessApiCallback<GetUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -483,7 +483,7 @@ void PlayFabAdminAPI::OnGetUserDataResult(int httpStatus, HttpRequest* request, 
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetUserDataCallback successCallback = reinterpret_cast<GetUserDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -500,7 +500,7 @@ void PlayFabAdminAPI::OnGetUserDataResult(int httpStatus, HttpRequest* request, 
 
 void PlayFabAdminAPI::GetUserInternalData(
     GetUserDataRequest& request,
-    GetUserInternalDataCallback callback,
+    ProcessApiCallback<GetUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -531,7 +531,7 @@ void PlayFabAdminAPI::OnGetUserInternalDataResult(int httpStatus, HttpRequest* r
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetUserInternalDataCallback successCallback = reinterpret_cast<GetUserInternalDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -548,7 +548,7 @@ void PlayFabAdminAPI::OnGetUserInternalDataResult(int httpStatus, HttpRequest* r
 
 void PlayFabAdminAPI::GetUserPublisherData(
     GetUserDataRequest& request,
-    GetUserPublisherDataCallback callback,
+    ProcessApiCallback<GetUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -579,7 +579,7 @@ void PlayFabAdminAPI::OnGetUserPublisherDataResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetUserPublisherDataCallback successCallback = reinterpret_cast<GetUserPublisherDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -596,7 +596,7 @@ void PlayFabAdminAPI::OnGetUserPublisherDataResult(int httpStatus, HttpRequest* 
 
 void PlayFabAdminAPI::GetUserPublisherInternalData(
     GetUserDataRequest& request,
-    GetUserPublisherInternalDataCallback callback,
+    ProcessApiCallback<GetUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -627,7 +627,7 @@ void PlayFabAdminAPI::OnGetUserPublisherInternalDataResult(int httpStatus, HttpR
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetUserPublisherInternalDataCallback successCallback = reinterpret_cast<GetUserPublisherInternalDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -644,7 +644,7 @@ void PlayFabAdminAPI::OnGetUserPublisherInternalDataResult(int httpStatus, HttpR
 
 void PlayFabAdminAPI::GetUserPublisherReadOnlyData(
     GetUserDataRequest& request,
-    GetUserPublisherReadOnlyDataCallback callback,
+    ProcessApiCallback<GetUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -675,7 +675,7 @@ void PlayFabAdminAPI::OnGetUserPublisherReadOnlyDataResult(int httpStatus, HttpR
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetUserPublisherReadOnlyDataCallback successCallback = reinterpret_cast<GetUserPublisherReadOnlyDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -692,7 +692,7 @@ void PlayFabAdminAPI::OnGetUserPublisherReadOnlyDataResult(int httpStatus, HttpR
 
 void PlayFabAdminAPI::GetUserReadOnlyData(
     GetUserDataRequest& request,
-    GetUserReadOnlyDataCallback callback,
+    ProcessApiCallback<GetUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -723,7 +723,7 @@ void PlayFabAdminAPI::OnGetUserReadOnlyDataResult(int httpStatus, HttpRequest* r
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetUserReadOnlyDataCallback successCallback = reinterpret_cast<GetUserReadOnlyDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -740,7 +740,7 @@ void PlayFabAdminAPI::OnGetUserReadOnlyDataResult(int httpStatus, HttpRequest* r
 
 void PlayFabAdminAPI::IncrementPlayerStatisticVersion(
     IncrementPlayerStatisticVersionRequest& request,
-    IncrementPlayerStatisticVersionCallback callback,
+    ProcessApiCallback<IncrementPlayerStatisticVersionResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -771,7 +771,7 @@ void PlayFabAdminAPI::OnIncrementPlayerStatisticVersionResult(int httpStatus, Ht
 
         if (request->GetResultCallback() != nullptr)
         {
-            IncrementPlayerStatisticVersionCallback successCallback = reinterpret_cast<IncrementPlayerStatisticVersionCallback>(request->GetResultCallback());
+            ProcessApiCallback<IncrementPlayerStatisticVersionResult> successCallback = reinterpret_cast<ProcessApiCallback<IncrementPlayerStatisticVersionResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -788,7 +788,7 @@ void PlayFabAdminAPI::OnIncrementPlayerStatisticVersionResult(int httpStatus, Ht
 
 void PlayFabAdminAPI::ResetUserStatistics(
     ResetUserStatisticsRequest& request,
-    ResetUserStatisticsCallback callback,
+    ProcessApiCallback<ResetUserStatisticsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -819,7 +819,7 @@ void PlayFabAdminAPI::OnResetUserStatisticsResult(int httpStatus, HttpRequest* r
 
         if (request->GetResultCallback() != nullptr)
         {
-            ResetUserStatisticsCallback successCallback = reinterpret_cast<ResetUserStatisticsCallback>(request->GetResultCallback());
+            ProcessApiCallback<ResetUserStatisticsResult> successCallback = reinterpret_cast<ProcessApiCallback<ResetUserStatisticsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -836,7 +836,7 @@ void PlayFabAdminAPI::OnResetUserStatisticsResult(int httpStatus, HttpRequest* r
 
 void PlayFabAdminAPI::UpdatePlayerStatisticDefinition(
     UpdatePlayerStatisticDefinitionRequest& request,
-    UpdatePlayerStatisticDefinitionCallback callback,
+    ProcessApiCallback<UpdatePlayerStatisticDefinitionResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -867,7 +867,7 @@ void PlayFabAdminAPI::OnUpdatePlayerStatisticDefinitionResult(int httpStatus, Ht
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdatePlayerStatisticDefinitionCallback successCallback = reinterpret_cast<UpdatePlayerStatisticDefinitionCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdatePlayerStatisticDefinitionResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdatePlayerStatisticDefinitionResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -884,7 +884,7 @@ void PlayFabAdminAPI::OnUpdatePlayerStatisticDefinitionResult(int httpStatus, Ht
 
 void PlayFabAdminAPI::UpdateUserData(
     UpdateUserDataRequest& request,
-    UpdateUserDataCallback callback,
+    ProcessApiCallback<UpdateUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -915,7 +915,7 @@ void PlayFabAdminAPI::OnUpdateUserDataResult(int httpStatus, HttpRequest* reques
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdateUserDataCallback successCallback = reinterpret_cast<UpdateUserDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -932,7 +932,7 @@ void PlayFabAdminAPI::OnUpdateUserDataResult(int httpStatus, HttpRequest* reques
 
 void PlayFabAdminAPI::UpdateUserInternalData(
     UpdateUserInternalDataRequest& request,
-    UpdateUserInternalDataCallback callback,
+    ProcessApiCallback<UpdateUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -963,7 +963,7 @@ void PlayFabAdminAPI::OnUpdateUserInternalDataResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdateUserInternalDataCallback successCallback = reinterpret_cast<UpdateUserInternalDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -980,7 +980,7 @@ void PlayFabAdminAPI::OnUpdateUserInternalDataResult(int httpStatus, HttpRequest
 
 void PlayFabAdminAPI::UpdateUserPublisherData(
     UpdateUserDataRequest& request,
-    UpdateUserPublisherDataCallback callback,
+    ProcessApiCallback<UpdateUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1011,7 +1011,7 @@ void PlayFabAdminAPI::OnUpdateUserPublisherDataResult(int httpStatus, HttpReques
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdateUserPublisherDataCallback successCallback = reinterpret_cast<UpdateUserPublisherDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1028,7 +1028,7 @@ void PlayFabAdminAPI::OnUpdateUserPublisherDataResult(int httpStatus, HttpReques
 
 void PlayFabAdminAPI::UpdateUserPublisherInternalData(
     UpdateUserInternalDataRequest& request,
-    UpdateUserPublisherInternalDataCallback callback,
+    ProcessApiCallback<UpdateUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1059,7 +1059,7 @@ void PlayFabAdminAPI::OnUpdateUserPublisherInternalDataResult(int httpStatus, Ht
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdateUserPublisherInternalDataCallback successCallback = reinterpret_cast<UpdateUserPublisherInternalDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1076,7 +1076,7 @@ void PlayFabAdminAPI::OnUpdateUserPublisherInternalDataResult(int httpStatus, Ht
 
 void PlayFabAdminAPI::UpdateUserPublisherReadOnlyData(
     UpdateUserDataRequest& request,
-    UpdateUserPublisherReadOnlyDataCallback callback,
+    ProcessApiCallback<UpdateUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1107,7 +1107,7 @@ void PlayFabAdminAPI::OnUpdateUserPublisherReadOnlyDataResult(int httpStatus, Ht
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdateUserPublisherReadOnlyDataCallback successCallback = reinterpret_cast<UpdateUserPublisherReadOnlyDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1124,7 +1124,7 @@ void PlayFabAdminAPI::OnUpdateUserPublisherReadOnlyDataResult(int httpStatus, Ht
 
 void PlayFabAdminAPI::UpdateUserReadOnlyData(
     UpdateUserDataRequest& request,
-    UpdateUserReadOnlyDataCallback callback,
+    ProcessApiCallback<UpdateUserDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1155,7 +1155,7 @@ void PlayFabAdminAPI::OnUpdateUserReadOnlyDataResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdateUserReadOnlyDataCallback successCallback = reinterpret_cast<UpdateUserReadOnlyDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1172,7 +1172,7 @@ void PlayFabAdminAPI::OnUpdateUserReadOnlyDataResult(int httpStatus, HttpRequest
 
 void PlayFabAdminAPI::AddNews(
     AddNewsRequest& request,
-    AddNewsCallback callback,
+    ProcessApiCallback<AddNewsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1203,7 +1203,7 @@ void PlayFabAdminAPI::OnAddNewsResult(int httpStatus, HttpRequest* request, void
 
         if (request->GetResultCallback() != nullptr)
         {
-            AddNewsCallback successCallback = reinterpret_cast<AddNewsCallback>(request->GetResultCallback());
+            ProcessApiCallback<AddNewsResult> successCallback = reinterpret_cast<ProcessApiCallback<AddNewsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1220,7 +1220,7 @@ void PlayFabAdminAPI::OnAddNewsResult(int httpStatus, HttpRequest* request, void
 
 void PlayFabAdminAPI::AddVirtualCurrencyTypes(
     AddVirtualCurrencyTypesRequest& request,
-    AddVirtualCurrencyTypesCallback callback,
+    ProcessApiCallback<BlankResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1251,7 +1251,7 @@ void PlayFabAdminAPI::OnAddVirtualCurrencyTypesResult(int httpStatus, HttpReques
 
         if (request->GetResultCallback() != nullptr)
         {
-            AddVirtualCurrencyTypesCallback successCallback = reinterpret_cast<AddVirtualCurrencyTypesCallback>(request->GetResultCallback());
+            ProcessApiCallback<BlankResult> successCallback = reinterpret_cast<ProcessApiCallback<BlankResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1268,7 +1268,7 @@ void PlayFabAdminAPI::OnAddVirtualCurrencyTypesResult(int httpStatus, HttpReques
 
 void PlayFabAdminAPI::GetCatalogItems(
     GetCatalogItemsRequest& request,
-    GetCatalogItemsCallback callback,
+    ProcessApiCallback<GetCatalogItemsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1299,7 +1299,7 @@ void PlayFabAdminAPI::OnGetCatalogItemsResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetCatalogItemsCallback successCallback = reinterpret_cast<GetCatalogItemsCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetCatalogItemsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetCatalogItemsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1316,7 +1316,7 @@ void PlayFabAdminAPI::OnGetCatalogItemsResult(int httpStatus, HttpRequest* reque
 
 void PlayFabAdminAPI::GetRandomResultTables(
     GetRandomResultTablesRequest& request,
-    GetRandomResultTablesCallback callback,
+    ProcessApiCallback<GetRandomResultTablesResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1347,7 +1347,7 @@ void PlayFabAdminAPI::OnGetRandomResultTablesResult(int httpStatus, HttpRequest*
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetRandomResultTablesCallback successCallback = reinterpret_cast<GetRandomResultTablesCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetRandomResultTablesResult> successCallback = reinterpret_cast<ProcessApiCallback<GetRandomResultTablesResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1364,7 +1364,7 @@ void PlayFabAdminAPI::OnGetRandomResultTablesResult(int httpStatus, HttpRequest*
 
 void PlayFabAdminAPI::GetStoreItems(
     GetStoreItemsRequest& request,
-    GetStoreItemsCallback callback,
+    ProcessApiCallback<GetStoreItemsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1395,7 +1395,7 @@ void PlayFabAdminAPI::OnGetStoreItemsResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetStoreItemsCallback successCallback = reinterpret_cast<GetStoreItemsCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetStoreItemsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetStoreItemsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1412,7 +1412,7 @@ void PlayFabAdminAPI::OnGetStoreItemsResult(int httpStatus, HttpRequest* request
 
 void PlayFabAdminAPI::GetTitleData(
     GetTitleDataRequest& request,
-    GetTitleDataCallback callback,
+    ProcessApiCallback<GetTitleDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1443,7 +1443,7 @@ void PlayFabAdminAPI::OnGetTitleDataResult(int httpStatus, HttpRequest* request,
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetTitleDataCallback successCallback = reinterpret_cast<GetTitleDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetTitleDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetTitleDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1460,7 +1460,7 @@ void PlayFabAdminAPI::OnGetTitleDataResult(int httpStatus, HttpRequest* request,
 
 void PlayFabAdminAPI::ListVirtualCurrencyTypes(
     
-    ListVirtualCurrencyTypesCallback callback,
+    ProcessApiCallback<ListVirtualCurrencyTypesResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1491,7 +1491,7 @@ void PlayFabAdminAPI::OnListVirtualCurrencyTypesResult(int httpStatus, HttpReque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ListVirtualCurrencyTypesCallback successCallback = reinterpret_cast<ListVirtualCurrencyTypesCallback>(request->GetResultCallback());
+            ProcessApiCallback<ListVirtualCurrencyTypesResult> successCallback = reinterpret_cast<ProcessApiCallback<ListVirtualCurrencyTypesResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1508,7 +1508,7 @@ void PlayFabAdminAPI::OnListVirtualCurrencyTypesResult(int httpStatus, HttpReque
 
 void PlayFabAdminAPI::SetCatalogItems(
     UpdateCatalogItemsRequest& request,
-    SetCatalogItemsCallback callback,
+    ProcessApiCallback<UpdateCatalogItemsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1539,7 +1539,7 @@ void PlayFabAdminAPI::OnSetCatalogItemsResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            SetCatalogItemsCallback successCallback = reinterpret_cast<SetCatalogItemsCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateCatalogItemsResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateCatalogItemsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1556,7 +1556,7 @@ void PlayFabAdminAPI::OnSetCatalogItemsResult(int httpStatus, HttpRequest* reque
 
 void PlayFabAdminAPI::SetStoreItems(
     UpdateStoreItemsRequest& request,
-    SetStoreItemsCallback callback,
+    ProcessApiCallback<UpdateStoreItemsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1587,7 +1587,7 @@ void PlayFabAdminAPI::OnSetStoreItemsResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            SetStoreItemsCallback successCallback = reinterpret_cast<SetStoreItemsCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateStoreItemsResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateStoreItemsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1604,7 +1604,7 @@ void PlayFabAdminAPI::OnSetStoreItemsResult(int httpStatus, HttpRequest* request
 
 void PlayFabAdminAPI::SetTitleData(
     SetTitleDataRequest& request,
-    SetTitleDataCallback callback,
+    ProcessApiCallback<SetTitleDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1635,7 +1635,7 @@ void PlayFabAdminAPI::OnSetTitleDataResult(int httpStatus, HttpRequest* request,
 
         if (request->GetResultCallback() != nullptr)
         {
-            SetTitleDataCallback successCallback = reinterpret_cast<SetTitleDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<SetTitleDataResult> successCallback = reinterpret_cast<ProcessApiCallback<SetTitleDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1652,7 +1652,7 @@ void PlayFabAdminAPI::OnSetTitleDataResult(int httpStatus, HttpRequest* request,
 
 void PlayFabAdminAPI::SetupPushNotification(
     SetupPushNotificationRequest& request,
-    SetupPushNotificationCallback callback,
+    ProcessApiCallback<SetupPushNotificationResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1683,7 +1683,7 @@ void PlayFabAdminAPI::OnSetupPushNotificationResult(int httpStatus, HttpRequest*
 
         if (request->GetResultCallback() != nullptr)
         {
-            SetupPushNotificationCallback successCallback = reinterpret_cast<SetupPushNotificationCallback>(request->GetResultCallback());
+            ProcessApiCallback<SetupPushNotificationResult> successCallback = reinterpret_cast<ProcessApiCallback<SetupPushNotificationResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1700,7 +1700,7 @@ void PlayFabAdminAPI::OnSetupPushNotificationResult(int httpStatus, HttpRequest*
 
 void PlayFabAdminAPI::UpdateCatalogItems(
     UpdateCatalogItemsRequest& request,
-    UpdateCatalogItemsCallback callback,
+    ProcessApiCallback<UpdateCatalogItemsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1731,7 +1731,7 @@ void PlayFabAdminAPI::OnUpdateCatalogItemsResult(int httpStatus, HttpRequest* re
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdateCatalogItemsCallback successCallback = reinterpret_cast<UpdateCatalogItemsCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateCatalogItemsResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateCatalogItemsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1748,7 +1748,7 @@ void PlayFabAdminAPI::OnUpdateCatalogItemsResult(int httpStatus, HttpRequest* re
 
 void PlayFabAdminAPI::UpdateRandomResultTables(
     UpdateRandomResultTablesRequest& request,
-    UpdateRandomResultTablesCallback callback,
+    ProcessApiCallback<UpdateRandomResultTablesResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1779,7 +1779,7 @@ void PlayFabAdminAPI::OnUpdateRandomResultTablesResult(int httpStatus, HttpReque
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdateRandomResultTablesCallback successCallback = reinterpret_cast<UpdateRandomResultTablesCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateRandomResultTablesResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateRandomResultTablesResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1796,7 +1796,7 @@ void PlayFabAdminAPI::OnUpdateRandomResultTablesResult(int httpStatus, HttpReque
 
 void PlayFabAdminAPI::UpdateStoreItems(
     UpdateStoreItemsRequest& request,
-    UpdateStoreItemsCallback callback,
+    ProcessApiCallback<UpdateStoreItemsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1827,7 +1827,7 @@ void PlayFabAdminAPI::OnUpdateStoreItemsResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdateStoreItemsCallback successCallback = reinterpret_cast<UpdateStoreItemsCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateStoreItemsResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateStoreItemsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1844,7 +1844,7 @@ void PlayFabAdminAPI::OnUpdateStoreItemsResult(int httpStatus, HttpRequest* requ
 
 void PlayFabAdminAPI::AddUserVirtualCurrency(
     AddUserVirtualCurrencyRequest& request,
-    AddUserVirtualCurrencyCallback callback,
+    ProcessApiCallback<ModifyUserVirtualCurrencyResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1875,7 +1875,7 @@ void PlayFabAdminAPI::OnAddUserVirtualCurrencyResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            AddUserVirtualCurrencyCallback successCallback = reinterpret_cast<AddUserVirtualCurrencyCallback>(request->GetResultCallback());
+            ProcessApiCallback<ModifyUserVirtualCurrencyResult> successCallback = reinterpret_cast<ProcessApiCallback<ModifyUserVirtualCurrencyResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1892,7 +1892,7 @@ void PlayFabAdminAPI::OnAddUserVirtualCurrencyResult(int httpStatus, HttpRequest
 
 void PlayFabAdminAPI::GetUserInventory(
     GetUserInventoryRequest& request,
-    GetUserInventoryCallback callback,
+    ProcessApiCallback<GetUserInventoryResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1923,7 +1923,7 @@ void PlayFabAdminAPI::OnGetUserInventoryResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetUserInventoryCallback successCallback = reinterpret_cast<GetUserInventoryCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetUserInventoryResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserInventoryResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1940,7 +1940,7 @@ void PlayFabAdminAPI::OnGetUserInventoryResult(int httpStatus, HttpRequest* requ
 
 void PlayFabAdminAPI::GrantItemsToUsers(
     GrantItemsToUsersRequest& request,
-    GrantItemsToUsersCallback callback,
+    ProcessApiCallback<GrantItemsToUsersResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -1971,7 +1971,7 @@ void PlayFabAdminAPI::OnGrantItemsToUsersResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            GrantItemsToUsersCallback successCallback = reinterpret_cast<GrantItemsToUsersCallback>(request->GetResultCallback());
+            ProcessApiCallback<GrantItemsToUsersResult> successCallback = reinterpret_cast<ProcessApiCallback<GrantItemsToUsersResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1988,7 +1988,7 @@ void PlayFabAdminAPI::OnGrantItemsToUsersResult(int httpStatus, HttpRequest* req
 
 void PlayFabAdminAPI::RevokeInventoryItem(
     RevokeInventoryItemRequest& request,
-    RevokeInventoryItemCallback callback,
+    ProcessApiCallback<RevokeInventoryResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2019,7 +2019,7 @@ void PlayFabAdminAPI::OnRevokeInventoryItemResult(int httpStatus, HttpRequest* r
 
         if (request->GetResultCallback() != nullptr)
         {
-            RevokeInventoryItemCallback successCallback = reinterpret_cast<RevokeInventoryItemCallback>(request->GetResultCallback());
+            ProcessApiCallback<RevokeInventoryResult> successCallback = reinterpret_cast<ProcessApiCallback<RevokeInventoryResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2036,7 +2036,7 @@ void PlayFabAdminAPI::OnRevokeInventoryItemResult(int httpStatus, HttpRequest* r
 
 void PlayFabAdminAPI::SubtractUserVirtualCurrency(
     SubtractUserVirtualCurrencyRequest& request,
-    SubtractUserVirtualCurrencyCallback callback,
+    ProcessApiCallback<ModifyUserVirtualCurrencyResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2067,7 +2067,7 @@ void PlayFabAdminAPI::OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRe
 
         if (request->GetResultCallback() != nullptr)
         {
-            SubtractUserVirtualCurrencyCallback successCallback = reinterpret_cast<SubtractUserVirtualCurrencyCallback>(request->GetResultCallback());
+            ProcessApiCallback<ModifyUserVirtualCurrencyResult> successCallback = reinterpret_cast<ProcessApiCallback<ModifyUserVirtualCurrencyResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2084,7 +2084,7 @@ void PlayFabAdminAPI::OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRe
 
 void PlayFabAdminAPI::GetMatchmakerGameInfo(
     GetMatchmakerGameInfoRequest& request,
-    GetMatchmakerGameInfoCallback callback,
+    ProcessApiCallback<GetMatchmakerGameInfoResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2115,7 +2115,7 @@ void PlayFabAdminAPI::OnGetMatchmakerGameInfoResult(int httpStatus, HttpRequest*
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetMatchmakerGameInfoCallback successCallback = reinterpret_cast<GetMatchmakerGameInfoCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetMatchmakerGameInfoResult> successCallback = reinterpret_cast<ProcessApiCallback<GetMatchmakerGameInfoResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2132,7 +2132,7 @@ void PlayFabAdminAPI::OnGetMatchmakerGameInfoResult(int httpStatus, HttpRequest*
 
 void PlayFabAdminAPI::GetMatchmakerGameModes(
     GetMatchmakerGameModesRequest& request,
-    GetMatchmakerGameModesCallback callback,
+    ProcessApiCallback<GetMatchmakerGameModesResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2163,7 +2163,7 @@ void PlayFabAdminAPI::OnGetMatchmakerGameModesResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetMatchmakerGameModesCallback successCallback = reinterpret_cast<GetMatchmakerGameModesCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetMatchmakerGameModesResult> successCallback = reinterpret_cast<ProcessApiCallback<GetMatchmakerGameModesResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2180,7 +2180,7 @@ void PlayFabAdminAPI::OnGetMatchmakerGameModesResult(int httpStatus, HttpRequest
 
 void PlayFabAdminAPI::ModifyMatchmakerGameModes(
     ModifyMatchmakerGameModesRequest& request,
-    ModifyMatchmakerGameModesCallback callback,
+    ProcessApiCallback<ModifyMatchmakerGameModesResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2211,7 +2211,7 @@ void PlayFabAdminAPI::OnModifyMatchmakerGameModesResult(int httpStatus, HttpRequ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ModifyMatchmakerGameModesCallback successCallback = reinterpret_cast<ModifyMatchmakerGameModesCallback>(request->GetResultCallback());
+            ProcessApiCallback<ModifyMatchmakerGameModesResult> successCallback = reinterpret_cast<ProcessApiCallback<ModifyMatchmakerGameModesResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2228,7 +2228,7 @@ void PlayFabAdminAPI::OnModifyMatchmakerGameModesResult(int httpStatus, HttpRequ
 
 void PlayFabAdminAPI::AddServerBuild(
     AddServerBuildRequest& request,
-    AddServerBuildCallback callback,
+    ProcessApiCallback<AddServerBuildResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2259,7 +2259,7 @@ void PlayFabAdminAPI::OnAddServerBuildResult(int httpStatus, HttpRequest* reques
 
         if (request->GetResultCallback() != nullptr)
         {
-            AddServerBuildCallback successCallback = reinterpret_cast<AddServerBuildCallback>(request->GetResultCallback());
+            ProcessApiCallback<AddServerBuildResult> successCallback = reinterpret_cast<ProcessApiCallback<AddServerBuildResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2276,7 +2276,7 @@ void PlayFabAdminAPI::OnAddServerBuildResult(int httpStatus, HttpRequest* reques
 
 void PlayFabAdminAPI::GetServerBuildInfo(
     GetServerBuildInfoRequest& request,
-    GetServerBuildInfoCallback callback,
+    ProcessApiCallback<GetServerBuildInfoResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2307,7 +2307,7 @@ void PlayFabAdminAPI::OnGetServerBuildInfoResult(int httpStatus, HttpRequest* re
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetServerBuildInfoCallback successCallback = reinterpret_cast<GetServerBuildInfoCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetServerBuildInfoResult> successCallback = reinterpret_cast<ProcessApiCallback<GetServerBuildInfoResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2324,7 +2324,7 @@ void PlayFabAdminAPI::OnGetServerBuildInfoResult(int httpStatus, HttpRequest* re
 
 void PlayFabAdminAPI::GetServerBuildUploadUrl(
     GetServerBuildUploadURLRequest& request,
-    GetServerBuildUploadUrlCallback callback,
+    ProcessApiCallback<GetServerBuildUploadURLResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2355,7 +2355,7 @@ void PlayFabAdminAPI::OnGetServerBuildUploadUrlResult(int httpStatus, HttpReques
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetServerBuildUploadUrlCallback successCallback = reinterpret_cast<GetServerBuildUploadUrlCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetServerBuildUploadURLResult> successCallback = reinterpret_cast<ProcessApiCallback<GetServerBuildUploadURLResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2372,7 +2372,7 @@ void PlayFabAdminAPI::OnGetServerBuildUploadUrlResult(int httpStatus, HttpReques
 
 void PlayFabAdminAPI::ListServerBuilds(
     
-    ListServerBuildsCallback callback,
+    ProcessApiCallback<ListBuildsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2403,7 +2403,7 @@ void PlayFabAdminAPI::OnListServerBuildsResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ListServerBuildsCallback successCallback = reinterpret_cast<ListServerBuildsCallback>(request->GetResultCallback());
+            ProcessApiCallback<ListBuildsResult> successCallback = reinterpret_cast<ProcessApiCallback<ListBuildsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2420,7 +2420,7 @@ void PlayFabAdminAPI::OnListServerBuildsResult(int httpStatus, HttpRequest* requ
 
 void PlayFabAdminAPI::ModifyServerBuild(
     ModifyServerBuildRequest& request,
-    ModifyServerBuildCallback callback,
+    ProcessApiCallback<ModifyServerBuildResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2451,7 +2451,7 @@ void PlayFabAdminAPI::OnModifyServerBuildResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            ModifyServerBuildCallback successCallback = reinterpret_cast<ModifyServerBuildCallback>(request->GetResultCallback());
+            ProcessApiCallback<ModifyServerBuildResult> successCallback = reinterpret_cast<ProcessApiCallback<ModifyServerBuildResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2468,7 +2468,7 @@ void PlayFabAdminAPI::OnModifyServerBuildResult(int httpStatus, HttpRequest* req
 
 void PlayFabAdminAPI::RemoveServerBuild(
     RemoveServerBuildRequest& request,
-    RemoveServerBuildCallback callback,
+    ProcessApiCallback<RemoveServerBuildResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2499,7 +2499,7 @@ void PlayFabAdminAPI::OnRemoveServerBuildResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            RemoveServerBuildCallback successCallback = reinterpret_cast<RemoveServerBuildCallback>(request->GetResultCallback());
+            ProcessApiCallback<RemoveServerBuildResult> successCallback = reinterpret_cast<ProcessApiCallback<RemoveServerBuildResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2516,7 +2516,7 @@ void PlayFabAdminAPI::OnRemoveServerBuildResult(int httpStatus, HttpRequest* req
 
 void PlayFabAdminAPI::GetPublisherData(
     GetPublisherDataRequest& request,
-    GetPublisherDataCallback callback,
+    ProcessApiCallback<GetPublisherDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2547,7 +2547,7 @@ void PlayFabAdminAPI::OnGetPublisherDataResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetPublisherDataCallback successCallback = reinterpret_cast<GetPublisherDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetPublisherDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPublisherDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2564,7 +2564,7 @@ void PlayFabAdminAPI::OnGetPublisherDataResult(int httpStatus, HttpRequest* requ
 
 void PlayFabAdminAPI::SetPublisherData(
     SetPublisherDataRequest& request,
-    SetPublisherDataCallback callback,
+    ProcessApiCallback<SetPublisherDataResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2595,7 +2595,7 @@ void PlayFabAdminAPI::OnSetPublisherDataResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            SetPublisherDataCallback successCallback = reinterpret_cast<SetPublisherDataCallback>(request->GetResultCallback());
+            ProcessApiCallback<SetPublisherDataResult> successCallback = reinterpret_cast<ProcessApiCallback<SetPublisherDataResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2612,7 +2612,7 @@ void PlayFabAdminAPI::OnSetPublisherDataResult(int httpStatus, HttpRequest* requ
 
 void PlayFabAdminAPI::GetCloudScriptRevision(
     GetCloudScriptRevisionRequest& request,
-    GetCloudScriptRevisionCallback callback,
+    ProcessApiCallback<GetCloudScriptRevisionResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2643,7 +2643,7 @@ void PlayFabAdminAPI::OnGetCloudScriptRevisionResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetCloudScriptRevisionCallback successCallback = reinterpret_cast<GetCloudScriptRevisionCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetCloudScriptRevisionResult> successCallback = reinterpret_cast<ProcessApiCallback<GetCloudScriptRevisionResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2660,7 +2660,7 @@ void PlayFabAdminAPI::OnGetCloudScriptRevisionResult(int httpStatus, HttpRequest
 
 void PlayFabAdminAPI::GetCloudScriptVersions(
     
-    GetCloudScriptVersionsCallback callback,
+    ProcessApiCallback<GetCloudScriptVersionsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2691,7 +2691,7 @@ void PlayFabAdminAPI::OnGetCloudScriptVersionsResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetCloudScriptVersionsCallback successCallback = reinterpret_cast<GetCloudScriptVersionsCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetCloudScriptVersionsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetCloudScriptVersionsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2708,7 +2708,7 @@ void PlayFabAdminAPI::OnGetCloudScriptVersionsResult(int httpStatus, HttpRequest
 
 void PlayFabAdminAPI::SetPublishedRevision(
     SetPublishedRevisionRequest& request,
-    SetPublishedRevisionCallback callback,
+    ProcessApiCallback<SetPublishedRevisionResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2739,7 +2739,7 @@ void PlayFabAdminAPI::OnSetPublishedRevisionResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            SetPublishedRevisionCallback successCallback = reinterpret_cast<SetPublishedRevisionCallback>(request->GetResultCallback());
+            ProcessApiCallback<SetPublishedRevisionResult> successCallback = reinterpret_cast<ProcessApiCallback<SetPublishedRevisionResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2756,7 +2756,7 @@ void PlayFabAdminAPI::OnSetPublishedRevisionResult(int httpStatus, HttpRequest* 
 
 void PlayFabAdminAPI::UpdateCloudScript(
     UpdateCloudScriptRequest& request,
-    UpdateCloudScriptCallback callback,
+    ProcessApiCallback<UpdateCloudScriptResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2787,7 +2787,7 @@ void PlayFabAdminAPI::OnUpdateCloudScriptResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            UpdateCloudScriptCallback successCallback = reinterpret_cast<UpdateCloudScriptCallback>(request->GetResultCallback());
+            ProcessApiCallback<UpdateCloudScriptResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateCloudScriptResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2804,7 +2804,7 @@ void PlayFabAdminAPI::OnUpdateCloudScriptResult(int httpStatus, HttpRequest* req
 
 void PlayFabAdminAPI::DeleteContent(
     DeleteContentRequest& request,
-    DeleteContentCallback callback,
+    ProcessApiCallback<BlankResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2835,7 +2835,7 @@ void PlayFabAdminAPI::OnDeleteContentResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            DeleteContentCallback successCallback = reinterpret_cast<DeleteContentCallback>(request->GetResultCallback());
+            ProcessApiCallback<BlankResult> successCallback = reinterpret_cast<ProcessApiCallback<BlankResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2852,7 +2852,7 @@ void PlayFabAdminAPI::OnDeleteContentResult(int httpStatus, HttpRequest* request
 
 void PlayFabAdminAPI::GetContentList(
     GetContentListRequest& request,
-    GetContentListCallback callback,
+    ProcessApiCallback<GetContentListResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2883,7 +2883,7 @@ void PlayFabAdminAPI::OnGetContentListResult(int httpStatus, HttpRequest* reques
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetContentListCallback successCallback = reinterpret_cast<GetContentListCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetContentListResult> successCallback = reinterpret_cast<ProcessApiCallback<GetContentListResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2900,7 +2900,7 @@ void PlayFabAdminAPI::OnGetContentListResult(int httpStatus, HttpRequest* reques
 
 void PlayFabAdminAPI::GetContentUploadUrl(
     GetContentUploadUrlRequest& request,
-    GetContentUploadUrlCallback callback,
+    ProcessApiCallback<GetContentUploadUrlResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2931,7 +2931,7 @@ void PlayFabAdminAPI::OnGetContentUploadUrlResult(int httpStatus, HttpRequest* r
 
         if (request->GetResultCallback() != nullptr)
         {
-            GetContentUploadUrlCallback successCallback = reinterpret_cast<GetContentUploadUrlCallback>(request->GetResultCallback());
+            ProcessApiCallback<GetContentUploadUrlResult> successCallback = reinterpret_cast<ProcessApiCallback<GetContentUploadUrlResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -2948,7 +2948,7 @@ void PlayFabAdminAPI::OnGetContentUploadUrlResult(int httpStatus, HttpRequest* r
 
 void PlayFabAdminAPI::ResetCharacterStatistics(
     ResetCharacterStatisticsRequest& request,
-    ResetCharacterStatisticsCallback callback,
+    ProcessApiCallback<ResetCharacterStatisticsResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2979,7 +2979,7 @@ void PlayFabAdminAPI::OnResetCharacterStatisticsResult(int httpStatus, HttpReque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ResetCharacterStatisticsCallback successCallback = reinterpret_cast<ResetCharacterStatisticsCallback>(request->GetResultCallback());
+            ProcessApiCallback<ResetCharacterStatisticsResult> successCallback = reinterpret_cast<ProcessApiCallback<ResetCharacterStatisticsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

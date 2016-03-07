@@ -3246,62 +3246,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct RefundPurchaseRequest : public PlayFabBaseModel
-        {
-            std::string PlayFabId;
-            std::string OrderId;
-            std::string Reason;
-
-            RefundPurchaseRequest() :
-                PlayFabBaseModel(),
-                PlayFabId(),
-                OrderId(),
-                Reason()
-            {}
-
-            RefundPurchaseRequest(const RefundPurchaseRequest& src) :
-                PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                OrderId(src.OrderId),
-                Reason(src.Reason)
-            {}
-
-            RefundPurchaseRequest(const rapidjson::Value& obj) : RefundPurchaseRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~RefundPurchaseRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct RefundPurchaseResponse : public PlayFabBaseModel
-        {
-            std::string PurchaseStatus;
-
-            RefundPurchaseResponse() :
-                PlayFabBaseModel(),
-                PurchaseStatus()
-            {}
-
-            RefundPurchaseResponse(const RefundPurchaseResponse& src) :
-                PlayFabBaseModel(),
-                PurchaseStatus(src.PurchaseStatus)
-            {}
-
-            RefundPurchaseResponse(const rapidjson::Value& obj) : RefundPurchaseResponse()
-            {
-                readFromValue(obj);
-            }
-
-            ~RefundPurchaseResponse();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct RemoveServerBuildRequest : public PlayFabBaseModel
         {
             std::string BuildId;
@@ -3494,75 +3438,6 @@ namespace PlayFab
             }
 
             ~ResetUserStatisticsResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        enum ResolutionOutcome
-        {
-            ResolutionOutcomeRevoke,
-            ResolutionOutcomeReinstate,
-            ResolutionOutcomeManual
-        };
-
-        void writeResolutionOutcomeEnumJSON(ResolutionOutcome enumVal, PFStringJsonWriter& writer);
-        ResolutionOutcome readResolutionOutcomeFromValue(const rapidjson::Value& obj);
-
-        struct ResolvePurchaseDisputeRequest : public PlayFabBaseModel
-        {
-            std::string PlayFabId;
-            std::string OrderId;
-            std::string Reason;
-            ResolutionOutcome Outcome;
-
-            ResolvePurchaseDisputeRequest() :
-                PlayFabBaseModel(),
-                PlayFabId(),
-                OrderId(),
-                Reason(),
-                Outcome()
-            {}
-
-            ResolvePurchaseDisputeRequest(const ResolvePurchaseDisputeRequest& src) :
-                PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                OrderId(src.OrderId),
-                Reason(src.Reason),
-                Outcome(src.Outcome)
-            {}
-
-            ResolvePurchaseDisputeRequest(const rapidjson::Value& obj) : ResolvePurchaseDisputeRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~ResolvePurchaseDisputeRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct ResolvePurchaseDisputeResponse : public PlayFabBaseModel
-        {
-            std::string PurchaseStatus;
-
-            ResolvePurchaseDisputeResponse() :
-                PlayFabBaseModel(),
-                PurchaseStatus()
-            {}
-
-            ResolvePurchaseDisputeResponse(const ResolvePurchaseDisputeResponse& src) :
-                PlayFabBaseModel(),
-                PurchaseStatus(src.PurchaseStatus)
-            {}
-
-            ResolvePurchaseDisputeResponse(const rapidjson::Value& obj) : ResolvePurchaseDisputeResponse()
-            {
-                readFromValue(obj);
-            }
-
-            ~ResolvePurchaseDisputeResponse();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
