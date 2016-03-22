@@ -726,6 +726,37 @@ StatisticResetIntervalOption PlayFab::AdminModels::readStatisticResetIntervalOpt
 
     return StatisticResetIntervalOptionNever; // Basically critical fail
 }
+void PlayFab::AdminModels::writeStatisticAggregationMethodEnumJSON(StatisticAggregationMethod enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case StatisticAggregationMethodLast: writer.String("Last"); break;
+    case StatisticAggregationMethodMin: writer.String("Min"); break;
+    case StatisticAggregationMethodMax: writer.String("Max"); break;
+    case StatisticAggregationMethodSum: writer.String("Sum"); break;
+
+    }
+}
+
+StatisticAggregationMethod PlayFab::AdminModels::readStatisticAggregationMethodFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, StatisticAggregationMethod> _StatisticAggregationMethodMap;
+    if (_StatisticAggregationMethodMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _StatisticAggregationMethodMap["Last"] = StatisticAggregationMethodLast;
+        _StatisticAggregationMethodMap["Min"] = StatisticAggregationMethodMin;
+        _StatisticAggregationMethodMap["Max"] = StatisticAggregationMethodMax;
+        _StatisticAggregationMethodMap["Sum"] = StatisticAggregationMethodSum;
+
+    }
+
+    auto output = _StatisticAggregationMethodMap.find(obj.GetString());
+    if (output != _StatisticAggregationMethodMap.end())
+        return output->second;
+
+    return StatisticAggregationMethodLast; // Basically critical fail
+}
 
 CreatePlayerStatisticDefinitionRequest::~CreatePlayerStatisticDefinitionRequest()
 {
@@ -738,6 +769,7 @@ void CreatePlayerStatisticDefinitionRequest::writeJSON(PFStringJsonWriter& write
 
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
+    if (AggregationMethod.notNull()) { writer.String("AggregationMethod"); writeStatisticAggregationMethodEnumJSON(AggregationMethod, writer); }
 
     writer.EndObject();
 }
@@ -748,6 +780,8 @@ bool CreatePlayerStatisticDefinitionRequest::readFromValue(const rapidjson::Valu
     if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
     const Value::ConstMemberIterator VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
     if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readStatisticResetIntervalOptionFromValue(VersionChangeInterval_member->value);
+    const Value::ConstMemberIterator AggregationMethod_member = obj.FindMember("AggregationMethod");
+    if (AggregationMethod_member != obj.MemberEnd() && !AggregationMethod_member->value.IsNull()) AggregationMethod = readStatisticAggregationMethodFromValue(AggregationMethod_member->value);
 
     return true;
 }
@@ -764,6 +798,7 @@ void PlayerStatisticDefinition::writeJSON(PFStringJsonWriter& writer)
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
     writer.String("CurrentVersion"); writer.Uint(CurrentVersion);
     if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
+    if (AggregationMethod.notNull()) { writer.String("AggregationMethod"); writeStatisticAggregationMethodEnumJSON(AggregationMethod, writer); }
 
     writer.EndObject();
 }
@@ -776,6 +811,8 @@ bool PlayerStatisticDefinition::readFromValue(const rapidjson::Value& obj)
     if (CurrentVersion_member != obj.MemberEnd() && !CurrentVersion_member->value.IsNull()) CurrentVersion = CurrentVersion_member->value.GetUint();
     const Value::ConstMemberIterator VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
     if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readStatisticResetIntervalOptionFromValue(VersionChangeInterval_member->value);
+    const Value::ConstMemberIterator AggregationMethod_member = obj.FindMember("AggregationMethod");
+    if (AggregationMethod_member != obj.MemberEnd() && !AggregationMethod_member->value.IsNull()) AggregationMethod = readStatisticAggregationMethodFromValue(AggregationMethod_member->value);
 
     return true;
 }
@@ -4443,6 +4480,7 @@ void UpdateCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
     
+    writer.String("Publish"); writer.Bool(Publish);
 
     writer.EndObject();
 }
@@ -4458,6 +4496,8 @@ bool UpdateCloudScriptRequest::readFromValue(const rapidjson::Value& obj)
             Files.push_back(CloudScriptFile(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator Publish_member = obj.FindMember("Publish");
+    if (Publish_member != obj.MemberEnd() && !Publish_member->value.IsNull()) Publish = Publish_member->value.GetBool();
 
     return true;
 }
@@ -4498,6 +4538,7 @@ void UpdatePlayerStatisticDefinitionRequest::writeJSON(PFStringJsonWriter& write
 
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
+    if (AggregationMethod.notNull()) { writer.String("AggregationMethod"); writeStatisticAggregationMethodEnumJSON(AggregationMethod, writer); }
 
     writer.EndObject();
 }
@@ -4508,6 +4549,8 @@ bool UpdatePlayerStatisticDefinitionRequest::readFromValue(const rapidjson::Valu
     if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
     const Value::ConstMemberIterator VersionChangeInterval_member = obj.FindMember("VersionChangeInterval");
     if (VersionChangeInterval_member != obj.MemberEnd() && !VersionChangeInterval_member->value.IsNull()) VersionChangeInterval = readStatisticResetIntervalOptionFromValue(VersionChangeInterval_member->value);
+    const Value::ConstMemberIterator AggregationMethod_member = obj.FindMember("AggregationMethod");
+    if (AggregationMethod_member != obj.MemberEnd() && !AggregationMethod_member->value.IsNull()) AggregationMethod = readStatisticAggregationMethodFromValue(AggregationMethod_member->value);
 
     return true;
 }

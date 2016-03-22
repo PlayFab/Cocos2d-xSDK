@@ -113,6 +113,7 @@ namespace PlayFab
         static void GetSharedGroupData(ClientModels::GetSharedGroupDataRequest& request, ProcessApiCallback<ClientModels::GetSharedGroupDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveSharedGroupMembers(ClientModels::RemoveSharedGroupMembersRequest& request, ProcessApiCallback<ClientModels::RemoveSharedGroupMembersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateSharedGroupData(ClientModels::UpdateSharedGroupDataRequest& request, ProcessApiCallback<ClientModels::UpdateSharedGroupDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ExecuteCloudScript(ClientModels::ExecuteCloudScriptRequest& request, ProcessApiCallback<ClientModels::ExecuteCloudScriptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCloudScriptUrl(ClientModels::GetCloudScriptUrlRequest& request, ProcessApiCallback<ClientModels::GetCloudScriptUrlResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RunCloudScript(ClientModels::RunCloudScriptRequest& request, ProcessApiCallback<ClientModels::RunCloudScriptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetContentDownloadUrl(ClientModels::GetContentDownloadUrlRequest& request, ProcessApiCallback<ClientModels::GetContentDownloadUrlResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -232,6 +233,7 @@ namespace PlayFab
         static void OnGetSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnExecuteCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCloudScriptUrlResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRunCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetContentDownloadUrlResult(int httpStatus, HttpRequest* request, void* userData);

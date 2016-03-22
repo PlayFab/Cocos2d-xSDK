@@ -567,21 +567,35 @@ namespace PlayFab
         void writeStatisticResetIntervalOptionEnumJSON(StatisticResetIntervalOption enumVal, PFStringJsonWriter& writer);
         StatisticResetIntervalOption readStatisticResetIntervalOptionFromValue(const rapidjson::Value& obj);
 
+        enum StatisticAggregationMethod
+        {
+            StatisticAggregationMethodLast,
+            StatisticAggregationMethodMin,
+            StatisticAggregationMethodMax,
+            StatisticAggregationMethodSum
+        };
+
+        void writeStatisticAggregationMethodEnumJSON(StatisticAggregationMethod enumVal, PFStringJsonWriter& writer);
+        StatisticAggregationMethod readStatisticAggregationMethodFromValue(const rapidjson::Value& obj);
+
         struct CreatePlayerStatisticDefinitionRequest : public PlayFabBaseModel
         {
             std::string StatisticName;
             Boxed<StatisticResetIntervalOption> VersionChangeInterval;
+            Boxed<StatisticAggregationMethod> AggregationMethod;
 
             CreatePlayerStatisticDefinitionRequest() :
                 PlayFabBaseModel(),
                 StatisticName(),
-                VersionChangeInterval()
+                VersionChangeInterval(),
+                AggregationMethod()
             {}
 
             CreatePlayerStatisticDefinitionRequest(const CreatePlayerStatisticDefinitionRequest& src) :
                 PlayFabBaseModel(),
                 StatisticName(src.StatisticName),
-                VersionChangeInterval(src.VersionChangeInterval)
+                VersionChangeInterval(src.VersionChangeInterval),
+                AggregationMethod(src.AggregationMethod)
             {}
 
             CreatePlayerStatisticDefinitionRequest(const rapidjson::Value& obj) : CreatePlayerStatisticDefinitionRequest()
@@ -600,19 +614,22 @@ namespace PlayFab
             std::string StatisticName;
             Uint32 CurrentVersion;
             Boxed<StatisticResetIntervalOption> VersionChangeInterval;
+            Boxed<StatisticAggregationMethod> AggregationMethod;
 
             PlayerStatisticDefinition() :
                 PlayFabBaseModel(),
                 StatisticName(),
                 CurrentVersion(0),
-                VersionChangeInterval()
+                VersionChangeInterval(),
+                AggregationMethod()
             {}
 
             PlayerStatisticDefinition(const PlayerStatisticDefinition& src) :
                 PlayFabBaseModel(),
                 StatisticName(src.StatisticName),
                 CurrentVersion(src.CurrentVersion),
-                VersionChangeInterval(src.VersionChangeInterval)
+                VersionChangeInterval(src.VersionChangeInterval),
+                AggregationMethod(src.AggregationMethod)
             {}
 
             PlayerStatisticDefinition(const rapidjson::Value& obj) : PlayerStatisticDefinition()
@@ -3840,17 +3857,20 @@ namespace PlayFab
         {
             OptionalInt32 Version;
             std::list<CloudScriptFile> Files;
+            bool Publish;
 
             UpdateCloudScriptRequest() :
                 PlayFabBaseModel(),
                 Version(),
-                Files()
+                Files(),
+                Publish(false)
             {}
 
             UpdateCloudScriptRequest(const UpdateCloudScriptRequest& src) :
                 PlayFabBaseModel(),
                 Version(src.Version),
-                Files(src.Files)
+                Files(src.Files),
+                Publish(src.Publish)
             {}
 
             UpdateCloudScriptRequest(const rapidjson::Value& obj) : UpdateCloudScriptRequest()
@@ -3896,17 +3916,20 @@ namespace PlayFab
         {
             std::string StatisticName;
             Boxed<StatisticResetIntervalOption> VersionChangeInterval;
+            Boxed<StatisticAggregationMethod> AggregationMethod;
 
             UpdatePlayerStatisticDefinitionRequest() :
                 PlayFabBaseModel(),
                 StatisticName(),
-                VersionChangeInterval()
+                VersionChangeInterval(),
+                AggregationMethod()
             {}
 
             UpdatePlayerStatisticDefinitionRequest(const UpdatePlayerStatisticDefinitionRequest& src) :
                 PlayFabBaseModel(),
                 StatisticName(src.StatisticName),
-                VersionChangeInterval(src.VersionChangeInterval)
+                VersionChangeInterval(src.VersionChangeInterval),
+                AggregationMethod(src.AggregationMethod)
             {}
 
             UpdatePlayerStatisticDefinitionRequest(const rapidjson::Value& obj) : UpdatePlayerStatisticDefinitionRequest()

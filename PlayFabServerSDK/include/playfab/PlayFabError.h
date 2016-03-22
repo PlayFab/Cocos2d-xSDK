@@ -210,7 +210,12 @@ namespace PlayFab
 		PlayFabErrorStatisticCountLimitExceeded = 1203,
 		PlayFabErrorStatisticVersionIncrementRateExceeded = 1204,
 		PlayFabErrorContainerKeyInvalid = 1205,
-		PlayFabErrorCloudScriptExecutionTimeLimitExceeded = 1206
+		PlayFabErrorCloudScriptExecutionTimeLimitExceeded = 1206,
+		PlayFabErrorNoWritePermissionsForEvent = 1207,
+		PlayFabErrorCloudScriptFunctionArgumentSizeExceeded = 1208,
+		PlayFabErrorCloudScriptAPIRequestCountExceeded = 1209,
+		PlayFabErrorCloudScriptAPIRequestError = 1210,
+		PlayFabErrorCloudScriptHTTPRequestError = 1211
     };
 
     struct PlayFabError
