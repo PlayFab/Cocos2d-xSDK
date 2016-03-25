@@ -2420,7 +2420,7 @@ void PlayFabServerAPI::OnUnlockContainerItemResult(int httpStatus, HttpRequest* 
 
 void PlayFabServerAPI::UpdateUserInventoryItemCustomData(
     UpdateUserInventoryItemDataRequest& request,
-    ProcessApiCallback<UpdateUserInventoryItemDataResult> callback,
+    ProcessApiCallback<EmptyResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
@@ -2443,7 +2443,7 @@ void PlayFabServerAPI::UpdateUserInventoryItemCustomData(
 
 void PlayFabServerAPI::OnUpdateUserInventoryItemCustomDataResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    UpdateUserInventoryItemDataResult outResult;
+    EmptyResult outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
@@ -2451,7 +2451,7 @@ void PlayFabServerAPI::OnUpdateUserInventoryItemCustomDataResult(int httpStatus,
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UpdateUserInventoryItemDataResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserInventoryItemDataResult>>(request->GetResultCallback());
+            ProcessApiCallback<EmptyResult> successCallback = reinterpret_cast<ProcessApiCallback<EmptyResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

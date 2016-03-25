@@ -2328,20 +2328,17 @@ namespace PlayFab
 
         struct GetCharacterInventoryRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::string CharacterId;
             std::string CatalogVersion;
 
             GetCharacterInventoryRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
                 CharacterId(),
                 CatalogVersion()
             {}
 
             GetCharacterInventoryRequest(const GetCharacterInventoryRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
                 CharacterId(src.CharacterId),
                 CatalogVersion(src.CatalogVersion)
             {}
@@ -2390,7 +2387,6 @@ namespace PlayFab
 
         struct GetCharacterInventoryResult : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::string CharacterId;
             std::list<ItemInstance> Inventory;
             std::map<std::string, Int32> VirtualCurrency;
@@ -2398,7 +2394,6 @@ namespace PlayFab
 
             GetCharacterInventoryResult() :
                 PlayFabBaseModel(),
-                PlayFabId(),
                 CharacterId(),
                 Inventory(),
                 VirtualCurrency(),
@@ -2407,7 +2402,6 @@ namespace PlayFab
 
             GetCharacterInventoryResult(const GetCharacterInventoryResult& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
                 CharacterId(src.CharacterId),
                 Inventory(src.Inventory),
                 VirtualCurrency(src.VirtualCurrency),
@@ -4020,19 +4014,19 @@ namespace PlayFab
 
         struct GetStoreItemsRequest : public PlayFabBaseModel
         {
-            std::string StoreId;
             std::string CatalogVersion;
+            std::string StoreId;
 
             GetStoreItemsRequest() :
                 PlayFabBaseModel(),
-                StoreId(),
-                CatalogVersion()
+                CatalogVersion(),
+                StoreId()
             {}
 
             GetStoreItemsRequest(const GetStoreItemsRequest& src) :
                 PlayFabBaseModel(),
-                StoreId(src.StoreId),
-                CatalogVersion(src.CatalogVersion)
+                CatalogVersion(src.CatalogVersion),
+                StoreId(src.StoreId)
             {}
 
             GetStoreItemsRequest(const rapidjson::Value& obj) : GetStoreItemsRequest()

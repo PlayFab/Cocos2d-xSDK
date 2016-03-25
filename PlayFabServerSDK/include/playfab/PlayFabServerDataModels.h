@@ -4940,16 +4940,16 @@ namespace PlayFab
 
         struct UpdateUserInventoryItemDataRequest : public PlayFabBaseModel
         {
-            std::string CharacterId;
             std::string PlayFabId;
+            std::string CharacterId;
             std::string ItemInstanceId;
             std::map<std::string, std::string> Data;
             std::list<std::string> KeysToRemove;
 
             UpdateUserInventoryItemDataRequest() :
                 PlayFabBaseModel(),
-                CharacterId(),
                 PlayFabId(),
+                CharacterId(),
                 ItemInstanceId(),
                 Data(),
                 KeysToRemove()
@@ -4957,8 +4957,8 @@ namespace PlayFab
 
             UpdateUserInventoryItemDataRequest(const UpdateUserInventoryItemDataRequest& src) :
                 PlayFabBaseModel(),
-                CharacterId(src.CharacterId),
                 PlayFabId(src.PlayFabId),
+                CharacterId(src.CharacterId),
                 ItemInstanceId(src.ItemInstanceId),
                 Data(src.Data),
                 KeysToRemove(src.KeysToRemove)
@@ -4970,28 +4970,6 @@ namespace PlayFab
             }
 
             ~UpdateUserInventoryItemDataRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct UpdateUserInventoryItemDataResult : public PlayFabBaseModel
-        {
-
-            UpdateUserInventoryItemDataResult() :
-                PlayFabBaseModel()
-            {}
-
-            UpdateUserInventoryItemDataResult(const UpdateUserInventoryItemDataResult& src) :
-                PlayFabBaseModel()
-            {}
-
-            UpdateUserInventoryItemDataResult(const rapidjson::Value& obj) : UpdateUserInventoryItemDataResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~UpdateUserInventoryItemDataResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

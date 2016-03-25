@@ -215,7 +215,9 @@ namespace PlayFab
 		PlayFabErrorCloudScriptFunctionArgumentSizeExceeded = 1208,
 		PlayFabErrorCloudScriptAPIRequestCountExceeded = 1209,
 		PlayFabErrorCloudScriptAPIRequestError = 1210,
-		PlayFabErrorCloudScriptHTTPRequestError = 1211
+		PlayFabErrorCloudScriptHTTPRequestError = 1211,
+		PlayFabErrorInsufficientGuildRole = 1212,
+		PlayFabErrorGuildNotFound = 1213
     };
 
     struct PlayFabError

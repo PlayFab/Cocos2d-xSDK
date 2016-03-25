@@ -2827,7 +2827,6 @@ void GetCharacterInventoryRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     writer.String("CharacterId"); writer.String(CharacterId.c_str());
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
 
@@ -2836,8 +2835,6 @@ void GetCharacterInventoryRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetCharacterInventoryRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
     const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
     if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
     const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
@@ -2883,7 +2880,6 @@ void GetCharacterInventoryResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
     if (!Inventory.empty()) {
     writer.String("Inventory");
@@ -2915,8 +2911,6 @@ void GetCharacterInventoryResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetCharacterInventoryResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
     const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
     if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
     const Value::ConstMemberIterator Inventory_member = obj.FindMember("Inventory");
@@ -4761,18 +4755,18 @@ void GetStoreItemsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    writer.String("StoreId"); writer.String(StoreId.c_str());
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+    writer.String("StoreId"); writer.String(StoreId.c_str());
 
     writer.EndObject();
 }
 
 bool GetStoreItemsRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator StoreId_member = obj.FindMember("StoreId");
-    if (StoreId_member != obj.MemberEnd() && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
     const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
     if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator StoreId_member = obj.FindMember("StoreId");
+    if (StoreId_member != obj.MemberEnd() && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
 
     return true;
 }
