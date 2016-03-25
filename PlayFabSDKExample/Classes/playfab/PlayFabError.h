@@ -217,7 +217,8 @@ namespace PlayFab
 		PlayFabErrorCloudScriptAPIRequestError = 1210,
 		PlayFabErrorCloudScriptHTTPRequestError = 1211,
 		PlayFabErrorInsufficientGuildRole = 1212,
-		PlayFabErrorGuildNotFound = 1213
+		PlayFabErrorGuildNotFound = 1213,
+		PlayFabErrorOverLimit = 1214
     };
 
     struct PlayFabError
