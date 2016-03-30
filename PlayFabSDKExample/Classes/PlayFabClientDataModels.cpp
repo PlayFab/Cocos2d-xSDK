@@ -1767,7 +1767,7 @@ void ExecuteCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
     if (FunctionParameter.notNull()) { writer.String("FunctionParameter"); FunctionParameter.writeJSON(writer); }
     if (RevisionSelection.notNull()) { writer.String("RevisionSelection"); writeCloudScriptRevisionOptionEnumJSON(RevisionSelection, writer); }
     if (SpecificRevision.notNull()) { writer.String("SpecificRevision"); writer.Int(SpecificRevision); }
-    writer.String("GeneratePlayStreamEvent"); writer.Bool(GeneratePlayStreamEvent);
+    if (GeneratePlayStreamEvent.notNull()) { writer.String("GeneratePlayStreamEvent"); writer.Bool(GeneratePlayStreamEvent); }
 
     writer.EndObject();
 }

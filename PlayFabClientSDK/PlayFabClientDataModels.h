@@ -1337,7 +1337,7 @@ namespace PlayFab
             MultitypeVar FunctionParameter;
             Boxed<CloudScriptRevisionOption> RevisionSelection;
             OptionalInt32 SpecificRevision;
-            bool GeneratePlayStreamEvent;
+            OptionalBool GeneratePlayStreamEvent;
 
             ExecuteCloudScriptRequest() :
                 PlayFabBaseModel(),
@@ -1345,7 +1345,7 @@ namespace PlayFab
                 FunctionParameter(),
                 RevisionSelection(),
                 SpecificRevision(),
-                GeneratePlayStreamEvent(false)
+                GeneratePlayStreamEvent()
             {}
 
             ExecuteCloudScriptRequest(const ExecuteCloudScriptRequest& src) :
