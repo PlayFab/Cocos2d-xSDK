@@ -5862,37 +5862,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct PlayStreamEventHistory : public PlayFabBaseModel
-        {
-            std::string ParentTriggerId;
-            std::string ParentEventId;
-            bool TriggeredEvents;
-
-            PlayStreamEventHistory() :
-                PlayFabBaseModel(),
-                ParentTriggerId(),
-                ParentEventId(),
-                TriggeredEvents(false)
-            {}
-
-            PlayStreamEventHistory(const PlayStreamEventHistory& src) :
-                PlayFabBaseModel(),
-                ParentTriggerId(src.ParentTriggerId),
-                ParentEventId(src.ParentEventId),
-                TriggeredEvents(src.TriggeredEvents)
-            {}
-
-            PlayStreamEventHistory(const rapidjson::Value& obj) : PlayStreamEventHistory()
-            {
-                readFromValue(obj);
-            }
-
-            ~PlayStreamEventHistory();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct PurchaseItemRequest : public PlayFabBaseModel
         {
             std::string ItemId;
@@ -6517,19 +6486,6 @@ namespace PlayFab
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
         };
-
-        enum SourceType
-        {
-            SourceTypeAdmin,
-            SourceTypeBackEnd,
-            SourceTypeGameClient,
-            SourceTypeGameServer,
-            SourceTypePartner,
-            SourceTypeStream
-        };
-
-        void writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer);
-        SourceType readSourceTypeFromValue(const rapidjson::Value& obj);
 
         struct StartGameRequest : public PlayFabBaseModel
         {
