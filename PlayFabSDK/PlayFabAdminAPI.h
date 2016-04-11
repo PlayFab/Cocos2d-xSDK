@@ -43,6 +43,7 @@ namespace PlayFab
         static void AddNews(AdminModels::AddNewsRequest& request, ProcessApiCallback<AdminModels::AddNewsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddVirtualCurrencyTypes(AdminModels::AddVirtualCurrencyTypesRequest& request, ProcessApiCallback<AdminModels::BlankResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCatalogItems(AdminModels::GetCatalogItemsRequest& request, ProcessApiCallback<AdminModels::GetCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPublisherData(AdminModels::GetPublisherDataRequest& request, ProcessApiCallback<AdminModels::GetPublisherDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetRandomResultTables(AdminModels::GetRandomResultTablesRequest& request, ProcessApiCallback<AdminModels::GetRandomResultTablesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetStoreItems(AdminModels::GetStoreItemsRequest& request, ProcessApiCallback<AdminModels::GetStoreItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleData(AdminModels::GetTitleDataRequest& request, ProcessApiCallback<AdminModels::GetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -68,7 +69,6 @@ namespace PlayFab
         static void ListServerBuilds(ProcessApiCallback<AdminModels::ListBuildsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ModifyServerBuild(AdminModels::ModifyServerBuildRequest& request, ProcessApiCallback<AdminModels::ModifyServerBuildResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveServerBuild(AdminModels::RemoveServerBuildRequest& request, ProcessApiCallback<AdminModels::RemoveServerBuildResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetPublisherData(AdminModels::GetPublisherDataRequest& request, ProcessApiCallback<AdminModels::GetPublisherDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetPublisherData(AdminModels::SetPublisherDataRequest& request, ProcessApiCallback<AdminModels::SetPublisherDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCloudScriptRevision(AdminModels::GetCloudScriptRevisionRequest& request, ProcessApiCallback<AdminModels::GetCloudScriptRevisionResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCloudScriptVersions(ProcessApiCallback<AdminModels::GetCloudScriptVersionsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -111,6 +111,7 @@ namespace PlayFab
         static void OnAddNewsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddVirtualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetRandomResultTablesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetStoreItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
@@ -136,7 +137,6 @@ namespace PlayFab
         static void OnListServerBuildsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnModifyServerBuildResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveServerBuildResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCloudScriptRevisionResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCloudScriptVersionsResult(int httpStatus, HttpRequest* request, void* userData);

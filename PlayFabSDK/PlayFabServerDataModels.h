@@ -1106,6 +1106,16 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum CloudScriptRevisionOption
+        {
+            CloudScriptRevisionOptionLive,
+            CloudScriptRevisionOptionLatest,
+            CloudScriptRevisionOptionSpecific
+        };
+
+        void writeCloudScriptRevisionOptionEnumJSON(CloudScriptRevisionOption enumVal, PFStringJsonWriter& writer);
+        CloudScriptRevisionOption readCloudScriptRevisionOptionFromValue(const rapidjson::Value& obj);
+
         struct ConsumeItemRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -1363,6 +1373,157 @@ namespace PlayFab
             }
 
             ~EmptyResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LogStatement : public PlayFabBaseModel
+        {
+            std::string Level;
+            std::string Message;
+            MultitypeVar Data;
+
+            LogStatement() :
+                PlayFabBaseModel(),
+                Level(),
+                Message(),
+                Data()
+            {}
+
+            LogStatement(const LogStatement& src) :
+                PlayFabBaseModel(),
+                Level(src.Level),
+                Message(src.Message),
+                Data(src.Data)
+            {}
+
+            LogStatement(const rapidjson::Value& obj) : LogStatement()
+            {
+                readFromValue(obj);
+            }
+
+            ~LogStatement();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ScriptExecutionError : public PlayFabBaseModel
+        {
+            std::string Error;
+            std::string Message;
+            std::string StackTrace;
+
+            ScriptExecutionError() :
+                PlayFabBaseModel(),
+                Error(),
+                Message(),
+                StackTrace()
+            {}
+
+            ScriptExecutionError(const ScriptExecutionError& src) :
+                PlayFabBaseModel(),
+                Error(src.Error),
+                Message(src.Message),
+                StackTrace(src.StackTrace)
+            {}
+
+            ScriptExecutionError(const rapidjson::Value& obj) : ScriptExecutionError()
+            {
+                readFromValue(obj);
+            }
+
+            ~ScriptExecutionError();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ExecuteCloudScriptResult : public PlayFabBaseModel
+        {
+            std::string FunctionName;
+            Int32 Revision;
+            MultitypeVar FunctionResult;
+            std::list<LogStatement> Logs;
+            double ExecutionTimeSeconds;
+            Uint32 MemoryConsumedBytes;
+            Int32 APIRequestsIssued;
+            Int32 HttpRequestsIssued;
+            ScriptExecutionError* Error;
+
+            ExecuteCloudScriptResult() :
+                PlayFabBaseModel(),
+                FunctionName(),
+                Revision(0),
+                FunctionResult(),
+                Logs(),
+                ExecutionTimeSeconds(0),
+                MemoryConsumedBytes(0),
+                APIRequestsIssued(0),
+                HttpRequestsIssued(0),
+                Error(NULL)
+            {}
+
+            ExecuteCloudScriptResult(const ExecuteCloudScriptResult& src) :
+                PlayFabBaseModel(),
+                FunctionName(src.FunctionName),
+                Revision(src.Revision),
+                FunctionResult(src.FunctionResult),
+                Logs(src.Logs),
+                ExecutionTimeSeconds(src.ExecutionTimeSeconds),
+                MemoryConsumedBytes(src.MemoryConsumedBytes),
+                APIRequestsIssued(src.APIRequestsIssued),
+                HttpRequestsIssued(src.HttpRequestsIssued),
+                Error(src.Error ? new ScriptExecutionError(*src.Error) : NULL)
+            {}
+
+            ExecuteCloudScriptResult(const rapidjson::Value& obj) : ExecuteCloudScriptResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~ExecuteCloudScriptResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ExecuteCloudScriptServerRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string FunctionName;
+            MultitypeVar FunctionParameter;
+            Boxed<CloudScriptRevisionOption> RevisionSelection;
+            OptionalInt32 SpecificRevision;
+            OptionalBool GeneratePlayStreamEvent;
+
+            ExecuteCloudScriptServerRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                FunctionName(),
+                FunctionParameter(),
+                RevisionSelection(),
+                SpecificRevision(),
+                GeneratePlayStreamEvent()
+            {}
+
+            ExecuteCloudScriptServerRequest(const ExecuteCloudScriptServerRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                FunctionName(src.FunctionName),
+                FunctionParameter(src.FunctionParameter),
+                RevisionSelection(src.RevisionSelection),
+                SpecificRevision(src.SpecificRevision),
+                GeneratePlayStreamEvent(src.GeneratePlayStreamEvent)
+            {}
+
+            ExecuteCloudScriptServerRequest(const rapidjson::Value& obj) : ExecuteCloudScriptServerRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ExecuteCloudScriptServerRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1882,59 +2043,6 @@ namespace PlayFab
             }
 
             ~GetCharacterStatisticsResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct GetCloudScriptUrlRequest : public PlayFabBaseModel
-        {
-            OptionalInt32 Version;
-            OptionalBool Testing;
-
-            GetCloudScriptUrlRequest() :
-                PlayFabBaseModel(),
-                Version(),
-                Testing()
-            {}
-
-            GetCloudScriptUrlRequest(const GetCloudScriptUrlRequest& src) :
-                PlayFabBaseModel(),
-                Version(src.Version),
-                Testing(src.Testing)
-            {}
-
-            GetCloudScriptUrlRequest(const rapidjson::Value& obj) : GetCloudScriptUrlRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~GetCloudScriptUrlRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct GetCloudScriptUrlResult : public PlayFabBaseModel
-        {
-            std::string Url;
-
-            GetCloudScriptUrlResult() :
-                PlayFabBaseModel(),
-                Url()
-            {}
-
-            GetCloudScriptUrlResult(const GetCloudScriptUrlResult& src) :
-                PlayFabBaseModel(),
-                Url(src.Url)
-            {}
-
-            GetCloudScriptUrlResult(const rapidjson::Value& obj) : GetCloudScriptUrlResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~GetCloudScriptUrlResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -3906,37 +4014,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct PlayStreamEventHistory : public PlayFabBaseModel
-        {
-            std::string ParentTriggerId;
-            std::string ParentEventId;
-            bool TriggeredEvents;
-
-            PlayStreamEventHistory() :
-                PlayFabBaseModel(),
-                ParentTriggerId(),
-                ParentEventId(),
-                TriggeredEvents(false)
-            {}
-
-            PlayStreamEventHistory(const PlayStreamEventHistory& src) :
-                PlayFabBaseModel(),
-                ParentTriggerId(src.ParentTriggerId),
-                ParentEventId(src.ParentEventId),
-                TriggeredEvents(src.TriggeredEvents)
-            {}
-
-            PlayStreamEventHistory(const rapidjson::Value& obj) : PlayStreamEventHistory()
-            {
-                readFromValue(obj);
-            }
-
-            ~PlayStreamEventHistory();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct RedeemCouponRequest : public PlayFabBaseModel
         {
             std::string CouponCode;
@@ -4217,49 +4294,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct RunCloudScriptResult : public PlayFabBaseModel
-        {
-            std::string ActionId;
-            Int32 Version;
-            Int32 Revision;
-            MultitypeVar Results;
-            std::string ResultsEncoded;
-            std::string ActionLog;
-            double ExecutionTime;
-
-            RunCloudScriptResult() :
-                PlayFabBaseModel(),
-                ActionId(),
-                Version(0),
-                Revision(0),
-                Results(),
-                ResultsEncoded(),
-                ActionLog(),
-                ExecutionTime(0)
-            {}
-
-            RunCloudScriptResult(const RunCloudScriptResult& src) :
-                PlayFabBaseModel(),
-                ActionId(src.ActionId),
-                Version(src.Version),
-                Revision(src.Revision),
-                Results(src.Results),
-                ResultsEncoded(src.ResultsEncoded),
-                ActionLog(src.ActionLog),
-                ExecutionTime(src.ExecutionTime)
-            {}
-
-            RunCloudScriptResult(const rapidjson::Value& obj) : RunCloudScriptResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~RunCloudScriptResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct SendPushNotificationRequest : public PlayFabBaseModel
         {
             std::string Recipient;
@@ -4412,19 +4446,6 @@ namespace PlayFab
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
         };
-
-        enum SourceType
-        {
-            SourceTypeAdmin,
-            SourceTypeBackEnd,
-            SourceTypeGameClient,
-            SourceTypeGameServer,
-            SourceTypePartner,
-            SourceTypeStream
-        };
-
-        void writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer);
-        SourceType readSourceTypeFromValue(const rapidjson::Value& obj);
 
         struct StatisticUpdate : public PlayFabBaseModel
         {

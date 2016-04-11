@@ -1767,7 +1767,7 @@ void ExecuteCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
     if (FunctionParameter.notNull()) { writer.String("FunctionParameter"); FunctionParameter.writeJSON(writer); }
     if (RevisionSelection.notNull()) { writer.String("RevisionSelection"); writeCloudScriptRevisionOptionEnumJSON(RevisionSelection, writer); }
     if (SpecificRevision.notNull()) { writer.String("SpecificRevision"); writer.Int(SpecificRevision); }
-    writer.String("GeneratePlayStreamEvent"); writer.Bool(GeneratePlayStreamEvent);
+    if (GeneratePlayStreamEvent.notNull()) { writer.String("GeneratePlayStreamEvent"); writer.Bool(GeneratePlayStreamEvent); }
 
     writer.EndObject();
 }
@@ -6782,34 +6782,6 @@ bool PaymentOption::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-PlayStreamEventHistory::~PlayStreamEventHistory()
-{
-
-}
-
-void PlayStreamEventHistory::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (ParentTriggerId.length() > 0) { writer.String("ParentTriggerId"); writer.String(ParentTriggerId.c_str()); }
-    if (ParentEventId.length() > 0) { writer.String("ParentEventId"); writer.String(ParentEventId.c_str()); }
-    writer.String("TriggeredEvents"); writer.Bool(TriggeredEvents);
-
-    writer.EndObject();
-}
-
-bool PlayStreamEventHistory::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator ParentTriggerId_member = obj.FindMember("ParentTriggerId");
-    if (ParentTriggerId_member != obj.MemberEnd() && !ParentTriggerId_member->value.IsNull()) ParentTriggerId = ParentTriggerId_member->value.GetString();
-    const Value::ConstMemberIterator ParentEventId_member = obj.FindMember("ParentEventId");
-    if (ParentEventId_member != obj.MemberEnd() && !ParentEventId_member->value.IsNull()) ParentEventId = ParentEventId_member->value.GetString();
-    const Value::ConstMemberIterator TriggeredEvents_member = obj.FindMember("TriggeredEvents");
-    if (TriggeredEvents_member != obj.MemberEnd() && !TriggeredEvents_member->value.IsNull()) TriggeredEvents = TriggeredEvents_member->value.GetBool();
-
-    return true;
-}
-
 PurchaseItemRequest::~PurchaseItemRequest()
 {
 
@@ -7414,41 +7386,6 @@ bool SetFriendTagsResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
-}
-void PlayFab::ClientModels::writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer)
-{
-    switch (enumVal)
-    {
-    case SourceTypeAdmin: writer.String("Admin"); break;
-    case SourceTypeBackEnd: writer.String("BackEnd"); break;
-    case SourceTypeGameClient: writer.String("GameClient"); break;
-    case SourceTypeGameServer: writer.String("GameServer"); break;
-    case SourceTypePartner: writer.String("Partner"); break;
-    case SourceTypeStream: writer.String("Stream"); break;
-
-    }
-}
-
-SourceType PlayFab::ClientModels::readSourceTypeFromValue(const rapidjson::Value& obj)
-{
-    static std::map<std::string, SourceType> _SourceTypeMap;
-    if (_SourceTypeMap.size() == 0)
-    {
-        // Auto-generate the map on the first use
-        _SourceTypeMap["Admin"] = SourceTypeAdmin;
-        _SourceTypeMap["BackEnd"] = SourceTypeBackEnd;
-        _SourceTypeMap["GameClient"] = SourceTypeGameClient;
-        _SourceTypeMap["GameServer"] = SourceTypeGameServer;
-        _SourceTypeMap["Partner"] = SourceTypePartner;
-        _SourceTypeMap["Stream"] = SourceTypeStream;
-
-    }
-
-    auto output = _SourceTypeMap.find(obj.GetString());
-    if (output != _SourceTypeMap.end())
-        return output->second;
-
-    return SourceTypeAdmin; // Basically critical fail
 }
 
 StartGameRequest::~StartGameRequest()
