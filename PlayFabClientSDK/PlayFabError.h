@@ -221,7 +221,8 @@ namespace PlayFab
 		PlayFabErrorOverLimit = 1214,
 		PlayFabErrorEventNotFound = 1215,
 		PlayFabErrorInvalidEventEntity = 1216,
-		PlayFabErrorInvalidEventName = 1217
+		PlayFabErrorInvalidEventName = 1217,
+		PlayFabErrorCatalogNotConfigured = 1218
     };
 
     struct PlayFabError
