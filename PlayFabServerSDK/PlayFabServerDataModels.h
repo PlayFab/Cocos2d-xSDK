@@ -5046,6 +5046,124 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct WriteEventResponse : public PlayFabBaseModel
+        {
+            std::string EventId;
+
+            WriteEventResponse() :
+                PlayFabBaseModel(),
+                EventId()
+            {}
+
+            WriteEventResponse(const WriteEventResponse& src) :
+                PlayFabBaseModel(),
+                EventId(src.EventId)
+            {}
+
+            WriteEventResponse(const rapidjson::Value& obj) : WriteEventResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~WriteEventResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct WriteServerCharacterEventRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string CharacterId;
+            std::string EventName;
+            OptionalTime Timestamp;
+
+            WriteServerCharacterEventRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                CharacterId(),
+                EventName(),
+                Timestamp()
+            {}
+
+            WriteServerCharacterEventRequest(const WriteServerCharacterEventRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                CharacterId(src.CharacterId),
+                EventName(src.EventName),
+                Timestamp(src.Timestamp)
+            {}
+
+            WriteServerCharacterEventRequest(const rapidjson::Value& obj) : WriteServerCharacterEventRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~WriteServerCharacterEventRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct WriteServerPlayerEventRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string EventName;
+            OptionalTime Timestamp;
+
+            WriteServerPlayerEventRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                EventName(),
+                Timestamp()
+            {}
+
+            WriteServerPlayerEventRequest(const WriteServerPlayerEventRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                EventName(src.EventName),
+                Timestamp(src.Timestamp)
+            {}
+
+            WriteServerPlayerEventRequest(const rapidjson::Value& obj) : WriteServerPlayerEventRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~WriteServerPlayerEventRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct WriteTitleEventRequest : public PlayFabBaseModel
+        {
+            std::string EventName;
+            OptionalTime Timestamp;
+
+            WriteTitleEventRequest() :
+                PlayFabBaseModel(),
+                EventName(),
+                Timestamp()
+            {}
+
+            WriteTitleEventRequest(const WriteTitleEventRequest& src) :
+                PlayFabBaseModel(),
+                EventName(src.EventName),
+                Timestamp(src.Timestamp)
+            {}
+
+            WriteTitleEventRequest(const rapidjson::Value& obj) : WriteTitleEventRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~WriteTitleEventRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
 
     }
 }

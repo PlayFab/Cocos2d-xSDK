@@ -8622,3 +8622,103 @@ bool ValidateIOSReceiptResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+WriteClientCharacterEventRequest::~WriteClientCharacterEventRequest()
+{
+
+}
+
+void WriteClientCharacterEventRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("CharacterId"); writer.String(CharacterId.c_str());
+    writer.String("EventName"); writer.String(EventName.c_str());
+    if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
+
+    writer.EndObject();
+}
+
+bool WriteClientCharacterEventRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator EventName_member = obj.FindMember("EventName");
+    if (EventName_member != obj.MemberEnd() && !EventName_member->value.IsNull()) EventName = EventName_member->value.GetString();
+    const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
+    if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+
+    return true;
+}
+
+WriteClientPlayerEventRequest::~WriteClientPlayerEventRequest()
+{
+
+}
+
+void WriteClientPlayerEventRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("EventName"); writer.String(EventName.c_str());
+    if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
+
+    writer.EndObject();
+}
+
+bool WriteClientPlayerEventRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator EventName_member = obj.FindMember("EventName");
+    if (EventName_member != obj.MemberEnd() && !EventName_member->value.IsNull()) EventName = EventName_member->value.GetString();
+    const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
+    if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+
+    return true;
+}
+
+WriteEventResponse::~WriteEventResponse()
+{
+
+}
+
+void WriteEventResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (EventId.length() > 0) { writer.String("EventId"); writer.String(EventId.c_str()); }
+
+    writer.EndObject();
+}
+
+bool WriteEventResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator EventId_member = obj.FindMember("EventId");
+    if (EventId_member != obj.MemberEnd() && !EventId_member->value.IsNull()) EventId = EventId_member->value.GetString();
+
+    return true;
+}
+
+WriteTitleEventRequest::~WriteTitleEventRequest()
+{
+
+}
+
+void WriteTitleEventRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("EventName"); writer.String(EventName.c_str());
+    if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
+
+    writer.EndObject();
+}
+
+bool WriteTitleEventRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator EventName_member = obj.FindMember("EventName");
+    if (EventName_member != obj.MemberEnd() && !EventName_member->value.IsNull()) EventName = EventName_member->value.GetString();
+    const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
+    if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+
+    return true;
+}
+
