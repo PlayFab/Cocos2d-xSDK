@@ -108,6 +108,9 @@ namespace PlayFab
         static void AndroidDevicePushNotificationRegistration(ClientModels::AndroidDevicePushNotificationRegistrationRequest& request, ProcessApiCallback<ClientModels::AndroidDevicePushNotificationRegistrationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ValidateGooglePlayPurchase(ClientModels::ValidateGooglePlayPurchaseRequest& request, ProcessApiCallback<ClientModels::ValidateGooglePlayPurchaseResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LogEvent(ClientModels::LogEventRequest& request, ProcessApiCallback<ClientModels::LogEventResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void WriteCharacterEvent(ClientModels::WriteClientCharacterEventRequest& request, ProcessApiCallback<ClientModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void WritePlayerEvent(ClientModels::WriteClientPlayerEventRequest& request, ProcessApiCallback<ClientModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void WriteTitleEvent(ClientModels::WriteTitleEventRequest& request, ProcessApiCallback<ClientModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddSharedGroupMembers(ClientModels::AddSharedGroupMembersRequest& request, ProcessApiCallback<ClientModels::AddSharedGroupMembersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateSharedGroup(ClientModels::CreateSharedGroupRequest& request, ProcessApiCallback<ClientModels::CreateSharedGroupResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetSharedGroupData(ClientModels::GetSharedGroupDataRequest& request, ProcessApiCallback<ClientModels::GetSharedGroupDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -228,6 +231,9 @@ namespace PlayFab
         static void OnAndroidDevicePushNotificationRegistrationResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnValidateGooglePlayPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLogEventResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnWriteCharacterEventResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnWritePlayerEventResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnWriteTitleEventResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateSharedGroupResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);

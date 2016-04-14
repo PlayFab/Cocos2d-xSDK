@@ -73,6 +73,9 @@ namespace PlayFab
         static void RedeemMatchmakerTicket(ServerModels::RedeemMatchmakerTicketRequest& request, ProcessApiCallback<ServerModels::RedeemMatchmakerTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AwardSteamAchievement(ServerModels::AwardSteamAchievementRequest& request, ProcessApiCallback<ServerModels::AwardSteamAchievementResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LogEvent(ServerModels::LogEventRequest& request, ProcessApiCallback<ServerModels::LogEventResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void WriteCharacterEvent(ServerModels::WriteServerCharacterEventRequest& request, ProcessApiCallback<ServerModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void WritePlayerEvent(ServerModels::WriteServerPlayerEventRequest& request, ProcessApiCallback<ServerModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void WriteTitleEvent(ServerModels::WriteTitleEventRequest& request, ProcessApiCallback<ServerModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddSharedGroupMembers(ServerModels::AddSharedGroupMembersRequest& request, ProcessApiCallback<ServerModels::AddSharedGroupMembersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateSharedGroup(ServerModels::CreateSharedGroupRequest& request, ProcessApiCallback<ServerModels::CreateSharedGroupResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteSharedGroup(ServerModels::DeleteSharedGroupRequest& request, ProcessApiCallback<ServerModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -158,6 +161,9 @@ namespace PlayFab
         static void OnRedeemMatchmakerTicketResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAwardSteamAchievementResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLogEventResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnWriteCharacterEventResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnWritePlayerEventResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnWriteTitleEventResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateSharedGroupResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteSharedGroupResult(int httpStatus, HttpRequest* request, void* userData);
