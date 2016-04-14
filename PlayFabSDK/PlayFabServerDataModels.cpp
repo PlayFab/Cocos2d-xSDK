@@ -5826,6 +5826,14 @@ void WriteServerCharacterEventRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("CharacterId"); writer.String(CharacterId.c_str());
     writer.String("EventName"); writer.String(EventName.c_str());
     if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
+    if (!Body.empty()) {
+    writer.String("Body");
+    writer.StartObject();
+    for (std::map<std::string, MultitypeVar>::iterator iter = Body.begin(); iter != Body.end(); ++iter) {
+        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+    }
+    writer.EndObject();
+     }
 
     writer.EndObject();
 }
@@ -5840,6 +5848,12 @@ bool WriteServerCharacterEventRequest::readFromValue(const rapidjson::Value& obj
     if (EventName_member != obj.MemberEnd() && !EventName_member->value.IsNull()) EventName = EventName_member->value.GetString();
     const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
     if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+    const Value::ConstMemberIterator Body_member = obj.FindMember("Body");
+    if (Body_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Body_member->value.MemberBegin(); iter != Body_member->value.MemberEnd(); ++iter) {
+            Body[iter->name.GetString()] = MultitypeVar(iter->value);
+        }
+    }
 
     return true;
 }
@@ -5856,6 +5870,14 @@ void WriteServerPlayerEventRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     writer.String("EventName"); writer.String(EventName.c_str());
     if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
+    if (!Body.empty()) {
+    writer.String("Body");
+    writer.StartObject();
+    for (std::map<std::string, MultitypeVar>::iterator iter = Body.begin(); iter != Body.end(); ++iter) {
+        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+    }
+    writer.EndObject();
+     }
 
     writer.EndObject();
 }
@@ -5868,6 +5890,12 @@ bool WriteServerPlayerEventRequest::readFromValue(const rapidjson::Value& obj)
     if (EventName_member != obj.MemberEnd() && !EventName_member->value.IsNull()) EventName = EventName_member->value.GetString();
     const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
     if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+    const Value::ConstMemberIterator Body_member = obj.FindMember("Body");
+    if (Body_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Body_member->value.MemberBegin(); iter != Body_member->value.MemberEnd(); ++iter) {
+            Body[iter->name.GetString()] = MultitypeVar(iter->value);
+        }
+    }
 
     return true;
 }
@@ -5883,6 +5911,14 @@ void WriteTitleEventRequest::writeJSON(PFStringJsonWriter& writer)
 
     writer.String("EventName"); writer.String(EventName.c_str());
     if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
+    if (!Body.empty()) {
+    writer.String("Body");
+    writer.StartObject();
+    for (std::map<std::string, MultitypeVar>::iterator iter = Body.begin(); iter != Body.end(); ++iter) {
+        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+    }
+    writer.EndObject();
+     }
 
     writer.EndObject();
 }
@@ -5893,6 +5929,12 @@ bool WriteTitleEventRequest::readFromValue(const rapidjson::Value& obj)
     if (EventName_member != obj.MemberEnd() && !EventName_member->value.IsNull()) EventName = EventName_member->value.GetString();
     const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
     if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
+    const Value::ConstMemberIterator Body_member = obj.FindMember("Body");
+    if (Body_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Body_member->value.MemberBegin(); iter != Body_member->value.MemberEnd(); ++iter) {
+            Body[iter->name.GetString()] = MultitypeVar(iter->value);
+        }
+    }
 
     return true;
 }

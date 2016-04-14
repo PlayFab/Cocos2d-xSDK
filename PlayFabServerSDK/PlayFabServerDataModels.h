@@ -5077,13 +5077,15 @@ namespace PlayFab
             std::string CharacterId;
             std::string EventName;
             OptionalTime Timestamp;
+            std::map<std::string, MultitypeVar> Body;
 
             WriteServerCharacterEventRequest() :
                 PlayFabBaseModel(),
                 PlayFabId(),
                 CharacterId(),
                 EventName(),
-                Timestamp()
+                Timestamp(),
+                Body()
             {}
 
             WriteServerCharacterEventRequest(const WriteServerCharacterEventRequest& src) :
@@ -5091,7 +5093,8 @@ namespace PlayFab
                 PlayFabId(src.PlayFabId),
                 CharacterId(src.CharacterId),
                 EventName(src.EventName),
-                Timestamp(src.Timestamp)
+                Timestamp(src.Timestamp),
+                Body(src.Body)
             {}
 
             WriteServerCharacterEventRequest(const rapidjson::Value& obj) : WriteServerCharacterEventRequest()
@@ -5110,19 +5113,22 @@ namespace PlayFab
             std::string PlayFabId;
             std::string EventName;
             OptionalTime Timestamp;
+            std::map<std::string, MultitypeVar> Body;
 
             WriteServerPlayerEventRequest() :
                 PlayFabBaseModel(),
                 PlayFabId(),
                 EventName(),
-                Timestamp()
+                Timestamp(),
+                Body()
             {}
 
             WriteServerPlayerEventRequest(const WriteServerPlayerEventRequest& src) :
                 PlayFabBaseModel(),
                 PlayFabId(src.PlayFabId),
                 EventName(src.EventName),
-                Timestamp(src.Timestamp)
+                Timestamp(src.Timestamp),
+                Body(src.Body)
             {}
 
             WriteServerPlayerEventRequest(const rapidjson::Value& obj) : WriteServerPlayerEventRequest()
@@ -5140,17 +5146,20 @@ namespace PlayFab
         {
             std::string EventName;
             OptionalTime Timestamp;
+            std::map<std::string, MultitypeVar> Body;
 
             WriteTitleEventRequest() :
                 PlayFabBaseModel(),
                 EventName(),
-                Timestamp()
+                Timestamp(),
+                Body()
             {}
 
             WriteTitleEventRequest(const WriteTitleEventRequest& src) :
                 PlayFabBaseModel(),
                 EventName(src.EventName),
-                Timestamp(src.Timestamp)
+                Timestamp(src.Timestamp),
+                Body(src.Body)
             {}
 
             WriteTitleEventRequest(const rapidjson::Value& obj) : WriteTitleEventRequest()
