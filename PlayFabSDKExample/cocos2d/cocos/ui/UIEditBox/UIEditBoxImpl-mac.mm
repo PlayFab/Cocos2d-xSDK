@@ -41,12 +41,16 @@
 /** TODO: Missing doc - What does "CustomTextFieldFormatter" do?
  */
 @interface CustomTextFieldFormatter : NSFormatter
+{
+    int _maximumLength;
+}
 
 @property (nonatomic, assign) int maximumLength;
 
 @end
 
 @implementation CustomTextFieldFormatter
+@synthesize maximumLength = _maximumLength;
 
 - (instancetype)init
 {
@@ -88,6 +92,16 @@
 #pragma mark - UIEditBox mac implementation
 
 @interface UIEditBoxImplMac : NSObject <NSTextFieldDelegate>
+{
+    NSTextField* _textField;
+    NSSecureTextField* _secureTextField;
+    NSMutableDictionary* _placeholderAttributes;
+    NSWindow* _window;
+
+    BOOL _editState;
+    BOOL _secure;
+    void* _editBox;
+}
 
 @property (nonatomic, retain) NSTextField* textField;
 @property (nonatomic, retain) NSSecureTextField *secureTextField;
@@ -110,6 +124,13 @@
 
 
 @implementation UIEditBoxImplMac
+@synthesize textField = _textField;
+@synthesize secureTextField = _secureTextField;
+@synthesize placeholderAttributes = _placeholderAttributes;
+@synthesize window = _window;
+@synthesize editState = _editState;
+@synthesize secure = _secure;
+@synthesize editBox = _editBox;
 
 - (instancetype)initWithFrame:(NSRect)frameRect editBox:(void *)editBox
 {
@@ -356,6 +377,7 @@ bool EditBoxImplMac::initWithSize(const Size& size)
 NSFont* EditBoxImplMac::constructFont(const char *fontName, int fontSize)
 {
     NSString * fntName = [NSString stringWithUTF8String:fontName];
+    fntName = [[fntName lastPathComponent] stringByDeletingPathExtension];
     float retinaFactor = _inRetinaMode ? 2.0f : 1.0f;
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     float scaleFactor = glview->getScaleX();
@@ -460,8 +482,8 @@ void EditBoxImplMac::setInputFlag(EditBox::InputFlag inputFlag)
         case EditBox::InputFlag::INITIAL_CAPS_SENTENCE:
             CCLOGWARN("INITIAL_CAPS_SENTENCE not implemented");
             break;
-        case EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS:
-            CCLOGWARN("INTIAL_CAPS_ALL_CHARACTERS not implemented");
+        case EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS:
+            CCLOGWARN("INITIAL_CAPS_ALL_CHARACTERS not implemented");
             break;
         case EditBox::InputFlag::SENSITIVE:
             CCLOGWARN("SENSITIVE not implemented");
