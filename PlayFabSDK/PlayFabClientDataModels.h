@@ -1335,7 +1335,7 @@ namespace PlayFab
         {
             std::string FunctionName;
             MultitypeVar FunctionParameter;
-            Boxed<CloudScriptRevisionOption> RevisionSelection;
+            CloudScriptRevisionOption RevisionSelection;
             OptionalInt32 SpecificRevision;
             OptionalBool GeneratePlayStreamEvent;
 
