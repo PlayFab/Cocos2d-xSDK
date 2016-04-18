@@ -1746,6 +1746,54 @@ void PlayFabServerAPI::OnConsumeItemResult(int httpStatus, HttpRequest* request,
     delete request;
 }
 
+void PlayFabServerAPI::EvaluateRandomResultTable(
+    EvaluateRandomResultTableRequest& request,
+    ProcessApiCallback<EvaluateRandomResultTableResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/EvaluateRandomResultTable"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    mHttpRequester->AddRequest(httpRequest, OnEvaluateRandomResultTableResult, nullptr);
+}
+
+void PlayFabServerAPI::OnEvaluateRandomResultTableResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    EvaluateRandomResultTableResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<EvaluateRandomResultTableResult> successCallback = reinterpret_cast<ProcessApiCallback<EvaluateRandomResultTableResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabServerAPI::GetCharacterInventory(
     GetCharacterInventoryRequest& request,
     ProcessApiCallback<GetCharacterInventoryResult> callback,
