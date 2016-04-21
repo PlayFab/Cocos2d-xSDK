@@ -1378,6 +1378,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct EvaluateRandomResultTableRequest : public PlayFabBaseModel
+        {
+            std::string TableId;
+            std::string CatalogVersion;
+
+            EvaluateRandomResultTableRequest() :
+                PlayFabBaseModel(),
+                TableId(),
+                CatalogVersion()
+            {}
+
+            EvaluateRandomResultTableRequest(const EvaluateRandomResultTableRequest& src) :
+                PlayFabBaseModel(),
+                TableId(src.TableId),
+                CatalogVersion(src.CatalogVersion)
+            {}
+
+            EvaluateRandomResultTableRequest(const rapidjson::Value& obj) : EvaluateRandomResultTableRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~EvaluateRandomResultTableRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct EvaluateRandomResultTableResult : public PlayFabBaseModel
+        {
+            std::string ResultItemId;
+
+            EvaluateRandomResultTableResult() :
+                PlayFabBaseModel(),
+                ResultItemId()
+            {}
+
+            EvaluateRandomResultTableResult(const EvaluateRandomResultTableResult& src) :
+                PlayFabBaseModel(),
+                ResultItemId(src.ResultItemId)
+            {}
+
+            EvaluateRandomResultTableResult(const rapidjson::Value& obj) : EvaluateRandomResultTableResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~EvaluateRandomResultTableResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct LogStatement : public PlayFabBaseModel
         {
             std::string Level;
@@ -1494,7 +1547,7 @@ namespace PlayFab
             std::string PlayFabId;
             std::string FunctionName;
             MultitypeVar FunctionParameter;
-            Boxed<CloudScriptRevisionOption> RevisionSelection;
+            CloudScriptRevisionOption RevisionSelection;
             OptionalInt32 SpecificRevision;
             OptionalBool GeneratePlayStreamEvent;
 

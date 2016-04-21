@@ -87,6 +87,17 @@ void PolygonInfo::setQuad(V3F_C4B_T2F_Quad *quad)
     triangles.verts = (V3F_C4B_T2F*)quad;
 }
 
+void PolygonInfo::setTriangles(TrianglesCommand::Triangles other)
+{
+    this->releaseVertsAndIndices();
+    isVertsOwner = false;
+    
+    this->triangles.vertCount = other.vertCount;
+    this->triangles.indexCount = other.indexCount;
+    this->triangles.verts = other.verts;
+    this->triangles.indices = other.indices;
+}
+
 void PolygonInfo::releaseVertsAndIndices()
 {
     if(isVertsOwner)
@@ -304,7 +315,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
                  +---+---+
                  |   | 8 |
                  +---+---+
-                 this should normaly go UP, but if we already been here, we go down
+                 this should normally go UP, but if we already been here, we go down
                 */
                 //find index from xy;
                 i = getIndexFromPos(curx, cury);
@@ -367,7 +378,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
         }
         else if(problem)
         {
-            //TODO: we triangulation cannot work collineer points, so we need to modify same point a little
+            //TODO: we triangulation cannot work collinear points, so we need to modify same point a little
             //TODO: maybe we can detect if we go into a hole and coming back the hole, we should extract those points and remove them
             _points.push_back(Vec2((float)(curx- rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
         }
@@ -473,7 +484,7 @@ std::vector<Vec2> AutoPolygon::reduce(const std::vector<Vec2>& points, const Rec
 std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const cocos2d::Rect &rect, const float& epsilon)
 {
     auto size = points.size();
-    // if there are less than 3 points, then we have nothig
+    // if there are less than 3 points, then we have nothing
     if(size<3)
     {
         log("AUTOPOLYGON: cannot expand points for %s with less than 3 points, e: %f", _filename.c_str(), epsilon);
@@ -570,7 +581,7 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
             }
             if(found)
             {
-                //if we found the same vertice, don't add to verts, but use the same vert with indices
+                //if we found the same vertex, don't add to verts, but use the same vertex with indices
                 indices[idx] = j;
                 idx++;
             }
@@ -621,7 +632,7 @@ void AutoPolygon::calculateUV(const Rect& rect, V3F_C4B_T2F* verts, const ssize_
     auto end = &verts[count];
     for(auto i = verts; i != end; i++)
     {
-        // for every point, offcset with the centerpoint
+        // for every point, offset with the center point
         float u = (i->vertices.x*_scaleFactor + rect.origin.x) / texWidth;
         float v = (rect.origin.y+rect.size.height - i->vertices.y*_scaleFactor) / texHeight;
         i->texCoords.u = u;

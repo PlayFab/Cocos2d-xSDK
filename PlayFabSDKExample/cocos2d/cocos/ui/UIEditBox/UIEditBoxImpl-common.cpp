@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2012 James Chen
- 
+ Copyright (c) 2013-2015 zilongshanren
+
  http://www.cocos2d-x.org
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -42,7 +43,7 @@ EditBoxImplCommon::EditBoxImplCommon(EditBox* pEditText)
 , _label(nullptr)
 , _labelPlaceHolder(nullptr)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
-, _editBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
+, _editBoxInputFlag(EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS)
 , _keyboardReturnType(EditBox::KeyboardReturnType::DEFAULT)
 , _colText(Color3B::WHITE)
 , _colPlaceHolder(Color3B::GRAY)
@@ -123,7 +124,7 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
     
 void EditBoxImplCommon::setFont(const char* pFontName, int fontSize)
 {
-    this->setNativeFont(pFontName, fontSize);
+    this->setNativeFont(pFontName, fontSize * _label->getNodeToWorldAffineTransform().a);
 
     if(strlen(pFontName) > 0)
     {
@@ -144,7 +145,7 @@ void EditBoxImplCommon::setFontColor(const Color4B& color)
 
 void EditBoxImplCommon::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-    this->setNativePlaceholderFont(pFontName, fontSize);
+    this->setNativePlaceholderFont(pFontName, fontSize * _labelPlaceHolder->getNodeToWorldAffineTransform().a);
     
     if( strlen(pFontName) > 0)
     {
@@ -248,7 +249,7 @@ void EditBoxImplCommon::setContentSize(const Size& size)
     
     auto director = cocos2d::Director::getInstance();
     auto glview = director->getOpenGLView();
-    Size  controlSize = Size(size.width * glview->getScaleX(),size.height * glview->getScaleY());
+    Size  controlSize = Size(size.width * glview->getScaleX() * _label->getNodeToWorldAffineTransform().a,size.height * glview->getScaleY() * _label->getNodeToWorldAffineTransform().a);
        
     this->setNativeContentSize(controlSize);
 
@@ -349,7 +350,7 @@ void EditBoxImplCommon::editBoxEditingDidEnd(const std::string& text)
     
     if (_editBox != nullptr)
     {
-        this->onEndEditing(text);
+        this->onEndEditing(_text);
     }
 }
 
