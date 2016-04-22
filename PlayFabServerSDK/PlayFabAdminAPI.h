@@ -11,9 +11,7 @@ namespace PlayFab
     class PlayFabAdminAPI
     {
     public:
-        template<typename ResType> using ProcessApiCallback = void(*)(ResType& result, void* userData);
-
-        static size_t Update();
+        template<typename ResType> using ProcessApiCallback = void(*)(const ResType& result, void* userData);
 
         // ------------ Generated API calls
         static void GetUserAccountInfo(AdminModels::LookupUserAccountInfoRequest& request, ProcessApiCallback<AdminModels::LookupUserAccountInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -146,8 +144,6 @@ namespace PlayFab
         static void OnGetContentListResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetContentUploadUrlResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnResetCharacterStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
-
-        static IHttpRequester* mHttpRequester;
     };
 };
 #endif

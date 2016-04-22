@@ -237,6 +237,6 @@ namespace PlayFab
     };
 
 
-    typedef void(*ErrorCallback)(PlayFabError& error, void* userData);
+    typedef void(*ErrorCallback)(const PlayFabError& error, void* userData);
 }
 #endif

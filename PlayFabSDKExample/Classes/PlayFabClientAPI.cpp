@@ -1,23 +1,17 @@
-#include "PlayFabClientAPI.h"
 #include "HttpRequest.h"
-#include "PlayFabSettings.h"
-#include "PlayFabResultHandler.h"
 #include "HttpRequesterCURL.h"
+#include "PlayFabResultHandler.h"
+#include "PlayFabSettings.h"
 #include "PlayFabVersion.h"
+#include "PlayFabClientAPI.h"
 #include <string>
 
 using namespace PlayFab;
 using namespace PlayFab::ClientModels;
 
-IHttpRequester* PlayFabClientAPI::mHttpRequester = new HttpRequesterCURL();
 std::string PlayFabClientAPI::mUserSessionTicket; // Private, Client-Specific
 
 PlayFabClientAPI::PlayFabClientAPI() {}
-
-size_t PlayFabClientAPI::Update()
-{
-    return mHttpRequester->UpdateRequests();
-}
 
 void PlayFabClientAPI::GetPhotonAuthenticationToken(
     GetPhotonAuthenticationTokenRequest& request,
@@ -39,7 +33,7 @@ void PlayFabClientAPI::GetPhotonAuthenticationToken(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetPhotonAuthenticationTokenResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPhotonAuthenticationTokenResult, userData);
 }
 
 void PlayFabClientAPI::OnGetPhotonAuthenticationTokenResult(int httpStatus, HttpRequest* request, void* userData)
@@ -88,7 +82,7 @@ void PlayFabClientAPI::LoginWithAndroidDeviceID(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLoginWithAndroidDeviceIDResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithAndroidDeviceIDResult, userData);
 }
 
 void PlayFabClientAPI::OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData)
@@ -140,7 +134,7 @@ void PlayFabClientAPI::LoginWithCustomID(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLoginWithCustomIDResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithCustomIDResult, userData);
 }
 
 void PlayFabClientAPI::OnLoginWithCustomIDResult(int httpStatus, HttpRequest* request, void* userData)
@@ -192,7 +186,7 @@ void PlayFabClientAPI::LoginWithEmailAddress(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLoginWithEmailAddressResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithEmailAddressResult, userData);
 }
 
 void PlayFabClientAPI::OnLoginWithEmailAddressResult(int httpStatus, HttpRequest* request, void* userData)
@@ -244,7 +238,7 @@ void PlayFabClientAPI::LoginWithFacebook(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLoginWithFacebookResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithFacebookResult, userData);
 }
 
 void PlayFabClientAPI::OnLoginWithFacebookResult(int httpStatus, HttpRequest* request, void* userData)
@@ -296,7 +290,7 @@ void PlayFabClientAPI::LoginWithGameCenter(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLoginWithGameCenterResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithGameCenterResult, userData);
 }
 
 void PlayFabClientAPI::OnLoginWithGameCenterResult(int httpStatus, HttpRequest* request, void* userData)
@@ -348,7 +342,7 @@ void PlayFabClientAPI::LoginWithGoogleAccount(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLoginWithGoogleAccountResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithGoogleAccountResult, userData);
 }
 
 void PlayFabClientAPI::OnLoginWithGoogleAccountResult(int httpStatus, HttpRequest* request, void* userData)
@@ -400,7 +394,7 @@ void PlayFabClientAPI::LoginWithIOSDeviceID(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLoginWithIOSDeviceIDResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithIOSDeviceIDResult, userData);
 }
 
 void PlayFabClientAPI::OnLoginWithIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData)
@@ -452,7 +446,7 @@ void PlayFabClientAPI::LoginWithKongregate(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLoginWithKongregateResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithKongregateResult, userData);
 }
 
 void PlayFabClientAPI::OnLoginWithKongregateResult(int httpStatus, HttpRequest* request, void* userData)
@@ -504,7 +498,7 @@ void PlayFabClientAPI::LoginWithPlayFab(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLoginWithPlayFabResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithPlayFabResult, userData);
 }
 
 void PlayFabClientAPI::OnLoginWithPlayFabResult(int httpStatus, HttpRequest* request, void* userData)
@@ -556,7 +550,7 @@ void PlayFabClientAPI::LoginWithSteam(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLoginWithSteamResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithSteamResult, userData);
 }
 
 void PlayFabClientAPI::OnLoginWithSteamResult(int httpStatus, HttpRequest* request, void* userData)
@@ -608,7 +602,7 @@ void PlayFabClientAPI::RegisterPlayFabUser(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnRegisterPlayFabUserResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRegisterPlayFabUserResult, userData);
 }
 
 void PlayFabClientAPI::OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* request, void* userData)
@@ -659,7 +653,7 @@ void PlayFabClientAPI::AddUsernamePassword(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnAddUsernamePasswordResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAddUsernamePasswordResult, userData);
 }
 
 void PlayFabClientAPI::OnAddUsernamePasswordResult(int httpStatus, HttpRequest* request, void* userData)
@@ -707,7 +701,7 @@ void PlayFabClientAPI::GetAccountInfo(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetAccountInfoResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetAccountInfoResult, userData);
 }
 
 void PlayFabClientAPI::OnGetAccountInfoResult(int httpStatus, HttpRequest* request, void* userData)
@@ -755,7 +749,7 @@ void PlayFabClientAPI::GetPlayFabIDsFromFacebookIDs(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromFacebookIDsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromFacebookIDsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -803,7 +797,7 @@ void PlayFabClientAPI::GetPlayFabIDsFromGameCenterIDs(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromGameCenterIDsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromGameCenterIDsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetPlayFabIDsFromGameCenterIDsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -851,7 +845,7 @@ void PlayFabClientAPI::GetPlayFabIDsFromGoogleIDs(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromGoogleIDsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromGoogleIDsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetPlayFabIDsFromGoogleIDsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -899,7 +893,7 @@ void PlayFabClientAPI::GetPlayFabIDsFromKongregateIDs(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromKongregateIDsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromKongregateIDsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetPlayFabIDsFromKongregateIDsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -947,7 +941,7 @@ void PlayFabClientAPI::GetPlayFabIDsFromSteamIDs(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromSteamIDsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromSteamIDsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -995,7 +989,7 @@ void PlayFabClientAPI::GetUserCombinedInfo(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetUserCombinedInfoResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetUserCombinedInfoResult, userData);
 }
 
 void PlayFabClientAPI::OnGetUserCombinedInfoResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1043,7 +1037,7 @@ void PlayFabClientAPI::LinkAndroidDeviceID(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLinkAndroidDeviceIDResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkAndroidDeviceIDResult, userData);
 }
 
 void PlayFabClientAPI::OnLinkAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1091,7 +1085,7 @@ void PlayFabClientAPI::LinkCustomID(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLinkCustomIDResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkCustomIDResult, userData);
 }
 
 void PlayFabClientAPI::OnLinkCustomIDResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1139,7 +1133,7 @@ void PlayFabClientAPI::LinkFacebookAccount(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLinkFacebookAccountResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkFacebookAccountResult, userData);
 }
 
 void PlayFabClientAPI::OnLinkFacebookAccountResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1187,7 +1181,7 @@ void PlayFabClientAPI::LinkGameCenterAccount(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLinkGameCenterAccountResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkGameCenterAccountResult, userData);
 }
 
 void PlayFabClientAPI::OnLinkGameCenterAccountResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1235,7 +1229,7 @@ void PlayFabClientAPI::LinkGoogleAccount(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLinkGoogleAccountResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkGoogleAccountResult, userData);
 }
 
 void PlayFabClientAPI::OnLinkGoogleAccountResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1283,7 +1277,7 @@ void PlayFabClientAPI::LinkIOSDeviceID(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLinkIOSDeviceIDResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkIOSDeviceIDResult, userData);
 }
 
 void PlayFabClientAPI::OnLinkIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1331,7 +1325,7 @@ void PlayFabClientAPI::LinkKongregate(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLinkKongregateResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkKongregateResult, userData);
 }
 
 void PlayFabClientAPI::OnLinkKongregateResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1379,7 +1373,7 @@ void PlayFabClientAPI::LinkSteamAccount(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLinkSteamAccountResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkSteamAccountResult, userData);
 }
 
 void PlayFabClientAPI::OnLinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1427,7 +1421,7 @@ void PlayFabClientAPI::ReportPlayer(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnReportPlayerResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnReportPlayerResult, userData);
 }
 
 void PlayFabClientAPI::OnReportPlayerResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1475,7 +1469,7 @@ void PlayFabClientAPI::SendAccountRecoveryEmail(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnSendAccountRecoveryEmailResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnSendAccountRecoveryEmailResult, userData);
 }
 
 void PlayFabClientAPI::OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1523,7 +1517,7 @@ void PlayFabClientAPI::UnlinkAndroidDeviceID(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUnlinkAndroidDeviceIDResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkAndroidDeviceIDResult, userData);
 }
 
 void PlayFabClientAPI::OnUnlinkAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1571,7 +1565,7 @@ void PlayFabClientAPI::UnlinkCustomID(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUnlinkCustomIDResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkCustomIDResult, userData);
 }
 
 void PlayFabClientAPI::OnUnlinkCustomIDResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1619,7 +1613,7 @@ void PlayFabClientAPI::UnlinkFacebookAccount(
     httpRequest->SetBody("{}");
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUnlinkFacebookAccountResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkFacebookAccountResult, userData);
 }
 
 void PlayFabClientAPI::OnUnlinkFacebookAccountResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1667,7 +1661,7 @@ void PlayFabClientAPI::UnlinkGameCenterAccount(
     httpRequest->SetBody("{}");
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUnlinkGameCenterAccountResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkGameCenterAccountResult, userData);
 }
 
 void PlayFabClientAPI::OnUnlinkGameCenterAccountResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1715,7 +1709,7 @@ void PlayFabClientAPI::UnlinkGoogleAccount(
     httpRequest->SetBody("{}");
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUnlinkGoogleAccountResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkGoogleAccountResult, userData);
 }
 
 void PlayFabClientAPI::OnUnlinkGoogleAccountResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1763,7 +1757,7 @@ void PlayFabClientAPI::UnlinkIOSDeviceID(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUnlinkIOSDeviceIDResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkIOSDeviceIDResult, userData);
 }
 
 void PlayFabClientAPI::OnUnlinkIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1811,7 +1805,7 @@ void PlayFabClientAPI::UnlinkKongregate(
     httpRequest->SetBody("{}");
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUnlinkKongregateResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkKongregateResult, userData);
 }
 
 void PlayFabClientAPI::OnUnlinkKongregateResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1859,7 +1853,7 @@ void PlayFabClientAPI::UnlinkSteamAccount(
     httpRequest->SetBody("{}");
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUnlinkSteamAccountResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkSteamAccountResult, userData);
 }
 
 void PlayFabClientAPI::OnUnlinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1907,7 +1901,7 @@ void PlayFabClientAPI::UpdateUserTitleDisplayName(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUpdateUserTitleDisplayNameResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUpdateUserTitleDisplayNameResult, userData);
 }
 
 void PlayFabClientAPI::OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpRequest* request, void* userData)
@@ -1955,7 +1949,7 @@ void PlayFabClientAPI::GetFriendLeaderboard(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetFriendLeaderboardResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetFriendLeaderboardResult, userData);
 }
 
 void PlayFabClientAPI::OnGetFriendLeaderboardResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2003,7 +1997,7 @@ void PlayFabClientAPI::GetFriendLeaderboardAroundCurrentUser(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetFriendLeaderboardAroundCurrentUserResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetFriendLeaderboardAroundCurrentUserResult, userData);
 }
 
 void PlayFabClientAPI::OnGetFriendLeaderboardAroundCurrentUserResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2051,7 +2045,7 @@ void PlayFabClientAPI::GetFriendLeaderboardAroundPlayer(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetFriendLeaderboardAroundPlayerResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetFriendLeaderboardAroundPlayerResult, userData);
 }
 
 void PlayFabClientAPI::OnGetFriendLeaderboardAroundPlayerResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2099,7 +2093,7 @@ void PlayFabClientAPI::GetLeaderboard(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetLeaderboardResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetLeaderboardResult, userData);
 }
 
 void PlayFabClientAPI::OnGetLeaderboardResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2147,7 +2141,7 @@ void PlayFabClientAPI::GetLeaderboardAroundCurrentUser(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetLeaderboardAroundCurrentUserResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetLeaderboardAroundCurrentUserResult, userData);
 }
 
 void PlayFabClientAPI::OnGetLeaderboardAroundCurrentUserResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2195,7 +2189,7 @@ void PlayFabClientAPI::GetLeaderboardAroundPlayer(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetLeaderboardAroundPlayerResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetLeaderboardAroundPlayerResult, userData);
 }
 
 void PlayFabClientAPI::OnGetLeaderboardAroundPlayerResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2243,7 +2237,7 @@ void PlayFabClientAPI::GetPlayerStatistics(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetPlayerStatisticsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayerStatisticsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetPlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2291,7 +2285,7 @@ void PlayFabClientAPI::GetPlayerStatisticVersions(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetPlayerStatisticVersionsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayerStatisticVersionsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetPlayerStatisticVersionsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2339,7 +2333,7 @@ void PlayFabClientAPI::GetUserData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetUserDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetUserDataResult, userData);
 }
 
 void PlayFabClientAPI::OnGetUserDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2387,7 +2381,7 @@ void PlayFabClientAPI::GetUserPublisherData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetUserPublisherDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetUserPublisherDataResult, userData);
 }
 
 void PlayFabClientAPI::OnGetUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2435,7 +2429,7 @@ void PlayFabClientAPI::GetUserPublisherReadOnlyData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetUserPublisherReadOnlyDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetUserPublisherReadOnlyDataResult, userData);
 }
 
 void PlayFabClientAPI::OnGetUserPublisherReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2483,7 +2477,7 @@ void PlayFabClientAPI::GetUserReadOnlyData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetUserReadOnlyDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetUserReadOnlyDataResult, userData);
 }
 
 void PlayFabClientAPI::OnGetUserReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2531,7 +2525,7 @@ void PlayFabClientAPI::GetUserStatistics(
     httpRequest->SetBody("{}");
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetUserStatisticsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetUserStatisticsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetUserStatisticsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2579,7 +2573,7 @@ void PlayFabClientAPI::UpdatePlayerStatistics(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUpdatePlayerStatisticsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUpdatePlayerStatisticsResult, userData);
 }
 
 void PlayFabClientAPI::OnUpdatePlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2627,7 +2621,7 @@ void PlayFabClientAPI::UpdateUserData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUpdateUserDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUpdateUserDataResult, userData);
 }
 
 void PlayFabClientAPI::OnUpdateUserDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2675,7 +2669,7 @@ void PlayFabClientAPI::UpdateUserPublisherData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUpdateUserPublisherDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUpdateUserPublisherDataResult, userData);
 }
 
 void PlayFabClientAPI::OnUpdateUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2723,7 +2717,7 @@ void PlayFabClientAPI::UpdateUserStatistics(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUpdateUserStatisticsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUpdateUserStatisticsResult, userData);
 }
 
 void PlayFabClientAPI::OnUpdateUserStatisticsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2771,7 +2765,7 @@ void PlayFabClientAPI::GetCatalogItems(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetCatalogItemsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetCatalogItemsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2819,7 +2813,7 @@ void PlayFabClientAPI::GetPublisherData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetPublisherDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPublisherDataResult, userData);
 }
 
 void PlayFabClientAPI::OnGetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2867,7 +2861,7 @@ void PlayFabClientAPI::GetStoreItems(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetStoreItemsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetStoreItemsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetStoreItemsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2915,7 +2909,7 @@ void PlayFabClientAPI::GetTitleData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetTitleDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetTitleDataResult, userData);
 }
 
 void PlayFabClientAPI::OnGetTitleDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -2963,7 +2957,7 @@ void PlayFabClientAPI::GetTitleNews(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetTitleNewsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetTitleNewsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetTitleNewsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3011,7 +3005,7 @@ void PlayFabClientAPI::AddUserVirtualCurrency(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnAddUserVirtualCurrencyResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAddUserVirtualCurrencyResult, userData);
 }
 
 void PlayFabClientAPI::OnAddUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3059,7 +3053,7 @@ void PlayFabClientAPI::ConfirmPurchase(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnConfirmPurchaseResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnConfirmPurchaseResult, userData);
 }
 
 void PlayFabClientAPI::OnConfirmPurchaseResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3107,7 +3101,7 @@ void PlayFabClientAPI::ConsumeItem(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnConsumeItemResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnConsumeItemResult, userData);
 }
 
 void PlayFabClientAPI::OnConsumeItemResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3155,7 +3149,7 @@ void PlayFabClientAPI::GetCharacterInventory(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetCharacterInventoryResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetCharacterInventoryResult, userData);
 }
 
 void PlayFabClientAPI::OnGetCharacterInventoryResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3203,7 +3197,7 @@ void PlayFabClientAPI::GetPurchase(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetPurchaseResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPurchaseResult, userData);
 }
 
 void PlayFabClientAPI::OnGetPurchaseResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3251,7 +3245,7 @@ void PlayFabClientAPI::GetUserInventory(
     httpRequest->SetBody("{}");
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetUserInventoryResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetUserInventoryResult, userData);
 }
 
 void PlayFabClientAPI::OnGetUserInventoryResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3299,7 +3293,7 @@ void PlayFabClientAPI::PayForPurchase(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnPayForPurchaseResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnPayForPurchaseResult, userData);
 }
 
 void PlayFabClientAPI::OnPayForPurchaseResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3347,7 +3341,7 @@ void PlayFabClientAPI::PurchaseItem(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnPurchaseItemResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnPurchaseItemResult, userData);
 }
 
 void PlayFabClientAPI::OnPurchaseItemResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3395,7 +3389,7 @@ void PlayFabClientAPI::RedeemCoupon(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnRedeemCouponResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRedeemCouponResult, userData);
 }
 
 void PlayFabClientAPI::OnRedeemCouponResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3443,7 +3437,7 @@ void PlayFabClientAPI::StartPurchase(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnStartPurchaseResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnStartPurchaseResult, userData);
 }
 
 void PlayFabClientAPI::OnStartPurchaseResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3491,7 +3485,7 @@ void PlayFabClientAPI::SubtractUserVirtualCurrency(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnSubtractUserVirtualCurrencyResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnSubtractUserVirtualCurrencyResult, userData);
 }
 
 void PlayFabClientAPI::OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3539,7 +3533,7 @@ void PlayFabClientAPI::UnlockContainerInstance(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUnlockContainerInstanceResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlockContainerInstanceResult, userData);
 }
 
 void PlayFabClientAPI::OnUnlockContainerInstanceResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3587,7 +3581,7 @@ void PlayFabClientAPI::UnlockContainerItem(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUnlockContainerItemResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlockContainerItemResult, userData);
 }
 
 void PlayFabClientAPI::OnUnlockContainerItemResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3635,7 +3629,7 @@ void PlayFabClientAPI::AddFriend(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnAddFriendResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAddFriendResult, userData);
 }
 
 void PlayFabClientAPI::OnAddFriendResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3683,7 +3677,7 @@ void PlayFabClientAPI::GetFriendsList(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetFriendsListResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetFriendsListResult, userData);
 }
 
 void PlayFabClientAPI::OnGetFriendsListResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3731,7 +3725,7 @@ void PlayFabClientAPI::RemoveFriend(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnRemoveFriendResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRemoveFriendResult, userData);
 }
 
 void PlayFabClientAPI::OnRemoveFriendResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3779,7 +3773,7 @@ void PlayFabClientAPI::SetFriendTags(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnSetFriendTagsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnSetFriendTagsResult, userData);
 }
 
 void PlayFabClientAPI::OnSetFriendTagsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3827,7 +3821,7 @@ void PlayFabClientAPI::RegisterForIOSPushNotification(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnRegisterForIOSPushNotificationResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRegisterForIOSPushNotificationResult, userData);
 }
 
 void PlayFabClientAPI::OnRegisterForIOSPushNotificationResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3875,7 +3869,7 @@ void PlayFabClientAPI::RestoreIOSPurchases(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnRestoreIOSPurchasesResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRestoreIOSPurchasesResult, userData);
 }
 
 void PlayFabClientAPI::OnRestoreIOSPurchasesResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3923,7 +3917,7 @@ void PlayFabClientAPI::ValidateIOSReceipt(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnValidateIOSReceiptResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnValidateIOSReceiptResult, userData);
 }
 
 void PlayFabClientAPI::OnValidateIOSReceiptResult(int httpStatus, HttpRequest* request, void* userData)
@@ -3971,7 +3965,7 @@ void PlayFabClientAPI::GetCurrentGames(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetCurrentGamesResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetCurrentGamesResult, userData);
 }
 
 void PlayFabClientAPI::OnGetCurrentGamesResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4019,7 +4013,7 @@ void PlayFabClientAPI::GetGameServerRegions(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetGameServerRegionsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetGameServerRegionsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetGameServerRegionsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4067,7 +4061,7 @@ void PlayFabClientAPI::Matchmake(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnMatchmakeResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnMatchmakeResult, userData);
 }
 
 void PlayFabClientAPI::OnMatchmakeResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4115,7 +4109,7 @@ void PlayFabClientAPI::StartGame(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnStartGameResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnStartGameResult, userData);
 }
 
 void PlayFabClientAPI::OnStartGameResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4163,7 +4157,7 @@ void PlayFabClientAPI::AndroidDevicePushNotificationRegistration(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnAndroidDevicePushNotificationRegistrationResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAndroidDevicePushNotificationRegistrationResult, userData);
 }
 
 void PlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4211,7 +4205,7 @@ void PlayFabClientAPI::ValidateGooglePlayPurchase(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnValidateGooglePlayPurchaseResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnValidateGooglePlayPurchaseResult, userData);
 }
 
 void PlayFabClientAPI::OnValidateGooglePlayPurchaseResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4259,7 +4253,7 @@ void PlayFabClientAPI::LogEvent(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnLogEventResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLogEventResult, userData);
 }
 
 void PlayFabClientAPI::OnLogEventResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4307,7 +4301,7 @@ void PlayFabClientAPI::WriteCharacterEvent(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnWriteCharacterEventResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnWriteCharacterEventResult, userData);
 }
 
 void PlayFabClientAPI::OnWriteCharacterEventResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4355,7 +4349,7 @@ void PlayFabClientAPI::WritePlayerEvent(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnWritePlayerEventResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnWritePlayerEventResult, userData);
 }
 
 void PlayFabClientAPI::OnWritePlayerEventResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4403,7 +4397,7 @@ void PlayFabClientAPI::WriteTitleEvent(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnWriteTitleEventResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnWriteTitleEventResult, userData);
 }
 
 void PlayFabClientAPI::OnWriteTitleEventResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4451,7 +4445,7 @@ void PlayFabClientAPI::AddSharedGroupMembers(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnAddSharedGroupMembersResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAddSharedGroupMembersResult, userData);
 }
 
 void PlayFabClientAPI::OnAddSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4499,7 +4493,7 @@ void PlayFabClientAPI::CreateSharedGroup(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnCreateSharedGroupResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnCreateSharedGroupResult, userData);
 }
 
 void PlayFabClientAPI::OnCreateSharedGroupResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4547,7 +4541,7 @@ void PlayFabClientAPI::GetSharedGroupData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetSharedGroupDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetSharedGroupDataResult, userData);
 }
 
 void PlayFabClientAPI::OnGetSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4595,7 +4589,7 @@ void PlayFabClientAPI::RemoveSharedGroupMembers(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnRemoveSharedGroupMembersResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRemoveSharedGroupMembersResult, userData);
 }
 
 void PlayFabClientAPI::OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4643,7 +4637,7 @@ void PlayFabClientAPI::UpdateSharedGroupData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUpdateSharedGroupDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUpdateSharedGroupDataResult, userData);
 }
 
 void PlayFabClientAPI::OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4691,7 +4685,7 @@ void PlayFabClientAPI::ExecuteCloudScript(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnExecuteCloudScriptResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnExecuteCloudScriptResult, userData);
 }
 
 void PlayFabClientAPI::OnExecuteCloudScriptResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4739,7 +4733,7 @@ void PlayFabClientAPI::GetCloudScriptUrl(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetCloudScriptUrlResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetCloudScriptUrlResult, userData);
 }
 
 void PlayFabClientAPI::OnGetCloudScriptUrlResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4788,7 +4782,7 @@ void PlayFabClientAPI::RunCloudScript(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnRunCloudScriptResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRunCloudScriptResult, userData);
 }
 
 void PlayFabClientAPI::OnRunCloudScriptResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4836,7 +4830,7 @@ void PlayFabClientAPI::GetContentDownloadUrl(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetContentDownloadUrlResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetContentDownloadUrlResult, userData);
 }
 
 void PlayFabClientAPI::OnGetContentDownloadUrlResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4884,7 +4878,7 @@ void PlayFabClientAPI::GetAllUsersCharacters(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetAllUsersCharactersResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetAllUsersCharactersResult, userData);
 }
 
 void PlayFabClientAPI::OnGetAllUsersCharactersResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4932,7 +4926,7 @@ void PlayFabClientAPI::GetCharacterLeaderboard(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetCharacterLeaderboardResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetCharacterLeaderboardResult, userData);
 }
 
 void PlayFabClientAPI::OnGetCharacterLeaderboardResult(int httpStatus, HttpRequest* request, void* userData)
@@ -4980,7 +4974,7 @@ void PlayFabClientAPI::GetCharacterStatistics(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetCharacterStatisticsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetCharacterStatisticsResult, userData);
 }
 
 void PlayFabClientAPI::OnGetCharacterStatisticsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5028,7 +5022,7 @@ void PlayFabClientAPI::GetLeaderboardAroundCharacter(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetLeaderboardAroundCharacterResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetLeaderboardAroundCharacterResult, userData);
 }
 
 void PlayFabClientAPI::OnGetLeaderboardAroundCharacterResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5076,7 +5070,7 @@ void PlayFabClientAPI::GetLeaderboardForUserCharacters(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetLeaderboardForUserCharactersResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetLeaderboardForUserCharactersResult, userData);
 }
 
 void PlayFabClientAPI::OnGetLeaderboardForUserCharactersResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5124,7 +5118,7 @@ void PlayFabClientAPI::GrantCharacterToUser(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGrantCharacterToUserResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGrantCharacterToUserResult, userData);
 }
 
 void PlayFabClientAPI::OnGrantCharacterToUserResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5172,7 +5166,7 @@ void PlayFabClientAPI::UpdateCharacterStatistics(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUpdateCharacterStatisticsResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUpdateCharacterStatisticsResult, userData);
 }
 
 void PlayFabClientAPI::OnUpdateCharacterStatisticsResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5220,7 +5214,7 @@ void PlayFabClientAPI::GetCharacterData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetCharacterDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetCharacterDataResult, userData);
 }
 
 void PlayFabClientAPI::OnGetCharacterDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5268,7 +5262,7 @@ void PlayFabClientAPI::GetCharacterReadOnlyData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetCharacterReadOnlyDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetCharacterReadOnlyDataResult, userData);
 }
 
 void PlayFabClientAPI::OnGetCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5316,7 +5310,7 @@ void PlayFabClientAPI::UpdateCharacterData(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUpdateCharacterDataResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUpdateCharacterDataResult, userData);
 }
 
 void PlayFabClientAPI::OnUpdateCharacterDataResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5364,7 +5358,7 @@ void PlayFabClientAPI::ValidateAmazonIAPReceipt(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnValidateAmazonIAPReceiptResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnValidateAmazonIAPReceiptResult, userData);
 }
 
 void PlayFabClientAPI::OnValidateAmazonIAPReceiptResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5412,7 +5406,7 @@ void PlayFabClientAPI::AcceptTrade(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnAcceptTradeResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAcceptTradeResult, userData);
 }
 
 void PlayFabClientAPI::OnAcceptTradeResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5460,7 +5454,7 @@ void PlayFabClientAPI::CancelTrade(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnCancelTradeResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnCancelTradeResult, userData);
 }
 
 void PlayFabClientAPI::OnCancelTradeResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5508,7 +5502,7 @@ void PlayFabClientAPI::GetPlayerTrades(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetPlayerTradesResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayerTradesResult, userData);
 }
 
 void PlayFabClientAPI::OnGetPlayerTradesResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5556,7 +5550,7 @@ void PlayFabClientAPI::GetTradeStatus(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnGetTradeStatusResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetTradeStatusResult, userData);
 }
 
 void PlayFabClientAPI::OnGetTradeStatusResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5604,7 +5598,7 @@ void PlayFabClientAPI::OpenTrade(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnOpenTradeResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnOpenTradeResult, userData);
 }
 
 void PlayFabClientAPI::OnOpenTradeResult(int httpStatus, HttpRequest* request, void* userData)
@@ -5652,7 +5646,7 @@ void PlayFabClientAPI::AttributeInstall(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnAttributeInstallResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAttributeInstallResult, userData);
 }
 
 void PlayFabClientAPI::OnAttributeInstallResult(int httpStatus, HttpRequest* request, void* userData)

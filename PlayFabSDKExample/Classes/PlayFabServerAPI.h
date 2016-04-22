@@ -11,9 +11,7 @@ namespace PlayFab
     class PlayFabServerAPI
     {
     public:
-        template<typename ResType> using ProcessApiCallback = void(*)(ResType& result, void* userData);
-
-        static size_t Update();
+        template<typename ResType> using ProcessApiCallback = void(*)(const ResType& result, void* userData);
 
         // ------------ Generated API calls
         static void AuthenticateSessionTicket(ServerModels::AuthenticateSessionTicketRequest& request, ProcessApiCallback<ServerModels::AuthenticateSessionTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -188,8 +186,6 @@ namespace PlayFab
         static void OnUpdateCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCharacterInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
-
-        static IHttpRequester* mHttpRequester;
     };
 };
 #endif
