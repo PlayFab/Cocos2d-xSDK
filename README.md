@@ -2,7 +2,7 @@ Cocos2d-xSDK README
 ========
 1. Overview:
 ----
-PlayFab SDKs for c++ based Cocos2d-x game development, Cocos version 3.10
+PlayFab SDKs for c++ based Cocos2d-x game development.
 
 The cocos sdk has not yet been fully tested across all Cocos platforms.  However, this list is improving over time.
 * These platforms are tested and should function very well:
@@ -14,6 +14,12 @@ The cocos sdk has not yet been fully tested across all Cocos platforms.  However
  * linux
  * win8.1-universal
  * win10
+
+For Android:
+AndroidSdk: targeting Andorid 5.0.1 (API 21).
+If you wish to target Android 6.0 (API 23), then you may need this fix:
+http://discuss.cocos2d-x.org/t/android-23-6-0-compile-errors-import-org-apache-http-header/26876
+This seems to be a case where Google removed code that Cocos relies on.  If you attempt to compile API 23 without the linked fix, you will probably get build errors.
 
 2. Prerequisites:
 ----
