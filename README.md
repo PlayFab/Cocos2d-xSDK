@@ -2,8 +2,18 @@ Cocos2d-xSDK README
 ========
 1. Overview:
 ----
-PlayFab SDKs for c++ based Cocos2d-x game development.
-Please note that this SDK does not work correctly for any mobile development (iOS, Android, WinPhone).  We are attempting to resolve this issue internally, and it will be solved as soon as possible.
+PlayFab SDKs for c++ based Cocos2d-x game development, Cocos version 3.10
+
+The cocos sdk has not yet been fully tested across all Cocos platforms.  However, this list is improving over time.
+* These platforms are tested and should function very well:
+ * win32
+ * ios_mac
+ * android
+* These platforms are not tested/working yet:
+ * android-studio
+ * linux
+ * win8.1-universal
+ * win10
 
 2. Prerequisites:
 ----
@@ -116,8 +126,11 @@ Our Developer Success Team can assist with answering any questions as well as pr
 
 [Forums, Support and Knowledge Base](https://community.playfab.com/hc/en-us)
 
+6. Acknowledgements
+----
+Special thanks to the team at Mingle Games (http://mingle-games.com/) for their assistance in expanding mobile support for this SDK!
 
-6. Copyright and Licensing Information:
+7. Copyright and Licensing Information:
 ----
   Apache License --
   Version 2.0, January 2004
