@@ -11,9 +11,7 @@ namespace PlayFab
     class PlayFabMatchmakerAPI
     {
     public:
-        template<typename ResType> using ProcessApiCallback = void(*)(ResType& result, void* userData);
-
-        static size_t Update();
+        template<typename ResType> using ProcessApiCallback = void(*)(const ResType& result, void* userData);
 
         // ------------ Generated API calls
         static void AuthUser(MatchmakerModels::AuthUserRequest& request, ProcessApiCallback<MatchmakerModels::AuthUserResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -32,8 +30,6 @@ namespace PlayFab
         static void OnPlayerLeftResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnStartGameResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUserInfoResult(int httpStatus, HttpRequest* request, void* userData);
-
-        static IHttpRequester* mHttpRequester;
     };
 };
 #endif

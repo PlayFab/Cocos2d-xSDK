@@ -6,8 +6,8 @@ cocos2d-x
 
 |  |iOS|Mac|Linux|Win32|Android|Win8.1-Universal|
 | ----|----|----- | ---|----|------|---|
-|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32)](http://45.56.80.45:8080/job/daily-build-v3/node=win32)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=windows-universal)](http://45.56.80.45:8080/job/daily-build-v3/node=windows-universal)|
-|v4|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=ios)](http://45.56.80.45:8080/job/daily-build-v4/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=mac)](http://45.56.80.45:8080/job/daily-build-v4/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=linux)](http://45.56.80.45:8080/job/daily-build-v4/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=win32)](http://45.56.80.45:8080/job/daily-build-v4/node=win32)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=android)](http://45.56.80.45:8080/job/daily-build-v4/node=android)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=windows-universal)](http://45.56.80.45:8080/job/daily-build-v4/node=windows-universal)|
+|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=windows-universal_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=windows-universal_bak)|
+|v4|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=ios)](http://45.56.80.45:8080/job/daily-build-v4/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=mac)](http://45.56.80.45:8080/job/daily-build-v4/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=linux)](http://45.56.80.45:8080/job/daily-build-v4/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v4/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=android)](http://45.56.80.45:8080/job/daily-build-v4/node=android)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=windows-universal_bak)](http://45.56.80.45:8080/job/daily-build-v4/node=windows-universal_bak)|
 
 
 
@@ -104,7 +104,7 @@ Run
 
 * Visual Studio 2013 Update 4 or later is required for Windows 8.1 Universal Apps
 
-* Visual Studio 2015 (Release version) and Windows 10.0 (Release version) are required for Windows 10.0 Universal Windows Platform (UWP) Apps. RC versions of Visual Studio and Window 10 are no longer supported.
+* Visual Studio 2015 (Release version) and Windows 10.0 (Release version) are required for Windows 10.0 Universal Windows Platform (UWP) Apps. RC versions of Visual Studio and Windows 10 are no longer supported.
 
 Starting with Cocos2d-x v3.3, you can create Windows 8.1 Universal Apps (Windows Store and Windows Phone 8.1).
 Starting with Cocos2d-x v3.8 you can create Windows 10.0 UWP Apps (Windows Store and Windows Phone 10.0).
@@ -182,7 +182,7 @@ Build Requirements
 
 Runtime Requirements
 --------------------
-  * iOS 5.0+ for iPhone / iPad games
+  * iOS 6.0+ for iPhone / iPad games
   * Android 2.3+ for Android games
   * Windows 8.1 or Windows 10.0 for Windows Phone/Store 8.1 games
   * Windows 10.0 for Windows Phone/Store 10.0  games
@@ -259,6 +259,38 @@ $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
 
+Learning Resources
+--------------------------------
+
+* [Programmers Guide](http://cocos2d-x.org/programmersguide/)
+* [Sonar Systems Videos](https://www.youtube.com/user/sonarsystemslimited/search?query=cocos2d-x)
+* [Android Fundamentals](https://developer.android.com/guide/components/fundamentals.html)
+* [Make School Tutorials](https://www.makeschool.com/tutorials/)
+* [Games From Scratch](http://www.gamefromscratch.com/page/Cocos2d-x-CPP-Game-Programming-Tutorial-Series.aspx)
+* [Cocos2d sample games](https://github.com/cocos2d/cocos2d-x-samples)
+
+Spreading the word!
+--------------------------------
+You can help us spread the word about cocos2d-x! We would surely appreciate it!
+
+* Talk about us on Facebook! Our [Facebook Page](https://www.facebook.com/cocos2dx/)
+* Tweet, Tweet! Our [Twitter](https://twitter.com/cocos2dx)
+* Read our [Blog](http://blog.cocos2d-x.org/) and promote it on your social media.
+* Become a [Regional Coordinator](http://discuss.cocos2d-x.org/t/we-need-regional-coordinators/24104)
+
+Where to get help
+--------------------------------
+
+* [Forums](http://discuss.cocos2d-x.org)
+* [Bug Tracker](https://github.com/cocos2d/cocos2d-x/issues)
+* IRC. We are in [Freenode](https://webchat.freenode.net/) in the _#cocos2d_ channel
+* `cpp-tests` project. This project is our basis for testing. Use this project to
+learn how we implement the functionality of the engine. This project is located in
+__cocos2d-x_root/build.__
+* [API Reference](http://cocos2d-x.org/wiki/Reference).
+* [Temporary Cocos2d-JS documents](http://cocos2d-x.org/docs/manual/framework/html5/en)
+* [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
+* [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
 Contributing to the Project
 --------------------------------
@@ -283,7 +315,7 @@ Contact us
 [5]: http://www.box2d.org "Box2D"
 [6]: http://www.chipmunk-physics.net "Chipmunk2D"
 [7]: http://esotericsoftware.com/ "http://esotericsoftware.com/"
-[8]: https://github.com/cocos2d/cocos2d-x/blob/v3/docs/CONTRIBUTE.md
+[8]: https://github.com/cocos2d/cocos2d-x/blob/v3/CONTRIBUTING.md
 [9]: http://forum.cocos2d-x.org "http://forum.cocos2d-x.org"
 [10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
 [11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"

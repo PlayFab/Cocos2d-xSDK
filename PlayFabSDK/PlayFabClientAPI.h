@@ -11,9 +11,7 @@ namespace PlayFab
     class PlayFabClientAPI
     {
     public:
-        template<typename ResType> using ProcessApiCallback = void(*)(ResType& result, void* userData);
-
-        static size_t Update();
+        template<typename ResType> using ProcessApiCallback = void(*)(const ResType& result, void* userData);
 
         // Public, Client-Specific
         static void MultiStepClientLogin(bool needsAttribution);
@@ -260,8 +258,6 @@ namespace PlayFab
         static void OnGetTradeStatusResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnOpenTradeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAttributeInstallResult(int httpStatus, HttpRequest* request, void* userData);
-
-        static IHttpRequester* mHttpRequester;
 
         // Private, Client-Specific
         static std::string mUserSessionTicket;

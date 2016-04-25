@@ -1678,6 +1678,53 @@ bool EmptyResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+EvaluateRandomResultTableRequest::~EvaluateRandomResultTableRequest()
+{
+
+}
+
+void EvaluateRandomResultTableRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("TableId"); writer.String(TableId.c_str());
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+
+    writer.EndObject();
+}
+
+bool EvaluateRandomResultTableRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TableId_member = obj.FindMember("TableId");
+    if (TableId_member != obj.MemberEnd() && !TableId_member->value.IsNull()) TableId = TableId_member->value.GetString();
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+
+    return true;
+}
+
+EvaluateRandomResultTableResult::~EvaluateRandomResultTableResult()
+{
+
+}
+
+void EvaluateRandomResultTableResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (ResultItemId.length() > 0) { writer.String("ResultItemId"); writer.String(ResultItemId.c_str()); }
+
+    writer.EndObject();
+}
+
+bool EvaluateRandomResultTableResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ResultItemId_member = obj.FindMember("ResultItemId");
+    if (ResultItemId_member != obj.MemberEnd() && !ResultItemId_member->value.IsNull()) ResultItemId = ResultItemId_member->value.GetString();
+
+    return true;
+}
+
 LogStatement::~LogStatement()
 {
 

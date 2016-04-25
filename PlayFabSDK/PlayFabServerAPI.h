@@ -11,9 +11,7 @@ namespace PlayFab
     class PlayFabServerAPI
     {
     public:
-        template<typename ResType> using ProcessApiCallback = void(*)(ResType& result, void* userData);
-
-        static size_t Update();
+        template<typename ResType> using ProcessApiCallback = void(*)(const ResType& result, void* userData);
 
         // ------------ Generated API calls
         static void AuthenticateSessionTicket(ServerModels::AuthenticateSessionTicketRequest& request, ProcessApiCallback<ServerModels::AuthenticateSessionTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -52,6 +50,7 @@ namespace PlayFab
         static void AddCharacterVirtualCurrency(ServerModels::AddCharacterVirtualCurrencyRequest& request, ProcessApiCallback<ServerModels::ModifyCharacterVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddUserVirtualCurrency(ServerModels::AddUserVirtualCurrencyRequest& request, ProcessApiCallback<ServerModels::ModifyUserVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ConsumeItem(ServerModels::ConsumeItemRequest& request, ProcessApiCallback<ServerModels::ConsumeItemResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void EvaluateRandomResultTable(ServerModels::EvaluateRandomResultTableRequest& request, ProcessApiCallback<ServerModels::EvaluateRandomResultTableResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCharacterInventory(ServerModels::GetCharacterInventoryRequest& request, ProcessApiCallback<ServerModels::GetCharacterInventoryResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserInventory(ServerModels::GetUserInventoryRequest& request, ProcessApiCallback<ServerModels::GetUserInventoryResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GrantItemsToCharacter(ServerModels::GrantItemsToCharacterRequest& request, ProcessApiCallback<ServerModels::GrantItemsToCharacterResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -140,6 +139,7 @@ namespace PlayFab
         static void OnAddCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnConsumeItemResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnEvaluateRandomResultTableResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCharacterInventoryResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserInventoryResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGrantItemsToCharacterResult(int httpStatus, HttpRequest* request, void* userData);
@@ -186,8 +186,6 @@ namespace PlayFab
         static void OnUpdateCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCharacterInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
-
-        static IHttpRequester* mHttpRequester;
     };
 };
 #endif

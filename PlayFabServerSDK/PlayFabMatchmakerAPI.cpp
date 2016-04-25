@@ -1,22 +1,15 @@
-#include "PlayFabMatchmakerAPI.h"
 #include "HttpRequest.h"
-#include "PlayFabSettings.h"
-#include "PlayFabResultHandler.h"
 #include "HttpRequesterCURL.h"
+#include "PlayFabResultHandler.h"
+#include "PlayFabSettings.h"
 #include "PlayFabVersion.h"
+#include "PlayFabMatchmakerAPI.h"
 #include <string>
 
 using namespace PlayFab;
 using namespace PlayFab::MatchmakerModels;
 
-IHttpRequester* PlayFabMatchmakerAPI::mHttpRequester = new HttpRequesterCURL();
-
 PlayFabMatchmakerAPI::PlayFabMatchmakerAPI() {}
-
-size_t PlayFabMatchmakerAPI::Update()
-{
-    return mHttpRequester->UpdateRequests();
-}
 
 void PlayFabMatchmakerAPI::AuthUser(
     AuthUserRequest& request,
@@ -38,7 +31,7 @@ void PlayFabMatchmakerAPI::AuthUser(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnAuthUserResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAuthUserResult, userData);
 }
 
 void PlayFabMatchmakerAPI::OnAuthUserResult(int httpStatus, HttpRequest* request, void* userData)
@@ -86,7 +79,7 @@ void PlayFabMatchmakerAPI::PlayerJoined(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnPlayerJoinedResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnPlayerJoinedResult, userData);
 }
 
 void PlayFabMatchmakerAPI::OnPlayerJoinedResult(int httpStatus, HttpRequest* request, void* userData)
@@ -134,7 +127,7 @@ void PlayFabMatchmakerAPI::PlayerLeft(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnPlayerLeftResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnPlayerLeftResult, userData);
 }
 
 void PlayFabMatchmakerAPI::OnPlayerLeftResult(int httpStatus, HttpRequest* request, void* userData)
@@ -182,7 +175,7 @@ void PlayFabMatchmakerAPI::StartGame(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnStartGameResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnStartGameResult, userData);
 }
 
 void PlayFabMatchmakerAPI::OnStartGameResult(int httpStatus, HttpRequest* request, void* userData)
@@ -230,7 +223,7 @@ void PlayFabMatchmakerAPI::UserInfo(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    mHttpRequester->AddRequest(httpRequest, OnUserInfoResult, nullptr);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUserInfoResult, userData);
 }
 
 void PlayFabMatchmakerAPI::OnUserInfoResult(int httpStatus, HttpRequest* request, void* userData)

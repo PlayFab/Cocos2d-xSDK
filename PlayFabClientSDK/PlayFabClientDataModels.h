@@ -336,19 +336,22 @@ namespace PlayFab
             std::string DeviceToken;
             OptionalBool SendPushNotificationConfirmation;
             std::string ConfirmationMessege;
+            std::string ConfirmationMessage;
 
             AndroidDevicePushNotificationRegistrationRequest() :
                 PlayFabBaseModel(),
                 DeviceToken(),
                 SendPushNotificationConfirmation(),
-                ConfirmationMessege()
+                ConfirmationMessege(),
+                ConfirmationMessage()
             {}
 
             AndroidDevicePushNotificationRegistrationRequest(const AndroidDevicePushNotificationRegistrationRequest& src) :
                 PlayFabBaseModel(),
                 DeviceToken(src.DeviceToken),
                 SendPushNotificationConfirmation(src.SendPushNotificationConfirmation),
-                ConfirmationMessege(src.ConfirmationMessege)
+                ConfirmationMessege(src.ConfirmationMessege),
+                ConfirmationMessage(src.ConfirmationMessage)
             {}
 
             AndroidDevicePushNotificationRegistrationRequest(const rapidjson::Value& obj) : AndroidDevicePushNotificationRegistrationRequest()
