@@ -223,7 +223,9 @@ namespace PlayFab
 		PlayFabErrorInvalidEventField = 1216,
 		PlayFabErrorInvalidEventName = 1217,
 		PlayFabErrorCatalogNotConfigured = 1218,
-		PlayFabErrorOperationNotSupportedForPlatform = 1219
+		PlayFabErrorOperationNotSupportedForPlatform = 1219,
+		PlayFabErrorSegmentNotFound = 1220,
+		PlayFabErrorStoreNotFound = 1221
     };
 
     struct PlayFabError

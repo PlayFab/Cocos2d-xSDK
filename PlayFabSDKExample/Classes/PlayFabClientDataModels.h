@@ -335,14 +335,12 @@ namespace PlayFab
         {
             std::string DeviceToken;
             OptionalBool SendPushNotificationConfirmation;
-            std::string ConfirmationMessege;
             std::string ConfirmationMessage;
 
             AndroidDevicePushNotificationRegistrationRequest() :
                 PlayFabBaseModel(),
                 DeviceToken(),
                 SendPushNotificationConfirmation(),
-                ConfirmationMessege(),
                 ConfirmationMessage()
             {}
 
@@ -350,7 +348,6 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 DeviceToken(src.DeviceToken),
                 SendPushNotificationConfirmation(src.SendPushNotificationConfirmation),
-                ConfirmationMessege(src.ConfirmationMessege),
                 ConfirmationMessage(src.ConfirmationMessage)
             {}
 
@@ -4748,18 +4745,15 @@ namespace PlayFab
         struct LinkFacebookAccountRequest : public PlayFabBaseModel
         {
             std::string AccessToken;
-            OptionalBool ForceLink;
 
             LinkFacebookAccountRequest() :
                 PlayFabBaseModel(),
-                AccessToken(),
-                ForceLink()
+                AccessToken()
             {}
 
             LinkFacebookAccountRequest(const LinkFacebookAccountRequest& src) :
                 PlayFabBaseModel(),
-                AccessToken(src.AccessToken),
-                ForceLink(src.ForceLink)
+                AccessToken(src.AccessToken)
             {}
 
             LinkFacebookAccountRequest(const rapidjson::Value& obj) : LinkFacebookAccountRequest()

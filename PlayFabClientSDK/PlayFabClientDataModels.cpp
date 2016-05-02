@@ -417,7 +417,6 @@ void AndroidDevicePushNotificationRegistrationRequest::writeJSON(PFStringJsonWri
 
     writer.String("DeviceToken"); writer.String(DeviceToken.c_str());
     if (SendPushNotificationConfirmation.notNull()) { writer.String("SendPushNotificationConfirmation"); writer.Bool(SendPushNotificationConfirmation); }
-    if (ConfirmationMessege.length() > 0) { writer.String("ConfirmationMessege"); writer.String(ConfirmationMessege.c_str()); }
     if (ConfirmationMessage.length() > 0) { writer.String("ConfirmationMessage"); writer.String(ConfirmationMessage.c_str()); }
 
     writer.EndObject();
@@ -429,8 +428,6 @@ bool AndroidDevicePushNotificationRegistrationRequest::readFromValue(const rapid
     if (DeviceToken_member != obj.MemberEnd() && !DeviceToken_member->value.IsNull()) DeviceToken = DeviceToken_member->value.GetString();
     const Value::ConstMemberIterator SendPushNotificationConfirmation_member = obj.FindMember("SendPushNotificationConfirmation");
     if (SendPushNotificationConfirmation_member != obj.MemberEnd() && !SendPushNotificationConfirmation_member->value.IsNull()) SendPushNotificationConfirmation = SendPushNotificationConfirmation_member->value.GetBool();
-    const Value::ConstMemberIterator ConfirmationMessege_member = obj.FindMember("ConfirmationMessege");
-    if (ConfirmationMessege_member != obj.MemberEnd() && !ConfirmationMessege_member->value.IsNull()) ConfirmationMessege = ConfirmationMessege_member->value.GetString();
     const Value::ConstMemberIterator ConfirmationMessage_member = obj.FindMember("ConfirmationMessage");
     if (ConfirmationMessage_member != obj.MemberEnd() && !ConfirmationMessage_member->value.IsNull()) ConfirmationMessage = ConfirmationMessage_member->value.GetString();
 
@@ -5645,7 +5642,6 @@ void LinkFacebookAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("AccessToken"); writer.String(AccessToken.c_str());
-    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
 }
@@ -5654,8 +5650,6 @@ bool LinkFacebookAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AccessToken_member = obj.FindMember("AccessToken");
     if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
-    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
-    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
 
     return true;
 }
