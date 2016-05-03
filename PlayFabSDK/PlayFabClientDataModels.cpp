@@ -8183,14 +8183,13 @@ void UpdatePlayerStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    if (!Statistics.empty()) {
     writer.String("Statistics");
     writer.StartArray();
     for (std::list<StatisticUpdate>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
         iter->writeJSON(writer);
     }
     writer.EndArray();
-     }
+    
 
     writer.EndObject();
 }

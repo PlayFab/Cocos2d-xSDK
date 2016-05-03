@@ -5480,14 +5480,13 @@ void UpdatePlayerStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-    if (!Statistics.empty()) {
     writer.String("Statistics");
     writer.StartArray();
     for (std::list<StatisticUpdate>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
         iter->writeJSON(writer);
     }
     writer.EndArray();
-     }
+    
 
     writer.EndObject();
 }
