@@ -225,7 +225,8 @@ namespace PlayFab
 		PlayFabErrorCatalogNotConfigured = 1218,
 		PlayFabErrorOperationNotSupportedForPlatform = 1219,
 		PlayFabErrorSegmentNotFound = 1220,
-		PlayFabErrorStoreNotFound = 1221
+		PlayFabErrorStoreNotFound = 1221,
+		PlayFabErrorInvalidStatisticName = 1222
     };
 
     struct PlayFabError
