@@ -917,19 +917,22 @@ namespace PlayFab
             std::string Gamemode;
             Uint32 MinPlayerCount;
             Uint32 MaxPlayerCount;
+            OptionalBool StartOpen;
 
             GameModeInfo() :
                 PlayFabBaseModel(),
                 Gamemode(),
                 MinPlayerCount(0),
-                MaxPlayerCount(0)
+                MaxPlayerCount(0),
+                StartOpen()
             {}
 
             GameModeInfo(const GameModeInfo& src) :
                 PlayFabBaseModel(),
                 Gamemode(src.Gamemode),
                 MinPlayerCount(src.MinPlayerCount),
-                MaxPlayerCount(src.MaxPlayerCount)
+                MaxPlayerCount(src.MaxPlayerCount),
+                StartOpen(src.StartOpen)
             {}
 
             GameModeInfo(const rapidjson::Value& obj) : GameModeInfo()

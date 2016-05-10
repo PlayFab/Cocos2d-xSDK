@@ -5537,6 +5537,7 @@ namespace PlayFab
             std::string LobbyId;
             std::string StatisticName;
             std::string CharacterId;
+            OptionalBool StartNewIfNoneFound;
             OptionalBool EnableQueue;
 
             MatchmakeRequest() :
@@ -5547,6 +5548,7 @@ namespace PlayFab
                 LobbyId(),
                 StatisticName(),
                 CharacterId(),
+                StartNewIfNoneFound(),
                 EnableQueue()
             {}
 
@@ -5558,6 +5560,7 @@ namespace PlayFab
                 LobbyId(src.LobbyId),
                 StatisticName(src.StatisticName),
                 CharacterId(src.CharacterId),
+                StartNewIfNoneFound(src.StartNewIfNoneFound),
                 EnableQueue(src.EnableQueue)
             {}
 
@@ -5576,7 +5579,9 @@ namespace PlayFab
         {
             MatchmakeStatusComplete,
             MatchmakeStatusWaiting,
-            MatchmakeStatusGameNotFound
+            MatchmakeStatusGameNotFound,
+            MatchmakeStatusNoAvailableSlots,
+            MatchmakeStatusSessionClosed
         };
 
         void writeMatchmakeStatusEnumJSON(MatchmakeStatus enumVal, PFStringJsonWriter& writer);

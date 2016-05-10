@@ -2699,6 +2699,54 @@ void PlayFabServerAPI::OnRedeemMatchmakerTicketResult(int httpStatus, HttpReques
     delete request;
 }
 
+void PlayFabServerAPI::SetGameServerInstanceState(
+    SetGameServerInstanceStateRequest& request,
+    ProcessApiCallback<SetGameServerInstanceStateResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/SetGameServerInstanceState"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabVersionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnSetGameServerInstanceStateResult, userData);
+}
+
+void PlayFabServerAPI::OnSetGameServerInstanceStateResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    SetGameServerInstanceStateResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<SetGameServerInstanceStateResult> successCallback = reinterpret_cast<ProcessApiCallback<SetGameServerInstanceStateResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabServerAPI::AwardSteamAchievement(
     AwardSteamAchievementRequest& request,
     ProcessApiCallback<AwardSteamAchievementResult> callback,

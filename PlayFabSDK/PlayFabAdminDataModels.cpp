@@ -1276,6 +1276,7 @@ void GameModeInfo::writeJSON(PFStringJsonWriter& writer)
     writer.String("Gamemode"); writer.String(Gamemode.c_str());
     writer.String("MinPlayerCount"); writer.Uint(MinPlayerCount);
     writer.String("MaxPlayerCount"); writer.Uint(MaxPlayerCount);
+    if (StartOpen.notNull()) { writer.String("StartOpen"); writer.Bool(StartOpen); }
 
     writer.EndObject();
 }
@@ -1288,6 +1289,8 @@ bool GameModeInfo::readFromValue(const rapidjson::Value& obj)
     if (MinPlayerCount_member != obj.MemberEnd() && !MinPlayerCount_member->value.IsNull()) MinPlayerCount = MinPlayerCount_member->value.GetUint();
     const Value::ConstMemberIterator MaxPlayerCount_member = obj.FindMember("MaxPlayerCount");
     if (MaxPlayerCount_member != obj.MemberEnd() && !MaxPlayerCount_member->value.IsNull()) MaxPlayerCount = MaxPlayerCount_member->value.GetUint();
+    const Value::ConstMemberIterator StartOpen_member = obj.FindMember("StartOpen");
+    if (StartOpen_member != obj.MemberEnd() && !StartOpen_member->value.IsNull()) StartOpen = StartOpen_member->value.GetBool();
 
     return true;
 }
