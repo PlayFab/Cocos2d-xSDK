@@ -1991,7 +1991,7 @@ namespace PlayFab
         {
             std::string PlayFabId;
             std::list<std::string> Keys;
-            OptionalInt32 IfChangedFromDataVersion;
+            OptionalUint32 IfChangedFromDataVersion;
 
             GetUserDataRequest() :
                 PlayFabBaseModel(),
