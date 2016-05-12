@@ -3861,19 +3861,22 @@ namespace PlayFab
             OptionalInt32 Version;
             std::list<CloudScriptFile> Files;
             bool Publish;
+            std::string DeveloperPlayFabId;
 
             UpdateCloudScriptRequest() :
                 PlayFabBaseModel(),
                 Version(),
                 Files(),
-                Publish(false)
+                Publish(false),
+                DeveloperPlayFabId()
             {}
 
             UpdateCloudScriptRequest(const UpdateCloudScriptRequest& src) :
                 PlayFabBaseModel(),
                 Version(src.Version),
                 Files(src.Files),
-                Publish(src.Publish)
+                Publish(src.Publish),
+                DeveloperPlayFabId(src.DeveloperPlayFabId)
             {}
 
             UpdateCloudScriptRequest(const rapidjson::Value& obj) : UpdateCloudScriptRequest()

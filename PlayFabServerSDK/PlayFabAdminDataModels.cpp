@@ -4484,6 +4484,7 @@ void UpdateCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
     writer.EndArray();
     
     writer.String("Publish"); writer.Bool(Publish);
+    if (DeveloperPlayFabId.length() > 0) { writer.String("DeveloperPlayFabId"); writer.String(DeveloperPlayFabId.c_str()); }
 
     writer.EndObject();
 }
@@ -4501,6 +4502,8 @@ bool UpdateCloudScriptRequest::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator Publish_member = obj.FindMember("Publish");
     if (Publish_member != obj.MemberEnd() && !Publish_member->value.IsNull()) Publish = Publish_member->value.GetBool();
+    const Value::ConstMemberIterator DeveloperPlayFabId_member = obj.FindMember("DeveloperPlayFabId");
+    if (DeveloperPlayFabId_member != obj.MemberEnd() && !DeveloperPlayFabId_member->value.IsNull()) DeveloperPlayFabId = DeveloperPlayFabId_member->value.GetString();
 
     return true;
 }
