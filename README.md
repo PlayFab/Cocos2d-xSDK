@@ -39,7 +39,27 @@ This package contains three different versions of the PlayFab SDK.
 * PlayFabSDK - Contains all APIs in one SDK, as well as a unit-test project
 * PlayFabSdkExample - A pre-built example using PlayFabSDK, which runs a full set of tests verifying that PlayFab works on the supported platforms.
 
-4. Troubleshooting:
+4. testTitleData.json file required for example unit-test-project
+----
+
+This file provides your secret title information to the unit-test project, so it can execute tests in your own PlayFab title
+
+The format is as follows:
+
+    {
+    	"titleId": "your Game Title ID, found in the settings/credentials section of your dashboard on the website",
+    	"developerSecretKey": "your PlayFab API Secret Key, found in the settings/credentials section of your dashboard on the website - NEVER SHARE THIS KEY WITH PLAYERS",
+    	"titleCanUpdateSettings": "false",  // "true" or "false", based on your Allow Client to Post Player Statistics option, found in the settings/general section of your dashboard on the website
+    	"userName": "testUser", // Arbitrary username, you can change this to any valid username
+    	"userEmail": "your@email.com", // This email address will be bound to the username above
+    	"userPassword": "testPassword", // This must be the correct password for the testUser above (if that user does not exist yet, this will be the new password)
+    	"characterName": "testCharacter" // Arbitrary characterName, you can change this to any valid characterName
+    }
+
+It is read from the hard-coded loction of: TEST_TITLE_DATA_LOC in PlayFabApiTest.h, you can redirect this to an input that matches your file location
+
+
+5. Troubleshooting:
 ----
 For a complete list of available APIs, check out the [online documentation](http://api.playfab.com/Documentation/).
 
@@ -51,11 +71,11 @@ Our Developer Success Team can assist with answering any questions as well as pr
 
 [Forums, Support and Knowledge Base](https://community.playfab.com/hc/en-us)
 
-5. Acknowledgements
+6. Acknowledgements
 ----
 Special thanks to the team at Mingle Games (http://mingle-games.com/) for their assistance in expanding mobile support for this SDK!
 
-6. Copyright and Licensing Information:
+7. Copyright and Licensing Information:
 ----
   Apache License --
   Version 2.0, January 2004
