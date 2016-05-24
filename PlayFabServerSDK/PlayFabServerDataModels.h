@@ -1656,6 +1656,15 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum GameInstanceState
+        {
+            GameInstanceStateOpen,
+            GameInstanceStateClosed
+        };
+
+        void writeGameInstanceStateEnumJSON(GameInstanceState enumVal, PFStringJsonWriter& writer);
+        GameInstanceState readGameInstanceStateFromValue(const rapidjson::Value& obj);
+
         struct GetCatalogItemsRequest : public PlayFabBaseModel
         {
             std::string CatalogVersion;
@@ -1711,7 +1720,7 @@ namespace PlayFab
             std::string PlayFabId;
             std::string CharacterId;
             std::list<std::string> Keys;
-            OptionalInt32 IfChangedFromDataVersion;
+            OptionalUint32 IfChangedFromDataVersion;
 
             GetCharacterDataRequest() :
                 PlayFabBaseModel(),
@@ -3094,7 +3103,7 @@ namespace PlayFab
         {
             std::string PlayFabId;
             std::list<std::string> Keys;
-            OptionalInt32 IfChangedFromDataVersion;
+            OptionalUint32 IfChangedFromDataVersion;
 
             GetUserDataRequest() :
                 PlayFabBaseModel(),
@@ -4395,6 +4404,56 @@ namespace PlayFab
             }
 
             ~SendPushNotificationResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetGameServerInstanceStateRequest : public PlayFabBaseModel
+        {
+            std::string LobbyId;
+            GameInstanceState State;
+
+            SetGameServerInstanceStateRequest() :
+                PlayFabBaseModel(),
+                LobbyId(),
+                State()
+            {}
+
+            SetGameServerInstanceStateRequest(const SetGameServerInstanceStateRequest& src) :
+                PlayFabBaseModel(),
+                LobbyId(src.LobbyId),
+                State(src.State)
+            {}
+
+            SetGameServerInstanceStateRequest(const rapidjson::Value& obj) : SetGameServerInstanceStateRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetGameServerInstanceStateRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetGameServerInstanceStateResult : public PlayFabBaseModel
+        {
+
+            SetGameServerInstanceStateResult() :
+                PlayFabBaseModel()
+            {}
+
+            SetGameServerInstanceStateResult(const SetGameServerInstanceStateResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            SetGameServerInstanceStateResult(const rapidjson::Value& obj) : SetGameServerInstanceStateResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetGameServerInstanceStateResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

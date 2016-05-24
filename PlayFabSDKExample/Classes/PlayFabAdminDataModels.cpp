@@ -1276,6 +1276,7 @@ void GameModeInfo::writeJSON(PFStringJsonWriter& writer)
     writer.String("Gamemode"); writer.String(Gamemode.c_str());
     writer.String("MinPlayerCount"); writer.Uint(MinPlayerCount);
     writer.String("MaxPlayerCount"); writer.Uint(MaxPlayerCount);
+    if (StartOpen.notNull()) { writer.String("StartOpen"); writer.Bool(StartOpen); }
 
     writer.EndObject();
 }
@@ -1288,6 +1289,8 @@ bool GameModeInfo::readFromValue(const rapidjson::Value& obj)
     if (MinPlayerCount_member != obj.MemberEnd() && !MinPlayerCount_member->value.IsNull()) MinPlayerCount = MinPlayerCount_member->value.GetUint();
     const Value::ConstMemberIterator MaxPlayerCount_member = obj.FindMember("MaxPlayerCount");
     if (MaxPlayerCount_member != obj.MemberEnd() && !MaxPlayerCount_member->value.IsNull()) MaxPlayerCount = MaxPlayerCount_member->value.GetUint();
+    const Value::ConstMemberIterator StartOpen_member = obj.FindMember("StartOpen");
+    if (StartOpen_member != obj.MemberEnd() && !StartOpen_member->value.IsNull()) StartOpen = StartOpen_member->value.GetBool();
 
     return true;
 }
@@ -2491,7 +2494,7 @@ void GetUserDataRequest::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
-    if (IfChangedFromDataVersion.notNull()) { writer.String("IfChangedFromDataVersion"); writer.Int(IfChangedFromDataVersion); }
+    if (IfChangedFromDataVersion.notNull()) { writer.String("IfChangedFromDataVersion"); writer.Uint(IfChangedFromDataVersion); }
 
     writer.EndObject();
 }
@@ -2508,7 +2511,7 @@ bool GetUserDataRequest::readFromValue(const rapidjson::Value& obj)
         }
     }
     const Value::ConstMemberIterator IfChangedFromDataVersion_member = obj.FindMember("IfChangedFromDataVersion");
-    if (IfChangedFromDataVersion_member != obj.MemberEnd() && !IfChangedFromDataVersion_member->value.IsNull()) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetInt();
+    if (IfChangedFromDataVersion_member != obj.MemberEnd() && !IfChangedFromDataVersion_member->value.IsNull()) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetUint();
 
     return true;
 }
@@ -4279,90 +4282,6 @@ bool SetPublisherDataResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-SetStoreSegemntOverridesResult::~SetStoreSegemntOverridesResult()
-{
-
-}
-
-void SetStoreSegemntOverridesResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool SetStoreSegemntOverridesResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-StoreSegmentNamePair::~StoreSegmentNamePair()
-{
-
-}
-
-void StoreSegmentNamePair::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("StoreId"); writer.String(StoreId.c_str());
-    writer.String("SegmentName"); writer.String(SegmentName.c_str());
-
-    writer.EndObject();
-}
-
-bool StoreSegmentNamePair::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator StoreId_member = obj.FindMember("StoreId");
-    if (StoreId_member != obj.MemberEnd() && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
-    const Value::ConstMemberIterator SegmentName_member = obj.FindMember("SegmentName");
-    if (SegmentName_member != obj.MemberEnd() && !SegmentName_member->value.IsNull()) SegmentName = SegmentName_member->value.GetString();
-
-    return true;
-}
-
-SetStoreSegmentOverridesRequest::~SetStoreSegmentOverridesRequest()
-{
-
-}
-
-void SetStoreSegmentOverridesRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
-    writer.String("BaseStoreId"); writer.String(BaseStoreId.c_str());
-    if (!Overrides.empty()) {
-    writer.String("Overrides");
-    writer.StartArray();
-    for (std::list<StoreSegmentNamePair>::iterator iter = Overrides.begin(); iter != Overrides.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool SetStoreSegmentOverridesRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::ConstMemberIterator BaseStoreId_member = obj.FindMember("BaseStoreId");
-    if (BaseStoreId_member != obj.MemberEnd() && !BaseStoreId_member->value.IsNull()) BaseStoreId = BaseStoreId_member->value.GetString();
-    const Value::ConstMemberIterator Overrides_member = obj.FindMember("Overrides");
-    if (Overrides_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Overrides_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Overrides.push_back(StoreSegmentNamePair(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
 SetTitleDataRequest::~SetTitleDataRequest()
 {
 
@@ -4565,6 +4484,7 @@ void UpdateCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
     writer.EndArray();
     
     writer.String("Publish"); writer.Bool(Publish);
+    if (DeveloperPlayFabId.length() > 0) { writer.String("DeveloperPlayFabId"); writer.String(DeveloperPlayFabId.c_str()); }
 
     writer.EndObject();
 }
@@ -4582,6 +4502,8 @@ bool UpdateCloudScriptRequest::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator Publish_member = obj.FindMember("Publish");
     if (Publish_member != obj.MemberEnd() && !Publish_member->value.IsNull()) Publish = Publish_member->value.GetBool();
+    const Value::ConstMemberIterator DeveloperPlayFabId_member = obj.FindMember("DeveloperPlayFabId");
+    if (DeveloperPlayFabId_member != obj.MemberEnd() && !DeveloperPlayFabId_member->value.IsNull()) DeveloperPlayFabId = DeveloperPlayFabId_member->value.GetString();
 
     return true;
 }

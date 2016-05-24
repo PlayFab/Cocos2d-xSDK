@@ -1959,6 +1959,33 @@ bool FriendInfo::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::ServerModels::writeGameInstanceStateEnumJSON(GameInstanceState enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case GameInstanceStateOpen: writer.String("Open"); break;
+    case GameInstanceStateClosed: writer.String("Closed"); break;
+
+    }
+}
+
+GameInstanceState PlayFab::ServerModels::readGameInstanceStateFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, GameInstanceState> _GameInstanceStateMap;
+    if (_GameInstanceStateMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _GameInstanceStateMap["Open"] = GameInstanceStateOpen;
+        _GameInstanceStateMap["Closed"] = GameInstanceStateClosed;
+
+    }
+
+    auto output = _GameInstanceStateMap.find(obj.GetString());
+    if (output != _GameInstanceStateMap.end())
+        return output->second;
+
+    return GameInstanceStateOpen; // Basically critical fail
+}
 
 GetCatalogItemsRequest::~GetCatalogItemsRequest()
 {
@@ -2035,7 +2062,7 @@ void GetCharacterDataRequest::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
-    if (IfChangedFromDataVersion.notNull()) { writer.String("IfChangedFromDataVersion"); writer.Int(IfChangedFromDataVersion); }
+    if (IfChangedFromDataVersion.notNull()) { writer.String("IfChangedFromDataVersion"); writer.Uint(IfChangedFromDataVersion); }
 
     writer.EndObject();
 }
@@ -2054,7 +2081,7 @@ bool GetCharacterDataRequest::readFromValue(const rapidjson::Value& obj)
         }
     }
     const Value::ConstMemberIterator IfChangedFromDataVersion_member = obj.FindMember("IfChangedFromDataVersion");
-    if (IfChangedFromDataVersion_member != obj.MemberEnd() && !IfChangedFromDataVersion_member->value.IsNull()) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetInt();
+    if (IfChangedFromDataVersion_member != obj.MemberEnd() && !IfChangedFromDataVersion_member->value.IsNull()) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetUint();
 
     return true;
 }
@@ -3649,7 +3676,7 @@ void GetUserDataRequest::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
-    if (IfChangedFromDataVersion.notNull()) { writer.String("IfChangedFromDataVersion"); writer.Int(IfChangedFromDataVersion); }
+    if (IfChangedFromDataVersion.notNull()) { writer.String("IfChangedFromDataVersion"); writer.Uint(IfChangedFromDataVersion); }
 
     writer.EndObject();
 }
@@ -3666,7 +3693,7 @@ bool GetUserDataRequest::readFromValue(const rapidjson::Value& obj)
         }
     }
     const Value::ConstMemberIterator IfChangedFromDataVersion_member = obj.FindMember("IfChangedFromDataVersion");
-    if (IfChangedFromDataVersion_member != obj.MemberEnd() && !IfChangedFromDataVersion_member->value.IsNull()) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetInt();
+    if (IfChangedFromDataVersion_member != obj.MemberEnd() && !IfChangedFromDataVersion_member->value.IsNull()) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetUint();
 
     return true;
 }
@@ -5039,6 +5066,50 @@ bool SendPushNotificationResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+SetGameServerInstanceStateRequest::~SetGameServerInstanceStateRequest()
+{
+
+}
+
+void SetGameServerInstanceStateRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("LobbyId"); writer.String(LobbyId.c_str());
+    writer.String("State"); writeGameInstanceStateEnumJSON(State, writer);
+
+    writer.EndObject();
+}
+
+bool SetGameServerInstanceStateRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
+    if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
+    const Value::ConstMemberIterator State_member = obj.FindMember("State");
+    if (State_member != obj.MemberEnd() && !State_member->value.IsNull()) State = readGameInstanceStateFromValue(State_member->value);
+
+    return true;
+}
+
+SetGameServerInstanceStateResult::~SetGameServerInstanceStateResult()
+{
+
+}
+
+void SetGameServerInstanceStateResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool SetGameServerInstanceStateResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 SetPublisherDataRequest::~SetPublisherDataRequest()
 {
 
@@ -5480,14 +5551,13 @@ void UpdatePlayerStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-    if (!Statistics.empty()) {
     writer.String("Statistics");
     writer.StartArray();
     for (std::list<StatisticUpdate>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
         iter->writeJSON(writer);
     }
     writer.EndArray();
-     }
+    
 
     writer.EndObject();
 }

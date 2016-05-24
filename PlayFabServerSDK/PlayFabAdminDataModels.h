@@ -917,19 +917,22 @@ namespace PlayFab
             std::string Gamemode;
             Uint32 MinPlayerCount;
             Uint32 MaxPlayerCount;
+            OptionalBool StartOpen;
 
             GameModeInfo() :
                 PlayFabBaseModel(),
                 Gamemode(),
                 MinPlayerCount(0),
-                MaxPlayerCount(0)
+                MaxPlayerCount(0),
+                StartOpen()
             {}
 
             GameModeInfo(const GameModeInfo& src) :
                 PlayFabBaseModel(),
                 Gamemode(src.Gamemode),
                 MinPlayerCount(src.MinPlayerCount),
-                MaxPlayerCount(src.MaxPlayerCount)
+                MaxPlayerCount(src.MaxPlayerCount),
+                StartOpen(src.StartOpen)
             {}
 
             GameModeInfo(const rapidjson::Value& obj) : GameModeInfo()
@@ -1988,7 +1991,7 @@ namespace PlayFab
         {
             std::string PlayFabId;
             std::list<std::string> Keys;
-            OptionalInt32 IfChangedFromDataVersion;
+            OptionalUint32 IfChangedFromDataVersion;
 
             GetUserDataRequest() :
                 PlayFabBaseModel(),
@@ -3660,87 +3663,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct SetStoreSegemntOverridesResult : public PlayFabBaseModel
-        {
-
-            SetStoreSegemntOverridesResult() :
-                PlayFabBaseModel()
-            {}
-
-            SetStoreSegemntOverridesResult(const SetStoreSegemntOverridesResult& src) :
-                PlayFabBaseModel()
-            {}
-
-            SetStoreSegemntOverridesResult(const rapidjson::Value& obj) : SetStoreSegemntOverridesResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~SetStoreSegemntOverridesResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct StoreSegmentNamePair : public PlayFabBaseModel
-        {
-            std::string StoreId;
-            std::string SegmentName;
-
-            StoreSegmentNamePair() :
-                PlayFabBaseModel(),
-                StoreId(),
-                SegmentName()
-            {}
-
-            StoreSegmentNamePair(const StoreSegmentNamePair& src) :
-                PlayFabBaseModel(),
-                StoreId(src.StoreId),
-                SegmentName(src.SegmentName)
-            {}
-
-            StoreSegmentNamePair(const rapidjson::Value& obj) : StoreSegmentNamePair()
-            {
-                readFromValue(obj);
-            }
-
-            ~StoreSegmentNamePair();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct SetStoreSegmentOverridesRequest : public PlayFabBaseModel
-        {
-            std::string CatalogVersion;
-            std::string BaseStoreId;
-            std::list<StoreSegmentNamePair> Overrides;
-
-            SetStoreSegmentOverridesRequest() :
-                PlayFabBaseModel(),
-                CatalogVersion(),
-                BaseStoreId(),
-                Overrides()
-            {}
-
-            SetStoreSegmentOverridesRequest(const SetStoreSegmentOverridesRequest& src) :
-                PlayFabBaseModel(),
-                CatalogVersion(src.CatalogVersion),
-                BaseStoreId(src.BaseStoreId),
-                Overrides(src.Overrides)
-            {}
-
-            SetStoreSegmentOverridesRequest(const rapidjson::Value& obj) : SetStoreSegmentOverridesRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~SetStoreSegmentOverridesRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct SetTitleDataRequest : public PlayFabBaseModel
         {
             std::string Key;
@@ -3939,19 +3861,22 @@ namespace PlayFab
             OptionalInt32 Version;
             std::list<CloudScriptFile> Files;
             bool Publish;
+            std::string DeveloperPlayFabId;
 
             UpdateCloudScriptRequest() :
                 PlayFabBaseModel(),
                 Version(),
                 Files(),
-                Publish(false)
+                Publish(false),
+                DeveloperPlayFabId()
             {}
 
             UpdateCloudScriptRequest(const UpdateCloudScriptRequest& src) :
                 PlayFabBaseModel(),
                 Version(src.Version),
                 Files(src.Files),
-                Publish(src.Publish)
+                Publish(src.Publish),
+                DeveloperPlayFabId(src.DeveloperPlayFabId)
             {}
 
             UpdateCloudScriptRequest(const rapidjson::Value& obj) : UpdateCloudScriptRequest()

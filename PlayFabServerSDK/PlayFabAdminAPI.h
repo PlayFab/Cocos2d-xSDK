@@ -48,7 +48,6 @@ namespace PlayFab
         static void ListVirtualCurrencyTypes(ProcessApiCallback<AdminModels::ListVirtualCurrencyTypesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetCatalogItems(AdminModels::UpdateCatalogItemsRequest& request, ProcessApiCallback<AdminModels::UpdateCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetStoreItems(AdminModels::UpdateStoreItemsRequest& request, ProcessApiCallback<AdminModels::UpdateStoreItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void SetStoreSegmentOverrides(AdminModels::SetStoreSegmentOverridesRequest& request, ProcessApiCallback<AdminModels::SetStoreSegemntOverridesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetTitleData(AdminModels::SetTitleDataRequest& request, ProcessApiCallback<AdminModels::SetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetupPushNotification(AdminModels::SetupPushNotificationRequest& request, ProcessApiCallback<AdminModels::SetupPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateCatalogItems(AdminModels::UpdateCatalogItemsRequest& request, ProcessApiCallback<AdminModels::UpdateCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -117,7 +116,6 @@ namespace PlayFab
         static void OnListVirtualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetStoreItemsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnSetStoreSegmentOverridesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetupPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
