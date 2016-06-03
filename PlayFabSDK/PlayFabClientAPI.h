@@ -28,9 +28,7 @@ namespace PlayFab
         static void LoginWithIOSDeviceID(ClientModels::LoginWithIOSDeviceIDRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithKongregate(ClientModels::LoginWithKongregateRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithPlayFab(ClientModels::LoginWithPlayFabRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void LoginWithPSN(ClientModels::LoginWithPSNRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithSteam(ClientModels::LoginWithSteamRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void LoginWithXbox(ClientModels::LoginWithXboxRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RegisterPlayFabUser(ClientModels::RegisterPlayFabUserRequest& request, ProcessApiCallback<ClientModels::RegisterPlayFabUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddUsernamePassword(ClientModels::AddUsernamePasswordRequest& request, ProcessApiCallback<ClientModels::AddUsernamePasswordResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAccountInfo(ClientModels::GetAccountInfoRequest& request, ProcessApiCallback<ClientModels::GetAccountInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -38,7 +36,6 @@ namespace PlayFab
         static void GetPlayFabIDsFromGameCenterIDs(ClientModels::GetPlayFabIDsFromGameCenterIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromGameCenterIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromGoogleIDs(ClientModels::GetPlayFabIDsFromGoogleIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromGoogleIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromKongregateIDs(ClientModels::GetPlayFabIDsFromKongregateIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromKongregateIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetPlayFabIDsFromPSNAccountIDs(ClientModels::GetPlayFabIDsFromPSNAccountIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromPSNAccountIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromSteamIDs(ClientModels::GetPlayFabIDsFromSteamIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromSteamIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserCombinedInfo(ClientModels::GetUserCombinedInfoRequest& request, ProcessApiCallback<ClientModels::GetUserCombinedInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkAndroidDeviceID(ClientModels::LinkAndroidDeviceIDRequest& request, ProcessApiCallback<ClientModels::LinkAndroidDeviceIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -48,9 +45,7 @@ namespace PlayFab
         static void LinkGoogleAccount(ClientModels::LinkGoogleAccountRequest& request, ProcessApiCallback<ClientModels::LinkGoogleAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkIOSDeviceID(ClientModels::LinkIOSDeviceIDRequest& request, ProcessApiCallback<ClientModels::LinkIOSDeviceIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkKongregate(ClientModels::LinkKongregateAccountRequest& request, ProcessApiCallback<ClientModels::LinkKongregateAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void LinkPSNAccount(ClientModels::LinkPSNAccountRequest& request, ProcessApiCallback<ClientModels::LinkPSNAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkSteamAccount(ClientModels::LinkSteamAccountRequest& request, ProcessApiCallback<ClientModels::LinkSteamAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void LinkXboxAccount(ClientModels::LinkXboxAccountRequest& request, ProcessApiCallback<ClientModels::LinkXboxAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ReportPlayer(ClientModels::ReportPlayerClientRequest& request, ProcessApiCallback<ClientModels::ReportPlayerClientResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendAccountRecoveryEmail(ClientModels::SendAccountRecoveryEmailRequest& request, ProcessApiCallback<ClientModels::SendAccountRecoveryEmailResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkAndroidDeviceID(ClientModels::UnlinkAndroidDeviceIDRequest& request, ProcessApiCallback<ClientModels::UnlinkAndroidDeviceIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -60,9 +55,7 @@ namespace PlayFab
         static void UnlinkGoogleAccount(ProcessApiCallback<ClientModels::UnlinkGoogleAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkIOSDeviceID(ClientModels::UnlinkIOSDeviceIDRequest& request, ProcessApiCallback<ClientModels::UnlinkIOSDeviceIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkKongregate(ProcessApiCallback<ClientModels::UnlinkKongregateAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UnlinkPSNAccount(ProcessApiCallback<ClientModels::UnlinkPSNAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkSteamAccount(ProcessApiCallback<ClientModels::UnlinkSteamAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UnlinkXboxAccount(ClientModels::UnlinkXboxAccountRequest& request, ProcessApiCallback<ClientModels::UnlinkXboxAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserTitleDisplayName(ClientModels::UpdateUserTitleDisplayNameRequest& request, ProcessApiCallback<ClientModels::UpdateUserTitleDisplayNameResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetFriendLeaderboard(ClientModels::GetFriendLeaderboardRequest& request, ProcessApiCallback<ClientModels::GetLeaderboardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetFriendLeaderboardAroundCurrentUser(ClientModels::GetFriendLeaderboardAroundCurrentUserRequest& request, ProcessApiCallback<ClientModels::GetFriendLeaderboardAroundCurrentUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -121,8 +114,6 @@ namespace PlayFab
         static void GetSharedGroupData(ClientModels::GetSharedGroupDataRequest& request, ProcessApiCallback<ClientModels::GetSharedGroupDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveSharedGroupMembers(ClientModels::RemoveSharedGroupMembersRequest& request, ProcessApiCallback<ClientModels::RemoveSharedGroupMembersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateSharedGroupData(ClientModels::UpdateSharedGroupDataRequest& request, ProcessApiCallback<ClientModels::UpdateSharedGroupDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ConsumePSNEntitlements(ClientModels::ConsumePSNEntitlementsRequest& request, ProcessApiCallback<ClientModels::ConsumePSNEntitlementsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void RefreshPSNAuthToken(ClientModels::RefreshPSNAuthTokenRequest& request, ProcessApiCallback<ClientModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ExecuteCloudScript(ClientModels::ExecuteCloudScriptRequest& request, ProcessApiCallback<ClientModels::ExecuteCloudScriptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCloudScriptUrl(ClientModels::GetCloudScriptUrlRequest& request, ProcessApiCallback<ClientModels::GetCloudScriptUrlResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RunCloudScript(ClientModels::RunCloudScriptRequest& request, ProcessApiCallback<ClientModels::RunCloudScriptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -144,27 +135,6 @@ namespace PlayFab
         static void GetTradeStatus(ClientModels::GetTradeStatusRequest& request, ProcessApiCallback<ClientModels::GetTradeStatusResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void OpenTrade(ClientModels::OpenTradeRequest& request, ProcessApiCallback<ClientModels::OpenTradeResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AttributeInstall(ClientModels::AttributeInstallRequest& request, ProcessApiCallback<ClientModels::AttributeInstallResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ApproveGuildRoleChange(ClientModels::ApproveGuildRoleChangeRequest& request, ProcessApiCallback<ClientModels::ApproveGuildRoleChangeResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ChangeGuildMemberRole(ClientModels::ChangeGuildMemberRoleRequest& request, ProcessApiCallback<ClientModels::ChangeGuildMemberRoleResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void CreateGuild(ClientModels::CreateGuildRequest& request, ProcessApiCallback<ClientModels::CreateGuildResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void DeleteGuild(ClientModels::DeleteGuildRequest& request, ProcessApiCallback<ClientModels::DeleteGuildResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void DenyGuildRoleChange(ClientModels::DenyGuildRoleChangeRequest& request, ProcessApiCallback<ClientModels::DenyGuildRoleChangeResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetGuildData(ClientModels::GetGuildDataRequest& request, ProcessApiCallback<ClientModels::GetGuildDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetGuildInventory(ClientModels::GetGuildInventoryRequest& request, ProcessApiCallback<ClientModels::GetGuildInventoryResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetGuildMembershipLeaderboard(ClientModels::GetGuildMembershipLeaderboardRequest& request, ProcessApiCallback<ClientModels::GetGuildMembershipLeaderboardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetGuildReadOnlyData(ClientModels::GetGuildDataRequest& request, ProcessApiCallback<ClientModels::GetGuildDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetGuildsLeaderboard(ClientModels::GetGuildsLeaderboardRequest& request, ProcessApiCallback<ClientModels::GetGuildsLeaderboardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetGuildsLeaderboardAroundGuild(ClientModels::GetGuildsLeaderboardAroundGuildRequest& request, ProcessApiCallback<ClientModels::GetGuildsLeaderboardAroundGuildResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetGuildStatistics(ClientModels::GetGuildStatisticsRequest& request, ProcessApiCallback<ClientModels::GetGuildStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetLeaderboardOfPlayersGuilds(ClientModels::GetLeaderboardOfPlayersGuildsRequest& request, ProcessApiCallback<ClientModels::GetLeaderboardOfPlayersGuildsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void LeaveGuild(ClientModels::LeaveGuildRequest& request, ProcessApiCallback<ClientModels::LeaveGuildResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ListGuildMembers(ClientModels::ListGuildMembersRequest& request, ProcessApiCallback<ClientModels::ListGuildMembersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ListPendingGuildRoleChangeRequests(ClientModels::ListPendingGuildRoleChangeRequestsRequest& request, ProcessApiCallback<ClientModels::ListPendingGuildRoleChangeRequestsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ListPlayerGuildMemberships(ProcessApiCallback<ClientModels::ListPlayerGuildMembershipsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void RemoveGuildMember(ClientModels::RemoveGuildMemberRequest& request, ProcessApiCallback<ClientModels::RemoveGuildMemberResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void RequestGuildRoleChange(ClientModels::RequestGuildRoleChangeRequest& request, ProcessApiCallback<ClientModels::RequestGuildRoleChangeResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UpdateGuildData(ClientModels::UpdateGuildDataRequest& request, ProcessApiCallback<ClientModels::UpdateGuildDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UpdateGuildStatistics(ClientModels::UpdateGuildStatisticsRequest& request, ProcessApiCallback<ClientModels::UpdateGuildStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
@@ -181,9 +151,7 @@ namespace PlayFab
         static void OnLoginWithIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithKongregateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithPlayFabResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnLoginWithPSNResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithSteamResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnLoginWithXboxResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddUsernamePasswordResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
@@ -191,7 +159,6 @@ namespace PlayFab
         static void OnGetPlayFabIDsFromGameCenterIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromGoogleIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromKongregateIDsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetPlayFabIDsFromPSNAccountIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserCombinedInfoResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
@@ -201,9 +168,7 @@ namespace PlayFab
         static void OnLinkGoogleAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkKongregateResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnLinkPSNAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnLinkXboxAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnReportPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
@@ -213,9 +178,7 @@ namespace PlayFab
         static void OnUnlinkGoogleAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkKongregateResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnUnlinkPSNAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnUnlinkXboxAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetFriendLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetFriendLeaderboardAroundCurrentUserResult(int httpStatus, HttpRequest* request, void* userData);
@@ -274,8 +237,6 @@ namespace PlayFab
         static void OnGetSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnConsumePSNEntitlementsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnRefreshPSNAuthTokenResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnExecuteCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCloudScriptUrlResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRunCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
@@ -297,27 +258,6 @@ namespace PlayFab
         static void OnGetTradeStatusResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnOpenTradeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAttributeInstallResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnApproveGuildRoleChangeResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnChangeGuildMemberRoleResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnCreateGuildResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnDeleteGuildResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnDenyGuildRoleChangeResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetGuildDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetGuildInventoryResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetGuildMembershipLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetGuildReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetGuildsLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetGuildsLeaderboardAroundGuildResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetGuildStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetLeaderboardOfPlayersGuildsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnLeaveGuildResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnListGuildMembersResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnListPendingGuildRoleChangeRequestsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnListPlayerGuildMembershipsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnRemoveGuildMemberResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnRequestGuildRoleChangeResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnUpdateGuildDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnUpdateGuildStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
 
         // Private, Client-Specific
         static std::string mUserSessionTicket;

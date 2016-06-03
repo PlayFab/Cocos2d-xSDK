@@ -453,50 +453,6 @@ bool AndroidDevicePushNotificationRegistrationResult::readFromValue(const rapidj
     return true;
 }
 
-ApproveGuildRoleChangeRequest::~ApproveGuildRoleChangeRequest()
-{
-
-}
-
-void ApproveGuildRoleChangeRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-    if (GuildRoleRequestId.length() > 0) { writer.String("GuildRoleRequestId"); writer.String(GuildRoleRequestId.c_str()); }
-
-    writer.EndObject();
-}
-
-bool ApproveGuildRoleChangeRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator GuildRoleRequestId_member = obj.FindMember("GuildRoleRequestId");
-    if (GuildRoleRequestId_member != obj.MemberEnd() && !GuildRoleRequestId_member->value.IsNull()) GuildRoleRequestId = GuildRoleRequestId_member->value.GetString();
-
-    return true;
-}
-
-ApproveGuildRoleChangeResult::~ApproveGuildRoleChangeResult()
-{
-
-}
-
-void ApproveGuildRoleChangeResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool ApproveGuildRoleChangeResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
 AttributeInstallRequest::~AttributeInstallRequest()
 {
 
@@ -922,80 +878,6 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
-void PlayFab::ClientModels::writeGuildRoleEnumJSON(GuildRole enumVal, PFStringJsonWriter& writer)
-{
-    switch (enumVal)
-    {
-    case GuildRoleOwner: writer.String("Owner"); break;
-    case GuildRoleMember: writer.String("Member"); break;
-
-    }
-}
-
-GuildRole PlayFab::ClientModels::readGuildRoleFromValue(const rapidjson::Value& obj)
-{
-    static std::map<std::string, GuildRole> _GuildRoleMap;
-    if (_GuildRoleMap.size() == 0)
-    {
-        // Auto-generate the map on the first use
-        _GuildRoleMap["Owner"] = GuildRoleOwner;
-        _GuildRoleMap["Member"] = GuildRoleMember;
-
-    }
-
-    auto output = _GuildRoleMap.find(obj.GetString());
-    if (output != _GuildRoleMap.end())
-        return output->second;
-
-    return GuildRoleOwner; // Basically critical fail
-}
-
-ChangeGuildMemberRoleRequest::~ChangeGuildMemberRoleRequest()
-{
-
-}
-
-void ChangeGuildMemberRoleRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-    if (PlayerId.length() > 0) { writer.String("PlayerId"); writer.String(PlayerId.c_str()); }
-    if (Role.notNull()) { writer.String("Role"); writeGuildRoleEnumJSON(Role, writer); }
-
-    writer.EndObject();
-}
-
-bool ChangeGuildMemberRoleRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator PlayerId_member = obj.FindMember("PlayerId");
-    if (PlayerId_member != obj.MemberEnd() && !PlayerId_member->value.IsNull()) PlayerId = PlayerId_member->value.GetString();
-    const Value::ConstMemberIterator Role_member = obj.FindMember("Role");
-    if (Role_member != obj.MemberEnd() && !Role_member->value.IsNull()) Role = readGuildRoleFromValue(Role_member->value);
-
-    return true;
-}
-
-ChangeGuildMemberRoleResult::~ChangeGuildMemberRoleResult()
-{
-
-}
-
-void ChangeGuildMemberRoleResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool ChangeGuildMemberRoleResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
 
 CharacterLeaderboardEntry::~CharacterLeaderboardEntry()
 {
@@ -1292,135 +1174,6 @@ bool ConsumeItemResult::readFromValue(const rapidjson::Value& obj)
     if (ItemInstanceId_member != obj.MemberEnd() && !ItemInstanceId_member->value.IsNull()) ItemInstanceId = ItemInstanceId_member->value.GetString();
     const Value::ConstMemberIterator RemainingUses_member = obj.FindMember("RemainingUses");
     if (RemainingUses_member != obj.MemberEnd() && !RemainingUses_member->value.IsNull()) RemainingUses = RemainingUses_member->value.GetInt();
-
-    return true;
-}
-
-ConsumePSNEntitlementsRequest::~ConsumePSNEntitlementsRequest()
-{
-
-}
-
-void ConsumePSNEntitlementsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
-    writer.String("ServiceLabel"); writer.Int(ServiceLabel);
-
-    writer.EndObject();
-}
-
-bool ConsumePSNEntitlementsRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-    const Value::ConstMemberIterator ServiceLabel_member = obj.FindMember("ServiceLabel");
-    if (ServiceLabel_member != obj.MemberEnd() && !ServiceLabel_member->value.IsNull()) ServiceLabel = ServiceLabel_member->value.GetInt();
-
-    return true;
-}
-
-ConsumePSNEntitlementsResult::~ConsumePSNEntitlementsResult()
-{
-
-}
-
-void ConsumePSNEntitlementsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!ItemsGranted.empty()) {
-    writer.String("ItemsGranted");
-    writer.StartArray();
-    for (std::list<ItemInstance>::iterator iter = ItemsGranted.begin(); iter != ItemsGranted.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool ConsumePSNEntitlementsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator ItemsGranted_member = obj.FindMember("ItemsGranted");
-    if (ItemsGranted_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = ItemsGranted_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            ItemsGranted.push_back(ItemInstance(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-CreateGuildRequest::~CreateGuildRequest()
-{
-
-}
-
-void CreateGuildRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
-
-    writer.EndObject();
-}
-
-bool CreateGuildRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
-    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-
-    return true;
-}
-
-GuildProperties::~GuildProperties()
-{
-
-}
-
-void GuildProperties::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
-    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
-
-    writer.EndObject();
-}
-
-bool GuildProperties::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
-    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
-    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
-    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-
-    return true;
-}
-
-CreateGuildResult::~CreateGuildResult()
-{
-    if (Guild != NULL) delete Guild;
-
-}
-
-void CreateGuildResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (Guild != NULL) { writer.String("Guild"); Guild->writeJSON(writer); }
-
-    writer.EndObject();
-}
-
-bool CreateGuildResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Guild_member = obj.FindMember("Guild");
-    if (Guild_member != obj.MemberEnd() && !Guild_member->value.IsNull()) Guild = new GuildProperties(Guild_member->value);
 
     return true;
 }
@@ -1978,91 +1731,6 @@ bool CurrentGamesResult::readFromValue(const rapidjson::Value& obj)
     if (PlayerCount_member != obj.MemberEnd() && !PlayerCount_member->value.IsNull()) PlayerCount = PlayerCount_member->value.GetInt();
     const Value::ConstMemberIterator GameCount_member = obj.FindMember("GameCount");
     if (GameCount_member != obj.MemberEnd() && !GameCount_member->value.IsNull()) GameCount = GameCount_member->value.GetInt();
-
-    return true;
-}
-
-DeleteGuildRequest::~DeleteGuildRequest()
-{
-
-}
-
-void DeleteGuildRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-
-    writer.EndObject();
-}
-
-bool DeleteGuildRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-
-    return true;
-}
-
-DeleteGuildResult::~DeleteGuildResult()
-{
-
-}
-
-void DeleteGuildResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool DeleteGuildResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-DenyGuildRoleChangeRequest::~DenyGuildRoleChangeRequest()
-{
-
-}
-
-void DenyGuildRoleChangeRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-    if (GuildRoleRequestId.length() > 0) { writer.String("GuildRoleRequestId"); writer.String(GuildRoleRequestId.c_str()); }
-
-    writer.EndObject();
-}
-
-bool DenyGuildRoleChangeRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator GuildRoleRequestId_member = obj.FindMember("GuildRoleRequestId");
-    if (GuildRoleRequestId_member != obj.MemberEnd() && !GuildRoleRequestId_member->value.IsNull()) GuildRoleRequestId = GuildRoleRequestId_member->value.GetString();
-
-    return true;
-}
-
-DenyGuildRoleChangeResult::~DenyGuildRoleChangeResult()
-{
-
-}
-
-void DenyGuildRoleChangeResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool DenyGuildRoleChangeResult::readFromValue(const rapidjson::Value& obj)
-{
 
     return true;
 }
@@ -3742,499 +3410,6 @@ bool GetFriendsListResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-GetGuildDataRequest::~GetGuildDataRequest()
-{
-
-}
-
-void GetGuildDataRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-    if (!Keys.empty()) {
-    writer.String("Keys");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
-        writer.String(iter->c_str());
-    }
-    writer.EndArray();
-     }
-    if (IfChangedFromDataVersion.notNull()) { writer.String("IfChangedFromDataVersion"); writer.Uint(IfChangedFromDataVersion); }
-
-    writer.EndObject();
-}
-
-bool GetGuildDataRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator Keys_member = obj.FindMember("Keys");
-    if (Keys_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Keys_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Keys.push_back(memberList[i].GetString());
-        }
-    }
-    const Value::ConstMemberIterator IfChangedFromDataVersion_member = obj.FindMember("IfChangedFromDataVersion");
-    if (IfChangedFromDataVersion_member != obj.MemberEnd() && !IfChangedFromDataVersion_member->value.IsNull()) IfChangedFromDataVersion = IfChangedFromDataVersion_member->value.GetUint();
-
-    return true;
-}
-
-GetGuildDataResult::~GetGuildDataResult()
-{
-
-}
-
-void GetGuildDataResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!Data.empty()) {
-    writer.String("Data");
-    writer.StartObject();
-    for (std::map<std::string, UserDataRecord>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
-        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
-    }
-    writer.EndObject();
-     }
-    writer.String("DataVersion"); writer.Uint(DataVersion);
-
-    writer.EndObject();
-}
-
-bool GetGuildDataResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
-    if (Data_member != obj.MemberEnd()) {
-        for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
-            Data[iter->name.GetString()] = UserDataRecord(iter->value);
-        }
-    }
-    const Value::ConstMemberIterator DataVersion_member = obj.FindMember("DataVersion");
-    if (DataVersion_member != obj.MemberEnd() && !DataVersion_member->value.IsNull()) DataVersion = DataVersion_member->value.GetUint();
-
-    return true;
-}
-
-GetGuildInventoryRequest::~GetGuildInventoryRequest()
-{
-
-}
-
-void GetGuildInventoryRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("GuildId"); writer.String(GuildId.c_str());
-    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
-
-    writer.EndObject();
-}
-
-bool GetGuildInventoryRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
-    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
-
-    return true;
-}
-
-GetGuildInventoryResult::~GetGuildInventoryResult()
-{
-
-}
-
-void GetGuildInventoryResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!Inventory.empty()) {
-    writer.String("Inventory");
-    writer.StartArray();
-    for (std::list<ItemInstance>::iterator iter = Inventory.begin(); iter != Inventory.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-    if (!VirtualCurrency.empty()) {
-    writer.String("VirtualCurrency");
-    writer.StartObject();
-    for (std::map<std::string, Int32>::iterator iter = VirtualCurrency.begin(); iter != VirtualCurrency.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Int(iter->second);
-    }
-    writer.EndObject();
-     }
-
-    writer.EndObject();
-}
-
-bool GetGuildInventoryResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Inventory_member = obj.FindMember("Inventory");
-    if (Inventory_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Inventory_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Inventory.push_back(ItemInstance(memberList[i]));
-        }
-    }
-    const Value::ConstMemberIterator VirtualCurrency_member = obj.FindMember("VirtualCurrency");
-    if (VirtualCurrency_member != obj.MemberEnd()) {
-        for (Value::ConstMemberIterator iter = VirtualCurrency_member->value.MemberBegin(); iter != VirtualCurrency_member->value.MemberEnd(); ++iter) {
-            VirtualCurrency[iter->name.GetString()] = iter->value.GetInt();
-        }
-    }
-
-    return true;
-}
-
-GetGuildMembershipLeaderboardRequest::~GetGuildMembershipLeaderboardRequest()
-{
-
-}
-
-void GetGuildMembershipLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("StatisticName"); writer.String(StatisticName.c_str());
-    writer.String("GuildId"); writer.String(GuildId.c_str());
-    writer.String("StartPosition"); writer.Int(StartPosition);
-    if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
-
-    writer.EndObject();
-}
-
-bool GetGuildMembershipLeaderboardRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator StartPosition_member = obj.FindMember("StartPosition");
-    if (StartPosition_member != obj.MemberEnd() && !StartPosition_member->value.IsNull()) StartPosition = StartPosition_member->value.GetInt();
-    const Value::ConstMemberIterator MaxResultsCount_member = obj.FindMember("MaxResultsCount");
-    if (MaxResultsCount_member != obj.MemberEnd() && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
-
-    return true;
-}
-
-GetGuildMembershipLeaderboardResult::~GetGuildMembershipLeaderboardResult()
-{
-
-}
-
-void GetGuildMembershipLeaderboardResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!Leaderboard.empty()) {
-    writer.String("Leaderboard");
-    writer.StartArray();
-    for (std::list<PlayerLeaderboardEntry>::iterator iter = Leaderboard.begin(); iter != Leaderboard.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool GetGuildMembershipLeaderboardResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Leaderboard_member = obj.FindMember("Leaderboard");
-    if (Leaderboard_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Leaderboard_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Leaderboard.push_back(PlayerLeaderboardEntry(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-GetGuildsLeaderboardAroundGuildRequest::~GetGuildsLeaderboardAroundGuildRequest()
-{
-
-}
-
-void GetGuildsLeaderboardAroundGuildRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("StatisticName"); writer.String(StatisticName.c_str());
-    writer.String("GuildId"); writer.String(GuildId.c_str());
-    if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
-
-    writer.EndObject();
-}
-
-bool GetGuildsLeaderboardAroundGuildRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator MaxResultsCount_member = obj.FindMember("MaxResultsCount");
-    if (MaxResultsCount_member != obj.MemberEnd() && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
-
-    return true;
-}
-
-GuildLeaderboardEntry::~GuildLeaderboardEntry()
-{
-
-}
-
-void GuildLeaderboardEntry::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-    if (GuildName.length() > 0) { writer.String("GuildName"); writer.String(GuildName.c_str()); }
-    writer.String("StatValue"); writer.Int(StatValue);
-    writer.String("Position"); writer.Int(Position);
-
-    writer.EndObject();
-}
-
-bool GuildLeaderboardEntry::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator GuildName_member = obj.FindMember("GuildName");
-    if (GuildName_member != obj.MemberEnd() && !GuildName_member->value.IsNull()) GuildName = GuildName_member->value.GetString();
-    const Value::ConstMemberIterator StatValue_member = obj.FindMember("StatValue");
-    if (StatValue_member != obj.MemberEnd() && !StatValue_member->value.IsNull()) StatValue = StatValue_member->value.GetInt();
-    const Value::ConstMemberIterator Position_member = obj.FindMember("Position");
-    if (Position_member != obj.MemberEnd() && !Position_member->value.IsNull()) Position = Position_member->value.GetInt();
-
-    return true;
-}
-
-GetGuildsLeaderboardAroundGuildResult::~GetGuildsLeaderboardAroundGuildResult()
-{
-
-}
-
-void GetGuildsLeaderboardAroundGuildResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!Leaderboard.empty()) {
-    writer.String("Leaderboard");
-    writer.StartArray();
-    for (std::list<GuildLeaderboardEntry>::iterator iter = Leaderboard.begin(); iter != Leaderboard.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool GetGuildsLeaderboardAroundGuildResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Leaderboard_member = obj.FindMember("Leaderboard");
-    if (Leaderboard_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Leaderboard_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Leaderboard.push_back(GuildLeaderboardEntry(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-GetGuildsLeaderboardRequest::~GetGuildsLeaderboardRequest()
-{
-
-}
-
-void GetGuildsLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("StatisticName"); writer.String(StatisticName.c_str());
-    writer.String("StartPosition"); writer.Int(StartPosition);
-    if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
-
-    writer.EndObject();
-}
-
-bool GetGuildsLeaderboardRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-    const Value::ConstMemberIterator StartPosition_member = obj.FindMember("StartPosition");
-    if (StartPosition_member != obj.MemberEnd() && !StartPosition_member->value.IsNull()) StartPosition = StartPosition_member->value.GetInt();
-    const Value::ConstMemberIterator MaxResultsCount_member = obj.FindMember("MaxResultsCount");
-    if (MaxResultsCount_member != obj.MemberEnd() && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
-
-    return true;
-}
-
-GetGuildsLeaderboardResult::~GetGuildsLeaderboardResult()
-{
-
-}
-
-void GetGuildsLeaderboardResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!Leaderboard.empty()) {
-    writer.String("Leaderboard");
-    writer.StartArray();
-    for (std::list<GuildLeaderboardEntry>::iterator iter = Leaderboard.begin(); iter != Leaderboard.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool GetGuildsLeaderboardResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Leaderboard_member = obj.FindMember("Leaderboard");
-    if (Leaderboard_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Leaderboard_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Leaderboard.push_back(GuildLeaderboardEntry(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-StatisticNameVersion::~StatisticNameVersion()
-{
-
-}
-
-void StatisticNameVersion::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("StatisticName"); writer.String(StatisticName.c_str());
-    writer.String("Version"); writer.Uint(Version);
-
-    writer.EndObject();
-}
-
-bool StatisticNameVersion::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
-    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetUint();
-
-    return true;
-}
-
-GetGuildStatisticsRequest::~GetGuildStatisticsRequest()
-{
-
-}
-
-void GetGuildStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-    if (!StatisticNameVersions.empty()) {
-    writer.String("StatisticNameVersions");
-    writer.StartArray();
-    for (std::list<StatisticNameVersion>::iterator iter = StatisticNameVersions.begin(); iter != StatisticNameVersions.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool GetGuildStatisticsRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator StatisticNameVersions_member = obj.FindMember("StatisticNameVersions");
-    if (StatisticNameVersions_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = StatisticNameVersions_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            StatisticNameVersions.push_back(StatisticNameVersion(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-StatisticValue::~StatisticValue()
-{
-
-}
-
-void StatisticValue::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-    writer.String("Value"); writer.Int(Value);
-    writer.String("Version"); writer.Uint(Version);
-
-    writer.EndObject();
-}
-
-bool StatisticValue::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-    const Value::ConstMemberIterator Value_member = obj.FindMember("Value");
-    if (Value_member != obj.MemberEnd() && !Value_member->value.IsNull()) Value = Value_member->value.GetInt();
-    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
-    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetUint();
-
-    return true;
-}
-
-GetGuildStatisticsResult::~GetGuildStatisticsResult()
-{
-
-}
-
-void GetGuildStatisticsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!Statistics.empty()) {
-    writer.String("Statistics");
-    writer.StartArray();
-    for (std::list<StatisticValue>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool GetGuildStatisticsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Statistics_member = obj.FindMember("Statistics");
-    if (Statistics_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Statistics_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Statistics.push_back(StatisticValue(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
 GetLeaderboardAroundCharacterRequest::~GetLeaderboardAroundCharacterRequest()
 {
 
@@ -4480,65 +3655,6 @@ bool GetLeaderboardForUsersCharactersResult::readFromValue(const rapidjson::Valu
     return true;
 }
 
-GetLeaderboardOfPlayersGuildsRequest::~GetLeaderboardOfPlayersGuildsRequest()
-{
-
-}
-
-void GetLeaderboardOfPlayersGuildsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("StatisticName"); writer.String(StatisticName.c_str());
-    writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
-
-    writer.EndObject();
-}
-
-bool GetLeaderboardOfPlayersGuildsRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
-    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
-    const Value::ConstMemberIterator MaxResultsCount_member = obj.FindMember("MaxResultsCount");
-    if (MaxResultsCount_member != obj.MemberEnd() && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
-
-    return true;
-}
-
-GetLeaderboardOfPlayersGuildsResult::~GetLeaderboardOfPlayersGuildsResult()
-{
-
-}
-
-void GetLeaderboardOfPlayersGuildsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!Leaderboard.empty()) {
-    writer.String("Leaderboard");
-    writer.StartArray();
-    for (std::list<GuildLeaderboardEntry>::iterator iter = Leaderboard.begin(); iter != Leaderboard.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool GetLeaderboardOfPlayersGuildsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Leaderboard_member = obj.FindMember("Leaderboard");
-    if (Leaderboard_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Leaderboard_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Leaderboard.push_back(GuildLeaderboardEntry(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
 GetLeaderboardRequest::~GetLeaderboardRequest()
 {
 
@@ -4645,6 +3761,31 @@ bool GetPhotonAuthenticationTokenResult::readFromValue(const rapidjson::Value& o
     return true;
 }
 
+StatisticNameVersion::~StatisticNameVersion()
+{
+
+}
+
+void StatisticNameVersion::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("StatisticName"); writer.String(StatisticName.c_str());
+    writer.String("Version"); writer.Uint(Version);
+
+    writer.EndObject();
+}
+
+bool StatisticNameVersion::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetUint();
+
+    return true;
+}
+
 GetPlayerStatisticsRequest::~GetPlayerStatisticsRequest()
 {
 
@@ -4690,6 +3831,34 @@ bool GetPlayerStatisticsRequest::readFromValue(const rapidjson::Value& obj)
             StatisticNameVersions.push_back(StatisticNameVersion(memberList[i]));
         }
     }
+
+    return true;
+}
+
+StatisticValue::~StatisticValue()
+{
+
+}
+
+void StatisticValue::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
+    writer.String("Value"); writer.Int(Value);
+    writer.String("Version"); writer.Uint(Version);
+
+    writer.EndObject();
+}
+
+bool StatisticValue::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::ConstMemberIterator Value_member = obj.FindMember("Value");
+    if (Value_member != obj.MemberEnd() && !Value_member->value.IsNull()) Value = Value_member->value.GetInt();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetUint();
 
     return true;
 }
@@ -5204,101 +4373,6 @@ bool GetPlayFabIDsFromKongregateIDsResult::readFromValue(const rapidjson::Value&
         const rapidjson::Value& memberList = Data_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Data.push_back(KongregatePlayFabIdPair(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-GetPlayFabIDsFromPSNAccountIDsRequest::~GetPlayFabIDsFromPSNAccountIDsRequest()
-{
-
-}
-
-void GetPlayFabIDsFromPSNAccountIDsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("PSNAccountIDs");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = PSNAccountIDs.begin(); iter != PSNAccountIDs.end(); iter++) {
-        writer.String(iter->c_str());
-    }
-    writer.EndArray();
-    
-    if (IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
-
-    writer.EndObject();
-}
-
-bool GetPlayFabIDsFromPSNAccountIDsRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator PSNAccountIDs_member = obj.FindMember("PSNAccountIDs");
-    if (PSNAccountIDs_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = PSNAccountIDs_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            PSNAccountIDs.push_back(memberList[i].GetString());
-        }
-    }
-    const Value::ConstMemberIterator IssuerId_member = obj.FindMember("IssuerId");
-    if (IssuerId_member != obj.MemberEnd() && !IssuerId_member->value.IsNull()) IssuerId = IssuerId_member->value.GetInt();
-
-    return true;
-}
-
-PSNAccountPlayFabIdPair::~PSNAccountPlayFabIdPair()
-{
-
-}
-
-void PSNAccountPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (PSNAccountId.length() > 0) { writer.String("PSNAccountId"); writer.String(PSNAccountId.c_str()); }
-    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
-
-    writer.EndObject();
-}
-
-bool PSNAccountPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator PSNAccountId_member = obj.FindMember("PSNAccountId");
-    if (PSNAccountId_member != obj.MemberEnd() && !PSNAccountId_member->value.IsNull()) PSNAccountId = PSNAccountId_member->value.GetString();
-    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-
-    return true;
-}
-
-GetPlayFabIDsFromPSNAccountIDsResult::~GetPlayFabIDsFromPSNAccountIDsResult()
-{
-
-}
-
-void GetPlayFabIDsFromPSNAccountIDsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!Data.empty()) {
-    writer.String("Data");
-    writer.StartArray();
-    for (std::list<PSNAccountPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool GetPlayFabIDsFromPSNAccountIDsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
-    if (Data_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Data_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Data.push_back(PSNAccountPlayFabIdPair(memberList[i]));
         }
     }
 
@@ -6427,85 +5501,6 @@ bool GrantCharacterToUserResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-GuildMember::~GuildMember()
-{
-
-}
-
-void GuildMember::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (PlayerId.length() > 0) { writer.String("PlayerId"); writer.String(PlayerId.c_str()); }
-    if (Role.notNull()) { writer.String("Role"); writeGuildRoleEnumJSON(Role, writer); }
-
-    writer.EndObject();
-}
-
-bool GuildMember::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator PlayerId_member = obj.FindMember("PlayerId");
-    if (PlayerId_member != obj.MemberEnd() && !PlayerId_member->value.IsNull()) PlayerId = PlayerId_member->value.GetString();
-    const Value::ConstMemberIterator Role_member = obj.FindMember("Role");
-    if (Role_member != obj.MemberEnd() && !Role_member->value.IsNull()) Role = readGuildRoleFromValue(Role_member->value);
-
-    return true;
-}
-
-GuildMembership::~GuildMembership()
-{
-    if (Guild != NULL) delete Guild;
-
-}
-
-void GuildMembership::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (Guild != NULL) { writer.String("Guild"); Guild->writeJSON(writer); }
-    if (Role.notNull()) { writer.String("Role"); writeGuildRoleEnumJSON(Role, writer); }
-
-    writer.EndObject();
-}
-
-bool GuildMembership::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Guild_member = obj.FindMember("Guild");
-    if (Guild_member != obj.MemberEnd() && !Guild_member->value.IsNull()) Guild = new GuildProperties(Guild_member->value);
-    const Value::ConstMemberIterator Role_member = obj.FindMember("Role");
-    if (Role_member != obj.MemberEnd() && !Role_member->value.IsNull()) Role = readGuildRoleFromValue(Role_member->value);
-
-    return true;
-}
-
-GuildRoleRequest::~GuildRoleRequest()
-{
-
-}
-
-void GuildRoleRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildRoleRequestId.length() > 0) { writer.String("GuildRoleRequestId"); writer.String(GuildRoleRequestId.c_str()); }
-    if (PlayerId.length() > 0) { writer.String("PlayerId"); writer.String(PlayerId.c_str()); }
-    if (Role.notNull()) { writer.String("Role"); writeGuildRoleEnumJSON(Role, writer); }
-
-    writer.EndObject();
-}
-
-bool GuildRoleRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildRoleRequestId_member = obj.FindMember("GuildRoleRequestId");
-    if (GuildRoleRequestId_member != obj.MemberEnd() && !GuildRoleRequestId_member->value.IsNull()) GuildRoleRequestId = GuildRoleRequestId_member->value.GetString();
-    const Value::ConstMemberIterator PlayerId_member = obj.FindMember("PlayerId");
-    if (PlayerId_member != obj.MemberEnd() && !PlayerId_member->value.IsNull()) PlayerId = PlayerId_member->value.GetString();
-    const Value::ConstMemberIterator Role_member = obj.FindMember("Role");
-    if (Role_member != obj.MemberEnd() && !Role_member->value.IsNull()) Role = readGuildRoleFromValue(Role_member->value);
-
-    return true;
-}
-
 ItemPurchaseRequest::~ItemPurchaseRequest()
 {
 
@@ -6545,47 +5540,6 @@ bool ItemPurchaseRequest::readFromValue(const rapidjson::Value& obj)
             UpgradeFromItems.push_back(memberList[i].GetString());
         }
     }
-
-    return true;
-}
-
-LeaveGuildRequest::~LeaveGuildRequest()
-{
-
-}
-
-void LeaveGuildRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-
-    writer.EndObject();
-}
-
-bool LeaveGuildRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-
-    return true;
-}
-
-LeaveGuildResult::~LeaveGuildResult()
-{
-
-}
-
-void LeaveGuildResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool LeaveGuildResult::readFromValue(const rapidjson::Value& obj)
-{
 
     return true;
 }
@@ -6892,53 +5846,6 @@ bool LinkKongregateAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-LinkPSNAccountRequest::~LinkPSNAccountRequest()
-{
-
-}
-
-void LinkPSNAccountRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("AuthCode"); writer.String(AuthCode.c_str());
-    writer.String("RedirectUri"); writer.String(RedirectUri.c_str());
-    if (IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
-
-    writer.EndObject();
-}
-
-bool LinkPSNAccountRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator AuthCode_member = obj.FindMember("AuthCode");
-    if (AuthCode_member != obj.MemberEnd() && !AuthCode_member->value.IsNull()) AuthCode = AuthCode_member->value.GetString();
-    const Value::ConstMemberIterator RedirectUri_member = obj.FindMember("RedirectUri");
-    if (RedirectUri_member != obj.MemberEnd() && !RedirectUri_member->value.IsNull()) RedirectUri = RedirectUri_member->value.GetString();
-    const Value::ConstMemberIterator IssuerId_member = obj.FindMember("IssuerId");
-    if (IssuerId_member != obj.MemberEnd() && !IssuerId_member->value.IsNull()) IssuerId = IssuerId_member->value.GetInt();
-
-    return true;
-}
-
-LinkPSNAccountResult::~LinkPSNAccountResult()
-{
-
-}
-
-void LinkPSNAccountResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool LinkPSNAccountResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
 LinkSteamAccountRequest::~LinkSteamAccountRequest()
 {
 
@@ -6976,212 +5883,6 @@ void LinkSteamAccountResult::writeJSON(PFStringJsonWriter& writer)
 
 bool LinkSteamAccountResult::readFromValue(const rapidjson::Value& obj)
 {
-
-    return true;
-}
-
-LinkXboxAccountRequest::~LinkXboxAccountRequest()
-{
-
-}
-
-void LinkXboxAccountRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("XboxToken"); writer.String(XboxToken.c_str());
-
-    writer.EndObject();
-}
-
-bool LinkXboxAccountRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator XboxToken_member = obj.FindMember("XboxToken");
-    if (XboxToken_member != obj.MemberEnd() && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
-
-    return true;
-}
-
-LinkXboxAccountResult::~LinkXboxAccountResult()
-{
-
-}
-
-void LinkXboxAccountResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool LinkXboxAccountResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-ListGuildMembersRequest::~ListGuildMembersRequest()
-{
-
-}
-
-void ListGuildMembersRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-
-    writer.EndObject();
-}
-
-bool ListGuildMembersRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-
-    return true;
-}
-
-ListGuildMembersResult::~ListGuildMembersResult()
-{
-
-}
-
-void ListGuildMembersResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!Members.empty()) {
-    writer.String("Members");
-    writer.StartArray();
-    for (std::list<GuildMember>::iterator iter = Members.begin(); iter != Members.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool ListGuildMembersResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Members_member = obj.FindMember("Members");
-    if (Members_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Members_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Members.push_back(GuildMember(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-ListPendingGuildRoleChangeRequestsRequest::~ListPendingGuildRoleChangeRequestsRequest()
-{
-
-}
-
-void ListPendingGuildRoleChangeRequestsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-
-    writer.EndObject();
-}
-
-bool ListPendingGuildRoleChangeRequestsRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-
-    return true;
-}
-
-ListPendingGuildRoleChangeRequestsResult::~ListPendingGuildRoleChangeRequestsResult()
-{
-
-}
-
-void ListPendingGuildRoleChangeRequestsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!RoleRequests.empty()) {
-    writer.String("RoleRequests");
-    writer.StartArray();
-    for (std::list<GuildRoleRequest>::iterator iter = RoleRequests.begin(); iter != RoleRequests.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool ListPendingGuildRoleChangeRequestsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator RoleRequests_member = obj.FindMember("RoleRequests");
-    if (RoleRequests_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = RoleRequests_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            RoleRequests.push_back(GuildRoleRequest(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-ListPlayerGuildMembershipsRequest::~ListPlayerGuildMembershipsRequest()
-{
-
-}
-
-void ListPlayerGuildMembershipsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool ListPlayerGuildMembershipsRequest::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-ListPlayerGuildMembershipsResult::~ListPlayerGuildMembershipsResult()
-{
-
-}
-
-void ListPlayerGuildMembershipsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (!Memberships.empty()) {
-    writer.String("Memberships");
-    writer.StartArray();
-    for (std::list<GuildMembership>::iterator iter = Memberships.begin(); iter != Memberships.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool ListPlayerGuildMembershipsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Memberships_member = obj.FindMember("Memberships");
-    if (Memberships_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Memberships_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Memberships.push_back(GuildMembership(memberList[i]));
-        }
-    }
 
     return true;
 }
@@ -7630,40 +6331,6 @@ bool LoginWithPlayFabRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-LoginWithPSNRequest::~LoginWithPSNRequest()
-{
-
-}
-
-void LoginWithPSNRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("TitleId"); writer.String(TitleId.c_str());
-    writer.String("AuthCode"); writer.String(AuthCode.c_str());
-    writer.String("RedirectUri"); writer.String(RedirectUri.c_str());
-    if (IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
-    if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
-
-    writer.EndObject();
-}
-
-bool LoginWithPSNRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
-    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
-    const Value::ConstMemberIterator AuthCode_member = obj.FindMember("AuthCode");
-    if (AuthCode_member != obj.MemberEnd() && !AuthCode_member->value.IsNull()) AuthCode = AuthCode_member->value.GetString();
-    const Value::ConstMemberIterator RedirectUri_member = obj.FindMember("RedirectUri");
-    if (RedirectUri_member != obj.MemberEnd() && !RedirectUri_member->value.IsNull()) RedirectUri = RedirectUri_member->value.GetString();
-    const Value::ConstMemberIterator IssuerId_member = obj.FindMember("IssuerId");
-    if (IssuerId_member != obj.MemberEnd() && !IssuerId_member->value.IsNull()) IssuerId = IssuerId_member->value.GetInt();
-    const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
-    if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
-
-    return true;
-}
-
 LoginWithSteamRequest::~LoginWithSteamRequest()
 {
 
@@ -7686,34 +6353,6 @@ bool LoginWithSteamRequest::readFromValue(const rapidjson::Value& obj)
     if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
     const Value::ConstMemberIterator SteamTicket_member = obj.FindMember("SteamTicket");
     if (SteamTicket_member != obj.MemberEnd() && !SteamTicket_member->value.IsNull()) SteamTicket = SteamTicket_member->value.GetString();
-    const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
-    if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
-
-    return true;
-}
-
-LoginWithXboxRequest::~LoginWithXboxRequest()
-{
-
-}
-
-void LoginWithXboxRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("TitleId"); writer.String(TitleId.c_str());
-    writer.String("XboxToken"); writer.String(XboxToken.c_str());
-    if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
-
-    writer.EndObject();
-}
-
-bool LoginWithXboxRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
-    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
-    const Value::ConstMemberIterator XboxToken_member = obj.FindMember("XboxToken");
-    if (XboxToken_member != obj.MemberEnd() && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
     const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
     if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
 
@@ -8277,34 +6916,6 @@ bool RedeemCouponResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-RefreshPSNAuthTokenRequest::~RefreshPSNAuthTokenRequest()
-{
-
-}
-
-void RefreshPSNAuthTokenRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("AuthCode"); writer.String(AuthCode.c_str());
-    writer.String("RedirectUri"); writer.String(RedirectUri.c_str());
-    if (IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
-
-    writer.EndObject();
-}
-
-bool RefreshPSNAuthTokenRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator AuthCode_member = obj.FindMember("AuthCode");
-    if (AuthCode_member != obj.MemberEnd() && !AuthCode_member->value.IsNull()) AuthCode = AuthCode_member->value.GetString();
-    const Value::ConstMemberIterator RedirectUri_member = obj.FindMember("RedirectUri");
-    if (RedirectUri_member != obj.MemberEnd() && !RedirectUri_member->value.IsNull()) RedirectUri = RedirectUri_member->value.GetString();
-    const Value::ConstMemberIterator IssuerId_member = obj.FindMember("IssuerId");
-    if (IssuerId_member != obj.MemberEnd() && !IssuerId_member->value.IsNull()) IssuerId = IssuerId_member->value.GetInt();
-
-    return true;
-}
-
 RegisterForIOSPushNotificationRequest::~RegisterForIOSPushNotificationRequest()
 {
 
@@ -8465,50 +7076,6 @@ bool RemoveFriendResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-RemoveGuildMemberRequest::~RemoveGuildMemberRequest()
-{
-
-}
-
-void RemoveGuildMemberRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-    if (PlayerId.length() > 0) { writer.String("PlayerId"); writer.String(PlayerId.c_str()); }
-
-    writer.EndObject();
-}
-
-bool RemoveGuildMemberRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator PlayerId_member = obj.FindMember("PlayerId");
-    if (PlayerId_member != obj.MemberEnd() && !PlayerId_member->value.IsNull()) PlayerId = PlayerId_member->value.GetString();
-
-    return true;
-}
-
-RemoveGuildMemberResult::~RemoveGuildMemberResult()
-{
-
-}
-
-void RemoveGuildMemberResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool RemoveGuildMemberResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
 RemoveSharedGroupMembersRequest::~RemoveSharedGroupMembersRequest()
 {
 
@@ -8610,53 +7177,6 @@ bool ReportPlayerClientResult::readFromValue(const rapidjson::Value& obj)
     if (Updated_member != obj.MemberEnd() && !Updated_member->value.IsNull()) Updated = Updated_member->value.GetBool();
     const Value::ConstMemberIterator SubmissionsRemaining_member = obj.FindMember("SubmissionsRemaining");
     if (SubmissionsRemaining_member != obj.MemberEnd() && !SubmissionsRemaining_member->value.IsNull()) SubmissionsRemaining = SubmissionsRemaining_member->value.GetInt();
-
-    return true;
-}
-
-RequestGuildRoleChangeRequest::~RequestGuildRoleChangeRequest()
-{
-
-}
-
-void RequestGuildRoleChangeRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-    if (Role.notNull()) { writer.String("Role"); writeGuildRoleEnumJSON(Role, writer); }
-
-    writer.EndObject();
-}
-
-bool RequestGuildRoleChangeRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator Role_member = obj.FindMember("Role");
-    if (Role_member != obj.MemberEnd() && !Role_member->value.IsNull()) Role = readGuildRoleFromValue(Role_member->value);
-
-    return true;
-}
-
-RequestGuildRoleChangeResult::~RequestGuildRoleChangeResult()
-{
-
-}
-
-void RequestGuildRoleChangeResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildRoleRequestId.length() > 0) { writer.String("GuildRoleRequestId"); writer.String(GuildRoleRequestId.c_str()); }
-
-    writer.EndObject();
-}
-
-bool RequestGuildRoleChangeResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildRoleRequestId_member = obj.FindMember("GuildRoleRequestId");
-    if (GuildRoleRequestId_member != obj.MemberEnd() && !GuildRoleRequestId_member->value.IsNull()) GuildRoleRequestId = GuildRoleRequestId_member->value.GetString();
 
     return true;
 }
@@ -9379,44 +7899,6 @@ bool UnlinkKongregateAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-UnlinkPSNAccountRequest::~UnlinkPSNAccountRequest()
-{
-
-}
-
-void UnlinkPSNAccountRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool UnlinkPSNAccountRequest::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-UnlinkPSNAccountResult::~UnlinkPSNAccountResult()
-{
-
-}
-
-void UnlinkPSNAccountResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool UnlinkPSNAccountResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
 UnlinkSteamAccountRequest::~UnlinkSteamAccountRequest()
 {
 
@@ -9450,47 +7932,6 @@ void UnlinkSteamAccountResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool UnlinkSteamAccountResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-UnlinkXboxAccountRequest::~UnlinkXboxAccountRequest()
-{
-
-}
-
-void UnlinkXboxAccountRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("XboxToken"); writer.String(XboxToken.c_str());
-
-    writer.EndObject();
-}
-
-bool UnlinkXboxAccountRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator XboxToken_member = obj.FindMember("XboxToken");
-    if (XboxToken_member != obj.MemberEnd() && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
-
-    return true;
-}
-
-UnlinkXboxAccountResult::~UnlinkXboxAccountResult()
-{
-
-}
-
-void UnlinkXboxAccountResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool UnlinkXboxAccountResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
@@ -9735,138 +8176,6 @@ void UpdateCharacterStatisticsResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool UpdateCharacterStatisticsResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-UpdateGuildDataRequest::~UpdateGuildDataRequest()
-{
-
-}
-
-void UpdateGuildDataRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("GuildId"); writer.String(GuildId.c_str());
-    if (!Data.empty()) {
-    writer.String("Data");
-    writer.StartObject();
-    for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
-    }
-    writer.EndObject();
-     }
-    if (!KeysToRemove.empty()) {
-    writer.String("KeysToRemove");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = KeysToRemove.begin(); iter != KeysToRemove.end(); iter++) {
-        writer.String(iter->c_str());
-    }
-    writer.EndArray();
-     }
-    if (Permission.notNull()) { writer.String("Permission"); writeUserDataPermissionEnumJSON(Permission, writer); }
-
-    writer.EndObject();
-}
-
-bool UpdateGuildDataRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
-    if (Data_member != obj.MemberEnd()) {
-        for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
-            Data[iter->name.GetString()] = iter->value.GetString();
-        }
-    }
-    const Value::ConstMemberIterator KeysToRemove_member = obj.FindMember("KeysToRemove");
-    if (KeysToRemove_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = KeysToRemove_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            KeysToRemove.push_back(memberList[i].GetString());
-        }
-    }
-    const Value::ConstMemberIterator Permission_member = obj.FindMember("Permission");
-    if (Permission_member != obj.MemberEnd() && !Permission_member->value.IsNull()) Permission = readUserDataPermissionFromValue(Permission_member->value);
-
-    return true;
-}
-
-UpdateGuildDataResult::~UpdateGuildDataResult()
-{
-
-}
-
-void UpdateGuildDataResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("DataVersion"); writer.Uint(DataVersion);
-
-    writer.EndObject();
-}
-
-bool UpdateGuildDataResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator DataVersion_member = obj.FindMember("DataVersion");
-    if (DataVersion_member != obj.MemberEnd() && !DataVersion_member->value.IsNull()) DataVersion = DataVersion_member->value.GetUint();
-
-    return true;
-}
-
-UpdateGuildStatisticsRequest::~UpdateGuildStatisticsRequest()
-{
-
-}
-
-void UpdateGuildStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (GuildId.length() > 0) { writer.String("GuildId"); writer.String(GuildId.c_str()); }
-    if (!Statistics.empty()) {
-    writer.String("Statistics");
-    writer.StartArray();
-    for (std::list<StatisticUpdate>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
-
-    writer.EndObject();
-}
-
-bool UpdateGuildStatisticsRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator GuildId_member = obj.FindMember("GuildId");
-    if (GuildId_member != obj.MemberEnd() && !GuildId_member->value.IsNull()) GuildId = GuildId_member->value.GetString();
-    const Value::ConstMemberIterator Statistics_member = obj.FindMember("Statistics");
-    if (Statistics_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Statistics_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Statistics.push_back(StatisticUpdate(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-UpdateGuildStatisticsResult::~UpdateGuildStatisticsResult()
-{
-
-}
-
-void UpdateGuildStatisticsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool UpdateGuildStatisticsResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;

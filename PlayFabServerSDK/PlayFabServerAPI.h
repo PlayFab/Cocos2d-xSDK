@@ -20,7 +20,6 @@ namespace PlayFab
         static void GetUserAccountInfo(ServerModels::GetUserAccountInfoRequest& request, ProcessApiCallback<ServerModels::GetUserAccountInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendPushNotification(ServerModels::SendPushNotificationRequest& request, ProcessApiCallback<ServerModels::SendPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteUsers(ServerModels::DeleteUsersRequest& request, ProcessApiCallback<ServerModels::DeleteUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetFriendLeaderboard(ServerModels::GetFriendLeaderboardRequest& request, ProcessApiCallback<ServerModels::GetLeaderboardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboard(ServerModels::GetLeaderboardRequest& request, ProcessApiCallback<ServerModels::GetLeaderboardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboardAroundUser(ServerModels::GetLeaderboardAroundUserRequest& request, ProcessApiCallback<ServerModels::GetLeaderboardAroundUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerStatistics(ServerModels::GetPlayerStatisticsRequest& request, ProcessApiCallback<ServerModels::GetPlayerStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -69,9 +68,6 @@ namespace PlayFab
         static void UnlockContainerInstance(ServerModels::UnlockContainerInstanceRequest& request, ProcessApiCallback<ServerModels::UnlockContainerItemResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlockContainerItem(ServerModels::UnlockContainerItemRequest& request, ProcessApiCallback<ServerModels::UnlockContainerItemResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserInventoryItemCustomData(ServerModels::UpdateUserInventoryItemDataRequest& request, ProcessApiCallback<ServerModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void AddFriend(ServerModels::AddFriendRequest& request, ProcessApiCallback<ServerModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetFriendsList(ServerModels::GetFriendsListRequest& request, ProcessApiCallback<ServerModels::GetFriendsListResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void RemoveFriend(ServerModels::RemoveFriendRequest& request, ProcessApiCallback<ServerModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void NotifyMatchmakerPlayerLeft(ServerModels::NotifyMatchmakerPlayerLeftRequest& request, ProcessApiCallback<ServerModels::NotifyMatchmakerPlayerLeftResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RedeemMatchmakerTicket(ServerModels::RedeemMatchmakerTicketRequest& request, ProcessApiCallback<ServerModels::RedeemMatchmakerTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetGameServerInstanceState(ServerModels::SetGameServerInstanceStateRequest& request, ProcessApiCallback<ServerModels::SetGameServerInstanceStateResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -102,17 +98,6 @@ namespace PlayFab
         static void UpdateCharacterData(ServerModels::UpdateCharacterDataRequest& request, ProcessApiCallback<ServerModels::UpdateCharacterDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateCharacterInternalData(ServerModels::UpdateCharacterDataRequest& request, ProcessApiCallback<ServerModels::UpdateCharacterDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateCharacterReadOnlyData(ServerModels::UpdateCharacterDataRequest& request, ProcessApiCallback<ServerModels::UpdateCharacterDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void AddGuildVirtualCurrency(ServerModels::AddGuildVirtualCurrencyRequest& request, ProcessApiCallback<ServerModels::ModifyGuildVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetGuildData(ServerModels::GetGuildDataRequest& request, ProcessApiCallback<ServerModels::GetGuildDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetGuildInternalData(ServerModels::GetGuildDataRequest& request, ProcessApiCallback<ServerModels::GetGuildDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetGuildReadOnlyData(ServerModels::GetGuildDataRequest& request, ProcessApiCallback<ServerModels::GetGuildDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetGuildStatistics(ServerModels::GetGuildStatisticsRequest& request, ProcessApiCallback<ServerModels::GetGuildStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GrantItemsToGuild(ServerModels::GrantItemsToGuildRequest& request, ProcessApiCallback<ServerModels::GrantItemsToGuildResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void SubtractGuildVirtualCurrency(ServerModels::SubtractGuildVirtualCurrencyRequest& request, ProcessApiCallback<ServerModels::ModifyGuildVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UpdateGuildData(ServerModels::UpdateGuildDataRequest& request, ProcessApiCallback<ServerModels::UpdateGuildDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UpdateGuildInternalData(ServerModels::UpdateGuildDataRequest& request, ProcessApiCallback<ServerModels::UpdateGuildDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UpdateGuildReadOnlyData(ServerModels::UpdateGuildDataRequest& request, ProcessApiCallback<ServerModels::UpdateGuildDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UpdateGuildStatistics(ServerModels::UpdateGuildStatisticsRequest& request, ProcessApiCallback<ServerModels::UpdateGuildStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
@@ -125,7 +110,6 @@ namespace PlayFab
         static void OnGetUserAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetFriendLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardAroundUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
@@ -174,9 +158,6 @@ namespace PlayFab
         static void OnUnlockContainerInstanceResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlockContainerItemResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserInventoryItemCustomDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnAddFriendResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetFriendsListResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnRemoveFriendResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnNotifyMatchmakerPlayerLeftResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRedeemMatchmakerTicketResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetGameServerInstanceStateResult(int httpStatus, HttpRequest* request, void* userData);
@@ -207,17 +188,6 @@ namespace PlayFab
         static void OnUpdateCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCharacterInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnAddGuildVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetGuildDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetGuildInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetGuildReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetGuildStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGrantItemsToGuildResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnSubtractGuildVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnUpdateGuildDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnUpdateGuildInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnUpdateGuildReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnUpdateGuildStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
     };
 };
 #endif
