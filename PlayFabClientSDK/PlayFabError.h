@@ -226,7 +226,10 @@ namespace PlayFab
 		PlayFabErrorOperationNotSupportedForPlatform = 1219,
 		PlayFabErrorSegmentNotFound = 1220,
 		PlayFabErrorStoreNotFound = 1221,
-		PlayFabErrorInvalidStatisticName = 1222
+		PlayFabErrorInvalidStatisticName = 1222,
+		PlayFabErrorTitleNotQualifiedForLimit = 1223,
+		PlayFabErrorInvalidServiceLimitLevel = 1224,
+		PlayFabErrorServiceLimitLevelInTransition = 1225
     };
 
     struct PlayFabError
