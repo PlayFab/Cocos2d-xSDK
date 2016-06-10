@@ -1636,6 +1636,33 @@ bool CurrentGamesRequest::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::ClientModels::writeGameInstanceStateEnumJSON(GameInstanceState enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case GameInstanceStateOpen: writer.String("Open"); break;
+    case GameInstanceStateClosed: writer.String("Closed"); break;
+
+    }
+}
+
+GameInstanceState PlayFab::ClientModels::readGameInstanceStateFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, GameInstanceState> _GameInstanceStateMap;
+    if (_GameInstanceStateMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _GameInstanceStateMap["Open"] = GameInstanceStateOpen;
+        _GameInstanceStateMap["Closed"] = GameInstanceStateClosed;
+
+    }
+
+    auto output = _GameInstanceStateMap.find(obj.GetString());
+    if (output != _GameInstanceStateMap.end())
+        return output->second;
+
+    return GameInstanceStateOpen; // Basically critical fail
+}
 
 GameInfo::~GameInfo()
 {
@@ -1661,7 +1688,8 @@ void GameInfo::writeJSON(PFStringJsonWriter& writer)
     writer.EndArray();
      }
     writer.String("RunTime"); writer.Uint(RunTime);
-    if (GameServerState.length() > 0) { writer.String("GameServerState"); writer.String(GameServerState.c_str()); }
+    if (GameServerState.notNull()) { writer.String("GameServerState"); writeGameInstanceStateEnumJSON(GameServerState, writer); }
+    if (GameServerData.length() > 0) { writer.String("GameServerData"); writer.String(GameServerData.c_str()); }
 
     writer.EndObject();
 }
@@ -1690,7 +1718,9 @@ bool GameInfo::readFromValue(const rapidjson::Value& obj)
     const Value::ConstMemberIterator RunTime_member = obj.FindMember("RunTime");
     if (RunTime_member != obj.MemberEnd() && !RunTime_member->value.IsNull()) RunTime = RunTime_member->value.GetUint();
     const Value::ConstMemberIterator GameServerState_member = obj.FindMember("GameServerState");
-    if (GameServerState_member != obj.MemberEnd() && !GameServerState_member->value.IsNull()) GameServerState = GameServerState_member->value.GetString();
+    if (GameServerState_member != obj.MemberEnd() && !GameServerState_member->value.IsNull()) GameServerState = readGameInstanceStateFromValue(GameServerState_member->value);
+    const Value::ConstMemberIterator GameServerData_member = obj.FindMember("GameServerData");
+    if (GameServerData_member != obj.MemberEnd() && !GameServerData_member->value.IsNull()) GameServerData = GameServerData_member->value.GetString();
 
     return true;
 }

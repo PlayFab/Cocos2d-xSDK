@@ -5066,6 +5066,50 @@ bool SendPushNotificationResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+SetGameServerInstanceDataRequest::~SetGameServerInstanceDataRequest()
+{
+
+}
+
+void SetGameServerInstanceDataRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("LobbyId"); writer.String(LobbyId.c_str());
+    writer.String("GameServerData"); writer.String(GameServerData.c_str());
+
+    writer.EndObject();
+}
+
+bool SetGameServerInstanceDataRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
+    if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
+    const Value::ConstMemberIterator GameServerData_member = obj.FindMember("GameServerData");
+    if (GameServerData_member != obj.MemberEnd() && !GameServerData_member->value.IsNull()) GameServerData = GameServerData_member->value.GetString();
+
+    return true;
+}
+
+SetGameServerInstanceDataResult::~SetGameServerInstanceDataResult()
+{
+
+}
+
+void SetGameServerInstanceDataResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool SetGameServerInstanceDataResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 SetGameServerInstanceStateRequest::~SetGameServerInstanceStateRequest()
 {
 
