@@ -4409,6 +4409,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct SetGameServerInstanceDataRequest : public PlayFabBaseModel
+        {
+            std::string LobbyId;
+            std::string GameServerData;
+
+            SetGameServerInstanceDataRequest() :
+                PlayFabBaseModel(),
+                LobbyId(),
+                GameServerData()
+            {}
+
+            SetGameServerInstanceDataRequest(const SetGameServerInstanceDataRequest& src) :
+                PlayFabBaseModel(),
+                LobbyId(src.LobbyId),
+                GameServerData(src.GameServerData)
+            {}
+
+            SetGameServerInstanceDataRequest(const rapidjson::Value& obj) : SetGameServerInstanceDataRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetGameServerInstanceDataRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetGameServerInstanceDataResult : public PlayFabBaseModel
+        {
+
+            SetGameServerInstanceDataResult() :
+                PlayFabBaseModel()
+            {}
+
+            SetGameServerInstanceDataResult(const SetGameServerInstanceDataResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            SetGameServerInstanceDataResult(const rapidjson::Value& obj) : SetGameServerInstanceDataResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetGameServerInstanceDataResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct SetGameServerInstanceStateRequest : public PlayFabBaseModel
         {
             std::string LobbyId;

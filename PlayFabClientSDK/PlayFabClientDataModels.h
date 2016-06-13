@@ -1229,6 +1229,15 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum GameInstanceState
+        {
+            GameInstanceStateOpen,
+            GameInstanceStateClosed
+        };
+
+        void writeGameInstanceStateEnumJSON(GameInstanceState enumVal, PFStringJsonWriter& writer);
+        GameInstanceState readGameInstanceStateFromValue(const rapidjson::Value& obj);
+
         struct GameInfo : public PlayFabBaseModel
         {
             Boxed<Region> pfRegion;
@@ -1239,7 +1248,8 @@ namespace PlayFab
             OptionalInt32 MaxPlayers;
             std::list<std::string> PlayerUserIds;
             Uint32 RunTime;
-            std::string GameServerState;
+            Boxed<GameInstanceState> GameServerState;
+            std::string GameServerData;
 
             GameInfo() :
                 PlayFabBaseModel(),
@@ -1251,7 +1261,8 @@ namespace PlayFab
                 MaxPlayers(),
                 PlayerUserIds(),
                 RunTime(0),
-                GameServerState()
+                GameServerState(),
+                GameServerData()
             {}
 
             GameInfo(const GameInfo& src) :
@@ -1264,7 +1275,8 @@ namespace PlayFab
                 MaxPlayers(src.MaxPlayers),
                 PlayerUserIds(src.PlayerUserIds),
                 RunTime(src.RunTime),
-                GameServerState(src.GameServerState)
+                GameServerState(src.GameServerState),
+                GameServerData(src.GameServerData)
             {}
 
             GameInfo(const rapidjson::Value& obj) : GameInfo()

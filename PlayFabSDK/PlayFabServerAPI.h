@@ -70,6 +70,7 @@ namespace PlayFab
         static void UpdateUserInventoryItemCustomData(ServerModels::UpdateUserInventoryItemDataRequest& request, ProcessApiCallback<ServerModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void NotifyMatchmakerPlayerLeft(ServerModels::NotifyMatchmakerPlayerLeftRequest& request, ProcessApiCallback<ServerModels::NotifyMatchmakerPlayerLeftResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RedeemMatchmakerTicket(ServerModels::RedeemMatchmakerTicketRequest& request, ProcessApiCallback<ServerModels::RedeemMatchmakerTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void SetGameServerInstanceData(ServerModels::SetGameServerInstanceDataRequest& request, ProcessApiCallback<ServerModels::SetGameServerInstanceDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetGameServerInstanceState(ServerModels::SetGameServerInstanceStateRequest& request, ProcessApiCallback<ServerModels::SetGameServerInstanceStateResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AwardSteamAchievement(ServerModels::AwardSteamAchievementRequest& request, ProcessApiCallback<ServerModels::AwardSteamAchievementResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LogEvent(ServerModels::LogEventRequest& request, ProcessApiCallback<ServerModels::LogEventResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -160,6 +161,7 @@ namespace PlayFab
         static void OnUpdateUserInventoryItemCustomDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnNotifyMatchmakerPlayerLeftResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRedeemMatchmakerTicketResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnSetGameServerInstanceDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetGameServerInstanceStateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAwardSteamAchievementResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLogEventResult(int httpStatus, HttpRequest* request, void* userData);

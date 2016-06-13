@@ -29,6 +29,13 @@ void MultitypeVar::writeJSON(PFStringJsonWriter& writer)
     case MultitypeString:
         writer.String(mString.c_str());
         break;
+    case MultitypeJsonObject:
+        mObj->writeJSON(writer);
+        break;
+    case MultitypeError:
+    default:
+        writer.String("MultitypeError");
+        break;
     }
 }
 
@@ -50,12 +57,14 @@ bool MultitypeVar::readFromValue(const rapidjson::Value& obj)
     }
     else if (obj.IsString())
     {
-        mType = MultitypeNumber;
+        mType = MultitypeString;
         mString = obj.GetString();
     }
-    else
+    else // if (obj.IsObject()) - or just something else
     {
-        mType = MultitypeNull;
+        // If you're here, you are trying to deserialize a real (and type-unknown) object into an abstract container, and that doesn't work in C++
+        // TODO: Our best workaround may be to give you back the json, because we can't assign mObj with anything meaningful - Someday
+        mType = MultitypeError;
         return false;
     }
     return true;
