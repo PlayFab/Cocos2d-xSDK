@@ -228,7 +228,8 @@ namespace PlayFab
         PlayFabErrorInvalidStatisticName = 1222,
         PlayFabErrorTitleNotQualifiedForLimit = 1223,
         PlayFabErrorInvalidServiceLimitLevel = 1224,
-        PlayFabErrorServiceLimitLevelInTransition = 1225
+        PlayFabErrorServiceLimitLevelInTransition = 1225,
+        PlayFabErrorCouponAlreadyRedeemed = 1226
     };
 
     struct PlayFabError
