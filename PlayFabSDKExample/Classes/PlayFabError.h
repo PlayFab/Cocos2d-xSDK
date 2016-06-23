@@ -229,7 +229,12 @@ namespace PlayFab
         PlayFabErrorTitleNotQualifiedForLimit = 1223,
         PlayFabErrorInvalidServiceLimitLevel = 1224,
         PlayFabErrorServiceLimitLevelInTransition = 1225,
-        PlayFabErrorCouponAlreadyRedeemed = 1226
+        PlayFabErrorCouponAlreadyRedeemed = 1226,
+        PlayFabErrorGameServerBuildSizeLimitExceeded = 1227,
+        PlayFabErrorGameServerBuildCountLimitExceeded = 1228,
+        PlayFabErrorVirtualCurrencyCountLimitExceeded = 1229,
+        PlayFabErrorVirtualCurrencyCodeExists = 1230,
+        PlayFabErrorTitleNewsItemCountLimitExceeded = 1231
     };
 
     struct PlayFabError
