@@ -728,6 +728,54 @@ void PlayFabClientAPI::OnGetAccountInfoResult(int httpStatus, HttpRequest* reque
     delete request;
 }
 
+void PlayFabClientAPI::GetPlayerCombinedInfo(
+    GetPlayerCombinedInfoRequest& request,
+    ProcessApiCallback<GetPlayerCombinedInfoResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetPlayerCombinedInfo"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayerCombinedInfoResult, userData);
+}
+
+void PlayFabClientAPI::OnGetPlayerCombinedInfoResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPlayerCombinedInfoResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<GetPlayerCombinedInfoResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayerCombinedInfoResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::GetPlayFabIDsFromFacebookIDs(
     GetPlayFabIDsFromFacebookIDsRequest& request,
     ProcessApiCallback<GetPlayFabIDsFromFacebookIDsResult> callback,
