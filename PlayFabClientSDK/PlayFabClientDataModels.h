@@ -331,85 +331,24 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct GetPlayerCombinedInfoRequestParams : public PlayFabBaseModel
-        {
-            bool GetUserInventory;
-            bool GetUserVirtualCurrency;
-            bool GetUserData;
-            std::list<std::string> UserDataKeys;
-            bool GetUserReadOnlyData;
-            std::list<std::string> UserReadOnlyDataKeys;
-            bool GetCharacterInventories;
-            bool GetCharacterList;
-            bool GetTitleData;
-            std::list<std::string> TitleDataKeys;
-            bool GetPlayerStatistics;
-            std::list<std::string> PlayerStatisticNames;
-
-            GetPlayerCombinedInfoRequestParams() :
-                PlayFabBaseModel(),
-                GetUserInventory(false),
-                GetUserVirtualCurrency(false),
-                GetUserData(false),
-                UserDataKeys(),
-                GetUserReadOnlyData(false),
-                UserReadOnlyDataKeys(),
-                GetCharacterInventories(false),
-                GetCharacterList(false),
-                GetTitleData(false),
-                TitleDataKeys(),
-                GetPlayerStatistics(false),
-                PlayerStatisticNames()
-            {}
-
-            GetPlayerCombinedInfoRequestParams(const GetPlayerCombinedInfoRequestParams& src) :
-                PlayFabBaseModel(),
-                GetUserInventory(src.GetUserInventory),
-                GetUserVirtualCurrency(src.GetUserVirtualCurrency),
-                GetUserData(src.GetUserData),
-                UserDataKeys(src.UserDataKeys),
-                GetUserReadOnlyData(src.GetUserReadOnlyData),
-                UserReadOnlyDataKeys(src.UserReadOnlyDataKeys),
-                GetCharacterInventories(src.GetCharacterInventories),
-                GetCharacterList(src.GetCharacterList),
-                GetTitleData(src.GetTitleData),
-                TitleDataKeys(src.TitleDataKeys),
-                GetPlayerStatistics(src.GetPlayerStatistics),
-                PlayerStatisticNames(src.PlayerStatisticNames)
-            {}
-
-            GetPlayerCombinedInfoRequestParams(const rapidjson::Value& obj) : GetPlayerCombinedInfoRequestParams()
-            {
-                readFromValue(obj);
-            }
-
-            ~GetPlayerCombinedInfoRequestParams();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct AndroidDevicePushNotificationRegistrationRequest : public PlayFabBaseModel
         {
             std::string DeviceToken;
             OptionalBool SendPushNotificationConfirmation;
             std::string ConfirmationMessage;
-            GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             AndroidDevicePushNotificationRegistrationRequest() :
                 PlayFabBaseModel(),
                 DeviceToken(),
                 SendPushNotificationConfirmation(),
-                ConfirmationMessage(),
-                InfoRequestParameters(NULL)
+                ConfirmationMessage()
             {}
 
             AndroidDevicePushNotificationRegistrationRequest(const AndroidDevicePushNotificationRegistrationRequest& src) :
                 PlayFabBaseModel(),
                 DeviceToken(src.DeviceToken),
                 SendPushNotificationConfirmation(src.SendPushNotificationConfirmation),
-                ConfirmationMessage(src.ConfirmationMessage),
-                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
+                ConfirmationMessage(src.ConfirmationMessage)
             {}
 
             AndroidDevicePushNotificationRegistrationRequest(const rapidjson::Value& obj) : AndroidDevicePushNotificationRegistrationRequest()
@@ -3305,6 +3244,67 @@ namespace PlayFab
             }
 
             ~GetPhotonAuthenticationTokenResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerCombinedInfoRequestParams : public PlayFabBaseModel
+        {
+            bool GetUserAccountInfo;
+            bool GetUserInventory;
+            bool GetUserVirtualCurrency;
+            bool GetUserData;
+            std::list<std::string> UserDataKeys;
+            bool GetUserReadOnlyData;
+            std::list<std::string> UserReadOnlyDataKeys;
+            bool GetCharacterInventories;
+            bool GetCharacterList;
+            bool GetTitleData;
+            std::list<std::string> TitleDataKeys;
+            bool GetPlayerStatistics;
+            std::list<std::string> PlayerStatisticNames;
+
+            GetPlayerCombinedInfoRequestParams() :
+                PlayFabBaseModel(),
+                GetUserAccountInfo(false),
+                GetUserInventory(false),
+                GetUserVirtualCurrency(false),
+                GetUserData(false),
+                UserDataKeys(),
+                GetUserReadOnlyData(false),
+                UserReadOnlyDataKeys(),
+                GetCharacterInventories(false),
+                GetCharacterList(false),
+                GetTitleData(false),
+                TitleDataKeys(),
+                GetPlayerStatistics(false),
+                PlayerStatisticNames()
+            {}
+
+            GetPlayerCombinedInfoRequestParams(const GetPlayerCombinedInfoRequestParams& src) :
+                PlayFabBaseModel(),
+                GetUserAccountInfo(src.GetUserAccountInfo),
+                GetUserInventory(src.GetUserInventory),
+                GetUserVirtualCurrency(src.GetUserVirtualCurrency),
+                GetUserData(src.GetUserData),
+                UserDataKeys(src.UserDataKeys),
+                GetUserReadOnlyData(src.GetUserReadOnlyData),
+                UserReadOnlyDataKeys(src.UserReadOnlyDataKeys),
+                GetCharacterInventories(src.GetCharacterInventories),
+                GetCharacterList(src.GetCharacterList),
+                GetTitleData(src.GetTitleData),
+                TitleDataKeys(src.TitleDataKeys),
+                GetPlayerStatistics(src.GetPlayerStatistics),
+                PlayerStatisticNames(src.PlayerStatisticNames)
+            {}
+
+            GetPlayerCombinedInfoRequestParams(const rapidjson::Value& obj) : GetPlayerCombinedInfoRequestParams()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerCombinedInfoRequestParams();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
