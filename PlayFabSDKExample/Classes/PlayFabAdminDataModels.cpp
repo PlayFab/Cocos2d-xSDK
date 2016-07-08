@@ -3210,6 +3210,7 @@ void PlayFab::AdminModels::writeUserOriginationEnumJSON(UserOrigination enumVal,
     case UserOriginationCustomId: writer.String("CustomId"); break;
     case UserOriginationXboxLive: writer.String("XboxLive"); break;
     case UserOriginationParse: writer.String("Parse"); break;
+    case UserOriginationTwitch: writer.String("Twitch"); break;
 
     }
 }
@@ -3236,6 +3237,7 @@ UserOrigination PlayFab::AdminModels::readUserOriginationFromValue(const rapidjs
         _UserOriginationMap["CustomId"] = UserOriginationCustomId;
         _UserOriginationMap["XboxLive"] = UserOriginationXboxLive;
         _UserOriginationMap["Parse"] = UserOriginationParse;
+        _UserOriginationMap["Twitch"] = UserOriginationTwitch;
 
     }
 
