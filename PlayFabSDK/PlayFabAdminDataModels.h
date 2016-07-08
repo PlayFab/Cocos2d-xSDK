@@ -2853,6 +2853,34 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UserTwitchInfo : public PlayFabBaseModel
+        {
+            std::string TwitchId;
+            std::string TwitchUserName;
+
+            UserTwitchInfo() :
+                PlayFabBaseModel(),
+                TwitchId(),
+                TwitchUserName()
+            {}
+
+            UserTwitchInfo(const UserTwitchInfo& src) :
+                PlayFabBaseModel(),
+                TwitchId(src.TwitchId),
+                TwitchUserName(src.TwitchUserName)
+            {}
+
+            UserTwitchInfo(const rapidjson::Value& obj) : UserTwitchInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~UserTwitchInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UserPsnInfo : public PlayFabBaseModel
         {
             std::string PsnAccountId;
@@ -2978,6 +3006,7 @@ namespace PlayFab
             UserIosDeviceInfo* IosDeviceInfo;
             UserAndroidDeviceInfo* AndroidDeviceInfo;
             UserKongregateInfo* KongregateInfo;
+            UserTwitchInfo* TwitchInfo;
             UserPsnInfo* PsnInfo;
             UserGoogleInfo* GoogleInfo;
             UserXboxInfo* XboxInfo;
@@ -2996,6 +3025,7 @@ namespace PlayFab
                 IosDeviceInfo(NULL),
                 AndroidDeviceInfo(NULL),
                 KongregateInfo(NULL),
+                TwitchInfo(NULL),
                 PsnInfo(NULL),
                 GoogleInfo(NULL),
                 XboxInfo(NULL),
@@ -3015,6 +3045,7 @@ namespace PlayFab
                 IosDeviceInfo(src.IosDeviceInfo ? new UserIosDeviceInfo(*src.IosDeviceInfo) : NULL),
                 AndroidDeviceInfo(src.AndroidDeviceInfo ? new UserAndroidDeviceInfo(*src.AndroidDeviceInfo) : NULL),
                 KongregateInfo(src.KongregateInfo ? new UserKongregateInfo(*src.KongregateInfo) : NULL),
+                TwitchInfo(src.TwitchInfo ? new UserTwitchInfo(*src.TwitchInfo) : NULL),
                 PsnInfo(src.PsnInfo ? new UserPsnInfo(*src.PsnInfo) : NULL),
                 GoogleInfo(src.GoogleInfo ? new UserGoogleInfo(*src.GoogleInfo) : NULL),
                 XboxInfo(src.XboxInfo ? new UserXboxInfo(*src.XboxInfo) : NULL),

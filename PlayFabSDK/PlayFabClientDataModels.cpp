@@ -2495,6 +2495,31 @@ bool UserKongregateInfo::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UserTwitchInfo::~UserTwitchInfo()
+{
+
+}
+
+void UserTwitchInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (TwitchId.length() > 0) { writer.String("TwitchId"); writer.String(TwitchId.c_str()); }
+    if (TwitchUserName.length() > 0) { writer.String("TwitchUserName"); writer.String(TwitchUserName.c_str()); }
+
+    writer.EndObject();
+}
+
+bool UserTwitchInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TwitchId_member = obj.FindMember("TwitchId");
+    if (TwitchId_member != obj.MemberEnd() && !TwitchId_member->value.IsNull()) TwitchId = TwitchId_member->value.GetString();
+    const Value::ConstMemberIterator TwitchUserName_member = obj.FindMember("TwitchUserName");
+    if (TwitchUserName_member != obj.MemberEnd() && !TwitchUserName_member->value.IsNull()) TwitchUserName = TwitchUserName_member->value.GetString();
+
+    return true;
+}
+
 UserPsnInfo::~UserPsnInfo()
 {
 
@@ -2605,6 +2630,7 @@ UserAccountInfo::~UserAccountInfo()
     if (IosDeviceInfo != NULL) delete IosDeviceInfo;
     if (AndroidDeviceInfo != NULL) delete AndroidDeviceInfo;
     if (KongregateInfo != NULL) delete KongregateInfo;
+    if (TwitchInfo != NULL) delete TwitchInfo;
     if (PsnInfo != NULL) delete PsnInfo;
     if (GoogleInfo != NULL) delete GoogleInfo;
     if (XboxInfo != NULL) delete XboxInfo;
@@ -2627,6 +2653,7 @@ void UserAccountInfo::writeJSON(PFStringJsonWriter& writer)
     if (IosDeviceInfo != NULL) { writer.String("IosDeviceInfo"); IosDeviceInfo->writeJSON(writer); }
     if (AndroidDeviceInfo != NULL) { writer.String("AndroidDeviceInfo"); AndroidDeviceInfo->writeJSON(writer); }
     if (KongregateInfo != NULL) { writer.String("KongregateInfo"); KongregateInfo->writeJSON(writer); }
+    if (TwitchInfo != NULL) { writer.String("TwitchInfo"); TwitchInfo->writeJSON(writer); }
     if (PsnInfo != NULL) { writer.String("PsnInfo"); PsnInfo->writeJSON(writer); }
     if (GoogleInfo != NULL) { writer.String("GoogleInfo"); GoogleInfo->writeJSON(writer); }
     if (XboxInfo != NULL) { writer.String("XboxInfo"); XboxInfo->writeJSON(writer); }
@@ -2659,6 +2686,8 @@ bool UserAccountInfo::readFromValue(const rapidjson::Value& obj)
     if (AndroidDeviceInfo_member != obj.MemberEnd() && !AndroidDeviceInfo_member->value.IsNull()) AndroidDeviceInfo = new UserAndroidDeviceInfo(AndroidDeviceInfo_member->value);
     const Value::ConstMemberIterator KongregateInfo_member = obj.FindMember("KongregateInfo");
     if (KongregateInfo_member != obj.MemberEnd() && !KongregateInfo_member->value.IsNull()) KongregateInfo = new UserKongregateInfo(KongregateInfo_member->value);
+    const Value::ConstMemberIterator TwitchInfo_member = obj.FindMember("TwitchInfo");
+    if (TwitchInfo_member != obj.MemberEnd() && !TwitchInfo_member->value.IsNull()) TwitchInfo = new UserTwitchInfo(TwitchInfo_member->value);
     const Value::ConstMemberIterator PsnInfo_member = obj.FindMember("PsnInfo");
     if (PsnInfo_member != obj.MemberEnd() && !PsnInfo_member->value.IsNull()) PsnInfo = new UserPsnInfo(PsnInfo_member->value);
     const Value::ConstMemberIterator GoogleInfo_member = obj.FindMember("GoogleInfo");
@@ -4875,6 +4904,98 @@ bool GetPlayFabIDsFromSteamIDsResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetPlayFabIDsFromTwitchIDsRequest::~GetPlayFabIDsFromTwitchIDsRequest()
+{
+
+}
+
+void GetPlayFabIDsFromTwitchIDsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("TwitchIds");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = TwitchIds.begin(); iter != TwitchIds.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromTwitchIDsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TwitchIds_member = obj.FindMember("TwitchIds");
+    if (TwitchIds_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = TwitchIds_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            TwitchIds.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
+TwitchPlayFabIdPair::~TwitchPlayFabIdPair()
+{
+
+}
+
+void TwitchPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (TwitchId.length() > 0) { writer.String("TwitchId"); writer.String(TwitchId.c_str()); }
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+
+    writer.EndObject();
+}
+
+bool TwitchPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TwitchId_member = obj.FindMember("TwitchId");
+    if (TwitchId_member != obj.MemberEnd() && !TwitchId_member->value.IsNull()) TwitchId = TwitchId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
+GetPlayFabIDsFromTwitchIDsResult::~GetPlayFabIDsFromTwitchIDsResult()
+{
+
+}
+
+void GetPlayFabIDsFromTwitchIDsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Data.empty()) {
+    writer.String("Data");
+    writer.StartArray();
+    for (std::list<TwitchPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromTwitchIDsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Data_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Data.push_back(TwitchPlayFabIdPair(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 GetPublisherDataRequest::~GetPublisherDataRequest()
 {
 
@@ -6272,6 +6393,47 @@ bool LinkSteamAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+LinkTwitchAccountRequest::~LinkTwitchAccountRequest()
+{
+
+}
+
+void LinkTwitchAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("AccessToken"); writer.String(AccessToken.c_str());
+
+    writer.EndObject();
+}
+
+bool LinkTwitchAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AccessToken_member = obj.FindMember("AccessToken");
+    if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
+
+    return true;
+}
+
+LinkTwitchAccountResult::~LinkTwitchAccountResult()
+{
+
+}
+
+void LinkTwitchAccountResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool LinkTwitchAccountResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 ListUsersCharactersRequest::~ListUsersCharactersRequest()
 {
 
@@ -6780,6 +6942,38 @@ bool LoginWithSteamRequest::readFromValue(const rapidjson::Value& obj)
     if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
     const Value::ConstMemberIterator SteamTicket_member = obj.FindMember("SteamTicket");
     if (SteamTicket_member != obj.MemberEnd() && !SteamTicket_member->value.IsNull()) SteamTicket = SteamTicket_member->value.GetString();
+    const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
+    if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
+    const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
+    if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
+
+    return true;
+}
+
+LoginWithTwitchRequest::~LoginWithTwitchRequest()
+{
+    if (InfoRequestParameters != NULL) delete InfoRequestParameters;
+
+}
+
+void LoginWithTwitchRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("TitleId"); writer.String(TitleId.c_str());
+    writer.String("AccessToken"); writer.String(AccessToken.c_str());
+    if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
+    if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool LoginWithTwitchRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator AccessToken_member = obj.FindMember("AccessToken");
+    if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
     const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
     if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
@@ -8361,6 +8555,44 @@ void UnlinkSteamAccountResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool UnlinkSteamAccountResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+UnlinkTwitchAccountRequest::~UnlinkTwitchAccountRequest()
+{
+
+}
+
+void UnlinkTwitchAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool UnlinkTwitchAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+UnlinkTwitchAccountResult::~UnlinkTwitchAccountResult()
+{
+
+}
+
+void UnlinkTwitchAccountResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool UnlinkTwitchAccountResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
