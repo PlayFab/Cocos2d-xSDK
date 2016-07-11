@@ -234,7 +234,9 @@ namespace PlayFab
         PlayFabErrorGameServerBuildCountLimitExceeded = 1228,
         PlayFabErrorVirtualCurrencyCountLimitExceeded = 1229,
         PlayFabErrorVirtualCurrencyCodeExists = 1230,
-        PlayFabErrorTitleNewsItemCountLimitExceeded = 1231
+        PlayFabErrorTitleNewsItemCountLimitExceeded = 1231,
+        PlayFabErrorInvalidTwitchToken = 1232,
+        PlayFabErrorTwitchResponseError = 1233
     };
 
     struct PlayFabError

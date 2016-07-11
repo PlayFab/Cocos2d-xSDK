@@ -580,6 +580,58 @@ void PlayFabClientAPI::OnLoginWithSteamResult(int httpStatus, HttpRequest* reque
     delete request;
 }
 
+void PlayFabClientAPI::LoginWithTwitch(
+    LoginWithTwitchRequest& request,
+    ProcessApiCallback<LoginResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    if (PlayFabSettings::titleId.length() > 0)
+        request.TitleId = PlayFabSettings::titleId;
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithTwitch"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithTwitchResult, userData);
+}
+
+void PlayFabClientAPI::OnLoginWithTwitchResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    LoginResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.length() > 0)
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::RegisterPlayFabUser(
     RegisterPlayFabUserRequest& request,
     ProcessApiCallback<RegisterPlayFabUserResult> callback,
@@ -1016,6 +1068,54 @@ void PlayFabClientAPI::OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpReq
     delete request;
 }
 
+void PlayFabClientAPI::GetPlayFabIDsFromTwitchIDs(
+    GetPlayFabIDsFromTwitchIDsRequest& request,
+    ProcessApiCallback<GetPlayFabIDsFromTwitchIDsResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetPlayFabIDsFromTwitchIDs"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromTwitchIDsResult, userData);
+}
+
+void PlayFabClientAPI::OnGetPlayFabIDsFromTwitchIDsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPlayFabIDsFromTwitchIDsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<GetPlayFabIDsFromTwitchIDsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayFabIDsFromTwitchIDsResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::GetUserCombinedInfo(
     GetUserCombinedInfoRequest& request,
     ProcessApiCallback<GetUserCombinedInfoResult> callback,
@@ -1434,6 +1534,54 @@ void PlayFabClientAPI::OnLinkSteamAccountResult(int httpStatus, HttpRequest* req
         if (request->GetResultCallback() != nullptr)
         {
             ProcessApiCallback<LinkSteamAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkSteamAccountResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::LinkTwitch(
+    LinkTwitchAccountRequest& request,
+    ProcessApiCallback<LinkTwitchAccountResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LinkTwitch"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkTwitchResult, userData);
+}
+
+void PlayFabClientAPI::OnLinkTwitchResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    LinkTwitchAccountResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<LinkTwitchAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkTwitchAccountResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1914,6 +2062,54 @@ void PlayFabClientAPI::OnUnlinkSteamAccountResult(int httpStatus, HttpRequest* r
         if (request->GetResultCallback() != nullptr)
         {
             ProcessApiCallback<UnlinkSteamAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlinkSteamAccountResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::UnlinkTwitch(
+    
+    ProcessApiCallback<UnlinkTwitchAccountResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/UnlinkTwitch"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody("{}");
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkTwitchResult, userData);
+}
+
+void PlayFabClientAPI::OnUnlinkTwitchResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    UnlinkTwitchAccountResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<UnlinkTwitchAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlinkTwitchAccountResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
