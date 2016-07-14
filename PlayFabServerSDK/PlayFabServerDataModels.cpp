@@ -161,6 +161,7 @@ void PlayFab::ServerModels::writeUserOriginationEnumJSON(UserOrigination enumVal
     case UserOriginationCustomId: writer.String("CustomId"); break;
     case UserOriginationXboxLive: writer.String("XboxLive"); break;
     case UserOriginationParse: writer.String("Parse"); break;
+    case UserOriginationTwitch: writer.String("Twitch"); break;
 
     }
 }
@@ -187,6 +188,7 @@ UserOrigination PlayFab::ServerModels::readUserOriginationFromValue(const rapidj
         _UserOriginationMap["CustomId"] = UserOriginationCustomId;
         _UserOriginationMap["XboxLive"] = UserOriginationXboxLive;
         _UserOriginationMap["Parse"] = UserOriginationParse;
+        _UserOriginationMap["Twitch"] = UserOriginationTwitch;
 
     }
 
@@ -783,6 +785,31 @@ bool UserKongregateInfo::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UserTwitchInfo::~UserTwitchInfo()
+{
+
+}
+
+void UserTwitchInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (TwitchId.length() > 0) { writer.String("TwitchId"); writer.String(TwitchId.c_str()); }
+    if (TwitchUserName.length() > 0) { writer.String("TwitchUserName"); writer.String(TwitchUserName.c_str()); }
+
+    writer.EndObject();
+}
+
+bool UserTwitchInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TwitchId_member = obj.FindMember("TwitchId");
+    if (TwitchId_member != obj.MemberEnd() && !TwitchId_member->value.IsNull()) TwitchId = TwitchId_member->value.GetString();
+    const Value::ConstMemberIterator TwitchUserName_member = obj.FindMember("TwitchUserName");
+    if (TwitchUserName_member != obj.MemberEnd() && !TwitchUserName_member->value.IsNull()) TwitchUserName = TwitchUserName_member->value.GetString();
+
+    return true;
+}
+
 UserPsnInfo::~UserPsnInfo()
 {
 
@@ -893,6 +920,7 @@ UserAccountInfo::~UserAccountInfo()
     if (IosDeviceInfo != NULL) delete IosDeviceInfo;
     if (AndroidDeviceInfo != NULL) delete AndroidDeviceInfo;
     if (KongregateInfo != NULL) delete KongregateInfo;
+    if (TwitchInfo != NULL) delete TwitchInfo;
     if (PsnInfo != NULL) delete PsnInfo;
     if (GoogleInfo != NULL) delete GoogleInfo;
     if (XboxInfo != NULL) delete XboxInfo;
@@ -915,6 +943,7 @@ void UserAccountInfo::writeJSON(PFStringJsonWriter& writer)
     if (IosDeviceInfo != NULL) { writer.String("IosDeviceInfo"); IosDeviceInfo->writeJSON(writer); }
     if (AndroidDeviceInfo != NULL) { writer.String("AndroidDeviceInfo"); AndroidDeviceInfo->writeJSON(writer); }
     if (KongregateInfo != NULL) { writer.String("KongregateInfo"); KongregateInfo->writeJSON(writer); }
+    if (TwitchInfo != NULL) { writer.String("TwitchInfo"); TwitchInfo->writeJSON(writer); }
     if (PsnInfo != NULL) { writer.String("PsnInfo"); PsnInfo->writeJSON(writer); }
     if (GoogleInfo != NULL) { writer.String("GoogleInfo"); GoogleInfo->writeJSON(writer); }
     if (XboxInfo != NULL) { writer.String("XboxInfo"); XboxInfo->writeJSON(writer); }
@@ -947,6 +976,8 @@ bool UserAccountInfo::readFromValue(const rapidjson::Value& obj)
     if (AndroidDeviceInfo_member != obj.MemberEnd() && !AndroidDeviceInfo_member->value.IsNull()) AndroidDeviceInfo = new UserAndroidDeviceInfo(AndroidDeviceInfo_member->value);
     const Value::ConstMemberIterator KongregateInfo_member = obj.FindMember("KongregateInfo");
     if (KongregateInfo_member != obj.MemberEnd() && !KongregateInfo_member->value.IsNull()) KongregateInfo = new UserKongregateInfo(KongregateInfo_member->value);
+    const Value::ConstMemberIterator TwitchInfo_member = obj.FindMember("TwitchInfo");
+    if (TwitchInfo_member != obj.MemberEnd() && !TwitchInfo_member->value.IsNull()) TwitchInfo = new UserTwitchInfo(TwitchInfo_member->value);
     const Value::ConstMemberIterator PsnInfo_member = obj.FindMember("PsnInfo");
     if (PsnInfo_member != obj.MemberEnd() && !PsnInfo_member->value.IsNull()) PsnInfo = new UserPsnInfo(PsnInfo_member->value);
     const Value::ConstMemberIterator GoogleInfo_member = obj.FindMember("GoogleInfo");
@@ -4197,6 +4228,22 @@ void ItemGrant::writeJSON(PFStringJsonWriter& writer)
     writer.String("ItemId"); writer.String(ItemId.c_str());
     if (Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
     if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    if (!Data.empty()) {
+    writer.String("Data");
+    writer.StartObject();
+    for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+    }
+    writer.EndObject();
+     }
+    if (!KeysToRemove.empty()) {
+    writer.String("KeysToRemove");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = KeysToRemove.begin(); iter != KeysToRemove.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+     }
 
     writer.EndObject();
 }
@@ -4211,6 +4258,19 @@ bool ItemGrant::readFromValue(const rapidjson::Value& obj)
     if (Annotation_member != obj.MemberEnd() && !Annotation_member->value.IsNull()) Annotation = Annotation_member->value.GetString();
     const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
     if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
+            Data[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+    const Value::ConstMemberIterator KeysToRemove_member = obj.FindMember("KeysToRemove");
+    if (KeysToRemove_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = KeysToRemove_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            KeysToRemove.push_back(memberList[i].GetString());
+        }
+    }
 
     return true;
 }

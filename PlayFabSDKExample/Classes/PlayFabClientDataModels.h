@@ -1858,7 +1858,8 @@ namespace PlayFab
             UserOriginationGameCenter,
             UserOriginationCustomId,
             UserOriginationXboxLive,
-            UserOriginationParse
+            UserOriginationParse,
+            UserOriginationTwitch
         };
 
         void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
@@ -2007,6 +2008,34 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UserTwitchInfo : public PlayFabBaseModel
+        {
+            std::string TwitchId;
+            std::string TwitchUserName;
+
+            UserTwitchInfo() :
+                PlayFabBaseModel(),
+                TwitchId(),
+                TwitchUserName()
+            {}
+
+            UserTwitchInfo(const UserTwitchInfo& src) :
+                PlayFabBaseModel(),
+                TwitchId(src.TwitchId),
+                TwitchUserName(src.TwitchUserName)
+            {}
+
+            UserTwitchInfo(const rapidjson::Value& obj) : UserTwitchInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~UserTwitchInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UserPsnInfo : public PlayFabBaseModel
         {
             std::string PsnAccountId;
@@ -2132,6 +2161,7 @@ namespace PlayFab
             UserIosDeviceInfo* IosDeviceInfo;
             UserAndroidDeviceInfo* AndroidDeviceInfo;
             UserKongregateInfo* KongregateInfo;
+            UserTwitchInfo* TwitchInfo;
             UserPsnInfo* PsnInfo;
             UserGoogleInfo* GoogleInfo;
             UserXboxInfo* XboxInfo;
@@ -2150,6 +2180,7 @@ namespace PlayFab
                 IosDeviceInfo(NULL),
                 AndroidDeviceInfo(NULL),
                 KongregateInfo(NULL),
+                TwitchInfo(NULL),
                 PsnInfo(NULL),
                 GoogleInfo(NULL),
                 XboxInfo(NULL),
@@ -2169,6 +2200,7 @@ namespace PlayFab
                 IosDeviceInfo(src.IosDeviceInfo ? new UserIosDeviceInfo(*src.IosDeviceInfo) : NULL),
                 AndroidDeviceInfo(src.AndroidDeviceInfo ? new UserAndroidDeviceInfo(*src.AndroidDeviceInfo) : NULL),
                 KongregateInfo(src.KongregateInfo ? new UserKongregateInfo(*src.KongregateInfo) : NULL),
+                TwitchInfo(src.TwitchInfo ? new UserTwitchInfo(*src.TwitchInfo) : NULL),
                 PsnInfo(src.PsnInfo ? new UserPsnInfo(*src.PsnInfo) : NULL),
                 GoogleInfo(src.GoogleInfo ? new UserGoogleInfo(*src.GoogleInfo) : NULL),
                 XboxInfo(src.XboxInfo ? new UserXboxInfo(*src.XboxInfo) : NULL),
@@ -4019,6 +4051,84 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayFabIDsFromTwitchIDsRequest : public PlayFabBaseModel
+        {
+            std::list<std::string> TwitchIds;
+
+            GetPlayFabIDsFromTwitchIDsRequest() :
+                PlayFabBaseModel(),
+                TwitchIds()
+            {}
+
+            GetPlayFabIDsFromTwitchIDsRequest(const GetPlayFabIDsFromTwitchIDsRequest& src) :
+                PlayFabBaseModel(),
+                TwitchIds(src.TwitchIds)
+            {}
+
+            GetPlayFabIDsFromTwitchIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromTwitchIDsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromTwitchIDsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct TwitchPlayFabIdPair : public PlayFabBaseModel
+        {
+            std::string TwitchId;
+            std::string PlayFabId;
+
+            TwitchPlayFabIdPair() :
+                PlayFabBaseModel(),
+                TwitchId(),
+                PlayFabId()
+            {}
+
+            TwitchPlayFabIdPair(const TwitchPlayFabIdPair& src) :
+                PlayFabBaseModel(),
+                TwitchId(src.TwitchId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            TwitchPlayFabIdPair(const rapidjson::Value& obj) : TwitchPlayFabIdPair()
+            {
+                readFromValue(obj);
+            }
+
+            ~TwitchPlayFabIdPair();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromTwitchIDsResult : public PlayFabBaseModel
+        {
+            std::list<TwitchPlayFabIdPair> Data;
+
+            GetPlayFabIDsFromTwitchIDsResult() :
+                PlayFabBaseModel(),
+                Data()
+            {}
+
+            GetPlayFabIDsFromTwitchIDsResult(const GetPlayFabIDsFromTwitchIDsResult& src) :
+                PlayFabBaseModel(),
+                Data(src.Data)
+            {}
+
+            GetPlayFabIDsFromTwitchIDsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromTwitchIDsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromTwitchIDsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetPublisherDataRequest : public PlayFabBaseModel
         {
             std::list<std::string> Keys;
@@ -5248,6 +5358,53 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct LinkTwitchAccountRequest : public PlayFabBaseModel
+        {
+            std::string AccessToken;
+
+            LinkTwitchAccountRequest() :
+                PlayFabBaseModel(),
+                AccessToken()
+            {}
+
+            LinkTwitchAccountRequest(const LinkTwitchAccountRequest& src) :
+                PlayFabBaseModel(),
+                AccessToken(src.AccessToken)
+            {}
+
+            LinkTwitchAccountRequest(const rapidjson::Value& obj) : LinkTwitchAccountRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkTwitchAccountRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LinkTwitchAccountResult : public PlayFabBaseModel
+        {
+
+            LinkTwitchAccountResult() :
+                PlayFabBaseModel()
+            {}
+
+            LinkTwitchAccountResult(const LinkTwitchAccountResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            LinkTwitchAccountResult(const rapidjson::Value& obj) : LinkTwitchAccountResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkTwitchAccountResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ListUsersCharactersRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -5772,6 +5929,40 @@ namespace PlayFab
             }
 
             ~LoginWithSteamRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LoginWithTwitchRequest : public PlayFabBaseModel
+        {
+            std::string TitleId;
+            std::string AccessToken;
+            OptionalBool CreateAccount;
+            GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+
+            LoginWithTwitchRequest() :
+                PlayFabBaseModel(),
+                TitleId(),
+                AccessToken(),
+                CreateAccount(),
+                InfoRequestParameters(NULL)
+            {}
+
+            LoginWithTwitchRequest(const LoginWithTwitchRequest& src) :
+                PlayFabBaseModel(),
+                TitleId(src.TitleId),
+                AccessToken(src.AccessToken),
+                CreateAccount(src.CreateAccount),
+                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
+            {}
+
+            LoginWithTwitchRequest(const rapidjson::Value& obj) : LoginWithTwitchRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LoginWithTwitchRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -7297,6 +7488,50 @@ namespace PlayFab
             }
 
             ~UnlinkSteamAccountResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UnlinkTwitchAccountRequest : public PlayFabBaseModel
+        {
+
+            UnlinkTwitchAccountRequest() :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkTwitchAccountRequest(const UnlinkTwitchAccountRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkTwitchAccountRequest(const rapidjson::Value& obj) : UnlinkTwitchAccountRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlinkTwitchAccountRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UnlinkTwitchAccountResult : public PlayFabBaseModel
+        {
+
+            UnlinkTwitchAccountResult() :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkTwitchAccountResult(const UnlinkTwitchAccountResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkTwitchAccountResult(const rapidjson::Value& obj) : UnlinkTwitchAccountResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlinkTwitchAccountResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
