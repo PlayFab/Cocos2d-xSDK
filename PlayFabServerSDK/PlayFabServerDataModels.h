@@ -3564,13 +3564,17 @@ namespace PlayFab
             std::string ItemId;
             std::string Annotation;
             std::string CharacterId;
+            std::map<std::string, std::string> Data;
+            std::list<std::string> KeysToRemove;
 
             ItemGrant() :
                 PlayFabBaseModel(),
                 PlayFabId(),
                 ItemId(),
                 Annotation(),
-                CharacterId()
+                CharacterId(),
+                Data(),
+                KeysToRemove()
             {}
 
             ItemGrant(const ItemGrant& src) :
@@ -3578,7 +3582,9 @@ namespace PlayFab
                 PlayFabId(src.PlayFabId),
                 ItemId(src.ItemId),
                 Annotation(src.Annotation),
-                CharacterId(src.CharacterId)
+                CharacterId(src.CharacterId),
+                Data(src.Data),
+                KeysToRemove(src.KeysToRemove)
             {}
 
             ItemGrant(const rapidjson::Value& obj) : ItemGrant()
