@@ -117,7 +117,6 @@ namespace PlayFab
         PlayFabErrorInvalidReportDate = 1111,
         PlayFabErrorReportNotAvailable = 1112,
         PlayFabErrorDatabaseThroughputExceeded = 1113,
-        PlayFabErrorInvalidLobbyId = 1114,
         PlayFabErrorInvalidGameTicket = 1115,
         PlayFabErrorExpiredGameTicket = 1116,
         PlayFabErrorGameTicketDoesNotMatchLobby = 1117,
