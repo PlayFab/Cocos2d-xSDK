@@ -1691,13 +1691,13 @@ void PlayFab::ClientModels::writeRegionEnumJSON(Region enumVal, PFStringJsonWrit
 {
     switch (enumVal)
     {
-    case RegionUSCentral: writer.String("USCentral"); break;
     case RegionUSEast: writer.String("USEast"); break;
     case RegionEUWest: writer.String("EUWest"); break;
     case RegionSingapore: writer.String("Singapore"); break;
     case RegionJapan: writer.String("Japan"); break;
-    case RegionBrazil: writer.String("Brazil"); break;
     case RegionAustralia: writer.String("Australia"); break;
+    case RegionBrazil: writer.String("Brazil"); break;
+    case RegionUSCentral: writer.String("USCentral"); break;
 
     }
 }
@@ -1708,13 +1708,13 @@ Region PlayFab::ClientModels::readRegionFromValue(const rapidjson::Value& obj)
     if (_RegionMap.size() == 0)
     {
         // Auto-generate the map on the first use
-        _RegionMap["USCentral"] = RegionUSCentral;
         _RegionMap["USEast"] = RegionUSEast;
         _RegionMap["EUWest"] = RegionEUWest;
         _RegionMap["Singapore"] = RegionSingapore;
         _RegionMap["Japan"] = RegionJapan;
-        _RegionMap["Brazil"] = RegionBrazil;
         _RegionMap["Australia"] = RegionAustralia;
+        _RegionMap["Brazil"] = RegionBrazil;
+        _RegionMap["USCentral"] = RegionUSCentral;
 
     }
 
@@ -1722,7 +1722,7 @@ Region PlayFab::ClientModels::readRegionFromValue(const rapidjson::Value& obj)
     if (output != _RegionMap.end())
         return output->second;
 
-    return RegionUSCentral; // Basically critical fail
+    return RegionUSEast; // Basically critical fail
 }
 
 CurrentGamesRequest::~CurrentGamesRequest()
