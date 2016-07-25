@@ -875,6 +875,59 @@ namespace PlayFab
         void writeCloudScriptRevisionOptionEnumJSON(CloudScriptRevisionOption enumVal, PFStringJsonWriter& writer);
         CloudScriptRevisionOption readCloudScriptRevisionOptionFromValue(const rapidjson::Value& obj);
 
+        struct Container_Dictionary_String_String : public PlayFabBaseModel
+        {
+            std::map<std::string, std::string> Data;
+
+            Container_Dictionary_String_String() :
+                PlayFabBaseModel(),
+                Data()
+            {}
+
+            Container_Dictionary_String_String(const Container_Dictionary_String_String& src) :
+                PlayFabBaseModel(),
+                Data(src.Data)
+            {}
+
+            Container_Dictionary_String_String(const rapidjson::Value& obj) : Container_Dictionary_String_String()
+            {
+                readFromValue(obj);
+            }
+
+            ~Container_Dictionary_String_String();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CollectionFilter : public PlayFabBaseModel
+        {
+            std::list<Container_Dictionary_String_String> Includes;
+            std::list<Container_Dictionary_String_String> Excludes;
+
+            CollectionFilter() :
+                PlayFabBaseModel(),
+                Includes(),
+                Excludes()
+            {}
+
+            CollectionFilter(const CollectionFilter& src) :
+                PlayFabBaseModel(),
+                Includes(src.Includes),
+                Excludes(src.Excludes)
+            {}
+
+            CollectionFilter(const rapidjson::Value& obj) : CollectionFilter()
+            {
+                readFromValue(obj);
+            }
+
+            ~CollectionFilter();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ConfirmPurchaseRequest : public PlayFabBaseModel
         {
             std::string OrderId;
@@ -1211,13 +1264,13 @@ namespace PlayFab
 
         enum Region
         {
-            RegionUSCentral,
             RegionUSEast,
             RegionEUWest,
             RegionSingapore,
             RegionJapan,
+            RegionAustralia,
             RegionBrazil,
-            RegionAustralia
+            RegionUSCentral
         };
 
         void writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer);
@@ -1229,13 +1282,15 @@ namespace PlayFab
             std::string BuildVersion;
             std::string GameMode;
             std::string StatisticName;
+            CollectionFilter* TagFilter;
 
             CurrentGamesRequest() :
                 PlayFabBaseModel(),
                 pfRegion(),
                 BuildVersion(),
                 GameMode(),
-                StatisticName()
+                StatisticName(),
+                TagFilter(NULL)
             {}
 
             CurrentGamesRequest(const CurrentGamesRequest& src) :
@@ -1243,7 +1298,8 @@ namespace PlayFab
                 pfRegion(src.pfRegion),
                 BuildVersion(src.BuildVersion),
                 GameMode(src.GameMode),
-                StatisticName(src.StatisticName)
+                StatisticName(src.StatisticName),
+                TagFilter(src.TagFilter ? new CollectionFilter(*src.TagFilter) : NULL)
             {}
 
             CurrentGamesRequest(const rapidjson::Value& obj) : CurrentGamesRequest()
@@ -1278,6 +1334,8 @@ namespace PlayFab
             Uint32 RunTime;
             Boxed<GameInstanceState> GameServerState;
             std::string GameServerData;
+            std::map<std::string, std::string> Tags;
+            OptionalTime LastHeartbeat;
 
             GameInfo() :
                 PlayFabBaseModel(),
@@ -1290,7 +1348,9 @@ namespace PlayFab
                 PlayerUserIds(),
                 RunTime(0),
                 GameServerState(),
-                GameServerData()
+                GameServerData(),
+                Tags(),
+                LastHeartbeat()
             {}
 
             GameInfo(const GameInfo& src) :
@@ -1304,7 +1364,9 @@ namespace PlayFab
                 PlayerUserIds(src.PlayerUserIds),
                 RunTime(src.RunTime),
                 GameServerState(src.GameServerState),
-                GameServerData(src.GameServerData)
+                GameServerData(src.GameServerData),
+                Tags(src.Tags),
+                LastHeartbeat(src.LastHeartbeat)
             {}
 
             GameInfo(const rapidjson::Value& obj) : GameInfo()
@@ -5977,6 +6039,7 @@ namespace PlayFab
             std::string StatisticName;
             std::string CharacterId;
             OptionalBool StartNewIfNoneFound;
+            CollectionFilter* TagFilter;
             OptionalBool EnableQueue;
 
             MatchmakeRequest() :
@@ -5988,6 +6051,7 @@ namespace PlayFab
                 StatisticName(),
                 CharacterId(),
                 StartNewIfNoneFound(),
+                TagFilter(NULL),
                 EnableQueue()
             {}
 
@@ -6000,6 +6064,7 @@ namespace PlayFab
                 StatisticName(src.StatisticName),
                 CharacterId(src.CharacterId),
                 StartNewIfNoneFound(src.StartNewIfNoneFound),
+                TagFilter(src.TagFilter ? new CollectionFilter(*src.TagFilter) : NULL),
                 EnableQueue(src.EnableQueue)
             {}
 

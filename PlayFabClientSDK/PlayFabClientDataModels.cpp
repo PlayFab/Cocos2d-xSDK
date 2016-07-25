@@ -1100,6 +1100,88 @@ CloudScriptRevisionOption PlayFab::ClientModels::readCloudScriptRevisionOptionFr
     return CloudScriptRevisionOptionLive; // Basically critical fail
 }
 
+Container_Dictionary_String_String::~Container_Dictionary_String_String()
+{
+
+}
+
+void Container_Dictionary_String_String::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Data.empty()) {
+    writer.String("Data");
+    writer.StartObject();
+    for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+    }
+    writer.EndObject();
+     }
+
+    writer.EndObject();
+}
+
+bool Container_Dictionary_String_String::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Data_member->value.MemberBegin(); iter != Data_member->value.MemberEnd(); ++iter) {
+            Data[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+
+    return true;
+}
+
+CollectionFilter::~CollectionFilter()
+{
+
+}
+
+void CollectionFilter::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Includes.empty()) {
+    writer.String("Includes");
+    writer.StartArray();
+    for (std::list<Container_Dictionary_String_String>::iterator iter = Includes.begin(); iter != Includes.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+    if (!Excludes.empty()) {
+    writer.String("Excludes");
+    writer.StartArray();
+    for (std::list<Container_Dictionary_String_String>::iterator iter = Excludes.begin(); iter != Excludes.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool CollectionFilter::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Includes_member = obj.FindMember("Includes");
+    if (Includes_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Includes_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Includes.push_back(Container_Dictionary_String_String(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator Excludes_member = obj.FindMember("Excludes");
+    if (Excludes_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Excludes_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Excludes.push_back(Container_Dictionary_String_String(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 ConfirmPurchaseRequest::~ConfirmPurchaseRequest()
 {
 
@@ -1609,13 +1691,13 @@ void PlayFab::ClientModels::writeRegionEnumJSON(Region enumVal, PFStringJsonWrit
 {
     switch (enumVal)
     {
-    case RegionUSCentral: writer.String("USCentral"); break;
     case RegionUSEast: writer.String("USEast"); break;
     case RegionEUWest: writer.String("EUWest"); break;
     case RegionSingapore: writer.String("Singapore"); break;
     case RegionJapan: writer.String("Japan"); break;
-    case RegionBrazil: writer.String("Brazil"); break;
     case RegionAustralia: writer.String("Australia"); break;
+    case RegionBrazil: writer.String("Brazil"); break;
+    case RegionUSCentral: writer.String("USCentral"); break;
 
     }
 }
@@ -1626,13 +1708,13 @@ Region PlayFab::ClientModels::readRegionFromValue(const rapidjson::Value& obj)
     if (_RegionMap.size() == 0)
     {
         // Auto-generate the map on the first use
-        _RegionMap["USCentral"] = RegionUSCentral;
         _RegionMap["USEast"] = RegionUSEast;
         _RegionMap["EUWest"] = RegionEUWest;
         _RegionMap["Singapore"] = RegionSingapore;
         _RegionMap["Japan"] = RegionJapan;
-        _RegionMap["Brazil"] = RegionBrazil;
         _RegionMap["Australia"] = RegionAustralia;
+        _RegionMap["Brazil"] = RegionBrazil;
+        _RegionMap["USCentral"] = RegionUSCentral;
 
     }
 
@@ -1640,11 +1722,12 @@ Region PlayFab::ClientModels::readRegionFromValue(const rapidjson::Value& obj)
     if (output != _RegionMap.end())
         return output->second;
 
-    return RegionUSCentral; // Basically critical fail
+    return RegionUSEast; // Basically critical fail
 }
 
 CurrentGamesRequest::~CurrentGamesRequest()
 {
+    if (TagFilter != NULL) delete TagFilter;
 
 }
 
@@ -1656,6 +1739,7 @@ void CurrentGamesRequest::writeJSON(PFStringJsonWriter& writer)
     if (BuildVersion.length() > 0) { writer.String("BuildVersion"); writer.String(BuildVersion.c_str()); }
     if (GameMode.length() > 0) { writer.String("GameMode"); writer.String(GameMode.c_str()); }
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
+    if (TagFilter != NULL) { writer.String("TagFilter"); TagFilter->writeJSON(writer); }
 
     writer.EndObject();
 }
@@ -1670,6 +1754,8 @@ bool CurrentGamesRequest::readFromValue(const rapidjson::Value& obj)
     if (GameMode_member != obj.MemberEnd() && !GameMode_member->value.IsNull()) GameMode = GameMode_member->value.GetString();
     const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
     if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::ConstMemberIterator TagFilter_member = obj.FindMember("TagFilter");
+    if (TagFilter_member != obj.MemberEnd() && !TagFilter_member->value.IsNull()) TagFilter = new CollectionFilter(TagFilter_member->value);
 
     return true;
 }
@@ -1727,6 +1813,15 @@ void GameInfo::writeJSON(PFStringJsonWriter& writer)
     writer.String("RunTime"); writer.Uint(RunTime);
     if (GameServerState.notNull()) { writer.String("GameServerState"); writeGameInstanceStateEnumJSON(GameServerState, writer); }
     if (GameServerData.length() > 0) { writer.String("GameServerData"); writer.String(GameServerData.c_str()); }
+    if (!Tags.empty()) {
+    writer.String("Tags");
+    writer.StartObject();
+    for (std::map<std::string, std::string>::iterator iter = Tags.begin(); iter != Tags.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+    }
+    writer.EndObject();
+     }
+    if (LastHeartbeat.notNull()) { writer.String("LastHeartbeat"); writeDatetime(LastHeartbeat, writer); }
 
     writer.EndObject();
 }
@@ -1758,6 +1853,14 @@ bool GameInfo::readFromValue(const rapidjson::Value& obj)
     if (GameServerState_member != obj.MemberEnd() && !GameServerState_member->value.IsNull()) GameServerState = readGameInstanceStateFromValue(GameServerState_member->value);
     const Value::ConstMemberIterator GameServerData_member = obj.FindMember("GameServerData");
     if (GameServerData_member != obj.MemberEnd() && !GameServerData_member->value.IsNull()) GameServerData = GameServerData_member->value.GetString();
+    const Value::ConstMemberIterator Tags_member = obj.FindMember("Tags");
+    if (Tags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Tags_member->value.MemberBegin(); iter != Tags_member->value.MemberEnd(); ++iter) {
+            Tags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+    const Value::ConstMemberIterator LastHeartbeat_member = obj.FindMember("LastHeartbeat");
+    if (LastHeartbeat_member != obj.MemberEnd() && !LastHeartbeat_member->value.IsNull()) LastHeartbeat = readDatetime(LastHeartbeat_member->value);
 
     return true;
 }
@@ -6984,6 +7087,7 @@ bool LoginWithTwitchRequest::readFromValue(const rapidjson::Value& obj)
 
 MatchmakeRequest::~MatchmakeRequest()
 {
+    if (TagFilter != NULL) delete TagFilter;
 
 }
 
@@ -6998,6 +7102,7 @@ void MatchmakeRequest::writeJSON(PFStringJsonWriter& writer)
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
     if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
     if (StartNewIfNoneFound.notNull()) { writer.String("StartNewIfNoneFound"); writer.Bool(StartNewIfNoneFound); }
+    if (TagFilter != NULL) { writer.String("TagFilter"); TagFilter->writeJSON(writer); }
     if (EnableQueue.notNull()) { writer.String("EnableQueue"); writer.Bool(EnableQueue); }
 
     writer.EndObject();
@@ -7019,6 +7124,8 @@ bool MatchmakeRequest::readFromValue(const rapidjson::Value& obj)
     if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
     const Value::ConstMemberIterator StartNewIfNoneFound_member = obj.FindMember("StartNewIfNoneFound");
     if (StartNewIfNoneFound_member != obj.MemberEnd() && !StartNewIfNoneFound_member->value.IsNull()) StartNewIfNoneFound = StartNewIfNoneFound_member->value.GetBool();
+    const Value::ConstMemberIterator TagFilter_member = obj.FindMember("TagFilter");
+    if (TagFilter_member != obj.MemberEnd() && !TagFilter_member->value.IsNull()) TagFilter = new CollectionFilter(TagFilter_member->value);
     const Value::ConstMemberIterator EnableQueue_member = obj.FindMember("EnableQueue");
     if (EnableQueue_member != obj.MemberEnd() && !EnableQueue_member->value.IsNull()) EnableQueue = EnableQueue_member->value.GetBool();
 
