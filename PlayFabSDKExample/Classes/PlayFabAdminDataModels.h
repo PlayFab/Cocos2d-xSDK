@@ -65,13 +65,13 @@ namespace PlayFab
 
         enum Region
         {
+            RegionUSCentral,
             RegionUSEast,
             RegionEUWest,
             RegionSingapore,
             RegionJapan,
-            RegionAustralia,
             RegionBrazil,
-            RegionUSCentral
+            RegionAustralia
         };
 
         void writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer);
