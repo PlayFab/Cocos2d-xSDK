@@ -684,6 +684,54 @@ void PlayFabClientAPI::OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* 
     delete request;
 }
 
+void PlayFabClientAPI::AddGenericID(
+    AddGenericIDRequest& request,
+    ProcessApiCallback<AddGenericIDResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/AddGenericID"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAddGenericIDResult, userData);
+}
+
+void PlayFabClientAPI::OnAddGenericIDResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    AddGenericIDResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<AddGenericIDResult> successCallback = reinterpret_cast<ProcessApiCallback<AddGenericIDResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::AddUsernamePassword(
     AddUsernamePasswordRequest& request,
     ProcessApiCallback<AddUsernamePasswordResult> callback,
@@ -910,6 +958,54 @@ void PlayFabClientAPI::OnGetPlayFabIDsFromGameCenterIDsResult(int httpStatus, Ht
         if (request->GetResultCallback() != nullptr)
         {
             ProcessApiCallback<GetPlayFabIDsFromGameCenterIDsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayFabIDsFromGameCenterIDsResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::GetPlayFabIDsFromGenericIDs(
+    GetPlayFabIDsFromGenericIDsRequest& request,
+    ProcessApiCallback<GetPlayFabIDsFromGenericIDsResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetPlayFabIDsFromGenericIDs"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromGenericIDsResult, userData);
+}
+
+void PlayFabClientAPI::OnGetPlayFabIDsFromGenericIDsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPlayFabIDsFromGenericIDsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<GetPlayFabIDsFromGenericIDsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayFabIDsFromGenericIDsResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }
@@ -1582,6 +1678,54 @@ void PlayFabClientAPI::OnLinkTwitchResult(int httpStatus, HttpRequest* request, 
         if (request->GetResultCallback() != nullptr)
         {
             ProcessApiCallback<LinkTwitchAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkTwitchAccountResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::RemoveGenericID(
+    RemoveGenericIDRequest& request,
+    ProcessApiCallback<RemoveGenericIDResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/RemoveGenericID"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRemoveGenericIDResult, userData);
+}
+
+void PlayFabClientAPI::OnRemoveGenericIDResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    RemoveGenericIDResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<RemoveGenericIDResult> successCallback = reinterpret_cast<ProcessApiCallback<RemoveGenericIDResult>>(request->GetResultCallback());
             successCallback(outResult, request->GetUserData());
         }
     }

@@ -239,7 +239,9 @@ namespace PlayFab
         PlayFabErrorProfaneDisplayName = 1234,
         PlayFabErrorUserAlreadyAdded = 1235,
         PlayFabErrorInvalidVirtualCurrencyCode = 1236,
-        PlayFabErrorVirtualCurrencyCannotBeDeleted = 1237
+        PlayFabErrorVirtualCurrencyCannotBeDeleted = 1237,
+        PlayFabErrorIdentifierAlreadyClaimed = 1238,
+        PlayFabErrorIdentifierNotLinked = 1239
     };
 
     struct PlayFabError
