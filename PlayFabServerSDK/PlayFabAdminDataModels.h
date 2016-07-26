@@ -3351,6 +3351,31 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct RemoveVirtualCurrencyTypesRequest : public PlayFabBaseModel
+        {
+            std::list<VirtualCurrencyData> VirtualCurrencies;
+
+            RemoveVirtualCurrencyTypesRequest() :
+                PlayFabBaseModel(),
+                VirtualCurrencies()
+            {}
+
+            RemoveVirtualCurrencyTypesRequest(const RemoveVirtualCurrencyTypesRequest& src) :
+                PlayFabBaseModel(),
+                VirtualCurrencies(src.VirtualCurrencies)
+            {}
+
+            RemoveVirtualCurrencyTypesRequest(const rapidjson::Value& obj) : RemoveVirtualCurrencyTypesRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RemoveVirtualCurrencyTypesRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ResetCharacterStatisticsRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;

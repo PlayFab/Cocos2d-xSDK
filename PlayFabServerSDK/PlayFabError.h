@@ -237,7 +237,9 @@ namespace PlayFab
         PlayFabErrorInvalidTwitchToken = 1232,
         PlayFabErrorTwitchResponseError = 1233,
         PlayFabErrorProfaneDisplayName = 1234,
-        PlayFabErrorUserAlreadyAdded = 1235
+        PlayFabErrorUserAlreadyAdded = 1235,
+        PlayFabErrorInvalidVirtualCurrencyCode = 1236,
+        PlayFabErrorVirtualCurrencyCannotBeDeleted = 1237
     };
 
     struct PlayFabError

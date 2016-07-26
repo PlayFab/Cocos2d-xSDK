@@ -4023,6 +4023,39 @@ bool RemoveServerBuildResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+RemoveVirtualCurrencyTypesRequest::~RemoveVirtualCurrencyTypesRequest()
+{
+
+}
+
+void RemoveVirtualCurrencyTypesRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("VirtualCurrencies");
+    writer.StartArray();
+    for (std::list<VirtualCurrencyData>::iterator iter = VirtualCurrencies.begin(); iter != VirtualCurrencies.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool RemoveVirtualCurrencyTypesRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator VirtualCurrencies_member = obj.FindMember("VirtualCurrencies");
+    if (VirtualCurrencies_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = VirtualCurrencies_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            VirtualCurrencies.push_back(VirtualCurrencyData(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 ResetCharacterStatisticsRequest::~ResetCharacterStatisticsRequest()
 {
 
