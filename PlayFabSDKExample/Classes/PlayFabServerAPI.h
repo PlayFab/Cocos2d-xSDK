@@ -22,6 +22,7 @@ namespace PlayFab
         static void DeleteUsers(ServerModels::DeleteUsersRequest& request, ProcessApiCallback<ServerModels::DeleteUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboard(ServerModels::GetLeaderboardRequest& request, ProcessApiCallback<ServerModels::GetLeaderboardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboardAroundUser(ServerModels::GetLeaderboardAroundUserRequest& request, ProcessApiCallback<ServerModels::GetLeaderboardAroundUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayerCombinedInfo(ServerModels::GetPlayerCombinedInfoRequest& request, ProcessApiCallback<ServerModels::GetPlayerCombinedInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerStatistics(ServerModels::GetPlayerStatisticsRequest& request, ProcessApiCallback<ServerModels::GetPlayerStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerStatisticVersions(ServerModels::GetPlayerStatisticVersionsRequest& request, ProcessApiCallback<ServerModels::GetPlayerStatisticVersionsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserData(ServerModels::GetUserDataRequest& request, ProcessApiCallback<ServerModels::GetUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -113,6 +114,7 @@ namespace PlayFab
         static void OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardAroundUserResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayerCombinedInfoResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerStatisticVersionsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserDataResult(int httpStatus, HttpRequest* request, void* userData);

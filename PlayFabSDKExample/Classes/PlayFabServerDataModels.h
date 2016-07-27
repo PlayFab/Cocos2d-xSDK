@@ -1064,6 +1064,101 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct ItemInstance : public PlayFabBaseModel
+        {
+            std::string ItemId;
+            std::string ItemInstanceId;
+            std::string ItemClass;
+            OptionalTime PurchaseDate;
+            OptionalTime Expiration;
+            OptionalInt32 RemainingUses;
+            OptionalInt32 UsesIncrementedBy;
+            std::string Annotation;
+            std::string CatalogVersion;
+            std::string BundleParent;
+            std::string DisplayName;
+            std::string UnitCurrency;
+            Uint32 UnitPrice;
+            std::list<std::string> BundleContents;
+            std::map<std::string, std::string> CustomData;
+
+            ItemInstance() :
+                PlayFabBaseModel(),
+                ItemId(),
+                ItemInstanceId(),
+                ItemClass(),
+                PurchaseDate(),
+                Expiration(),
+                RemainingUses(),
+                UsesIncrementedBy(),
+                Annotation(),
+                CatalogVersion(),
+                BundleParent(),
+                DisplayName(),
+                UnitCurrency(),
+                UnitPrice(0),
+                BundleContents(),
+                CustomData()
+            {}
+
+            ItemInstance(const ItemInstance& src) :
+                PlayFabBaseModel(),
+                ItemId(src.ItemId),
+                ItemInstanceId(src.ItemInstanceId),
+                ItemClass(src.ItemClass),
+                PurchaseDate(src.PurchaseDate),
+                Expiration(src.Expiration),
+                RemainingUses(src.RemainingUses),
+                UsesIncrementedBy(src.UsesIncrementedBy),
+                Annotation(src.Annotation),
+                CatalogVersion(src.CatalogVersion),
+                BundleParent(src.BundleParent),
+                DisplayName(src.DisplayName),
+                UnitCurrency(src.UnitCurrency),
+                UnitPrice(src.UnitPrice),
+                BundleContents(src.BundleContents),
+                CustomData(src.CustomData)
+            {}
+
+            ItemInstance(const rapidjson::Value& obj) : ItemInstance()
+            {
+                readFromValue(obj);
+            }
+
+            ~ItemInstance();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CharacterInventory : public PlayFabBaseModel
+        {
+            std::string CharacterId;
+            std::list<ItemInstance> Inventory;
+
+            CharacterInventory() :
+                PlayFabBaseModel(),
+                CharacterId(),
+                Inventory()
+            {}
+
+            CharacterInventory(const CharacterInventory& src) :
+                PlayFabBaseModel(),
+                CharacterId(src.CharacterId),
+                Inventory(src.Inventory)
+            {}
+
+            CharacterInventory(const rapidjson::Value& obj) : CharacterInventory()
+            {
+                readFromValue(obj);
+            }
+
+            ~CharacterInventory();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CharacterLeaderboardEntry : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -1886,73 +1981,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct ItemInstance : public PlayFabBaseModel
-        {
-            std::string ItemId;
-            std::string ItemInstanceId;
-            std::string ItemClass;
-            OptionalTime PurchaseDate;
-            OptionalTime Expiration;
-            OptionalInt32 RemainingUses;
-            OptionalInt32 UsesIncrementedBy;
-            std::string Annotation;
-            std::string CatalogVersion;
-            std::string BundleParent;
-            std::string DisplayName;
-            std::string UnitCurrency;
-            Uint32 UnitPrice;
-            std::list<std::string> BundleContents;
-            std::map<std::string, std::string> CustomData;
-
-            ItemInstance() :
-                PlayFabBaseModel(),
-                ItemId(),
-                ItemInstanceId(),
-                ItemClass(),
-                PurchaseDate(),
-                Expiration(),
-                RemainingUses(),
-                UsesIncrementedBy(),
-                Annotation(),
-                CatalogVersion(),
-                BundleParent(),
-                DisplayName(),
-                UnitCurrency(),
-                UnitPrice(0),
-                BundleContents(),
-                CustomData()
-            {}
-
-            ItemInstance(const ItemInstance& src) :
-                PlayFabBaseModel(),
-                ItemId(src.ItemId),
-                ItemInstanceId(src.ItemInstanceId),
-                ItemClass(src.ItemClass),
-                PurchaseDate(src.PurchaseDate),
-                Expiration(src.Expiration),
-                RemainingUses(src.RemainingUses),
-                UsesIncrementedBy(src.UsesIncrementedBy),
-                Annotation(src.Annotation),
-                CatalogVersion(src.CatalogVersion),
-                BundleParent(src.BundleParent),
-                DisplayName(src.DisplayName),
-                UnitCurrency(src.UnitCurrency),
-                UnitPrice(src.UnitPrice),
-                BundleContents(src.BundleContents),
-                CustomData(src.CustomData)
-            {}
-
-            ItemInstance(const rapidjson::Value& obj) : ItemInstance()
-            {
-                readFromValue(obj);
-            }
-
-            ~ItemInstance();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct VirtualCurrencyRechargeTime : public PlayFabBaseModel
         {
             Int32 SecondsToRecharge;
@@ -2462,6 +2490,212 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayerCombinedInfoRequestParams : public PlayFabBaseModel
+        {
+            bool GetUserAccountInfo;
+            bool GetUserInventory;
+            bool GetUserVirtualCurrency;
+            bool GetUserData;
+            std::list<std::string> UserDataKeys;
+            bool GetUserReadOnlyData;
+            std::list<std::string> UserReadOnlyDataKeys;
+            bool GetCharacterInventories;
+            bool GetCharacterList;
+            bool GetTitleData;
+            std::list<std::string> TitleDataKeys;
+            bool GetPlayerStatistics;
+            std::list<std::string> PlayerStatisticNames;
+
+            GetPlayerCombinedInfoRequestParams() :
+                PlayFabBaseModel(),
+                GetUserAccountInfo(false),
+                GetUserInventory(false),
+                GetUserVirtualCurrency(false),
+                GetUserData(false),
+                UserDataKeys(),
+                GetUserReadOnlyData(false),
+                UserReadOnlyDataKeys(),
+                GetCharacterInventories(false),
+                GetCharacterList(false),
+                GetTitleData(false),
+                TitleDataKeys(),
+                GetPlayerStatistics(false),
+                PlayerStatisticNames()
+            {}
+
+            GetPlayerCombinedInfoRequestParams(const GetPlayerCombinedInfoRequestParams& src) :
+                PlayFabBaseModel(),
+                GetUserAccountInfo(src.GetUserAccountInfo),
+                GetUserInventory(src.GetUserInventory),
+                GetUserVirtualCurrency(src.GetUserVirtualCurrency),
+                GetUserData(src.GetUserData),
+                UserDataKeys(src.UserDataKeys),
+                GetUserReadOnlyData(src.GetUserReadOnlyData),
+                UserReadOnlyDataKeys(src.UserReadOnlyDataKeys),
+                GetCharacterInventories(src.GetCharacterInventories),
+                GetCharacterList(src.GetCharacterList),
+                GetTitleData(src.GetTitleData),
+                TitleDataKeys(src.TitleDataKeys),
+                GetPlayerStatistics(src.GetPlayerStatistics),
+                PlayerStatisticNames(src.PlayerStatisticNames)
+            {}
+
+            GetPlayerCombinedInfoRequestParams(const rapidjson::Value& obj) : GetPlayerCombinedInfoRequestParams()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerCombinedInfoRequestParams();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerCombinedInfoRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            GetPlayerCombinedInfoRequestParams InfoRequestParameters;
+
+            GetPlayerCombinedInfoRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                InfoRequestParameters()
+            {}
+
+            GetPlayerCombinedInfoRequest(const GetPlayerCombinedInfoRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                InfoRequestParameters(src.InfoRequestParameters)
+            {}
+
+            GetPlayerCombinedInfoRequest(const rapidjson::Value& obj) : GetPlayerCombinedInfoRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerCombinedInfoRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct StatisticValue : public PlayFabBaseModel
+        {
+            std::string StatisticName;
+            Int32 Value;
+            Uint32 Version;
+
+            StatisticValue() :
+                PlayFabBaseModel(),
+                StatisticName(),
+                Value(0),
+                Version(0)
+            {}
+
+            StatisticValue(const StatisticValue& src) :
+                PlayFabBaseModel(),
+                StatisticName(src.StatisticName),
+                Value(src.Value),
+                Version(src.Version)
+            {}
+
+            StatisticValue(const rapidjson::Value& obj) : StatisticValue()
+            {
+                readFromValue(obj);
+            }
+
+            ~StatisticValue();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerCombinedInfoResultPayload : public PlayFabBaseModel
+        {
+            UserAccountInfo* AccountInfo;
+            std::list<ItemInstance> UserInventory;
+            std::map<std::string, Int32> UserVirtualCurrency;
+            std::map<std::string, VirtualCurrencyRechargeTime> UserVirtualCurrencyRechargeTimes;
+            std::map<std::string, UserDataRecord> UserData;
+            Uint32 UserDataVersion;
+            std::map<std::string, UserDataRecord> UserReadOnlyData;
+            Uint32 UserReadOnlyDataVersion;
+            std::list<CharacterResult> CharacterList;
+            std::list<CharacterInventory> CharacterInventories;
+            std::map<std::string, std::string> TitleData;
+            std::list<StatisticValue> PlayerStatistics;
+
+            GetPlayerCombinedInfoResultPayload() :
+                PlayFabBaseModel(),
+                AccountInfo(NULL),
+                UserInventory(),
+                UserVirtualCurrency(),
+                UserVirtualCurrencyRechargeTimes(),
+                UserData(),
+                UserDataVersion(0),
+                UserReadOnlyData(),
+                UserReadOnlyDataVersion(0),
+                CharacterList(),
+                CharacterInventories(),
+                TitleData(),
+                PlayerStatistics()
+            {}
+
+            GetPlayerCombinedInfoResultPayload(const GetPlayerCombinedInfoResultPayload& src) :
+                PlayFabBaseModel(),
+                AccountInfo(src.AccountInfo ? new UserAccountInfo(*src.AccountInfo) : NULL),
+                UserInventory(src.UserInventory),
+                UserVirtualCurrency(src.UserVirtualCurrency),
+                UserVirtualCurrencyRechargeTimes(src.UserVirtualCurrencyRechargeTimes),
+                UserData(src.UserData),
+                UserDataVersion(src.UserDataVersion),
+                UserReadOnlyData(src.UserReadOnlyData),
+                UserReadOnlyDataVersion(src.UserReadOnlyDataVersion),
+                CharacterList(src.CharacterList),
+                CharacterInventories(src.CharacterInventories),
+                TitleData(src.TitleData),
+                PlayerStatistics(src.PlayerStatistics)
+            {}
+
+            GetPlayerCombinedInfoResultPayload(const rapidjson::Value& obj) : GetPlayerCombinedInfoResultPayload()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerCombinedInfoResultPayload();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerCombinedInfoResult : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            GetPlayerCombinedInfoResultPayload* InfoResultPayload;
+
+            GetPlayerCombinedInfoResult() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                InfoResultPayload(NULL)
+            {}
+
+            GetPlayerCombinedInfoResult(const GetPlayerCombinedInfoResult& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                InfoResultPayload(src.InfoResultPayload ? new GetPlayerCombinedInfoResultPayload(*src.InfoResultPayload) : NULL)
+            {}
+
+            GetPlayerCombinedInfoResult(const rapidjson::Value& obj) : GetPlayerCombinedInfoResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerCombinedInfoResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct StatisticNameVersion : public PlayFabBaseModel
         {
             std::string StatisticName;
@@ -2516,37 +2750,6 @@ namespace PlayFab
             }
 
             ~GetPlayerStatisticsRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct StatisticValue : public PlayFabBaseModel
-        {
-            std::string StatisticName;
-            Int32 Value;
-            Uint32 Version;
-
-            StatisticValue() :
-                PlayFabBaseModel(),
-                StatisticName(),
-                Value(0),
-                Version(0)
-            {}
-
-            StatisticValue(const StatisticValue& src) :
-                PlayFabBaseModel(),
-                StatisticName(src.StatisticName),
-                Value(src.Value),
-                Version(src.Version)
-            {}
-
-            StatisticValue(const rapidjson::Value& obj) : StatisticValue()
-            {
-                readFromValue(obj);
-            }
-
-            ~StatisticValue();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
