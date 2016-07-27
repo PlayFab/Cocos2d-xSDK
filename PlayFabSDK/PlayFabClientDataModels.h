@@ -3652,6 +3652,84 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayerSegmentsRequest : public PlayFabBaseModel
+        {
+
+            GetPlayerSegmentsRequest() :
+                PlayFabBaseModel()
+            {}
+
+            GetPlayerSegmentsRequest(const GetPlayerSegmentsRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            GetPlayerSegmentsRequest(const rapidjson::Value& obj) : GetPlayerSegmentsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerSegmentsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetSegmentResult : public PlayFabBaseModel
+        {
+            std::string Id;
+            std::string Name;
+            std::string ABTestParent;
+
+            GetSegmentResult() :
+                PlayFabBaseModel(),
+                Id(),
+                Name(),
+                ABTestParent()
+            {}
+
+            GetSegmentResult(const GetSegmentResult& src) :
+                PlayFabBaseModel(),
+                Id(src.Id),
+                Name(src.Name),
+                ABTestParent(src.ABTestParent)
+            {}
+
+            GetSegmentResult(const rapidjson::Value& obj) : GetSegmentResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetSegmentResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerSegmentsResult : public PlayFabBaseModel
+        {
+            std::list<GetSegmentResult> Segments;
+
+            GetPlayerSegmentsResult() :
+                PlayFabBaseModel(),
+                Segments()
+            {}
+
+            GetPlayerSegmentsResult(const GetPlayerSegmentsResult& src) :
+                PlayFabBaseModel(),
+                Segments(src.Segments)
+            {}
+
+            GetPlayerSegmentsResult(const rapidjson::Value& obj) : GetPlayerSegmentsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerSegmentsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct StatisticNameVersion : public PlayFabBaseModel
         {
             std::string StatisticName;

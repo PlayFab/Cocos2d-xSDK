@@ -143,6 +143,7 @@ namespace PlayFab
         static void GetTradeStatus(ClientModels::GetTradeStatusRequest& request, ProcessApiCallback<ClientModels::GetTradeStatusResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void OpenTrade(ClientModels::OpenTradeRequest& request, ProcessApiCallback<ClientModels::OpenTradeResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AttributeInstall(ClientModels::AttributeInstallRequest& request, ProcessApiCallback<ClientModels::AttributeInstallResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayerSegments(ProcessApiCallback<ClientModels::GetPlayerSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
@@ -274,6 +275,7 @@ namespace PlayFab
         static void OnGetTradeStatusResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnOpenTradeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAttributeInstallResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayerSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
 
         // Private, Client-Specific
         static std::string mUserSessionTicket;

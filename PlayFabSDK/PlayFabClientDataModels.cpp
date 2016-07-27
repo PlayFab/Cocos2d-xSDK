@@ -4398,6 +4398,87 @@ bool GetPlayerCombinedInfoResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetPlayerSegmentsRequest::~GetPlayerSegmentsRequest()
+{
+
+}
+
+void GetPlayerSegmentsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool GetPlayerSegmentsRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+GetSegmentResult::~GetSegmentResult()
+{
+
+}
+
+void GetSegmentResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Id"); writer.String(Id.c_str());
+    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    if (ABTestParent.length() > 0) { writer.String("ABTestParent"); writer.String(ABTestParent.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetSegmentResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
+    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator ABTestParent_member = obj.FindMember("ABTestParent");
+    if (ABTestParent_member != obj.MemberEnd() && !ABTestParent_member->value.IsNull()) ABTestParent = ABTestParent_member->value.GetString();
+
+    return true;
+}
+
+GetPlayerSegmentsResult::~GetPlayerSegmentsResult()
+{
+
+}
+
+void GetPlayerSegmentsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Segments.empty()) {
+    writer.String("Segments");
+    writer.StartArray();
+    for (std::list<GetSegmentResult>::iterator iter = Segments.begin(); iter != Segments.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPlayerSegmentsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Segments_member = obj.FindMember("Segments");
+    if (Segments_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Segments_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Segments.push_back(GetSegmentResult(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 StatisticNameVersion::~StatisticNameVersion()
 {
 

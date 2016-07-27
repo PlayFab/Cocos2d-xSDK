@@ -6063,6 +6063,54 @@ void PlayFabClientAPI::OnAttributeInstallResult(int httpStatus, HttpRequest* req
     delete request;
 }
 
+void PlayFabClientAPI::GetPlayerSegments(
+    
+    ProcessApiCallback<GetPlayerSegmentsResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetPlayerSegments"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody("{}");
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayerSegmentsResult, userData);
+}
+
+void PlayFabClientAPI::OnGetPlayerSegmentsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPlayerSegmentsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<GetPlayerSegmentsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayerSegmentsResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 bool PlayFabClientAPI::IsClientLoggedIn()
 {
     return !mUserSessionTicket.empty();
