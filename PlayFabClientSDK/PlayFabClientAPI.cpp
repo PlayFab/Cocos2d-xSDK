@@ -6074,7 +6074,7 @@ void PlayFabClientAPI::GetPlayerSegments(
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetPlayerSegments"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
     httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
     httpRequest->SetErrorCallback(errorCallback);
