@@ -237,7 +237,16 @@ namespace PlayFab
         PlayFabErrorInvalidTwitchToken = 1232,
         PlayFabErrorTwitchResponseError = 1233,
         PlayFabErrorProfaneDisplayName = 1234,
-        PlayFabErrorUserAlreadyAdded = 1235
+        PlayFabErrorUserAlreadyAdded = 1235,
+        PlayFabErrorInvalidVirtualCurrencyCode = 1236,
+        PlayFabErrorVirtualCurrencyCannotBeDeleted = 1237,
+        PlayFabErrorIdentifierAlreadyClaimed = 1238,
+        PlayFabErrorIdentifierNotLinked = 1239,
+        PlayFabErrorInvalidContinuationToken = 1240,
+        PlayFabErrorExpiredContinuationToken = 1241,
+        PlayFabErrorInvalidSegment = 1242,
+        PlayFabErrorInvalidSessionId = 1243,
+        PlayFabErrorSessionLogNotFound = 1244
     };
 
     struct PlayFabError

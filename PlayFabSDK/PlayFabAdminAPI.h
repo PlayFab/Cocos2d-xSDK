@@ -47,6 +47,7 @@ namespace PlayFab
         static void GetTitleData(AdminModels::GetTitleDataRequest& request, ProcessApiCallback<AdminModels::GetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleInternalData(AdminModels::GetTitleDataRequest& request, ProcessApiCallback<AdminModels::GetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListVirtualCurrencyTypes(ProcessApiCallback<AdminModels::ListVirtualCurrencyTypesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RemoveVirtualCurrencyTypes(AdminModels::RemoveVirtualCurrencyTypesRequest& request, ProcessApiCallback<AdminModels::BlankResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetCatalogItems(AdminModels::UpdateCatalogItemsRequest& request, ProcessApiCallback<AdminModels::UpdateCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetStoreItems(AdminModels::UpdateStoreItemsRequest& request, ProcessApiCallback<AdminModels::UpdateStoreItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetTitleData(AdminModels::SetTitleDataRequest& request, ProcessApiCallback<AdminModels::SetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -78,6 +79,9 @@ namespace PlayFab
         static void GetContentList(AdminModels::GetContentListRequest& request, ProcessApiCallback<AdminModels::GetContentListResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetContentUploadUrl(AdminModels::GetContentUploadUrlRequest& request, ProcessApiCallback<AdminModels::GetContentUploadUrlResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ResetCharacterStatistics(AdminModels::ResetCharacterStatisticsRequest& request, ProcessApiCallback<AdminModels::ResetCharacterStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetAllSegments(ProcessApiCallback<AdminModels::GetAllSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayerSegments(AdminModels::GetPlayersSegmentsRequest& request, ProcessApiCallback<AdminModels::GetPlayerSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayersInSegment(AdminModels::GetPlayersInSegmentRequest& request, ProcessApiCallback<AdminModels::GetPlayersInSegmentResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
@@ -117,6 +121,7 @@ namespace PlayFab
         static void OnGetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListVirtualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRemoveVirtualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetStoreItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
@@ -148,6 +153,9 @@ namespace PlayFab
         static void OnGetContentListResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetContentUploadUrlResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnResetCharacterStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetAllSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayerSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayersInSegmentResult(int httpStatus, HttpRequest* request, void* userData);
     };
 };
 #endif
