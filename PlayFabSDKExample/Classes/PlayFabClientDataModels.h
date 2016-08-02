@@ -197,6 +197,81 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GenericServiceId : public PlayFabBaseModel
+        {
+            std::string ServiceName;
+            std::string UserId;
+
+            GenericServiceId() :
+                PlayFabBaseModel(),
+                ServiceName(),
+                UserId()
+            {}
+
+            GenericServiceId(const GenericServiceId& src) :
+                PlayFabBaseModel(),
+                ServiceName(src.ServiceName),
+                UserId(src.UserId)
+            {}
+
+            GenericServiceId(const rapidjson::Value& obj) : GenericServiceId()
+            {
+                readFromValue(obj);
+            }
+
+            ~GenericServiceId();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct AddGenericIDRequest : public PlayFabBaseModel
+        {
+            GenericServiceId GenericId;
+
+            AddGenericIDRequest() :
+                PlayFabBaseModel(),
+                GenericId()
+            {}
+
+            AddGenericIDRequest(const AddGenericIDRequest& src) :
+                PlayFabBaseModel(),
+                GenericId(src.GenericId)
+            {}
+
+            AddGenericIDRequest(const rapidjson::Value& obj) : AddGenericIDRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~AddGenericIDRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct AddGenericIDResult : public PlayFabBaseModel
+        {
+
+            AddGenericIDResult() :
+                PlayFabBaseModel()
+            {}
+
+            AddGenericIDResult(const AddGenericIDResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            AddGenericIDResult(const rapidjson::Value& obj) : AddGenericIDResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~AddGenericIDResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct AddSharedGroupMembersRequest : public PlayFabBaseModel
         {
             std::string SharedGroupId;
@@ -1864,6 +1939,34 @@ namespace PlayFab
             }
 
             ~GameServerRegionsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GenericPlayFabIdPair : public PlayFabBaseModel
+        {
+            GenericServiceId* GenericId;
+            std::string PlayFabId;
+
+            GenericPlayFabIdPair() :
+                PlayFabBaseModel(),
+                GenericId(NULL),
+                PlayFabId()
+            {}
+
+            GenericPlayFabIdPair(const GenericPlayFabIdPair& src) :
+                PlayFabBaseModel(),
+                GenericId(src.GenericId ? new GenericServiceId(*src.GenericId) : NULL),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            GenericPlayFabIdPair(const rapidjson::Value& obj) : GenericPlayFabIdPair()
+            {
+                readFromValue(obj);
+            }
+
+            ~GenericPlayFabIdPair();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -3549,6 +3652,84 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayerSegmentsRequest : public PlayFabBaseModel
+        {
+
+            GetPlayerSegmentsRequest() :
+                PlayFabBaseModel()
+            {}
+
+            GetPlayerSegmentsRequest(const GetPlayerSegmentsRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            GetPlayerSegmentsRequest(const rapidjson::Value& obj) : GetPlayerSegmentsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerSegmentsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetSegmentResult : public PlayFabBaseModel
+        {
+            std::string Id;
+            std::string Name;
+            std::string ABTestParent;
+
+            GetSegmentResult() :
+                PlayFabBaseModel(),
+                Id(),
+                Name(),
+                ABTestParent()
+            {}
+
+            GetSegmentResult(const GetSegmentResult& src) :
+                PlayFabBaseModel(),
+                Id(src.Id),
+                Name(src.Name),
+                ABTestParent(src.ABTestParent)
+            {}
+
+            GetSegmentResult(const rapidjson::Value& obj) : GetSegmentResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetSegmentResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerSegmentsResult : public PlayFabBaseModel
+        {
+            std::list<GetSegmentResult> Segments;
+
+            GetPlayerSegmentsResult() :
+                PlayFabBaseModel(),
+                Segments()
+            {}
+
+            GetPlayerSegmentsResult(const GetPlayerSegmentsResult& src) :
+                PlayFabBaseModel(),
+                Segments(src.Segments)
+            {}
+
+            GetPlayerSegmentsResult(const rapidjson::Value& obj) : GetPlayerSegmentsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerSegmentsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct StatisticNameVersion : public PlayFabBaseModel
         {
             std::string StatisticName;
@@ -3868,6 +4049,56 @@ namespace PlayFab
             }
 
             ~GetPlayFabIDsFromGameCenterIDsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromGenericIDsRequest : public PlayFabBaseModel
+        {
+            std::list<GenericServiceId> GenericIDs;
+
+            GetPlayFabIDsFromGenericIDsRequest() :
+                PlayFabBaseModel(),
+                GenericIDs()
+            {}
+
+            GetPlayFabIDsFromGenericIDsRequest(const GetPlayFabIDsFromGenericIDsRequest& src) :
+                PlayFabBaseModel(),
+                GenericIDs(src.GenericIDs)
+            {}
+
+            GetPlayFabIDsFromGenericIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromGenericIDsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromGenericIDsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromGenericIDsResult : public PlayFabBaseModel
+        {
+            std::list<GenericPlayFabIdPair> Data;
+
+            GetPlayFabIDsFromGenericIDsResult() :
+                PlayFabBaseModel(),
+                Data()
+            {}
+
+            GetPlayFabIDsFromGenericIDsResult(const GetPlayFabIDsFromGenericIDsResult& src) :
+                PlayFabBaseModel(),
+                Data(src.Data)
+            {}
+
+            GetPlayFabIDsFromGenericIDsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromGenericIDsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromGenericIDsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -6658,6 +6889,53 @@ namespace PlayFab
             }
 
             ~RemoveFriendResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RemoveGenericIDRequest : public PlayFabBaseModel
+        {
+            GenericServiceId GenericId;
+
+            RemoveGenericIDRequest() :
+                PlayFabBaseModel(),
+                GenericId()
+            {}
+
+            RemoveGenericIDRequest(const RemoveGenericIDRequest& src) :
+                PlayFabBaseModel(),
+                GenericId(src.GenericId)
+            {}
+
+            RemoveGenericIDRequest(const rapidjson::Value& obj) : RemoveGenericIDRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RemoveGenericIDRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RemoveGenericIDResult : public PlayFabBaseModel
+        {
+
+            RemoveGenericIDResult() :
+                PlayFabBaseModel()
+            {}
+
+            RemoveGenericIDResult(const RemoveGenericIDResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            RemoveGenericIDResult(const rapidjson::Value& obj) : RemoveGenericIDResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RemoveGenericIDResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

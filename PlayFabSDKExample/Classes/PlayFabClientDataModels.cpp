@@ -276,6 +276,72 @@ bool AddFriendResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GenericServiceId::~GenericServiceId()
+{
+
+}
+
+void GenericServiceId::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("ServiceName"); writer.String(ServiceName.c_str());
+    writer.String("UserId"); writer.String(UserId.c_str());
+
+    writer.EndObject();
+}
+
+bool GenericServiceId::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ServiceName_member = obj.FindMember("ServiceName");
+    if (ServiceName_member != obj.MemberEnd() && !ServiceName_member->value.IsNull()) ServiceName = ServiceName_member->value.GetString();
+    const Value::ConstMemberIterator UserId_member = obj.FindMember("UserId");
+    if (UserId_member != obj.MemberEnd() && !UserId_member->value.IsNull()) UserId = UserId_member->value.GetString();
+
+    return true;
+}
+
+AddGenericIDRequest::~AddGenericIDRequest()
+{
+
+}
+
+void AddGenericIDRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("GenericId"); GenericId.writeJSON(writer);
+
+    writer.EndObject();
+}
+
+bool AddGenericIDRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator GenericId_member = obj.FindMember("GenericId");
+    if (GenericId_member != obj.MemberEnd() && !GenericId_member->value.IsNull()) GenericId = GenericServiceId(GenericId_member->value);
+
+    return true;
+}
+
+AddGenericIDResult::~AddGenericIDResult()
+{
+
+}
+
+void AddGenericIDResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool AddGenericIDResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 AddSharedGroupMembersRequest::~AddSharedGroupMembersRequest()
 {
 
@@ -2382,6 +2448,32 @@ bool GameServerRegionsResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GenericPlayFabIdPair::~GenericPlayFabIdPair()
+{
+    if (GenericId != NULL) delete GenericId;
+
+}
+
+void GenericPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (GenericId != NULL) { writer.String("GenericId"); GenericId->writeJSON(writer); }
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GenericPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator GenericId_member = obj.FindMember("GenericId");
+    if (GenericId_member != obj.MemberEnd() && !GenericId_member->value.IsNull()) GenericId = new GenericServiceId(GenericId_member->value);
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
 GetAccountInfoRequest::~GetAccountInfoRequest()
 {
 
@@ -4306,6 +4398,87 @@ bool GetPlayerCombinedInfoResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetPlayerSegmentsRequest::~GetPlayerSegmentsRequest()
+{
+
+}
+
+void GetPlayerSegmentsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool GetPlayerSegmentsRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+GetSegmentResult::~GetSegmentResult()
+{
+
+}
+
+void GetSegmentResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Id"); writer.String(Id.c_str());
+    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    if (ABTestParent.length() > 0) { writer.String("ABTestParent"); writer.String(ABTestParent.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetSegmentResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
+    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator ABTestParent_member = obj.FindMember("ABTestParent");
+    if (ABTestParent_member != obj.MemberEnd() && !ABTestParent_member->value.IsNull()) ABTestParent = ABTestParent_member->value.GetString();
+
+    return true;
+}
+
+GetPlayerSegmentsResult::~GetPlayerSegmentsResult()
+{
+
+}
+
+void GetPlayerSegmentsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Segments.empty()) {
+    writer.String("Segments");
+    writer.StartArray();
+    for (std::list<GetSegmentResult>::iterator iter = Segments.begin(); iter != Segments.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPlayerSegmentsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Segments_member = obj.FindMember("Segments");
+    if (Segments_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Segments_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Segments.push_back(GetSegmentResult(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 StatisticNameVersion::~StatisticNameVersion()
 {
 
@@ -4706,6 +4879,73 @@ bool GetPlayFabIDsFromGameCenterIDsResult::readFromValue(const rapidjson::Value&
         const rapidjson::Value& memberList = Data_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Data.push_back(GameCenterPlayFabIdPair(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetPlayFabIDsFromGenericIDsRequest::~GetPlayFabIDsFromGenericIDsRequest()
+{
+
+}
+
+void GetPlayFabIDsFromGenericIDsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("GenericIDs");
+    writer.StartArray();
+    for (std::list<GenericServiceId>::iterator iter = GenericIDs.begin(); iter != GenericIDs.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromGenericIDsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator GenericIDs_member = obj.FindMember("GenericIDs");
+    if (GenericIDs_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = GenericIDs_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            GenericIDs.push_back(GenericServiceId(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetPlayFabIDsFromGenericIDsResult::~GetPlayFabIDsFromGenericIDsResult()
+{
+
+}
+
+void GetPlayFabIDsFromGenericIDsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Data.empty()) {
+    writer.String("Data");
+    writer.StartArray();
+    for (std::list<GenericPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromGenericIDsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Data_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Data.push_back(GenericPlayFabIdPair(memberList[i]));
         }
     }
 
@@ -7801,6 +8041,47 @@ void RemoveFriendResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool RemoveFriendResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+RemoveGenericIDRequest::~RemoveGenericIDRequest()
+{
+
+}
+
+void RemoveGenericIDRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("GenericId"); GenericId.writeJSON(writer);
+
+    writer.EndObject();
+}
+
+bool RemoveGenericIDRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator GenericId_member = obj.FindMember("GenericId");
+    if (GenericId_member != obj.MemberEnd() && !GenericId_member->value.IsNull()) GenericId = GenericServiceId(GenericId_member->value);
+
+    return true;
+}
+
+RemoveGenericIDResult::~RemoveGenericIDResult()
+{
+
+}
+
+void RemoveGenericIDResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool RemoveGenericIDResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
