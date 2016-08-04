@@ -1706,7 +1706,7 @@ namespace PlayFab
             OptionalTime LastLogin;
             OptionalTime BannedUntil;
             std::map<std::string, Int32> Statistics;
-            std::map<std::string, double> ValuesToDate;
+            std::map<std::string, Uint32> ValuesToDate;
             std::map<std::string, Int32> VirtualCurrencyBalances;
             std::list<AdCampaignAttribution> AdCampaignAttributions;
             std::list<PushNotificationRegistration> PushNotificationRegistrations;
