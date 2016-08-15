@@ -3634,6 +3634,14 @@ void PlayerProfile::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndObject();
      }
+    if (!ValuesToDate.empty()) {
+    writer.String("ValuesToDate");
+    writer.StartObject();
+    for (std::map<std::string, Uint32>::iterator iter = ValuesToDate.begin(); iter != ValuesToDate.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.Uint(iter->second);
+    }
+    writer.EndObject();
+     }
     if (!VirtualCurrencyBalances.empty()) {
     writer.String("VirtualCurrencyBalances");
     writer.StartObject();
@@ -3698,6 +3706,12 @@ bool PlayerProfile::readFromValue(const rapidjson::Value& obj)
     if (Statistics_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Statistics_member->value.MemberBegin(); iter != Statistics_member->value.MemberEnd(); ++iter) {
             Statistics[iter->name.GetString()] = iter->value.GetInt();
+        }
+    }
+    const Value::ConstMemberIterator ValuesToDate_member = obj.FindMember("ValuesToDate");
+    if (ValuesToDate_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = ValuesToDate_member->value.MemberBegin(); iter != ValuesToDate_member->value.MemberEnd(); ++iter) {
+            ValuesToDate[iter->name.GetString()] = iter->value.GetUint();
         }
     }
     const Value::ConstMemberIterator VirtualCurrencyBalances_member = obj.FindMember("VirtualCurrencyBalances");
