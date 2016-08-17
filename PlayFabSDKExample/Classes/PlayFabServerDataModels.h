@@ -2994,6 +2994,7 @@ namespace PlayFab
             std::string PlayerId;
             std::string TitleId;
             std::string DisplayName;
+            std::string PublisherId;
             Boxed<LoginIdentityProvider> Origination;
             OptionalTime Created;
             OptionalTime LastLogin;
@@ -3011,6 +3012,7 @@ namespace PlayFab
                 PlayerId(),
                 TitleId(),
                 DisplayName(),
+                PublisherId(),
                 Origination(),
                 Created(),
                 LastLogin(),
@@ -3029,6 +3031,7 @@ namespace PlayFab
                 PlayerId(src.PlayerId),
                 TitleId(src.TitleId),
                 DisplayName(src.DisplayName),
+                PublisherId(src.PublisherId),
                 Origination(src.Origination),
                 Created(src.Created),
                 LastLogin(src.LastLogin),
