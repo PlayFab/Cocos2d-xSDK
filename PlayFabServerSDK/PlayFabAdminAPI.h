@@ -40,6 +40,7 @@ namespace PlayFab
         static void UpdateUserReadOnlyData(AdminModels::UpdateUserDataRequest& request, ProcessApiCallback<AdminModels::UpdateUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddNews(AdminModels::AddNewsRequest& request, ProcessApiCallback<AdminModels::AddNewsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddVirtualCurrencyTypes(AdminModels::AddVirtualCurrencyTypesRequest& request, ProcessApiCallback<AdminModels::BlankResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void DeleteStore(AdminModels::DeleteStoreRequest& request, ProcessApiCallback<AdminModels::DeleteStoreResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCatalogItems(AdminModels::GetCatalogItemsRequest& request, ProcessApiCallback<AdminModels::GetCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPublisherData(AdminModels::GetPublisherDataRequest& request, ProcessApiCallback<AdminModels::GetPublisherDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetRandomResultTables(AdminModels::GetRandomResultTablesRequest& request, ProcessApiCallback<AdminModels::GetRandomResultTablesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -114,6 +115,7 @@ namespace PlayFab
         static void OnUpdateUserReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddNewsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddVirtualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnDeleteStoreResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetRandomResultTablesResult(int httpStatus, HttpRequest* request, void* userData);

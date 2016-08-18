@@ -893,6 +893,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct DeleteStoreRequest : public PlayFabBaseModel
+        {
+            std::string CatalogVersion;
+            std::string StoreId;
+
+            DeleteStoreRequest() :
+                PlayFabBaseModel(),
+                CatalogVersion(),
+                StoreId()
+            {}
+
+            DeleteStoreRequest(const DeleteStoreRequest& src) :
+                PlayFabBaseModel(),
+                CatalogVersion(src.CatalogVersion),
+                StoreId(src.StoreId)
+            {}
+
+            DeleteStoreRequest(const rapidjson::Value& obj) : DeleteStoreRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteStoreRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeleteStoreResult : public PlayFabBaseModel
+        {
+
+            DeleteStoreResult() :
+                PlayFabBaseModel()
+            {}
+
+            DeleteStoreResult(const DeleteStoreResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            DeleteStoreResult(const rapidjson::Value& obj) : DeleteStoreResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteStoreResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct DeleteUsersRequest : public PlayFabBaseModel
         {
             std::list<std::string> PlayFabIds;

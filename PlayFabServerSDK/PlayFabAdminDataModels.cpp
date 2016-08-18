@@ -1237,6 +1237,50 @@ bool DeleteContentRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeleteStoreRequest::~DeleteStoreRequest()
+{
+
+}
+
+void DeleteStoreRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+    writer.String("StoreId"); writer.String(StoreId.c_str());
+
+    writer.EndObject();
+}
+
+bool DeleteStoreRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator StoreId_member = obj.FindMember("StoreId");
+    if (StoreId_member != obj.MemberEnd() && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
+
+    return true;
+}
+
+DeleteStoreResult::~DeleteStoreResult()
+{
+
+}
+
+void DeleteStoreResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool DeleteStoreResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 DeleteUsersRequest::~DeleteUsersRequest()
 {
 

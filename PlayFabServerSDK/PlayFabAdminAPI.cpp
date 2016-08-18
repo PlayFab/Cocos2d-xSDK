@@ -1258,6 +1258,54 @@ void PlayFabAdminAPI::OnAddVirtualCurrencyTypesResult(int httpStatus, HttpReques
     delete request;
 }
 
+void PlayFabAdminAPI::DeleteStore(
+    DeleteStoreRequest& request,
+    ProcessApiCallback<DeleteStoreResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/DeleteStore"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnDeleteStoreResult, userData);
+}
+
+void PlayFabAdminAPI::OnDeleteStoreResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    DeleteStoreResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            ProcessApiCallback<DeleteStoreResult> successCallback = reinterpret_cast<ProcessApiCallback<DeleteStoreResult>>(request->GetResultCallback());
+            successCallback(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabAdminAPI::GetCatalogItems(
     GetCatalogItemsRequest& request,
     ProcessApiCallback<GetCatalogItemsResult> callback,
