@@ -3473,6 +3473,130 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetRandomResultTablesRequest : public PlayFabBaseModel
+        {
+            std::string CatalogVersion;
+            std::list<std::string> TableIDs;
+
+            GetRandomResultTablesRequest() :
+                PlayFabBaseModel(),
+                CatalogVersion(),
+                TableIDs()
+            {}
+
+            GetRandomResultTablesRequest(const GetRandomResultTablesRequest& src) :
+                PlayFabBaseModel(),
+                CatalogVersion(src.CatalogVersion),
+                TableIDs(src.TableIDs)
+            {}
+
+            GetRandomResultTablesRequest(const rapidjson::Value& obj) : GetRandomResultTablesRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetRandomResultTablesRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum ResultTableNodeType
+        {
+            ResultTableNodeTypeItemId,
+            ResultTableNodeTypeTableId
+        };
+
+        void writeResultTableNodeTypeEnumJSON(ResultTableNodeType enumVal, PFStringJsonWriter& writer);
+        ResultTableNodeType readResultTableNodeTypeFromValue(const rapidjson::Value& obj);
+
+        struct ResultTableNode : public PlayFabBaseModel
+        {
+            ResultTableNodeType ResultItemType;
+            std::string ResultItem;
+            Int32 Weight;
+
+            ResultTableNode() :
+                PlayFabBaseModel(),
+                ResultItemType(),
+                ResultItem(),
+                Weight(0)
+            {}
+
+            ResultTableNode(const ResultTableNode& src) :
+                PlayFabBaseModel(),
+                ResultItemType(src.ResultItemType),
+                ResultItem(src.ResultItem),
+                Weight(src.Weight)
+            {}
+
+            ResultTableNode(const rapidjson::Value& obj) : ResultTableNode()
+            {
+                readFromValue(obj);
+            }
+
+            ~ResultTableNode();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RandomResultTableListing : public PlayFabBaseModel
+        {
+            std::string CatalogVersion;
+            std::string TableId;
+            std::list<ResultTableNode> Nodes;
+
+            RandomResultTableListing() :
+                PlayFabBaseModel(),
+                CatalogVersion(),
+                TableId(),
+                Nodes()
+            {}
+
+            RandomResultTableListing(const RandomResultTableListing& src) :
+                PlayFabBaseModel(),
+                CatalogVersion(src.CatalogVersion),
+                TableId(src.TableId),
+                Nodes(src.Nodes)
+            {}
+
+            RandomResultTableListing(const rapidjson::Value& obj) : RandomResultTableListing()
+            {
+                readFromValue(obj);
+            }
+
+            ~RandomResultTableListing();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetRandomResultTablesResult : public PlayFabBaseModel
+        {
+            std::map<std::string, RandomResultTableListing> Tables;
+
+            GetRandomResultTablesResult() :
+                PlayFabBaseModel(),
+                Tables()
+            {}
+
+            GetRandomResultTablesResult(const GetRandomResultTablesResult& src) :
+                PlayFabBaseModel(),
+                Tables(src.Tables)
+            {}
+
+            GetRandomResultTablesResult(const rapidjson::Value& obj) : GetRandomResultTablesResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetRandomResultTablesResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetSharedGroupDataRequest : public PlayFabBaseModel
         {
             std::string SharedGroupId;

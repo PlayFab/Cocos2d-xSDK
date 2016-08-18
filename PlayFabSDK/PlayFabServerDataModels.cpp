@@ -4268,6 +4268,169 @@ bool GetPublisherDataResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetRandomResultTablesRequest::~GetRandomResultTablesRequest()
+{
+
+}
+
+void GetRandomResultTablesRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+    writer.String("TableIDs");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = TableIDs.begin(); iter != TableIDs.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool GetRandomResultTablesRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator TableIDs_member = obj.FindMember("TableIDs");
+    if (TableIDs_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = TableIDs_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            TableIDs.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+void PlayFab::ServerModels::writeResultTableNodeTypeEnumJSON(ResultTableNodeType enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case ResultTableNodeTypeItemId: writer.String("ItemId"); break;
+    case ResultTableNodeTypeTableId: writer.String("TableId"); break;
+
+    }
+}
+
+ResultTableNodeType PlayFab::ServerModels::readResultTableNodeTypeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, ResultTableNodeType> _ResultTableNodeTypeMap;
+    if (_ResultTableNodeTypeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _ResultTableNodeTypeMap["ItemId"] = ResultTableNodeTypeItemId;
+        _ResultTableNodeTypeMap["TableId"] = ResultTableNodeTypeTableId;
+
+    }
+
+    auto output = _ResultTableNodeTypeMap.find(obj.GetString());
+    if (output != _ResultTableNodeTypeMap.end())
+        return output->second;
+
+    return ResultTableNodeTypeItemId; // Basically critical fail
+}
+
+ResultTableNode::~ResultTableNode()
+{
+
+}
+
+void ResultTableNode::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("ResultItemType"); writeResultTableNodeTypeEnumJSON(ResultItemType, writer);
+    writer.String("ResultItem"); writer.String(ResultItem.c_str());
+    writer.String("Weight"); writer.Int(Weight);
+
+    writer.EndObject();
+}
+
+bool ResultTableNode::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ResultItemType_member = obj.FindMember("ResultItemType");
+    if (ResultItemType_member != obj.MemberEnd() && !ResultItemType_member->value.IsNull()) ResultItemType = readResultTableNodeTypeFromValue(ResultItemType_member->value);
+    const Value::ConstMemberIterator ResultItem_member = obj.FindMember("ResultItem");
+    if (ResultItem_member != obj.MemberEnd() && !ResultItem_member->value.IsNull()) ResultItem = ResultItem_member->value.GetString();
+    const Value::ConstMemberIterator Weight_member = obj.FindMember("Weight");
+    if (Weight_member != obj.MemberEnd() && !Weight_member->value.IsNull()) Weight = Weight_member->value.GetInt();
+
+    return true;
+}
+
+RandomResultTableListing::~RandomResultTableListing()
+{
+
+}
+
+void RandomResultTableListing::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+    writer.String("TableId"); writer.String(TableId.c_str());
+    writer.String("Nodes");
+    writer.StartArray();
+    for (std::list<ResultTableNode>::iterator iter = Nodes.begin(); iter != Nodes.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool RandomResultTableListing::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator TableId_member = obj.FindMember("TableId");
+    if (TableId_member != obj.MemberEnd() && !TableId_member->value.IsNull()) TableId = TableId_member->value.GetString();
+    const Value::ConstMemberIterator Nodes_member = obj.FindMember("Nodes");
+    if (Nodes_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Nodes_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Nodes.push_back(ResultTableNode(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetRandomResultTablesResult::~GetRandomResultTablesResult()
+{
+
+}
+
+void GetRandomResultTablesResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Tables.empty()) {
+    writer.String("Tables");
+    writer.StartObject();
+    for (std::map<std::string, RandomResultTableListing>::iterator iter = Tables.begin(); iter != Tables.end(); ++iter) {
+        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+    }
+    writer.EndObject();
+     }
+
+    writer.EndObject();
+}
+
+bool GetRandomResultTablesResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Tables_member = obj.FindMember("Tables");
+    if (Tables_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Tables_member->value.MemberBegin(); iter != Tables_member->value.MemberEnd(); ++iter) {
+            Tables[iter->name.GetString()] = RandomResultTableListing(iter->value);
+        }
+    }
+
+    return true;
+}
+
 GetSharedGroupDataRequest::~GetSharedGroupDataRequest()
 {
 

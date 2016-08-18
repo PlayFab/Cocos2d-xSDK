@@ -53,6 +53,7 @@ namespace PlayFab
         static void ConsumeItem(ServerModels::ConsumeItemRequest& request, ProcessApiCallback<ServerModels::ConsumeItemResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void EvaluateRandomResultTable(ServerModels::EvaluateRandomResultTableRequest& request, ProcessApiCallback<ServerModels::EvaluateRandomResultTableResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCharacterInventory(ServerModels::GetCharacterInventoryRequest& request, ProcessApiCallback<ServerModels::GetCharacterInventoryResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetRandomResultTables(ServerModels::GetRandomResultTablesRequest& request, ProcessApiCallback<ServerModels::GetRandomResultTablesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserInventory(ServerModels::GetUserInventoryRequest& request, ProcessApiCallback<ServerModels::GetUserInventoryResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GrantItemsToCharacter(ServerModels::GrantItemsToCharacterRequest& request, ProcessApiCallback<ServerModels::GrantItemsToCharacterResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GrantItemsToUser(ServerModels::GrantItemsToUserRequest& request, ProcessApiCallback<ServerModels::GrantItemsToUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -148,6 +149,7 @@ namespace PlayFab
         static void OnConsumeItemResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnEvaluateRandomResultTableResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCharacterInventoryResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetRandomResultTablesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserInventoryResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGrantItemsToCharacterResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGrantItemsToUserResult(int httpStatus, HttpRequest* request, void* userData);
