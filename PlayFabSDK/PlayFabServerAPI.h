@@ -15,10 +15,15 @@ namespace PlayFab
 
         // ------------ Generated API calls
         static void AuthenticateSessionTicket(ServerModels::AuthenticateSessionTicketRequest& request, ProcessApiCallback<ServerModels::AuthenticateSessionTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void BanUsers(ServerModels::BanUsersRequest& request, ProcessApiCallback<ServerModels::BanUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromFacebookIDs(ServerModels::GetPlayFabIDsFromFacebookIDsRequest& request, ProcessApiCallback<ServerModels::GetPlayFabIDsFromFacebookIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromSteamIDs(ServerModels::GetPlayFabIDsFromSteamIDsRequest& request, ProcessApiCallback<ServerModels::GetPlayFabIDsFromSteamIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserAccountInfo(ServerModels::GetUserAccountInfoRequest& request, ProcessApiCallback<ServerModels::GetUserAccountInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetUserBans(ServerModels::GetUserBansRequest& request, ProcessApiCallback<ServerModels::GetUserBansResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RevokeAllBansForUser(ServerModels::RevokeAllBansForUserRequest& request, ProcessApiCallback<ServerModels::RevokeAllBansForUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RevokeBans(ServerModels::RevokeBansRequest& request, ProcessApiCallback<ServerModels::RevokeBansResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendPushNotification(ServerModels::SendPushNotificationRequest& request, ProcessApiCallback<ServerModels::SendPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UpdateBans(ServerModels::UpdateBansRequest& request, ProcessApiCallback<ServerModels::UpdateBansResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteUsers(ServerModels::DeleteUsersRequest& request, ProcessApiCallback<ServerModels::DeleteUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboard(ServerModels::GetLeaderboardRequest& request, ProcessApiCallback<ServerModels::GetLeaderboardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboardAroundUser(ServerModels::GetLeaderboardAroundUserRequest& request, ProcessApiCallback<ServerModels::GetLeaderboardAroundUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -111,10 +116,15 @@ namespace PlayFab
 
         // ------------ Generated result handlers
         static void OnAuthenticateSessionTicketResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnBanUsersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetUserBansResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRevokeAllBansForUserResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRevokeBansResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUpdateBansResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardAroundUserResult(int httpStatus, HttpRequest* request, void* userData);

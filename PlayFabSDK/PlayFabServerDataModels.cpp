@@ -1136,6 +1136,150 @@ bool AwardSteamAchievementResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+BanInfo::~BanInfo()
+{
+
+}
+
+void BanInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    if (BanId.length() > 0) { writer.String("BanId"); writer.String(BanId.c_str()); }
+    if (IPAddress.length() > 0) { writer.String("IPAddress"); writer.String(IPAddress.c_str()); }
+    if (MACAddress.length() > 0) { writer.String("MACAddress"); writer.String(MACAddress.c_str()); }
+    if (Created.notNull()) { writer.String("Created"); writeDatetime(Created, writer); }
+    if (Expires.notNull()) { writer.String("Expires"); writeDatetime(Expires, writer); }
+    if (Reason.length() > 0) { writer.String("Reason"); writer.String(Reason.c_str()); }
+    writer.String("Active"); writer.Bool(Active);
+
+    writer.EndObject();
+}
+
+bool BanInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator BanId_member = obj.FindMember("BanId");
+    if (BanId_member != obj.MemberEnd() && !BanId_member->value.IsNull()) BanId = BanId_member->value.GetString();
+    const Value::ConstMemberIterator IPAddress_member = obj.FindMember("IPAddress");
+    if (IPAddress_member != obj.MemberEnd() && !IPAddress_member->value.IsNull()) IPAddress = IPAddress_member->value.GetString();
+    const Value::ConstMemberIterator MACAddress_member = obj.FindMember("MACAddress");
+    if (MACAddress_member != obj.MemberEnd() && !MACAddress_member->value.IsNull()) MACAddress = MACAddress_member->value.GetString();
+    const Value::ConstMemberIterator Created_member = obj.FindMember("Created");
+    if (Created_member != obj.MemberEnd() && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
+    const Value::ConstMemberIterator Expires_member = obj.FindMember("Expires");
+    if (Expires_member != obj.MemberEnd() && !Expires_member->value.IsNull()) Expires = readDatetime(Expires_member->value);
+    const Value::ConstMemberIterator Reason_member = obj.FindMember("Reason");
+    if (Reason_member != obj.MemberEnd() && !Reason_member->value.IsNull()) Reason = Reason_member->value.GetString();
+    const Value::ConstMemberIterator Active_member = obj.FindMember("Active");
+    if (Active_member != obj.MemberEnd() && !Active_member->value.IsNull()) Active = Active_member->value.GetBool();
+
+    return true;
+}
+
+BanRequest::~BanRequest()
+{
+
+}
+
+void BanRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if (IPAddress.length() > 0) { writer.String("IPAddress"); writer.String(IPAddress.c_str()); }
+    if (MACAddress.length() > 0) { writer.String("MACAddress"); writer.String(MACAddress.c_str()); }
+    if (Reason.length() > 0) { writer.String("Reason"); writer.String(Reason.c_str()); }
+    if (DurationInHours.notNull()) { writer.String("DurationInHours"); writer.Uint(DurationInHours); }
+
+    writer.EndObject();
+}
+
+bool BanRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator IPAddress_member = obj.FindMember("IPAddress");
+    if (IPAddress_member != obj.MemberEnd() && !IPAddress_member->value.IsNull()) IPAddress = IPAddress_member->value.GetString();
+    const Value::ConstMemberIterator MACAddress_member = obj.FindMember("MACAddress");
+    if (MACAddress_member != obj.MemberEnd() && !MACAddress_member->value.IsNull()) MACAddress = MACAddress_member->value.GetString();
+    const Value::ConstMemberIterator Reason_member = obj.FindMember("Reason");
+    if (Reason_member != obj.MemberEnd() && !Reason_member->value.IsNull()) Reason = Reason_member->value.GetString();
+    const Value::ConstMemberIterator DurationInHours_member = obj.FindMember("DurationInHours");
+    if (DurationInHours_member != obj.MemberEnd() && !DurationInHours_member->value.IsNull()) DurationInHours = DurationInHours_member->value.GetUint();
+
+    return true;
+}
+
+BanUsersRequest::~BanUsersRequest()
+{
+
+}
+
+void BanUsersRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Bans");
+    writer.StartArray();
+    for (std::list<BanRequest>::iterator iter = Bans.begin(); iter != Bans.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool BanUsersRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Bans_member = obj.FindMember("Bans");
+    if (Bans_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Bans_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Bans.push_back(BanRequest(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+BanUsersResult::~BanUsersResult()
+{
+
+}
+
+void BanUsersResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!BanData.empty()) {
+    writer.String("BanData");
+    writer.StartArray();
+    for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool BanUsersResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator BanData_member = obj.FindMember("BanData");
+    if (BanData_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = BanData_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            BanData.push_back(BanInfo(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 CatalogItemConsumableInfo::~CatalogItemConsumableInfo()
 {
 
@@ -3643,6 +3787,14 @@ void PlayerProfile::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndObject();
      }
+    if (!Tags.empty()) {
+    writer.String("Tags");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = Tags.begin(); iter != Tags.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+     }
     if (!VirtualCurrencyBalances.empty()) {
     writer.String("VirtualCurrencyBalances");
     writer.StartObject();
@@ -3715,6 +3867,13 @@ bool PlayerProfile::readFromValue(const rapidjson::Value& obj)
     if (ValuesToDate_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = ValuesToDate_member->value.MemberBegin(); iter != ValuesToDate_member->value.MemberEnd(); ++iter) {
             ValuesToDate[iter->name.GetString()] = iter->value.GetUint();
+        }
+    }
+    const Value::ConstMemberIterator Tags_member = obj.FindMember("Tags");
+    if (Tags_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Tags_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Tags.push_back(memberList[i].GetString());
         }
     }
     const Value::ConstMemberIterator VirtualCurrencyBalances_member = obj.FindMember("VirtualCurrencyBalances");
@@ -4745,6 +4904,62 @@ bool GetUserAccountInfoResult::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator UserInfo_member = obj.FindMember("UserInfo");
     if (UserInfo_member != obj.MemberEnd() && !UserInfo_member->value.IsNull()) UserInfo = new UserAccountInfo(UserInfo_member->value);
+
+    return true;
+}
+
+GetUserBansRequest::~GetUserBansRequest()
+{
+
+}
+
+void GetUserBansRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+
+    writer.EndObject();
+}
+
+bool GetUserBansRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
+GetUserBansResult::~GetUserBansResult()
+{
+
+}
+
+void GetUserBansResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!BanData.empty()) {
+    writer.String("BanData");
+    writer.StartArray();
+    for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetUserBansResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator BanData_member = obj.FindMember("BanData");
+    if (BanData_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = BanData_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            BanData.push_back(BanInfo(memberList[i]));
+        }
+    }
 
     return true;
 }
@@ -6092,6 +6307,129 @@ bool ReportPlayerServerResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+RevokeAllBansForUserRequest::~RevokeAllBansForUserRequest()
+{
+
+}
+
+void RevokeAllBansForUserRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+
+    writer.EndObject();
+}
+
+bool RevokeAllBansForUserRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
+RevokeAllBansForUserResult::~RevokeAllBansForUserResult()
+{
+
+}
+
+void RevokeAllBansForUserResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!BanData.empty()) {
+    writer.String("BanData");
+    writer.StartArray();
+    for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool RevokeAllBansForUserResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator BanData_member = obj.FindMember("BanData");
+    if (BanData_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = BanData_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            BanData.push_back(BanInfo(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+RevokeBansRequest::~RevokeBansRequest()
+{
+
+}
+
+void RevokeBansRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("BanIds");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = BanIds.begin(); iter != BanIds.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool RevokeBansRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator BanIds_member = obj.FindMember("BanIds");
+    if (BanIds_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = BanIds_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            BanIds.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
+RevokeBansResult::~RevokeBansResult()
+{
+
+}
+
+void RevokeBansResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!BanData.empty()) {
+    writer.String("BanData");
+    writer.StartArray();
+    for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool RevokeBansResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator BanData_member = obj.FindMember("BanData");
+    if (BanData_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = BanData_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            BanData.push_back(BanInfo(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 RevokeInventoryItemRequest::~RevokeInventoryItemRequest()
 {
 
@@ -6562,6 +6900,113 @@ bool UnlockContainerItemResult::readFromValue(const rapidjson::Value& obj)
     if (VirtualCurrency_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = VirtualCurrency_member->value.MemberBegin(); iter != VirtualCurrency_member->value.MemberEnd(); ++iter) {
             VirtualCurrency[iter->name.GetString()] = iter->value.GetUint();
+        }
+    }
+
+    return true;
+}
+
+UpdateBanRequest::~UpdateBanRequest()
+{
+
+}
+
+void UpdateBanRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("BanId"); writer.String(BanId.c_str());
+    if (Reason.length() > 0) { writer.String("Reason"); writer.String(Reason.c_str()); }
+    if (Expires.notNull()) { writer.String("Expires"); writeDatetime(Expires, writer); }
+    if (IPAddress.length() > 0) { writer.String("IPAddress"); writer.String(IPAddress.c_str()); }
+    if (MACAddress.length() > 0) { writer.String("MACAddress"); writer.String(MACAddress.c_str()); }
+    if (Permanent.notNull()) { writer.String("Permanent"); writer.Bool(Permanent); }
+    if (Active.notNull()) { writer.String("Active"); writer.Bool(Active); }
+
+    writer.EndObject();
+}
+
+bool UpdateBanRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator BanId_member = obj.FindMember("BanId");
+    if (BanId_member != obj.MemberEnd() && !BanId_member->value.IsNull()) BanId = BanId_member->value.GetString();
+    const Value::ConstMemberIterator Reason_member = obj.FindMember("Reason");
+    if (Reason_member != obj.MemberEnd() && !Reason_member->value.IsNull()) Reason = Reason_member->value.GetString();
+    const Value::ConstMemberIterator Expires_member = obj.FindMember("Expires");
+    if (Expires_member != obj.MemberEnd() && !Expires_member->value.IsNull()) Expires = readDatetime(Expires_member->value);
+    const Value::ConstMemberIterator IPAddress_member = obj.FindMember("IPAddress");
+    if (IPAddress_member != obj.MemberEnd() && !IPAddress_member->value.IsNull()) IPAddress = IPAddress_member->value.GetString();
+    const Value::ConstMemberIterator MACAddress_member = obj.FindMember("MACAddress");
+    if (MACAddress_member != obj.MemberEnd() && !MACAddress_member->value.IsNull()) MACAddress = MACAddress_member->value.GetString();
+    const Value::ConstMemberIterator Permanent_member = obj.FindMember("Permanent");
+    if (Permanent_member != obj.MemberEnd() && !Permanent_member->value.IsNull()) Permanent = Permanent_member->value.GetBool();
+    const Value::ConstMemberIterator Active_member = obj.FindMember("Active");
+    if (Active_member != obj.MemberEnd() && !Active_member->value.IsNull()) Active = Active_member->value.GetBool();
+
+    return true;
+}
+
+UpdateBansRequest::~UpdateBansRequest()
+{
+
+}
+
+void UpdateBansRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Bans");
+    writer.StartArray();
+    for (std::list<UpdateBanRequest>::iterator iter = Bans.begin(); iter != Bans.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool UpdateBansRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Bans_member = obj.FindMember("Bans");
+    if (Bans_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Bans_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Bans.push_back(UpdateBanRequest(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+UpdateBansResult::~UpdateBansResult()
+{
+
+}
+
+void UpdateBansResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!BanData.empty()) {
+    writer.String("BanData");
+    writer.StartArray();
+    for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool UpdateBansResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator BanData_member = obj.FindMember("BanData");
+    if (BanData_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = BanData_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            BanData.push_back(BanInfo(memberList[i]));
         }
     }
 

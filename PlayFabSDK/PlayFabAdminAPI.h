@@ -14,9 +14,14 @@ namespace PlayFab
         template<typename ResType> using ProcessApiCallback = void(*)(const ResType& result, void* userData);
 
         // ------------ Generated API calls
+        static void BanUsers(AdminModels::BanUsersRequest& request, ProcessApiCallback<AdminModels::BanUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserAccountInfo(AdminModels::LookupUserAccountInfoRequest& request, ProcessApiCallback<AdminModels::LookupUserAccountInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetUserBans(AdminModels::GetUserBansRequest& request, ProcessApiCallback<AdminModels::GetUserBansResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ResetUsers(AdminModels::ResetUsersRequest& request, ProcessApiCallback<AdminModels::BlankResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RevokeAllBansForUser(AdminModels::RevokeAllBansForUserRequest& request, ProcessApiCallback<AdminModels::RevokeAllBansForUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RevokeBans(AdminModels::RevokeBansRequest& request, ProcessApiCallback<AdminModels::RevokeBansResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendAccountRecoveryEmail(AdminModels::SendAccountRecoveryEmailRequest& request, ProcessApiCallback<AdminModels::SendAccountRecoveryEmailResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UpdateBans(AdminModels::UpdateBansRequest& request, ProcessApiCallback<AdminModels::UpdateBansResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserTitleDisplayName(AdminModels::UpdateUserTitleDisplayNameRequest& request, ProcessApiCallback<AdminModels::UpdateUserTitleDisplayNameResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreatePlayerStatisticDefinition(AdminModels::CreatePlayerStatisticDefinitionRequest& request, ProcessApiCallback<AdminModels::CreatePlayerStatisticDefinitionResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteUsers(AdminModels::DeleteUsersRequest& request, ProcessApiCallback<AdminModels::DeleteUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -89,9 +94,14 @@ namespace PlayFab
         PlayFabAdminAPI();
 
         // ------------ Generated result handlers
+        static void OnBanUsersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetUserBansResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnResetUsersResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRevokeAllBansForUserResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRevokeBansResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUpdateBansResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreatePlayerStatisticDefinitionResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData);
