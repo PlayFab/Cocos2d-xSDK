@@ -247,7 +247,9 @@ namespace PlayFab
         PlayFabErrorInvalidSegment = 1242,
         PlayFabErrorInvalidSessionId = 1243,
         PlayFabErrorSessionLogNotFound = 1244,
-        PlayFabErrorInvalidSearchTerm = 1245
+        PlayFabErrorInvalidSearchTerm = 1245,
+        PlayFabErrorTwoFactorAuthenticationTokenRequired = 1246,
+        PlayFabErrorGameServerHostCountLimitExceeded = 1247
     };
 
     struct PlayFabError
