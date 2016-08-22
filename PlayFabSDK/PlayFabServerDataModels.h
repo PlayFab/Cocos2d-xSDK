@@ -929,6 +929,139 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct BanInfo : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string BanId;
+            std::string IPAddress;
+            std::string MACAddress;
+            OptionalTime Created;
+            OptionalTime Expires;
+            std::string Reason;
+            bool Active;
+
+            BanInfo() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                BanId(),
+                IPAddress(),
+                MACAddress(),
+                Created(),
+                Expires(),
+                Reason(),
+                Active(false)
+            {}
+
+            BanInfo(const BanInfo& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                BanId(src.BanId),
+                IPAddress(src.IPAddress),
+                MACAddress(src.MACAddress),
+                Created(src.Created),
+                Expires(src.Expires),
+                Reason(src.Reason),
+                Active(src.Active)
+            {}
+
+            BanInfo(const rapidjson::Value& obj) : BanInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~BanInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct BanRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string IPAddress;
+            std::string MACAddress;
+            std::string Reason;
+            OptionalUint32 DurationInHours;
+
+            BanRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                IPAddress(),
+                MACAddress(),
+                Reason(),
+                DurationInHours()
+            {}
+
+            BanRequest(const BanRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                IPAddress(src.IPAddress),
+                MACAddress(src.MACAddress),
+                Reason(src.Reason),
+                DurationInHours(src.DurationInHours)
+            {}
+
+            BanRequest(const rapidjson::Value& obj) : BanRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~BanRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct BanUsersRequest : public PlayFabBaseModel
+        {
+            std::list<BanRequest> Bans;
+
+            BanUsersRequest() :
+                PlayFabBaseModel(),
+                Bans()
+            {}
+
+            BanUsersRequest(const BanUsersRequest& src) :
+                PlayFabBaseModel(),
+                Bans(src.Bans)
+            {}
+
+            BanUsersRequest(const rapidjson::Value& obj) : BanUsersRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~BanUsersRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct BanUsersResult : public PlayFabBaseModel
+        {
+            std::list<BanInfo> BanData;
+
+            BanUsersResult() :
+                PlayFabBaseModel(),
+                BanData()
+            {}
+
+            BanUsersResult(const BanUsersResult& src) :
+                PlayFabBaseModel(),
+                BanData(src.BanData)
+            {}
+
+            BanUsersResult(const rapidjson::Value& obj) : BanUsersResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~BanUsersResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CatalogItemConsumableInfo : public PlayFabBaseModel
         {
             OptionalUint32 UsageCount;
@@ -2994,12 +3127,14 @@ namespace PlayFab
             std::string PlayerId;
             std::string TitleId;
             std::string DisplayName;
+            std::string PublisherId;
             Boxed<LoginIdentityProvider> Origination;
             OptionalTime Created;
             OptionalTime LastLogin;
             OptionalTime BannedUntil;
             std::map<std::string, Int32> Statistics;
             std::map<std::string, Uint32> ValuesToDate;
+            std::list<std::string> Tags;
             std::map<std::string, Int32> VirtualCurrencyBalances;
             std::list<AdCampaignAttribution> AdCampaignAttributions;
             std::list<PushNotificationRegistration> PushNotificationRegistrations;
@@ -3011,12 +3146,14 @@ namespace PlayFab
                 PlayerId(),
                 TitleId(),
                 DisplayName(),
+                PublisherId(),
                 Origination(),
                 Created(),
                 LastLogin(),
                 BannedUntil(),
                 Statistics(),
                 ValuesToDate(),
+                Tags(),
                 VirtualCurrencyBalances(),
                 AdCampaignAttributions(),
                 PushNotificationRegistrations(),
@@ -3029,12 +3166,14 @@ namespace PlayFab
                 PlayerId(src.PlayerId),
                 TitleId(src.TitleId),
                 DisplayName(src.DisplayName),
+                PublisherId(src.PublisherId),
                 Origination(src.Origination),
                 Created(src.Created),
                 LastLogin(src.LastLogin),
                 BannedUntil(src.BannedUntil),
                 Statistics(src.Statistics),
                 ValuesToDate(src.ValuesToDate),
+                Tags(src.Tags),
                 VirtualCurrencyBalances(src.VirtualCurrencyBalances),
                 AdCampaignAttributions(src.AdCampaignAttributions),
                 PushNotificationRegistrations(src.PushNotificationRegistrations),
@@ -3470,6 +3609,130 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetRandomResultTablesRequest : public PlayFabBaseModel
+        {
+            std::string CatalogVersion;
+            std::list<std::string> TableIDs;
+
+            GetRandomResultTablesRequest() :
+                PlayFabBaseModel(),
+                CatalogVersion(),
+                TableIDs()
+            {}
+
+            GetRandomResultTablesRequest(const GetRandomResultTablesRequest& src) :
+                PlayFabBaseModel(),
+                CatalogVersion(src.CatalogVersion),
+                TableIDs(src.TableIDs)
+            {}
+
+            GetRandomResultTablesRequest(const rapidjson::Value& obj) : GetRandomResultTablesRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetRandomResultTablesRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum ResultTableNodeType
+        {
+            ResultTableNodeTypeItemId,
+            ResultTableNodeTypeTableId
+        };
+
+        void writeResultTableNodeTypeEnumJSON(ResultTableNodeType enumVal, PFStringJsonWriter& writer);
+        ResultTableNodeType readResultTableNodeTypeFromValue(const rapidjson::Value& obj);
+
+        struct ResultTableNode : public PlayFabBaseModel
+        {
+            ResultTableNodeType ResultItemType;
+            std::string ResultItem;
+            Int32 Weight;
+
+            ResultTableNode() :
+                PlayFabBaseModel(),
+                ResultItemType(),
+                ResultItem(),
+                Weight(0)
+            {}
+
+            ResultTableNode(const ResultTableNode& src) :
+                PlayFabBaseModel(),
+                ResultItemType(src.ResultItemType),
+                ResultItem(src.ResultItem),
+                Weight(src.Weight)
+            {}
+
+            ResultTableNode(const rapidjson::Value& obj) : ResultTableNode()
+            {
+                readFromValue(obj);
+            }
+
+            ~ResultTableNode();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RandomResultTableListing : public PlayFabBaseModel
+        {
+            std::string CatalogVersion;
+            std::string TableId;
+            std::list<ResultTableNode> Nodes;
+
+            RandomResultTableListing() :
+                PlayFabBaseModel(),
+                CatalogVersion(),
+                TableId(),
+                Nodes()
+            {}
+
+            RandomResultTableListing(const RandomResultTableListing& src) :
+                PlayFabBaseModel(),
+                CatalogVersion(src.CatalogVersion),
+                TableId(src.TableId),
+                Nodes(src.Nodes)
+            {}
+
+            RandomResultTableListing(const rapidjson::Value& obj) : RandomResultTableListing()
+            {
+                readFromValue(obj);
+            }
+
+            ~RandomResultTableListing();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetRandomResultTablesResult : public PlayFabBaseModel
+        {
+            std::map<std::string, RandomResultTableListing> Tables;
+
+            GetRandomResultTablesResult() :
+                PlayFabBaseModel(),
+                Tables()
+            {}
+
+            GetRandomResultTablesResult(const GetRandomResultTablesResult& src) :
+                PlayFabBaseModel(),
+                Tables(src.Tables)
+            {}
+
+            GetRandomResultTablesResult(const rapidjson::Value& obj) : GetRandomResultTablesResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetRandomResultTablesResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetSharedGroupDataRequest : public PlayFabBaseModel
         {
             std::string SharedGroupId;
@@ -3742,6 +4005,56 @@ namespace PlayFab
             }
 
             ~GetUserAccountInfoResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetUserBansRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+
+            GetUserBansRequest() :
+                PlayFabBaseModel(),
+                PlayFabId()
+            {}
+
+            GetUserBansRequest(const GetUserBansRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            GetUserBansRequest(const rapidjson::Value& obj) : GetUserBansRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetUserBansRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetUserBansResult : public PlayFabBaseModel
+        {
+            std::list<BanInfo> BanData;
+
+            GetUserBansResult() :
+                PlayFabBaseModel(),
+                BanData()
+            {}
+
+            GetUserBansResult(const GetUserBansResult& src) :
+                PlayFabBaseModel(),
+                BanData(src.BanData)
+            {}
+
+            GetUserBansResult(const rapidjson::Value& obj) : GetUserBansResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetUserBansResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -4957,6 +5270,106 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct RevokeAllBansForUserRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+
+            RevokeAllBansForUserRequest() :
+                PlayFabBaseModel(),
+                PlayFabId()
+            {}
+
+            RevokeAllBansForUserRequest(const RevokeAllBansForUserRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            RevokeAllBansForUserRequest(const rapidjson::Value& obj) : RevokeAllBansForUserRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RevokeAllBansForUserRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RevokeAllBansForUserResult : public PlayFabBaseModel
+        {
+            std::list<BanInfo> BanData;
+
+            RevokeAllBansForUserResult() :
+                PlayFabBaseModel(),
+                BanData()
+            {}
+
+            RevokeAllBansForUserResult(const RevokeAllBansForUserResult& src) :
+                PlayFabBaseModel(),
+                BanData(src.BanData)
+            {}
+
+            RevokeAllBansForUserResult(const rapidjson::Value& obj) : RevokeAllBansForUserResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RevokeAllBansForUserResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RevokeBansRequest : public PlayFabBaseModel
+        {
+            std::list<std::string> BanIds;
+
+            RevokeBansRequest() :
+                PlayFabBaseModel(),
+                BanIds()
+            {}
+
+            RevokeBansRequest(const RevokeBansRequest& src) :
+                PlayFabBaseModel(),
+                BanIds(src.BanIds)
+            {}
+
+            RevokeBansRequest(const rapidjson::Value& obj) : RevokeBansRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RevokeBansRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RevokeBansResult : public PlayFabBaseModel
+        {
+            std::list<BanInfo> BanData;
+
+            RevokeBansResult() :
+                PlayFabBaseModel(),
+                BanData()
+            {}
+
+            RevokeBansResult(const RevokeBansResult& src) :
+                PlayFabBaseModel(),
+                BanData(src.BanData)
+            {}
+
+            RevokeBansResult(const rapidjson::Value& obj) : RevokeBansResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RevokeBansResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct RevokeInventoryItemRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -5459,6 +5872,99 @@ namespace PlayFab
             }
 
             ~UnlockContainerItemResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdateBanRequest : public PlayFabBaseModel
+        {
+            std::string BanId;
+            std::string Reason;
+            OptionalTime Expires;
+            std::string IPAddress;
+            std::string MACAddress;
+            OptionalBool Permanent;
+            OptionalBool Active;
+
+            UpdateBanRequest() :
+                PlayFabBaseModel(),
+                BanId(),
+                Reason(),
+                Expires(),
+                IPAddress(),
+                MACAddress(),
+                Permanent(),
+                Active()
+            {}
+
+            UpdateBanRequest(const UpdateBanRequest& src) :
+                PlayFabBaseModel(),
+                BanId(src.BanId),
+                Reason(src.Reason),
+                Expires(src.Expires),
+                IPAddress(src.IPAddress),
+                MACAddress(src.MACAddress),
+                Permanent(src.Permanent),
+                Active(src.Active)
+            {}
+
+            UpdateBanRequest(const rapidjson::Value& obj) : UpdateBanRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdateBanRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdateBansRequest : public PlayFabBaseModel
+        {
+            std::list<UpdateBanRequest> Bans;
+
+            UpdateBansRequest() :
+                PlayFabBaseModel(),
+                Bans()
+            {}
+
+            UpdateBansRequest(const UpdateBansRequest& src) :
+                PlayFabBaseModel(),
+                Bans(src.Bans)
+            {}
+
+            UpdateBansRequest(const rapidjson::Value& obj) : UpdateBansRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdateBansRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdateBansResult : public PlayFabBaseModel
+        {
+            std::list<BanInfo> BanData;
+
+            UpdateBansResult() :
+                PlayFabBaseModel(),
+                BanData()
+            {}
+
+            UpdateBansResult(const UpdateBansResult& src) :
+                PlayFabBaseModel(),
+                BanData(src.BanData)
+            {}
+
+            UpdateBansResult(const rapidjson::Value& obj) : UpdateBansResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdateBansResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
