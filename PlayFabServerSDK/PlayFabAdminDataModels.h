@@ -4769,6 +4769,7 @@ namespace PlayFab
 
         struct UpdateCloudScriptRequest : public PlayFabBaseModel
         {
+            // Deprecated - Do not use
             OptionalInt32 Version;
             std::list<CloudScriptFile> Files;
             bool Publish;

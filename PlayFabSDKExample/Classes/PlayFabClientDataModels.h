@@ -2765,6 +2765,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetCloudScriptUrlRequest : public PlayFabBaseModel
         {
             OptionalInt32 Version;
@@ -2793,6 +2794,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetCloudScriptUrlResult : public PlayFabBaseModel
         {
             std::string Url;
@@ -2874,6 +2876,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetFriendLeaderboardAroundCurrentUserRequest : public PlayFabBaseModel
         {
             std::string StatisticName;
@@ -2942,6 +2945,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetFriendLeaderboardAroundCurrentUserResult : public PlayFabBaseModel
         {
             std::list<PlayerLeaderboardEntry> Leaderboard;
@@ -3178,6 +3182,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetLeaderboardAroundCurrentUserRequest : public PlayFabBaseModel
         {
             std::string StatisticName;
@@ -3206,6 +3211,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetLeaderboardAroundCurrentUserResult : public PlayFabBaseModel
         {
             std::list<PlayerLeaderboardEntry> Leaderboard;
@@ -4262,6 +4268,7 @@ namespace PlayFab
 
         struct GetPlayFabIDsFromSteamIDsRequest : public PlayFabBaseModel
         {
+            // Deprecated - Use 'SteamStringIDs' instead
             std::list<Uint64> SteamIDs;
             std::list<std::string> SteamStringIDs;
 
@@ -4290,6 +4297,7 @@ namespace PlayFab
 
         struct SteamPlayFabIdPair : public PlayFabBaseModel
         {
+            // Deprecated - Use 'SteamStringId' instead
             Uint64 SteamId;
             std::string SteamStringId;
             std::string PlayFabId;
@@ -4901,6 +4909,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetUserCombinedInfoRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -4956,6 +4965,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetUserCombinedInfoResult : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -5117,6 +5127,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetUserStatisticsRequest : public PlayFabBaseModel
         {
 
@@ -5139,6 +5150,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetUserStatisticsResult : public PlayFabBaseModel
         {
             std::map<std::string, Int32> UserStatistics;
@@ -5748,6 +5760,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct LogEventRequest : public PlayFabBaseModel
         {
             OptionalTime Timestamp;
@@ -5782,6 +5795,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct LogEventResult : public PlayFabBaseModel
         {
 
@@ -6050,6 +6064,7 @@ namespace PlayFab
             std::string TitleId;
             std::string AccessToken;
             OptionalBool CreateAccount;
+            // Deprecated - Do not use
             std::string PublisherId;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
@@ -6271,6 +6286,7 @@ namespace PlayFab
             std::string CharacterId;
             OptionalBool StartNewIfNoneFound;
             CollectionFilter* TagFilter;
+            // Deprecated - Do not use
             OptionalBool EnableQueue;
 
             MatchmakeRequest() :
@@ -6778,6 +6794,7 @@ namespace PlayFab
             std::string Password;
             OptionalBool RequireBothUsernameAndEmail;
             std::string DisplayName;
+            // Deprecated - Do not use
             std::string Origination;
 
             RegisterPlayFabUserRequest() :
@@ -7094,6 +7111,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct RunCloudScriptRequest : public PlayFabBaseModel
         {
             std::string ActionId;
@@ -7125,6 +7143,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct RunCloudScriptResult : public PlayFabBaseModel
         {
             std::string ActionId;
@@ -7172,6 +7191,7 @@ namespace PlayFab
         {
             std::string Email;
             std::string TitleId;
+            // Deprecated - Do not use
             std::string PublisherId;
 
             SendAccountRecoveryEmailRequest() :
@@ -8247,6 +8267,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct UpdateUserStatisticsRequest : public PlayFabBaseModel
         {
             std::map<std::string, Int32> UserStatistics;
@@ -8272,6 +8293,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct UpdateUserStatisticsResult : public PlayFabBaseModel
         {
 

@@ -3477,6 +3477,7 @@ namespace PlayFab
 
         struct GetPlayFabIDsFromSteamIDsRequest : public PlayFabBaseModel
         {
+            // Deprecated - Use 'SteamStringIDs' instead
             std::list<Uint64> SteamIDs;
             std::list<std::string> SteamStringIDs;
 
@@ -3505,6 +3506,7 @@ namespace PlayFab
 
         struct SteamPlayFabIdPair : public PlayFabBaseModel
         {
+            // Deprecated - Use 'SteamStringId' instead
             Uint64 SteamId;
             std::string SteamStringId;
             std::string PlayFabId;
@@ -4181,6 +4183,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetUserStatisticsRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -4206,6 +4209,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetUserStatisticsResult : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -4630,6 +4634,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct LogEventRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -4673,6 +4678,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct LogEventResult : public PlayFabBaseModel
         {
 
@@ -6318,6 +6324,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct UpdateUserStatisticsRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -6346,6 +6353,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct UpdateUserStatisticsResult : public PlayFabBaseModel
         {
 
