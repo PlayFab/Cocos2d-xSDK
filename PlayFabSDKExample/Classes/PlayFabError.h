@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <functional>
 
 namespace PlayFab
 {
@@ -249,7 +250,8 @@ namespace PlayFab
         PlayFabErrorSessionLogNotFound = 1244,
         PlayFabErrorInvalidSearchTerm = 1245,
         PlayFabErrorTwoFactorAuthenticationTokenRequired = 1246,
-        PlayFabErrorGameServerHostCountLimitExceeded = 1247
+        PlayFabErrorGameServerHostCountLimitExceeded = 1247,
+        PlayFabErrorPlayerTagCountLimitExceeded = 1248
     };
 
     struct PlayFabError
@@ -276,6 +278,6 @@ namespace PlayFab
         }
     };
 
-    typedef void(*ErrorCallback)(const PlayFabError& error, void* userData);
+    typedef std::function<void(const PlayFabError& error, void* userData)> ErrorCallback;
 }
 #endif

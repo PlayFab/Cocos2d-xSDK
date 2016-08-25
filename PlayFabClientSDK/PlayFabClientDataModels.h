@@ -3907,6 +3907,62 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayerTagsRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string Namespace;
+
+            GetPlayerTagsRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                Namespace()
+            {}
+
+            GetPlayerTagsRequest(const GetPlayerTagsRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                Namespace(src.Namespace)
+            {}
+
+            GetPlayerTagsRequest(const rapidjson::Value& obj) : GetPlayerTagsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerTagsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerTagsResult : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::list<std::string> Tags;
+
+            GetPlayerTagsResult() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                Tags()
+            {}
+
+            GetPlayerTagsResult(const GetPlayerTagsResult& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                Tags(src.Tags)
+            {}
+
+            GetPlayerTagsResult(const rapidjson::Value& obj) : GetPlayerTagsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerTagsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetPlayerTradesRequest : public PlayFabBaseModel
         {
             Boxed<TradeStatus> StatusFilter;

@@ -11,7 +11,7 @@ namespace PlayFab
     class PlayFabMatchmakerAPI
     {
     public:
-        template<typename ResType> using ProcessApiCallback = void(*)(const ResType& result, void* userData);
+        template<typename ResType> using ProcessApiCallback = std::function<void(const ResType& result, void* userData)>;
 
         // ------------ Generated API calls
         static void AuthUser(MatchmakerModels::AuthUserRequest& request, ProcessApiCallback<MatchmakerModels::AuthUserResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);

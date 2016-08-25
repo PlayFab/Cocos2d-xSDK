@@ -11,7 +11,7 @@ namespace PlayFab
     class PlayFabClientAPI
     {
     public:
-        template<typename ResType> using ProcessApiCallback = void(*)(const ResType& result, void* userData);
+        template<typename ResType> using ProcessApiCallback = std::function<void(const ResType& result, void* userData)>;
 
         // Public, Client-Specific
         static void MultiStepClientLogin(bool needsAttribution);
@@ -152,6 +152,7 @@ namespace PlayFab
         static void OpenTrade(ClientModels::OpenTradeRequest& request, ProcessApiCallback<ClientModels::OpenTradeResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AttributeInstall(ClientModels::AttributeInstallRequest& request, ProcessApiCallback<ClientModels::AttributeInstallResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerSegments(ProcessApiCallback<ClientModels::GetPlayerSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayerTags(ClientModels::GetPlayerTagsRequest& request, ProcessApiCallback<ClientModels::GetPlayerTagsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
@@ -284,6 +285,7 @@ namespace PlayFab
         static void OnOpenTradeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAttributeInstallResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayerTagsResult(int httpStatus, HttpRequest* request, void* userData);
 
         // Private, Client-Specific
         static std::string mUserSessionTicket;
