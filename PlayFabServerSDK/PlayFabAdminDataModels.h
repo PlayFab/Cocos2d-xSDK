@@ -2594,19 +2594,25 @@ namespace PlayFab
             std::string ItemId;
             std::map<std::string, Uint32> VirtualCurrencyPrices;
             std::map<std::string, Uint32> RealCurrencyPrices;
+            MultitypeVar CustomData;
+            OptionalUint32 DisplayPosition;
 
             StoreItem() :
                 PlayFabBaseModel(),
                 ItemId(),
                 VirtualCurrencyPrices(),
-                RealCurrencyPrices()
+                RealCurrencyPrices(),
+                CustomData(),
+                DisplayPosition()
             {}
 
             StoreItem(const StoreItem& src) :
                 PlayFabBaseModel(),
                 ItemId(src.ItemId),
                 VirtualCurrencyPrices(src.VirtualCurrencyPrices),
-                RealCurrencyPrices(src.RealCurrencyPrices)
+                RealCurrencyPrices(src.RealCurrencyPrices),
+                CustomData(src.CustomData),
+                DisplayPosition(src.DisplayPosition)
             {}
 
             StoreItem(const rapidjson::Value& obj) : StoreItem()
@@ -2620,18 +2626,74 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum SourceType
+        {
+            SourceTypeAdmin,
+            SourceTypeBackEnd,
+            SourceTypeGameClient,
+            SourceTypeGameServer,
+            SourceTypePartner,
+            SourceTypeStream
+        };
+
+        void writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer);
+        SourceType readSourceTypeFromValue(const rapidjson::Value& obj);
+
+        struct StoreMarketingModel : public PlayFabBaseModel
+        {
+            std::string DisplayName;
+            std::string Description;
+            MultitypeVar Metadata;
+
+            StoreMarketingModel() :
+                PlayFabBaseModel(),
+                DisplayName(),
+                Description(),
+                Metadata()
+            {}
+
+            StoreMarketingModel(const StoreMarketingModel& src) :
+                PlayFabBaseModel(),
+                DisplayName(src.DisplayName),
+                Description(src.Description),
+                Metadata(src.Metadata)
+            {}
+
+            StoreMarketingModel(const rapidjson::Value& obj) : StoreMarketingModel()
+            {
+                readFromValue(obj);
+            }
+
+            ~StoreMarketingModel();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetStoreItemsResult : public PlayFabBaseModel
         {
             std::list<StoreItem> Store;
+            Boxed<SourceType> Source;
+            std::string CatalogVersion;
+            std::string StoreId;
+            StoreMarketingModel* MarketingData;
 
             GetStoreItemsResult() :
                 PlayFabBaseModel(),
-                Store()
+                Store(),
+                Source(),
+                CatalogVersion(),
+                StoreId(),
+                MarketingData(NULL)
             {}
 
             GetStoreItemsResult(const GetStoreItemsResult& src) :
                 PlayFabBaseModel(),
-                Store(src.Store)
+                Store(src.Store),
+                Source(src.Source),
+                CatalogVersion(src.CatalogVersion),
+                StoreId(src.StoreId),
+                MarketingData(src.MarketingData ? new StoreMarketingModel(*src.MarketingData) : NULL)
             {}
 
             GetStoreItemsResult(const rapidjson::Value& obj) : GetStoreItemsResult()
@@ -5096,12 +5158,14 @@ namespace PlayFab
         {
             std::string CatalogVersion;
             std::string StoreId;
+            StoreMarketingModel* MarketingData;
             std::list<StoreItem> Store;
 
             UpdateStoreItemsRequest() :
                 PlayFabBaseModel(),
                 CatalogVersion(),
                 StoreId(),
+                MarketingData(NULL),
                 Store()
             {}
 
@@ -5109,6 +5173,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CatalogVersion(src.CatalogVersion),
                 StoreId(src.StoreId),
+                MarketingData(src.MarketingData ? new StoreMarketingModel(*src.MarketingData) : NULL),
                 Store(src.Store)
             {}
 

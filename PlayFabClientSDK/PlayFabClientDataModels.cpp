@@ -5707,6 +5707,8 @@ void StoreItem::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndObject();
      }
+    if (CustomData.notNull()) { writer.String("CustomData"); CustomData.writeJSON(writer); }
+    if (DisplayPosition.notNull()) { writer.String("DisplayPosition"); writer.Uint(DisplayPosition); }
 
     writer.EndObject();
 }
@@ -5727,12 +5729,80 @@ bool StoreItem::readFromValue(const rapidjson::Value& obj)
             RealCurrencyPrices[iter->name.GetString()] = iter->value.GetUint();
         }
     }
+    const Value::ConstMemberIterator CustomData_member = obj.FindMember("CustomData");
+    if (CustomData_member != obj.MemberEnd() && !CustomData_member->value.IsNull()) CustomData = MultitypeVar(CustomData_member->value);
+    const Value::ConstMemberIterator DisplayPosition_member = obj.FindMember("DisplayPosition");
+    if (DisplayPosition_member != obj.MemberEnd() && !DisplayPosition_member->value.IsNull()) DisplayPosition = DisplayPosition_member->value.GetUint();
+
+    return true;
+}
+void PlayFab::ClientModels::writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case SourceTypeAdmin: writer.String("Admin"); break;
+    case SourceTypeBackEnd: writer.String("BackEnd"); break;
+    case SourceTypeGameClient: writer.String("GameClient"); break;
+    case SourceTypeGameServer: writer.String("GameServer"); break;
+    case SourceTypePartner: writer.String("Partner"); break;
+    case SourceTypeStream: writer.String("Stream"); break;
+
+    }
+}
+
+SourceType PlayFab::ClientModels::readSourceTypeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, SourceType> _SourceTypeMap;
+    if (_SourceTypeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _SourceTypeMap["Admin"] = SourceTypeAdmin;
+        _SourceTypeMap["BackEnd"] = SourceTypeBackEnd;
+        _SourceTypeMap["GameClient"] = SourceTypeGameClient;
+        _SourceTypeMap["GameServer"] = SourceTypeGameServer;
+        _SourceTypeMap["Partner"] = SourceTypePartner;
+        _SourceTypeMap["Stream"] = SourceTypeStream;
+
+    }
+
+    auto output = _SourceTypeMap.find(obj.GetString());
+    if (output != _SourceTypeMap.end())
+        return output->second;
+
+    return SourceTypeAdmin; // Basically critical fail
+}
+
+StoreMarketingModel::~StoreMarketingModel()
+{
+
+}
+
+void StoreMarketingModel::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
+    if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
+    if (Metadata.notNull()) { writer.String("Metadata"); Metadata.writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool StoreMarketingModel::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
+    if (Metadata_member != obj.MemberEnd() && !Metadata_member->value.IsNull()) Metadata = MultitypeVar(Metadata_member->value);
 
     return true;
 }
 
 GetStoreItemsResult::~GetStoreItemsResult()
 {
+    if (MarketingData != NULL) delete MarketingData;
 
 }
 
@@ -5748,6 +5818,10 @@ void GetStoreItemsResult::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
+    if (Source.notNull()) { writer.String("Source"); writeSourceTypeEnumJSON(Source, writer); }
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+    if (StoreId.length() > 0) { writer.String("StoreId"); writer.String(StoreId.c_str()); }
+    if (MarketingData != NULL) { writer.String("MarketingData"); MarketingData->writeJSON(writer); }
 
     writer.EndObject();
 }
@@ -5761,6 +5835,14 @@ bool GetStoreItemsResult::readFromValue(const rapidjson::Value& obj)
             Store.push_back(StoreItem(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator Source_member = obj.FindMember("Source");
+    if (Source_member != obj.MemberEnd() && !Source_member->value.IsNull()) Source = readSourceTypeFromValue(Source_member->value);
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator StoreId_member = obj.FindMember("StoreId");
+    if (StoreId_member != obj.MemberEnd() && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
+    const Value::ConstMemberIterator MarketingData_member = obj.FindMember("MarketingData");
+    if (MarketingData_member != obj.MemberEnd() && !MarketingData_member->value.IsNull()) MarketingData = new StoreMarketingModel(MarketingData_member->value);
 
     return true;
 }
