@@ -719,6 +719,7 @@ namespace PlayFab
             bool IsStackable;
             bool IsTradable;
             std::string ItemImageUrl;
+            bool IsLimitedEdition;
 
             CatalogItem() :
                 PlayFabBaseModel(),
@@ -737,7 +738,8 @@ namespace PlayFab
                 CanBecomeCharacter(false),
                 IsStackable(false),
                 IsTradable(false),
-                ItemImageUrl()
+                ItemImageUrl(),
+                IsLimitedEdition(false)
             {}
 
             CatalogItem(const CatalogItem& src) :
@@ -757,7 +759,8 @@ namespace PlayFab
                 CanBecomeCharacter(src.CanBecomeCharacter),
                 IsStackable(src.IsStackable),
                 IsTradable(src.IsTradable),
-                ItemImageUrl(src.ItemImageUrl)
+                ItemImageUrl(src.ItemImageUrl),
+                IsLimitedEdition(src.IsLimitedEdition)
             {}
 
             CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -2765,6 +2768,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetCloudScriptUrlRequest : public PlayFabBaseModel
         {
             OptionalInt32 Version;
@@ -2793,6 +2797,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetCloudScriptUrlResult : public PlayFabBaseModel
         {
             std::string Url;
@@ -2874,6 +2879,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetFriendLeaderboardAroundCurrentUserRequest : public PlayFabBaseModel
         {
             std::string StatisticName;
@@ -2942,6 +2948,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetFriendLeaderboardAroundCurrentUserResult : public PlayFabBaseModel
         {
             std::list<PlayerLeaderboardEntry> Leaderboard;
@@ -3178,6 +3185,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetLeaderboardAroundCurrentUserRequest : public PlayFabBaseModel
         {
             std::string StatisticName;
@@ -3206,6 +3214,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetLeaderboardAroundCurrentUserResult : public PlayFabBaseModel
         {
             std::list<PlayerLeaderboardEntry> Leaderboard;
@@ -3901,6 +3910,62 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayerTagsRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string Namespace;
+
+            GetPlayerTagsRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                Namespace()
+            {}
+
+            GetPlayerTagsRequest(const GetPlayerTagsRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                Namespace(src.Namespace)
+            {}
+
+            GetPlayerTagsRequest(const rapidjson::Value& obj) : GetPlayerTagsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerTagsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerTagsResult : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::list<std::string> Tags;
+
+            GetPlayerTagsResult() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                Tags()
+            {}
+
+            GetPlayerTagsResult(const GetPlayerTagsResult& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                Tags(src.Tags)
+            {}
+
+            GetPlayerTagsResult(const rapidjson::Value& obj) : GetPlayerTagsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerTagsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetPlayerTradesRequest : public PlayFabBaseModel
         {
             Boxed<TradeStatus> StatusFilter;
@@ -4262,6 +4327,7 @@ namespace PlayFab
 
         struct GetPlayFabIDsFromSteamIDsRequest : public PlayFabBaseModel
         {
+            // Deprecated - Use 'SteamStringIDs' instead
             std::list<Uint64> SteamIDs;
             std::list<std::string> SteamStringIDs;
 
@@ -4290,6 +4356,7 @@ namespace PlayFab
 
         struct SteamPlayFabIdPair : public PlayFabBaseModel
         {
+            // Deprecated - Use 'SteamStringId' instead
             Uint64 SteamId;
             std::string SteamStringId;
             std::string PlayFabId;
@@ -4663,19 +4730,25 @@ namespace PlayFab
             std::string ItemId;
             std::map<std::string, Uint32> VirtualCurrencyPrices;
             std::map<std::string, Uint32> RealCurrencyPrices;
+            MultitypeVar CustomData;
+            OptionalUint32 DisplayPosition;
 
             StoreItem() :
                 PlayFabBaseModel(),
                 ItemId(),
                 VirtualCurrencyPrices(),
-                RealCurrencyPrices()
+                RealCurrencyPrices(),
+                CustomData(),
+                DisplayPosition()
             {}
 
             StoreItem(const StoreItem& src) :
                 PlayFabBaseModel(),
                 ItemId(src.ItemId),
                 VirtualCurrencyPrices(src.VirtualCurrencyPrices),
-                RealCurrencyPrices(src.RealCurrencyPrices)
+                RealCurrencyPrices(src.RealCurrencyPrices),
+                CustomData(src.CustomData),
+                DisplayPosition(src.DisplayPosition)
             {}
 
             StoreItem(const rapidjson::Value& obj) : StoreItem()
@@ -4689,18 +4762,74 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum SourceType
+        {
+            SourceTypeAdmin,
+            SourceTypeBackEnd,
+            SourceTypeGameClient,
+            SourceTypeGameServer,
+            SourceTypePartner,
+            SourceTypeStream
+        };
+
+        void writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer);
+        SourceType readSourceTypeFromValue(const rapidjson::Value& obj);
+
+        struct StoreMarketingModel : public PlayFabBaseModel
+        {
+            std::string DisplayName;
+            std::string Description;
+            MultitypeVar Metadata;
+
+            StoreMarketingModel() :
+                PlayFabBaseModel(),
+                DisplayName(),
+                Description(),
+                Metadata()
+            {}
+
+            StoreMarketingModel(const StoreMarketingModel& src) :
+                PlayFabBaseModel(),
+                DisplayName(src.DisplayName),
+                Description(src.Description),
+                Metadata(src.Metadata)
+            {}
+
+            StoreMarketingModel(const rapidjson::Value& obj) : StoreMarketingModel()
+            {
+                readFromValue(obj);
+            }
+
+            ~StoreMarketingModel();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetStoreItemsResult : public PlayFabBaseModel
         {
             std::list<StoreItem> Store;
+            Boxed<SourceType> Source;
+            std::string CatalogVersion;
+            std::string StoreId;
+            StoreMarketingModel* MarketingData;
 
             GetStoreItemsResult() :
                 PlayFabBaseModel(),
-                Store()
+                Store(),
+                Source(),
+                CatalogVersion(),
+                StoreId(),
+                MarketingData(NULL)
             {}
 
             GetStoreItemsResult(const GetStoreItemsResult& src) :
                 PlayFabBaseModel(),
-                Store(src.Store)
+                Store(src.Store),
+                Source(src.Source),
+                CatalogVersion(src.CatalogVersion),
+                StoreId(src.StoreId),
+                MarketingData(src.MarketingData ? new StoreMarketingModel(*src.MarketingData) : NULL)
             {}
 
             GetStoreItemsResult(const rapidjson::Value& obj) : GetStoreItemsResult()
@@ -4901,6 +5030,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetUserCombinedInfoRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -4956,6 +5086,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetUserCombinedInfoResult : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -5117,6 +5248,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetUserStatisticsRequest : public PlayFabBaseModel
         {
 
@@ -5139,6 +5271,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct GetUserStatisticsResult : public PlayFabBaseModel
         {
             std::map<std::string, Int32> UserStatistics;
@@ -5748,6 +5881,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct LogEventRequest : public PlayFabBaseModel
         {
             OptionalTime Timestamp;
@@ -5782,6 +5916,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct LogEventResult : public PlayFabBaseModel
         {
 
@@ -6050,6 +6185,7 @@ namespace PlayFab
             std::string TitleId;
             std::string AccessToken;
             OptionalBool CreateAccount;
+            // Deprecated - Do not use
             std::string PublisherId;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
@@ -6271,6 +6407,7 @@ namespace PlayFab
             std::string CharacterId;
             OptionalBool StartNewIfNoneFound;
             CollectionFilter* TagFilter;
+            // Deprecated - Do not use
             OptionalBool EnableQueue;
 
             MatchmakeRequest() :
@@ -6778,6 +6915,7 @@ namespace PlayFab
             std::string Password;
             OptionalBool RequireBothUsernameAndEmail;
             std::string DisplayName;
+            // Deprecated - Do not use
             std::string Origination;
 
             RegisterPlayFabUserRequest() :
@@ -7094,6 +7232,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct RunCloudScriptRequest : public PlayFabBaseModel
         {
             std::string ActionId;
@@ -7125,6 +7264,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct RunCloudScriptResult : public PlayFabBaseModel
         {
             std::string ActionId;
@@ -7172,6 +7312,7 @@ namespace PlayFab
         {
             std::string Email;
             std::string TitleId;
+            // Deprecated - Do not use
             std::string PublisherId;
 
             SendAccountRecoveryEmailRequest() :
@@ -8247,6 +8388,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct UpdateUserStatisticsRequest : public PlayFabBaseModel
         {
             std::map<std::string, Int32> UserStatistics;
@@ -8272,6 +8414,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct UpdateUserStatisticsResult : public PlayFabBaseModel
         {
 

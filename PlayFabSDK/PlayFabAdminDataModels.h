@@ -94,6 +94,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct AddPlayerTagRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string TagName;
+
+            AddPlayerTagRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                TagName()
+            {}
+
+            AddPlayerTagRequest(const AddPlayerTagRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                TagName(src.TagName)
+            {}
+
+            AddPlayerTagRequest(const rapidjson::Value& obj) : AddPlayerTagRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~AddPlayerTagRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct AddPlayerTagResult : public PlayFabBaseModel
+        {
+
+            AddPlayerTagResult() :
+                PlayFabBaseModel()
+            {}
+
+            AddPlayerTagResult(const AddPlayerTagResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            AddPlayerTagResult(const rapidjson::Value& obj) : AddPlayerTagResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~AddPlayerTagResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum Region
         {
             RegionUSCentral,
@@ -577,6 +627,7 @@ namespace PlayFab
             bool IsStackable;
             bool IsTradable;
             std::string ItemImageUrl;
+            bool IsLimitedEdition;
 
             CatalogItem() :
                 PlayFabBaseModel(),
@@ -595,7 +646,8 @@ namespace PlayFab
                 CanBecomeCharacter(false),
                 IsStackable(false),
                 IsTradable(false),
-                ItemImageUrl()
+                ItemImageUrl(),
+                IsLimitedEdition(false)
             {}
 
             CatalogItem(const CatalogItem& src) :
@@ -615,7 +667,8 @@ namespace PlayFab
                 CanBecomeCharacter(src.CanBecomeCharacter),
                 IsStackable(src.IsStackable),
                 IsTradable(src.IsTradable),
-                ItemImageUrl(src.ItemImageUrl)
+                ItemImageUrl(src.ItemImageUrl),
+                IsLimitedEdition(src.IsLimitedEdition)
             {}
 
             CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -2160,6 +2213,62 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayerTagsRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string Namespace;
+
+            GetPlayerTagsRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                Namespace()
+            {}
+
+            GetPlayerTagsRequest(const GetPlayerTagsRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                Namespace(src.Namespace)
+            {}
+
+            GetPlayerTagsRequest(const rapidjson::Value& obj) : GetPlayerTagsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerTagsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerTagsResult : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::list<std::string> Tags;
+
+            GetPlayerTagsResult() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                Tags()
+            {}
+
+            GetPlayerTagsResult(const GetPlayerTagsResult& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                Tags(src.Tags)
+            {}
+
+            GetPlayerTagsResult(const rapidjson::Value& obj) : GetPlayerTagsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerTagsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetPublisherDataRequest : public PlayFabBaseModel
         {
             std::list<std::string> Keys;
@@ -2488,19 +2597,25 @@ namespace PlayFab
             std::string ItemId;
             std::map<std::string, Uint32> VirtualCurrencyPrices;
             std::map<std::string, Uint32> RealCurrencyPrices;
+            MultitypeVar CustomData;
+            OptionalUint32 DisplayPosition;
 
             StoreItem() :
                 PlayFabBaseModel(),
                 ItemId(),
                 VirtualCurrencyPrices(),
-                RealCurrencyPrices()
+                RealCurrencyPrices(),
+                CustomData(),
+                DisplayPosition()
             {}
 
             StoreItem(const StoreItem& src) :
                 PlayFabBaseModel(),
                 ItemId(src.ItemId),
                 VirtualCurrencyPrices(src.VirtualCurrencyPrices),
-                RealCurrencyPrices(src.RealCurrencyPrices)
+                RealCurrencyPrices(src.RealCurrencyPrices),
+                CustomData(src.CustomData),
+                DisplayPosition(src.DisplayPosition)
             {}
 
             StoreItem(const rapidjson::Value& obj) : StoreItem()
@@ -2514,18 +2629,74 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum SourceType
+        {
+            SourceTypeAdmin,
+            SourceTypeBackEnd,
+            SourceTypeGameClient,
+            SourceTypeGameServer,
+            SourceTypePartner,
+            SourceTypeStream
+        };
+
+        void writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer);
+        SourceType readSourceTypeFromValue(const rapidjson::Value& obj);
+
+        struct StoreMarketingModel : public PlayFabBaseModel
+        {
+            std::string DisplayName;
+            std::string Description;
+            MultitypeVar Metadata;
+
+            StoreMarketingModel() :
+                PlayFabBaseModel(),
+                DisplayName(),
+                Description(),
+                Metadata()
+            {}
+
+            StoreMarketingModel(const StoreMarketingModel& src) :
+                PlayFabBaseModel(),
+                DisplayName(src.DisplayName),
+                Description(src.Description),
+                Metadata(src.Metadata)
+            {}
+
+            StoreMarketingModel(const rapidjson::Value& obj) : StoreMarketingModel()
+            {
+                readFromValue(obj);
+            }
+
+            ~StoreMarketingModel();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetStoreItemsResult : public PlayFabBaseModel
         {
             std::list<StoreItem> Store;
+            Boxed<SourceType> Source;
+            std::string CatalogVersion;
+            std::string StoreId;
+            StoreMarketingModel* MarketingData;
 
             GetStoreItemsResult() :
                 PlayFabBaseModel(),
-                Store()
+                Store(),
+                Source(),
+                CatalogVersion(),
+                StoreId(),
+                MarketingData(NULL)
             {}
 
             GetStoreItemsResult(const GetStoreItemsResult& src) :
                 PlayFabBaseModel(),
-                Store(src.Store)
+                Store(src.Store),
+                Source(src.Source),
+                CatalogVersion(src.CatalogVersion),
+                StoreId(src.StoreId),
+                MarketingData(src.MarketingData ? new StoreMarketingModel(*src.MarketingData) : NULL)
             {}
 
             GetStoreItemsResult(const rapidjson::Value& obj) : GetStoreItemsResult()
@@ -3956,6 +4127,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct RemovePlayerTagRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string TagName;
+
+            RemovePlayerTagRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                TagName()
+            {}
+
+            RemovePlayerTagRequest(const RemovePlayerTagRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                TagName(src.TagName)
+            {}
+
+            RemovePlayerTagRequest(const rapidjson::Value& obj) : RemovePlayerTagRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RemovePlayerTagRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RemovePlayerTagResult : public PlayFabBaseModel
+        {
+
+            RemovePlayerTagResult() :
+                PlayFabBaseModel()
+            {}
+
+            RemovePlayerTagResult(const RemovePlayerTagResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            RemovePlayerTagResult(const rapidjson::Value& obj) : RemovePlayerTagResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RemovePlayerTagResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct RemoveServerBuildRequest : public PlayFabBaseModel
         {
             std::string BuildId;
@@ -4769,6 +4990,7 @@ namespace PlayFab
 
         struct UpdateCloudScriptRequest : public PlayFabBaseModel
         {
+            // Deprecated - Do not use
             OptionalInt32 Version;
             std::list<CloudScriptFile> Files;
             bool Publish;
@@ -4939,12 +5161,14 @@ namespace PlayFab
         {
             std::string CatalogVersion;
             std::string StoreId;
+            StoreMarketingModel* MarketingData;
             std::list<StoreItem> Store;
 
             UpdateStoreItemsRequest() :
                 PlayFabBaseModel(),
                 CatalogVersion(),
                 StoreId(),
+                MarketingData(NULL),
                 Store()
             {}
 
@@ -4952,6 +5176,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CatalogVersion(src.CatalogVersion),
                 StoreId(src.StoreId),
+                MarketingData(src.MarketingData ? new StoreMarketingModel(*src.MarketingData) : NULL),
                 Store(src.Store)
             {}
 
