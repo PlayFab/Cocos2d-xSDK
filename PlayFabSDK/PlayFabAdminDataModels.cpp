@@ -774,6 +774,7 @@ void CatalogItem::writeJSON(PFStringJsonWriter& writer)
     writer.String("IsStackable"); writer.Bool(IsStackable);
     writer.String("IsTradable"); writer.Bool(IsTradable);
     if (ItemImageUrl.length() > 0) { writer.String("ItemImageUrl"); writer.String(ItemImageUrl.c_str()); }
+    writer.String("IsLimitedEdition"); writer.Bool(IsLimitedEdition);
 
     writer.EndObject();
 }
@@ -825,6 +826,8 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
     if (IsTradable_member != obj.MemberEnd() && !IsTradable_member->value.IsNull()) IsTradable = IsTradable_member->value.GetBool();
     const Value::ConstMemberIterator ItemImageUrl_member = obj.FindMember("ItemImageUrl");
     if (ItemImageUrl_member != obj.MemberEnd() && !ItemImageUrl_member->value.IsNull()) ItemImageUrl = ItemImageUrl_member->value.GetString();
+    const Value::ConstMemberIterator IsLimitedEdition_member = obj.FindMember("IsLimitedEdition");
+    if (IsLimitedEdition_member != obj.MemberEnd() && !IsLimitedEdition_member->value.IsNull()) IsLimitedEdition = IsLimitedEdition_member->value.GetBool();
 
     return true;
 }

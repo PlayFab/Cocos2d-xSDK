@@ -627,6 +627,7 @@ namespace PlayFab
             bool IsStackable;
             bool IsTradable;
             std::string ItemImageUrl;
+            bool IsLimitedEdition;
 
             CatalogItem() :
                 PlayFabBaseModel(),
@@ -645,7 +646,8 @@ namespace PlayFab
                 CanBecomeCharacter(false),
                 IsStackable(false),
                 IsTradable(false),
-                ItemImageUrl()
+                ItemImageUrl(),
+                IsLimitedEdition(false)
             {}
 
             CatalogItem(const CatalogItem& src) :
@@ -665,7 +667,8 @@ namespace PlayFab
                 CanBecomeCharacter(src.CanBecomeCharacter),
                 IsStackable(src.IsStackable),
                 IsTradable(src.IsTradable),
-                ItemImageUrl(src.ItemImageUrl)
+                ItemImageUrl(src.ItemImageUrl),
+                IsLimitedEdition(src.IsLimitedEdition)
             {}
 
             CatalogItem(const rapidjson::Value& obj) : CatalogItem()
