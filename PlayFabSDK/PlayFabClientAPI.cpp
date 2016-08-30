@@ -25,7 +25,8 @@ void PlayFabClientAPI::GetPhotonAuthenticationToken(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPhotonAuthenticationTokenResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -45,8 +46,7 @@ void PlayFabClientAPI::OnGetPhotonAuthenticationTokenResult(int httpStatus, Http
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPhotonAuthenticationTokenResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPhotonAuthenticationTokenResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPhotonAuthenticationTokenResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -74,7 +74,8 @@ void PlayFabClientAPI::LoginWithAndroidDeviceID(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -97,8 +98,7 @@ void PlayFabClientAPI::OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -126,7 +126,8 @@ void PlayFabClientAPI::LoginWithCustomID(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -149,8 +150,7 @@ void PlayFabClientAPI::OnLoginWithCustomIDResult(int httpStatus, HttpRequest* re
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -178,7 +178,8 @@ void PlayFabClientAPI::LoginWithEmailAddress(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -201,8 +202,7 @@ void PlayFabClientAPI::OnLoginWithEmailAddressResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -230,7 +230,8 @@ void PlayFabClientAPI::LoginWithFacebook(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -253,8 +254,7 @@ void PlayFabClientAPI::OnLoginWithFacebookResult(int httpStatus, HttpRequest* re
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -282,7 +282,8 @@ void PlayFabClientAPI::LoginWithGameCenter(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -305,8 +306,7 @@ void PlayFabClientAPI::OnLoginWithGameCenterResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -334,7 +334,8 @@ void PlayFabClientAPI::LoginWithGoogleAccount(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -357,8 +358,7 @@ void PlayFabClientAPI::OnLoginWithGoogleAccountResult(int httpStatus, HttpReques
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -386,7 +386,8 @@ void PlayFabClientAPI::LoginWithIOSDeviceID(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -409,8 +410,7 @@ void PlayFabClientAPI::OnLoginWithIOSDeviceIDResult(int httpStatus, HttpRequest*
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -438,7 +438,8 @@ void PlayFabClientAPI::LoginWithKongregate(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -461,8 +462,7 @@ void PlayFabClientAPI::OnLoginWithKongregateResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -490,7 +490,8 @@ void PlayFabClientAPI::LoginWithPlayFab(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -513,8 +514,7 @@ void PlayFabClientAPI::OnLoginWithPlayFabResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -542,7 +542,8 @@ void PlayFabClientAPI::LoginWithSteam(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -565,8 +566,7 @@ void PlayFabClientAPI::OnLoginWithSteamResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -594,7 +594,8 @@ void PlayFabClientAPI::LoginWithTwitch(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -617,8 +618,7 @@ void PlayFabClientAPI::OnLoginWithTwitchResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LoginResult> successCallback = reinterpret_cast<ProcessApiCallback<LoginResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -646,7 +646,8 @@ void PlayFabClientAPI::RegisterPlayFabUser(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RegisterPlayFabUserResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -669,8 +670,7 @@ void PlayFabClientAPI::OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<RegisterPlayFabUserResult> successCallback = reinterpret_cast<ProcessApiCallback<RegisterPlayFabUserResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<RegisterPlayFabUserResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -697,7 +697,8 @@ void PlayFabClientAPI::AddGenericID(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AddGenericIDResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -717,8 +718,7 @@ void PlayFabClientAPI::OnAddGenericIDResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<AddGenericIDResult> successCallback = reinterpret_cast<ProcessApiCallback<AddGenericIDResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<AddGenericIDResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -745,7 +745,8 @@ void PlayFabClientAPI::AddUsernamePassword(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AddUsernamePasswordResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -765,8 +766,7 @@ void PlayFabClientAPI::OnAddUsernamePasswordResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<AddUsernamePasswordResult> successCallback = reinterpret_cast<ProcessApiCallback<AddUsernamePasswordResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<AddUsernamePasswordResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -793,7 +793,8 @@ void PlayFabClientAPI::GetAccountInfo(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetAccountInfoResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -813,8 +814,7 @@ void PlayFabClientAPI::OnGetAccountInfoResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetAccountInfoResult> successCallback = reinterpret_cast<ProcessApiCallback<GetAccountInfoResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetAccountInfoResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -841,7 +841,8 @@ void PlayFabClientAPI::GetPlayerCombinedInfo(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayerCombinedInfoResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -861,8 +862,7 @@ void PlayFabClientAPI::OnGetPlayerCombinedInfoResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayerCombinedInfoResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayerCombinedInfoResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayerCombinedInfoResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -889,7 +889,8 @@ void PlayFabClientAPI::GetPlayFabIDsFromFacebookIDs(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayFabIDsFromFacebookIDsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -909,8 +910,7 @@ void PlayFabClientAPI::OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, Http
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayFabIDsFromFacebookIDsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayFabIDsFromFacebookIDsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayFabIDsFromFacebookIDsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -937,7 +937,8 @@ void PlayFabClientAPI::GetPlayFabIDsFromGameCenterIDs(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayFabIDsFromGameCenterIDsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -957,8 +958,7 @@ void PlayFabClientAPI::OnGetPlayFabIDsFromGameCenterIDsResult(int httpStatus, Ht
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayFabIDsFromGameCenterIDsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayFabIDsFromGameCenterIDsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayFabIDsFromGameCenterIDsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -985,7 +985,8 @@ void PlayFabClientAPI::GetPlayFabIDsFromGenericIDs(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayFabIDsFromGenericIDsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1005,8 +1006,7 @@ void PlayFabClientAPI::OnGetPlayFabIDsFromGenericIDsResult(int httpStatus, HttpR
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayFabIDsFromGenericIDsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayFabIDsFromGenericIDsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayFabIDsFromGenericIDsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1033,7 +1033,8 @@ void PlayFabClientAPI::GetPlayFabIDsFromGoogleIDs(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayFabIDsFromGoogleIDsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1053,8 +1054,7 @@ void PlayFabClientAPI::OnGetPlayFabIDsFromGoogleIDsResult(int httpStatus, HttpRe
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayFabIDsFromGoogleIDsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayFabIDsFromGoogleIDsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayFabIDsFromGoogleIDsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1081,7 +1081,8 @@ void PlayFabClientAPI::GetPlayFabIDsFromKongregateIDs(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayFabIDsFromKongregateIDsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1101,8 +1102,7 @@ void PlayFabClientAPI::OnGetPlayFabIDsFromKongregateIDsResult(int httpStatus, Ht
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayFabIDsFromKongregateIDsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayFabIDsFromKongregateIDsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayFabIDsFromKongregateIDsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1129,7 +1129,8 @@ void PlayFabClientAPI::GetPlayFabIDsFromSteamIDs(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayFabIDsFromSteamIDsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1149,8 +1150,7 @@ void PlayFabClientAPI::OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpReq
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayFabIDsFromSteamIDsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayFabIDsFromSteamIDsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayFabIDsFromSteamIDsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1177,7 +1177,8 @@ void PlayFabClientAPI::GetPlayFabIDsFromTwitchIDs(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayFabIDsFromTwitchIDsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1197,8 +1198,7 @@ void PlayFabClientAPI::OnGetPlayFabIDsFromTwitchIDsResult(int httpStatus, HttpRe
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayFabIDsFromTwitchIDsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayFabIDsFromTwitchIDsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayFabIDsFromTwitchIDsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1225,7 +1225,8 @@ void PlayFabClientAPI::GetUserCombinedInfo(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetUserCombinedInfoResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1245,8 +1246,7 @@ void PlayFabClientAPI::OnGetUserCombinedInfoResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetUserCombinedInfoResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserCombinedInfoResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetUserCombinedInfoResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1273,7 +1273,8 @@ void PlayFabClientAPI::LinkAndroidDeviceID(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkAndroidDeviceIDResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1293,8 +1294,7 @@ void PlayFabClientAPI::OnLinkAndroidDeviceIDResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LinkAndroidDeviceIDResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkAndroidDeviceIDResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LinkAndroidDeviceIDResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1321,7 +1321,8 @@ void PlayFabClientAPI::LinkCustomID(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkCustomIDResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1341,8 +1342,7 @@ void PlayFabClientAPI::OnLinkCustomIDResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LinkCustomIDResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkCustomIDResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LinkCustomIDResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1369,7 +1369,8 @@ void PlayFabClientAPI::LinkFacebookAccount(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkFacebookAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1389,8 +1390,7 @@ void PlayFabClientAPI::OnLinkFacebookAccountResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LinkFacebookAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkFacebookAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LinkFacebookAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1417,7 +1417,8 @@ void PlayFabClientAPI::LinkGameCenterAccount(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkGameCenterAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1437,8 +1438,7 @@ void PlayFabClientAPI::OnLinkGameCenterAccountResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LinkGameCenterAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkGameCenterAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LinkGameCenterAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1465,7 +1465,8 @@ void PlayFabClientAPI::LinkGoogleAccount(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkGoogleAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1485,8 +1486,7 @@ void PlayFabClientAPI::OnLinkGoogleAccountResult(int httpStatus, HttpRequest* re
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LinkGoogleAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkGoogleAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LinkGoogleAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1513,7 +1513,8 @@ void PlayFabClientAPI::LinkIOSDeviceID(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkIOSDeviceIDResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1533,8 +1534,7 @@ void PlayFabClientAPI::OnLinkIOSDeviceIDResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LinkIOSDeviceIDResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkIOSDeviceIDResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LinkIOSDeviceIDResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1561,7 +1561,8 @@ void PlayFabClientAPI::LinkKongregate(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkKongregateAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1581,8 +1582,7 @@ void PlayFabClientAPI::OnLinkKongregateResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LinkKongregateAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkKongregateAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LinkKongregateAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1609,7 +1609,8 @@ void PlayFabClientAPI::LinkSteamAccount(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkSteamAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1629,8 +1630,7 @@ void PlayFabClientAPI::OnLinkSteamAccountResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LinkSteamAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkSteamAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LinkSteamAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1657,7 +1657,8 @@ void PlayFabClientAPI::LinkTwitch(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkTwitchAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1677,8 +1678,7 @@ void PlayFabClientAPI::OnLinkTwitchResult(int httpStatus, HttpRequest* request, 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LinkTwitchAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<LinkTwitchAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LinkTwitchAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1705,7 +1705,8 @@ void PlayFabClientAPI::RemoveGenericID(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RemoveGenericIDResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1725,8 +1726,7 @@ void PlayFabClientAPI::OnRemoveGenericIDResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<RemoveGenericIDResult> successCallback = reinterpret_cast<ProcessApiCallback<RemoveGenericIDResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<RemoveGenericIDResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1753,7 +1753,8 @@ void PlayFabClientAPI::ReportPlayer(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ReportPlayerClientResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1773,8 +1774,7 @@ void PlayFabClientAPI::OnReportPlayerResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<ReportPlayerClientResult> successCallback = reinterpret_cast<ProcessApiCallback<ReportPlayerClientResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<ReportPlayerClientResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1801,7 +1801,8 @@ void PlayFabClientAPI::SendAccountRecoveryEmail(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<SendAccountRecoveryEmailResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1821,8 +1822,7 @@ void PlayFabClientAPI::OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<SendAccountRecoveryEmailResult> successCallback = reinterpret_cast<ProcessApiCallback<SendAccountRecoveryEmailResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<SendAccountRecoveryEmailResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1849,7 +1849,8 @@ void PlayFabClientAPI::UnlinkAndroidDeviceID(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkAndroidDeviceIDResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1869,8 +1870,7 @@ void PlayFabClientAPI::OnUnlinkAndroidDeviceIDResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UnlinkAndroidDeviceIDResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlinkAndroidDeviceIDResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UnlinkAndroidDeviceIDResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1897,7 +1897,8 @@ void PlayFabClientAPI::UnlinkCustomID(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkCustomIDResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1917,8 +1918,7 @@ void PlayFabClientAPI::OnUnlinkCustomIDResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UnlinkCustomIDResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlinkCustomIDResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UnlinkCustomIDResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1945,7 +1945,8 @@ void PlayFabClientAPI::UnlinkFacebookAccount(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkFacebookAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1965,8 +1966,7 @@ void PlayFabClientAPI::OnUnlinkFacebookAccountResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UnlinkFacebookAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlinkFacebookAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UnlinkFacebookAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1993,7 +1993,8 @@ void PlayFabClientAPI::UnlinkGameCenterAccount(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkGameCenterAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2013,8 +2014,7 @@ void PlayFabClientAPI::OnUnlinkGameCenterAccountResult(int httpStatus, HttpReque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UnlinkGameCenterAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlinkGameCenterAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UnlinkGameCenterAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2041,7 +2041,8 @@ void PlayFabClientAPI::UnlinkGoogleAccount(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkGoogleAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2061,8 +2062,7 @@ void PlayFabClientAPI::OnUnlinkGoogleAccountResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UnlinkGoogleAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlinkGoogleAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UnlinkGoogleAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2089,7 +2089,8 @@ void PlayFabClientAPI::UnlinkIOSDeviceID(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkIOSDeviceIDResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2109,8 +2110,7 @@ void PlayFabClientAPI::OnUnlinkIOSDeviceIDResult(int httpStatus, HttpRequest* re
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UnlinkIOSDeviceIDResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlinkIOSDeviceIDResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UnlinkIOSDeviceIDResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2137,7 +2137,8 @@ void PlayFabClientAPI::UnlinkKongregate(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkKongregateAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2157,8 +2158,7 @@ void PlayFabClientAPI::OnUnlinkKongregateResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UnlinkKongregateAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlinkKongregateAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UnlinkKongregateAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2185,7 +2185,8 @@ void PlayFabClientAPI::UnlinkSteamAccount(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkSteamAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2205,8 +2206,7 @@ void PlayFabClientAPI::OnUnlinkSteamAccountResult(int httpStatus, HttpRequest* r
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UnlinkSteamAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlinkSteamAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UnlinkSteamAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2233,7 +2233,8 @@ void PlayFabClientAPI::UnlinkTwitch(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkTwitchAccountResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2253,8 +2254,7 @@ void PlayFabClientAPI::OnUnlinkTwitchResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UnlinkTwitchAccountResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlinkTwitchAccountResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UnlinkTwitchAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2281,7 +2281,8 @@ void PlayFabClientAPI::UpdateUserTitleDisplayName(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UpdateUserTitleDisplayNameResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2301,8 +2302,7 @@ void PlayFabClientAPI::OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpRe
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UpdateUserTitleDisplayNameResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserTitleDisplayNameResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UpdateUserTitleDisplayNameResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2329,7 +2329,8 @@ void PlayFabClientAPI::GetFriendLeaderboard(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetLeaderboardResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2349,8 +2350,7 @@ void PlayFabClientAPI::OnGetFriendLeaderboardResult(int httpStatus, HttpRequest*
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetLeaderboardResult> successCallback = reinterpret_cast<ProcessApiCallback<GetLeaderboardResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetLeaderboardResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2377,7 +2377,8 @@ void PlayFabClientAPI::GetFriendLeaderboardAroundCurrentUser(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetFriendLeaderboardAroundCurrentUserResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2397,8 +2398,7 @@ void PlayFabClientAPI::OnGetFriendLeaderboardAroundCurrentUserResult(int httpSta
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetFriendLeaderboardAroundCurrentUserResult> successCallback = reinterpret_cast<ProcessApiCallback<GetFriendLeaderboardAroundCurrentUserResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetFriendLeaderboardAroundCurrentUserResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2425,7 +2425,8 @@ void PlayFabClientAPI::GetFriendLeaderboardAroundPlayer(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetFriendLeaderboardAroundPlayerResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2445,8 +2446,7 @@ void PlayFabClientAPI::OnGetFriendLeaderboardAroundPlayerResult(int httpStatus, 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetFriendLeaderboardAroundPlayerResult> successCallback = reinterpret_cast<ProcessApiCallback<GetFriendLeaderboardAroundPlayerResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetFriendLeaderboardAroundPlayerResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2473,7 +2473,8 @@ void PlayFabClientAPI::GetLeaderboard(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetLeaderboardResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2493,8 +2494,7 @@ void PlayFabClientAPI::OnGetLeaderboardResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetLeaderboardResult> successCallback = reinterpret_cast<ProcessApiCallback<GetLeaderboardResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetLeaderboardResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2521,7 +2521,8 @@ void PlayFabClientAPI::GetLeaderboardAroundCurrentUser(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetLeaderboardAroundCurrentUserResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2541,8 +2542,7 @@ void PlayFabClientAPI::OnGetLeaderboardAroundCurrentUserResult(int httpStatus, H
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetLeaderboardAroundCurrentUserResult> successCallback = reinterpret_cast<ProcessApiCallback<GetLeaderboardAroundCurrentUserResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetLeaderboardAroundCurrentUserResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2569,7 +2569,8 @@ void PlayFabClientAPI::GetLeaderboardAroundPlayer(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetLeaderboardAroundPlayerResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2589,8 +2590,7 @@ void PlayFabClientAPI::OnGetLeaderboardAroundPlayerResult(int httpStatus, HttpRe
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetLeaderboardAroundPlayerResult> successCallback = reinterpret_cast<ProcessApiCallback<GetLeaderboardAroundPlayerResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetLeaderboardAroundPlayerResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2617,7 +2617,8 @@ void PlayFabClientAPI::GetPlayerStatistics(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayerStatisticsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2637,8 +2638,7 @@ void PlayFabClientAPI::OnGetPlayerStatisticsResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayerStatisticsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayerStatisticsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayerStatisticsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2665,7 +2665,8 @@ void PlayFabClientAPI::GetPlayerStatisticVersions(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayerStatisticVersionsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2685,8 +2686,7 @@ void PlayFabClientAPI::OnGetPlayerStatisticVersionsResult(int httpStatus, HttpRe
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayerStatisticVersionsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayerStatisticVersionsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayerStatisticVersionsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2713,7 +2713,8 @@ void PlayFabClientAPI::GetUserData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetUserDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2733,8 +2734,7 @@ void PlayFabClientAPI::OnGetUserDataResult(int httpStatus, HttpRequest* request,
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetUserDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2761,7 +2761,8 @@ void PlayFabClientAPI::GetUserPublisherData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetUserDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2781,8 +2782,7 @@ void PlayFabClientAPI::OnGetUserPublisherDataResult(int httpStatus, HttpRequest*
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetUserDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2809,7 +2809,8 @@ void PlayFabClientAPI::GetUserPublisherReadOnlyData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetUserDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2829,8 +2830,7 @@ void PlayFabClientAPI::OnGetUserPublisherReadOnlyDataResult(int httpStatus, Http
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetUserDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2857,7 +2857,8 @@ void PlayFabClientAPI::GetUserReadOnlyData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetUserDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2877,8 +2878,7 @@ void PlayFabClientAPI::OnGetUserReadOnlyDataResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetUserDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2905,7 +2905,8 @@ void PlayFabClientAPI::GetUserStatistics(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetUserStatisticsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2925,8 +2926,7 @@ void PlayFabClientAPI::OnGetUserStatisticsResult(int httpStatus, HttpRequest* re
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetUserStatisticsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserStatisticsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetUserStatisticsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2953,7 +2953,8 @@ void PlayFabClientAPI::UpdatePlayerStatistics(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UpdatePlayerStatisticsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -2973,8 +2974,7 @@ void PlayFabClientAPI::OnUpdatePlayerStatisticsResult(int httpStatus, HttpReques
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UpdatePlayerStatisticsResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdatePlayerStatisticsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UpdatePlayerStatisticsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3001,7 +3001,8 @@ void PlayFabClientAPI::UpdateUserData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UpdateUserDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3021,8 +3022,7 @@ void PlayFabClientAPI::OnUpdateUserDataResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UpdateUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UpdateUserDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3049,7 +3049,8 @@ void PlayFabClientAPI::UpdateUserPublisherData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UpdateUserDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3069,8 +3070,7 @@ void PlayFabClientAPI::OnUpdateUserPublisherDataResult(int httpStatus, HttpReque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UpdateUserDataResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UpdateUserDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3097,7 +3097,8 @@ void PlayFabClientAPI::UpdateUserStatistics(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UpdateUserStatisticsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3117,8 +3118,7 @@ void PlayFabClientAPI::OnUpdateUserStatisticsResult(int httpStatus, HttpRequest*
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UpdateUserStatisticsResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateUserStatisticsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UpdateUserStatisticsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3145,7 +3145,8 @@ void PlayFabClientAPI::GetCatalogItems(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetCatalogItemsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3165,8 +3166,7 @@ void PlayFabClientAPI::OnGetCatalogItemsResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetCatalogItemsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetCatalogItemsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetCatalogItemsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3193,7 +3193,8 @@ void PlayFabClientAPI::GetPublisherData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPublisherDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3213,8 +3214,7 @@ void PlayFabClientAPI::OnGetPublisherDataResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPublisherDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPublisherDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPublisherDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3241,7 +3241,8 @@ void PlayFabClientAPI::GetStoreItems(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetStoreItemsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3261,8 +3262,7 @@ void PlayFabClientAPI::OnGetStoreItemsResult(int httpStatus, HttpRequest* reques
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetStoreItemsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetStoreItemsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetStoreItemsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3289,7 +3289,8 @@ void PlayFabClientAPI::GetTitleData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetTitleDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3309,8 +3310,7 @@ void PlayFabClientAPI::OnGetTitleDataResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetTitleDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetTitleDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetTitleDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3337,7 +3337,8 @@ void PlayFabClientAPI::GetTitleNews(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetTitleNewsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3357,8 +3358,7 @@ void PlayFabClientAPI::OnGetTitleNewsResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetTitleNewsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetTitleNewsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetTitleNewsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3385,7 +3385,8 @@ void PlayFabClientAPI::AddUserVirtualCurrency(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ModifyUserVirtualCurrencyResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3405,8 +3406,7 @@ void PlayFabClientAPI::OnAddUserVirtualCurrencyResult(int httpStatus, HttpReques
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<ModifyUserVirtualCurrencyResult> successCallback = reinterpret_cast<ProcessApiCallback<ModifyUserVirtualCurrencyResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<ModifyUserVirtualCurrencyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3433,7 +3433,8 @@ void PlayFabClientAPI::ConfirmPurchase(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ConfirmPurchaseResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3453,8 +3454,7 @@ void PlayFabClientAPI::OnConfirmPurchaseResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<ConfirmPurchaseResult> successCallback = reinterpret_cast<ProcessApiCallback<ConfirmPurchaseResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<ConfirmPurchaseResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3481,7 +3481,8 @@ void PlayFabClientAPI::ConsumeItem(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ConsumeItemResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3501,8 +3502,7 @@ void PlayFabClientAPI::OnConsumeItemResult(int httpStatus, HttpRequest* request,
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<ConsumeItemResult> successCallback = reinterpret_cast<ProcessApiCallback<ConsumeItemResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<ConsumeItemResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3529,7 +3529,8 @@ void PlayFabClientAPI::GetCharacterInventory(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetCharacterInventoryResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3549,8 +3550,7 @@ void PlayFabClientAPI::OnGetCharacterInventoryResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetCharacterInventoryResult> successCallback = reinterpret_cast<ProcessApiCallback<GetCharacterInventoryResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetCharacterInventoryResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3577,7 +3577,8 @@ void PlayFabClientAPI::GetPurchase(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPurchaseResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3597,8 +3598,7 @@ void PlayFabClientAPI::OnGetPurchaseResult(int httpStatus, HttpRequest* request,
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPurchaseResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPurchaseResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPurchaseResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3625,7 +3625,8 @@ void PlayFabClientAPI::GetUserInventory(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetUserInventoryResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3645,8 +3646,7 @@ void PlayFabClientAPI::OnGetUserInventoryResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetUserInventoryResult> successCallback = reinterpret_cast<ProcessApiCallback<GetUserInventoryResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetUserInventoryResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3673,7 +3673,8 @@ void PlayFabClientAPI::PayForPurchase(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<PayForPurchaseResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3693,8 +3694,7 @@ void PlayFabClientAPI::OnPayForPurchaseResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<PayForPurchaseResult> successCallback = reinterpret_cast<ProcessApiCallback<PayForPurchaseResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<PayForPurchaseResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3721,7 +3721,8 @@ void PlayFabClientAPI::PurchaseItem(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<PurchaseItemResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3741,8 +3742,7 @@ void PlayFabClientAPI::OnPurchaseItemResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<PurchaseItemResult> successCallback = reinterpret_cast<ProcessApiCallback<PurchaseItemResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<PurchaseItemResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3769,7 +3769,8 @@ void PlayFabClientAPI::RedeemCoupon(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RedeemCouponResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3789,8 +3790,7 @@ void PlayFabClientAPI::OnRedeemCouponResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<RedeemCouponResult> successCallback = reinterpret_cast<ProcessApiCallback<RedeemCouponResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<RedeemCouponResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3817,7 +3817,8 @@ void PlayFabClientAPI::StartPurchase(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<StartPurchaseResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3837,8 +3838,7 @@ void PlayFabClientAPI::OnStartPurchaseResult(int httpStatus, HttpRequest* reques
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<StartPurchaseResult> successCallback = reinterpret_cast<ProcessApiCallback<StartPurchaseResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<StartPurchaseResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3865,7 +3865,8 @@ void PlayFabClientAPI::SubtractUserVirtualCurrency(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ModifyUserVirtualCurrencyResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3885,8 +3886,7 @@ void PlayFabClientAPI::OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpR
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<ModifyUserVirtualCurrencyResult> successCallback = reinterpret_cast<ProcessApiCallback<ModifyUserVirtualCurrencyResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<ModifyUserVirtualCurrencyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3913,7 +3913,8 @@ void PlayFabClientAPI::UnlockContainerInstance(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlockContainerItemResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3933,8 +3934,7 @@ void PlayFabClientAPI::OnUnlockContainerInstanceResult(int httpStatus, HttpReque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UnlockContainerItemResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlockContainerItemResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UnlockContainerItemResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3961,7 +3961,8 @@ void PlayFabClientAPI::UnlockContainerItem(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlockContainerItemResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3981,8 +3982,7 @@ void PlayFabClientAPI::OnUnlockContainerItemResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UnlockContainerItemResult> successCallback = reinterpret_cast<ProcessApiCallback<UnlockContainerItemResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UnlockContainerItemResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4009,7 +4009,8 @@ void PlayFabClientAPI::AddFriend(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AddFriendResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4029,8 +4030,7 @@ void PlayFabClientAPI::OnAddFriendResult(int httpStatus, HttpRequest* request, v
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<AddFriendResult> successCallback = reinterpret_cast<ProcessApiCallback<AddFriendResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<AddFriendResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4057,7 +4057,8 @@ void PlayFabClientAPI::GetFriendsList(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetFriendsListResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4077,8 +4078,7 @@ void PlayFabClientAPI::OnGetFriendsListResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetFriendsListResult> successCallback = reinterpret_cast<ProcessApiCallback<GetFriendsListResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetFriendsListResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4105,7 +4105,8 @@ void PlayFabClientAPI::RemoveFriend(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RemoveFriendResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4125,8 +4126,7 @@ void PlayFabClientAPI::OnRemoveFriendResult(int httpStatus, HttpRequest* request
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<RemoveFriendResult> successCallback = reinterpret_cast<ProcessApiCallback<RemoveFriendResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<RemoveFriendResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4153,7 +4153,8 @@ void PlayFabClientAPI::SetFriendTags(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<SetFriendTagsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4173,8 +4174,7 @@ void PlayFabClientAPI::OnSetFriendTagsResult(int httpStatus, HttpRequest* reques
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<SetFriendTagsResult> successCallback = reinterpret_cast<ProcessApiCallback<SetFriendTagsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<SetFriendTagsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4201,7 +4201,8 @@ void PlayFabClientAPI::RegisterForIOSPushNotification(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RegisterForIOSPushNotificationResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4221,8 +4222,7 @@ void PlayFabClientAPI::OnRegisterForIOSPushNotificationResult(int httpStatus, Ht
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<RegisterForIOSPushNotificationResult> successCallback = reinterpret_cast<ProcessApiCallback<RegisterForIOSPushNotificationResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<RegisterForIOSPushNotificationResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4249,7 +4249,8 @@ void PlayFabClientAPI::RestoreIOSPurchases(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RestoreIOSPurchasesResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4269,8 +4270,7 @@ void PlayFabClientAPI::OnRestoreIOSPurchasesResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<RestoreIOSPurchasesResult> successCallback = reinterpret_cast<ProcessApiCallback<RestoreIOSPurchasesResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<RestoreIOSPurchasesResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4297,7 +4297,8 @@ void PlayFabClientAPI::ValidateIOSReceipt(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ValidateIOSReceiptResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4317,8 +4318,7 @@ void PlayFabClientAPI::OnValidateIOSReceiptResult(int httpStatus, HttpRequest* r
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<ValidateIOSReceiptResult> successCallback = reinterpret_cast<ProcessApiCallback<ValidateIOSReceiptResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<ValidateIOSReceiptResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4345,7 +4345,8 @@ void PlayFabClientAPI::GetCurrentGames(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<CurrentGamesResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4365,8 +4366,7 @@ void PlayFabClientAPI::OnGetCurrentGamesResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<CurrentGamesResult> successCallback = reinterpret_cast<ProcessApiCallback<CurrentGamesResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<CurrentGamesResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4393,7 +4393,8 @@ void PlayFabClientAPI::GetGameServerRegions(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GameServerRegionsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4413,8 +4414,7 @@ void PlayFabClientAPI::OnGetGameServerRegionsResult(int httpStatus, HttpRequest*
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GameServerRegionsResult> successCallback = reinterpret_cast<ProcessApiCallback<GameServerRegionsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GameServerRegionsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4441,7 +4441,8 @@ void PlayFabClientAPI::Matchmake(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<MatchmakeResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4461,8 +4462,7 @@ void PlayFabClientAPI::OnMatchmakeResult(int httpStatus, HttpRequest* request, v
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<MatchmakeResult> successCallback = reinterpret_cast<ProcessApiCallback<MatchmakeResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<MatchmakeResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4489,7 +4489,8 @@ void PlayFabClientAPI::StartGame(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<StartGameResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4509,8 +4510,7 @@ void PlayFabClientAPI::OnStartGameResult(int httpStatus, HttpRequest* request, v
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<StartGameResult> successCallback = reinterpret_cast<ProcessApiCallback<StartGameResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<StartGameResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4537,7 +4537,8 @@ void PlayFabClientAPI::AndroidDevicePushNotificationRegistration(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AndroidDevicePushNotificationRegistrationResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4557,8 +4558,7 @@ void PlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult(int htt
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<AndroidDevicePushNotificationRegistrationResult> successCallback = reinterpret_cast<ProcessApiCallback<AndroidDevicePushNotificationRegistrationResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<AndroidDevicePushNotificationRegistrationResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4585,7 +4585,8 @@ void PlayFabClientAPI::ValidateGooglePlayPurchase(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ValidateGooglePlayPurchaseResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4605,8 +4606,7 @@ void PlayFabClientAPI::OnValidateGooglePlayPurchaseResult(int httpStatus, HttpRe
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<ValidateGooglePlayPurchaseResult> successCallback = reinterpret_cast<ProcessApiCallback<ValidateGooglePlayPurchaseResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<ValidateGooglePlayPurchaseResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4633,7 +4633,8 @@ void PlayFabClientAPI::LogEvent(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LogEventResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4653,8 +4654,7 @@ void PlayFabClientAPI::OnLogEventResult(int httpStatus, HttpRequest* request, vo
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<LogEventResult> successCallback = reinterpret_cast<ProcessApiCallback<LogEventResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<LogEventResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4681,7 +4681,8 @@ void PlayFabClientAPI::WriteCharacterEvent(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<WriteEventResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4701,8 +4702,7 @@ void PlayFabClientAPI::OnWriteCharacterEventResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<WriteEventResponse> successCallback = reinterpret_cast<ProcessApiCallback<WriteEventResponse>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<WriteEventResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4729,7 +4729,8 @@ void PlayFabClientAPI::WritePlayerEvent(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<WriteEventResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4749,8 +4750,7 @@ void PlayFabClientAPI::OnWritePlayerEventResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<WriteEventResponse> successCallback = reinterpret_cast<ProcessApiCallback<WriteEventResponse>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<WriteEventResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4777,7 +4777,8 @@ void PlayFabClientAPI::WriteTitleEvent(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<WriteEventResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4797,8 +4798,7 @@ void PlayFabClientAPI::OnWriteTitleEventResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<WriteEventResponse> successCallback = reinterpret_cast<ProcessApiCallback<WriteEventResponse>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<WriteEventResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4825,7 +4825,8 @@ void PlayFabClientAPI::AddSharedGroupMembers(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AddSharedGroupMembersResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4845,8 +4846,7 @@ void PlayFabClientAPI::OnAddSharedGroupMembersResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<AddSharedGroupMembersResult> successCallback = reinterpret_cast<ProcessApiCallback<AddSharedGroupMembersResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<AddSharedGroupMembersResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4873,7 +4873,8 @@ void PlayFabClientAPI::CreateSharedGroup(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<CreateSharedGroupResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4893,8 +4894,7 @@ void PlayFabClientAPI::OnCreateSharedGroupResult(int httpStatus, HttpRequest* re
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<CreateSharedGroupResult> successCallback = reinterpret_cast<ProcessApiCallback<CreateSharedGroupResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<CreateSharedGroupResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4921,7 +4921,8 @@ void PlayFabClientAPI::GetSharedGroupData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetSharedGroupDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4941,8 +4942,7 @@ void PlayFabClientAPI::OnGetSharedGroupDataResult(int httpStatus, HttpRequest* r
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetSharedGroupDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetSharedGroupDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetSharedGroupDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4969,7 +4969,8 @@ void PlayFabClientAPI::RemoveSharedGroupMembers(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RemoveSharedGroupMembersResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4989,8 +4990,7 @@ void PlayFabClientAPI::OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<RemoveSharedGroupMembersResult> successCallback = reinterpret_cast<ProcessApiCallback<RemoveSharedGroupMembersResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<RemoveSharedGroupMembersResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5017,7 +5017,8 @@ void PlayFabClientAPI::UpdateSharedGroupData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UpdateSharedGroupDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5037,8 +5038,7 @@ void PlayFabClientAPI::OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UpdateSharedGroupDataResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateSharedGroupDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UpdateSharedGroupDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5065,7 +5065,8 @@ void PlayFabClientAPI::ExecuteCloudScript(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ExecuteCloudScriptResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5085,8 +5086,7 @@ void PlayFabClientAPI::OnExecuteCloudScriptResult(int httpStatus, HttpRequest* r
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<ExecuteCloudScriptResult> successCallback = reinterpret_cast<ProcessApiCallback<ExecuteCloudScriptResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<ExecuteCloudScriptResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5113,7 +5113,8 @@ void PlayFabClientAPI::GetCloudScriptUrl(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetCloudScriptUrlResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5134,8 +5135,7 @@ if (outResult.Url.length() > 0) PlayFabSettings::logicServerURL = outResult.Url;
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetCloudScriptUrlResult> successCallback = reinterpret_cast<ProcessApiCallback<GetCloudScriptUrlResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetCloudScriptUrlResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5162,7 +5162,8 @@ void PlayFabClientAPI::RunCloudScript(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RunCloudScriptResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5182,8 +5183,7 @@ void PlayFabClientAPI::OnRunCloudScriptResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<RunCloudScriptResult> successCallback = reinterpret_cast<ProcessApiCallback<RunCloudScriptResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<RunCloudScriptResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5210,7 +5210,8 @@ void PlayFabClientAPI::GetContentDownloadUrl(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetContentDownloadUrlResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5230,8 +5231,7 @@ void PlayFabClientAPI::OnGetContentDownloadUrlResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetContentDownloadUrlResult> successCallback = reinterpret_cast<ProcessApiCallback<GetContentDownloadUrlResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetContentDownloadUrlResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5258,7 +5258,8 @@ void PlayFabClientAPI::GetAllUsersCharacters(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ListUsersCharactersResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5278,8 +5279,7 @@ void PlayFabClientAPI::OnGetAllUsersCharactersResult(int httpStatus, HttpRequest
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<ListUsersCharactersResult> successCallback = reinterpret_cast<ProcessApiCallback<ListUsersCharactersResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<ListUsersCharactersResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5306,7 +5306,8 @@ void PlayFabClientAPI::GetCharacterLeaderboard(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetCharacterLeaderboardResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5326,8 +5327,7 @@ void PlayFabClientAPI::OnGetCharacterLeaderboardResult(int httpStatus, HttpReque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetCharacterLeaderboardResult> successCallback = reinterpret_cast<ProcessApiCallback<GetCharacterLeaderboardResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetCharacterLeaderboardResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5354,7 +5354,8 @@ void PlayFabClientAPI::GetCharacterStatistics(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetCharacterStatisticsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5374,8 +5375,7 @@ void PlayFabClientAPI::OnGetCharacterStatisticsResult(int httpStatus, HttpReques
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetCharacterStatisticsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetCharacterStatisticsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetCharacterStatisticsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5402,7 +5402,8 @@ void PlayFabClientAPI::GetLeaderboardAroundCharacter(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetLeaderboardAroundCharacterResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5422,8 +5423,7 @@ void PlayFabClientAPI::OnGetLeaderboardAroundCharacterResult(int httpStatus, Htt
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetLeaderboardAroundCharacterResult> successCallback = reinterpret_cast<ProcessApiCallback<GetLeaderboardAroundCharacterResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetLeaderboardAroundCharacterResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5450,7 +5450,8 @@ void PlayFabClientAPI::GetLeaderboardForUserCharacters(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetLeaderboardForUsersCharactersResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5470,8 +5471,7 @@ void PlayFabClientAPI::OnGetLeaderboardForUserCharactersResult(int httpStatus, H
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetLeaderboardForUsersCharactersResult> successCallback = reinterpret_cast<ProcessApiCallback<GetLeaderboardForUsersCharactersResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetLeaderboardForUsersCharactersResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5498,7 +5498,8 @@ void PlayFabClientAPI::GrantCharacterToUser(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GrantCharacterToUserResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5518,8 +5519,7 @@ void PlayFabClientAPI::OnGrantCharacterToUserResult(int httpStatus, HttpRequest*
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GrantCharacterToUserResult> successCallback = reinterpret_cast<ProcessApiCallback<GrantCharacterToUserResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GrantCharacterToUserResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5546,7 +5546,8 @@ void PlayFabClientAPI::UpdateCharacterStatistics(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UpdateCharacterStatisticsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5566,8 +5567,7 @@ void PlayFabClientAPI::OnUpdateCharacterStatisticsResult(int httpStatus, HttpReq
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UpdateCharacterStatisticsResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateCharacterStatisticsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UpdateCharacterStatisticsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5594,7 +5594,8 @@ void PlayFabClientAPI::GetCharacterData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetCharacterDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5614,8 +5615,7 @@ void PlayFabClientAPI::OnGetCharacterDataResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetCharacterDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetCharacterDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetCharacterDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5642,7 +5642,8 @@ void PlayFabClientAPI::GetCharacterReadOnlyData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetCharacterDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5662,8 +5663,7 @@ void PlayFabClientAPI::OnGetCharacterReadOnlyDataResult(int httpStatus, HttpRequ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetCharacterDataResult> successCallback = reinterpret_cast<ProcessApiCallback<GetCharacterDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetCharacterDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5690,7 +5690,8 @@ void PlayFabClientAPI::UpdateCharacterData(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UpdateCharacterDataResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5710,8 +5711,7 @@ void PlayFabClientAPI::OnUpdateCharacterDataResult(int httpStatus, HttpRequest* 
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<UpdateCharacterDataResult> successCallback = reinterpret_cast<ProcessApiCallback<UpdateCharacterDataResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<UpdateCharacterDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5738,7 +5738,8 @@ void PlayFabClientAPI::ValidateAmazonIAPReceipt(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ValidateAmazonReceiptResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5758,8 +5759,7 @@ void PlayFabClientAPI::OnValidateAmazonIAPReceiptResult(int httpStatus, HttpRequ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<ValidateAmazonReceiptResult> successCallback = reinterpret_cast<ProcessApiCallback<ValidateAmazonReceiptResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<ValidateAmazonReceiptResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5786,7 +5786,8 @@ void PlayFabClientAPI::AcceptTrade(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AcceptTradeResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5806,8 +5807,7 @@ void PlayFabClientAPI::OnAcceptTradeResult(int httpStatus, HttpRequest* request,
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<AcceptTradeResponse> successCallback = reinterpret_cast<ProcessApiCallback<AcceptTradeResponse>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<AcceptTradeResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5834,7 +5834,8 @@ void PlayFabClientAPI::CancelTrade(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<CancelTradeResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5854,8 +5855,7 @@ void PlayFabClientAPI::OnCancelTradeResult(int httpStatus, HttpRequest* request,
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<CancelTradeResponse> successCallback = reinterpret_cast<ProcessApiCallback<CancelTradeResponse>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<CancelTradeResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5882,7 +5882,8 @@ void PlayFabClientAPI::GetPlayerTrades(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayerTradesResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5902,8 +5903,7 @@ void PlayFabClientAPI::OnGetPlayerTradesResult(int httpStatus, HttpRequest* requ
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayerTradesResponse> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayerTradesResponse>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayerTradesResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5930,7 +5930,8 @@ void PlayFabClientAPI::GetTradeStatus(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetTradeStatusResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5950,8 +5951,7 @@ void PlayFabClientAPI::OnGetTradeStatusResult(int httpStatus, HttpRequest* reque
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetTradeStatusResponse> successCallback = reinterpret_cast<ProcessApiCallback<GetTradeStatusResponse>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetTradeStatusResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5978,7 +5978,8 @@ void PlayFabClientAPI::OpenTrade(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<OpenTradeResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5998,8 +5999,7 @@ void PlayFabClientAPI::OnOpenTradeResult(int httpStatus, HttpRequest* request, v
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<OpenTradeResponse> successCallback = reinterpret_cast<ProcessApiCallback<OpenTradeResponse>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<OpenTradeResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -6026,7 +6026,8 @@ void PlayFabClientAPI::AttributeInstall(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AttributeInstallResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -6048,8 +6049,7 @@ void PlayFabClientAPI::OnAttributeInstallResult(int httpStatus, HttpRequest* req
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<AttributeInstallResult> successCallback = reinterpret_cast<ProcessApiCallback<AttributeInstallResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<AttributeInstallResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -6076,7 +6076,8 @@ void PlayFabClientAPI::GetPlayerSegments(
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
-    httpRequest->SetResultCallback(reinterpret_cast<void*>(callback));
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayerSegmentsResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -6096,8 +6097,55 @@ void PlayFabClientAPI::OnGetPlayerSegmentsResult(int httpStatus, HttpRequest* re
 
         if (request->GetResultCallback() != nullptr)
         {
-            ProcessApiCallback<GetPlayerSegmentsResult> successCallback = reinterpret_cast<ProcessApiCallback<GetPlayerSegmentsResult>>(request->GetResultCallback());
-            successCallback(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<GetPlayerSegmentsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::GetPlayerTags(
+    GetPlayerTagsRequest& request,
+    ProcessApiCallback<GetPlayerTagsResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetPlayerTags"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayerTagsResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayerTagsResult, userData);
+}
+
+void PlayFabClientAPI::OnGetPlayerTagsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPlayerTagsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<GetPlayerTagsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

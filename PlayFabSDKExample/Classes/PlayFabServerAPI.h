@@ -11,7 +11,7 @@ namespace PlayFab
     class PlayFabServerAPI
     {
     public:
-        template<typename ResType> using ProcessApiCallback = void(*)(const ResType& result, void* userData);
+        template<typename ResType> using ProcessApiCallback = std::function<void(const ResType& result, void* userData)>;
 
         // ------------ Generated API calls
         static void AuthenticateSessionTicket(ServerModels::AuthenticateSessionTicketRequest& request, ProcessApiCallback<ServerModels::AuthenticateSessionTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -36,6 +36,7 @@ namespace PlayFab
         static void GetUserPublisherInternalData(ServerModels::GetUserDataRequest& request, ProcessApiCallback<ServerModels::GetUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserPublisherReadOnlyData(ServerModels::GetUserDataRequest& request, ProcessApiCallback<ServerModels::GetUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserReadOnlyData(ServerModels::GetUserDataRequest& request, ProcessApiCallback<ServerModels::GetUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        // Deprecated - Use 'GetPlayerStatistics' instead
         static void GetUserStatistics(ServerModels::GetUserStatisticsRequest& request, ProcessApiCallback<ServerModels::GetUserStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdatePlayerStatistics(ServerModels::UpdatePlayerStatisticsRequest& request, ProcessApiCallback<ServerModels::UpdatePlayerStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserData(ServerModels::UpdateUserDataRequest& request, ProcessApiCallback<ServerModels::UpdateUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -44,6 +45,7 @@ namespace PlayFab
         static void UpdateUserPublisherInternalData(ServerModels::UpdateUserInternalDataRequest& request, ProcessApiCallback<ServerModels::UpdateUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserPublisherReadOnlyData(ServerModels::UpdateUserDataRequest& request, ProcessApiCallback<ServerModels::UpdateUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserReadOnlyData(ServerModels::UpdateUserDataRequest& request, ProcessApiCallback<ServerModels::UpdateUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        // Deprecated - Use 'UpdatePlayerStatistics' instead
         static void UpdateUserStatistics(ServerModels::UpdateUserStatisticsRequest& request, ProcessApiCallback<ServerModels::UpdateUserStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCatalogItems(ServerModels::GetCatalogItemsRequest& request, ProcessApiCallback<ServerModels::GetCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPublisherData(ServerModels::GetPublisherDataRequest& request, ProcessApiCallback<ServerModels::GetPublisherDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -80,6 +82,7 @@ namespace PlayFab
         static void SetGameServerInstanceData(ServerModels::SetGameServerInstanceDataRequest& request, ProcessApiCallback<ServerModels::SetGameServerInstanceDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetGameServerInstanceState(ServerModels::SetGameServerInstanceStateRequest& request, ProcessApiCallback<ServerModels::SetGameServerInstanceStateResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AwardSteamAchievement(ServerModels::AwardSteamAchievementRequest& request, ProcessApiCallback<ServerModels::AwardSteamAchievementResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        // Deprecated - Use 'WritePlayerEvent' instead
         static void LogEvent(ServerModels::LogEventRequest& request, ProcessApiCallback<ServerModels::LogEventResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void WriteCharacterEvent(ServerModels::WriteServerCharacterEventRequest& request, ProcessApiCallback<ServerModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void WritePlayerEvent(ServerModels::WriteServerPlayerEventRequest& request, ProcessApiCallback<ServerModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -106,9 +109,12 @@ namespace PlayFab
         static void UpdateCharacterData(ServerModels::UpdateCharacterDataRequest& request, ProcessApiCallback<ServerModels::UpdateCharacterDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateCharacterInternalData(ServerModels::UpdateCharacterDataRequest& request, ProcessApiCallback<ServerModels::UpdateCharacterDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateCharacterReadOnlyData(ServerModels::UpdateCharacterDataRequest& request, ProcessApiCallback<ServerModels::UpdateCharacterDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void AddPlayerTag(ServerModels::AddPlayerTagRequest& request, ProcessApiCallback<ServerModels::AddPlayerTagResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAllSegments(ProcessApiCallback<ServerModels::GetAllSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerSegments(ServerModels::GetPlayersSegmentsRequest& request, ProcessApiCallback<ServerModels::GetPlayerSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayersInSegment(ServerModels::GetPlayersInSegmentRequest& request, ProcessApiCallback<ServerModels::GetPlayersInSegmentResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayerTags(ServerModels::GetPlayerTagsRequest& request, ProcessApiCallback<ServerModels::GetPlayerTagsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RemovePlayerTag(ServerModels::RemovePlayerTagRequest& request, ProcessApiCallback<ServerModels::RemovePlayerTagResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
@@ -207,9 +213,12 @@ namespace PlayFab
         static void OnUpdateCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCharacterInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnAddPlayerTagResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAllSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayersInSegmentResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayerTagsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRemovePlayerTagResult(int httpStatus, HttpRequest* request, void* userData);
     };
 };
 #endif

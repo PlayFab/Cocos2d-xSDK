@@ -64,6 +64,50 @@ bool AddCharacterVirtualCurrencyRequest::readFromValue(const rapidjson::Value& o
     return true;
 }
 
+AddPlayerTagRequest::~AddPlayerTagRequest()
+{
+
+}
+
+void AddPlayerTagRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.String("TagName"); writer.String(TagName.c_str());
+
+    writer.EndObject();
+}
+
+bool AddPlayerTagRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator TagName_member = obj.FindMember("TagName");
+    if (TagName_member != obj.MemberEnd() && !TagName_member->value.IsNull()) TagName = TagName_member->value.GetString();
+
+    return true;
+}
+
+AddPlayerTagResult::~AddPlayerTagResult()
+{
+
+}
+
+void AddPlayerTagResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool AddPlayerTagResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 AddSharedGroupMembersRequest::~AddSharedGroupMembersRequest()
 {
 
@@ -1486,6 +1530,7 @@ void CatalogItem::writeJSON(PFStringJsonWriter& writer)
     writer.String("IsStackable"); writer.Bool(IsStackable);
     writer.String("IsTradable"); writer.Bool(IsTradable);
     if (ItemImageUrl.length() > 0) { writer.String("ItemImageUrl"); writer.String(ItemImageUrl.c_str()); }
+    writer.String("IsLimitedEdition"); writer.Bool(IsLimitedEdition);
 
     writer.EndObject();
 }
@@ -1537,6 +1582,8 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
     if (IsTradable_member != obj.MemberEnd() && !IsTradable_member->value.IsNull()) IsTradable = IsTradable_member->value.GetBool();
     const Value::ConstMemberIterator ItemImageUrl_member = obj.FindMember("ItemImageUrl");
     if (ItemImageUrl_member != obj.MemberEnd() && !ItemImageUrl_member->value.IsNull()) ItemImageUrl = ItemImageUrl_member->value.GetString();
+    const Value::ConstMemberIterator IsLimitedEdition_member = obj.FindMember("IsLimitedEdition");
+    if (IsLimitedEdition_member != obj.MemberEnd() && !IsLimitedEdition_member->value.IsNull()) IsLimitedEdition = IsLimitedEdition_member->value.GetBool();
 
     return true;
 }
@@ -4183,6 +4230,67 @@ bool GetPlayerStatisticVersionsResult::readFromValue(const rapidjson::Value& obj
     return true;
 }
 
+GetPlayerTagsRequest::~GetPlayerTagsRequest()
+{
+
+}
+
+void GetPlayerTagsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if (Namespace.length() > 0) { writer.String("Namespace"); writer.String(Namespace.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetPlayerTagsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator Namespace_member = obj.FindMember("Namespace");
+    if (Namespace_member != obj.MemberEnd() && !Namespace_member->value.IsNull()) Namespace = Namespace_member->value.GetString();
+
+    return true;
+}
+
+GetPlayerTagsResult::~GetPlayerTagsResult()
+{
+
+}
+
+void GetPlayerTagsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.String("Tags");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = Tags.begin(); iter != Tags.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool GetPlayerTagsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator Tags_member = obj.FindMember("Tags");
+    if (Tags_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Tags_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Tags.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
 GetPlayFabIDsFromFacebookIDsRequest::~GetPlayFabIDsFromFacebookIDsRequest()
 {
 
@@ -6191,6 +6299,50 @@ bool RedeemMatchmakerTicketResult::readFromValue(const rapidjson::Value& obj)
     if (Error_member != obj.MemberEnd() && !Error_member->value.IsNull()) Error = Error_member->value.GetString();
     const Value::ConstMemberIterator UserInfo_member = obj.FindMember("UserInfo");
     if (UserInfo_member != obj.MemberEnd() && !UserInfo_member->value.IsNull()) UserInfo = new UserAccountInfo(UserInfo_member->value);
+
+    return true;
+}
+
+RemovePlayerTagRequest::~RemovePlayerTagRequest()
+{
+
+}
+
+void RemovePlayerTagRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.String("TagName"); writer.String(TagName.c_str());
+
+    writer.EndObject();
+}
+
+bool RemovePlayerTagRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator TagName_member = obj.FindMember("TagName");
+    if (TagName_member != obj.MemberEnd() && !TagName_member->value.IsNull()) TagName = TagName_member->value.GetString();
+
+    return true;
+}
+
+RemovePlayerTagResult::~RemovePlayerTagResult()
+{
+
+}
+
+void RemovePlayerTagResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool RemovePlayerTagResult::readFromValue(const rapidjson::Value& obj)
+{
 
     return true;
 }
