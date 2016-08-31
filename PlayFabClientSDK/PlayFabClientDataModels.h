@@ -720,6 +720,7 @@ namespace PlayFab
             bool IsTradable;
             std::string ItemImageUrl;
             bool IsLimitedEdition;
+            Int32 InitialLimitedEditionCount;
 
             CatalogItem() :
                 PlayFabBaseModel(),
@@ -739,7 +740,8 @@ namespace PlayFab
                 IsStackable(false),
                 IsTradable(false),
                 ItemImageUrl(),
-                IsLimitedEdition(false)
+                IsLimitedEdition(false),
+                InitialLimitedEditionCount(0)
             {}
 
             CatalogItem(const CatalogItem& src) :
@@ -760,7 +762,8 @@ namespace PlayFab
                 IsStackable(src.IsStackable),
                 IsTradable(src.IsTradable),
                 ItemImageUrl(src.ItemImageUrl),
-                IsLimitedEdition(src.IsLimitedEdition)
+                IsLimitedEdition(src.IsLimitedEdition),
+                InitialLimitedEditionCount(src.InitialLimitedEditionCount)
             {}
 
             CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -1617,6 +1620,7 @@ namespace PlayFab
             MultitypeVar FunctionResult;
             std::list<LogStatement> Logs;
             double ExecutionTimeSeconds;
+            double ProcessorTimeSeconds;
             Uint32 MemoryConsumedBytes;
             Int32 APIRequestsIssued;
             Int32 HttpRequestsIssued;
@@ -1629,6 +1633,7 @@ namespace PlayFab
                 FunctionResult(),
                 Logs(),
                 ExecutionTimeSeconds(0),
+                ProcessorTimeSeconds(0),
                 MemoryConsumedBytes(0),
                 APIRequestsIssued(0),
                 HttpRequestsIssued(0),
@@ -1642,6 +1647,7 @@ namespace PlayFab
                 FunctionResult(src.FunctionResult),
                 Logs(src.Logs),
                 ExecutionTimeSeconds(src.ExecutionTimeSeconds),
+                ProcessorTimeSeconds(src.ProcessorTimeSeconds),
                 MemoryConsumedBytes(src.MemoryConsumedBytes),
                 APIRequestsIssued(src.APIRequestsIssued),
                 HttpRequestsIssued(src.HttpRequestsIssued),

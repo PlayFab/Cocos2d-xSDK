@@ -891,6 +891,7 @@ void CatalogItem::writeJSON(PFStringJsonWriter& writer)
     writer.String("IsTradable"); writer.Bool(IsTradable);
     if (ItemImageUrl.length() > 0) { writer.String("ItemImageUrl"); writer.String(ItemImageUrl.c_str()); }
     writer.String("IsLimitedEdition"); writer.Bool(IsLimitedEdition);
+    writer.String("InitialLimitedEditionCount"); writer.Int(InitialLimitedEditionCount);
 
     writer.EndObject();
 }
@@ -944,6 +945,8 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
     if (ItemImageUrl_member != obj.MemberEnd() && !ItemImageUrl_member->value.IsNull()) ItemImageUrl = ItemImageUrl_member->value.GetString();
     const Value::ConstMemberIterator IsLimitedEdition_member = obj.FindMember("IsLimitedEdition");
     if (IsLimitedEdition_member != obj.MemberEnd() && !IsLimitedEdition_member->value.IsNull()) IsLimitedEdition = IsLimitedEdition_member->value.GetBool();
+    const Value::ConstMemberIterator InitialLimitedEditionCount_member = obj.FindMember("InitialLimitedEditionCount");
+    if (InitialLimitedEditionCount_member != obj.MemberEnd() && !InitialLimitedEditionCount_member->value.IsNull()) InitialLimitedEditionCount = InitialLimitedEditionCount_member->value.GetInt();
 
     return true;
 }
@@ -2105,6 +2108,7 @@ void ExecuteCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
     writer.EndArray();
      }
     writer.String("ExecutionTimeSeconds"); writer.Double(ExecutionTimeSeconds);
+    writer.String("ProcessorTimeSeconds"); writer.Double(ProcessorTimeSeconds);
     writer.String("MemoryConsumedBytes"); writer.Uint(MemoryConsumedBytes);
     writer.String("APIRequestsIssued"); writer.Int(APIRequestsIssued);
     writer.String("HttpRequestsIssued"); writer.Int(HttpRequestsIssued);
@@ -2130,6 +2134,8 @@ bool ExecuteCloudScriptResult::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator ExecutionTimeSeconds_member = obj.FindMember("ExecutionTimeSeconds");
     if (ExecutionTimeSeconds_member != obj.MemberEnd() && !ExecutionTimeSeconds_member->value.IsNull()) ExecutionTimeSeconds = ExecutionTimeSeconds_member->value.GetDouble();
+    const Value::ConstMemberIterator ProcessorTimeSeconds_member = obj.FindMember("ProcessorTimeSeconds");
+    if (ProcessorTimeSeconds_member != obj.MemberEnd() && !ProcessorTimeSeconds_member->value.IsNull()) ProcessorTimeSeconds = ProcessorTimeSeconds_member->value.GetDouble();
     const Value::ConstMemberIterator MemoryConsumedBytes_member = obj.FindMember("MemoryConsumedBytes");
     if (MemoryConsumedBytes_member != obj.MemberEnd() && !MemoryConsumedBytes_member->value.IsNull()) MemoryConsumedBytes = MemoryConsumedBytes_member->value.GetUint();
     const Value::ConstMemberIterator APIRequestsIssued_member = obj.FindMember("APIRequestsIssued");
