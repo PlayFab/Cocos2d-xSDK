@@ -1561,6 +1561,83 @@ bool GameModeInfo::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetActionGroupResult::~GetActionGroupResult()
+{
+
+}
+
+void GetActionGroupResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Name"); writer.String(Name.c_str());
+    if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetActionGroupResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
+    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
+
+    return true;
+}
+
+GetAllActionGroupsRequest::~GetAllActionGroupsRequest()
+{
+
+}
+
+void GetAllActionGroupsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool GetAllActionGroupsRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+GetAllActionGroupsResult::~GetAllActionGroupsResult()
+{
+
+}
+
+void GetAllActionGroupsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("ActionGroups");
+    writer.StartArray();
+    for (std::list<GetActionGroupResult>::iterator iter = ActionGroups.begin(); iter != ActionGroups.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool GetAllActionGroupsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ActionGroups_member = obj.FindMember("ActionGroups");
+    if (ActionGroups_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = ActionGroups_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            ActionGroups.push_back(GetActionGroupResult(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 GetAllSegmentsRequest::~GetAllSegmentsRequest()
 {
 

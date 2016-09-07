@@ -6557,6 +6557,7 @@ void LinkAndroidDeviceIDRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("AndroidDeviceId"); writer.String(AndroidDeviceId.c_str());
     if (OS.length() > 0) { writer.String("OS"); writer.String(OS.c_str()); }
     if (AndroidDevice.length() > 0) { writer.String("AndroidDevice"); writer.String(AndroidDevice.c_str()); }
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
 }
@@ -6569,6 +6570,8 @@ bool LinkAndroidDeviceIDRequest::readFromValue(const rapidjson::Value& obj)
     if (OS_member != obj.MemberEnd() && !OS_member->value.IsNull()) OS = OS_member->value.GetString();
     const Value::ConstMemberIterator AndroidDevice_member = obj.FindMember("AndroidDevice");
     if (AndroidDevice_member != obj.MemberEnd() && !AndroidDevice_member->value.IsNull()) AndroidDevice = AndroidDevice_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
 
     return true;
 }
@@ -6602,6 +6605,7 @@ void LinkCustomIDRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("CustomId"); writer.String(CustomId.c_str());
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
 }
@@ -6610,6 +6614,8 @@ bool LinkCustomIDRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator CustomId_member = obj.FindMember("CustomId");
     if (CustomId_member != obj.MemberEnd() && !CustomId_member->value.IsNull()) CustomId = CustomId_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
 
     return true;
 }
@@ -6643,6 +6649,7 @@ void LinkFacebookAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("AccessToken"); writer.String(AccessToken.c_str());
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
 }
@@ -6651,6 +6658,8 @@ bool LinkFacebookAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AccessToken_member = obj.FindMember("AccessToken");
     if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
 
     return true;
 }
@@ -6684,6 +6693,7 @@ void LinkGameCenterAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("GameCenterId"); writer.String(GameCenterId.c_str());
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
 }
@@ -6692,6 +6702,8 @@ bool LinkGameCenterAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator GameCenterId_member = obj.FindMember("GameCenterId");
     if (GameCenterId_member != obj.MemberEnd() && !GameCenterId_member->value.IsNull()) GameCenterId = GameCenterId_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
 
     return true;
 }
@@ -6725,6 +6737,7 @@ void LinkGoogleAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("AccessToken"); writer.String(AccessToken.c_str());
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
 }
@@ -6733,6 +6746,8 @@ bool LinkGoogleAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AccessToken_member = obj.FindMember("AccessToken");
     if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
 
     return true;
 }
@@ -6768,6 +6783,7 @@ void LinkIOSDeviceIDRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("DeviceId"); writer.String(DeviceId.c_str());
     if (OS.length() > 0) { writer.String("OS"); writer.String(OS.c_str()); }
     if (DeviceModel.length() > 0) { writer.String("DeviceModel"); writer.String(DeviceModel.c_str()); }
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
 }
@@ -6780,6 +6796,8 @@ bool LinkIOSDeviceIDRequest::readFromValue(const rapidjson::Value& obj)
     if (OS_member != obj.MemberEnd() && !OS_member->value.IsNull()) OS = OS_member->value.GetString();
     const Value::ConstMemberIterator DeviceModel_member = obj.FindMember("DeviceModel");
     if (DeviceModel_member != obj.MemberEnd() && !DeviceModel_member->value.IsNull()) DeviceModel = DeviceModel_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
 
     return true;
 }
@@ -6814,6 +6832,7 @@ void LinkKongregateAccountRequest::writeJSON(PFStringJsonWriter& writer)
 
     writer.String("KongregateId"); writer.String(KongregateId.c_str());
     writer.String("AuthTicket"); writer.String(AuthTicket.c_str());
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
 }
@@ -6824,6 +6843,8 @@ bool LinkKongregateAccountRequest::readFromValue(const rapidjson::Value& obj)
     if (KongregateId_member != obj.MemberEnd() && !KongregateId_member->value.IsNull()) KongregateId = KongregateId_member->value.GetString();
     const Value::ConstMemberIterator AuthTicket_member = obj.FindMember("AuthTicket");
     if (AuthTicket_member != obj.MemberEnd() && !AuthTicket_member->value.IsNull()) AuthTicket = AuthTicket_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
 
     return true;
 }
@@ -6857,6 +6878,7 @@ void LinkSteamAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("SteamTicket"); writer.String(SteamTicket.c_str());
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
 }
@@ -6865,6 +6887,8 @@ bool LinkSteamAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator SteamTicket_member = obj.FindMember("SteamTicket");
     if (SteamTicket_member != obj.MemberEnd() && !SteamTicket_member->value.IsNull()) SteamTicket = SteamTicket_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
 
     return true;
 }
@@ -6898,6 +6922,7 @@ void LinkTwitchAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("AccessToken"); writer.String(AccessToken.c_str());
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
 }
@@ -6906,6 +6931,8 @@ bool LinkTwitchAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AccessToken_member = obj.FindMember("AccessToken");
     if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
 
     return true;
 }
