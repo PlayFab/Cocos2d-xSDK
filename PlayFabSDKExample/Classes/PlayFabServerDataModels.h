@@ -3267,6 +3267,7 @@ namespace PlayFab
             OptionalTime LastLogin;
             OptionalTime BannedUntil;
             std::map<std::string, Int32> Statistics;
+            OptionalUint32 TotalValueToDateInUSD;
             std::map<std::string, Uint32> ValuesToDate;
             std::list<std::string> Tags;
             std::map<std::string, Int32> VirtualCurrencyBalances;
@@ -3286,6 +3287,7 @@ namespace PlayFab
                 LastLogin(),
                 BannedUntil(),
                 Statistics(),
+                TotalValueToDateInUSD(),
                 ValuesToDate(),
                 Tags(),
                 VirtualCurrencyBalances(),
@@ -3306,6 +3308,7 @@ namespace PlayFab
                 LastLogin(src.LastLogin),
                 BannedUntil(src.BannedUntil),
                 Statistics(src.Statistics),
+                TotalValueToDateInUSD(src.TotalValueToDateInUSD),
                 ValuesToDate(src.ValuesToDate),
                 Tags(src.Tags),
                 VirtualCurrencyBalances(src.VirtualCurrencyBalances),

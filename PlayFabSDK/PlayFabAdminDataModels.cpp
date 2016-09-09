@@ -2453,6 +2453,7 @@ void PlayerProfile::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndObject();
      }
+    if (TotalValueToDateInUSD.notNull()) { writer.String("TotalValueToDateInUSD"); writer.Uint(TotalValueToDateInUSD); }
     if (!ValuesToDate.empty()) {
     writer.String("ValuesToDate");
     writer.StartObject();
@@ -2537,6 +2538,8 @@ bool PlayerProfile::readFromValue(const rapidjson::Value& obj)
             Statistics[iter->name.GetString()] = iter->value.GetInt();
         }
     }
+    const Value::ConstMemberIterator TotalValueToDateInUSD_member = obj.FindMember("TotalValueToDateInUSD");
+    if (TotalValueToDateInUSD_member != obj.MemberEnd() && !TotalValueToDateInUSD_member->value.IsNull()) TotalValueToDateInUSD = TotalValueToDateInUSD_member->value.GetUint();
     const Value::ConstMemberIterator ValuesToDate_member = obj.FindMember("ValuesToDate");
     if (ValuesToDate_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = ValuesToDate_member->value.MemberBegin(); iter != ValuesToDate_member->value.MemberEnd(); ++iter) {
