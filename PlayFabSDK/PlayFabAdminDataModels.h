@@ -628,6 +628,7 @@ namespace PlayFab
             bool IsTradable;
             std::string ItemImageUrl;
             bool IsLimitedEdition;
+            Int32 InitialLimitedEditionCount;
 
             CatalogItem() :
                 PlayFabBaseModel(),
@@ -647,7 +648,8 @@ namespace PlayFab
                 IsStackable(false),
                 IsTradable(false),
                 ItemImageUrl(),
-                IsLimitedEdition(false)
+                IsLimitedEdition(false),
+                InitialLimitedEditionCount(0)
             {}
 
             CatalogItem(const CatalogItem& src) :
@@ -668,7 +670,8 @@ namespace PlayFab
                 IsStackable(src.IsStackable),
                 IsTradable(src.IsTradable),
                 ItemImageUrl(src.ItemImageUrl),
-                IsLimitedEdition(src.IsLimitedEdition)
+                IsLimitedEdition(src.IsLimitedEdition),
+                InitialLimitedEditionCount(src.InitialLimitedEditionCount)
             {}
 
             CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -1208,6 +1211,81 @@ namespace PlayFab
             }
 
             ~GameModeInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetActionGroupResult : public PlayFabBaseModel
+        {
+            std::string Name;
+            std::string Id;
+
+            GetActionGroupResult() :
+                PlayFabBaseModel(),
+                Name(),
+                Id()
+            {}
+
+            GetActionGroupResult(const GetActionGroupResult& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                Id(src.Id)
+            {}
+
+            GetActionGroupResult(const rapidjson::Value& obj) : GetActionGroupResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetActionGroupResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetAllActionGroupsRequest : public PlayFabBaseModel
+        {
+
+            GetAllActionGroupsRequest() :
+                PlayFabBaseModel()
+            {}
+
+            GetAllActionGroupsRequest(const GetAllActionGroupsRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            GetAllActionGroupsRequest(const rapidjson::Value& obj) : GetAllActionGroupsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetAllActionGroupsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetAllActionGroupsResult : public PlayFabBaseModel
+        {
+            std::list<GetActionGroupResult> ActionGroups;
+
+            GetAllActionGroupsResult() :
+                PlayFabBaseModel(),
+                ActionGroups()
+            {}
+
+            GetAllActionGroupsResult(const GetAllActionGroupsResult& src) :
+                PlayFabBaseModel(),
+                ActionGroups(src.ActionGroups)
+            {}
+
+            GetAllActionGroupsResult(const rapidjson::Value& obj) : GetAllActionGroupsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetAllActionGroupsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1943,6 +2021,7 @@ namespace PlayFab
             OptionalTime LastLogin;
             OptionalTime BannedUntil;
             std::map<std::string, Int32> Statistics;
+            OptionalUint32 TotalValueToDateInUSD;
             std::map<std::string, Uint32> ValuesToDate;
             std::list<std::string> Tags;
             std::map<std::string, Int32> VirtualCurrencyBalances;
@@ -1962,6 +2041,7 @@ namespace PlayFab
                 LastLogin(),
                 BannedUntil(),
                 Statistics(),
+                TotalValueToDateInUSD(),
                 ValuesToDate(),
                 Tags(),
                 VirtualCurrencyBalances(),
@@ -1982,6 +2062,7 @@ namespace PlayFab
                 LastLogin(src.LastLogin),
                 BannedUntil(src.BannedUntil),
                 Statistics(src.Statistics),
+                TotalValueToDateInUSD(src.TotalValueToDateInUSD),
                 ValuesToDate(src.ValuesToDate),
                 Tags(src.Tags),
                 VirtualCurrencyBalances(src.VirtualCurrencyBalances),
