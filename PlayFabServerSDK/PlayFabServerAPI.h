@@ -110,6 +110,7 @@ namespace PlayFab
         static void UpdateCharacterInternalData(ServerModels::UpdateCharacterDataRequest& request, ProcessApiCallback<ServerModels::UpdateCharacterDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateCharacterReadOnlyData(ServerModels::UpdateCharacterDataRequest& request, ProcessApiCallback<ServerModels::UpdateCharacterDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddPlayerTag(ServerModels::AddPlayerTagRequest& request, ProcessApiCallback<ServerModels::AddPlayerTagResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetAllActionGroups(ProcessApiCallback<ServerModels::GetAllActionGroupsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAllSegments(ProcessApiCallback<ServerModels::GetAllSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerSegments(ServerModels::GetPlayersSegmentsRequest& request, ProcessApiCallback<ServerModels::GetPlayerSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayersInSegment(ServerModels::GetPlayersInSegmentRequest& request, ProcessApiCallback<ServerModels::GetPlayersInSegmentResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -214,6 +215,7 @@ namespace PlayFab
         static void OnUpdateCharacterInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddPlayerTagResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetAllActionGroupsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAllSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayersInSegmentResult(int httpStatus, HttpRequest* request, void* userData);

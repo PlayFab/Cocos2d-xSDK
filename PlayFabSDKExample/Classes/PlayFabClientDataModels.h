@@ -720,6 +720,7 @@ namespace PlayFab
             bool IsTradable;
             std::string ItemImageUrl;
             bool IsLimitedEdition;
+            Int32 InitialLimitedEditionCount;
 
             CatalogItem() :
                 PlayFabBaseModel(),
@@ -739,7 +740,8 @@ namespace PlayFab
                 IsStackable(false),
                 IsTradable(false),
                 ItemImageUrl(),
-                IsLimitedEdition(false)
+                IsLimitedEdition(false),
+                InitialLimitedEditionCount(0)
             {}
 
             CatalogItem(const CatalogItem& src) :
@@ -760,7 +762,8 @@ namespace PlayFab
                 IsStackable(src.IsStackable),
                 IsTradable(src.IsTradable),
                 ItemImageUrl(src.ItemImageUrl),
-                IsLimitedEdition(src.IsLimitedEdition)
+                IsLimitedEdition(src.IsLimitedEdition),
+                InitialLimitedEditionCount(src.InitialLimitedEditionCount)
             {}
 
             CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -1617,6 +1620,7 @@ namespace PlayFab
             MultitypeVar FunctionResult;
             std::list<LogStatement> Logs;
             double ExecutionTimeSeconds;
+            double ProcessorTimeSeconds;
             Uint32 MemoryConsumedBytes;
             Int32 APIRequestsIssued;
             Int32 HttpRequestsIssued;
@@ -1629,6 +1633,7 @@ namespace PlayFab
                 FunctionResult(),
                 Logs(),
                 ExecutionTimeSeconds(0),
+                ProcessorTimeSeconds(0),
                 MemoryConsumedBytes(0),
                 APIRequestsIssued(0),
                 HttpRequestsIssued(0),
@@ -1642,6 +1647,7 @@ namespace PlayFab
                 FunctionResult(src.FunctionResult),
                 Logs(src.Logs),
                 ExecutionTimeSeconds(src.ExecutionTimeSeconds),
+                ProcessorTimeSeconds(src.ProcessorTimeSeconds),
                 MemoryConsumedBytes(src.MemoryConsumedBytes),
                 APIRequestsIssued(src.APIRequestsIssued),
                 HttpRequestsIssued(src.HttpRequestsIssued),
@@ -5398,19 +5404,22 @@ namespace PlayFab
             std::string AndroidDeviceId;
             std::string OS;
             std::string AndroidDevice;
+            OptionalBool ForceLink;
 
             LinkAndroidDeviceIDRequest() :
                 PlayFabBaseModel(),
                 AndroidDeviceId(),
                 OS(),
-                AndroidDevice()
+                AndroidDevice(),
+                ForceLink()
             {}
 
             LinkAndroidDeviceIDRequest(const LinkAndroidDeviceIDRequest& src) :
                 PlayFabBaseModel(),
                 AndroidDeviceId(src.AndroidDeviceId),
                 OS(src.OS),
-                AndroidDevice(src.AndroidDevice)
+                AndroidDevice(src.AndroidDevice),
+                ForceLink(src.ForceLink)
             {}
 
             LinkAndroidDeviceIDRequest(const rapidjson::Value& obj) : LinkAndroidDeviceIDRequest()
@@ -5449,15 +5458,18 @@ namespace PlayFab
         struct LinkCustomIDRequest : public PlayFabBaseModel
         {
             std::string CustomId;
+            OptionalBool ForceLink;
 
             LinkCustomIDRequest() :
                 PlayFabBaseModel(),
-                CustomId()
+                CustomId(),
+                ForceLink()
             {}
 
             LinkCustomIDRequest(const LinkCustomIDRequest& src) :
                 PlayFabBaseModel(),
-                CustomId(src.CustomId)
+                CustomId(src.CustomId),
+                ForceLink(src.ForceLink)
             {}
 
             LinkCustomIDRequest(const rapidjson::Value& obj) : LinkCustomIDRequest()
@@ -5496,15 +5508,18 @@ namespace PlayFab
         struct LinkFacebookAccountRequest : public PlayFabBaseModel
         {
             std::string AccessToken;
+            OptionalBool ForceLink;
 
             LinkFacebookAccountRequest() :
                 PlayFabBaseModel(),
-                AccessToken()
+                AccessToken(),
+                ForceLink()
             {}
 
             LinkFacebookAccountRequest(const LinkFacebookAccountRequest& src) :
                 PlayFabBaseModel(),
-                AccessToken(src.AccessToken)
+                AccessToken(src.AccessToken),
+                ForceLink(src.ForceLink)
             {}
 
             LinkFacebookAccountRequest(const rapidjson::Value& obj) : LinkFacebookAccountRequest()
@@ -5543,15 +5558,18 @@ namespace PlayFab
         struct LinkGameCenterAccountRequest : public PlayFabBaseModel
         {
             std::string GameCenterId;
+            OptionalBool ForceLink;
 
             LinkGameCenterAccountRequest() :
                 PlayFabBaseModel(),
-                GameCenterId()
+                GameCenterId(),
+                ForceLink()
             {}
 
             LinkGameCenterAccountRequest(const LinkGameCenterAccountRequest& src) :
                 PlayFabBaseModel(),
-                GameCenterId(src.GameCenterId)
+                GameCenterId(src.GameCenterId),
+                ForceLink(src.ForceLink)
             {}
 
             LinkGameCenterAccountRequest(const rapidjson::Value& obj) : LinkGameCenterAccountRequest()
@@ -5590,15 +5608,18 @@ namespace PlayFab
         struct LinkGoogleAccountRequest : public PlayFabBaseModel
         {
             std::string AccessToken;
+            OptionalBool ForceLink;
 
             LinkGoogleAccountRequest() :
                 PlayFabBaseModel(),
-                AccessToken()
+                AccessToken(),
+                ForceLink()
             {}
 
             LinkGoogleAccountRequest(const LinkGoogleAccountRequest& src) :
                 PlayFabBaseModel(),
-                AccessToken(src.AccessToken)
+                AccessToken(src.AccessToken),
+                ForceLink(src.ForceLink)
             {}
 
             LinkGoogleAccountRequest(const rapidjson::Value& obj) : LinkGoogleAccountRequest()
@@ -5639,19 +5660,22 @@ namespace PlayFab
             std::string DeviceId;
             std::string OS;
             std::string DeviceModel;
+            OptionalBool ForceLink;
 
             LinkIOSDeviceIDRequest() :
                 PlayFabBaseModel(),
                 DeviceId(),
                 OS(),
-                DeviceModel()
+                DeviceModel(),
+                ForceLink()
             {}
 
             LinkIOSDeviceIDRequest(const LinkIOSDeviceIDRequest& src) :
                 PlayFabBaseModel(),
                 DeviceId(src.DeviceId),
                 OS(src.OS),
-                DeviceModel(src.DeviceModel)
+                DeviceModel(src.DeviceModel),
+                ForceLink(src.ForceLink)
             {}
 
             LinkIOSDeviceIDRequest(const rapidjson::Value& obj) : LinkIOSDeviceIDRequest()
@@ -5691,17 +5715,20 @@ namespace PlayFab
         {
             std::string KongregateId;
             std::string AuthTicket;
+            OptionalBool ForceLink;
 
             LinkKongregateAccountRequest() :
                 PlayFabBaseModel(),
                 KongregateId(),
-                AuthTicket()
+                AuthTicket(),
+                ForceLink()
             {}
 
             LinkKongregateAccountRequest(const LinkKongregateAccountRequest& src) :
                 PlayFabBaseModel(),
                 KongregateId(src.KongregateId),
-                AuthTicket(src.AuthTicket)
+                AuthTicket(src.AuthTicket),
+                ForceLink(src.ForceLink)
             {}
 
             LinkKongregateAccountRequest(const rapidjson::Value& obj) : LinkKongregateAccountRequest()
@@ -5740,15 +5767,18 @@ namespace PlayFab
         struct LinkSteamAccountRequest : public PlayFabBaseModel
         {
             std::string SteamTicket;
+            OptionalBool ForceLink;
 
             LinkSteamAccountRequest() :
                 PlayFabBaseModel(),
-                SteamTicket()
+                SteamTicket(),
+                ForceLink()
             {}
 
             LinkSteamAccountRequest(const LinkSteamAccountRequest& src) :
                 PlayFabBaseModel(),
-                SteamTicket(src.SteamTicket)
+                SteamTicket(src.SteamTicket),
+                ForceLink(src.ForceLink)
             {}
 
             LinkSteamAccountRequest(const rapidjson::Value& obj) : LinkSteamAccountRequest()
@@ -5787,15 +5817,18 @@ namespace PlayFab
         struct LinkTwitchAccountRequest : public PlayFabBaseModel
         {
             std::string AccessToken;
+            OptionalBool ForceLink;
 
             LinkTwitchAccountRequest() :
                 PlayFabBaseModel(),
-                AccessToken()
+                AccessToken(),
+                ForceLink()
             {}
 
             LinkTwitchAccountRequest(const LinkTwitchAccountRequest& src) :
                 PlayFabBaseModel(),
-                AccessToken(src.AccessToken)
+                AccessToken(src.AccessToken),
+                ForceLink(src.ForceLink)
             {}
 
             LinkTwitchAccountRequest(const rapidjson::Value& obj) : LinkTwitchAccountRequest()

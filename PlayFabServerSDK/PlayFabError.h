@@ -253,7 +253,10 @@ namespace PlayFab
         PlayFabErrorTwoFactorAuthenticationTokenRequired = 1246,
         PlayFabErrorGameServerHostCountLimitExceeded = 1247,
         PlayFabErrorPlayerTagCountLimitExceeded = 1248,
-        PlayFabErrorRequestAlreadyRunning = 1249
+        PlayFabErrorRequestAlreadyRunning = 1249,
+        PlayFabErrorActionGroupNotFound = 1250,
+        PlayFabErrorMaximumSegmentBulkActionJobsRunning = 1251,
+        PlayFabErrorNoActionsOnPlayersInSegmentJob = 1252
     };
 
     struct PlayFabError

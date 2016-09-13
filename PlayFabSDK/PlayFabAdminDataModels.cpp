@@ -775,6 +775,7 @@ void CatalogItem::writeJSON(PFStringJsonWriter& writer)
     writer.String("IsTradable"); writer.Bool(IsTradable);
     if (ItemImageUrl.length() > 0) { writer.String("ItemImageUrl"); writer.String(ItemImageUrl.c_str()); }
     writer.String("IsLimitedEdition"); writer.Bool(IsLimitedEdition);
+    writer.String("InitialLimitedEditionCount"); writer.Int(InitialLimitedEditionCount);
 
     writer.EndObject();
 }
@@ -828,6 +829,8 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
     if (ItemImageUrl_member != obj.MemberEnd() && !ItemImageUrl_member->value.IsNull()) ItemImageUrl = ItemImageUrl_member->value.GetString();
     const Value::ConstMemberIterator IsLimitedEdition_member = obj.FindMember("IsLimitedEdition");
     if (IsLimitedEdition_member != obj.MemberEnd() && !IsLimitedEdition_member->value.IsNull()) IsLimitedEdition = IsLimitedEdition_member->value.GetBool();
+    const Value::ConstMemberIterator InitialLimitedEditionCount_member = obj.FindMember("InitialLimitedEditionCount");
+    if (InitialLimitedEditionCount_member != obj.MemberEnd() && !InitialLimitedEditionCount_member->value.IsNull()) InitialLimitedEditionCount = InitialLimitedEditionCount_member->value.GetInt();
 
     return true;
 }
@@ -1554,6 +1557,83 @@ bool GameModeInfo::readFromValue(const rapidjson::Value& obj)
     if (MaxPlayerCount_member != obj.MemberEnd() && !MaxPlayerCount_member->value.IsNull()) MaxPlayerCount = MaxPlayerCount_member->value.GetUint();
     const Value::ConstMemberIterator StartOpen_member = obj.FindMember("StartOpen");
     if (StartOpen_member != obj.MemberEnd() && !StartOpen_member->value.IsNull()) StartOpen = StartOpen_member->value.GetBool();
+
+    return true;
+}
+
+GetActionGroupResult::~GetActionGroupResult()
+{
+
+}
+
+void GetActionGroupResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Name"); writer.String(Name.c_str());
+    if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetActionGroupResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
+    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
+
+    return true;
+}
+
+GetAllActionGroupsRequest::~GetAllActionGroupsRequest()
+{
+
+}
+
+void GetAllActionGroupsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool GetAllActionGroupsRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+GetAllActionGroupsResult::~GetAllActionGroupsResult()
+{
+
+}
+
+void GetAllActionGroupsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("ActionGroups");
+    writer.StartArray();
+    for (std::list<GetActionGroupResult>::iterator iter = ActionGroups.begin(); iter != ActionGroups.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    
+
+    writer.EndObject();
+}
+
+bool GetAllActionGroupsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ActionGroups_member = obj.FindMember("ActionGroups");
+    if (ActionGroups_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = ActionGroups_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            ActionGroups.push_back(GetActionGroupResult(memberList[i]));
+        }
+    }
 
     return true;
 }
@@ -2373,6 +2453,7 @@ void PlayerProfile::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndObject();
      }
+    if (TotalValueToDateInUSD.notNull()) { writer.String("TotalValueToDateInUSD"); writer.Uint(TotalValueToDateInUSD); }
     if (!ValuesToDate.empty()) {
     writer.String("ValuesToDate");
     writer.StartObject();
@@ -2457,6 +2538,8 @@ bool PlayerProfile::readFromValue(const rapidjson::Value& obj)
             Statistics[iter->name.GetString()] = iter->value.GetInt();
         }
     }
+    const Value::ConstMemberIterator TotalValueToDateInUSD_member = obj.FindMember("TotalValueToDateInUSD");
+    if (TotalValueToDateInUSD_member != obj.MemberEnd() && !TotalValueToDateInUSD_member->value.IsNull()) TotalValueToDateInUSD = TotalValueToDateInUSD_member->value.GetUint();
     const Value::ConstMemberIterator ValuesToDate_member = obj.FindMember("ValuesToDate");
     if (ValuesToDate_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = ValuesToDate_member->value.MemberBegin(); iter != ValuesToDate_member->value.MemberEnd(); ++iter) {

@@ -1227,6 +1227,7 @@ namespace PlayFab
             bool IsTradable;
             std::string ItemImageUrl;
             bool IsLimitedEdition;
+            Int32 InitialLimitedEditionCount;
 
             CatalogItem() :
                 PlayFabBaseModel(),
@@ -1246,7 +1247,8 @@ namespace PlayFab
                 IsStackable(false),
                 IsTradable(false),
                 ItemImageUrl(),
-                IsLimitedEdition(false)
+                IsLimitedEdition(false),
+                InitialLimitedEditionCount(0)
             {}
 
             CatalogItem(const CatalogItem& src) :
@@ -1267,7 +1269,8 @@ namespace PlayFab
                 IsStackable(src.IsStackable),
                 IsTradable(src.IsTradable),
                 ItemImageUrl(src.ItemImageUrl),
-                IsLimitedEdition(src.IsLimitedEdition)
+                IsLimitedEdition(src.IsLimitedEdition),
+                InitialLimitedEditionCount(src.InitialLimitedEditionCount)
             {}
 
             CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -1844,6 +1847,7 @@ namespace PlayFab
             MultitypeVar FunctionResult;
             std::list<LogStatement> Logs;
             double ExecutionTimeSeconds;
+            double ProcessorTimeSeconds;
             Uint32 MemoryConsumedBytes;
             Int32 APIRequestsIssued;
             Int32 HttpRequestsIssued;
@@ -1856,6 +1860,7 @@ namespace PlayFab
                 FunctionResult(),
                 Logs(),
                 ExecutionTimeSeconds(0),
+                ProcessorTimeSeconds(0),
                 MemoryConsumedBytes(0),
                 APIRequestsIssued(0),
                 HttpRequestsIssued(0),
@@ -1869,6 +1874,7 @@ namespace PlayFab
                 FunctionResult(src.FunctionResult),
                 Logs(src.Logs),
                 ExecutionTimeSeconds(src.ExecutionTimeSeconds),
+                ProcessorTimeSeconds(src.ProcessorTimeSeconds),
                 MemoryConsumedBytes(src.MemoryConsumedBytes),
                 APIRequestsIssued(src.APIRequestsIssued),
                 HttpRequestsIssued(src.HttpRequestsIssued),
@@ -2008,6 +2014,81 @@ namespace PlayFab
 
         void writeGameInstanceStateEnumJSON(GameInstanceState enumVal, PFStringJsonWriter& writer);
         GameInstanceState readGameInstanceStateFromValue(const rapidjson::Value& obj);
+
+        struct GetActionGroupResult : public PlayFabBaseModel
+        {
+            std::string Name;
+            std::string Id;
+
+            GetActionGroupResult() :
+                PlayFabBaseModel(),
+                Name(),
+                Id()
+            {}
+
+            GetActionGroupResult(const GetActionGroupResult& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                Id(src.Id)
+            {}
+
+            GetActionGroupResult(const rapidjson::Value& obj) : GetActionGroupResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetActionGroupResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetAllActionGroupsRequest : public PlayFabBaseModel
+        {
+
+            GetAllActionGroupsRequest() :
+                PlayFabBaseModel()
+            {}
+
+            GetAllActionGroupsRequest(const GetAllActionGroupsRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            GetAllActionGroupsRequest(const rapidjson::Value& obj) : GetAllActionGroupsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetAllActionGroupsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetAllActionGroupsResult : public PlayFabBaseModel
+        {
+            std::list<GetActionGroupResult> ActionGroups;
+
+            GetAllActionGroupsResult() :
+                PlayFabBaseModel(),
+                ActionGroups()
+            {}
+
+            GetAllActionGroupsResult(const GetAllActionGroupsResult& src) :
+                PlayFabBaseModel(),
+                ActionGroups(src.ActionGroups)
+            {}
+
+            GetAllActionGroupsResult(const rapidjson::Value& obj) : GetAllActionGroupsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetAllActionGroupsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
 
         struct GetAllSegmentsRequest : public PlayFabBaseModel
         {
@@ -3186,6 +3267,7 @@ namespace PlayFab
             OptionalTime LastLogin;
             OptionalTime BannedUntil;
             std::map<std::string, Int32> Statistics;
+            OptionalUint32 TotalValueToDateInUSD;
             std::map<std::string, Uint32> ValuesToDate;
             std::list<std::string> Tags;
             std::map<std::string, Int32> VirtualCurrencyBalances;
@@ -3205,6 +3287,7 @@ namespace PlayFab
                 LastLogin(),
                 BannedUntil(),
                 Statistics(),
+                TotalValueToDateInUSD(),
                 ValuesToDate(),
                 Tags(),
                 VirtualCurrencyBalances(),
@@ -3225,6 +3308,7 @@ namespace PlayFab
                 LastLogin(src.LastLogin),
                 BannedUntil(src.BannedUntil),
                 Statistics(src.Statistics),
+                TotalValueToDateInUSD(src.TotalValueToDateInUSD),
                 ValuesToDate(src.ValuesToDate),
                 Tags(src.Tags),
                 VirtualCurrencyBalances(src.VirtualCurrencyBalances),
