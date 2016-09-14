@@ -1703,53 +1703,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct DeregisterGameRequest : public PlayFabBaseModel
-        {
-            std::string LobbyId;
-
-            DeregisterGameRequest() :
-                PlayFabBaseModel(),
-                LobbyId()
-            {}
-
-            DeregisterGameRequest(const DeregisterGameRequest& src) :
-                PlayFabBaseModel(),
-                LobbyId(src.LobbyId)
-            {}
-
-            DeregisterGameRequest(const rapidjson::Value& obj) : DeregisterGameRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~DeregisterGameRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct DeregisterGameResponse : public PlayFabBaseModel
-        {
-
-            DeregisterGameResponse() :
-                PlayFabBaseModel()
-            {}
-
-            DeregisterGameResponse(const DeregisterGameResponse& src) :
-                PlayFabBaseModel()
-            {}
-
-            DeregisterGameResponse(const rapidjson::Value& obj) : DeregisterGameResponse()
-            {
-                readFromValue(obj);
-            }
-
-            ~DeregisterGameResponse();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct EmptyResult : public PlayFabBaseModel
         {
 
@@ -5399,85 +5352,6 @@ namespace PlayFab
             }
 
             ~RedeemMatchmakerTicketResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        enum Region
-        {
-            RegionUSCentral,
-            RegionUSEast,
-            RegionEUWest,
-            RegionSingapore,
-            RegionJapan,
-            RegionBrazil,
-            RegionAustralia
-        };
-
-        void writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer);
-        Region readRegionFromValue(const rapidjson::Value& obj);
-
-        struct RegisterGameRequest : public PlayFabBaseModel
-        {
-            std::string ServerHost;
-            std::string ServerPort;
-            std::string Build;
-            Region pfRegion;
-            std::string GameMode;
-            std::map<std::string, std::string> Tags;
-
-            RegisterGameRequest() :
-                PlayFabBaseModel(),
-                ServerHost(),
-                ServerPort(),
-                Build(),
-                pfRegion(),
-                GameMode(),
-                Tags()
-            {}
-
-            RegisterGameRequest(const RegisterGameRequest& src) :
-                PlayFabBaseModel(),
-                ServerHost(src.ServerHost),
-                ServerPort(src.ServerPort),
-                Build(src.Build),
-                pfRegion(src.pfRegion),
-                GameMode(src.GameMode),
-                Tags(src.Tags)
-            {}
-
-            RegisterGameRequest(const rapidjson::Value& obj) : RegisterGameRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~RegisterGameRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct RegisterGameResponse : public PlayFabBaseModel
-        {
-            std::string LobbyId;
-
-            RegisterGameResponse() :
-                PlayFabBaseModel(),
-                LobbyId()
-            {}
-
-            RegisterGameResponse(const RegisterGameResponse& src) :
-                PlayFabBaseModel(),
-                LobbyId(src.LobbyId)
-            {}
-
-            RegisterGameResponse(const rapidjson::Value& obj) : RegisterGameResponse()
-            {
-                readFromValue(obj);
-            }
-
-            ~RegisterGameResponse();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
