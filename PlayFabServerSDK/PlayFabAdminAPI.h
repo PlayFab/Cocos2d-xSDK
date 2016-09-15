@@ -35,7 +35,9 @@ namespace PlayFab
         static void GetUserPublisherReadOnlyData(AdminModels::GetUserDataRequest& request, ProcessApiCallback<AdminModels::GetUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserReadOnlyData(AdminModels::GetUserDataRequest& request, ProcessApiCallback<AdminModels::GetUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void IncrementPlayerStatisticVersion(AdminModels::IncrementPlayerStatisticVersionRequest& request, ProcessApiCallback<AdminModels::IncrementPlayerStatisticVersionResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RefundPurchase(AdminModels::RefundPurchaseRequest& request, ProcessApiCallback<AdminModels::RefundPurchaseResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ResetUserStatistics(AdminModels::ResetUserStatisticsRequest& request, ProcessApiCallback<AdminModels::ResetUserStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ResolvePurchaseDispute(AdminModels::ResolvePurchaseDisputeRequest& request, ProcessApiCallback<AdminModels::ResolvePurchaseDisputeResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdatePlayerStatisticDefinition(AdminModels::UpdatePlayerStatisticDefinitionRequest& request, ProcessApiCallback<AdminModels::UpdatePlayerStatisticDefinitionResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserData(AdminModels::UpdateUserDataRequest& request, ProcessApiCallback<AdminModels::UpdateUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserInternalData(AdminModels::UpdateUserInternalDataRequest& request, ProcessApiCallback<AdminModels::UpdateUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -119,7 +121,9 @@ namespace PlayFab
         static void OnGetUserPublisherReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnIncrementPlayerStatisticVersionResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRefundPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnResetUserStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnResolvePurchaseDisputeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdatePlayerStatisticDefinitionResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
