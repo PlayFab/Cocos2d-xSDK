@@ -64,6 +64,40 @@ bool AddCharacterVirtualCurrencyRequest::readFromValue(const rapidjson::Value& o
     return true;
 }
 
+AddFriendRequest::~AddFriendRequest()
+{
+
+}
+
+void AddFriendRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if (FriendPlayFabId.length() > 0) { writer.String("FriendPlayFabId"); writer.String(FriendPlayFabId.c_str()); }
+    if (FriendUsername.length() > 0) { writer.String("FriendUsername"); writer.String(FriendUsername.c_str()); }
+    if (FriendEmail.length() > 0) { writer.String("FriendEmail"); writer.String(FriendEmail.c_str()); }
+    if (FriendTitleDisplayName.length() > 0) { writer.String("FriendTitleDisplayName"); writer.String(FriendTitleDisplayName.c_str()); }
+
+    writer.EndObject();
+}
+
+bool AddFriendRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator FriendPlayFabId_member = obj.FindMember("FriendPlayFabId");
+    if (FriendPlayFabId_member != obj.MemberEnd() && !FriendPlayFabId_member->value.IsNull()) FriendPlayFabId = FriendPlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator FriendUsername_member = obj.FindMember("FriendUsername");
+    if (FriendUsername_member != obj.MemberEnd() && !FriendUsername_member->value.IsNull()) FriendUsername = FriendUsername_member->value.GetString();
+    const Value::ConstMemberIterator FriendEmail_member = obj.FindMember("FriendEmail");
+    if (FriendEmail_member != obj.MemberEnd() && !FriendEmail_member->value.IsNull()) FriendEmail = FriendEmail_member->value.GetString();
+    const Value::ConstMemberIterator FriendTitleDisplayName_member = obj.FindMember("FriendTitleDisplayName");
+    if (FriendTitleDisplayName_member != obj.MemberEnd() && !FriendTitleDisplayName_member->value.IsNull()) FriendTitleDisplayName = FriendTitleDisplayName_member->value.GetString();
+
+    return true;
+}
+
 AddPlayerTagRequest::~AddPlayerTagRequest()
 {
 
@@ -3064,6 +3098,105 @@ bool GetContentDownloadUrlResult::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator URL_member = obj.FindMember("URL");
     if (URL_member != obj.MemberEnd() && !URL_member->value.IsNull()) URL = URL_member->value.GetString();
+
+    return true;
+}
+
+GetFriendLeaderboardRequest::~GetFriendLeaderboardRequest()
+{
+
+}
+
+void GetFriendLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.String("StatisticName"); writer.String(StatisticName.c_str());
+    writer.String("StartPosition"); writer.Int(StartPosition);
+    writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+    if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
+    if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
+
+    writer.EndObject();
+}
+
+bool GetFriendLeaderboardRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::ConstMemberIterator StartPosition_member = obj.FindMember("StartPosition");
+    if (StartPosition_member != obj.MemberEnd() && !StartPosition_member->value.IsNull()) StartPosition = StartPosition_member->value.GetInt();
+    const Value::ConstMemberIterator MaxResultsCount_member = obj.FindMember("MaxResultsCount");
+    if (MaxResultsCount_member != obj.MemberEnd() && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
+    const Value::ConstMemberIterator IncludeSteamFriends_member = obj.FindMember("IncludeSteamFriends");
+    if (IncludeSteamFriends_member != obj.MemberEnd() && !IncludeSteamFriends_member->value.IsNull()) IncludeSteamFriends = IncludeSteamFriends_member->value.GetBool();
+    const Value::ConstMemberIterator IncludeFacebookFriends_member = obj.FindMember("IncludeFacebookFriends");
+    if (IncludeFacebookFriends_member != obj.MemberEnd() && !IncludeFacebookFriends_member->value.IsNull()) IncludeFacebookFriends = IncludeFacebookFriends_member->value.GetBool();
+
+    return true;
+}
+
+GetFriendsListRequest::~GetFriendsListRequest()
+{
+
+}
+
+void GetFriendsListRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
+    if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
+
+    writer.EndObject();
+}
+
+bool GetFriendsListRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator IncludeSteamFriends_member = obj.FindMember("IncludeSteamFriends");
+    if (IncludeSteamFriends_member != obj.MemberEnd() && !IncludeSteamFriends_member->value.IsNull()) IncludeSteamFriends = IncludeSteamFriends_member->value.GetBool();
+    const Value::ConstMemberIterator IncludeFacebookFriends_member = obj.FindMember("IncludeFacebookFriends");
+    if (IncludeFacebookFriends_member != obj.MemberEnd() && !IncludeFacebookFriends_member->value.IsNull()) IncludeFacebookFriends = IncludeFacebookFriends_member->value.GetBool();
+
+    return true;
+}
+
+GetFriendsListResult::~GetFriendsListResult()
+{
+
+}
+
+void GetFriendsListResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Friends.empty()) {
+    writer.String("Friends");
+    writer.StartArray();
+    for (std::list<FriendInfo>::iterator iter = Friends.begin(); iter != Friends.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetFriendsListResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Friends_member = obj.FindMember("Friends");
+    if (Friends_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Friends_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Friends.push_back(FriendInfo(memberList[i]));
+        }
+    }
 
     return true;
 }
@@ -6533,6 +6666,31 @@ bool RegisterGameResponse::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
     if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
+
+    return true;
+}
+
+RemoveFriendRequest::~RemoveFriendRequest()
+{
+
+}
+
+void RemoveFriendRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("FriendPlayFabId"); writer.String(FriendPlayFabId.c_str());
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+
+    writer.EndObject();
+}
+
+bool RemoveFriendRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator FriendPlayFabId_member = obj.FindMember("FriendPlayFabId");
+    if (FriendPlayFabId_member != obj.MemberEnd() && !FriendPlayFabId_member->value.IsNull()) FriendPlayFabId = FriendPlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
 
     return true;
 }

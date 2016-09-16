@@ -72,6 +72,43 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct AddFriendRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string FriendPlayFabId;
+            std::string FriendUsername;
+            std::string FriendEmail;
+            std::string FriendTitleDisplayName;
+
+            AddFriendRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                FriendPlayFabId(),
+                FriendUsername(),
+                FriendEmail(),
+                FriendTitleDisplayName()
+            {}
+
+            AddFriendRequest(const AddFriendRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                FriendPlayFabId(src.FriendPlayFabId),
+                FriendUsername(src.FriendUsername),
+                FriendEmail(src.FriendEmail),
+                FriendTitleDisplayName(src.FriendTitleDisplayName)
+            {}
+
+            AddFriendRequest(const rapidjson::Value& obj) : AddFriendRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~AddFriendRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct AddPlayerTagRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -2644,6 +2681,102 @@ namespace PlayFab
             }
 
             ~GetContentDownloadUrlResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetFriendLeaderboardRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string StatisticName;
+            Int32 StartPosition;
+            Int32 MaxResultsCount;
+            OptionalBool IncludeSteamFriends;
+            OptionalBool IncludeFacebookFriends;
+
+            GetFriendLeaderboardRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                StatisticName(),
+                StartPosition(0),
+                MaxResultsCount(0),
+                IncludeSteamFriends(),
+                IncludeFacebookFriends()
+            {}
+
+            GetFriendLeaderboardRequest(const GetFriendLeaderboardRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                StatisticName(src.StatisticName),
+                StartPosition(src.StartPosition),
+                MaxResultsCount(src.MaxResultsCount),
+                IncludeSteamFriends(src.IncludeSteamFriends),
+                IncludeFacebookFriends(src.IncludeFacebookFriends)
+            {}
+
+            GetFriendLeaderboardRequest(const rapidjson::Value& obj) : GetFriendLeaderboardRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetFriendLeaderboardRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetFriendsListRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            OptionalBool IncludeSteamFriends;
+            OptionalBool IncludeFacebookFriends;
+
+            GetFriendsListRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                IncludeSteamFriends(),
+                IncludeFacebookFriends()
+            {}
+
+            GetFriendsListRequest(const GetFriendsListRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                IncludeSteamFriends(src.IncludeSteamFriends),
+                IncludeFacebookFriends(src.IncludeFacebookFriends)
+            {}
+
+            GetFriendsListRequest(const rapidjson::Value& obj) : GetFriendsListRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetFriendsListRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetFriendsListResult : public PlayFabBaseModel
+        {
+            std::list<FriendInfo> Friends;
+
+            GetFriendsListResult() :
+                PlayFabBaseModel(),
+                Friends()
+            {}
+
+            GetFriendsListResult(const GetFriendsListResult& src) :
+                PlayFabBaseModel(),
+                Friends(src.Friends)
+            {}
+
+            GetFriendsListResult(const rapidjson::Value& obj) : GetFriendsListResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetFriendsListResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -5478,6 +5611,34 @@ namespace PlayFab
             }
 
             ~RegisterGameResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RemoveFriendRequest : public PlayFabBaseModel
+        {
+            std::string FriendPlayFabId;
+            std::string PlayFabId;
+
+            RemoveFriendRequest() :
+                PlayFabBaseModel(),
+                FriendPlayFabId(),
+                PlayFabId()
+            {}
+
+            RemoveFriendRequest(const RemoveFriendRequest& src) :
+                PlayFabBaseModel(),
+                FriendPlayFabId(src.FriendPlayFabId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            RemoveFriendRequest(const rapidjson::Value& obj) : RemoveFriendRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RemoveFriendRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

@@ -39,7 +39,6 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "2d/CCCamera.h"
-#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 
@@ -155,7 +154,7 @@ void UniformValue::setCallback(const std::function<void(GLProgram*, Uniform*)> &
     if (_type == Type::CALLBACK_FN)
 		delete _value.callback;
 
-    _value.callback = new std::function<void(GLProgram*, Uniform*)>();
+    _value.callback = new (std::nothrow) std::function<void(GLProgram*, Uniform*)>();
 	*_value.callback = callback;
 
     _type = Type::CALLBACK_FN;
@@ -290,7 +289,7 @@ void VertexAttribValue::apply()
 
 void VertexAttribValue::setCallback(const std::function<void(VertexAttrib*)> &callback)
 {
-	_value.callback = new std::function<void(VertexAttrib*)>();
+	_value.callback = new (std::nothrow) std::function<void(VertexAttrib*)>();
 	*_value.callback = callback;
     _useCallback = true;
     _enabled = true;
@@ -311,6 +310,22 @@ void VertexAttribValue::setPointer(GLint size, GLenum type, GLboolean normalized
 // GLProgramState
 //
 //
+GLProgramState* GLProgramState::getOrCreateWithGLProgramName(const std::string& glProgramName, Texture2D* texture)
+{
+    if (texture != nullptr && texture->getAlphaTextureName() != 0) {
+        if (glProgramName == GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR) {
+            return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR);
+        }
+        else if (glProgramName == GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP) {
+            return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP);
+        }
+        else if (glProgramName == GLProgram::SHADER_NAME_POSITION_GRAYSCALE) {
+            return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_ETC1AS_POSITION_TEXTURE_GRAY_NO_MVP);
+        }
+    }
+
+    return GLProgramState::getOrCreateWithGLProgramName(glProgramName);
+}
 
 GLProgramState* GLProgramState::create(GLProgram *glprogram)
 {
