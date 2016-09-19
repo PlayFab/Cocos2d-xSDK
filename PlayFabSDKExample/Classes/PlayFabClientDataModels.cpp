@@ -7145,7 +7145,7 @@ void LoginWithAndroidDeviceIDRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("TitleId"); writer.String(TitleId.c_str());
-    if (AndroidDeviceId.length() > 0) { writer.String("AndroidDeviceId"); writer.String(AndroidDeviceId.c_str()); }
+    writer.String("AndroidDeviceId"); writer.String(AndroidDeviceId.c_str());
     if (OS.length() > 0) { writer.String("OS"); writer.String(OS.c_str()); }
     if (AndroidDevice.length() > 0) { writer.String("AndroidDevice"); writer.String(AndroidDevice.c_str()); }
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
