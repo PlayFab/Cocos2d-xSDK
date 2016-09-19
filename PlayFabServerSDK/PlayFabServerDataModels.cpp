@@ -64,6 +64,40 @@ bool AddCharacterVirtualCurrencyRequest::readFromValue(const rapidjson::Value& o
     return true;
 }
 
+AddFriendRequest::~AddFriendRequest()
+{
+
+}
+
+void AddFriendRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if (FriendPlayFabId.length() > 0) { writer.String("FriendPlayFabId"); writer.String(FriendPlayFabId.c_str()); }
+    if (FriendUsername.length() > 0) { writer.String("FriendUsername"); writer.String(FriendUsername.c_str()); }
+    if (FriendEmail.length() > 0) { writer.String("FriendEmail"); writer.String(FriendEmail.c_str()); }
+    if (FriendTitleDisplayName.length() > 0) { writer.String("FriendTitleDisplayName"); writer.String(FriendTitleDisplayName.c_str()); }
+
+    writer.EndObject();
+}
+
+bool AddFriendRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator FriendPlayFabId_member = obj.FindMember("FriendPlayFabId");
+    if (FriendPlayFabId_member != obj.MemberEnd() && !FriendPlayFabId_member->value.IsNull()) FriendPlayFabId = FriendPlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator FriendUsername_member = obj.FindMember("FriendUsername");
+    if (FriendUsername_member != obj.MemberEnd() && !FriendUsername_member->value.IsNull()) FriendUsername = FriendUsername_member->value.GetString();
+    const Value::ConstMemberIterator FriendEmail_member = obj.FindMember("FriendEmail");
+    if (FriendEmail_member != obj.MemberEnd() && !FriendEmail_member->value.IsNull()) FriendEmail = FriendEmail_member->value.GetString();
+    const Value::ConstMemberIterator FriendTitleDisplayName_member = obj.FindMember("FriendTitleDisplayName");
+    if (FriendTitleDisplayName_member != obj.MemberEnd() && !FriendTitleDisplayName_member->value.IsNull()) FriendTitleDisplayName = FriendTitleDisplayName_member->value.GetString();
+
+    return true;
+}
+
 AddPlayerTagRequest::~AddPlayerTagRequest()
 {
 
@@ -2036,6 +2070,47 @@ bool DeleteUsersResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeregisterGameRequest::~DeregisterGameRequest()
+{
+
+}
+
+void DeregisterGameRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("LobbyId"); writer.String(LobbyId.c_str());
+
+    writer.EndObject();
+}
+
+bool DeregisterGameRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
+    if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
+
+    return true;
+}
+
+DeregisterGameResponse::~DeregisterGameResponse()
+{
+
+}
+
+void DeregisterGameResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool DeregisterGameResponse::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 EmptyResult::~EmptyResult()
 {
 
@@ -3023,6 +3098,105 @@ bool GetContentDownloadUrlResult::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator URL_member = obj.FindMember("URL");
     if (URL_member != obj.MemberEnd() && !URL_member->value.IsNull()) URL = URL_member->value.GetString();
+
+    return true;
+}
+
+GetFriendLeaderboardRequest::~GetFriendLeaderboardRequest()
+{
+
+}
+
+void GetFriendLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.String("StatisticName"); writer.String(StatisticName.c_str());
+    writer.String("StartPosition"); writer.Int(StartPosition);
+    writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
+    if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
+    if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
+
+    writer.EndObject();
+}
+
+bool GetFriendLeaderboardRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
+    if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
+    const Value::ConstMemberIterator StartPosition_member = obj.FindMember("StartPosition");
+    if (StartPosition_member != obj.MemberEnd() && !StartPosition_member->value.IsNull()) StartPosition = StartPosition_member->value.GetInt();
+    const Value::ConstMemberIterator MaxResultsCount_member = obj.FindMember("MaxResultsCount");
+    if (MaxResultsCount_member != obj.MemberEnd() && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
+    const Value::ConstMemberIterator IncludeSteamFriends_member = obj.FindMember("IncludeSteamFriends");
+    if (IncludeSteamFriends_member != obj.MemberEnd() && !IncludeSteamFriends_member->value.IsNull()) IncludeSteamFriends = IncludeSteamFriends_member->value.GetBool();
+    const Value::ConstMemberIterator IncludeFacebookFriends_member = obj.FindMember("IncludeFacebookFriends");
+    if (IncludeFacebookFriends_member != obj.MemberEnd() && !IncludeFacebookFriends_member->value.IsNull()) IncludeFacebookFriends = IncludeFacebookFriends_member->value.GetBool();
+
+    return true;
+}
+
+GetFriendsListRequest::~GetFriendsListRequest()
+{
+
+}
+
+void GetFriendsListRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
+    if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
+
+    writer.EndObject();
+}
+
+bool GetFriendsListRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator IncludeSteamFriends_member = obj.FindMember("IncludeSteamFriends");
+    if (IncludeSteamFriends_member != obj.MemberEnd() && !IncludeSteamFriends_member->value.IsNull()) IncludeSteamFriends = IncludeSteamFriends_member->value.GetBool();
+    const Value::ConstMemberIterator IncludeFacebookFriends_member = obj.FindMember("IncludeFacebookFriends");
+    if (IncludeFacebookFriends_member != obj.MemberEnd() && !IncludeFacebookFriends_member->value.IsNull()) IncludeFacebookFriends = IncludeFacebookFriends_member->value.GetBool();
+
+    return true;
+}
+
+GetFriendsListResult::~GetFriendsListResult()
+{
+
+}
+
+void GetFriendsListResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Friends.empty()) {
+    writer.String("Friends");
+    writer.StartArray();
+    for (std::list<FriendInfo>::iterator iter = Friends.begin(); iter != Friends.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetFriendsListResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Friends_member = obj.FindMember("Friends");
+    if (Friends_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Friends_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Friends.push_back(FriendInfo(memberList[i]));
+        }
+    }
 
     return true;
 }
@@ -6389,6 +6563,179 @@ bool RedeemMatchmakerTicketResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+RefreshGameServerInstanceHeartbeatRequest::~RefreshGameServerInstanceHeartbeatRequest()
+{
+
+}
+
+void RefreshGameServerInstanceHeartbeatRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("LobbyId"); writer.String(LobbyId.c_str());
+
+    writer.EndObject();
+}
+
+bool RefreshGameServerInstanceHeartbeatRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
+    if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
+
+    return true;
+}
+
+RefreshGameServerInstanceHeartbeatResult::~RefreshGameServerInstanceHeartbeatResult()
+{
+
+}
+
+void RefreshGameServerInstanceHeartbeatResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool RefreshGameServerInstanceHeartbeatResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+void PlayFab::ServerModels::writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case RegionUSCentral: writer.String("USCentral"); break;
+    case RegionUSEast: writer.String("USEast"); break;
+    case RegionEUWest: writer.String("EUWest"); break;
+    case RegionSingapore: writer.String("Singapore"); break;
+    case RegionJapan: writer.String("Japan"); break;
+    case RegionBrazil: writer.String("Brazil"); break;
+    case RegionAustralia: writer.String("Australia"); break;
+
+    }
+}
+
+Region PlayFab::ServerModels::readRegionFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, Region> _RegionMap;
+    if (_RegionMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _RegionMap["USCentral"] = RegionUSCentral;
+        _RegionMap["USEast"] = RegionUSEast;
+        _RegionMap["EUWest"] = RegionEUWest;
+        _RegionMap["Singapore"] = RegionSingapore;
+        _RegionMap["Japan"] = RegionJapan;
+        _RegionMap["Brazil"] = RegionBrazil;
+        _RegionMap["Australia"] = RegionAustralia;
+
+    }
+
+    auto output = _RegionMap.find(obj.GetString());
+    if (output != _RegionMap.end())
+        return output->second;
+
+    return RegionUSCentral; // Basically critical fail
+}
+
+RegisterGameRequest::~RegisterGameRequest()
+{
+
+}
+
+void RegisterGameRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("ServerHost"); writer.String(ServerHost.c_str());
+    writer.String("ServerPort"); writer.String(ServerPort.c_str());
+    writer.String("Build"); writer.String(Build.c_str());
+    writer.String("Region"); writeRegionEnumJSON(pfRegion, writer);
+    writer.String("GameMode"); writer.String(GameMode.c_str());
+    if (!Tags.empty()) {
+    writer.String("Tags");
+    writer.StartObject();
+    for (std::map<std::string, std::string>::iterator iter = Tags.begin(); iter != Tags.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+    }
+    writer.EndObject();
+     }
+
+    writer.EndObject();
+}
+
+bool RegisterGameRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ServerHost_member = obj.FindMember("ServerHost");
+    if (ServerHost_member != obj.MemberEnd() && !ServerHost_member->value.IsNull()) ServerHost = ServerHost_member->value.GetString();
+    const Value::ConstMemberIterator ServerPort_member = obj.FindMember("ServerPort");
+    if (ServerPort_member != obj.MemberEnd() && !ServerPort_member->value.IsNull()) ServerPort = ServerPort_member->value.GetString();
+    const Value::ConstMemberIterator Build_member = obj.FindMember("Build");
+    if (Build_member != obj.MemberEnd() && !Build_member->value.IsNull()) Build = Build_member->value.GetString();
+    const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
+    if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
+    const Value::ConstMemberIterator GameMode_member = obj.FindMember("GameMode");
+    if (GameMode_member != obj.MemberEnd() && !GameMode_member->value.IsNull()) GameMode = GameMode_member->value.GetString();
+    const Value::ConstMemberIterator Tags_member = obj.FindMember("Tags");
+    if (Tags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Tags_member->value.MemberBegin(); iter != Tags_member->value.MemberEnd(); ++iter) {
+            Tags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+
+    return true;
+}
+
+RegisterGameResponse::~RegisterGameResponse()
+{
+
+}
+
+void RegisterGameResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (LobbyId.length() > 0) { writer.String("LobbyId"); writer.String(LobbyId.c_str()); }
+
+    writer.EndObject();
+}
+
+bool RegisterGameResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
+    if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
+
+    return true;
+}
+
+RemoveFriendRequest::~RemoveFriendRequest()
+{
+
+}
+
+void RemoveFriendRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("FriendPlayFabId"); writer.String(FriendPlayFabId.c_str());
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+
+    writer.EndObject();
+}
+
+bool RemoveFriendRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator FriendPlayFabId_member = obj.FindMember("FriendPlayFabId");
+    if (FriendPlayFabId_member != obj.MemberEnd() && !FriendPlayFabId_member->value.IsNull()) FriendPlayFabId = FriendPlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
 RemovePlayerTagRequest::~RemovePlayerTagRequest()
 {
 
@@ -6845,6 +7192,60 @@ void SetGameServerInstanceStateResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool SetGameServerInstanceStateResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+SetGameServerInstanceTagsRequest::~SetGameServerInstanceTagsRequest()
+{
+
+}
+
+void SetGameServerInstanceTagsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("LobbyId"); writer.String(LobbyId.c_str());
+    writer.String("Tags");
+    writer.StartObject();
+    for (std::map<std::string, std::string>::iterator iter = Tags.begin(); iter != Tags.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+    }
+    writer.EndObject();
+    
+
+    writer.EndObject();
+}
+
+bool SetGameServerInstanceTagsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
+    if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
+    const Value::ConstMemberIterator Tags_member = obj.FindMember("Tags");
+    if (Tags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Tags_member->value.MemberBegin(); iter != Tags_member->value.MemberEnd(); ++iter) {
+            Tags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+
+    return true;
+}
+
+SetGameServerInstanceTagsResult::~SetGameServerInstanceTagsResult()
+{
+
+}
+
+void SetGameServerInstanceTagsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool SetGameServerInstanceTagsResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;

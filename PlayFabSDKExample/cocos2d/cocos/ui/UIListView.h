@@ -128,7 +128,7 @@ public:
     static ListView* create();
     
     /**
-     * Set a item model for listview.
+     * Set an item model for listview.
      *
      * When calling `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.
      * @param model  Model in `Widget*`.
@@ -142,13 +142,13 @@ public:
     
     /**
      * Insert a default item(create by cloning model) into listview at a give index.
-     *@param index  A index in ssize_t.
+     *@param index  An index in ssize_t.
      */
     void insertDefaultItem(ssize_t index);
     
     /**
      * Insert a  custom item into the end of ListView.
-     *@param item A item in `Widget*`.
+     *@param item An item in `Widget*`.
      */
     void pushBackCustomItem(Widget* item);
     
@@ -167,7 +167,7 @@ public:
     void removeLastItem();
     
     /**
-     * Remove a item at given index.
+     * Remove an item at given index.
      *
      * @param index A given index in ssize_t.
      */
@@ -181,7 +181,7 @@ public:
     void removeAllItems();
     
     /**
-     * Return a item at a given index.
+     * Return an item at a given index.
      *
      * @param index A given index in ssize_t.
      * @return A widget instance.
@@ -232,7 +232,7 @@ public:
     /**
      * Set the margin between each item in ListView.
      *
-     * @param margin
+     * @param margin A margin in float.
      */
     void setItemsMargin(float margin);
     
@@ -244,6 +244,21 @@ public:
      */
     float getItemsMargin()const;
     
+    /**
+     * Set the time in seconds to scroll between items.
+     * Subsequent calls of function 'scrollToItem', will take 'time' seconds for scrolling.
+     * @param time The seconds needed to scroll between two items. 'time' must be >= 0
+     * @see scrollToItem(ssize_t, const Vec2&, const Vec2&)
+     */
+    void  setScrollDuration(float time);
+    
+     /**
+     * Get the time in seconds to scroll between items.
+     * @return The time in seconds to scroll between items
+     * @see setScrollDuration(float)
+     */
+    float getScrollDuration() const;
+    
     //override methods
     virtual void doLayout() override;
     virtual void requestDoLayout() override;
@@ -253,14 +268,14 @@ public:
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    virtual void removeChild(Node* child, bool cleaup = true) override;
+    virtual void removeChild(Node* child, bool cleanup = true) override;
 
     /**
      * @brief Query the closest item to a specific position in inner container.
      *
      * @param targetPosition Specifies the target position in inner container's coordinates.
      * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
-     * @return A item instance if list view is not empty. Otherwise, returns null.
+     * @return An item instance if list view is not empty. Otherwise, returns null.
      */
     Widget* getClosestItemToPosition(const Vec2& targetPosition, const Vec2& itemAnchorPoint) const;
     
@@ -270,37 +285,37 @@ public:
      *
      * @param positionRatioInView Specifies the target position with ratio in list view's content size.
      * @param itemAnchorPoint Specifies an anchor point of each item for position to calculate distance.
-     * @return A item instance if list view is not empty. Otherwise, returns null.
+     * @return An item instance if list view is not empty. Otherwise, returns null.
      */
     Widget* getClosestItemToPositionInCurrentView(const Vec2& positionRatioInView, const Vec2& itemAnchorPoint) const;
     
     /**
      * @brief Query the center item
-     * @return A item instance.
+     * @return An item instance.
      */
     Widget* getCenterItemInCurrentView() const;
     
     /**
      * @brief Query the leftmost item in horizontal list
-     * @return A item instance.
+     * @return An item instance.
      */
     Widget* getLeftmostItemInCurrentView() const;
     
     /**
      * @brief Query the rightmost item in horizontal list
-     * @return A item instance.
+     * @return An item instance.
      */
     Widget* getRightmostItemInCurrentView() const;
     
     /**
      * @brief Query the topmost item in horizontal list
-     * @return A item instance.
+     * @return An item instance.
      */
     Widget* getTopmostItemInCurrentView() const;
     
     /**
      * @brief Query the bottommost item in horizontal list
-     * @return A item instance.
+     * @return An item instance.
      */
     Widget* getBottommostItemInCurrentView() const;
 
@@ -337,15 +352,21 @@ public:
     void scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, const Vec2& itemAnchorPoint, float timeInSec);
     
     /**
-     * @brief Query current selected widget's idnex.
+     * @brief Query current selected widget's index.
      *
      
-     * @return A index of a selected item.
+     * @return An index of a selected item.
      */
     ssize_t getCurSelectedIndex() const;
     
     /**
-     * Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.
+     * @brief Set current selected widget's index and call TouchEventType::ENDED event.
+     * @param itemIndex A index of a selected item.
+     */
+     void setCurSelectedIndex(int itemIndex);
+    
+    /**
+     * Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      *@deprecated Use  `addEventListener` instead.
      *@param target A pointer of `Ref*` type.
      *@param selector A member function pointer with type of `SEL_ListViewEvent`.
@@ -353,7 +374,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE void addEventListenerListView(Ref* target, SEL_ListViewEvent selector);
 
     /**
-     * Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.
+     * Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      *@param callback A callback function with type of `ccListViewCallback`.
      */
     void addEventListener(const ccListViewCallback& callback);
@@ -420,6 +441,8 @@ protected:
     bool _magneticAllowedOutOfBoundary;
     
     float _itemsMargin;
+    
+    float _scrollTime;
     
     ssize_t _curSelectedIndex;
 
