@@ -1018,6 +1018,54 @@ void PlayFabAdminAPI::OnIncrementPlayerStatisticVersionResult(int httpStatus, Ht
     delete request;
 }
 
+void PlayFabAdminAPI::RefundPurchase(
+    RefundPurchaseRequest& request,
+    ProcessApiCallback<RefundPurchaseResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/RefundPurchase"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RefundPurchaseResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRefundPurchaseResult, userData);
+}
+
+void PlayFabAdminAPI::OnRefundPurchaseResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    RefundPurchaseResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<RefundPurchaseResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabAdminAPI::ResetUserStatistics(
     ResetUserStatisticsRequest& request,
     ProcessApiCallback<ResetUserStatisticsResult> callback,
@@ -1053,6 +1101,54 @@ void PlayFabAdminAPI::OnResetUserStatisticsResult(int httpStatus, HttpRequest* r
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<ResetUserStatisticsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabAdminAPI::ResolvePurchaseDispute(
+    ResolvePurchaseDisputeRequest& request,
+    ProcessApiCallback<ResolvePurchaseDisputeResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/ResolvePurchaseDispute"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ResolvePurchaseDisputeResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnResolvePurchaseDisputeResult, userData);
+}
+
+void PlayFabAdminAPI::OnResolvePurchaseDisputeResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ResolvePurchaseDisputeResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<ResolvePurchaseDisputeResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

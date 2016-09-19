@@ -119,7 +119,7 @@ static void SetBlending(GLenum sfactor, GLenum dfactor)
 
         RenderState::StateBlock::_defaultState->setBlend(true);
         RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)sfactor);
-        RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)dfactor);
+        RenderState::StateBlock::_defaultState->setBlendDst((RenderState::Blend)dfactor);
     }
 }
 
@@ -150,6 +150,15 @@ void blendResetToCache(void)
 void bindTexture2D(GLuint textureId)
 {
     GL::bindTexture2DN(0, textureId);
+}
+
+void bindTexture2D(Texture2D* texture)
+{
+    GL::bindTexture2DN(0, texture->getName());
+    auto alphaTexID = texture->getAlphaTextureName();
+    if (alphaTexID > 0) {
+        GL::bindTexture2DN(1, alphaTexID);
+    }
 }
 
 void bindTexture2DN(GLuint textureUnit, GLuint textureId)
