@@ -5537,6 +5537,53 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct RefreshGameServerInstanceHeartbeatRequest : public PlayFabBaseModel
+        {
+            std::string LobbyId;
+
+            RefreshGameServerInstanceHeartbeatRequest() :
+                PlayFabBaseModel(),
+                LobbyId()
+            {}
+
+            RefreshGameServerInstanceHeartbeatRequest(const RefreshGameServerInstanceHeartbeatRequest& src) :
+                PlayFabBaseModel(),
+                LobbyId(src.LobbyId)
+            {}
+
+            RefreshGameServerInstanceHeartbeatRequest(const rapidjson::Value& obj) : RefreshGameServerInstanceHeartbeatRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RefreshGameServerInstanceHeartbeatRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RefreshGameServerInstanceHeartbeatResult : public PlayFabBaseModel
+        {
+
+            RefreshGameServerInstanceHeartbeatResult() :
+                PlayFabBaseModel()
+            {}
+
+            RefreshGameServerInstanceHeartbeatResult(const RefreshGameServerInstanceHeartbeatResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            RefreshGameServerInstanceHeartbeatResult(const rapidjson::Value& obj) : RefreshGameServerInstanceHeartbeatResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RefreshGameServerInstanceHeartbeatResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum Region
         {
             RegionUSCentral,
@@ -6107,6 +6154,56 @@ namespace PlayFab
             }
 
             ~SetGameServerInstanceStateResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetGameServerInstanceTagsRequest : public PlayFabBaseModel
+        {
+            std::string LobbyId;
+            std::map<std::string, std::string> Tags;
+
+            SetGameServerInstanceTagsRequest() :
+                PlayFabBaseModel(),
+                LobbyId(),
+                Tags()
+            {}
+
+            SetGameServerInstanceTagsRequest(const SetGameServerInstanceTagsRequest& src) :
+                PlayFabBaseModel(),
+                LobbyId(src.LobbyId),
+                Tags(src.Tags)
+            {}
+
+            SetGameServerInstanceTagsRequest(const rapidjson::Value& obj) : SetGameServerInstanceTagsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetGameServerInstanceTagsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetGameServerInstanceTagsResult : public PlayFabBaseModel
+        {
+
+            SetGameServerInstanceTagsResult() :
+                PlayFabBaseModel()
+            {}
+
+            SetGameServerInstanceTagsResult(const SetGameServerInstanceTagsResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            SetGameServerInstanceTagsResult(const rapidjson::Value& obj) : SetGameServerInstanceTagsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetGameServerInstanceTagsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

@@ -3274,6 +3274,54 @@ void PlayFabServerAPI::OnRedeemMatchmakerTicketResult(int httpStatus, HttpReques
     delete request;
 }
 
+void PlayFabServerAPI::RefreshGameServerInstanceHeartbeat(
+    RefreshGameServerInstanceHeartbeatRequest& request,
+    ProcessApiCallback<RefreshGameServerInstanceHeartbeatResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/RefreshGameServerInstanceHeartbeat"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RefreshGameServerInstanceHeartbeatResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRefreshGameServerInstanceHeartbeatResult, userData);
+}
+
+void PlayFabServerAPI::OnRefreshGameServerInstanceHeartbeatResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    RefreshGameServerInstanceHeartbeatResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<RefreshGameServerInstanceHeartbeatResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabServerAPI::RegisterGame(
     RegisterGameRequest& request,
     ProcessApiCallback<RegisterGameResponse> callback,
@@ -3405,6 +3453,54 @@ void PlayFabServerAPI::OnSetGameServerInstanceStateResult(int httpStatus, HttpRe
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<SetGameServerInstanceStateResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabServerAPI::SetGameServerInstanceTags(
+    SetGameServerInstanceTagsRequest& request,
+    ProcessApiCallback<SetGameServerInstanceTagsResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/SetGameServerInstanceTags"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<SetGameServerInstanceTagsResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnSetGameServerInstanceTagsResult, userData);
+}
+
+void PlayFabServerAPI::OnSetGameServerInstanceTagsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    SetGameServerInstanceTagsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<SetGameServerInstanceTagsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

@@ -6562,6 +6562,47 @@ bool RedeemMatchmakerTicketResult::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+
+RefreshGameServerInstanceHeartbeatRequest::~RefreshGameServerInstanceHeartbeatRequest()
+{
+
+}
+
+void RefreshGameServerInstanceHeartbeatRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("LobbyId"); writer.String(LobbyId.c_str());
+
+    writer.EndObject();
+}
+
+bool RefreshGameServerInstanceHeartbeatRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
+    if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
+
+    return true;
+}
+
+RefreshGameServerInstanceHeartbeatResult::~RefreshGameServerInstanceHeartbeatResult()
+{
+
+}
+
+void RefreshGameServerInstanceHeartbeatResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool RefreshGameServerInstanceHeartbeatResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
 void PlayFab::ServerModels::writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -7151,6 +7192,60 @@ void SetGameServerInstanceStateResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool SetGameServerInstanceStateResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+SetGameServerInstanceTagsRequest::~SetGameServerInstanceTagsRequest()
+{
+
+}
+
+void SetGameServerInstanceTagsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("LobbyId"); writer.String(LobbyId.c_str());
+    writer.String("Tags");
+    writer.StartObject();
+    for (std::map<std::string, std::string>::iterator iter = Tags.begin(); iter != Tags.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+    }
+    writer.EndObject();
+    
+
+    writer.EndObject();
+}
+
+bool SetGameServerInstanceTagsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
+    if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
+    const Value::ConstMemberIterator Tags_member = obj.FindMember("Tags");
+    if (Tags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Tags_member->value.MemberBegin(); iter != Tags_member->value.MemberEnd(); ++iter) {
+            Tags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+
+    return true;
+}
+
+SetGameServerInstanceTagsResult::~SetGameServerInstanceTagsResult()
+{
+
+}
+
+void SetGameServerInstanceTagsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool SetGameServerInstanceTagsResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
