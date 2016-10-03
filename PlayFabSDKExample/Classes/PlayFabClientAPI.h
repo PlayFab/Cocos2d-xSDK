@@ -90,6 +90,7 @@ namespace PlayFab
         static void GetCatalogItems(ClientModels::GetCatalogItemsRequest& request, ProcessApiCallback<ClientModels::GetCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPublisherData(ClientModels::GetPublisherDataRequest& request, ProcessApiCallback<ClientModels::GetPublisherDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetStoreItems(ClientModels::GetStoreItemsRequest& request, ProcessApiCallback<ClientModels::GetStoreItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetTime(ProcessApiCallback<ClientModels::GetTimeResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleData(ClientModels::GetTitleDataRequest& request, ProcessApiCallback<ClientModels::GetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleNews(ClientModels::GetTitleNewsRequest& request, ProcessApiCallback<ClientModels::GetTitleNewsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddUserVirtualCurrency(ClientModels::AddUserVirtualCurrencyRequest& request, ProcessApiCallback<ClientModels::ModifyUserVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -226,6 +227,7 @@ namespace PlayFab
         static void OnGetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetStoreItemsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetTimeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleNewsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);

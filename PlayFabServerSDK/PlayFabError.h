@@ -256,7 +256,12 @@ namespace PlayFab
         PlayFabErrorRequestAlreadyRunning = 1249,
         PlayFabErrorActionGroupNotFound = 1250,
         PlayFabErrorMaximumSegmentBulkActionJobsRunning = 1251,
-        PlayFabErrorNoActionsOnPlayersInSegmentJob = 1252
+        PlayFabErrorNoActionsOnPlayersInSegmentJob = 1252,
+        PlayFabErrorDuplicateStatisticName = 1253,
+        PlayFabErrorScheduledTaskNameConflict = 1254,
+        PlayFabErrorScheduledTaskCreateConflict = 1255,
+        PlayFabErrorInvalidScheduledTaskName = 1256,
+        PlayFabErrorInvalidTaskSchedule = 1257
     };
 
     struct PlayFabError
