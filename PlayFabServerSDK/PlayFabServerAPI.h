@@ -50,6 +50,7 @@ namespace PlayFab
         static void UpdateUserStatistics(ServerModels::UpdateUserStatisticsRequest& request, ProcessApiCallback<ServerModels::UpdateUserStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCatalogItems(ServerModels::GetCatalogItemsRequest& request, ProcessApiCallback<ServerModels::GetCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPublisherData(ServerModels::GetPublisherDataRequest& request, ProcessApiCallback<ServerModels::GetPublisherDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetTime(ProcessApiCallback<ServerModels::GetTimeResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleData(ServerModels::GetTitleDataRequest& request, ProcessApiCallback<ServerModels::GetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleInternalData(ServerModels::GetTitleDataRequest& request, ProcessApiCallback<ServerModels::GetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleNews(ServerModels::GetTitleNewsRequest& request, ProcessApiCallback<ServerModels::GetTitleNewsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -164,6 +165,7 @@ namespace PlayFab
         static void OnUpdateUserStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetTimeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleNewsResult(int httpStatus, HttpRequest* request, void* userData);

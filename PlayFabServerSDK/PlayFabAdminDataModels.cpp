@@ -3327,7 +3327,6 @@ void PlayFab::AdminModels::writeSourceTypeEnumJSON(SourceType enumVal, PFStringJ
     case SourceTypeGameClient: writer.String("GameClient"); break;
     case SourceTypeGameServer: writer.String("GameServer"); break;
     case SourceTypePartner: writer.String("Partner"); break;
-    case SourceTypeStream: writer.String("Stream"); break;
 
     }
 }
@@ -3343,7 +3342,6 @@ SourceType PlayFab::AdminModels::readSourceTypeFromValue(const rapidjson::Value&
         _SourceTypeMap["GameClient"] = SourceTypeGameClient;
         _SourceTypeMap["GameServer"] = SourceTypeGameServer;
         _SourceTypeMap["Partner"] = SourceTypePartner;
-        _SourceTypeMap["Stream"] = SourceTypeStream;
 
     }
 
