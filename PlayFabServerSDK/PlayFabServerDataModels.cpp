@@ -5077,6 +5077,47 @@ bool GetSharedGroupDataResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetTimeRequest::~GetTimeRequest()
+{
+
+}
+
+void GetTimeRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool GetTimeRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+GetTimeResult::~GetTimeResult()
+{
+
+}
+
+void GetTimeResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Time"); writeDatetime(Time, writer);
+
+    writer.EndObject();
+}
+
+bool GetTimeResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Time_member = obj.FindMember("Time");
+    if (Time_member != obj.MemberEnd() && !Time_member->value.IsNull()) Time = readDatetime(Time_member->value);
+
+    return true;
+}
+
 GetTitleDataRequest::~GetTitleDataRequest()
 {
 

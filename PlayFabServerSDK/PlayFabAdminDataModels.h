@@ -2716,8 +2716,7 @@ namespace PlayFab
             SourceTypeBackEnd,
             SourceTypeGameClient,
             SourceTypeGameServer,
-            SourceTypePartner,
-            SourceTypeStream
+            SourceTypePartner
         };
 
         void writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer);

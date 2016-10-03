@@ -4774,8 +4774,7 @@ namespace PlayFab
             SourceTypeBackEnd,
             SourceTypeGameClient,
             SourceTypeGameServer,
-            SourceTypePartner,
-            SourceTypeStream
+            SourceTypePartner
         };
 
         void writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer);
@@ -4844,6 +4843,53 @@ namespace PlayFab
             }
 
             ~GetStoreItemsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetTimeRequest : public PlayFabBaseModel
+        {
+
+            GetTimeRequest() :
+                PlayFabBaseModel()
+            {}
+
+            GetTimeRequest(const GetTimeRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            GetTimeRequest(const rapidjson::Value& obj) : GetTimeRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetTimeRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetTimeResult : public PlayFabBaseModel
+        {
+            time_t Time;
+
+            GetTimeResult() :
+                PlayFabBaseModel(),
+                Time(0)
+            {}
+
+            GetTimeResult(const GetTimeResult& src) :
+                PlayFabBaseModel(),
+                Time(src.Time)
+            {}
+
+            GetTimeResult(const rapidjson::Value& obj) : GetTimeResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetTimeResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -6697,6 +6743,7 @@ namespace PlayFab
             std::string ProviderData;
             std::string PurchaseConfirmationPageURL;
             std::map<std::string, Int32> VirtualCurrency;
+            std::string ProviderToken;
 
             PayForPurchaseResult() :
                 PlayFabBaseModel(),
@@ -6708,7 +6755,8 @@ namespace PlayFab
                 CreditApplied(0),
                 ProviderData(),
                 PurchaseConfirmationPageURL(),
-                VirtualCurrency()
+                VirtualCurrency(),
+                ProviderToken()
             {}
 
             PayForPurchaseResult(const PayForPurchaseResult& src) :
@@ -6721,7 +6769,8 @@ namespace PlayFab
                 CreditApplied(src.CreditApplied),
                 ProviderData(src.ProviderData),
                 PurchaseConfirmationPageURL(src.PurchaseConfirmationPageURL),
-                VirtualCurrency(src.VirtualCurrency)
+                VirtualCurrency(src.VirtualCurrency),
+                ProviderToken(src.ProviderToken)
             {}
 
             PayForPurchaseResult(const rapidjson::Value& obj) : PayForPurchaseResult()
