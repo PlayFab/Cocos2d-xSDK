@@ -261,7 +261,8 @@ namespace PlayFab
         PlayFabErrorScheduledTaskNameConflict = 1254,
         PlayFabErrorScheduledTaskCreateConflict = 1255,
         PlayFabErrorInvalidScheduledTaskName = 1256,
-        PlayFabErrorInvalidTaskSchedule = 1257
+        PlayFabErrorInvalidTaskSchedule = 1257,
+        PlayFabErrorSteamNotEnabledForTitle = 1258
     };
 
     struct PlayFabError

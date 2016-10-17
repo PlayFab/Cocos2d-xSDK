@@ -4438,6 +4438,7 @@ namespace PlayFab
         struct UserCredentials : public PlayFabBaseModel
         {
             std::string Username;
+            // Deprecated - Do not use
             std::string Password;
 
             UserCredentials() :
@@ -5195,15 +5196,12 @@ namespace PlayFab
 
         struct UpdateCloudScriptRequest : public PlayFabBaseModel
         {
-            // Deprecated - Do not use
-            OptionalInt32 Version;
             std::list<CloudScriptFile> Files;
             bool Publish;
             std::string DeveloperPlayFabId;
 
             UpdateCloudScriptRequest() :
                 PlayFabBaseModel(),
-                Version(),
                 Files(),
                 Publish(false),
                 DeveloperPlayFabId()
@@ -5211,7 +5209,6 @@ namespace PlayFab
 
             UpdateCloudScriptRequest(const UpdateCloudScriptRequest& src) :
                 PlayFabBaseModel(),
-                Version(src.Version),
                 Files(src.Files),
                 Publish(src.Publish),
                 DeveloperPlayFabId(src.DeveloperPlayFabId)

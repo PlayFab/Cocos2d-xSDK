@@ -152,14 +152,13 @@ void AddSharedGroupMembersRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("SharedGroupId"); writer.String(SharedGroupId.c_str());
-    if (!PlayFabIds.empty()) {
     writer.String("PlayFabIds");
     writer.StartArray();
     for (std::list<std::string>::iterator iter = PlayFabIds.begin(); iter != PlayFabIds.end(); iter++) {
         writer.String(iter->c_str());
     }
     writer.EndArray();
-     }
+    
 
     writer.EndObject();
 }
@@ -2002,7 +2001,7 @@ void DeleteSharedGroupRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    if (SharedGroupId.length() > 0) { writer.String("SharedGroupId"); writer.String(SharedGroupId.c_str()); }
+    writer.String("SharedGroupId"); writer.String(SharedGroupId.c_str());
 
     writer.EndObject();
 }
@@ -2304,7 +2303,7 @@ void ExecuteCloudScriptServerRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     writer.String("FunctionName"); writer.String(FunctionName.c_str());
     if (FunctionParameter.notNull()) { writer.String("FunctionParameter"); FunctionParameter.writeJSON(writer); }
     if (RevisionSelection.notNull()) { writer.String("RevisionSelection"); writeCloudScriptRevisionOptionEnumJSON(RevisionSelection, writer); }
@@ -4627,14 +4626,6 @@ void GetPlayFabIDsFromSteamIDsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    if (!SteamIDs.empty()) {
-    writer.String("SteamIDs");
-    writer.StartArray();
-    for (std::list<Uint64>::iterator iter = SteamIDs.begin(); iter != SteamIDs.end(); iter++) {
-        writer.Uint64(*iter);
-    }
-    writer.EndArray();
-     }
     if (!SteamStringIDs.empty()) {
     writer.String("SteamStringIDs");
     writer.StartArray();
@@ -4649,13 +4640,6 @@ void GetPlayFabIDsFromSteamIDsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetPlayFabIDsFromSteamIDsRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator SteamIDs_member = obj.FindMember("SteamIDs");
-    if (SteamIDs_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = SteamIDs_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            SteamIDs.push_back(memberList[i].GetUint64());
-        }
-    }
     const Value::ConstMemberIterator SteamStringIDs_member = obj.FindMember("SteamStringIDs");
     if (SteamStringIDs_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = SteamStringIDs_member->value;
@@ -4676,7 +4660,6 @@ void SteamPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    writer.String("SteamId"); writer.Uint64(SteamId);
     if (SteamStringId.length() > 0) { writer.String("SteamStringId"); writer.String(SteamStringId.c_str()); }
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
 
@@ -4685,8 +4668,6 @@ void SteamPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
 
 bool SteamPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator SteamId_member = obj.FindMember("SteamId");
-    if (SteamId_member != obj.MemberEnd() && !SteamId_member->value.IsNull()) SteamId = SteamId_member->value.GetUint64();
     const Value::ConstMemberIterator SteamStringId_member = obj.FindMember("SteamStringId");
     if (SteamStringId_member != obj.MemberEnd() && !SteamStringId_member->value.IsNull()) SteamStringId = SteamStringId_member->value.GetString();
     const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
@@ -4967,7 +4948,7 @@ void GetSharedGroupDataRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    if (SharedGroupId.length() > 0) { writer.String("SharedGroupId"); writer.String(SharedGroupId.c_str()); }
+    writer.String("SharedGroupId"); writer.String(SharedGroupId.c_str());
     if (!Keys.empty()) {
     writer.String("Keys");
     writer.StartArray();
@@ -5539,64 +5520,6 @@ bool GetUserInventoryResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-GetUserStatisticsRequest::~GetUserStatisticsRequest()
-{
-
-}
-
-void GetUserStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
-    writer.EndObject();
-}
-
-bool GetUserStatisticsRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-
-    return true;
-}
-
-GetUserStatisticsResult::~GetUserStatisticsResult()
-{
-
-}
-
-void GetUserStatisticsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
-    if (!UserStatistics.empty()) {
-    writer.String("UserStatistics");
-    writer.StartObject();
-    for (std::map<std::string, Int32>::iterator iter = UserStatistics.begin(); iter != UserStatistics.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Int(iter->second);
-    }
-    writer.EndObject();
-     }
-
-    writer.EndObject();
-}
-
-bool GetUserStatisticsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::ConstMemberIterator UserStatistics_member = obj.FindMember("UserStatistics");
-    if (UserStatistics_member != obj.MemberEnd()) {
-        for (Value::ConstMemberIterator iter = UserStatistics_member->value.MemberBegin(); iter != UserStatistics_member->value.MemberEnd(); ++iter) {
-            UserStatistics[iter->name.GetString()] = iter->value.GetInt();
-        }
-    }
-
-    return true;
-}
-
 GrantCharacterToUserRequest::~GrantCharacterToUserRequest()
 {
 
@@ -6085,76 +6008,6 @@ bool ListUsersCharactersResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-LogEventRequest::~LogEventRequest()
-{
-
-}
-
-void LogEventRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
-    if (EntityId.length() > 0) { writer.String("EntityId"); writer.String(EntityId.c_str()); }
-    if (EntityType.length() > 0) { writer.String("EntityType"); writer.String(EntityType.c_str()); }
-    if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
-    if (EventName.length() > 0) { writer.String("EventName"); writer.String(EventName.c_str()); }
-    if (!Body.empty()) {
-    writer.String("Body");
-    writer.StartObject();
-    for (std::map<std::string, MultitypeVar>::iterator iter = Body.begin(); iter != Body.end(); ++iter) {
-        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
-    }
-    writer.EndObject();
-     }
-    writer.String("ProfileSetEvent"); writer.Bool(ProfileSetEvent);
-
-    writer.EndObject();
-}
-
-bool LogEventRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::ConstMemberIterator EntityId_member = obj.FindMember("EntityId");
-    if (EntityId_member != obj.MemberEnd() && !EntityId_member->value.IsNull()) EntityId = EntityId_member->value.GetString();
-    const Value::ConstMemberIterator EntityType_member = obj.FindMember("EntityType");
-    if (EntityType_member != obj.MemberEnd() && !EntityType_member->value.IsNull()) EntityType = EntityType_member->value.GetString();
-    const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
-    if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = readDatetime(Timestamp_member->value);
-    const Value::ConstMemberIterator EventName_member = obj.FindMember("EventName");
-    if (EventName_member != obj.MemberEnd() && !EventName_member->value.IsNull()) EventName = EventName_member->value.GetString();
-    const Value::ConstMemberIterator Body_member = obj.FindMember("Body");
-    if (Body_member != obj.MemberEnd()) {
-        for (Value::ConstMemberIterator iter = Body_member->value.MemberBegin(); iter != Body_member->value.MemberEnd(); ++iter) {
-            Body[iter->name.GetString()] = MultitypeVar(iter->value);
-        }
-    }
-    const Value::ConstMemberIterator ProfileSetEvent_member = obj.FindMember("ProfileSetEvent");
-    if (ProfileSetEvent_member != obj.MemberEnd() && !ProfileSetEvent_member->value.IsNull()) ProfileSetEvent = ProfileSetEvent_member->value.GetBool();
-
-    return true;
-}
-
-LogEventResult::~LogEventResult()
-{
-
-}
-
-void LogEventResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool LogEventResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
 ModifyCharacterVirtualCurrencyResult::~ModifyCharacterVirtualCurrencyResult()
 {
 
@@ -6440,7 +6293,6 @@ void PlayFab::ServerModels::writePlayerConnectionStateEnumJSON(PlayerConnectionS
     case PlayerConnectionStateConnecting: writer.String("Connecting"); break;
     case PlayerConnectionStateParticipating: writer.String("Participating"); break;
     case PlayerConnectionStateParticipated: writer.String("Participated"); break;
-    case PlayerConnectionStateReconnecting: writer.String("Reconnecting"); break;
 
     }
 }
@@ -6455,7 +6307,6 @@ PlayerConnectionState PlayFab::ServerModels::readPlayerConnectionStateFromValue(
         _PlayerConnectionStateMap["Connecting"] = PlayerConnectionStateConnecting;
         _PlayerConnectionStateMap["Participating"] = PlayerConnectionStateParticipating;
         _PlayerConnectionStateMap["Participated"] = PlayerConnectionStateParticipated;
-        _PlayerConnectionStateMap["Reconnecting"] = PlayerConnectionStateReconnecting;
 
     }
 
@@ -6831,14 +6682,13 @@ void RemoveSharedGroupMembersRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("SharedGroupId"); writer.String(SharedGroupId.c_str());
-    if (!PlayFabIds.empty()) {
     writer.String("PlayFabIds");
     writer.StartArray();
     for (std::list<std::string>::iterator iter = PlayFabIds.begin(); iter != PlayFabIds.end(); iter++) {
         writer.String(iter->c_str());
     }
     writer.EndArray();
-     }
+    
 
     writer.EndObject();
 }
@@ -8138,61 +7988,6 @@ bool UpdateUserInventoryItemDataRequest::readFromValue(const rapidjson::Value& o
             KeysToRemove.push_back(memberList[i].GetString());
         }
     }
-
-    return true;
-}
-
-UpdateUserStatisticsRequest::~UpdateUserStatisticsRequest()
-{
-
-}
-
-void UpdateUserStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-    if (!UserStatistics.empty()) {
-    writer.String("UserStatistics");
-    writer.StartObject();
-    for (std::map<std::string, Int32>::iterator iter = UserStatistics.begin(); iter != UserStatistics.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Int(iter->second);
-    }
-    writer.EndObject();
-     }
-
-    writer.EndObject();
-}
-
-bool UpdateUserStatisticsRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
-    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::ConstMemberIterator UserStatistics_member = obj.FindMember("UserStatistics");
-    if (UserStatistics_member != obj.MemberEnd()) {
-        for (Value::ConstMemberIterator iter = UserStatistics_member->value.MemberBegin(); iter != UserStatistics_member->value.MemberEnd(); ++iter) {
-            UserStatistics[iter->name.GetString()] = iter->value.GetInt();
-        }
-    }
-
-    return true;
-}
-
-UpdateUserStatisticsResult::~UpdateUserStatisticsResult()
-{
-
-}
-
-void UpdateUserStatisticsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool UpdateUserStatisticsResult::readFromValue(const rapidjson::Value& obj)
-{
 
     return true;
 }
