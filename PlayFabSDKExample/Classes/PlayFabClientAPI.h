@@ -67,12 +67,8 @@ namespace PlayFab
         static void UnlinkTwitch(ProcessApiCallback<ClientModels::UnlinkTwitchAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserTitleDisplayName(ClientModels::UpdateUserTitleDisplayNameRequest& request, ProcessApiCallback<ClientModels::UpdateUserTitleDisplayNameResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetFriendLeaderboard(ClientModels::GetFriendLeaderboardRequest& request, ProcessApiCallback<ClientModels::GetLeaderboardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'GetFriendLeaderboardAroundPlayer' instead
-        static void GetFriendLeaderboardAroundCurrentUser(ClientModels::GetFriendLeaderboardAroundCurrentUserRequest& request, ProcessApiCallback<ClientModels::GetFriendLeaderboardAroundCurrentUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetFriendLeaderboardAroundPlayer(ClientModels::GetFriendLeaderboardAroundPlayerRequest& request, ProcessApiCallback<ClientModels::GetFriendLeaderboardAroundPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboard(ClientModels::GetLeaderboardRequest& request, ProcessApiCallback<ClientModels::GetLeaderboardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'GetLeaderboardAroundPlayer' instead
-        static void GetLeaderboardAroundCurrentUser(ClientModels::GetLeaderboardAroundCurrentUserRequest& request, ProcessApiCallback<ClientModels::GetLeaderboardAroundCurrentUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboardAroundPlayer(ClientModels::GetLeaderboardAroundPlayerRequest& request, ProcessApiCallback<ClientModels::GetLeaderboardAroundPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerStatistics(ClientModels::GetPlayerStatisticsRequest& request, ProcessApiCallback<ClientModels::GetPlayerStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerStatisticVersions(ClientModels::GetPlayerStatisticVersionsRequest& request, ProcessApiCallback<ClientModels::GetPlayerStatisticVersionsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -80,13 +76,9 @@ namespace PlayFab
         static void GetUserPublisherData(ClientModels::GetUserDataRequest& request, ProcessApiCallback<ClientModels::GetUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserPublisherReadOnlyData(ClientModels::GetUserDataRequest& request, ProcessApiCallback<ClientModels::GetUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserReadOnlyData(ClientModels::GetUserDataRequest& request, ProcessApiCallback<ClientModels::GetUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'GetPlayerStatistics' instead
-        static void GetUserStatistics(ProcessApiCallback<ClientModels::GetUserStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdatePlayerStatistics(ClientModels::UpdatePlayerStatisticsRequest& request, ProcessApiCallback<ClientModels::UpdatePlayerStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserData(ClientModels::UpdateUserDataRequest& request, ProcessApiCallback<ClientModels::UpdateUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserPublisherData(ClientModels::UpdateUserDataRequest& request, ProcessApiCallback<ClientModels::UpdateUserDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'UpdatePlayerStatistics' instead
-        static void UpdateUserStatistics(ClientModels::UpdateUserStatisticsRequest& request, ProcessApiCallback<ClientModels::UpdateUserStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCatalogItems(ClientModels::GetCatalogItemsRequest& request, ProcessApiCallback<ClientModels::GetCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPublisherData(ClientModels::GetPublisherDataRequest& request, ProcessApiCallback<ClientModels::GetPublisherDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetStoreItems(ClientModels::GetStoreItemsRequest& request, ProcessApiCallback<ClientModels::GetStoreItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -119,8 +111,6 @@ namespace PlayFab
         static void StartGame(ClientModels::StartGameRequest& request, ProcessApiCallback<ClientModels::StartGameResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AndroidDevicePushNotificationRegistration(ClientModels::AndroidDevicePushNotificationRegistrationRequest& request, ProcessApiCallback<ClientModels::AndroidDevicePushNotificationRegistrationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ValidateGooglePlayPurchase(ClientModels::ValidateGooglePlayPurchaseRequest& request, ProcessApiCallback<ClientModels::ValidateGooglePlayPurchaseResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'WritePlayerEvent' instead
-        static void LogEvent(ClientModels::LogEventRequest& request, ProcessApiCallback<ClientModels::LogEventResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void WriteCharacterEvent(ClientModels::WriteClientCharacterEventRequest& request, ProcessApiCallback<ClientModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void WritePlayerEvent(ClientModels::WriteClientPlayerEventRequest& request, ProcessApiCallback<ClientModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void WriteTitleEvent(ClientModels::WriteTitleEventRequest& request, ProcessApiCallback<ClientModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -130,10 +120,6 @@ namespace PlayFab
         static void RemoveSharedGroupMembers(ClientModels::RemoveSharedGroupMembersRequest& request, ProcessApiCallback<ClientModels::RemoveSharedGroupMembersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateSharedGroupData(ClientModels::UpdateSharedGroupDataRequest& request, ProcessApiCallback<ClientModels::UpdateSharedGroupDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ExecuteCloudScript(ClientModels::ExecuteCloudScriptRequest& request, ProcessApiCallback<ClientModels::ExecuteCloudScriptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'ExecuteCloudScript' instead
-        static void GetCloudScriptUrl(ClientModels::GetCloudScriptUrlRequest& request, ProcessApiCallback<ClientModels::GetCloudScriptUrlResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'ExecuteCloudScript' instead
-        static void RunCloudScript(ClientModels::RunCloudScriptRequest& request, ProcessApiCallback<ClientModels::RunCloudScriptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetContentDownloadUrl(ClientModels::GetContentDownloadUrlRequest& request, ProcessApiCallback<ClientModels::GetContentDownloadUrlResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAllUsersCharacters(ClientModels::ListUsersCharactersRequest& request, ProcessApiCallback<ClientModels::ListUsersCharactersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCharacterLeaderboard(ClientModels::GetCharacterLeaderboardRequest& request, ProcessApiCallback<ClientModels::GetCharacterLeaderboardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -208,10 +194,8 @@ namespace PlayFab
         static void OnUnlinkTwitchResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetFriendLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetFriendLeaderboardAroundCurrentUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetFriendLeaderboardAroundPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetLeaderboardAroundCurrentUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardAroundPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerStatisticVersionsResult(int httpStatus, HttpRequest* request, void* userData);
@@ -219,11 +203,9 @@ namespace PlayFab
         static void OnGetUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserPublisherReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetUserStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdatePlayerStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnUpdateUserStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetStoreItemsResult(int httpStatus, HttpRequest* request, void* userData);
@@ -256,7 +238,6 @@ namespace PlayFab
         static void OnStartGameResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAndroidDevicePushNotificationRegistrationResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnValidateGooglePlayPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnLogEventResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnWriteCharacterEventResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnWritePlayerEventResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnWriteTitleEventResult(int httpStatus, HttpRequest* request, void* userData);
@@ -266,8 +247,6 @@ namespace PlayFab
         static void OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnExecuteCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetCloudScriptUrlResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnRunCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetContentDownloadUrlResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAllUsersCharactersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCharacterLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
