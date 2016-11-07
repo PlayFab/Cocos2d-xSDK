@@ -94,6 +94,16 @@ namespace PlayFab
         static void GetPlayersInSegment(AdminModels::GetPlayersInSegmentRequest& request, ProcessApiCallback<AdminModels::GetPlayersInSegmentResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerTags(AdminModels::GetPlayerTagsRequest& request, ProcessApiCallback<AdminModels::GetPlayerTagsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemovePlayerTag(AdminModels::RemovePlayerTagRequest& request, ProcessApiCallback<AdminModels::RemovePlayerTagResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void AbortTaskInstance(AdminModels::AbortTaskInstanceRequest& request, ProcessApiCallback<AdminModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void CreateActionsOnPlayersInSegmentTask(AdminModels::CreateActionsOnPlayerSegmentTaskRequest& request, ProcessApiCallback<AdminModels::CreateTaskResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void CreateCloudScriptTask(AdminModels::CreateCloudScriptTaskRequest& request, ProcessApiCallback<AdminModels::CreateTaskResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void DeleteTask(AdminModels::DeleteTaskRequest& request, ProcessApiCallback<AdminModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetActionsOnPlayersInSegmentTaskInstance(AdminModels::GetTaskInstanceRequest& request, ProcessApiCallback<AdminModels::GetActionsOnPlayersInSegmentTaskInstanceResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetCloudScriptTaskInstance(AdminModels::GetTaskInstanceRequest& request, ProcessApiCallback<AdminModels::GetCloudScriptTaskInstanceResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetTaskInstances(AdminModels::GetTaskInstancesRequest& request, ProcessApiCallback<AdminModels::GetTaskInstancesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetTasks(AdminModels::GetTasksRequest& request, ProcessApiCallback<AdminModels::GetTasksResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RunTask(AdminModels::RunTaskRequest& request, ProcessApiCallback<AdminModels::RunTaskResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UpdateTask(AdminModels::UpdateTaskRequest& request, ProcessApiCallback<AdminModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
@@ -180,6 +190,16 @@ namespace PlayFab
         static void OnGetPlayersInSegmentResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerTagsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemovePlayerTagResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnAbortTaskInstanceResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnCreateActionsOnPlayersInSegmentTaskResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnCreateCloudScriptTaskResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnDeleteTaskResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetActionsOnPlayersInSegmentTaskInstanceResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetCloudScriptTaskInstanceResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetTaskInstancesResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetTasksResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRunTaskResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUpdateTaskResult(int httpStatus, HttpRequest* request, void* userData);
     };
 };
 #endif

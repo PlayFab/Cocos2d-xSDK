@@ -7,6 +7,105 @@ namespace PlayFab
 {
     namespace ServerModels
     {
+        struct NameIdentifier : public PlayFabBaseModel
+        {
+            std::string Name;
+            std::string Id;
+
+            NameIdentifier() :
+                PlayFabBaseModel(),
+                Name(),
+                Id()
+            {}
+
+            NameIdentifier(const NameIdentifier& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                Id(src.Id)
+            {}
+
+            NameIdentifier(const rapidjson::Value& obj) : NameIdentifier()
+            {
+                readFromValue(obj);
+            }
+
+            ~NameIdentifier();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum TaskInstanceStatus
+        {
+            TaskInstanceStatusSucceeded,
+            TaskInstanceStatusStarting,
+            TaskInstanceStatusInProgress,
+            TaskInstanceStatusFailed,
+            TaskInstanceStatusAborted,
+            TaskInstanceStatusPending
+        };
+
+        void writeTaskInstanceStatusEnumJSON(TaskInstanceStatus enumVal, PFStringJsonWriter& writer);
+        TaskInstanceStatus readTaskInstanceStatusFromValue(const rapidjson::Value& obj);
+
+        struct ActionsOnPlayersInSegmentTaskSummary : public PlayFabBaseModel
+        {
+            std::string TaskInstanceId;
+            NameIdentifier* TaskIdentifier;
+            time_t StartedAt;
+            OptionalTime CompletedAt;
+            Boxed<TaskInstanceStatus> Status;
+            OptionalDouble PercentComplete;
+            OptionalDouble EstimatedSecondsRemaining;
+            std::string ScheduledByUserId;
+            std::string ErrorMessage;
+            OptionalBool ErrorWasFatal;
+            OptionalInt32 TotalPlayersInSegment;
+            OptionalInt32 TotalPlayersProcessed;
+
+            ActionsOnPlayersInSegmentTaskSummary() :
+                PlayFabBaseModel(),
+                TaskInstanceId(),
+                TaskIdentifier(NULL),
+                StartedAt(0),
+                CompletedAt(),
+                Status(),
+                PercentComplete(),
+                EstimatedSecondsRemaining(),
+                ScheduledByUserId(),
+                ErrorMessage(),
+                ErrorWasFatal(),
+                TotalPlayersInSegment(),
+                TotalPlayersProcessed()
+            {}
+
+            ActionsOnPlayersInSegmentTaskSummary(const ActionsOnPlayersInSegmentTaskSummary& src) :
+                PlayFabBaseModel(),
+                TaskInstanceId(src.TaskInstanceId),
+                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
+                StartedAt(src.StartedAt),
+                CompletedAt(src.CompletedAt),
+                Status(src.Status),
+                PercentComplete(src.PercentComplete),
+                EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
+                ScheduledByUserId(src.ScheduledByUserId),
+                ErrorMessage(src.ErrorMessage),
+                ErrorWasFatal(src.ErrorWasFatal),
+                TotalPlayersInSegment(src.TotalPlayersInSegment),
+                TotalPlayersProcessed(src.TotalPlayersProcessed)
+            {}
+
+            ActionsOnPlayersInSegmentTaskSummary(const rapidjson::Value& obj) : ActionsOnPlayersInSegmentTaskSummary()
+            {
+                readFromValue(obj);
+            }
+
+            ~ActionsOnPlayersInSegmentTaskSummary();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct AdCampaignAttribution : public PlayFabBaseModel
         {
             std::string Platform;
@@ -1561,6 +1660,276 @@ namespace PlayFab
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
         };
+
+        enum ContinentCode
+        {
+            ContinentCodeAF,
+            ContinentCodeAN,
+            ContinentCodeAS,
+            ContinentCodeEU,
+            ContinentCodeNA,
+            ContinentCodeOC,
+            ContinentCodeSA
+        };
+
+        void writeContinentCodeEnumJSON(ContinentCode enumVal, PFStringJsonWriter& writer);
+        ContinentCode readContinentCodeFromValue(const rapidjson::Value& obj);
+
+        enum CountryCode
+        {
+            CountryCodeAF,
+            CountryCodeAX,
+            CountryCodeAL,
+            CountryCodeDZ,
+            CountryCodeAS,
+            CountryCodeAD,
+            CountryCodeAO,
+            CountryCodeAI,
+            CountryCodeAQ,
+            CountryCodeAG,
+            CountryCodeAR,
+            CountryCodeAM,
+            CountryCodeAW,
+            CountryCodeAU,
+            CountryCodeAT,
+            CountryCodeAZ,
+            CountryCodeBS,
+            CountryCodeBH,
+            CountryCodeBD,
+            CountryCodeBB,
+            CountryCodeBY,
+            CountryCodeBE,
+            CountryCodeBZ,
+            CountryCodeBJ,
+            CountryCodeBM,
+            CountryCodeBT,
+            CountryCodeBO,
+            CountryCodeBQ,
+            CountryCodeBA,
+            CountryCodeBW,
+            CountryCodeBV,
+            CountryCodeBR,
+            CountryCodeIO,
+            CountryCodeBN,
+            CountryCodeBG,
+            CountryCodeBF,
+            CountryCodeBI,
+            CountryCodeKH,
+            CountryCodeCM,
+            CountryCodeCA,
+            CountryCodeCV,
+            CountryCodeKY,
+            CountryCodeCF,
+            CountryCodeTD,
+            CountryCodeCL,
+            CountryCodeCN,
+            CountryCodeCX,
+            CountryCodeCC,
+            CountryCodeCO,
+            CountryCodeKM,
+            CountryCodeCG,
+            CountryCodeCD,
+            CountryCodeCK,
+            CountryCodeCR,
+            CountryCodeCI,
+            CountryCodeHR,
+            CountryCodeCU,
+            CountryCodeCW,
+            CountryCodeCY,
+            CountryCodeCZ,
+            CountryCodeDK,
+            CountryCodeDJ,
+            CountryCodeDM,
+            CountryCodeDO,
+            CountryCodeEC,
+            CountryCodeEG,
+            CountryCodeSV,
+            CountryCodeGQ,
+            CountryCodeER,
+            CountryCodeEE,
+            CountryCodeET,
+            CountryCodeFK,
+            CountryCodeFO,
+            CountryCodeFJ,
+            CountryCodeFI,
+            CountryCodeFR,
+            CountryCodeGF,
+            CountryCodePF,
+            CountryCodeTF,
+            CountryCodeGA,
+            CountryCodeGM,
+            CountryCodeGE,
+            CountryCodeDE,
+            CountryCodeGH,
+            CountryCodeGI,
+            CountryCodeGR,
+            CountryCodeGL,
+            CountryCodeGD,
+            CountryCodeGP,
+            CountryCodeGU,
+            CountryCodeGT,
+            CountryCodeGG,
+            CountryCodeGN,
+            CountryCodeGW,
+            CountryCodeGY,
+            CountryCodeHT,
+            CountryCodeHM,
+            CountryCodeVA,
+            CountryCodeHN,
+            CountryCodeHK,
+            CountryCodeHU,
+            CountryCodeIS,
+            CountryCodeIN,
+            CountryCodeID,
+            CountryCodeIR,
+            CountryCodeIQ,
+            CountryCodeIE,
+            CountryCodeIM,
+            CountryCodeIL,
+            CountryCodeIT,
+            CountryCodeJM,
+            CountryCodeJP,
+            CountryCodeJE,
+            CountryCodeJO,
+            CountryCodeKZ,
+            CountryCodeKE,
+            CountryCodeKI,
+            CountryCodeKP,
+            CountryCodeKR,
+            CountryCodeKW,
+            CountryCodeKG,
+            CountryCodeLA,
+            CountryCodeLV,
+            CountryCodeLB,
+            CountryCodeLS,
+            CountryCodeLR,
+            CountryCodeLY,
+            CountryCodeLI,
+            CountryCodeLT,
+            CountryCodeLU,
+            CountryCodeMO,
+            CountryCodeMK,
+            CountryCodeMG,
+            CountryCodeMW,
+            CountryCodeMY,
+            CountryCodeMV,
+            CountryCodeML,
+            CountryCodeMT,
+            CountryCodeMH,
+            CountryCodeMQ,
+            CountryCodeMR,
+            CountryCodeMU,
+            CountryCodeYT,
+            CountryCodeMX,
+            CountryCodeFM,
+            CountryCodeMD,
+            CountryCodeMC,
+            CountryCodeMN,
+            CountryCodeME,
+            CountryCodeMS,
+            CountryCodeMA,
+            CountryCodeMZ,
+            CountryCodeMM,
+            CountryCodeNA,
+            CountryCodeNR,
+            CountryCodeNP,
+            CountryCodeNL,
+            CountryCodeNC,
+            CountryCodeNZ,
+            CountryCodeNI,
+            CountryCodeNE,
+            CountryCodeNG,
+            CountryCodeNU,
+            CountryCodeNF,
+            CountryCodeMP,
+            CountryCodeNO,
+            CountryCodeOM,
+            CountryCodePK,
+            CountryCodePW,
+            CountryCodePS,
+            CountryCodePA,
+            CountryCodePG,
+            CountryCodePY,
+            CountryCodePE,
+            CountryCodePH,
+            CountryCodePN,
+            CountryCodePL,
+            CountryCodePT,
+            CountryCodePR,
+            CountryCodeQA,
+            CountryCodeRE,
+            CountryCodeRO,
+            CountryCodeRU,
+            CountryCodeRW,
+            CountryCodeBL,
+            CountryCodeSH,
+            CountryCodeKN,
+            CountryCodeLC,
+            CountryCodeMF,
+            CountryCodePM,
+            CountryCodeVC,
+            CountryCodeWS,
+            CountryCodeSM,
+            CountryCodeST,
+            CountryCodeSA,
+            CountryCodeSN,
+            CountryCodeRS,
+            CountryCodeSC,
+            CountryCodeSL,
+            CountryCodeSG,
+            CountryCodeSX,
+            CountryCodeSK,
+            CountryCodeSI,
+            CountryCodeSB,
+            CountryCodeSO,
+            CountryCodeZA,
+            CountryCodeGS,
+            CountryCodeSS,
+            CountryCodeES,
+            CountryCodeLK,
+            CountryCodeSD,
+            CountryCodeSR,
+            CountryCodeSJ,
+            CountryCodeSZ,
+            CountryCodeSE,
+            CountryCodeCH,
+            CountryCodeSY,
+            CountryCodeTW,
+            CountryCodeTJ,
+            CountryCodeTZ,
+            CountryCodeTH,
+            CountryCodeTL,
+            CountryCodeTG,
+            CountryCodeTK,
+            CountryCodeTO,
+            CountryCodeTT,
+            CountryCodeTN,
+            CountryCodeTR,
+            CountryCodeTM,
+            CountryCodeTC,
+            CountryCodeTV,
+            CountryCodeUG,
+            CountryCodeUA,
+            CountryCodeAE,
+            CountryCodeGB,
+            CountryCodeUS,
+            CountryCodeUM,
+            CountryCodeUY,
+            CountryCodeUZ,
+            CountryCodeVU,
+            CountryCodeVE,
+            CountryCodeVN,
+            CountryCodeVG,
+            CountryCodeVI,
+            CountryCodeWF,
+            CountryCodeEH,
+            CountryCodeYE,
+            CountryCodeZM,
+            CountryCodeZW
+        };
+
+        void writeCountryCodeEnumJSON(CountryCode enumVal, PFStringJsonWriter& writer);
+        CountryCode readCountryCodeFromValue(const rapidjson::Value& obj);
 
         struct CreateSharedGroupRequest : public PlayFabBaseModel
         {
@@ -3331,6 +3700,43 @@ namespace PlayFab
         void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);
         LoginIdentityProvider readLoginIdentityProviderFromValue(const rapidjson::Value& obj);
 
+        struct PlayerLocation : public PlayFabBaseModel
+        {
+            ContinentCode pfContinentCode;
+            CountryCode pfCountryCode;
+            std::string City;
+            OptionalDouble Latitude;
+            OptionalDouble Longitude;
+
+            PlayerLocation() :
+                PlayFabBaseModel(),
+                pfContinentCode(),
+                pfCountryCode(),
+                City(),
+                Latitude(),
+                Longitude()
+            {}
+
+            PlayerLocation(const PlayerLocation& src) :
+                PlayFabBaseModel(),
+                pfContinentCode(src.pfContinentCode),
+                pfCountryCode(src.pfCountryCode),
+                City(src.City),
+                Latitude(src.Latitude),
+                Longitude(src.Longitude)
+            {}
+
+            PlayerLocation(const rapidjson::Value& obj) : PlayerLocation()
+            {
+                readFromValue(obj);
+            }
+
+            ~PlayerLocation();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum PushNotificationPlatform
         {
             PushNotificationPlatformApplePushNotificationService,
@@ -3450,6 +3856,7 @@ namespace PlayFab
             OptionalUint32 TotalValueToDateInUSD;
             std::map<std::string, Uint32> ValuesToDate;
             std::list<std::string> Tags;
+            std::map<std::string, PlayerLocation> Locations;
             std::map<std::string, Int32> VirtualCurrencyBalances;
             std::list<AdCampaignAttribution> AdCampaignAttributions;
             std::list<PushNotificationRegistration> PushNotificationRegistrations;
@@ -3470,6 +3877,7 @@ namespace PlayFab
                 TotalValueToDateInUSD(),
                 ValuesToDate(),
                 Tags(),
+                Locations(),
                 VirtualCurrencyBalances(),
                 AdCampaignAttributions(),
                 PushNotificationRegistrations(),
@@ -3491,6 +3899,7 @@ namespace PlayFab
                 TotalValueToDateInUSD(src.TotalValueToDateInUSD),
                 ValuesToDate(src.ValuesToDate),
                 Tags(src.Tags),
+                Locations(src.Locations),
                 VirtualCurrencyBalances(src.VirtualCurrencyBalances),
                 AdCampaignAttributions(src.AdCampaignAttributions),
                 PushNotificationRegistrations(src.PushNotificationRegistrations),
@@ -5343,19 +5752,22 @@ namespace PlayFab
             std::string CouponCode;
             std::string PlayFabId;
             std::string CatalogVersion;
+            std::string CharacterId;
 
             RedeemCouponRequest() :
                 PlayFabBaseModel(),
                 CouponCode(),
                 PlayFabId(),
-                CatalogVersion()
+                CatalogVersion(),
+                CharacterId()
             {}
 
             RedeemCouponRequest(const RedeemCouponRequest& src) :
                 PlayFabBaseModel(),
                 CouponCode(src.CouponCode),
                 PlayFabId(src.PlayFabId),
-                CatalogVersion(src.CatalogVersion)
+                CatalogVersion(src.CatalogVersion),
+                CharacterId(src.CharacterId)
             {}
 
             RedeemCouponRequest(const rapidjson::Value& obj) : RedeemCouponRequest()
@@ -6638,17 +7050,20 @@ namespace PlayFab
         {
             std::string PlayFabId;
             std::list<StatisticUpdate> Statistics;
+            OptionalBool ForceUpdate;
 
             UpdatePlayerStatisticsRequest() :
                 PlayFabBaseModel(),
                 PlayFabId(),
-                Statistics()
+                Statistics(),
+                ForceUpdate()
             {}
 
             UpdatePlayerStatisticsRequest(const UpdatePlayerStatisticsRequest& src) :
                 PlayFabBaseModel(),
                 PlayFabId(src.PlayFabId),
-                Statistics(src.Statistics)
+                Statistics(src.Statistics),
+                ForceUpdate(src.ForceUpdate)
             {}
 
             UpdatePlayerStatisticsRequest(const rapidjson::Value& obj) : UpdatePlayerStatisticsRequest()

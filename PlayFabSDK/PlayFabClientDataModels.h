@@ -1421,6 +1421,8 @@ namespace PlayFab
             std::string GameServerData;
             std::map<std::string, std::string> Tags;
             OptionalTime LastHeartbeat;
+            std::string ServerHostname;
+            OptionalInt32 ServerPort;
 
             GameInfo() :
                 PlayFabBaseModel(),
@@ -1435,7 +1437,9 @@ namespace PlayFab
                 GameServerState(),
                 GameServerData(),
                 Tags(),
-                LastHeartbeat()
+                LastHeartbeat(),
+                ServerHostname(),
+                ServerPort()
             {}
 
             GameInfo(const GameInfo& src) :
@@ -1451,7 +1455,9 @@ namespace PlayFab
                 GameServerState(src.GameServerState),
                 GameServerData(src.GameServerData),
                 Tags(src.Tags),
-                LastHeartbeat(src.LastHeartbeat)
+                LastHeartbeat(src.LastHeartbeat),
+                ServerHostname(src.ServerHostname),
+                ServerPort(src.ServerPort)
             {}
 
             GameInfo(const rapidjson::Value& obj) : GameInfo()
@@ -6597,17 +6603,20 @@ namespace PlayFab
         {
             std::string CouponCode;
             std::string CatalogVersion;
+            std::string CharacterId;
 
             RedeemCouponRequest() :
                 PlayFabBaseModel(),
                 CouponCode(),
-                CatalogVersion()
+                CatalogVersion(),
+                CharacterId()
             {}
 
             RedeemCouponRequest(const RedeemCouponRequest& src) :
                 PlayFabBaseModel(),
                 CouponCode(src.CouponCode),
-                CatalogVersion(src.CatalogVersion)
+                CatalogVersion(src.CatalogVersion),
+                CharacterId(src.CharacterId)
             {}
 
             RedeemCouponRequest(const rapidjson::Value& obj) : RedeemCouponRequest()

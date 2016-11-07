@@ -7,6 +7,158 @@ namespace PlayFab
 {
     namespace AdminModels
     {
+        struct AbortTaskInstanceRequest : public PlayFabBaseModel
+        {
+            std::string TaskInstanceId;
+
+            AbortTaskInstanceRequest() :
+                PlayFabBaseModel(),
+                TaskInstanceId()
+            {}
+
+            AbortTaskInstanceRequest(const AbortTaskInstanceRequest& src) :
+                PlayFabBaseModel(),
+                TaskInstanceId(src.TaskInstanceId)
+            {}
+
+            AbortTaskInstanceRequest(const rapidjson::Value& obj) : AbortTaskInstanceRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~AbortTaskInstanceRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ActionsOnPlayersInSegmentTaskParameter : public PlayFabBaseModel
+        {
+            std::string SegmentId;
+            std::string ActionId;
+
+            ActionsOnPlayersInSegmentTaskParameter() :
+                PlayFabBaseModel(),
+                SegmentId(),
+                ActionId()
+            {}
+
+            ActionsOnPlayersInSegmentTaskParameter(const ActionsOnPlayersInSegmentTaskParameter& src) :
+                PlayFabBaseModel(),
+                SegmentId(src.SegmentId),
+                ActionId(src.ActionId)
+            {}
+
+            ActionsOnPlayersInSegmentTaskParameter(const rapidjson::Value& obj) : ActionsOnPlayersInSegmentTaskParameter()
+            {
+                readFromValue(obj);
+            }
+
+            ~ActionsOnPlayersInSegmentTaskParameter();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct NameIdentifier : public PlayFabBaseModel
+        {
+            std::string Name;
+            std::string Id;
+
+            NameIdentifier() :
+                PlayFabBaseModel(),
+                Name(),
+                Id()
+            {}
+
+            NameIdentifier(const NameIdentifier& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                Id(src.Id)
+            {}
+
+            NameIdentifier(const rapidjson::Value& obj) : NameIdentifier()
+            {
+                readFromValue(obj);
+            }
+
+            ~NameIdentifier();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum TaskInstanceStatus
+        {
+            TaskInstanceStatusSucceeded,
+            TaskInstanceStatusStarting,
+            TaskInstanceStatusInProgress,
+            TaskInstanceStatusFailed,
+            TaskInstanceStatusAborted,
+            TaskInstanceStatusPending
+        };
+
+        void writeTaskInstanceStatusEnumJSON(TaskInstanceStatus enumVal, PFStringJsonWriter& writer);
+        TaskInstanceStatus readTaskInstanceStatusFromValue(const rapidjson::Value& obj);
+
+        struct ActionsOnPlayersInSegmentTaskSummary : public PlayFabBaseModel
+        {
+            std::string TaskInstanceId;
+            NameIdentifier* TaskIdentifier;
+            time_t StartedAt;
+            OptionalTime CompletedAt;
+            Boxed<TaskInstanceStatus> Status;
+            OptionalDouble PercentComplete;
+            OptionalDouble EstimatedSecondsRemaining;
+            std::string ScheduledByUserId;
+            std::string ErrorMessage;
+            OptionalBool ErrorWasFatal;
+            OptionalInt32 TotalPlayersInSegment;
+            OptionalInt32 TotalPlayersProcessed;
+
+            ActionsOnPlayersInSegmentTaskSummary() :
+                PlayFabBaseModel(),
+                TaskInstanceId(),
+                TaskIdentifier(NULL),
+                StartedAt(0),
+                CompletedAt(),
+                Status(),
+                PercentComplete(),
+                EstimatedSecondsRemaining(),
+                ScheduledByUserId(),
+                ErrorMessage(),
+                ErrorWasFatal(),
+                TotalPlayersInSegment(),
+                TotalPlayersProcessed()
+            {}
+
+            ActionsOnPlayersInSegmentTaskSummary(const ActionsOnPlayersInSegmentTaskSummary& src) :
+                PlayFabBaseModel(),
+                TaskInstanceId(src.TaskInstanceId),
+                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
+                StartedAt(src.StartedAt),
+                CompletedAt(src.CompletedAt),
+                Status(src.Status),
+                PercentComplete(src.PercentComplete),
+                EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
+                ScheduledByUserId(src.ScheduledByUserId),
+                ErrorMessage(src.ErrorMessage),
+                ErrorWasFatal(src.ErrorWasFatal),
+                TotalPlayersInSegment(src.TotalPlayersInSegment),
+                TotalPlayersProcessed(src.TotalPlayersProcessed)
+            {}
+
+            ActionsOnPlayersInSegmentTaskSummary(const rapidjson::Value& obj) : ActionsOnPlayersInSegmentTaskSummary()
+            {
+                readFromValue(obj);
+            }
+
+            ~ActionsOnPlayersInSegmentTaskSummary();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct AdCampaignAttribution : public PlayFabBaseModel
         {
             std::string Platform;
@@ -713,6 +865,197 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct CloudScriptTaskParameter : public PlayFabBaseModel
+        {
+            std::string FunctionName;
+            MultitypeVar Argument;
+
+            CloudScriptTaskParameter() :
+                PlayFabBaseModel(),
+                FunctionName(),
+                Argument()
+            {}
+
+            CloudScriptTaskParameter(const CloudScriptTaskParameter& src) :
+                PlayFabBaseModel(),
+                FunctionName(src.FunctionName),
+                Argument(src.Argument)
+            {}
+
+            CloudScriptTaskParameter(const rapidjson::Value& obj) : CloudScriptTaskParameter()
+            {
+                readFromValue(obj);
+            }
+
+            ~CloudScriptTaskParameter();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LogStatement : public PlayFabBaseModel
+        {
+            std::string Level;
+            std::string Message;
+            MultitypeVar Data;
+
+            LogStatement() :
+                PlayFabBaseModel(),
+                Level(),
+                Message(),
+                Data()
+            {}
+
+            LogStatement(const LogStatement& src) :
+                PlayFabBaseModel(),
+                Level(src.Level),
+                Message(src.Message),
+                Data(src.Data)
+            {}
+
+            LogStatement(const rapidjson::Value& obj) : LogStatement()
+            {
+                readFromValue(obj);
+            }
+
+            ~LogStatement();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ScriptExecutionError : public PlayFabBaseModel
+        {
+            std::string Error;
+            std::string Message;
+            std::string StackTrace;
+
+            ScriptExecutionError() :
+                PlayFabBaseModel(),
+                Error(),
+                Message(),
+                StackTrace()
+            {}
+
+            ScriptExecutionError(const ScriptExecutionError& src) :
+                PlayFabBaseModel(),
+                Error(src.Error),
+                Message(src.Message),
+                StackTrace(src.StackTrace)
+            {}
+
+            ScriptExecutionError(const rapidjson::Value& obj) : ScriptExecutionError()
+            {
+                readFromValue(obj);
+            }
+
+            ~ScriptExecutionError();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ExecuteCloudScriptResult : public PlayFabBaseModel
+        {
+            std::string FunctionName;
+            Int32 Revision;
+            MultitypeVar FunctionResult;
+            std::list<LogStatement> Logs;
+            double ExecutionTimeSeconds;
+            double ProcessorTimeSeconds;
+            Uint32 MemoryConsumedBytes;
+            Int32 APIRequestsIssued;
+            Int32 HttpRequestsIssued;
+            ScriptExecutionError* Error;
+
+            ExecuteCloudScriptResult() :
+                PlayFabBaseModel(),
+                FunctionName(),
+                Revision(0),
+                FunctionResult(),
+                Logs(),
+                ExecutionTimeSeconds(0),
+                ProcessorTimeSeconds(0),
+                MemoryConsumedBytes(0),
+                APIRequestsIssued(0),
+                HttpRequestsIssued(0),
+                Error(NULL)
+            {}
+
+            ExecuteCloudScriptResult(const ExecuteCloudScriptResult& src) :
+                PlayFabBaseModel(),
+                FunctionName(src.FunctionName),
+                Revision(src.Revision),
+                FunctionResult(src.FunctionResult),
+                Logs(src.Logs),
+                ExecutionTimeSeconds(src.ExecutionTimeSeconds),
+                ProcessorTimeSeconds(src.ProcessorTimeSeconds),
+                MemoryConsumedBytes(src.MemoryConsumedBytes),
+                APIRequestsIssued(src.APIRequestsIssued),
+                HttpRequestsIssued(src.HttpRequestsIssued),
+                Error(src.Error ? new ScriptExecutionError(*src.Error) : NULL)
+            {}
+
+            ExecuteCloudScriptResult(const rapidjson::Value& obj) : ExecuteCloudScriptResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~ExecuteCloudScriptResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CloudScriptTaskSummary : public PlayFabBaseModel
+        {
+            std::string TaskInstanceId;
+            NameIdentifier* TaskIdentifier;
+            time_t StartedAt;
+            OptionalTime CompletedAt;
+            Boxed<TaskInstanceStatus> Status;
+            OptionalDouble PercentComplete;
+            OptionalDouble EstimatedSecondsRemaining;
+            std::string ScheduledByUserId;
+            ExecuteCloudScriptResult* Result;
+
+            CloudScriptTaskSummary() :
+                PlayFabBaseModel(),
+                TaskInstanceId(),
+                TaskIdentifier(NULL),
+                StartedAt(0),
+                CompletedAt(),
+                Status(),
+                PercentComplete(),
+                EstimatedSecondsRemaining(),
+                ScheduledByUserId(),
+                Result(NULL)
+            {}
+
+            CloudScriptTaskSummary(const CloudScriptTaskSummary& src) :
+                PlayFabBaseModel(),
+                TaskInstanceId(src.TaskInstanceId),
+                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
+                StartedAt(src.StartedAt),
+                CompletedAt(src.CompletedAt),
+                Status(src.Status),
+                PercentComplete(src.PercentComplete),
+                EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
+                ScheduledByUserId(src.ScheduledByUserId),
+                Result(src.Result ? new ExecuteCloudScriptResult(*src.Result) : NULL)
+            {}
+
+            CloudScriptTaskSummary(const rapidjson::Value& obj) : CloudScriptTaskSummary()
+            {
+                readFromValue(obj);
+            }
+
+            ~CloudScriptTaskSummary();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CloudScriptVersionStatus : public PlayFabBaseModel
         {
             Int32 Version;
@@ -770,6 +1113,350 @@ namespace PlayFab
             }
 
             ~ContentInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum ContinentCode
+        {
+            ContinentCodeAF,
+            ContinentCodeAN,
+            ContinentCodeAS,
+            ContinentCodeEU,
+            ContinentCodeNA,
+            ContinentCodeOC,
+            ContinentCodeSA
+        };
+
+        void writeContinentCodeEnumJSON(ContinentCode enumVal, PFStringJsonWriter& writer);
+        ContinentCode readContinentCodeFromValue(const rapidjson::Value& obj);
+
+        enum CountryCode
+        {
+            CountryCodeAF,
+            CountryCodeAX,
+            CountryCodeAL,
+            CountryCodeDZ,
+            CountryCodeAS,
+            CountryCodeAD,
+            CountryCodeAO,
+            CountryCodeAI,
+            CountryCodeAQ,
+            CountryCodeAG,
+            CountryCodeAR,
+            CountryCodeAM,
+            CountryCodeAW,
+            CountryCodeAU,
+            CountryCodeAT,
+            CountryCodeAZ,
+            CountryCodeBS,
+            CountryCodeBH,
+            CountryCodeBD,
+            CountryCodeBB,
+            CountryCodeBY,
+            CountryCodeBE,
+            CountryCodeBZ,
+            CountryCodeBJ,
+            CountryCodeBM,
+            CountryCodeBT,
+            CountryCodeBO,
+            CountryCodeBQ,
+            CountryCodeBA,
+            CountryCodeBW,
+            CountryCodeBV,
+            CountryCodeBR,
+            CountryCodeIO,
+            CountryCodeBN,
+            CountryCodeBG,
+            CountryCodeBF,
+            CountryCodeBI,
+            CountryCodeKH,
+            CountryCodeCM,
+            CountryCodeCA,
+            CountryCodeCV,
+            CountryCodeKY,
+            CountryCodeCF,
+            CountryCodeTD,
+            CountryCodeCL,
+            CountryCodeCN,
+            CountryCodeCX,
+            CountryCodeCC,
+            CountryCodeCO,
+            CountryCodeKM,
+            CountryCodeCG,
+            CountryCodeCD,
+            CountryCodeCK,
+            CountryCodeCR,
+            CountryCodeCI,
+            CountryCodeHR,
+            CountryCodeCU,
+            CountryCodeCW,
+            CountryCodeCY,
+            CountryCodeCZ,
+            CountryCodeDK,
+            CountryCodeDJ,
+            CountryCodeDM,
+            CountryCodeDO,
+            CountryCodeEC,
+            CountryCodeEG,
+            CountryCodeSV,
+            CountryCodeGQ,
+            CountryCodeER,
+            CountryCodeEE,
+            CountryCodeET,
+            CountryCodeFK,
+            CountryCodeFO,
+            CountryCodeFJ,
+            CountryCodeFI,
+            CountryCodeFR,
+            CountryCodeGF,
+            CountryCodePF,
+            CountryCodeTF,
+            CountryCodeGA,
+            CountryCodeGM,
+            CountryCodeGE,
+            CountryCodeDE,
+            CountryCodeGH,
+            CountryCodeGI,
+            CountryCodeGR,
+            CountryCodeGL,
+            CountryCodeGD,
+            CountryCodeGP,
+            CountryCodeGU,
+            CountryCodeGT,
+            CountryCodeGG,
+            CountryCodeGN,
+            CountryCodeGW,
+            CountryCodeGY,
+            CountryCodeHT,
+            CountryCodeHM,
+            CountryCodeVA,
+            CountryCodeHN,
+            CountryCodeHK,
+            CountryCodeHU,
+            CountryCodeIS,
+            CountryCodeIN,
+            CountryCodeID,
+            CountryCodeIR,
+            CountryCodeIQ,
+            CountryCodeIE,
+            CountryCodeIM,
+            CountryCodeIL,
+            CountryCodeIT,
+            CountryCodeJM,
+            CountryCodeJP,
+            CountryCodeJE,
+            CountryCodeJO,
+            CountryCodeKZ,
+            CountryCodeKE,
+            CountryCodeKI,
+            CountryCodeKP,
+            CountryCodeKR,
+            CountryCodeKW,
+            CountryCodeKG,
+            CountryCodeLA,
+            CountryCodeLV,
+            CountryCodeLB,
+            CountryCodeLS,
+            CountryCodeLR,
+            CountryCodeLY,
+            CountryCodeLI,
+            CountryCodeLT,
+            CountryCodeLU,
+            CountryCodeMO,
+            CountryCodeMK,
+            CountryCodeMG,
+            CountryCodeMW,
+            CountryCodeMY,
+            CountryCodeMV,
+            CountryCodeML,
+            CountryCodeMT,
+            CountryCodeMH,
+            CountryCodeMQ,
+            CountryCodeMR,
+            CountryCodeMU,
+            CountryCodeYT,
+            CountryCodeMX,
+            CountryCodeFM,
+            CountryCodeMD,
+            CountryCodeMC,
+            CountryCodeMN,
+            CountryCodeME,
+            CountryCodeMS,
+            CountryCodeMA,
+            CountryCodeMZ,
+            CountryCodeMM,
+            CountryCodeNA,
+            CountryCodeNR,
+            CountryCodeNP,
+            CountryCodeNL,
+            CountryCodeNC,
+            CountryCodeNZ,
+            CountryCodeNI,
+            CountryCodeNE,
+            CountryCodeNG,
+            CountryCodeNU,
+            CountryCodeNF,
+            CountryCodeMP,
+            CountryCodeNO,
+            CountryCodeOM,
+            CountryCodePK,
+            CountryCodePW,
+            CountryCodePS,
+            CountryCodePA,
+            CountryCodePG,
+            CountryCodePY,
+            CountryCodePE,
+            CountryCodePH,
+            CountryCodePN,
+            CountryCodePL,
+            CountryCodePT,
+            CountryCodePR,
+            CountryCodeQA,
+            CountryCodeRE,
+            CountryCodeRO,
+            CountryCodeRU,
+            CountryCodeRW,
+            CountryCodeBL,
+            CountryCodeSH,
+            CountryCodeKN,
+            CountryCodeLC,
+            CountryCodeMF,
+            CountryCodePM,
+            CountryCodeVC,
+            CountryCodeWS,
+            CountryCodeSM,
+            CountryCodeST,
+            CountryCodeSA,
+            CountryCodeSN,
+            CountryCodeRS,
+            CountryCodeSC,
+            CountryCodeSL,
+            CountryCodeSG,
+            CountryCodeSX,
+            CountryCodeSK,
+            CountryCodeSI,
+            CountryCodeSB,
+            CountryCodeSO,
+            CountryCodeZA,
+            CountryCodeGS,
+            CountryCodeSS,
+            CountryCodeES,
+            CountryCodeLK,
+            CountryCodeSD,
+            CountryCodeSR,
+            CountryCodeSJ,
+            CountryCodeSZ,
+            CountryCodeSE,
+            CountryCodeCH,
+            CountryCodeSY,
+            CountryCodeTW,
+            CountryCodeTJ,
+            CountryCodeTZ,
+            CountryCodeTH,
+            CountryCodeTL,
+            CountryCodeTG,
+            CountryCodeTK,
+            CountryCodeTO,
+            CountryCodeTT,
+            CountryCodeTN,
+            CountryCodeTR,
+            CountryCodeTM,
+            CountryCodeTC,
+            CountryCodeTV,
+            CountryCodeUG,
+            CountryCodeUA,
+            CountryCodeAE,
+            CountryCodeGB,
+            CountryCodeUS,
+            CountryCodeUM,
+            CountryCodeUY,
+            CountryCodeUZ,
+            CountryCodeVU,
+            CountryCodeVE,
+            CountryCodeVN,
+            CountryCodeVG,
+            CountryCodeVI,
+            CountryCodeWF,
+            CountryCodeEH,
+            CountryCodeYE,
+            CountryCodeZM,
+            CountryCodeZW
+        };
+
+        void writeCountryCodeEnumJSON(CountryCode enumVal, PFStringJsonWriter& writer);
+        CountryCode readCountryCodeFromValue(const rapidjson::Value& obj);
+
+        struct CreateActionsOnPlayerSegmentTaskRequest : public PlayFabBaseModel
+        {
+            std::string Name;
+            std::string Description;
+            std::string Schedule;
+            bool IsActive;
+            ActionsOnPlayersInSegmentTaskParameter Parameter;
+
+            CreateActionsOnPlayerSegmentTaskRequest() :
+                PlayFabBaseModel(),
+                Name(),
+                Description(),
+                Schedule(),
+                IsActive(false),
+                Parameter()
+            {}
+
+            CreateActionsOnPlayerSegmentTaskRequest(const CreateActionsOnPlayerSegmentTaskRequest& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                Description(src.Description),
+                Schedule(src.Schedule),
+                IsActive(src.IsActive),
+                Parameter(src.Parameter)
+            {}
+
+            CreateActionsOnPlayerSegmentTaskRequest(const rapidjson::Value& obj) : CreateActionsOnPlayerSegmentTaskRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateActionsOnPlayerSegmentTaskRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateCloudScriptTaskRequest : public PlayFabBaseModel
+        {
+            std::string Name;
+            std::string Description;
+            std::string Schedule;
+            bool IsActive;
+            CloudScriptTaskParameter Parameter;
+
+            CreateCloudScriptTaskRequest() :
+                PlayFabBaseModel(),
+                Name(),
+                Description(),
+                Schedule(),
+                IsActive(false),
+                Parameter()
+            {}
+
+            CreateCloudScriptTaskRequest(const CreateCloudScriptTaskRequest& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                Description(src.Description),
+                Schedule(src.Schedule),
+                IsActive(src.IsActive),
+                Parameter(src.Parameter)
+            {}
+
+            CreateCloudScriptTaskRequest(const rapidjson::Value& obj) : CreateCloudScriptTaskRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateCloudScriptTaskRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -883,6 +1570,31 @@ namespace PlayFab
             }
 
             ~CreatePlayerStatisticDefinitionResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateTaskResult : public PlayFabBaseModel
+        {
+            std::string TaskId;
+
+            CreateTaskResult() :
+                PlayFabBaseModel(),
+                TaskId()
+            {}
+
+            CreateTaskResult(const CreateTaskResult& src) :
+                PlayFabBaseModel(),
+                TaskId(src.TaskId)
+            {}
+
+            CreateTaskResult(const rapidjson::Value& obj) : CreateTaskResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateTaskResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1132,6 +1844,31 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct DeleteTaskRequest : public PlayFabBaseModel
+        {
+            NameIdentifier* Identifier;
+
+            DeleteTaskRequest() :
+                PlayFabBaseModel(),
+                Identifier(NULL)
+            {}
+
+            DeleteTaskRequest(const DeleteTaskRequest& src) :
+                PlayFabBaseModel(),
+                Identifier(src.Identifier ? new NameIdentifier(*src.Identifier) : NULL)
+            {}
+
+            DeleteTaskRequest(const rapidjson::Value& obj) : DeleteTaskRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteTaskRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct DeleteUsersRequest : public PlayFabBaseModel
         {
             std::list<std::string> PlayFabIds;
@@ -1177,6 +1914,28 @@ namespace PlayFab
             }
 
             ~DeleteUsersResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct EmptyResult : public PlayFabBaseModel
+        {
+
+            EmptyResult() :
+                PlayFabBaseModel()
+            {}
+
+            EmptyResult(const EmptyResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            EmptyResult(const rapidjson::Value& obj) : EmptyResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~EmptyResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1239,6 +1998,34 @@ namespace PlayFab
             }
 
             ~GetActionGroupResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetActionsOnPlayersInSegmentTaskInstanceResult : public PlayFabBaseModel
+        {
+            ActionsOnPlayersInSegmentTaskSummary* Summary;
+            ActionsOnPlayersInSegmentTaskParameter* Parameter;
+
+            GetActionsOnPlayersInSegmentTaskInstanceResult() :
+                PlayFabBaseModel(),
+                Summary(NULL),
+                Parameter(NULL)
+            {}
+
+            GetActionsOnPlayersInSegmentTaskInstanceResult(const GetActionsOnPlayersInSegmentTaskInstanceResult& src) :
+                PlayFabBaseModel(),
+                Summary(src.Summary ? new ActionsOnPlayersInSegmentTaskSummary(*src.Summary) : NULL),
+                Parameter(src.Parameter ? new ActionsOnPlayersInSegmentTaskParameter(*src.Parameter) : NULL)
+            {}
+
+            GetActionsOnPlayersInSegmentTaskInstanceResult(const rapidjson::Value& obj) : GetActionsOnPlayersInSegmentTaskInstanceResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetActionsOnPlayersInSegmentTaskInstanceResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1479,6 +2266,34 @@ namespace PlayFab
             }
 
             ~GetCloudScriptRevisionResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetCloudScriptTaskInstanceResult : public PlayFabBaseModel
+        {
+            CloudScriptTaskSummary* Summary;
+            CloudScriptTaskParameter* Parameter;
+
+            GetCloudScriptTaskInstanceResult() :
+                PlayFabBaseModel(),
+                Summary(NULL),
+                Parameter(NULL)
+            {}
+
+            GetCloudScriptTaskInstanceResult(const GetCloudScriptTaskInstanceResult& src) :
+                PlayFabBaseModel(),
+                Summary(src.Summary ? new CloudScriptTaskSummary(*src.Summary) : NULL),
+                Parameter(src.Parameter ? new CloudScriptTaskParameter(*src.Parameter) : NULL)
+            {}
+
+            GetCloudScriptTaskInstanceResult(const rapidjson::Value& obj) : GetCloudScriptTaskInstanceResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetCloudScriptTaskInstanceResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1905,6 +2720,43 @@ namespace PlayFab
         void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);
         LoginIdentityProvider readLoginIdentityProviderFromValue(const rapidjson::Value& obj);
 
+        struct PlayerLocation : public PlayFabBaseModel
+        {
+            ContinentCode pfContinentCode;
+            CountryCode pfCountryCode;
+            std::string City;
+            OptionalDouble Latitude;
+            OptionalDouble Longitude;
+
+            PlayerLocation() :
+                PlayFabBaseModel(),
+                pfContinentCode(),
+                pfCountryCode(),
+                City(),
+                Latitude(),
+                Longitude()
+            {}
+
+            PlayerLocation(const PlayerLocation& src) :
+                PlayFabBaseModel(),
+                pfContinentCode(src.pfContinentCode),
+                pfCountryCode(src.pfCountryCode),
+                City(src.City),
+                Latitude(src.Latitude),
+                Longitude(src.Longitude)
+            {}
+
+            PlayerLocation(const rapidjson::Value& obj) : PlayerLocation()
+            {
+                readFromValue(obj);
+            }
+
+            ~PlayerLocation();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum PushNotificationPlatform
         {
             PushNotificationPlatformApplePushNotificationService,
@@ -2024,6 +2876,7 @@ namespace PlayFab
             OptionalUint32 TotalValueToDateInUSD;
             std::map<std::string, Uint32> ValuesToDate;
             std::list<std::string> Tags;
+            std::map<std::string, PlayerLocation> Locations;
             std::map<std::string, Int32> VirtualCurrencyBalances;
             std::list<AdCampaignAttribution> AdCampaignAttributions;
             std::list<PushNotificationRegistration> PushNotificationRegistrations;
@@ -2044,6 +2897,7 @@ namespace PlayFab
                 TotalValueToDateInUSD(),
                 ValuesToDate(),
                 Tags(),
+                Locations(),
                 VirtualCurrencyBalances(),
                 AdCampaignAttributions(),
                 PushNotificationRegistrations(),
@@ -2065,6 +2919,7 @@ namespace PlayFab
                 TotalValueToDateInUSD(src.TotalValueToDateInUSD),
                 ValuesToDate(src.ValuesToDate),
                 Tags(src.Tags),
+                Locations(src.Locations),
                 VirtualCurrencyBalances(src.VirtualCurrencyBalances),
                 AdCampaignAttributions(src.AdCampaignAttributions),
                 PushNotificationRegistrations(src.PushNotificationRegistrations),
@@ -2785,6 +3640,247 @@ namespace PlayFab
             }
 
             ~GetStoreItemsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetTaskInstanceRequest : public PlayFabBaseModel
+        {
+            std::string TaskInstanceId;
+
+            GetTaskInstanceRequest() :
+                PlayFabBaseModel(),
+                TaskInstanceId()
+            {}
+
+            GetTaskInstanceRequest(const GetTaskInstanceRequest& src) :
+                PlayFabBaseModel(),
+                TaskInstanceId(src.TaskInstanceId)
+            {}
+
+            GetTaskInstanceRequest(const rapidjson::Value& obj) : GetTaskInstanceRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetTaskInstanceRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetTaskInstancesRequest : public PlayFabBaseModel
+        {
+            NameIdentifier* TaskIdentifier;
+            Boxed<TaskInstanceStatus> StatusFilter;
+            OptionalTime StartedAtRangeFrom;
+            OptionalTime StartedAtRangeTo;
+
+            GetTaskInstancesRequest() :
+                PlayFabBaseModel(),
+                TaskIdentifier(NULL),
+                StatusFilter(),
+                StartedAtRangeFrom(),
+                StartedAtRangeTo()
+            {}
+
+            GetTaskInstancesRequest(const GetTaskInstancesRequest& src) :
+                PlayFabBaseModel(),
+                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
+                StatusFilter(src.StatusFilter),
+                StartedAtRangeFrom(src.StartedAtRangeFrom),
+                StartedAtRangeTo(src.StartedAtRangeTo)
+            {}
+
+            GetTaskInstancesRequest(const rapidjson::Value& obj) : GetTaskInstancesRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetTaskInstancesRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum ScheduledTaskType
+        {
+            ScheduledTaskTypeCloudScript,
+            ScheduledTaskTypeActionsOnPlayerSegment
+        };
+
+        void writeScheduledTaskTypeEnumJSON(ScheduledTaskType enumVal, PFStringJsonWriter& writer);
+        ScheduledTaskType readScheduledTaskTypeFromValue(const rapidjson::Value& obj);
+
+        struct TaskInstanceBasicSummary : public PlayFabBaseModel
+        {
+            std::string TaskInstanceId;
+            NameIdentifier* TaskIdentifier;
+            time_t StartedAt;
+            OptionalTime CompletedAt;
+            Boxed<TaskInstanceStatus> Status;
+            OptionalDouble PercentComplete;
+            OptionalDouble EstimatedSecondsRemaining;
+            std::string ScheduledByUserId;
+            Boxed<ScheduledTaskType> Type;
+
+            TaskInstanceBasicSummary() :
+                PlayFabBaseModel(),
+                TaskInstanceId(),
+                TaskIdentifier(NULL),
+                StartedAt(0),
+                CompletedAt(),
+                Status(),
+                PercentComplete(),
+                EstimatedSecondsRemaining(),
+                ScheduledByUserId(),
+                Type()
+            {}
+
+            TaskInstanceBasicSummary(const TaskInstanceBasicSummary& src) :
+                PlayFabBaseModel(),
+                TaskInstanceId(src.TaskInstanceId),
+                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
+                StartedAt(src.StartedAt),
+                CompletedAt(src.CompletedAt),
+                Status(src.Status),
+                PercentComplete(src.PercentComplete),
+                EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
+                ScheduledByUserId(src.ScheduledByUserId),
+                Type(src.Type)
+            {}
+
+            TaskInstanceBasicSummary(const rapidjson::Value& obj) : TaskInstanceBasicSummary()
+            {
+                readFromValue(obj);
+            }
+
+            ~TaskInstanceBasicSummary();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetTaskInstancesResult : public PlayFabBaseModel
+        {
+            std::list<TaskInstanceBasicSummary> Summaries;
+
+            GetTaskInstancesResult() :
+                PlayFabBaseModel(),
+                Summaries()
+            {}
+
+            GetTaskInstancesResult(const GetTaskInstancesResult& src) :
+                PlayFabBaseModel(),
+                Summaries(src.Summaries)
+            {}
+
+            GetTaskInstancesResult(const rapidjson::Value& obj) : GetTaskInstancesResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetTaskInstancesResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetTasksRequest : public PlayFabBaseModel
+        {
+            NameIdentifier* Identifier;
+
+            GetTasksRequest() :
+                PlayFabBaseModel(),
+                Identifier(NULL)
+            {}
+
+            GetTasksRequest(const GetTasksRequest& src) :
+                PlayFabBaseModel(),
+                Identifier(src.Identifier ? new NameIdentifier(*src.Identifier) : NULL)
+            {}
+
+            GetTasksRequest(const rapidjson::Value& obj) : GetTasksRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetTasksRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ScheduledTask : public PlayFabBaseModel
+        {
+            std::string TaskId;
+            std::string Name;
+            std::string Description;
+            std::string Schedule;
+            bool IsActive;
+            Boxed<ScheduledTaskType> Type;
+            MultitypeVar Parameter;
+            OptionalTime LastRunTime;
+            OptionalTime NextRunTime;
+
+            ScheduledTask() :
+                PlayFabBaseModel(),
+                TaskId(),
+                Name(),
+                Description(),
+                Schedule(),
+                IsActive(false),
+                Type(),
+                Parameter(),
+                LastRunTime(),
+                NextRunTime()
+            {}
+
+            ScheduledTask(const ScheduledTask& src) :
+                PlayFabBaseModel(),
+                TaskId(src.TaskId),
+                Name(src.Name),
+                Description(src.Description),
+                Schedule(src.Schedule),
+                IsActive(src.IsActive),
+                Type(src.Type),
+                Parameter(src.Parameter),
+                LastRunTime(src.LastRunTime),
+                NextRunTime(src.NextRunTime)
+            {}
+
+            ScheduledTask(const rapidjson::Value& obj) : ScheduledTask()
+            {
+                readFromValue(obj);
+            }
+
+            ~ScheduledTask();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetTasksResult : public PlayFabBaseModel
+        {
+            std::list<ScheduledTask> Tasks;
+
+            GetTasksResult() :
+                PlayFabBaseModel(),
+                Tasks()
+            {}
+
+            GetTasksResult(const GetTasksResult& src) :
+                PlayFabBaseModel(),
+                Tasks(src.Tasks)
+            {}
+
+            GetTasksResult(const rapidjson::Value& obj) : GetTasksResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetTasksResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -4758,6 +5854,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct RunTaskRequest : public PlayFabBaseModel
+        {
+            NameIdentifier* Identifier;
+
+            RunTaskRequest() :
+                PlayFabBaseModel(),
+                Identifier(NULL)
+            {}
+
+            RunTaskRequest(const RunTaskRequest& src) :
+                PlayFabBaseModel(),
+                Identifier(src.Identifier ? new NameIdentifier(*src.Identifier) : NULL)
+            {}
+
+            RunTaskRequest(const rapidjson::Value& obj) : RunTaskRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RunTaskRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RunTaskResult : public PlayFabBaseModel
+        {
+            std::string TaskInstanceId;
+
+            RunTaskResult() :
+                PlayFabBaseModel(),
+                TaskInstanceId()
+            {}
+
+            RunTaskResult(const RunTaskResult& src) :
+                PlayFabBaseModel(),
+                TaskInstanceId(src.TaskInstanceId)
+            {}
+
+            RunTaskResult(const rapidjson::Value& obj) : RunTaskResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RunTaskResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct SendAccountRecoveryEmailRequest : public PlayFabBaseModel
         {
             std::string Email;
@@ -5410,6 +6556,49 @@ namespace PlayFab
             }
 
             ~UpdateStoreItemsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdateTaskRequest : public PlayFabBaseModel
+        {
+            NameIdentifier* Identifier;
+            std::string Name;
+            std::string Description;
+            std::string Schedule;
+            bool IsActive;
+            ScheduledTaskType Type;
+            MultitypeVar Parameter;
+
+            UpdateTaskRequest() :
+                PlayFabBaseModel(),
+                Identifier(NULL),
+                Name(),
+                Description(),
+                Schedule(),
+                IsActive(false),
+                Type(),
+                Parameter()
+            {}
+
+            UpdateTaskRequest(const UpdateTaskRequest& src) :
+                PlayFabBaseModel(),
+                Identifier(src.Identifier ? new NameIdentifier(*src.Identifier) : NULL),
+                Name(src.Name),
+                Description(src.Description),
+                Schedule(src.Schedule),
+                IsActive(src.IsActive),
+                Type(src.Type),
+                Parameter(src.Parameter)
+            {}
+
+            UpdateTaskRequest(const rapidjson::Value& obj) : UpdateTaskRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdateTaskRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

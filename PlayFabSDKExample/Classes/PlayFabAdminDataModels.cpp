@@ -5,6 +5,169 @@ using namespace PlayFab::AdminModels;
 using namespace rapidjson;
 
 
+AbortTaskInstanceRequest::~AbortTaskInstanceRequest()
+{
+
+}
+
+void AbortTaskInstanceRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str());
+
+    writer.EndObject();
+}
+
+bool AbortTaskInstanceRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TaskInstanceId_member = obj.FindMember("TaskInstanceId");
+    if (TaskInstanceId_member != obj.MemberEnd() && !TaskInstanceId_member->value.IsNull()) TaskInstanceId = TaskInstanceId_member->value.GetString();
+
+    return true;
+}
+
+ActionsOnPlayersInSegmentTaskParameter::~ActionsOnPlayersInSegmentTaskParameter()
+{
+
+}
+
+void ActionsOnPlayersInSegmentTaskParameter::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("SegmentId"); writer.String(SegmentId.c_str());
+    writer.String("ActionId"); writer.String(ActionId.c_str());
+
+    writer.EndObject();
+}
+
+bool ActionsOnPlayersInSegmentTaskParameter::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator SegmentId_member = obj.FindMember("SegmentId");
+    if (SegmentId_member != obj.MemberEnd() && !SegmentId_member->value.IsNull()) SegmentId = SegmentId_member->value.GetString();
+    const Value::ConstMemberIterator ActionId_member = obj.FindMember("ActionId");
+    if (ActionId_member != obj.MemberEnd() && !ActionId_member->value.IsNull()) ActionId = ActionId_member->value.GetString();
+
+    return true;
+}
+
+NameIdentifier::~NameIdentifier()
+{
+
+}
+
+void NameIdentifier::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
+
+    writer.EndObject();
+}
+
+bool NameIdentifier::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
+    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
+
+    return true;
+}
+void PlayFab::AdminModels::writeTaskInstanceStatusEnumJSON(TaskInstanceStatus enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case TaskInstanceStatusSucceeded: writer.String("Succeeded"); break;
+    case TaskInstanceStatusStarting: writer.String("Starting"); break;
+    case TaskInstanceStatusInProgress: writer.String("InProgress"); break;
+    case TaskInstanceStatusFailed: writer.String("Failed"); break;
+    case TaskInstanceStatusAborted: writer.String("Aborted"); break;
+    case TaskInstanceStatusPending: writer.String("Pending"); break;
+
+    }
+}
+
+TaskInstanceStatus PlayFab::AdminModels::readTaskInstanceStatusFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, TaskInstanceStatus> _TaskInstanceStatusMap;
+    if (_TaskInstanceStatusMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _TaskInstanceStatusMap["Succeeded"] = TaskInstanceStatusSucceeded;
+        _TaskInstanceStatusMap["Starting"] = TaskInstanceStatusStarting;
+        _TaskInstanceStatusMap["InProgress"] = TaskInstanceStatusInProgress;
+        _TaskInstanceStatusMap["Failed"] = TaskInstanceStatusFailed;
+        _TaskInstanceStatusMap["Aborted"] = TaskInstanceStatusAborted;
+        _TaskInstanceStatusMap["Pending"] = TaskInstanceStatusPending;
+
+    }
+
+    auto output = _TaskInstanceStatusMap.find(obj.GetString());
+    if (output != _TaskInstanceStatusMap.end())
+        return output->second;
+
+    return TaskInstanceStatusSucceeded; // Basically critical fail
+}
+
+ActionsOnPlayersInSegmentTaskSummary::~ActionsOnPlayersInSegmentTaskSummary()
+{
+    if (TaskIdentifier != NULL) delete TaskIdentifier;
+
+}
+
+void ActionsOnPlayersInSegmentTaskSummary::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (TaskInstanceId.length() > 0) { writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str()); }
+    if (TaskIdentifier != NULL) { writer.String("TaskIdentifier"); TaskIdentifier->writeJSON(writer); }
+    writer.String("StartedAt"); writeDatetime(StartedAt, writer);
+    if (CompletedAt.notNull()) { writer.String("CompletedAt"); writeDatetime(CompletedAt, writer); }
+    if (Status.notNull()) { writer.String("Status"); writeTaskInstanceStatusEnumJSON(Status, writer); }
+    if (PercentComplete.notNull()) { writer.String("PercentComplete"); writer.Double(PercentComplete); }
+    if (EstimatedSecondsRemaining.notNull()) { writer.String("EstimatedSecondsRemaining"); writer.Double(EstimatedSecondsRemaining); }
+    if (ScheduledByUserId.length() > 0) { writer.String("ScheduledByUserId"); writer.String(ScheduledByUserId.c_str()); }
+    if (ErrorMessage.length() > 0) { writer.String("ErrorMessage"); writer.String(ErrorMessage.c_str()); }
+    if (ErrorWasFatal.notNull()) { writer.String("ErrorWasFatal"); writer.Bool(ErrorWasFatal); }
+    if (TotalPlayersInSegment.notNull()) { writer.String("TotalPlayersInSegment"); writer.Int(TotalPlayersInSegment); }
+    if (TotalPlayersProcessed.notNull()) { writer.String("TotalPlayersProcessed"); writer.Int(TotalPlayersProcessed); }
+
+    writer.EndObject();
+}
+
+bool ActionsOnPlayersInSegmentTaskSummary::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TaskInstanceId_member = obj.FindMember("TaskInstanceId");
+    if (TaskInstanceId_member != obj.MemberEnd() && !TaskInstanceId_member->value.IsNull()) TaskInstanceId = TaskInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator TaskIdentifier_member = obj.FindMember("TaskIdentifier");
+    if (TaskIdentifier_member != obj.MemberEnd() && !TaskIdentifier_member->value.IsNull()) TaskIdentifier = new NameIdentifier(TaskIdentifier_member->value);
+    const Value::ConstMemberIterator StartedAt_member = obj.FindMember("StartedAt");
+    if (StartedAt_member != obj.MemberEnd() && !StartedAt_member->value.IsNull()) StartedAt = readDatetime(StartedAt_member->value);
+    const Value::ConstMemberIterator CompletedAt_member = obj.FindMember("CompletedAt");
+    if (CompletedAt_member != obj.MemberEnd() && !CompletedAt_member->value.IsNull()) CompletedAt = readDatetime(CompletedAt_member->value);
+    const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
+    if (Status_member != obj.MemberEnd() && !Status_member->value.IsNull()) Status = readTaskInstanceStatusFromValue(Status_member->value);
+    const Value::ConstMemberIterator PercentComplete_member = obj.FindMember("PercentComplete");
+    if (PercentComplete_member != obj.MemberEnd() && !PercentComplete_member->value.IsNull()) PercentComplete = PercentComplete_member->value.GetDouble();
+    const Value::ConstMemberIterator EstimatedSecondsRemaining_member = obj.FindMember("EstimatedSecondsRemaining");
+    if (EstimatedSecondsRemaining_member != obj.MemberEnd() && !EstimatedSecondsRemaining_member->value.IsNull()) EstimatedSecondsRemaining = EstimatedSecondsRemaining_member->value.GetDouble();
+    const Value::ConstMemberIterator ScheduledByUserId_member = obj.FindMember("ScheduledByUserId");
+    if (ScheduledByUserId_member != obj.MemberEnd() && !ScheduledByUserId_member->value.IsNull()) ScheduledByUserId = ScheduledByUserId_member->value.GetString();
+    const Value::ConstMemberIterator ErrorMessage_member = obj.FindMember("ErrorMessage");
+    if (ErrorMessage_member != obj.MemberEnd() && !ErrorMessage_member->value.IsNull()) ErrorMessage = ErrorMessage_member->value.GetString();
+    const Value::ConstMemberIterator ErrorWasFatal_member = obj.FindMember("ErrorWasFatal");
+    if (ErrorWasFatal_member != obj.MemberEnd() && !ErrorWasFatal_member->value.IsNull()) ErrorWasFatal = ErrorWasFatal_member->value.GetBool();
+    const Value::ConstMemberIterator TotalPlayersInSegment_member = obj.FindMember("TotalPlayersInSegment");
+    if (TotalPlayersInSegment_member != obj.MemberEnd() && !TotalPlayersInSegment_member->value.IsNull()) TotalPlayersInSegment = TotalPlayersInSegment_member->value.GetInt();
+    const Value::ConstMemberIterator TotalPlayersProcessed_member = obj.FindMember("TotalPlayersProcessed");
+    if (TotalPlayersProcessed_member != obj.MemberEnd() && !TotalPlayersProcessed_member->value.IsNull()) TotalPlayersProcessed = TotalPlayersProcessed_member->value.GetInt();
+
+    return true;
+}
+
 AdCampaignAttribution::~AdCampaignAttribution()
 {
 
@@ -860,6 +1023,197 @@ bool CloudScriptFile::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+CloudScriptTaskParameter::~CloudScriptTaskParameter()
+{
+
+}
+
+void CloudScriptTaskParameter::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (FunctionName.length() > 0) { writer.String("FunctionName"); writer.String(FunctionName.c_str()); }
+    if (Argument.notNull()) { writer.String("Argument"); Argument.writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool CloudScriptTaskParameter::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator FunctionName_member = obj.FindMember("FunctionName");
+    if (FunctionName_member != obj.MemberEnd() && !FunctionName_member->value.IsNull()) FunctionName = FunctionName_member->value.GetString();
+    const Value::ConstMemberIterator Argument_member = obj.FindMember("Argument");
+    if (Argument_member != obj.MemberEnd() && !Argument_member->value.IsNull()) Argument = MultitypeVar(Argument_member->value);
+
+    return true;
+}
+
+LogStatement::~LogStatement()
+{
+
+}
+
+void LogStatement::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Level.length() > 0) { writer.String("Level"); writer.String(Level.c_str()); }
+    if (Message.length() > 0) { writer.String("Message"); writer.String(Message.c_str()); }
+    if (Data.notNull()) { writer.String("Data"); Data.writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool LogStatement::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Level_member = obj.FindMember("Level");
+    if (Level_member != obj.MemberEnd() && !Level_member->value.IsNull()) Level = Level_member->value.GetString();
+    const Value::ConstMemberIterator Message_member = obj.FindMember("Message");
+    if (Message_member != obj.MemberEnd() && !Message_member->value.IsNull()) Message = Message_member->value.GetString();
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd() && !Data_member->value.IsNull()) Data = MultitypeVar(Data_member->value);
+
+    return true;
+}
+
+ScriptExecutionError::~ScriptExecutionError()
+{
+
+}
+
+void ScriptExecutionError::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Error.length() > 0) { writer.String("Error"); writer.String(Error.c_str()); }
+    if (Message.length() > 0) { writer.String("Message"); writer.String(Message.c_str()); }
+    if (StackTrace.length() > 0) { writer.String("StackTrace"); writer.String(StackTrace.c_str()); }
+
+    writer.EndObject();
+}
+
+bool ScriptExecutionError::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Error_member = obj.FindMember("Error");
+    if (Error_member != obj.MemberEnd() && !Error_member->value.IsNull()) Error = Error_member->value.GetString();
+    const Value::ConstMemberIterator Message_member = obj.FindMember("Message");
+    if (Message_member != obj.MemberEnd() && !Message_member->value.IsNull()) Message = Message_member->value.GetString();
+    const Value::ConstMemberIterator StackTrace_member = obj.FindMember("StackTrace");
+    if (StackTrace_member != obj.MemberEnd() && !StackTrace_member->value.IsNull()) StackTrace = StackTrace_member->value.GetString();
+
+    return true;
+}
+
+ExecuteCloudScriptResult::~ExecuteCloudScriptResult()
+{
+    if (Error != NULL) delete Error;
+
+}
+
+void ExecuteCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (FunctionName.length() > 0) { writer.String("FunctionName"); writer.String(FunctionName.c_str()); }
+    writer.String("Revision"); writer.Int(Revision);
+    if (FunctionResult.notNull()) { writer.String("FunctionResult"); FunctionResult.writeJSON(writer); }
+    if (!Logs.empty()) {
+    writer.String("Logs");
+    writer.StartArray();
+    for (std::list<LogStatement>::iterator iter = Logs.begin(); iter != Logs.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+    writer.String("ExecutionTimeSeconds"); writer.Double(ExecutionTimeSeconds);
+    writer.String("ProcessorTimeSeconds"); writer.Double(ProcessorTimeSeconds);
+    writer.String("MemoryConsumedBytes"); writer.Uint(MemoryConsumedBytes);
+    writer.String("APIRequestsIssued"); writer.Int(APIRequestsIssued);
+    writer.String("HttpRequestsIssued"); writer.Int(HttpRequestsIssued);
+    if (Error != NULL) { writer.String("Error"); Error->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool ExecuteCloudScriptResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator FunctionName_member = obj.FindMember("FunctionName");
+    if (FunctionName_member != obj.MemberEnd() && !FunctionName_member->value.IsNull()) FunctionName = FunctionName_member->value.GetString();
+    const Value::ConstMemberIterator Revision_member = obj.FindMember("Revision");
+    if (Revision_member != obj.MemberEnd() && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
+    const Value::ConstMemberIterator FunctionResult_member = obj.FindMember("FunctionResult");
+    if (FunctionResult_member != obj.MemberEnd() && !FunctionResult_member->value.IsNull()) FunctionResult = MultitypeVar(FunctionResult_member->value);
+    const Value::ConstMemberIterator Logs_member = obj.FindMember("Logs");
+    if (Logs_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Logs_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Logs.push_back(LogStatement(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator ExecutionTimeSeconds_member = obj.FindMember("ExecutionTimeSeconds");
+    if (ExecutionTimeSeconds_member != obj.MemberEnd() && !ExecutionTimeSeconds_member->value.IsNull()) ExecutionTimeSeconds = ExecutionTimeSeconds_member->value.GetDouble();
+    const Value::ConstMemberIterator ProcessorTimeSeconds_member = obj.FindMember("ProcessorTimeSeconds");
+    if (ProcessorTimeSeconds_member != obj.MemberEnd() && !ProcessorTimeSeconds_member->value.IsNull()) ProcessorTimeSeconds = ProcessorTimeSeconds_member->value.GetDouble();
+    const Value::ConstMemberIterator MemoryConsumedBytes_member = obj.FindMember("MemoryConsumedBytes");
+    if (MemoryConsumedBytes_member != obj.MemberEnd() && !MemoryConsumedBytes_member->value.IsNull()) MemoryConsumedBytes = MemoryConsumedBytes_member->value.GetUint();
+    const Value::ConstMemberIterator APIRequestsIssued_member = obj.FindMember("APIRequestsIssued");
+    if (APIRequestsIssued_member != obj.MemberEnd() && !APIRequestsIssued_member->value.IsNull()) APIRequestsIssued = APIRequestsIssued_member->value.GetInt();
+    const Value::ConstMemberIterator HttpRequestsIssued_member = obj.FindMember("HttpRequestsIssued");
+    if (HttpRequestsIssued_member != obj.MemberEnd() && !HttpRequestsIssued_member->value.IsNull()) HttpRequestsIssued = HttpRequestsIssued_member->value.GetInt();
+    const Value::ConstMemberIterator Error_member = obj.FindMember("Error");
+    if (Error_member != obj.MemberEnd() && !Error_member->value.IsNull()) Error = new ScriptExecutionError(Error_member->value);
+
+    return true;
+}
+
+CloudScriptTaskSummary::~CloudScriptTaskSummary()
+{
+    if (TaskIdentifier != NULL) delete TaskIdentifier;
+    if (Result != NULL) delete Result;
+
+}
+
+void CloudScriptTaskSummary::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (TaskInstanceId.length() > 0) { writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str()); }
+    if (TaskIdentifier != NULL) { writer.String("TaskIdentifier"); TaskIdentifier->writeJSON(writer); }
+    writer.String("StartedAt"); writeDatetime(StartedAt, writer);
+    if (CompletedAt.notNull()) { writer.String("CompletedAt"); writeDatetime(CompletedAt, writer); }
+    if (Status.notNull()) { writer.String("Status"); writeTaskInstanceStatusEnumJSON(Status, writer); }
+    if (PercentComplete.notNull()) { writer.String("PercentComplete"); writer.Double(PercentComplete); }
+    if (EstimatedSecondsRemaining.notNull()) { writer.String("EstimatedSecondsRemaining"); writer.Double(EstimatedSecondsRemaining); }
+    if (ScheduledByUserId.length() > 0) { writer.String("ScheduledByUserId"); writer.String(ScheduledByUserId.c_str()); }
+    if (Result != NULL) { writer.String("Result"); Result->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool CloudScriptTaskSummary::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TaskInstanceId_member = obj.FindMember("TaskInstanceId");
+    if (TaskInstanceId_member != obj.MemberEnd() && !TaskInstanceId_member->value.IsNull()) TaskInstanceId = TaskInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator TaskIdentifier_member = obj.FindMember("TaskIdentifier");
+    if (TaskIdentifier_member != obj.MemberEnd() && !TaskIdentifier_member->value.IsNull()) TaskIdentifier = new NameIdentifier(TaskIdentifier_member->value);
+    const Value::ConstMemberIterator StartedAt_member = obj.FindMember("StartedAt");
+    if (StartedAt_member != obj.MemberEnd() && !StartedAt_member->value.IsNull()) StartedAt = readDatetime(StartedAt_member->value);
+    const Value::ConstMemberIterator CompletedAt_member = obj.FindMember("CompletedAt");
+    if (CompletedAt_member != obj.MemberEnd() && !CompletedAt_member->value.IsNull()) CompletedAt = readDatetime(CompletedAt_member->value);
+    const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
+    if (Status_member != obj.MemberEnd() && !Status_member->value.IsNull()) Status = readTaskInstanceStatusFromValue(Status_member->value);
+    const Value::ConstMemberIterator PercentComplete_member = obj.FindMember("PercentComplete");
+    if (PercentComplete_member != obj.MemberEnd() && !PercentComplete_member->value.IsNull()) PercentComplete = PercentComplete_member->value.GetDouble();
+    const Value::ConstMemberIterator EstimatedSecondsRemaining_member = obj.FindMember("EstimatedSecondsRemaining");
+    if (EstimatedSecondsRemaining_member != obj.MemberEnd() && !EstimatedSecondsRemaining_member->value.IsNull()) EstimatedSecondsRemaining = EstimatedSecondsRemaining_member->value.GetDouble();
+    const Value::ConstMemberIterator ScheduledByUserId_member = obj.FindMember("ScheduledByUserId");
+    if (ScheduledByUserId_member != obj.MemberEnd() && !ScheduledByUserId_member->value.IsNull()) ScheduledByUserId = ScheduledByUserId_member->value.GetString();
+    const Value::ConstMemberIterator Result_member = obj.FindMember("Result");
+    if (Result_member != obj.MemberEnd() && !Result_member->value.IsNull()) Result = new ExecuteCloudScriptResult(Result_member->value);
+
+    return true;
+}
+
 CloudScriptVersionStatus::~CloudScriptVersionStatus()
 {
 
@@ -912,6 +1266,632 @@ bool ContentInfo::readFromValue(const rapidjson::Value& obj)
     if (Size_member != obj.MemberEnd() && !Size_member->value.IsNull()) Size = Size_member->value.GetUint();
     const Value::ConstMemberIterator LastModified_member = obj.FindMember("LastModified");
     if (LastModified_member != obj.MemberEnd() && !LastModified_member->value.IsNull()) LastModified = readDatetime(LastModified_member->value);
+
+    return true;
+}
+void PlayFab::AdminModels::writeContinentCodeEnumJSON(ContinentCode enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case ContinentCodeAF: writer.String("AF"); break;
+    case ContinentCodeAN: writer.String("AN"); break;
+    case ContinentCodeAS: writer.String("AS"); break;
+    case ContinentCodeEU: writer.String("EU"); break;
+    case ContinentCodeNA: writer.String("NA"); break;
+    case ContinentCodeOC: writer.String("OC"); break;
+    case ContinentCodeSA: writer.String("SA"); break;
+
+    }
+}
+
+ContinentCode PlayFab::AdminModels::readContinentCodeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, ContinentCode> _ContinentCodeMap;
+    if (_ContinentCodeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _ContinentCodeMap["AF"] = ContinentCodeAF;
+        _ContinentCodeMap["AN"] = ContinentCodeAN;
+        _ContinentCodeMap["AS"] = ContinentCodeAS;
+        _ContinentCodeMap["EU"] = ContinentCodeEU;
+        _ContinentCodeMap["NA"] = ContinentCodeNA;
+        _ContinentCodeMap["OC"] = ContinentCodeOC;
+        _ContinentCodeMap["SA"] = ContinentCodeSA;
+
+    }
+
+    auto output = _ContinentCodeMap.find(obj.GetString());
+    if (output != _ContinentCodeMap.end())
+        return output->second;
+
+    return ContinentCodeAF; // Basically critical fail
+}
+void PlayFab::AdminModels::writeCountryCodeEnumJSON(CountryCode enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case CountryCodeAF: writer.String("AF"); break;
+    case CountryCodeAX: writer.String("AX"); break;
+    case CountryCodeAL: writer.String("AL"); break;
+    case CountryCodeDZ: writer.String("DZ"); break;
+    case CountryCodeAS: writer.String("AS"); break;
+    case CountryCodeAD: writer.String("AD"); break;
+    case CountryCodeAO: writer.String("AO"); break;
+    case CountryCodeAI: writer.String("AI"); break;
+    case CountryCodeAQ: writer.String("AQ"); break;
+    case CountryCodeAG: writer.String("AG"); break;
+    case CountryCodeAR: writer.String("AR"); break;
+    case CountryCodeAM: writer.String("AM"); break;
+    case CountryCodeAW: writer.String("AW"); break;
+    case CountryCodeAU: writer.String("AU"); break;
+    case CountryCodeAT: writer.String("AT"); break;
+    case CountryCodeAZ: writer.String("AZ"); break;
+    case CountryCodeBS: writer.String("BS"); break;
+    case CountryCodeBH: writer.String("BH"); break;
+    case CountryCodeBD: writer.String("BD"); break;
+    case CountryCodeBB: writer.String("BB"); break;
+    case CountryCodeBY: writer.String("BY"); break;
+    case CountryCodeBE: writer.String("BE"); break;
+    case CountryCodeBZ: writer.String("BZ"); break;
+    case CountryCodeBJ: writer.String("BJ"); break;
+    case CountryCodeBM: writer.String("BM"); break;
+    case CountryCodeBT: writer.String("BT"); break;
+    case CountryCodeBO: writer.String("BO"); break;
+    case CountryCodeBQ: writer.String("BQ"); break;
+    case CountryCodeBA: writer.String("BA"); break;
+    case CountryCodeBW: writer.String("BW"); break;
+    case CountryCodeBV: writer.String("BV"); break;
+    case CountryCodeBR: writer.String("BR"); break;
+    case CountryCodeIO: writer.String("IO"); break;
+    case CountryCodeBN: writer.String("BN"); break;
+    case CountryCodeBG: writer.String("BG"); break;
+    case CountryCodeBF: writer.String("BF"); break;
+    case CountryCodeBI: writer.String("BI"); break;
+    case CountryCodeKH: writer.String("KH"); break;
+    case CountryCodeCM: writer.String("CM"); break;
+    case CountryCodeCA: writer.String("CA"); break;
+    case CountryCodeCV: writer.String("CV"); break;
+    case CountryCodeKY: writer.String("KY"); break;
+    case CountryCodeCF: writer.String("CF"); break;
+    case CountryCodeTD: writer.String("TD"); break;
+    case CountryCodeCL: writer.String("CL"); break;
+    case CountryCodeCN: writer.String("CN"); break;
+    case CountryCodeCX: writer.String("CX"); break;
+    case CountryCodeCC: writer.String("CC"); break;
+    case CountryCodeCO: writer.String("CO"); break;
+    case CountryCodeKM: writer.String("KM"); break;
+    case CountryCodeCG: writer.String("CG"); break;
+    case CountryCodeCD: writer.String("CD"); break;
+    case CountryCodeCK: writer.String("CK"); break;
+    case CountryCodeCR: writer.String("CR"); break;
+    case CountryCodeCI: writer.String("CI"); break;
+    case CountryCodeHR: writer.String("HR"); break;
+    case CountryCodeCU: writer.String("CU"); break;
+    case CountryCodeCW: writer.String("CW"); break;
+    case CountryCodeCY: writer.String("CY"); break;
+    case CountryCodeCZ: writer.String("CZ"); break;
+    case CountryCodeDK: writer.String("DK"); break;
+    case CountryCodeDJ: writer.String("DJ"); break;
+    case CountryCodeDM: writer.String("DM"); break;
+    case CountryCodeDO: writer.String("DO"); break;
+    case CountryCodeEC: writer.String("EC"); break;
+    case CountryCodeEG: writer.String("EG"); break;
+    case CountryCodeSV: writer.String("SV"); break;
+    case CountryCodeGQ: writer.String("GQ"); break;
+    case CountryCodeER: writer.String("ER"); break;
+    case CountryCodeEE: writer.String("EE"); break;
+    case CountryCodeET: writer.String("ET"); break;
+    case CountryCodeFK: writer.String("FK"); break;
+    case CountryCodeFO: writer.String("FO"); break;
+    case CountryCodeFJ: writer.String("FJ"); break;
+    case CountryCodeFI: writer.String("FI"); break;
+    case CountryCodeFR: writer.String("FR"); break;
+    case CountryCodeGF: writer.String("GF"); break;
+    case CountryCodePF: writer.String("PF"); break;
+    case CountryCodeTF: writer.String("TF"); break;
+    case CountryCodeGA: writer.String("GA"); break;
+    case CountryCodeGM: writer.String("GM"); break;
+    case CountryCodeGE: writer.String("GE"); break;
+    case CountryCodeDE: writer.String("DE"); break;
+    case CountryCodeGH: writer.String("GH"); break;
+    case CountryCodeGI: writer.String("GI"); break;
+    case CountryCodeGR: writer.String("GR"); break;
+    case CountryCodeGL: writer.String("GL"); break;
+    case CountryCodeGD: writer.String("GD"); break;
+    case CountryCodeGP: writer.String("GP"); break;
+    case CountryCodeGU: writer.String("GU"); break;
+    case CountryCodeGT: writer.String("GT"); break;
+    case CountryCodeGG: writer.String("GG"); break;
+    case CountryCodeGN: writer.String("GN"); break;
+    case CountryCodeGW: writer.String("GW"); break;
+    case CountryCodeGY: writer.String("GY"); break;
+    case CountryCodeHT: writer.String("HT"); break;
+    case CountryCodeHM: writer.String("HM"); break;
+    case CountryCodeVA: writer.String("VA"); break;
+    case CountryCodeHN: writer.String("HN"); break;
+    case CountryCodeHK: writer.String("HK"); break;
+    case CountryCodeHU: writer.String("HU"); break;
+    case CountryCodeIS: writer.String("IS"); break;
+    case CountryCodeIN: writer.String("IN"); break;
+    case CountryCodeID: writer.String("ID"); break;
+    case CountryCodeIR: writer.String("IR"); break;
+    case CountryCodeIQ: writer.String("IQ"); break;
+    case CountryCodeIE: writer.String("IE"); break;
+    case CountryCodeIM: writer.String("IM"); break;
+    case CountryCodeIL: writer.String("IL"); break;
+    case CountryCodeIT: writer.String("IT"); break;
+    case CountryCodeJM: writer.String("JM"); break;
+    case CountryCodeJP: writer.String("JP"); break;
+    case CountryCodeJE: writer.String("JE"); break;
+    case CountryCodeJO: writer.String("JO"); break;
+    case CountryCodeKZ: writer.String("KZ"); break;
+    case CountryCodeKE: writer.String("KE"); break;
+    case CountryCodeKI: writer.String("KI"); break;
+    case CountryCodeKP: writer.String("KP"); break;
+    case CountryCodeKR: writer.String("KR"); break;
+    case CountryCodeKW: writer.String("KW"); break;
+    case CountryCodeKG: writer.String("KG"); break;
+    case CountryCodeLA: writer.String("LA"); break;
+    case CountryCodeLV: writer.String("LV"); break;
+    case CountryCodeLB: writer.String("LB"); break;
+    case CountryCodeLS: writer.String("LS"); break;
+    case CountryCodeLR: writer.String("LR"); break;
+    case CountryCodeLY: writer.String("LY"); break;
+    case CountryCodeLI: writer.String("LI"); break;
+    case CountryCodeLT: writer.String("LT"); break;
+    case CountryCodeLU: writer.String("LU"); break;
+    case CountryCodeMO: writer.String("MO"); break;
+    case CountryCodeMK: writer.String("MK"); break;
+    case CountryCodeMG: writer.String("MG"); break;
+    case CountryCodeMW: writer.String("MW"); break;
+    case CountryCodeMY: writer.String("MY"); break;
+    case CountryCodeMV: writer.String("MV"); break;
+    case CountryCodeML: writer.String("ML"); break;
+    case CountryCodeMT: writer.String("MT"); break;
+    case CountryCodeMH: writer.String("MH"); break;
+    case CountryCodeMQ: writer.String("MQ"); break;
+    case CountryCodeMR: writer.String("MR"); break;
+    case CountryCodeMU: writer.String("MU"); break;
+    case CountryCodeYT: writer.String("YT"); break;
+    case CountryCodeMX: writer.String("MX"); break;
+    case CountryCodeFM: writer.String("FM"); break;
+    case CountryCodeMD: writer.String("MD"); break;
+    case CountryCodeMC: writer.String("MC"); break;
+    case CountryCodeMN: writer.String("MN"); break;
+    case CountryCodeME: writer.String("ME"); break;
+    case CountryCodeMS: writer.String("MS"); break;
+    case CountryCodeMA: writer.String("MA"); break;
+    case CountryCodeMZ: writer.String("MZ"); break;
+    case CountryCodeMM: writer.String("MM"); break;
+    case CountryCodeNA: writer.String("NA"); break;
+    case CountryCodeNR: writer.String("NR"); break;
+    case CountryCodeNP: writer.String("NP"); break;
+    case CountryCodeNL: writer.String("NL"); break;
+    case CountryCodeNC: writer.String("NC"); break;
+    case CountryCodeNZ: writer.String("NZ"); break;
+    case CountryCodeNI: writer.String("NI"); break;
+    case CountryCodeNE: writer.String("NE"); break;
+    case CountryCodeNG: writer.String("NG"); break;
+    case CountryCodeNU: writer.String("NU"); break;
+    case CountryCodeNF: writer.String("NF"); break;
+    case CountryCodeMP: writer.String("MP"); break;
+    case CountryCodeNO: writer.String("NO"); break;
+    case CountryCodeOM: writer.String("OM"); break;
+    case CountryCodePK: writer.String("PK"); break;
+    case CountryCodePW: writer.String("PW"); break;
+    case CountryCodePS: writer.String("PS"); break;
+    case CountryCodePA: writer.String("PA"); break;
+    case CountryCodePG: writer.String("PG"); break;
+    case CountryCodePY: writer.String("PY"); break;
+    case CountryCodePE: writer.String("PE"); break;
+    case CountryCodePH: writer.String("PH"); break;
+    case CountryCodePN: writer.String("PN"); break;
+    case CountryCodePL: writer.String("PL"); break;
+    case CountryCodePT: writer.String("PT"); break;
+    case CountryCodePR: writer.String("PR"); break;
+    case CountryCodeQA: writer.String("QA"); break;
+    case CountryCodeRE: writer.String("RE"); break;
+    case CountryCodeRO: writer.String("RO"); break;
+    case CountryCodeRU: writer.String("RU"); break;
+    case CountryCodeRW: writer.String("RW"); break;
+    case CountryCodeBL: writer.String("BL"); break;
+    case CountryCodeSH: writer.String("SH"); break;
+    case CountryCodeKN: writer.String("KN"); break;
+    case CountryCodeLC: writer.String("LC"); break;
+    case CountryCodeMF: writer.String("MF"); break;
+    case CountryCodePM: writer.String("PM"); break;
+    case CountryCodeVC: writer.String("VC"); break;
+    case CountryCodeWS: writer.String("WS"); break;
+    case CountryCodeSM: writer.String("SM"); break;
+    case CountryCodeST: writer.String("ST"); break;
+    case CountryCodeSA: writer.String("SA"); break;
+    case CountryCodeSN: writer.String("SN"); break;
+    case CountryCodeRS: writer.String("RS"); break;
+    case CountryCodeSC: writer.String("SC"); break;
+    case CountryCodeSL: writer.String("SL"); break;
+    case CountryCodeSG: writer.String("SG"); break;
+    case CountryCodeSX: writer.String("SX"); break;
+    case CountryCodeSK: writer.String("SK"); break;
+    case CountryCodeSI: writer.String("SI"); break;
+    case CountryCodeSB: writer.String("SB"); break;
+    case CountryCodeSO: writer.String("SO"); break;
+    case CountryCodeZA: writer.String("ZA"); break;
+    case CountryCodeGS: writer.String("GS"); break;
+    case CountryCodeSS: writer.String("SS"); break;
+    case CountryCodeES: writer.String("ES"); break;
+    case CountryCodeLK: writer.String("LK"); break;
+    case CountryCodeSD: writer.String("SD"); break;
+    case CountryCodeSR: writer.String("SR"); break;
+    case CountryCodeSJ: writer.String("SJ"); break;
+    case CountryCodeSZ: writer.String("SZ"); break;
+    case CountryCodeSE: writer.String("SE"); break;
+    case CountryCodeCH: writer.String("CH"); break;
+    case CountryCodeSY: writer.String("SY"); break;
+    case CountryCodeTW: writer.String("TW"); break;
+    case CountryCodeTJ: writer.String("TJ"); break;
+    case CountryCodeTZ: writer.String("TZ"); break;
+    case CountryCodeTH: writer.String("TH"); break;
+    case CountryCodeTL: writer.String("TL"); break;
+    case CountryCodeTG: writer.String("TG"); break;
+    case CountryCodeTK: writer.String("TK"); break;
+    case CountryCodeTO: writer.String("TO"); break;
+    case CountryCodeTT: writer.String("TT"); break;
+    case CountryCodeTN: writer.String("TN"); break;
+    case CountryCodeTR: writer.String("TR"); break;
+    case CountryCodeTM: writer.String("TM"); break;
+    case CountryCodeTC: writer.String("TC"); break;
+    case CountryCodeTV: writer.String("TV"); break;
+    case CountryCodeUG: writer.String("UG"); break;
+    case CountryCodeUA: writer.String("UA"); break;
+    case CountryCodeAE: writer.String("AE"); break;
+    case CountryCodeGB: writer.String("GB"); break;
+    case CountryCodeUS: writer.String("US"); break;
+    case CountryCodeUM: writer.String("UM"); break;
+    case CountryCodeUY: writer.String("UY"); break;
+    case CountryCodeUZ: writer.String("UZ"); break;
+    case CountryCodeVU: writer.String("VU"); break;
+    case CountryCodeVE: writer.String("VE"); break;
+    case CountryCodeVN: writer.String("VN"); break;
+    case CountryCodeVG: writer.String("VG"); break;
+    case CountryCodeVI: writer.String("VI"); break;
+    case CountryCodeWF: writer.String("WF"); break;
+    case CountryCodeEH: writer.String("EH"); break;
+    case CountryCodeYE: writer.String("YE"); break;
+    case CountryCodeZM: writer.String("ZM"); break;
+    case CountryCodeZW: writer.String("ZW"); break;
+
+    }
+}
+
+CountryCode PlayFab::AdminModels::readCountryCodeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, CountryCode> _CountryCodeMap;
+    if (_CountryCodeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _CountryCodeMap["AF"] = CountryCodeAF;
+        _CountryCodeMap["AX"] = CountryCodeAX;
+        _CountryCodeMap["AL"] = CountryCodeAL;
+        _CountryCodeMap["DZ"] = CountryCodeDZ;
+        _CountryCodeMap["AS"] = CountryCodeAS;
+        _CountryCodeMap["AD"] = CountryCodeAD;
+        _CountryCodeMap["AO"] = CountryCodeAO;
+        _CountryCodeMap["AI"] = CountryCodeAI;
+        _CountryCodeMap["AQ"] = CountryCodeAQ;
+        _CountryCodeMap["AG"] = CountryCodeAG;
+        _CountryCodeMap["AR"] = CountryCodeAR;
+        _CountryCodeMap["AM"] = CountryCodeAM;
+        _CountryCodeMap["AW"] = CountryCodeAW;
+        _CountryCodeMap["AU"] = CountryCodeAU;
+        _CountryCodeMap["AT"] = CountryCodeAT;
+        _CountryCodeMap["AZ"] = CountryCodeAZ;
+        _CountryCodeMap["BS"] = CountryCodeBS;
+        _CountryCodeMap["BH"] = CountryCodeBH;
+        _CountryCodeMap["BD"] = CountryCodeBD;
+        _CountryCodeMap["BB"] = CountryCodeBB;
+        _CountryCodeMap["BY"] = CountryCodeBY;
+        _CountryCodeMap["BE"] = CountryCodeBE;
+        _CountryCodeMap["BZ"] = CountryCodeBZ;
+        _CountryCodeMap["BJ"] = CountryCodeBJ;
+        _CountryCodeMap["BM"] = CountryCodeBM;
+        _CountryCodeMap["BT"] = CountryCodeBT;
+        _CountryCodeMap["BO"] = CountryCodeBO;
+        _CountryCodeMap["BQ"] = CountryCodeBQ;
+        _CountryCodeMap["BA"] = CountryCodeBA;
+        _CountryCodeMap["BW"] = CountryCodeBW;
+        _CountryCodeMap["BV"] = CountryCodeBV;
+        _CountryCodeMap["BR"] = CountryCodeBR;
+        _CountryCodeMap["IO"] = CountryCodeIO;
+        _CountryCodeMap["BN"] = CountryCodeBN;
+        _CountryCodeMap["BG"] = CountryCodeBG;
+        _CountryCodeMap["BF"] = CountryCodeBF;
+        _CountryCodeMap["BI"] = CountryCodeBI;
+        _CountryCodeMap["KH"] = CountryCodeKH;
+        _CountryCodeMap["CM"] = CountryCodeCM;
+        _CountryCodeMap["CA"] = CountryCodeCA;
+        _CountryCodeMap["CV"] = CountryCodeCV;
+        _CountryCodeMap["KY"] = CountryCodeKY;
+        _CountryCodeMap["CF"] = CountryCodeCF;
+        _CountryCodeMap["TD"] = CountryCodeTD;
+        _CountryCodeMap["CL"] = CountryCodeCL;
+        _CountryCodeMap["CN"] = CountryCodeCN;
+        _CountryCodeMap["CX"] = CountryCodeCX;
+        _CountryCodeMap["CC"] = CountryCodeCC;
+        _CountryCodeMap["CO"] = CountryCodeCO;
+        _CountryCodeMap["KM"] = CountryCodeKM;
+        _CountryCodeMap["CG"] = CountryCodeCG;
+        _CountryCodeMap["CD"] = CountryCodeCD;
+        _CountryCodeMap["CK"] = CountryCodeCK;
+        _CountryCodeMap["CR"] = CountryCodeCR;
+        _CountryCodeMap["CI"] = CountryCodeCI;
+        _CountryCodeMap["HR"] = CountryCodeHR;
+        _CountryCodeMap["CU"] = CountryCodeCU;
+        _CountryCodeMap["CW"] = CountryCodeCW;
+        _CountryCodeMap["CY"] = CountryCodeCY;
+        _CountryCodeMap["CZ"] = CountryCodeCZ;
+        _CountryCodeMap["DK"] = CountryCodeDK;
+        _CountryCodeMap["DJ"] = CountryCodeDJ;
+        _CountryCodeMap["DM"] = CountryCodeDM;
+        _CountryCodeMap["DO"] = CountryCodeDO;
+        _CountryCodeMap["EC"] = CountryCodeEC;
+        _CountryCodeMap["EG"] = CountryCodeEG;
+        _CountryCodeMap["SV"] = CountryCodeSV;
+        _CountryCodeMap["GQ"] = CountryCodeGQ;
+        _CountryCodeMap["ER"] = CountryCodeER;
+        _CountryCodeMap["EE"] = CountryCodeEE;
+        _CountryCodeMap["ET"] = CountryCodeET;
+        _CountryCodeMap["FK"] = CountryCodeFK;
+        _CountryCodeMap["FO"] = CountryCodeFO;
+        _CountryCodeMap["FJ"] = CountryCodeFJ;
+        _CountryCodeMap["FI"] = CountryCodeFI;
+        _CountryCodeMap["FR"] = CountryCodeFR;
+        _CountryCodeMap["GF"] = CountryCodeGF;
+        _CountryCodeMap["PF"] = CountryCodePF;
+        _CountryCodeMap["TF"] = CountryCodeTF;
+        _CountryCodeMap["GA"] = CountryCodeGA;
+        _CountryCodeMap["GM"] = CountryCodeGM;
+        _CountryCodeMap["GE"] = CountryCodeGE;
+        _CountryCodeMap["DE"] = CountryCodeDE;
+        _CountryCodeMap["GH"] = CountryCodeGH;
+        _CountryCodeMap["GI"] = CountryCodeGI;
+        _CountryCodeMap["GR"] = CountryCodeGR;
+        _CountryCodeMap["GL"] = CountryCodeGL;
+        _CountryCodeMap["GD"] = CountryCodeGD;
+        _CountryCodeMap["GP"] = CountryCodeGP;
+        _CountryCodeMap["GU"] = CountryCodeGU;
+        _CountryCodeMap["GT"] = CountryCodeGT;
+        _CountryCodeMap["GG"] = CountryCodeGG;
+        _CountryCodeMap["GN"] = CountryCodeGN;
+        _CountryCodeMap["GW"] = CountryCodeGW;
+        _CountryCodeMap["GY"] = CountryCodeGY;
+        _CountryCodeMap["HT"] = CountryCodeHT;
+        _CountryCodeMap["HM"] = CountryCodeHM;
+        _CountryCodeMap["VA"] = CountryCodeVA;
+        _CountryCodeMap["HN"] = CountryCodeHN;
+        _CountryCodeMap["HK"] = CountryCodeHK;
+        _CountryCodeMap["HU"] = CountryCodeHU;
+        _CountryCodeMap["IS"] = CountryCodeIS;
+        _CountryCodeMap["IN"] = CountryCodeIN;
+        _CountryCodeMap["ID"] = CountryCodeID;
+        _CountryCodeMap["IR"] = CountryCodeIR;
+        _CountryCodeMap["IQ"] = CountryCodeIQ;
+        _CountryCodeMap["IE"] = CountryCodeIE;
+        _CountryCodeMap["IM"] = CountryCodeIM;
+        _CountryCodeMap["IL"] = CountryCodeIL;
+        _CountryCodeMap["IT"] = CountryCodeIT;
+        _CountryCodeMap["JM"] = CountryCodeJM;
+        _CountryCodeMap["JP"] = CountryCodeJP;
+        _CountryCodeMap["JE"] = CountryCodeJE;
+        _CountryCodeMap["JO"] = CountryCodeJO;
+        _CountryCodeMap["KZ"] = CountryCodeKZ;
+        _CountryCodeMap["KE"] = CountryCodeKE;
+        _CountryCodeMap["KI"] = CountryCodeKI;
+        _CountryCodeMap["KP"] = CountryCodeKP;
+        _CountryCodeMap["KR"] = CountryCodeKR;
+        _CountryCodeMap["KW"] = CountryCodeKW;
+        _CountryCodeMap["KG"] = CountryCodeKG;
+        _CountryCodeMap["LA"] = CountryCodeLA;
+        _CountryCodeMap["LV"] = CountryCodeLV;
+        _CountryCodeMap["LB"] = CountryCodeLB;
+        _CountryCodeMap["LS"] = CountryCodeLS;
+        _CountryCodeMap["LR"] = CountryCodeLR;
+        _CountryCodeMap["LY"] = CountryCodeLY;
+        _CountryCodeMap["LI"] = CountryCodeLI;
+        _CountryCodeMap["LT"] = CountryCodeLT;
+        _CountryCodeMap["LU"] = CountryCodeLU;
+        _CountryCodeMap["MO"] = CountryCodeMO;
+        _CountryCodeMap["MK"] = CountryCodeMK;
+        _CountryCodeMap["MG"] = CountryCodeMG;
+        _CountryCodeMap["MW"] = CountryCodeMW;
+        _CountryCodeMap["MY"] = CountryCodeMY;
+        _CountryCodeMap["MV"] = CountryCodeMV;
+        _CountryCodeMap["ML"] = CountryCodeML;
+        _CountryCodeMap["MT"] = CountryCodeMT;
+        _CountryCodeMap["MH"] = CountryCodeMH;
+        _CountryCodeMap["MQ"] = CountryCodeMQ;
+        _CountryCodeMap["MR"] = CountryCodeMR;
+        _CountryCodeMap["MU"] = CountryCodeMU;
+        _CountryCodeMap["YT"] = CountryCodeYT;
+        _CountryCodeMap["MX"] = CountryCodeMX;
+        _CountryCodeMap["FM"] = CountryCodeFM;
+        _CountryCodeMap["MD"] = CountryCodeMD;
+        _CountryCodeMap["MC"] = CountryCodeMC;
+        _CountryCodeMap["MN"] = CountryCodeMN;
+        _CountryCodeMap["ME"] = CountryCodeME;
+        _CountryCodeMap["MS"] = CountryCodeMS;
+        _CountryCodeMap["MA"] = CountryCodeMA;
+        _CountryCodeMap["MZ"] = CountryCodeMZ;
+        _CountryCodeMap["MM"] = CountryCodeMM;
+        _CountryCodeMap["NA"] = CountryCodeNA;
+        _CountryCodeMap["NR"] = CountryCodeNR;
+        _CountryCodeMap["NP"] = CountryCodeNP;
+        _CountryCodeMap["NL"] = CountryCodeNL;
+        _CountryCodeMap["NC"] = CountryCodeNC;
+        _CountryCodeMap["NZ"] = CountryCodeNZ;
+        _CountryCodeMap["NI"] = CountryCodeNI;
+        _CountryCodeMap["NE"] = CountryCodeNE;
+        _CountryCodeMap["NG"] = CountryCodeNG;
+        _CountryCodeMap["NU"] = CountryCodeNU;
+        _CountryCodeMap["NF"] = CountryCodeNF;
+        _CountryCodeMap["MP"] = CountryCodeMP;
+        _CountryCodeMap["NO"] = CountryCodeNO;
+        _CountryCodeMap["OM"] = CountryCodeOM;
+        _CountryCodeMap["PK"] = CountryCodePK;
+        _CountryCodeMap["PW"] = CountryCodePW;
+        _CountryCodeMap["PS"] = CountryCodePS;
+        _CountryCodeMap["PA"] = CountryCodePA;
+        _CountryCodeMap["PG"] = CountryCodePG;
+        _CountryCodeMap["PY"] = CountryCodePY;
+        _CountryCodeMap["PE"] = CountryCodePE;
+        _CountryCodeMap["PH"] = CountryCodePH;
+        _CountryCodeMap["PN"] = CountryCodePN;
+        _CountryCodeMap["PL"] = CountryCodePL;
+        _CountryCodeMap["PT"] = CountryCodePT;
+        _CountryCodeMap["PR"] = CountryCodePR;
+        _CountryCodeMap["QA"] = CountryCodeQA;
+        _CountryCodeMap["RE"] = CountryCodeRE;
+        _CountryCodeMap["RO"] = CountryCodeRO;
+        _CountryCodeMap["RU"] = CountryCodeRU;
+        _CountryCodeMap["RW"] = CountryCodeRW;
+        _CountryCodeMap["BL"] = CountryCodeBL;
+        _CountryCodeMap["SH"] = CountryCodeSH;
+        _CountryCodeMap["KN"] = CountryCodeKN;
+        _CountryCodeMap["LC"] = CountryCodeLC;
+        _CountryCodeMap["MF"] = CountryCodeMF;
+        _CountryCodeMap["PM"] = CountryCodePM;
+        _CountryCodeMap["VC"] = CountryCodeVC;
+        _CountryCodeMap["WS"] = CountryCodeWS;
+        _CountryCodeMap["SM"] = CountryCodeSM;
+        _CountryCodeMap["ST"] = CountryCodeST;
+        _CountryCodeMap["SA"] = CountryCodeSA;
+        _CountryCodeMap["SN"] = CountryCodeSN;
+        _CountryCodeMap["RS"] = CountryCodeRS;
+        _CountryCodeMap["SC"] = CountryCodeSC;
+        _CountryCodeMap["SL"] = CountryCodeSL;
+        _CountryCodeMap["SG"] = CountryCodeSG;
+        _CountryCodeMap["SX"] = CountryCodeSX;
+        _CountryCodeMap["SK"] = CountryCodeSK;
+        _CountryCodeMap["SI"] = CountryCodeSI;
+        _CountryCodeMap["SB"] = CountryCodeSB;
+        _CountryCodeMap["SO"] = CountryCodeSO;
+        _CountryCodeMap["ZA"] = CountryCodeZA;
+        _CountryCodeMap["GS"] = CountryCodeGS;
+        _CountryCodeMap["SS"] = CountryCodeSS;
+        _CountryCodeMap["ES"] = CountryCodeES;
+        _CountryCodeMap["LK"] = CountryCodeLK;
+        _CountryCodeMap["SD"] = CountryCodeSD;
+        _CountryCodeMap["SR"] = CountryCodeSR;
+        _CountryCodeMap["SJ"] = CountryCodeSJ;
+        _CountryCodeMap["SZ"] = CountryCodeSZ;
+        _CountryCodeMap["SE"] = CountryCodeSE;
+        _CountryCodeMap["CH"] = CountryCodeCH;
+        _CountryCodeMap["SY"] = CountryCodeSY;
+        _CountryCodeMap["TW"] = CountryCodeTW;
+        _CountryCodeMap["TJ"] = CountryCodeTJ;
+        _CountryCodeMap["TZ"] = CountryCodeTZ;
+        _CountryCodeMap["TH"] = CountryCodeTH;
+        _CountryCodeMap["TL"] = CountryCodeTL;
+        _CountryCodeMap["TG"] = CountryCodeTG;
+        _CountryCodeMap["TK"] = CountryCodeTK;
+        _CountryCodeMap["TO"] = CountryCodeTO;
+        _CountryCodeMap["TT"] = CountryCodeTT;
+        _CountryCodeMap["TN"] = CountryCodeTN;
+        _CountryCodeMap["TR"] = CountryCodeTR;
+        _CountryCodeMap["TM"] = CountryCodeTM;
+        _CountryCodeMap["TC"] = CountryCodeTC;
+        _CountryCodeMap["TV"] = CountryCodeTV;
+        _CountryCodeMap["UG"] = CountryCodeUG;
+        _CountryCodeMap["UA"] = CountryCodeUA;
+        _CountryCodeMap["AE"] = CountryCodeAE;
+        _CountryCodeMap["GB"] = CountryCodeGB;
+        _CountryCodeMap["US"] = CountryCodeUS;
+        _CountryCodeMap["UM"] = CountryCodeUM;
+        _CountryCodeMap["UY"] = CountryCodeUY;
+        _CountryCodeMap["UZ"] = CountryCodeUZ;
+        _CountryCodeMap["VU"] = CountryCodeVU;
+        _CountryCodeMap["VE"] = CountryCodeVE;
+        _CountryCodeMap["VN"] = CountryCodeVN;
+        _CountryCodeMap["VG"] = CountryCodeVG;
+        _CountryCodeMap["VI"] = CountryCodeVI;
+        _CountryCodeMap["WF"] = CountryCodeWF;
+        _CountryCodeMap["EH"] = CountryCodeEH;
+        _CountryCodeMap["YE"] = CountryCodeYE;
+        _CountryCodeMap["ZM"] = CountryCodeZM;
+        _CountryCodeMap["ZW"] = CountryCodeZW;
+
+    }
+
+    auto output = _CountryCodeMap.find(obj.GetString());
+    if (output != _CountryCodeMap.end())
+        return output->second;
+
+    return CountryCodeAF; // Basically critical fail
+}
+
+CreateActionsOnPlayerSegmentTaskRequest::~CreateActionsOnPlayerSegmentTaskRequest()
+{
+
+}
+
+void CreateActionsOnPlayerSegmentTaskRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Name"); writer.String(Name.c_str());
+    if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
+    if (Schedule.length() > 0) { writer.String("Schedule"); writer.String(Schedule.c_str()); }
+    writer.String("IsActive"); writer.Bool(IsActive);
+    writer.String("Parameter"); Parameter.writeJSON(writer);
+
+    writer.EndObject();
+}
+
+bool CreateActionsOnPlayerSegmentTaskRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator Schedule_member = obj.FindMember("Schedule");
+    if (Schedule_member != obj.MemberEnd() && !Schedule_member->value.IsNull()) Schedule = Schedule_member->value.GetString();
+    const Value::ConstMemberIterator IsActive_member = obj.FindMember("IsActive");
+    if (IsActive_member != obj.MemberEnd() && !IsActive_member->value.IsNull()) IsActive = IsActive_member->value.GetBool();
+    const Value::ConstMemberIterator Parameter_member = obj.FindMember("Parameter");
+    if (Parameter_member != obj.MemberEnd() && !Parameter_member->value.IsNull()) Parameter = ActionsOnPlayersInSegmentTaskParameter(Parameter_member->value);
+
+    return true;
+}
+
+CreateCloudScriptTaskRequest::~CreateCloudScriptTaskRequest()
+{
+
+}
+
+void CreateCloudScriptTaskRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Name"); writer.String(Name.c_str());
+    if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
+    if (Schedule.length() > 0) { writer.String("Schedule"); writer.String(Schedule.c_str()); }
+    writer.String("IsActive"); writer.Bool(IsActive);
+    writer.String("Parameter"); Parameter.writeJSON(writer);
+
+    writer.EndObject();
+}
+
+bool CreateCloudScriptTaskRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator Schedule_member = obj.FindMember("Schedule");
+    if (Schedule_member != obj.MemberEnd() && !Schedule_member->value.IsNull()) Schedule = Schedule_member->value.GetString();
+    const Value::ConstMemberIterator IsActive_member = obj.FindMember("IsActive");
+    if (IsActive_member != obj.MemberEnd() && !IsActive_member->value.IsNull()) IsActive = IsActive_member->value.GetBool();
+    const Value::ConstMemberIterator Parameter_member = obj.FindMember("Parameter");
+    if (Parameter_member != obj.MemberEnd() && !Parameter_member->value.IsNull()) Parameter = CloudScriptTaskParameter(Parameter_member->value);
 
     return true;
 }
@@ -1058,6 +2038,28 @@ bool CreatePlayerStatisticDefinitionResult::readFromValue(const rapidjson::Value
 {
     const Value::ConstMemberIterator Statistic_member = obj.FindMember("Statistic");
     if (Statistic_member != obj.MemberEnd() && !Statistic_member->value.IsNull()) Statistic = new PlayerStatisticDefinition(Statistic_member->value);
+
+    return true;
+}
+
+CreateTaskResult::~CreateTaskResult()
+{
+
+}
+
+void CreateTaskResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (TaskId.length() > 0) { writer.String("TaskId"); writer.String(TaskId.c_str()); }
+
+    writer.EndObject();
+}
+
+bool CreateTaskResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TaskId_member = obj.FindMember("TaskId");
+    if (TaskId_member != obj.MemberEnd() && !TaskId_member->value.IsNull()) TaskId = TaskId_member->value.GetString();
 
     return true;
 }
@@ -1475,6 +2477,29 @@ bool DeleteStoreResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeleteTaskRequest::~DeleteTaskRequest()
+{
+    if (Identifier != NULL) delete Identifier;
+
+}
+
+void DeleteTaskRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Identifier != NULL) { writer.String("Identifier"); Identifier->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool DeleteTaskRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Identifier_member = obj.FindMember("Identifier");
+    if (Identifier_member != obj.MemberEnd() && !Identifier_member->value.IsNull()) Identifier = new NameIdentifier(Identifier_member->value);
+
+    return true;
+}
+
 DeleteUsersRequest::~DeleteUsersRequest()
 {
 
@@ -1525,6 +2550,25 @@ void DeleteUsersResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool DeleteUsersResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+EmptyResult::~EmptyResult()
+{
+
+}
+
+void EmptyResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool EmptyResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
@@ -1582,6 +2626,33 @@ bool GetActionGroupResult::readFromValue(const rapidjson::Value& obj)
     if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
     const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
     if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
+
+    return true;
+}
+
+GetActionsOnPlayersInSegmentTaskInstanceResult::~GetActionsOnPlayersInSegmentTaskInstanceResult()
+{
+    if (Summary != NULL) delete Summary;
+    if (Parameter != NULL) delete Parameter;
+
+}
+
+void GetActionsOnPlayersInSegmentTaskInstanceResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Summary != NULL) { writer.String("Summary"); Summary->writeJSON(writer); }
+    if (Parameter != NULL) { writer.String("Parameter"); Parameter->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool GetActionsOnPlayersInSegmentTaskInstanceResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Summary_member = obj.FindMember("Summary");
+    if (Summary_member != obj.MemberEnd() && !Summary_member->value.IsNull()) Summary = new ActionsOnPlayersInSegmentTaskSummary(Summary_member->value);
+    const Value::ConstMemberIterator Parameter_member = obj.FindMember("Parameter");
+    if (Parameter_member != obj.MemberEnd() && !Parameter_member->value.IsNull()) Parameter = new ActionsOnPlayersInSegmentTaskParameter(Parameter_member->value);
 
     return true;
 }
@@ -1842,6 +2913,33 @@ bool GetCloudScriptRevisionResult::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator IsPublished_member = obj.FindMember("IsPublished");
     if (IsPublished_member != obj.MemberEnd() && !IsPublished_member->value.IsNull()) IsPublished = IsPublished_member->value.GetBool();
+
+    return true;
+}
+
+GetCloudScriptTaskInstanceResult::~GetCloudScriptTaskInstanceResult()
+{
+    if (Summary != NULL) delete Summary;
+    if (Parameter != NULL) delete Parameter;
+
+}
+
+void GetCloudScriptTaskInstanceResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Summary != NULL) { writer.String("Summary"); Summary->writeJSON(writer); }
+    if (Parameter != NULL) { writer.String("Parameter"); Parameter->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool GetCloudScriptTaskInstanceResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Summary_member = obj.FindMember("Summary");
+    if (Summary_member != obj.MemberEnd() && !Summary_member->value.IsNull()) Summary = new CloudScriptTaskSummary(Summary_member->value);
+    const Value::ConstMemberIterator Parameter_member = obj.FindMember("Parameter");
+    if (Parameter_member != obj.MemberEnd() && !Parameter_member->value.IsNull()) Parameter = new CloudScriptTaskParameter(Parameter_member->value);
 
     return true;
 }
@@ -2313,6 +3411,40 @@ LoginIdentityProvider PlayFab::AdminModels::readLoginIdentityProviderFromValue(c
 
     return LoginIdentityProviderUnknown; // Basically critical fail
 }
+
+PlayerLocation::~PlayerLocation()
+{
+
+}
+
+void PlayerLocation::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("ContinentCode"); writeContinentCodeEnumJSON(pfContinentCode, writer);
+    writer.String("CountryCode"); writeCountryCodeEnumJSON(pfCountryCode, writer);
+    if (City.length() > 0) { writer.String("City"); writer.String(City.c_str()); }
+    if (Latitude.notNull()) { writer.String("Latitude"); writer.Double(Latitude); }
+    if (Longitude.notNull()) { writer.String("Longitude"); writer.Double(Longitude); }
+
+    writer.EndObject();
+}
+
+bool PlayerLocation::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ContinentCode_member = obj.FindMember("ContinentCode");
+    if (ContinentCode_member != obj.MemberEnd() && !ContinentCode_member->value.IsNull()) pfContinentCode = readContinentCodeFromValue(ContinentCode_member->value);
+    const Value::ConstMemberIterator CountryCode_member = obj.FindMember("CountryCode");
+    if (CountryCode_member != obj.MemberEnd() && !CountryCode_member->value.IsNull()) pfCountryCode = readCountryCodeFromValue(CountryCode_member->value);
+    const Value::ConstMemberIterator City_member = obj.FindMember("City");
+    if (City_member != obj.MemberEnd() && !City_member->value.IsNull()) City = City_member->value.GetString();
+    const Value::ConstMemberIterator Latitude_member = obj.FindMember("Latitude");
+    if (Latitude_member != obj.MemberEnd() && !Latitude_member->value.IsNull()) Latitude = Latitude_member->value.GetDouble();
+    const Value::ConstMemberIterator Longitude_member = obj.FindMember("Longitude");
+    if (Longitude_member != obj.MemberEnd() && !Longitude_member->value.IsNull()) Longitude = Longitude_member->value.GetDouble();
+
+    return true;
+}
 void PlayFab::AdminModels::writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -2470,6 +3602,14 @@ void PlayerProfile::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
+    if (!Locations.empty()) {
+    writer.String("Locations");
+    writer.StartObject();
+    for (std::map<std::string, PlayerLocation>::iterator iter = Locations.begin(); iter != Locations.end(); ++iter) {
+        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+    }
+    writer.EndObject();
+     }
     if (!VirtualCurrencyBalances.empty()) {
     writer.String("VirtualCurrencyBalances");
     writer.StartObject();
@@ -2551,6 +3691,12 @@ bool PlayerProfile::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = Tags_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Tags.push_back(memberList[i].GetString());
+        }
+    }
+    const Value::ConstMemberIterator Locations_member = obj.FindMember("Locations");
+    if (Locations_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Locations_member->value.MemberBegin(); iter != Locations_member->value.MemberEnd(); ++iter) {
+            Locations[iter->name.GetString()] = PlayerLocation(iter->value);
         }
     }
     const Value::ConstMemberIterator VirtualCurrencyBalances_member = obj.FindMember("VirtualCurrencyBalances");
@@ -3423,6 +4569,271 @@ bool GetStoreItemsResult::readFromValue(const rapidjson::Value& obj)
     if (StoreId_member != obj.MemberEnd() && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
     const Value::ConstMemberIterator MarketingData_member = obj.FindMember("MarketingData");
     if (MarketingData_member != obj.MemberEnd() && !MarketingData_member->value.IsNull()) MarketingData = new StoreMarketingModel(MarketingData_member->value);
+
+    return true;
+}
+
+GetTaskInstanceRequest::~GetTaskInstanceRequest()
+{
+
+}
+
+void GetTaskInstanceRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str());
+
+    writer.EndObject();
+}
+
+bool GetTaskInstanceRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TaskInstanceId_member = obj.FindMember("TaskInstanceId");
+    if (TaskInstanceId_member != obj.MemberEnd() && !TaskInstanceId_member->value.IsNull()) TaskInstanceId = TaskInstanceId_member->value.GetString();
+
+    return true;
+}
+
+GetTaskInstancesRequest::~GetTaskInstancesRequest()
+{
+    if (TaskIdentifier != NULL) delete TaskIdentifier;
+
+}
+
+void GetTaskInstancesRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (TaskIdentifier != NULL) { writer.String("TaskIdentifier"); TaskIdentifier->writeJSON(writer); }
+    if (StatusFilter.notNull()) { writer.String("StatusFilter"); writeTaskInstanceStatusEnumJSON(StatusFilter, writer); }
+    if (StartedAtRangeFrom.notNull()) { writer.String("StartedAtRangeFrom"); writeDatetime(StartedAtRangeFrom, writer); }
+    if (StartedAtRangeTo.notNull()) { writer.String("StartedAtRangeTo"); writeDatetime(StartedAtRangeTo, writer); }
+
+    writer.EndObject();
+}
+
+bool GetTaskInstancesRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TaskIdentifier_member = obj.FindMember("TaskIdentifier");
+    if (TaskIdentifier_member != obj.MemberEnd() && !TaskIdentifier_member->value.IsNull()) TaskIdentifier = new NameIdentifier(TaskIdentifier_member->value);
+    const Value::ConstMemberIterator StatusFilter_member = obj.FindMember("StatusFilter");
+    if (StatusFilter_member != obj.MemberEnd() && !StatusFilter_member->value.IsNull()) StatusFilter = readTaskInstanceStatusFromValue(StatusFilter_member->value);
+    const Value::ConstMemberIterator StartedAtRangeFrom_member = obj.FindMember("StartedAtRangeFrom");
+    if (StartedAtRangeFrom_member != obj.MemberEnd() && !StartedAtRangeFrom_member->value.IsNull()) StartedAtRangeFrom = readDatetime(StartedAtRangeFrom_member->value);
+    const Value::ConstMemberIterator StartedAtRangeTo_member = obj.FindMember("StartedAtRangeTo");
+    if (StartedAtRangeTo_member != obj.MemberEnd() && !StartedAtRangeTo_member->value.IsNull()) StartedAtRangeTo = readDatetime(StartedAtRangeTo_member->value);
+
+    return true;
+}
+void PlayFab::AdminModels::writeScheduledTaskTypeEnumJSON(ScheduledTaskType enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case ScheduledTaskTypeCloudScript: writer.String("CloudScript"); break;
+    case ScheduledTaskTypeActionsOnPlayerSegment: writer.String("ActionsOnPlayerSegment"); break;
+
+    }
+}
+
+ScheduledTaskType PlayFab::AdminModels::readScheduledTaskTypeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, ScheduledTaskType> _ScheduledTaskTypeMap;
+    if (_ScheduledTaskTypeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _ScheduledTaskTypeMap["CloudScript"] = ScheduledTaskTypeCloudScript;
+        _ScheduledTaskTypeMap["ActionsOnPlayerSegment"] = ScheduledTaskTypeActionsOnPlayerSegment;
+
+    }
+
+    auto output = _ScheduledTaskTypeMap.find(obj.GetString());
+    if (output != _ScheduledTaskTypeMap.end())
+        return output->second;
+
+    return ScheduledTaskTypeCloudScript; // Basically critical fail
+}
+
+TaskInstanceBasicSummary::~TaskInstanceBasicSummary()
+{
+    if (TaskIdentifier != NULL) delete TaskIdentifier;
+
+}
+
+void TaskInstanceBasicSummary::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (TaskInstanceId.length() > 0) { writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str()); }
+    if (TaskIdentifier != NULL) { writer.String("TaskIdentifier"); TaskIdentifier->writeJSON(writer); }
+    writer.String("StartedAt"); writeDatetime(StartedAt, writer);
+    if (CompletedAt.notNull()) { writer.String("CompletedAt"); writeDatetime(CompletedAt, writer); }
+    if (Status.notNull()) { writer.String("Status"); writeTaskInstanceStatusEnumJSON(Status, writer); }
+    if (PercentComplete.notNull()) { writer.String("PercentComplete"); writer.Double(PercentComplete); }
+    if (EstimatedSecondsRemaining.notNull()) { writer.String("EstimatedSecondsRemaining"); writer.Double(EstimatedSecondsRemaining); }
+    if (ScheduledByUserId.length() > 0) { writer.String("ScheduledByUserId"); writer.String(ScheduledByUserId.c_str()); }
+    if (Type.notNull()) { writer.String("Type"); writeScheduledTaskTypeEnumJSON(Type, writer); }
+
+    writer.EndObject();
+}
+
+bool TaskInstanceBasicSummary::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TaskInstanceId_member = obj.FindMember("TaskInstanceId");
+    if (TaskInstanceId_member != obj.MemberEnd() && !TaskInstanceId_member->value.IsNull()) TaskInstanceId = TaskInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator TaskIdentifier_member = obj.FindMember("TaskIdentifier");
+    if (TaskIdentifier_member != obj.MemberEnd() && !TaskIdentifier_member->value.IsNull()) TaskIdentifier = new NameIdentifier(TaskIdentifier_member->value);
+    const Value::ConstMemberIterator StartedAt_member = obj.FindMember("StartedAt");
+    if (StartedAt_member != obj.MemberEnd() && !StartedAt_member->value.IsNull()) StartedAt = readDatetime(StartedAt_member->value);
+    const Value::ConstMemberIterator CompletedAt_member = obj.FindMember("CompletedAt");
+    if (CompletedAt_member != obj.MemberEnd() && !CompletedAt_member->value.IsNull()) CompletedAt = readDatetime(CompletedAt_member->value);
+    const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
+    if (Status_member != obj.MemberEnd() && !Status_member->value.IsNull()) Status = readTaskInstanceStatusFromValue(Status_member->value);
+    const Value::ConstMemberIterator PercentComplete_member = obj.FindMember("PercentComplete");
+    if (PercentComplete_member != obj.MemberEnd() && !PercentComplete_member->value.IsNull()) PercentComplete = PercentComplete_member->value.GetDouble();
+    const Value::ConstMemberIterator EstimatedSecondsRemaining_member = obj.FindMember("EstimatedSecondsRemaining");
+    if (EstimatedSecondsRemaining_member != obj.MemberEnd() && !EstimatedSecondsRemaining_member->value.IsNull()) EstimatedSecondsRemaining = EstimatedSecondsRemaining_member->value.GetDouble();
+    const Value::ConstMemberIterator ScheduledByUserId_member = obj.FindMember("ScheduledByUserId");
+    if (ScheduledByUserId_member != obj.MemberEnd() && !ScheduledByUserId_member->value.IsNull()) ScheduledByUserId = ScheduledByUserId_member->value.GetString();
+    const Value::ConstMemberIterator Type_member = obj.FindMember("Type");
+    if (Type_member != obj.MemberEnd() && !Type_member->value.IsNull()) Type = readScheduledTaskTypeFromValue(Type_member->value);
+
+    return true;
+}
+
+GetTaskInstancesResult::~GetTaskInstancesResult()
+{
+
+}
+
+void GetTaskInstancesResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Summaries.empty()) {
+    writer.String("Summaries");
+    writer.StartArray();
+    for (std::list<TaskInstanceBasicSummary>::iterator iter = Summaries.begin(); iter != Summaries.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetTaskInstancesResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Summaries_member = obj.FindMember("Summaries");
+    if (Summaries_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Summaries_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Summaries.push_back(TaskInstanceBasicSummary(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetTasksRequest::~GetTasksRequest()
+{
+    if (Identifier != NULL) delete Identifier;
+
+}
+
+void GetTasksRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Identifier != NULL) { writer.String("Identifier"); Identifier->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool GetTasksRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Identifier_member = obj.FindMember("Identifier");
+    if (Identifier_member != obj.MemberEnd() && !Identifier_member->value.IsNull()) Identifier = new NameIdentifier(Identifier_member->value);
+
+    return true;
+}
+
+ScheduledTask::~ScheduledTask()
+{
+
+}
+
+void ScheduledTask::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (TaskId.length() > 0) { writer.String("TaskId"); writer.String(TaskId.c_str()); }
+    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
+    if (Schedule.length() > 0) { writer.String("Schedule"); writer.String(Schedule.c_str()); }
+    writer.String("IsActive"); writer.Bool(IsActive);
+    if (Type.notNull()) { writer.String("Type"); writeScheduledTaskTypeEnumJSON(Type, writer); }
+    if (Parameter.notNull()) { writer.String("Parameter"); Parameter.writeJSON(writer); }
+    if (LastRunTime.notNull()) { writer.String("LastRunTime"); writeDatetime(LastRunTime, writer); }
+    if (NextRunTime.notNull()) { writer.String("NextRunTime"); writeDatetime(NextRunTime, writer); }
+
+    writer.EndObject();
+}
+
+bool ScheduledTask::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TaskId_member = obj.FindMember("TaskId");
+    if (TaskId_member != obj.MemberEnd() && !TaskId_member->value.IsNull()) TaskId = TaskId_member->value.GetString();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator Schedule_member = obj.FindMember("Schedule");
+    if (Schedule_member != obj.MemberEnd() && !Schedule_member->value.IsNull()) Schedule = Schedule_member->value.GetString();
+    const Value::ConstMemberIterator IsActive_member = obj.FindMember("IsActive");
+    if (IsActive_member != obj.MemberEnd() && !IsActive_member->value.IsNull()) IsActive = IsActive_member->value.GetBool();
+    const Value::ConstMemberIterator Type_member = obj.FindMember("Type");
+    if (Type_member != obj.MemberEnd() && !Type_member->value.IsNull()) Type = readScheduledTaskTypeFromValue(Type_member->value);
+    const Value::ConstMemberIterator Parameter_member = obj.FindMember("Parameter");
+    if (Parameter_member != obj.MemberEnd() && !Parameter_member->value.IsNull()) Parameter = MultitypeVar(Parameter_member->value);
+    const Value::ConstMemberIterator LastRunTime_member = obj.FindMember("LastRunTime");
+    if (LastRunTime_member != obj.MemberEnd() && !LastRunTime_member->value.IsNull()) LastRunTime = readDatetime(LastRunTime_member->value);
+    const Value::ConstMemberIterator NextRunTime_member = obj.FindMember("NextRunTime");
+    if (NextRunTime_member != obj.MemberEnd() && !NextRunTime_member->value.IsNull()) NextRunTime = readDatetime(NextRunTime_member->value);
+
+    return true;
+}
+
+GetTasksResult::~GetTasksResult()
+{
+
+}
+
+void GetTasksResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Tasks.empty()) {
+    writer.String("Tasks");
+    writer.StartArray();
+    for (std::list<ScheduledTask>::iterator iter = Tasks.begin(); iter != Tasks.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetTasksResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Tasks_member = obj.FindMember("Tasks");
+    if (Tasks_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Tasks_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Tasks.push_back(ScheduledTask(memberList[i]));
+        }
+    }
 
     return true;
 }
@@ -5619,6 +7030,51 @@ bool RevokeInventoryResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+RunTaskRequest::~RunTaskRequest()
+{
+    if (Identifier != NULL) delete Identifier;
+
+}
+
+void RunTaskRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Identifier != NULL) { writer.String("Identifier"); Identifier->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool RunTaskRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Identifier_member = obj.FindMember("Identifier");
+    if (Identifier_member != obj.MemberEnd() && !Identifier_member->value.IsNull()) Identifier = new NameIdentifier(Identifier_member->value);
+
+    return true;
+}
+
+RunTaskResult::~RunTaskResult()
+{
+
+}
+
+void RunTaskResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (TaskInstanceId.length() > 0) { writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str()); }
+
+    writer.EndObject();
+}
+
+bool RunTaskResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TaskInstanceId_member = obj.FindMember("TaskInstanceId");
+    if (TaskInstanceId_member != obj.MemberEnd() && !TaskInstanceId_member->value.IsNull()) TaskInstanceId = TaskInstanceId_member->value.GetString();
+
+    return true;
+}
+
 SendAccountRecoveryEmailRequest::~SendAccountRecoveryEmailRequest()
 {
 
@@ -6272,6 +7728,47 @@ void UpdateStoreItemsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateStoreItemsResult::readFromValue(const rapidjson::Value& obj)
 {
+
+    return true;
+}
+
+UpdateTaskRequest::~UpdateTaskRequest()
+{
+    if (Identifier != NULL) delete Identifier;
+
+}
+
+void UpdateTaskRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Identifier != NULL) { writer.String("Identifier"); Identifier->writeJSON(writer); }
+    writer.String("Name"); writer.String(Name.c_str());
+    if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
+    if (Schedule.length() > 0) { writer.String("Schedule"); writer.String(Schedule.c_str()); }
+    writer.String("IsActive"); writer.Bool(IsActive);
+    writer.String("Type"); writeScheduledTaskTypeEnumJSON(Type, writer);
+    if (Parameter.notNull()) { writer.String("Parameter"); Parameter.writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool UpdateTaskRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Identifier_member = obj.FindMember("Identifier");
+    if (Identifier_member != obj.MemberEnd() && !Identifier_member->value.IsNull()) Identifier = new NameIdentifier(Identifier_member->value);
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator Schedule_member = obj.FindMember("Schedule");
+    if (Schedule_member != obj.MemberEnd() && !Schedule_member->value.IsNull()) Schedule = Schedule_member->value.GetString();
+    const Value::ConstMemberIterator IsActive_member = obj.FindMember("IsActive");
+    if (IsActive_member != obj.MemberEnd() && !IsActive_member->value.IsNull()) IsActive = IsActive_member->value.GetBool();
+    const Value::ConstMemberIterator Type_member = obj.FindMember("Type");
+    if (Type_member != obj.MemberEnd() && !Type_member->value.IsNull()) Type = readScheduledTaskTypeFromValue(Type_member->value);
+    const Value::ConstMemberIterator Parameter_member = obj.FindMember("Parameter");
+    if (Parameter_member != obj.MemberEnd() && !Parameter_member->value.IsNull()) Parameter = MultitypeVar(Parameter_member->value);
 
     return true;
 }
