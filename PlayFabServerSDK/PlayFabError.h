@@ -262,7 +262,11 @@ namespace PlayFab
         PlayFabErrorScheduledTaskCreateConflict = 1255,
         PlayFabErrorInvalidScheduledTaskName = 1256,
         PlayFabErrorInvalidTaskSchedule = 1257,
-        PlayFabErrorSteamNotEnabledForTitle = 1258
+        PlayFabErrorSteamNotEnabledForTitle = 1258,
+        PlayFabErrorLimitNotAnUpgradeOption = 1259,
+        PlayFabErrorNoSecretKeyEnabledForCloudScript = 1260,
+        PlayFabErrorTaskNotFound = 1261,
+        PlayFabErrorTaskInstanceNotFound = 1262
     };
 
     struct PlayFabError

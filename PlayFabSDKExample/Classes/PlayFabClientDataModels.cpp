@@ -1897,6 +1897,8 @@ void GameInfo::writeJSON(PFStringJsonWriter& writer)
     writer.EndObject();
      }
     if (LastHeartbeat.notNull()) { writer.String("LastHeartbeat"); writeDatetime(LastHeartbeat, writer); }
+    if (ServerHostname.length() > 0) { writer.String("ServerHostname"); writer.String(ServerHostname.c_str()); }
+    if (ServerPort.notNull()) { writer.String("ServerPort"); writer.Int(ServerPort); }
 
     writer.EndObject();
 }
@@ -1936,6 +1938,10 @@ bool GameInfo::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator LastHeartbeat_member = obj.FindMember("LastHeartbeat");
     if (LastHeartbeat_member != obj.MemberEnd() && !LastHeartbeat_member->value.IsNull()) LastHeartbeat = readDatetime(LastHeartbeat_member->value);
+    const Value::ConstMemberIterator ServerHostname_member = obj.FindMember("ServerHostname");
+    if (ServerHostname_member != obj.MemberEnd() && !ServerHostname_member->value.IsNull()) ServerHostname = ServerHostname_member->value.GetString();
+    const Value::ConstMemberIterator ServerPort_member = obj.FindMember("ServerPort");
+    if (ServerPort_member != obj.MemberEnd() && !ServerPort_member->value.IsNull()) ServerPort = ServerPort_member->value.GetInt();
 
     return true;
 }
@@ -7754,6 +7760,7 @@ void RedeemCouponRequest::writeJSON(PFStringJsonWriter& writer)
 
     writer.String("CouponCode"); writer.String(CouponCode.c_str());
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+    if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
 
     writer.EndObject();
 }
@@ -7764,6 +7771,8 @@ bool RedeemCouponRequest::readFromValue(const rapidjson::Value& obj)
     if (CouponCode_member != obj.MemberEnd() && !CouponCode_member->value.IsNull()) CouponCode = CouponCode_member->value.GetString();
     const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
     if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
 
     return true;
 }
