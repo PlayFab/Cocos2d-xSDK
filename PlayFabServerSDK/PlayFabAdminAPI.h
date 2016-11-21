@@ -14,6 +14,8 @@ namespace PlayFab
         template<typename ResType> using ProcessApiCallback = std::function<void(const ResType& result, void* userData)>;
 
         // ------------ Generated API calls
+        static void GetPolicy(AdminModels::GetPolicyRequest& request, ProcessApiCallback<AdminModels::GetPolicyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UpdatePolicy(AdminModels::UpdatePolicyRequest& request, ProcessApiCallback<AdminModels::UpdatePolicyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void BanUsers(AdminModels::BanUsersRequest& request, ProcessApiCallback<AdminModels::BanUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserAccountInfo(AdminModels::LookupUserAccountInfoRequest& request, ProcessApiCallback<AdminModels::LookupUserAccountInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetUserBans(AdminModels::GetUserBansRequest& request, ProcessApiCallback<AdminModels::GetUserBansResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -110,6 +112,8 @@ namespace PlayFab
         PlayFabAdminAPI();
 
         // ------------ Generated result handlers
+        static void OnGetPolicyResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUpdatePolicyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnBanUsersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetUserBansResult(int httpStatus, HttpRequest* request, void* userData);
