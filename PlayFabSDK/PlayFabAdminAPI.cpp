@@ -10,6 +10,102 @@ using namespace PlayFab::AdminModels;
 
 PlayFabAdminAPI::PlayFabAdminAPI() {}
 
+void PlayFabAdminAPI::GetPolicy(
+    GetPolicyRequest& request,
+    ProcessApiCallback<GetPolicyResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/GetPolicy"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPolicyResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPolicyResult, userData);
+}
+
+void PlayFabAdminAPI::OnGetPolicyResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPolicyResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<GetPolicyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabAdminAPI::UpdatePolicy(
+    UpdatePolicyRequest& request,
+    ProcessApiCallback<UpdatePolicyResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/UpdatePolicy"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UpdatePolicyResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUpdatePolicyResult, userData);
+}
+
+void PlayFabAdminAPI::OnUpdatePolicyResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    UpdatePolicyResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<UpdatePolicyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabAdminAPI::BanUsers(
     BanUsersRequest& request,
     ProcessApiCallback<BanUsersResult> callback,

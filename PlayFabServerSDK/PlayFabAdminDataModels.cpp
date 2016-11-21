@@ -2554,6 +2554,31 @@ bool DeleteUsersResult::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::AdminModels::writeEffectTypeEnumJSON(EffectType enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case EffectTypeAllow: writer.String("Allow"); break;
+
+    }
+}
+
+EffectType PlayFab::AdminModels::readEffectTypeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, EffectType> _EffectTypeMap;
+    if (_EffectTypeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _EffectTypeMap["Allow"] = EffectTypeAllow;
+
+    }
+
+    auto output = _EffectTypeMap.find(obj.GetString());
+    if (output != _EffectTypeMap.end())
+        return output->second;
+
+    return EffectTypeAllow; // Basically critical fail
+}
 
 EmptyResult::~EmptyResult()
 {
@@ -4039,6 +4064,99 @@ bool GetPlayerTagsResult::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = Tags_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Tags.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
+GetPolicyRequest::~GetPolicyRequest()
+{
+
+}
+
+void GetPolicyRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (PolicyName.length() > 0) { writer.String("PolicyName"); writer.String(PolicyName.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetPolicyRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PolicyName_member = obj.FindMember("PolicyName");
+    if (PolicyName_member != obj.MemberEnd() && !PolicyName_member->value.IsNull()) PolicyName = PolicyName_member->value.GetString();
+
+    return true;
+}
+
+PermissionStatement::~PermissionStatement()
+{
+
+}
+
+void PermissionStatement::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Resource"); writer.String(Resource.c_str());
+    writer.String("Action"); writer.String(Action.c_str());
+    writer.String("Effect"); writeEffectTypeEnumJSON(Effect, writer);
+    writer.String("Principal"); writer.String(Principal.c_str());
+    if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
+
+    writer.EndObject();
+}
+
+bool PermissionStatement::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Resource_member = obj.FindMember("Resource");
+    if (Resource_member != obj.MemberEnd() && !Resource_member->value.IsNull()) Resource = Resource_member->value.GetString();
+    const Value::ConstMemberIterator Action_member = obj.FindMember("Action");
+    if (Action_member != obj.MemberEnd() && !Action_member->value.IsNull()) Action = Action_member->value.GetString();
+    const Value::ConstMemberIterator Effect_member = obj.FindMember("Effect");
+    if (Effect_member != obj.MemberEnd() && !Effect_member->value.IsNull()) Effect = readEffectTypeFromValue(Effect_member->value);
+    const Value::ConstMemberIterator Principal_member = obj.FindMember("Principal");
+    if (Principal_member != obj.MemberEnd() && !Principal_member->value.IsNull()) Principal = Principal_member->value.GetString();
+    const Value::ConstMemberIterator Comment_member = obj.FindMember("Comment");
+    if (Comment_member != obj.MemberEnd() && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
+
+    return true;
+}
+
+GetPolicyResponse::~GetPolicyResponse()
+{
+
+}
+
+void GetPolicyResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (PolicyName.length() > 0) { writer.String("PolicyName"); writer.String(PolicyName.c_str()); }
+    if (!Statements.empty()) {
+    writer.String("Statements");
+    writer.StartArray();
+    for (std::list<PermissionStatement>::iterator iter = Statements.begin(); iter != Statements.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool GetPolicyResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PolicyName_member = obj.FindMember("PolicyName");
+    if (PolicyName_member != obj.MemberEnd() && !PolicyName_member->value.IsNull()) PolicyName = PolicyName_member->value.GetString();
+    const Value::ConstMemberIterator Statements_member = obj.FindMember("Statements");
+    if (Statements_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Statements_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Statements.push_back(PermissionStatement(memberList[i]));
         }
     }
 
@@ -6689,7 +6807,6 @@ void UserCredentials::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("Username"); writer.String(Username.c_str());
-    if (Password.length() > 0) { writer.String("Password"); writer.String(Password.c_str()); }
 
     writer.EndObject();
 }
@@ -6698,8 +6815,6 @@ bool UserCredentials::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator Username_member = obj.FindMember("Username");
     if (Username_member != obj.MemberEnd() && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
-    const Value::ConstMemberIterator Password_member = obj.FindMember("Password");
-    if (Password_member != obj.MemberEnd() && !Password_member->value.IsNull()) Password = Password_member->value.GetString();
 
     return true;
 }
@@ -7609,6 +7724,82 @@ bool UpdatePlayerStatisticDefinitionResult::readFromValue(const rapidjson::Value
 {
     const Value::ConstMemberIterator Statistic_member = obj.FindMember("Statistic");
     if (Statistic_member != obj.MemberEnd() && !Statistic_member->value.IsNull()) Statistic = new PlayerStatisticDefinition(Statistic_member->value);
+
+    return true;
+}
+
+UpdatePolicyRequest::~UpdatePolicyRequest()
+{
+
+}
+
+void UpdatePolicyRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PolicyName"); writer.String(PolicyName.c_str());
+    writer.String("Statements");
+    writer.StartArray();
+    for (std::list<PermissionStatement>::iterator iter = Statements.begin(); iter != Statements.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    
+    writer.String("OverwritePolicy"); writer.Bool(OverwritePolicy);
+
+    writer.EndObject();
+}
+
+bool UpdatePolicyRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PolicyName_member = obj.FindMember("PolicyName");
+    if (PolicyName_member != obj.MemberEnd() && !PolicyName_member->value.IsNull()) PolicyName = PolicyName_member->value.GetString();
+    const Value::ConstMemberIterator Statements_member = obj.FindMember("Statements");
+    if (Statements_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Statements_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Statements.push_back(PermissionStatement(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator OverwritePolicy_member = obj.FindMember("OverwritePolicy");
+    if (OverwritePolicy_member != obj.MemberEnd() && !OverwritePolicy_member->value.IsNull()) OverwritePolicy = OverwritePolicy_member->value.GetBool();
+
+    return true;
+}
+
+UpdatePolicyResponse::~UpdatePolicyResponse()
+{
+
+}
+
+void UpdatePolicyResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (PolicyName.length() > 0) { writer.String("PolicyName"); writer.String(PolicyName.c_str()); }
+    if (!Statements.empty()) {
+    writer.String("Statements");
+    writer.StartArray();
+    for (std::list<PermissionStatement>::iterator iter = Statements.begin(); iter != Statements.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool UpdatePolicyResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PolicyName_member = obj.FindMember("PolicyName");
+    if (PolicyName_member != obj.MemberEnd() && !PolicyName_member->value.IsNull()) PolicyName = PolicyName_member->value.GetString();
+    const Value::ConstMemberIterator Statements_member = obj.FindMember("Statements");
+    if (Statements_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Statements_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Statements.push_back(PermissionStatement(memberList[i]));
+        }
+    }
 
     return true;
 }

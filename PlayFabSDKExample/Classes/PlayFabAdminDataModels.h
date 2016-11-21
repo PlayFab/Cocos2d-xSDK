@@ -1919,6 +1919,14 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum EffectType
+        {
+            EffectTypeAllow
+        };
+
+        void writeEffectTypeEnumJSON(EffectType enumVal, PFStringJsonWriter& writer);
+        EffectType readEffectTypeFromValue(const rapidjson::Value& obj);
+
         struct EmptyResult : public PlayFabBaseModel
         {
 
@@ -3200,6 +3208,96 @@ namespace PlayFab
             }
 
             ~GetPlayerTagsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPolicyRequest : public PlayFabBaseModel
+        {
+            std::string PolicyName;
+
+            GetPolicyRequest() :
+                PlayFabBaseModel(),
+                PolicyName()
+            {}
+
+            GetPolicyRequest(const GetPolicyRequest& src) :
+                PlayFabBaseModel(),
+                PolicyName(src.PolicyName)
+            {}
+
+            GetPolicyRequest(const rapidjson::Value& obj) : GetPolicyRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPolicyRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct PermissionStatement : public PlayFabBaseModel
+        {
+            std::string Resource;
+            std::string Action;
+            EffectType Effect;
+            std::string Principal;
+            std::string Comment;
+
+            PermissionStatement() :
+                PlayFabBaseModel(),
+                Resource(),
+                Action(),
+                Effect(),
+                Principal(),
+                Comment()
+            {}
+
+            PermissionStatement(const PermissionStatement& src) :
+                PlayFabBaseModel(),
+                Resource(src.Resource),
+                Action(src.Action),
+                Effect(src.Effect),
+                Principal(src.Principal),
+                Comment(src.Comment)
+            {}
+
+            PermissionStatement(const rapidjson::Value& obj) : PermissionStatement()
+            {
+                readFromValue(obj);
+            }
+
+            ~PermissionStatement();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPolicyResponse : public PlayFabBaseModel
+        {
+            std::string PolicyName;
+            std::list<PermissionStatement> Statements;
+
+            GetPolicyResponse() :
+                PlayFabBaseModel(),
+                PolicyName(),
+                Statements()
+            {}
+
+            GetPolicyResponse(const GetPolicyResponse& src) :
+                PlayFabBaseModel(),
+                PolicyName(src.PolicyName),
+                Statements(src.Statements)
+            {}
+
+            GetPolicyResponse(const rapidjson::Value& obj) : GetPolicyResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPolicyResponse();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -5534,19 +5632,15 @@ namespace PlayFab
         struct UserCredentials : public PlayFabBaseModel
         {
             std::string Username;
-            // Deprecated - Do not use
-            std::string Password;
 
             UserCredentials() :
                 PlayFabBaseModel(),
-                Username(),
-                Password()
+                Username()
             {}
 
             UserCredentials(const UserCredentials& src) :
                 PlayFabBaseModel(),
-                Username(src.Username),
-                Password(src.Password)
+                Username(src.Username)
             {}
 
             UserCredentials(const rapidjson::Value& obj) : UserCredentials()
@@ -6450,6 +6544,65 @@ namespace PlayFab
             }
 
             ~UpdatePlayerStatisticDefinitionResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdatePolicyRequest : public PlayFabBaseModel
+        {
+            std::string PolicyName;
+            std::list<PermissionStatement> Statements;
+            bool OverwritePolicy;
+
+            UpdatePolicyRequest() :
+                PlayFabBaseModel(),
+                PolicyName(),
+                Statements(),
+                OverwritePolicy(false)
+            {}
+
+            UpdatePolicyRequest(const UpdatePolicyRequest& src) :
+                PlayFabBaseModel(),
+                PolicyName(src.PolicyName),
+                Statements(src.Statements),
+                OverwritePolicy(src.OverwritePolicy)
+            {}
+
+            UpdatePolicyRequest(const rapidjson::Value& obj) : UpdatePolicyRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdatePolicyRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdatePolicyResponse : public PlayFabBaseModel
+        {
+            std::string PolicyName;
+            std::list<PermissionStatement> Statements;
+
+            UpdatePolicyResponse() :
+                PlayFabBaseModel(),
+                PolicyName(),
+                Statements()
+            {}
+
+            UpdatePolicyResponse(const UpdatePolicyResponse& src) :
+                PlayFabBaseModel(),
+                PolicyName(src.PolicyName),
+                Statements(src.Statements)
+            {}
+
+            UpdatePolicyResponse(const rapidjson::Value& obj) : UpdatePolicyResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdatePolicyResponse();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
