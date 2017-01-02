@@ -266,7 +266,10 @@ namespace PlayFab
         PlayFabErrorLimitNotAnUpgradeOption = 1259,
         PlayFabErrorNoSecretKeyEnabledForCloudScript = 1260,
         PlayFabErrorTaskNotFound = 1261,
-        PlayFabErrorTaskInstanceNotFound = 1262
+        PlayFabErrorTaskInstanceNotFound = 1262,
+        PlayFabErrorInvalidIdentityProviderId = 1263,
+        PlayFabErrorMisconfiguredIdentityProvider = 1264,
+        PlayFabErrorInvalidScheduledTaskType = 1265
     };
 
     struct PlayFabError
