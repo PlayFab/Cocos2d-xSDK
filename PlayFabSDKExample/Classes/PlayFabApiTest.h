@@ -223,6 +223,7 @@ namespace PlayFabApiTest
             if (setupSuccessful)
             {
                 testContexts.insert(testContexts.end(), new PfTestContext("InvalidLogin", InvalidLogin));
+                testContexts.insert(testContexts.end(), new PfTestContext("InvalidLoginLambda", InvalidLoginLambda));
                 testContexts.insert(testContexts.end(), new PfTestContext("InvalidRegistration", InvalidRegistration));
                 testContexts.insert(testContexts.end(), new PfTestContext("LoginOrRegister", LoginOrRegister));
                 testContexts.insert(testContexts.end(), new PfTestContext("LoginWithAdvertisingId", LoginWithAdvertisingId));
@@ -231,6 +232,7 @@ namespace PlayFabApiTest
                 testContexts.insert(testContexts.end(), new PfTestContext("UserCharacter", UserCharacter));
                 testContexts.insert(testContexts.end(), new PfTestContext("LeaderBoard", LeaderBoard));
                 testContexts.insert(testContexts.end(), new PfTestContext("AccountInfo", AccountInfo));
+                testContexts.insert(testContexts.end(), new PfTestContext("CloudScriptLambda", CloudScriptLambda));
                 testContexts.insert(testContexts.end(), new PfTestContext("CloudScript", CloudScript));
                 testContexts.insert(testContexts.end(), new PfTestContext("CloudScriptError", CloudScriptError));
                 testContexts.insert(testContexts.end(), new PfTestContext("WriteEvent", WriteEvent));
@@ -312,9 +314,8 @@ namespace PlayFabApiTest
         static PlayFabSettings* playFabSettings;
 
         // A bunch of constants loaded from testTitleData.json
-        static const std::string TEST_TITLE_DATA_LOC;
+        static std::string TEST_TITLE_DATA_LOC;
         static std::string userEmail;
-        static bool TITLE_CAN_UPDATE_SETTINGS;
         const static std::string TEST_DATA_KEY;
         const static std::string TEST_STAT_NAME;
         static std::string playFabId;
@@ -325,26 +326,37 @@ namespace PlayFabApiTest
         static bool ClassSetup()
         {
             // README:
-            // modify the TEST_TITLE_DATA_LOC to a location of a testTitleData.json file
+            // Create an environment variable PF_TEST_TITLE_DATA_JSON, and set it to the location of a valid testTitleData.json file
             // The format of this file is described in the sdk readme
             //  - OR -
             // Comment the "return false;" below, and
             //   Fill in all the variables under: POPULATE THIS SECTION WITH REAL INFORMATION
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) // Env vars are only available on Win32
+            // Prefer to load path from environment variable, if present
+            char* envPath = nullptr;
+            size_t envPathStrLen;
+            errno_t err = _dupenv_s(&envPath, &envPathStrLen, "PF_TEST_TITLE_DATA_JSON");
+            if (err == 0)
+                TEST_TITLE_DATA_LOC = envPath; // If exists, reset path to env var
+            free(envPath); // It's OK to call free with NULL
+#endif
+
             std::ifstream titleInput;
             titleInput.open(TEST_TITLE_DATA_LOC, std::ios::binary | std::ios::in);
             if (titleInput)
             {
-                int begin = titleInput.tellg();
+                auto begin = titleInput.tellg();
                 titleInput.seekg(0, std::ios::end);
-                int end = titleInput.tellg();
-                char* titleData = new char[end - begin];
+                auto end = titleInput.tellg();
+                int size = static_cast<int>(end - begin);
+                char* titleJson = new char[size + 1];
                 titleInput.seekg(0, std::ios::beg);
-                titleInput.read(titleData, end - begin);
-                titleData[end - begin] = '\0';
+                titleInput.read(titleJson, size);
+                titleJson[size] = '\0';
 
                 Document testInputs;
-                testInputs.Parse<0>(titleData);
+                testInputs.Parse<0>(titleJson);
                 SetTitleInfo(testInputs);
 
                 titleInput.close();
@@ -352,12 +364,9 @@ namespace PlayFabApiTest
             else
             {
                 return false;
-                // TODO: Put the info for your title here (Fallback in case it can't read from the file)
-
-                // POPULATE THIS SECTION WITH REAL INFORMATION
+                // TODO: POPULATE THIS SECTION WITH REAL INFORMATION (or set up a testTitleData file, and set your PF_TEST_TITLE_DATA_JSON to the path for that file)
                 playFabSettings->titleId = ""; // The titleId for your title, found in the "Settings" section of PlayFab Game Manager
-                TITLE_CAN_UPDATE_SETTINGS = true; // Make sure this is enabled in your title, found in the "Settings" section, "API Features" section of PlayFab Game Manager
-                userEmail = ""; // This is the email for the user
+                userEmail = ""; // This is the email for a valid user (test tries to log into it with an invalid password, and verifies error result)
             }
 
             // Verify all the inputs won't cause crashes in the tests
@@ -435,11 +444,6 @@ namespace PlayFabApiTest
             auto each = testInputs.FindMember("titleId");
             if (each != end) playFabSettings->titleId = each->value.GetString();
 
-            std::string blah;
-            each = testInputs.FindMember("titleCanUpdateSettings");
-            if (each != end) blah = each->value.GetString();
-            TITLE_CAN_UPDATE_SETTINGS = (blah.compare("true") == 0 || blah.compare("True") == 0 || blah.compare("TRUE") == 0);
-
             each = testInputs.FindMember("userEmail");
             if (each != end) userEmail = each->value.GetString();
         }
@@ -501,6 +505,19 @@ namespace PlayFabApiTest
                 EndTest(*testContext, PASSED, "");
             else
                 EndTest(*testContext, FAILED, "Password error message not found: " + error.ErrorMessage);
+        }
+
+        /// <summary>
+        /// CLIENT API
+        /// Test that a lambda error callback can be successfully invoked
+        /// </summary>
+        static void InvalidLoginLambda(PfTestContext& testContext)
+        {
+            LoginWithEmailAddressRequest request;
+            request.Email = userEmail;
+            request.Password = "INVALID";
+
+            PlayFabClientAPI::LoginWithEmailAddress(request, nullptr, [](const PlayFabError& error, void* customData) { PfTestContext* testContext = reinterpret_cast<PfTestContext*>(customData); EndTest(*testContext, PASSED, ""); }, &testContext);
         }
 
         /// <summary>
@@ -659,11 +676,6 @@ namespace PlayFabApiTest
                 EndTest(testContext, SKIPPED, "Earlier tests failed to log in");
                 return;
             }
-            if (!TITLE_CAN_UPDATE_SETTINGS)
-            {
-                EndTest(testContext, SKIPPED, "Can't modify stats from the client");
-                return;
-            }
 
             GetPlayerStatisticsRequest request;
             PlayFabClientAPI::GetPlayerStatistics(request, OnPlayerStatisticsApiGet1, OnSharedError, &testContext);
@@ -793,6 +805,17 @@ namespace PlayFabApiTest
 
         /// <summary>
         /// CLIENT API
+        /// Test that a lambda success callback can be successfully invoked
+        /// </summary>
+        static void CloudScriptLambda(PfTestContext& testContext)
+        {
+            ExecuteCloudScriptRequest hwRequest;
+            hwRequest.FunctionName = "helloWorld";
+            PlayFabClientAPI::ExecuteCloudScript(hwRequest, [](const ExecuteCloudScriptResult& constResult, void* customData) { OnHelloWorldCloudScript(constResult, customData); }, OnSharedError, &testContext);
+        }
+
+        /// <summary>
+        /// CLIENT API
         /// Test that CloudScript errors can be deciphered
         /// </summary>
         static void CloudScriptError(PfTestContext& testContext)
@@ -838,9 +861,8 @@ namespace PlayFabApiTest
     time_t PlayFabApiTests::suiteStartTime;
     std::string PlayFabApiTests::_outputSummary;
     PlayFabSettings* PlayFabApiTests::playFabSettings;
-    const std::string PlayFabApiTests::TEST_TITLE_DATA_LOC = "C:/depot/pf-main/tools/SDKBuildScripts/testTitleData.json";
+    std::string PlayFabApiTests::TEST_TITLE_DATA_LOC = "testTitleData.json"; // default to local file if PF_TEST_TITLE_DATA_JSON env-var does not exist
     std::string PlayFabApiTests::userEmail;
-    bool PlayFabApiTests::TITLE_CAN_UPDATE_SETTINGS = false;
     const std::string PlayFabApiTests::TEST_DATA_KEY = "testCounter";
     const std::string PlayFabApiTests::TEST_STAT_NAME = "str";
     std::list<PfTestContext*> PlayFabApiTests::testContexts;

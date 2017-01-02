@@ -42,8 +42,6 @@ namespace PlayFab
         static void GetPlayFabIDsFromKongregateIDs(ClientModels::GetPlayFabIDsFromKongregateIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromKongregateIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromSteamIDs(ClientModels::GetPlayFabIDsFromSteamIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromSteamIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromTwitchIDs(ClientModels::GetPlayFabIDsFromTwitchIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromTwitchIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'GetPlayerCombinedInfo' instead
-        static void GetUserCombinedInfo(ClientModels::GetUserCombinedInfoRequest& request, ProcessApiCallback<ClientModels::GetUserCombinedInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkAndroidDeviceID(ClientModels::LinkAndroidDeviceIDRequest& request, ProcessApiCallback<ClientModels::LinkAndroidDeviceIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkCustomID(ClientModels::LinkCustomIDRequest& request, ProcessApiCallback<ClientModels::LinkCustomIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkFacebookAccount(ClientModels::LinkFacebookAccountRequest& request, ProcessApiCallback<ClientModels::LinkFacebookAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -170,7 +168,6 @@ namespace PlayFab
         static void OnGetPlayFabIDsFromKongregateIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromTwitchIDsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetUserCombinedInfoResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkCustomIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkFacebookAccountResult(int httpStatus, HttpRequest* request, void* userData);
