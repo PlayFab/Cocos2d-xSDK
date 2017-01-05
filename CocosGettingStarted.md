@@ -21,7 +21,7 @@ Cocos2d-x Project Setup
     * Navigate to a location where you wish to store your Cocos project
     * Open a command window in your parent folder (Cocos CLI will create the actual project directory)
       * Hold shift and right click in the empty-white-space of the Explorer window
-      * ![Cocos image](/SdkQuickStart/images/Cocos/CmdExe.png)
+      * ![Cocos image](/images/Cocos/CmdExe.png)
     * In the new console window enter this command:
       * cocos new CocosGettingStarted -l cpp
         * Make sure your target sub-directory (CocosGettingStarted) does not already exist - This command will fail if the folder exists
@@ -53,10 +53,10 @@ Cocos2d-x Project Setup
       * Drag and drop all of those files from Explorer, onto the Visual Studio Solution/CocosGettingStarted/src folder we found above
         * If you experience problems, you can drag and drop each file one at a time, just be careful and get all of them
         * You should see these files in your VS project:
-          * ![Cocos image](/SdkQuickStart/images/Cocos/SlnSrc.png)
+          * ![Cocos image](/images/Cocos/SlnSrc.png)
   * PlayFab uses several Cocos libraries that have to be manually added to the dependencies list
     * Open the Properties window for your CocosGettingStarted project:
-      * ![Cocos image](/SdkQuickStart/images/Cocos/CocosInclude.png)
+      * ![Cocos image](/images/Cocos/CocosInclude.png)
     * Replace the Additional Include Directories with this:
       * $(ProjectDir)..\cocos2d\external\zlib\include;$(ProjectDir)..\cocos2d\external\curl\include\win32;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END);..\cocos2d
       * We are adding curl and zlib, which libraries that come with Cocos, but not enabled by default
