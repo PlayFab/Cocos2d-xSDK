@@ -6364,7 +6364,8 @@ void LinkGoogleAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    writer.String("AccessToken"); writer.String(AccessToken.c_str());
+    if (ServerAuthCode.length() > 0) { writer.String("ServerAuthCode"); writer.String(ServerAuthCode.c_str()); }
+    if (AccessToken.length() > 0) { writer.String("AccessToken"); writer.String(AccessToken.c_str()); }
     if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
@@ -6372,6 +6373,8 @@ void LinkGoogleAccountRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool LinkGoogleAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator ServerAuthCode_member = obj.FindMember("ServerAuthCode");
+    if (ServerAuthCode_member != obj.MemberEnd() && !ServerAuthCode_member->value.IsNull()) ServerAuthCode = ServerAuthCode_member->value.GetString();
     const Value::ConstMemberIterator AccessToken_member = obj.FindMember("AccessToken");
     if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
     const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
@@ -6878,7 +6881,8 @@ void LoginWithGoogleAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("TitleId"); writer.String(TitleId.c_str());
-    writer.String("AccessToken"); writer.String(AccessToken.c_str());
+    if (ServerAuthCode.length() > 0) { writer.String("ServerAuthCode"); writer.String(ServerAuthCode.c_str()); }
+    if (AccessToken.length() > 0) { writer.String("AccessToken"); writer.String(AccessToken.c_str()); }
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
 
@@ -6889,6 +6893,8 @@ bool LoginWithGoogleAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
     if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator ServerAuthCode_member = obj.FindMember("ServerAuthCode");
+    if (ServerAuthCode_member != obj.MemberEnd() && !ServerAuthCode_member->value.IsNull()) ServerAuthCode = ServerAuthCode_member->value.GetString();
     const Value::ConstMemberIterator AccessToken_member = obj.FindMember("AccessToken");
     if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
     const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
@@ -7212,6 +7218,31 @@ bool ModifyUserVirtualCurrencyResult::readFromValue(const rapidjson::Value& obj)
     if (BalanceChange_member != obj.MemberEnd() && !BalanceChange_member->value.IsNull()) BalanceChange = BalanceChange_member->value.GetInt();
     const Value::ConstMemberIterator Balance_member = obj.FindMember("Balance");
     if (Balance_member != obj.MemberEnd() && !Balance_member->value.IsNull()) Balance = Balance_member->value.GetInt();
+
+    return true;
+}
+
+NameIdentifier::~NameIdentifier()
+{
+
+}
+
+void NameIdentifier::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
+
+    writer.EndObject();
+}
+
+bool NameIdentifier::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
+    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
 
     return true;
 }

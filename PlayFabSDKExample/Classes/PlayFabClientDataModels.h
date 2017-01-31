@@ -5329,17 +5329,21 @@ namespace PlayFab
 
         struct LinkGoogleAccountRequest : public PlayFabBaseModel
         {
+            std::string ServerAuthCode;
+            // Deprecated - Use 'ServerAuthCode' instead
             std::string AccessToken;
             OptionalBool ForceLink;
 
             LinkGoogleAccountRequest() :
                 PlayFabBaseModel(),
+                ServerAuthCode(),
                 AccessToken(),
                 ForceLink()
             {}
 
             LinkGoogleAccountRequest(const LinkGoogleAccountRequest& src) :
                 PlayFabBaseModel(),
+                ServerAuthCode(src.ServerAuthCode),
                 AccessToken(src.AccessToken),
                 ForceLink(src.ForceLink)
             {}
@@ -5880,6 +5884,8 @@ namespace PlayFab
         struct LoginWithGoogleAccountRequest : public PlayFabBaseModel
         {
             std::string TitleId;
+            std::string ServerAuthCode;
+            // Deprecated - Use 'ServerAuthCode' instead
             std::string AccessToken;
             OptionalBool CreateAccount;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
@@ -5887,6 +5893,7 @@ namespace PlayFab
             LoginWithGoogleAccountRequest() :
                 PlayFabBaseModel(),
                 TitleId(),
+                ServerAuthCode(),
                 AccessToken(),
                 CreateAccount(),
                 InfoRequestParameters(NULL)
@@ -5895,6 +5902,7 @@ namespace PlayFab
             LoginWithGoogleAccountRequest(const LoginWithGoogleAccountRequest& src) :
                 PlayFabBaseModel(),
                 TitleId(src.TitleId),
+                ServerAuthCode(src.ServerAuthCode),
                 AccessToken(src.AccessToken),
                 CreateAccount(src.CreateAccount),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
@@ -6220,6 +6228,34 @@ namespace PlayFab
             }
 
             ~ModifyUserVirtualCurrencyResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct NameIdentifier : public PlayFabBaseModel
+        {
+            std::string Name;
+            std::string Id;
+
+            NameIdentifier() :
+                PlayFabBaseModel(),
+                Name(),
+                Id()
+            {}
+
+            NameIdentifier(const NameIdentifier& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                Id(src.Id)
+            {}
+
+            NameIdentifier(const rapidjson::Value& obj) : NameIdentifier()
+            {
+                readFromValue(obj);
+            }
+
+            ~NameIdentifier();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
