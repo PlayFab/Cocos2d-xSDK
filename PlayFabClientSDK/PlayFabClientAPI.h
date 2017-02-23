@@ -19,6 +19,8 @@ namespace PlayFab
 
         // ------------ Generated API calls
         static void GetPhotonAuthenticationToken(ClientModels::GetPhotonAuthenticationTokenRequest& request, ProcessApiCallback<ClientModels::GetPhotonAuthenticationTokenResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetWindowsHelloChallenge(ClientModels::GetWindowsHelloChallengeRequest& request, ProcessApiCallback<ClientModels::GetWindowsHelloChallengeResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void LinkWindowsHello(ClientModels::LinkWindowsHelloAccountRequest& request, ProcessApiCallback<ClientModels::LinkWindowsHelloAccountResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithAndroidDeviceID(ClientModels::LoginWithAndroidDeviceIDRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithCustomID(ClientModels::LoginWithCustomIDRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithEmailAddress(ClientModels::LoginWithEmailAddressRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -30,7 +32,10 @@ namespace PlayFab
         static void LoginWithPlayFab(ClientModels::LoginWithPlayFabRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithSteam(ClientModels::LoginWithSteamRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithTwitch(ClientModels::LoginWithTwitchRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void LoginWithWindowsHello(ClientModels::LoginWithWindowsHelloRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RegisterPlayFabUser(ClientModels::RegisterPlayFabUserRequest& request, ProcessApiCallback<ClientModels::RegisterPlayFabUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RegisterWithWindowsHello(ClientModels::RegisterWithWindowsHelloRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UnlinkWindowsHello(ClientModels::UnlinkWindowsHelloAccountRequest& request, ProcessApiCallback<ClientModels::UnlinkWindowsHelloAccountResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddGenericID(ClientModels::AddGenericIDRequest& request, ProcessApiCallback<ClientModels::AddGenericIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddUsernamePassword(ClientModels::AddUsernamePasswordRequest& request, ProcessApiCallback<ClientModels::AddUsernamePasswordResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAccountInfo(ClientModels::GetAccountInfoRequest& request, ProcessApiCallback<ClientModels::GetAccountInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -63,6 +68,7 @@ namespace PlayFab
         static void UnlinkKongregate(ProcessApiCallback<ClientModels::UnlinkKongregateAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkSteamAccount(ProcessApiCallback<ClientModels::UnlinkSteamAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkTwitch(ProcessApiCallback<ClientModels::UnlinkTwitchAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UpdateAvatarUrl(ClientModels::UpdateAvatarUrlRequest& request, ProcessApiCallback<ClientModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateUserTitleDisplayName(ClientModels::UpdateUserTitleDisplayNameRequest& request, ProcessApiCallback<ClientModels::UpdateUserTitleDisplayNameResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetFriendLeaderboard(ClientModels::GetFriendLeaderboardRequest& request, ProcessApiCallback<ClientModels::GetLeaderboardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetFriendLeaderboardAroundPlayer(ClientModels::GetFriendLeaderboardAroundPlayerRequest& request, ProcessApiCallback<ClientModels::GetFriendLeaderboardAroundPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -138,6 +144,7 @@ namespace PlayFab
         static void AttributeInstall(ClientModels::AttributeInstallRequest& request, ProcessApiCallback<ClientModels::AttributeInstallResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerSegments(ProcessApiCallback<ClientModels::GetPlayerSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerTags(ClientModels::GetPlayerTagsRequest& request, ProcessApiCallback<ClientModels::GetPlayerTagsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ValidateWindowsStoreReceipt(ClientModels::ValidateWindowsReceiptRequest& request, ProcessApiCallback<ClientModels::ValidateWindowsReceiptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
@@ -145,6 +152,8 @@ namespace PlayFab
 
         // ------------ Generated result handlers
         static void OnGetPhotonAuthenticationTokenResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetWindowsHelloChallengeResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnLinkWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithCustomIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithEmailAddressResult(int httpStatus, HttpRequest* request, void* userData);
@@ -156,7 +165,10 @@ namespace PlayFab
         static void OnLoginWithPlayFabResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithSteamResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithTwitchResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnLoginWithWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRegisterWithWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUnlinkWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddGenericIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddUsernamePasswordResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAccountInfoResult(int httpStatus, HttpRequest* request, void* userData);
@@ -189,6 +201,7 @@ namespace PlayFab
         static void OnUnlinkKongregateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkTwitchResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUpdateAvatarUrlResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateUserTitleDisplayNameResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetFriendLeaderboardResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetFriendLeaderboardAroundPlayerResult(int httpStatus, HttpRequest* request, void* userData);
@@ -264,6 +277,7 @@ namespace PlayFab
         static void OnAttributeInstallResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerTagsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnValidateWindowsStoreReceiptResult(int httpStatus, HttpRequest* request, void* userData);
 
         // Private, Client-Specific
         static std::string mUserSessionTicket;

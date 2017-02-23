@@ -2722,7 +2722,8 @@ namespace PlayFab
             LoginIdentityProviderFacebook,
             LoginIdentityProviderIOSDevice,
             LoginIdentityProviderAndroidDevice,
-            LoginIdentityProviderTwitch
+            LoginIdentityProviderTwitch,
+            LoginIdentityProviderWindowsHello
         };
 
         void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);
@@ -2880,6 +2881,7 @@ namespace PlayFab
             OptionalTime Created;
             OptionalTime LastLogin;
             OptionalTime BannedUntil;
+            std::string AvatarUrl;
             std::map<std::string, Int32> Statistics;
             OptionalUint32 TotalValueToDateInUSD;
             std::map<std::string, Uint32> ValuesToDate;
@@ -2901,6 +2903,7 @@ namespace PlayFab
                 Created(),
                 LastLogin(),
                 BannedUntil(),
+                AvatarUrl(),
                 Statistics(),
                 TotalValueToDateInUSD(),
                 ValuesToDate(),
@@ -2923,6 +2926,7 @@ namespace PlayFab
                 Created(src.Created),
                 LastLogin(src.LastLogin),
                 BannedUntil(src.BannedUntil),
+                AvatarUrl(src.AvatarUrl),
                 Statistics(src.Statistics),
                 TotalValueToDateInUSD(src.TotalValueToDateInUSD),
                 ValuesToDate(src.ValuesToDate),
@@ -4708,7 +4712,8 @@ namespace PlayFab
             UserOriginationCustomId,
             UserOriginationXboxLive,
             UserOriginationParse,
-            UserOriginationTwitch
+            UserOriginationTwitch,
+            UserOriginationWindowsHello
         };
 
         void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
@@ -4722,6 +4727,7 @@ namespace PlayFab
             OptionalTime LastLogin;
             OptionalTime FirstLogin;
             OptionalBool isBanned;
+            std::string AvatarUrl;
 
             UserTitleInfo() :
                 PlayFabBaseModel(),
@@ -4730,7 +4736,8 @@ namespace PlayFab
                 Created(0),
                 LastLogin(),
                 FirstLogin(),
-                isBanned()
+                isBanned(),
+                AvatarUrl()
             {}
 
             UserTitleInfo(const UserTitleInfo& src) :
@@ -4740,7 +4747,8 @@ namespace PlayFab
                 Created(src.Created),
                 LastLogin(src.LastLogin),
                 FirstLogin(src.FirstLogin),
-                isBanned(src.isBanned)
+                isBanned(src.isBanned),
+                AvatarUrl(src.AvatarUrl)
             {}
 
             UserTitleInfo(const rapidjson::Value& obj) : UserTitleInfo()
