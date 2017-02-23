@@ -138,6 +138,37 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct AdCampaignAttribution : public PlayFabBaseModel
+        {
+            std::string Platform;
+            std::string CampaignId;
+            time_t AttributedAt;
+
+            AdCampaignAttribution() :
+                PlayFabBaseModel(),
+                Platform(),
+                CampaignId(),
+                AttributedAt(0)
+            {}
+
+            AdCampaignAttribution(const AdCampaignAttribution& src) :
+                PlayFabBaseModel(),
+                Platform(src.Platform),
+                CampaignId(src.CampaignId),
+                AttributedAt(src.AttributedAt)
+            {}
+
+            AdCampaignAttribution(const rapidjson::Value& obj) : AdCampaignAttribution()
+            {
+                readFromValue(obj);
+            }
+
+            ~AdCampaignAttribution();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct AddFriendRequest : public PlayFabBaseModel
         {
             std::string FriendPlayFabId;
@@ -462,21 +493,17 @@ namespace PlayFab
         struct AttributeInstallRequest : public PlayFabBaseModel
         {
             std::string Idfa;
-            // Deprecated - Use 'Adid' instead
-            std::string Android_Id;
             std::string Adid;
 
             AttributeInstallRequest() :
                 PlayFabBaseModel(),
                 Idfa(),
-                Android_Id(),
                 Adid()
             {}
 
             AttributeInstallRequest(const AttributeInstallRequest& src) :
                 PlayFabBaseModel(),
                 Idfa(src.Idfa),
-                Android_Id(src.Android_Id),
                 Adid(src.Adid)
             {}
 
@@ -1127,6 +1154,276 @@ namespace PlayFab
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
         };
+
+        enum ContinentCode
+        {
+            ContinentCodeAF,
+            ContinentCodeAN,
+            ContinentCodeAS,
+            ContinentCodeEU,
+            ContinentCodeNA,
+            ContinentCodeOC,
+            ContinentCodeSA
+        };
+
+        void writeContinentCodeEnumJSON(ContinentCode enumVal, PFStringJsonWriter& writer);
+        ContinentCode readContinentCodeFromValue(const rapidjson::Value& obj);
+
+        enum CountryCode
+        {
+            CountryCodeAF,
+            CountryCodeAX,
+            CountryCodeAL,
+            CountryCodeDZ,
+            CountryCodeAS,
+            CountryCodeAD,
+            CountryCodeAO,
+            CountryCodeAI,
+            CountryCodeAQ,
+            CountryCodeAG,
+            CountryCodeAR,
+            CountryCodeAM,
+            CountryCodeAW,
+            CountryCodeAU,
+            CountryCodeAT,
+            CountryCodeAZ,
+            CountryCodeBS,
+            CountryCodeBH,
+            CountryCodeBD,
+            CountryCodeBB,
+            CountryCodeBY,
+            CountryCodeBE,
+            CountryCodeBZ,
+            CountryCodeBJ,
+            CountryCodeBM,
+            CountryCodeBT,
+            CountryCodeBO,
+            CountryCodeBQ,
+            CountryCodeBA,
+            CountryCodeBW,
+            CountryCodeBV,
+            CountryCodeBR,
+            CountryCodeIO,
+            CountryCodeBN,
+            CountryCodeBG,
+            CountryCodeBF,
+            CountryCodeBI,
+            CountryCodeKH,
+            CountryCodeCM,
+            CountryCodeCA,
+            CountryCodeCV,
+            CountryCodeKY,
+            CountryCodeCF,
+            CountryCodeTD,
+            CountryCodeCL,
+            CountryCodeCN,
+            CountryCodeCX,
+            CountryCodeCC,
+            CountryCodeCO,
+            CountryCodeKM,
+            CountryCodeCG,
+            CountryCodeCD,
+            CountryCodeCK,
+            CountryCodeCR,
+            CountryCodeCI,
+            CountryCodeHR,
+            CountryCodeCU,
+            CountryCodeCW,
+            CountryCodeCY,
+            CountryCodeCZ,
+            CountryCodeDK,
+            CountryCodeDJ,
+            CountryCodeDM,
+            CountryCodeDO,
+            CountryCodeEC,
+            CountryCodeEG,
+            CountryCodeSV,
+            CountryCodeGQ,
+            CountryCodeER,
+            CountryCodeEE,
+            CountryCodeET,
+            CountryCodeFK,
+            CountryCodeFO,
+            CountryCodeFJ,
+            CountryCodeFI,
+            CountryCodeFR,
+            CountryCodeGF,
+            CountryCodePF,
+            CountryCodeTF,
+            CountryCodeGA,
+            CountryCodeGM,
+            CountryCodeGE,
+            CountryCodeDE,
+            CountryCodeGH,
+            CountryCodeGI,
+            CountryCodeGR,
+            CountryCodeGL,
+            CountryCodeGD,
+            CountryCodeGP,
+            CountryCodeGU,
+            CountryCodeGT,
+            CountryCodeGG,
+            CountryCodeGN,
+            CountryCodeGW,
+            CountryCodeGY,
+            CountryCodeHT,
+            CountryCodeHM,
+            CountryCodeVA,
+            CountryCodeHN,
+            CountryCodeHK,
+            CountryCodeHU,
+            CountryCodeIS,
+            CountryCodeIN,
+            CountryCodeID,
+            CountryCodeIR,
+            CountryCodeIQ,
+            CountryCodeIE,
+            CountryCodeIM,
+            CountryCodeIL,
+            CountryCodeIT,
+            CountryCodeJM,
+            CountryCodeJP,
+            CountryCodeJE,
+            CountryCodeJO,
+            CountryCodeKZ,
+            CountryCodeKE,
+            CountryCodeKI,
+            CountryCodeKP,
+            CountryCodeKR,
+            CountryCodeKW,
+            CountryCodeKG,
+            CountryCodeLA,
+            CountryCodeLV,
+            CountryCodeLB,
+            CountryCodeLS,
+            CountryCodeLR,
+            CountryCodeLY,
+            CountryCodeLI,
+            CountryCodeLT,
+            CountryCodeLU,
+            CountryCodeMO,
+            CountryCodeMK,
+            CountryCodeMG,
+            CountryCodeMW,
+            CountryCodeMY,
+            CountryCodeMV,
+            CountryCodeML,
+            CountryCodeMT,
+            CountryCodeMH,
+            CountryCodeMQ,
+            CountryCodeMR,
+            CountryCodeMU,
+            CountryCodeYT,
+            CountryCodeMX,
+            CountryCodeFM,
+            CountryCodeMD,
+            CountryCodeMC,
+            CountryCodeMN,
+            CountryCodeME,
+            CountryCodeMS,
+            CountryCodeMA,
+            CountryCodeMZ,
+            CountryCodeMM,
+            CountryCodeNA,
+            CountryCodeNR,
+            CountryCodeNP,
+            CountryCodeNL,
+            CountryCodeNC,
+            CountryCodeNZ,
+            CountryCodeNI,
+            CountryCodeNE,
+            CountryCodeNG,
+            CountryCodeNU,
+            CountryCodeNF,
+            CountryCodeMP,
+            CountryCodeNO,
+            CountryCodeOM,
+            CountryCodePK,
+            CountryCodePW,
+            CountryCodePS,
+            CountryCodePA,
+            CountryCodePG,
+            CountryCodePY,
+            CountryCodePE,
+            CountryCodePH,
+            CountryCodePN,
+            CountryCodePL,
+            CountryCodePT,
+            CountryCodePR,
+            CountryCodeQA,
+            CountryCodeRE,
+            CountryCodeRO,
+            CountryCodeRU,
+            CountryCodeRW,
+            CountryCodeBL,
+            CountryCodeSH,
+            CountryCodeKN,
+            CountryCodeLC,
+            CountryCodeMF,
+            CountryCodePM,
+            CountryCodeVC,
+            CountryCodeWS,
+            CountryCodeSM,
+            CountryCodeST,
+            CountryCodeSA,
+            CountryCodeSN,
+            CountryCodeRS,
+            CountryCodeSC,
+            CountryCodeSL,
+            CountryCodeSG,
+            CountryCodeSX,
+            CountryCodeSK,
+            CountryCodeSI,
+            CountryCodeSB,
+            CountryCodeSO,
+            CountryCodeZA,
+            CountryCodeGS,
+            CountryCodeSS,
+            CountryCodeES,
+            CountryCodeLK,
+            CountryCodeSD,
+            CountryCodeSR,
+            CountryCodeSJ,
+            CountryCodeSZ,
+            CountryCodeSE,
+            CountryCodeCH,
+            CountryCodeSY,
+            CountryCodeTW,
+            CountryCodeTJ,
+            CountryCodeTZ,
+            CountryCodeTH,
+            CountryCodeTL,
+            CountryCodeTG,
+            CountryCodeTK,
+            CountryCodeTO,
+            CountryCodeTT,
+            CountryCodeTN,
+            CountryCodeTR,
+            CountryCodeTM,
+            CountryCodeTC,
+            CountryCodeTV,
+            CountryCodeUG,
+            CountryCodeUA,
+            CountryCodeAE,
+            CountryCodeGB,
+            CountryCodeUS,
+            CountryCodeUM,
+            CountryCodeUY,
+            CountryCodeUZ,
+            CountryCodeVU,
+            CountryCodeVE,
+            CountryCodeVN,
+            CountryCodeVG,
+            CountryCodeVI,
+            CountryCodeWF,
+            CountryCodeEH,
+            CountryCodeYE,
+            CountryCodeZM,
+            CountryCodeZW
+        };
+
+        void writeCountryCodeEnumJSON(CountryCode enumVal, PFStringJsonWriter& writer);
+        CountryCode readCountryCodeFromValue(const rapidjson::Value& obj);
 
         struct CreateSharedGroupRequest : public PlayFabBaseModel
         {
@@ -2043,7 +2340,8 @@ namespace PlayFab
             UserOriginationCustomId,
             UserOriginationXboxLive,
             UserOriginationParse,
-            UserOriginationTwitch
+            UserOriginationTwitch,
+            UserOriginationWindowsHello
         };
 
         void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
@@ -2057,6 +2355,7 @@ namespace PlayFab
             OptionalTime LastLogin;
             OptionalTime FirstLogin;
             OptionalBool isBanned;
+            std::string AvatarUrl;
 
             UserTitleInfo() :
                 PlayFabBaseModel(),
@@ -2065,7 +2364,8 @@ namespace PlayFab
                 Created(0),
                 LastLogin(),
                 FirstLogin(),
-                isBanned()
+                isBanned(),
+                AvatarUrl()
             {}
 
             UserTitleInfo(const UserTitleInfo& src) :
@@ -2075,7 +2375,8 @@ namespace PlayFab
                 Created(src.Created),
                 LastLogin(src.LastLogin),
                 FirstLogin(src.FirstLogin),
-                isBanned(src.isBanned)
+                isBanned(src.isBanned),
+                AvatarUrl(src.AvatarUrl)
             {}
 
             UserTitleInfo(const rapidjson::Value& obj) : UserTitleInfo()
@@ -2847,6 +3148,8 @@ namespace PlayFab
             std::string PlayFabId;
             OptionalBool IncludeSteamFriends;
             OptionalBool IncludeFacebookFriends;
+            Int32 Version;
+            bool UseSpecificVersion;
 
             GetFriendLeaderboardAroundPlayerRequest() :
                 PlayFabBaseModel(),
@@ -2854,7 +3157,9 @@ namespace PlayFab
                 MaxResultsCount(),
                 PlayFabId(),
                 IncludeSteamFriends(),
-                IncludeFacebookFriends()
+                IncludeFacebookFriends(),
+                Version(0),
+                UseSpecificVersion(false)
             {}
 
             GetFriendLeaderboardAroundPlayerRequest(const GetFriendLeaderboardAroundPlayerRequest& src) :
@@ -2863,7 +3168,9 @@ namespace PlayFab
                 MaxResultsCount(src.MaxResultsCount),
                 PlayFabId(src.PlayFabId),
                 IncludeSteamFriends(src.IncludeSteamFriends),
-                IncludeFacebookFriends(src.IncludeFacebookFriends)
+                IncludeFacebookFriends(src.IncludeFacebookFriends),
+                Version(src.Version),
+                UseSpecificVersion(src.UseSpecificVersion)
             {}
 
             GetFriendLeaderboardAroundPlayerRequest(const rapidjson::Value& obj) : GetFriendLeaderboardAroundPlayerRequest()
@@ -2877,19 +3184,263 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum LoginIdentityProvider
+        {
+            LoginIdentityProviderUnknown,
+            LoginIdentityProviderPlayFab,
+            LoginIdentityProviderCustom,
+            LoginIdentityProviderGameCenter,
+            LoginIdentityProviderGooglePlay,
+            LoginIdentityProviderSteam,
+            LoginIdentityProviderXBoxLive,
+            LoginIdentityProviderPSN,
+            LoginIdentityProviderKongregate,
+            LoginIdentityProviderFacebook,
+            LoginIdentityProviderIOSDevice,
+            LoginIdentityProviderAndroidDevice,
+            LoginIdentityProviderTwitch,
+            LoginIdentityProviderWindowsHello
+        };
+
+        void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);
+        LoginIdentityProvider readLoginIdentityProviderFromValue(const rapidjson::Value& obj);
+
+        struct PlayerLocation : public PlayFabBaseModel
+        {
+            ContinentCode pfContinentCode;
+            CountryCode pfCountryCode;
+            std::string City;
+            OptionalDouble Latitude;
+            OptionalDouble Longitude;
+
+            PlayerLocation() :
+                PlayFabBaseModel(),
+                pfContinentCode(),
+                pfCountryCode(),
+                City(),
+                Latitude(),
+                Longitude()
+            {}
+
+            PlayerLocation(const PlayerLocation& src) :
+                PlayFabBaseModel(),
+                pfContinentCode(src.pfContinentCode),
+                pfCountryCode(src.pfCountryCode),
+                City(src.City),
+                Latitude(src.Latitude),
+                Longitude(src.Longitude)
+            {}
+
+            PlayerLocation(const rapidjson::Value& obj) : PlayerLocation()
+            {
+                readFromValue(obj);
+            }
+
+            ~PlayerLocation();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum PushNotificationPlatform
+        {
+            PushNotificationPlatformApplePushNotificationService,
+            PushNotificationPlatformGoogleCloudMessaging
+        };
+
+        void writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, PFStringJsonWriter& writer);
+        PushNotificationPlatform readPushNotificationPlatformFromValue(const rapidjson::Value& obj);
+
+        struct PushNotificationRegistration : public PlayFabBaseModel
+        {
+            Boxed<PushNotificationPlatform> Platform;
+            std::string NotificationEndpointARN;
+
+            PushNotificationRegistration() :
+                PlayFabBaseModel(),
+                Platform(),
+                NotificationEndpointARN()
+            {}
+
+            PushNotificationRegistration(const PushNotificationRegistration& src) :
+                PlayFabBaseModel(),
+                Platform(src.Platform),
+                NotificationEndpointARN(src.NotificationEndpointARN)
+            {}
+
+            PushNotificationRegistration(const rapidjson::Value& obj) : PushNotificationRegistration()
+            {
+                readFromValue(obj);
+            }
+
+            ~PushNotificationRegistration();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct PlayerLinkedAccount : public PlayFabBaseModel
+        {
+            Boxed<LoginIdentityProvider> Platform;
+            std::string PlatformUserId;
+            std::string Username;
+            std::string Email;
+
+            PlayerLinkedAccount() :
+                PlayFabBaseModel(),
+                Platform(),
+                PlatformUserId(),
+                Username(),
+                Email()
+            {}
+
+            PlayerLinkedAccount(const PlayerLinkedAccount& src) :
+                PlayFabBaseModel(),
+                Platform(src.Platform),
+                PlatformUserId(src.PlatformUserId),
+                Username(src.Username),
+                Email(src.Email)
+            {}
+
+            PlayerLinkedAccount(const rapidjson::Value& obj) : PlayerLinkedAccount()
+            {
+                readFromValue(obj);
+            }
+
+            ~PlayerLinkedAccount();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct PlayerStatistic : public PlayFabBaseModel
+        {
+            std::string Id;
+            Int32 StatisticVersion;
+            Int32 StatisticValue;
+            std::string Name;
+
+            PlayerStatistic() :
+                PlayFabBaseModel(),
+                Id(),
+                StatisticVersion(0),
+                StatisticValue(0),
+                Name()
+            {}
+
+            PlayerStatistic(const PlayerStatistic& src) :
+                PlayFabBaseModel(),
+                Id(src.Id),
+                StatisticVersion(src.StatisticVersion),
+                StatisticValue(src.StatisticValue),
+                Name(src.Name)
+            {}
+
+            PlayerStatistic(const rapidjson::Value& obj) : PlayerStatistic()
+            {
+                readFromValue(obj);
+            }
+
+            ~PlayerStatistic();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct PlayerProfile : public PlayFabBaseModel
+        {
+            std::string PlayerId;
+            std::string TitleId;
+            std::string DisplayName;
+            std::string PublisherId;
+            Boxed<LoginIdentityProvider> Origination;
+            OptionalTime Created;
+            OptionalTime LastLogin;
+            OptionalTime BannedUntil;
+            std::string AvatarUrl;
+            std::map<std::string, Int32> Statistics;
+            OptionalUint32 TotalValueToDateInUSD;
+            std::map<std::string, Uint32> ValuesToDate;
+            std::list<std::string> Tags;
+            std::map<std::string, PlayerLocation> Locations;
+            std::map<std::string, Int32> VirtualCurrencyBalances;
+            std::list<AdCampaignAttribution> AdCampaignAttributions;
+            std::list<PushNotificationRegistration> PushNotificationRegistrations;
+            std::list<PlayerLinkedAccount> LinkedAccounts;
+            std::list<PlayerStatistic> PlayerStatistics;
+
+            PlayerProfile() :
+                PlayFabBaseModel(),
+                PlayerId(),
+                TitleId(),
+                DisplayName(),
+                PublisherId(),
+                Origination(),
+                Created(),
+                LastLogin(),
+                BannedUntil(),
+                AvatarUrl(),
+                Statistics(),
+                TotalValueToDateInUSD(),
+                ValuesToDate(),
+                Tags(),
+                Locations(),
+                VirtualCurrencyBalances(),
+                AdCampaignAttributions(),
+                PushNotificationRegistrations(),
+                LinkedAccounts(),
+                PlayerStatistics()
+            {}
+
+            PlayerProfile(const PlayerProfile& src) :
+                PlayFabBaseModel(),
+                PlayerId(src.PlayerId),
+                TitleId(src.TitleId),
+                DisplayName(src.DisplayName),
+                PublisherId(src.PublisherId),
+                Origination(src.Origination),
+                Created(src.Created),
+                LastLogin(src.LastLogin),
+                BannedUntil(src.BannedUntil),
+                AvatarUrl(src.AvatarUrl),
+                Statistics(src.Statistics),
+                TotalValueToDateInUSD(src.TotalValueToDateInUSD),
+                ValuesToDate(src.ValuesToDate),
+                Tags(src.Tags),
+                Locations(src.Locations),
+                VirtualCurrencyBalances(src.VirtualCurrencyBalances),
+                AdCampaignAttributions(src.AdCampaignAttributions),
+                PushNotificationRegistrations(src.PushNotificationRegistrations),
+                LinkedAccounts(src.LinkedAccounts),
+                PlayerStatistics(src.PlayerStatistics)
+            {}
+
+            PlayerProfile(const rapidjson::Value& obj) : PlayerProfile()
+            {
+                readFromValue(obj);
+            }
+
+            ~PlayerProfile();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct PlayerLeaderboardEntry : public PlayFabBaseModel
         {
             std::string PlayFabId;
             std::string DisplayName;
             Int32 StatValue;
             Int32 Position;
+            PlayerProfile* Profile;
 
             PlayerLeaderboardEntry() :
                 PlayFabBaseModel(),
                 PlayFabId(),
                 DisplayName(),
                 StatValue(0),
-                Position(0)
+                Position(0),
+                Profile(NULL)
             {}
 
             PlayerLeaderboardEntry(const PlayerLeaderboardEntry& src) :
@@ -2897,7 +3448,8 @@ namespace PlayFab
                 PlayFabId(src.PlayFabId),
                 DisplayName(src.DisplayName),
                 StatValue(src.StatValue),
-                Position(src.Position)
+                Position(src.Position),
+                Profile(src.Profile ? new PlayerProfile(*src.Profile) : NULL)
             {}
 
             PlayerLeaderboardEntry(const rapidjson::Value& obj) : PlayerLeaderboardEntry()
@@ -2914,15 +3466,21 @@ namespace PlayFab
         struct GetFriendLeaderboardAroundPlayerResult : public PlayFabBaseModel
         {
             std::list<PlayerLeaderboardEntry> Leaderboard;
+            Int32 Version;
+            OptionalTime NextReset;
 
             GetFriendLeaderboardAroundPlayerResult() :
                 PlayFabBaseModel(),
-                Leaderboard()
+                Leaderboard(),
+                Version(0),
+                NextReset()
             {}
 
             GetFriendLeaderboardAroundPlayerResult(const GetFriendLeaderboardAroundPlayerResult& src) :
                 PlayFabBaseModel(),
-                Leaderboard(src.Leaderboard)
+                Leaderboard(src.Leaderboard),
+                Version(src.Version),
+                NextReset(src.NextReset)
             {}
 
             GetFriendLeaderboardAroundPlayerResult(const rapidjson::Value& obj) : GetFriendLeaderboardAroundPlayerResult()
@@ -2943,6 +3501,8 @@ namespace PlayFab
             OptionalInt32 MaxResultsCount;
             OptionalBool IncludeSteamFriends;
             OptionalBool IncludeFacebookFriends;
+            Int32 Version;
+            bool UseSpecificVersion;
 
             GetFriendLeaderboardRequest() :
                 PlayFabBaseModel(),
@@ -2950,7 +3510,9 @@ namespace PlayFab
                 StartPosition(0),
                 MaxResultsCount(),
                 IncludeSteamFriends(),
-                IncludeFacebookFriends()
+                IncludeFacebookFriends(),
+                Version(0),
+                UseSpecificVersion(false)
             {}
 
             GetFriendLeaderboardRequest(const GetFriendLeaderboardRequest& src) :
@@ -2959,7 +3521,9 @@ namespace PlayFab
                 StartPosition(src.StartPosition),
                 MaxResultsCount(src.MaxResultsCount),
                 IncludeSteamFriends(src.IncludeSteamFriends),
-                IncludeFacebookFriends(src.IncludeFacebookFriends)
+                IncludeFacebookFriends(src.IncludeFacebookFriends),
+                Version(src.Version),
+                UseSpecificVersion(src.UseSpecificVersion)
             {}
 
             GetFriendLeaderboardRequest(const rapidjson::Value& obj) : GetFriendLeaderboardRequest()
@@ -3090,19 +3654,25 @@ namespace PlayFab
             std::string PlayFabId;
             std::string StatisticName;
             OptionalInt32 MaxResultsCount;
+            Int32 Version;
+            bool UseSpecificVersion;
 
             GetLeaderboardAroundPlayerRequest() :
                 PlayFabBaseModel(),
                 PlayFabId(),
                 StatisticName(),
-                MaxResultsCount()
+                MaxResultsCount(),
+                Version(0),
+                UseSpecificVersion(false)
             {}
 
             GetLeaderboardAroundPlayerRequest(const GetLeaderboardAroundPlayerRequest& src) :
                 PlayFabBaseModel(),
                 PlayFabId(src.PlayFabId),
                 StatisticName(src.StatisticName),
-                MaxResultsCount(src.MaxResultsCount)
+                MaxResultsCount(src.MaxResultsCount),
+                Version(src.Version),
+                UseSpecificVersion(src.UseSpecificVersion)
             {}
 
             GetLeaderboardAroundPlayerRequest(const rapidjson::Value& obj) : GetLeaderboardAroundPlayerRequest()
@@ -3119,15 +3689,21 @@ namespace PlayFab
         struct GetLeaderboardAroundPlayerResult : public PlayFabBaseModel
         {
             std::list<PlayerLeaderboardEntry> Leaderboard;
+            Int32 Version;
+            OptionalTime NextReset;
 
             GetLeaderboardAroundPlayerResult() :
                 PlayFabBaseModel(),
-                Leaderboard()
+                Leaderboard(),
+                Version(0),
+                NextReset()
             {}
 
             GetLeaderboardAroundPlayerResult(const GetLeaderboardAroundPlayerResult& src) :
                 PlayFabBaseModel(),
-                Leaderboard(src.Leaderboard)
+                Leaderboard(src.Leaderboard),
+                Version(src.Version),
+                NextReset(src.NextReset)
             {}
 
             GetLeaderboardAroundPlayerResult(const rapidjson::Value& obj) : GetLeaderboardAroundPlayerResult()
@@ -3199,19 +3775,25 @@ namespace PlayFab
             std::string StatisticName;
             Int32 StartPosition;
             OptionalInt32 MaxResultsCount;
+            Int32 Version;
+            bool UseSpecificVersion;
 
             GetLeaderboardRequest() :
                 PlayFabBaseModel(),
                 StatisticName(),
                 StartPosition(0),
-                MaxResultsCount()
+                MaxResultsCount(),
+                Version(0),
+                UseSpecificVersion(false)
             {}
 
             GetLeaderboardRequest(const GetLeaderboardRequest& src) :
                 PlayFabBaseModel(),
                 StatisticName(src.StatisticName),
                 StartPosition(src.StartPosition),
-                MaxResultsCount(src.MaxResultsCount)
+                MaxResultsCount(src.MaxResultsCount),
+                Version(src.Version),
+                UseSpecificVersion(src.UseSpecificVersion)
             {}
 
             GetLeaderboardRequest(const rapidjson::Value& obj) : GetLeaderboardRequest()
@@ -3228,15 +3810,21 @@ namespace PlayFab
         struct GetLeaderboardResult : public PlayFabBaseModel
         {
             std::list<PlayerLeaderboardEntry> Leaderboard;
+            Int32 Version;
+            OptionalTime NextReset;
 
             GetLeaderboardResult() :
                 PlayFabBaseModel(),
-                Leaderboard()
+                Leaderboard(),
+                Version(0),
+                NextReset()
             {}
 
             GetLeaderboardResult(const GetLeaderboardResult& src) :
                 PlayFabBaseModel(),
-                Leaderboard(src.Leaderboard)
+                Leaderboard(src.Leaderboard),
+                Version(src.Version),
+                NextReset(src.NextReset)
             {}
 
             GetLeaderboardResult(const rapidjson::Value& obj) : GetLeaderboardResult()
@@ -5025,6 +5613,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetWindowsHelloChallengeRequest : public PlayFabBaseModel
+        {
+            std::string TitleId;
+            std::string PublicKeyHint;
+
+            GetWindowsHelloChallengeRequest() :
+                PlayFabBaseModel(),
+                TitleId(),
+                PublicKeyHint()
+            {}
+
+            GetWindowsHelloChallengeRequest(const GetWindowsHelloChallengeRequest& src) :
+                PlayFabBaseModel(),
+                TitleId(src.TitleId),
+                PublicKeyHint(src.PublicKeyHint)
+            {}
+
+            GetWindowsHelloChallengeRequest(const rapidjson::Value& obj) : GetWindowsHelloChallengeRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetWindowsHelloChallengeRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetWindowsHelloChallengeResponse : public PlayFabBaseModel
+        {
+            std::string Challenge;
+
+            GetWindowsHelloChallengeResponse() :
+                PlayFabBaseModel(),
+                Challenge()
+            {}
+
+            GetWindowsHelloChallengeResponse(const GetWindowsHelloChallengeResponse& src) :
+                PlayFabBaseModel(),
+                Challenge(src.Challenge)
+            {}
+
+            GetWindowsHelloChallengeResponse(const rapidjson::Value& obj) : GetWindowsHelloChallengeResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetWindowsHelloChallengeResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GrantCharacterToUserRequest : public PlayFabBaseModel
         {
             std::string CatalogVersion;
@@ -5590,6 +6231,62 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct LinkWindowsHelloAccountRequest : public PlayFabBaseModel
+        {
+            std::string UserName;
+            std::string PublicKey;
+            std::string DeviceName;
+            OptionalBool ForceLink;
+
+            LinkWindowsHelloAccountRequest() :
+                PlayFabBaseModel(),
+                UserName(),
+                PublicKey(),
+                DeviceName(),
+                ForceLink()
+            {}
+
+            LinkWindowsHelloAccountRequest(const LinkWindowsHelloAccountRequest& src) :
+                PlayFabBaseModel(),
+                UserName(src.UserName),
+                PublicKey(src.PublicKey),
+                DeviceName(src.DeviceName),
+                ForceLink(src.ForceLink)
+            {}
+
+            LinkWindowsHelloAccountRequest(const rapidjson::Value& obj) : LinkWindowsHelloAccountRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkWindowsHelloAccountRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LinkWindowsHelloAccountResponse : public PlayFabBaseModel
+        {
+
+            LinkWindowsHelloAccountResponse() :
+                PlayFabBaseModel()
+            {}
+
+            LinkWindowsHelloAccountResponse(const LinkWindowsHelloAccountResponse& src) :
+                PlayFabBaseModel()
+            {}
+
+            LinkWindowsHelloAccountResponse(const rapidjson::Value& obj) : LinkWindowsHelloAccountResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkWindowsHelloAccountResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ListUsersCharactersRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -6093,6 +6790,40 @@ namespace PlayFab
             }
 
             ~LoginWithTwitchRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LoginWithWindowsHelloRequest : public PlayFabBaseModel
+        {
+            std::string TitleId;
+            std::string ChallengeSignature;
+            std::string PublicKeyHint;
+            GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+
+            LoginWithWindowsHelloRequest() :
+                PlayFabBaseModel(),
+                TitleId(),
+                ChallengeSignature(),
+                PublicKeyHint(),
+                InfoRequestParameters(NULL)
+            {}
+
+            LoginWithWindowsHelloRequest(const LoginWithWindowsHelloRequest& src) :
+                PlayFabBaseModel(),
+                TitleId(src.TitleId),
+                ChallengeSignature(src.ChallengeSignature),
+                PublicKeyHint(src.PublicKeyHint),
+                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
+            {}
+
+            LoginWithWindowsHelloRequest(const rapidjson::Value& obj) : LoginWithWindowsHelloRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LoginWithWindowsHelloRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -6707,6 +7438,43 @@ namespace PlayFab
             }
 
             ~RegisterPlayFabUserResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RegisterWithWindowsHelloRequest : public PlayFabBaseModel
+        {
+            std::string TitleId;
+            std::string UserName;
+            std::string PublicKey;
+            std::string DeviceName;
+            GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+
+            RegisterWithWindowsHelloRequest() :
+                PlayFabBaseModel(),
+                TitleId(),
+                UserName(),
+                PublicKey(),
+                DeviceName(),
+                InfoRequestParameters(NULL)
+            {}
+
+            RegisterWithWindowsHelloRequest(const RegisterWithWindowsHelloRequest& src) :
+                PlayFabBaseModel(),
+                TitleId(src.TitleId),
+                UserName(src.UserName),
+                PublicKey(src.PublicKey),
+                DeviceName(src.DeviceName),
+                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
+            {}
+
+            RegisterWithWindowsHelloRequest(const rapidjson::Value& obj) : RegisterWithWindowsHelloRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RegisterWithWindowsHelloRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -7668,6 +8436,53 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UnlinkWindowsHelloAccountRequest : public PlayFabBaseModel
+        {
+            std::string PublicKeyHint;
+
+            UnlinkWindowsHelloAccountRequest() :
+                PlayFabBaseModel(),
+                PublicKeyHint()
+            {}
+
+            UnlinkWindowsHelloAccountRequest(const UnlinkWindowsHelloAccountRequest& src) :
+                PlayFabBaseModel(),
+                PublicKeyHint(src.PublicKeyHint)
+            {}
+
+            UnlinkWindowsHelloAccountRequest(const rapidjson::Value& obj) : UnlinkWindowsHelloAccountRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlinkWindowsHelloAccountRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UnlinkWindowsHelloAccountResponse : public PlayFabBaseModel
+        {
+
+            UnlinkWindowsHelloAccountResponse() :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkWindowsHelloAccountResponse(const UnlinkWindowsHelloAccountResponse& src) :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkWindowsHelloAccountResponse(const rapidjson::Value& obj) : UnlinkWindowsHelloAccountResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlinkWindowsHelloAccountResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UnlockContainerInstanceRequest : public PlayFabBaseModel
         {
             std::string CharacterId;
@@ -7762,6 +8577,31 @@ namespace PlayFab
             }
 
             ~UnlockContainerItemResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdateAvatarUrlRequest : public PlayFabBaseModel
+        {
+            std::string ImageUrl;
+
+            UpdateAvatarUrlRequest() :
+                PlayFabBaseModel(),
+                ImageUrl()
+            {}
+
+            UpdateAvatarUrlRequest(const UpdateAvatarUrlRequest& src) :
+                PlayFabBaseModel(),
+                ImageUrl(src.ImageUrl)
+            {}
+
+            UpdateAvatarUrlRequest(const rapidjson::Value& obj) : UpdateAvatarUrlRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdateAvatarUrlRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -8248,6 +9088,62 @@ namespace PlayFab
             }
 
             ~ValidateIOSReceiptResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ValidateWindowsReceiptRequest : public PlayFabBaseModel
+        {
+            std::string Receipt;
+            std::string CatalogVersion;
+            std::string CurrencyCode;
+            Uint32 PurchasePrice;
+
+            ValidateWindowsReceiptRequest() :
+                PlayFabBaseModel(),
+                Receipt(),
+                CatalogVersion(),
+                CurrencyCode(),
+                PurchasePrice(0)
+            {}
+
+            ValidateWindowsReceiptRequest(const ValidateWindowsReceiptRequest& src) :
+                PlayFabBaseModel(),
+                Receipt(src.Receipt),
+                CatalogVersion(src.CatalogVersion),
+                CurrencyCode(src.CurrencyCode),
+                PurchasePrice(src.PurchasePrice)
+            {}
+
+            ValidateWindowsReceiptRequest(const rapidjson::Value& obj) : ValidateWindowsReceiptRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ValidateWindowsReceiptRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ValidateWindowsReceiptResult : public PlayFabBaseModel
+        {
+
+            ValidateWindowsReceiptResult() :
+                PlayFabBaseModel()
+            {}
+
+            ValidateWindowsReceiptResult(const ValidateWindowsReceiptResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            ValidateWindowsReceiptResult(const rapidjson::Value& obj) : ValidateWindowsReceiptResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~ValidateWindowsReceiptResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

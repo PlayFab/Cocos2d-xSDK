@@ -223,6 +223,34 @@ bool AcceptTradeResponse::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+AdCampaignAttribution::~AdCampaignAttribution()
+{
+
+}
+
+void AdCampaignAttribution::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Platform.length() > 0) { writer.String("Platform"); writer.String(Platform.c_str()); }
+    if (CampaignId.length() > 0) { writer.String("CampaignId"); writer.String(CampaignId.c_str()); }
+    writer.String("AttributedAt"); writeDatetime(AttributedAt, writer);
+
+    writer.EndObject();
+}
+
+bool AdCampaignAttribution::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Platform_member = obj.FindMember("Platform");
+    if (Platform_member != obj.MemberEnd() && !Platform_member->value.IsNull()) Platform = Platform_member->value.GetString();
+    const Value::ConstMemberIterator CampaignId_member = obj.FindMember("CampaignId");
+    if (CampaignId_member != obj.MemberEnd() && !CampaignId_member->value.IsNull()) CampaignId = CampaignId_member->value.GetString();
+    const Value::ConstMemberIterator AttributedAt_member = obj.FindMember("AttributedAt");
+    if (AttributedAt_member != obj.MemberEnd() && !AttributedAt_member->value.IsNull()) AttributedAt = readDatetime(AttributedAt_member->value);
+
+    return true;
+}
+
 AddFriendRequest::~AddFriendRequest()
 {
 
@@ -529,7 +557,6 @@ void AttributeInstallRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     if (Idfa.length() > 0) { writer.String("Idfa"); writer.String(Idfa.c_str()); }
-    if (Android_Id.length() > 0) { writer.String("Android_Id"); writer.String(Android_Id.c_str()); }
     if (Adid.length() > 0) { writer.String("Adid"); writer.String(Adid.c_str()); }
 
     writer.EndObject();
@@ -539,8 +566,6 @@ bool AttributeInstallRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator Idfa_member = obj.FindMember("Idfa");
     if (Idfa_member != obj.MemberEnd() && !Idfa_member->value.IsNull()) Idfa = Idfa_member->value.GetString();
-    const Value::ConstMemberIterator Android_Id_member = obj.FindMember("Android_Id");
-    if (Android_Id_member != obj.MemberEnd() && !Android_Id_member->value.IsNull()) Android_Id = Android_Id_member->value.GetString();
     const Value::ConstMemberIterator Adid_member = obj.FindMember("Adid");
     if (Adid_member != obj.MemberEnd() && !Adid_member->value.IsNull()) Adid = Adid_member->value.GetString();
 
@@ -1370,6 +1395,564 @@ bool ConsumeItemResult::readFromValue(const rapidjson::Value& obj)
     if (RemainingUses_member != obj.MemberEnd() && !RemainingUses_member->value.IsNull()) RemainingUses = RemainingUses_member->value.GetInt();
 
     return true;
+}
+void PlayFab::ClientModels::writeContinentCodeEnumJSON(ContinentCode enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case ContinentCodeAF: writer.String("AF"); break;
+    case ContinentCodeAN: writer.String("AN"); break;
+    case ContinentCodeAS: writer.String("AS"); break;
+    case ContinentCodeEU: writer.String("EU"); break;
+    case ContinentCodeNA: writer.String("NA"); break;
+    case ContinentCodeOC: writer.String("OC"); break;
+    case ContinentCodeSA: writer.String("SA"); break;
+
+    }
+}
+
+ContinentCode PlayFab::ClientModels::readContinentCodeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, ContinentCode> _ContinentCodeMap;
+    if (_ContinentCodeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _ContinentCodeMap["AF"] = ContinentCodeAF;
+        _ContinentCodeMap["AN"] = ContinentCodeAN;
+        _ContinentCodeMap["AS"] = ContinentCodeAS;
+        _ContinentCodeMap["EU"] = ContinentCodeEU;
+        _ContinentCodeMap["NA"] = ContinentCodeNA;
+        _ContinentCodeMap["OC"] = ContinentCodeOC;
+        _ContinentCodeMap["SA"] = ContinentCodeSA;
+
+    }
+
+    auto output = _ContinentCodeMap.find(obj.GetString());
+    if (output != _ContinentCodeMap.end())
+        return output->second;
+
+    return ContinentCodeAF; // Basically critical fail
+}
+void PlayFab::ClientModels::writeCountryCodeEnumJSON(CountryCode enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case CountryCodeAF: writer.String("AF"); break;
+    case CountryCodeAX: writer.String("AX"); break;
+    case CountryCodeAL: writer.String("AL"); break;
+    case CountryCodeDZ: writer.String("DZ"); break;
+    case CountryCodeAS: writer.String("AS"); break;
+    case CountryCodeAD: writer.String("AD"); break;
+    case CountryCodeAO: writer.String("AO"); break;
+    case CountryCodeAI: writer.String("AI"); break;
+    case CountryCodeAQ: writer.String("AQ"); break;
+    case CountryCodeAG: writer.String("AG"); break;
+    case CountryCodeAR: writer.String("AR"); break;
+    case CountryCodeAM: writer.String("AM"); break;
+    case CountryCodeAW: writer.String("AW"); break;
+    case CountryCodeAU: writer.String("AU"); break;
+    case CountryCodeAT: writer.String("AT"); break;
+    case CountryCodeAZ: writer.String("AZ"); break;
+    case CountryCodeBS: writer.String("BS"); break;
+    case CountryCodeBH: writer.String("BH"); break;
+    case CountryCodeBD: writer.String("BD"); break;
+    case CountryCodeBB: writer.String("BB"); break;
+    case CountryCodeBY: writer.String("BY"); break;
+    case CountryCodeBE: writer.String("BE"); break;
+    case CountryCodeBZ: writer.String("BZ"); break;
+    case CountryCodeBJ: writer.String("BJ"); break;
+    case CountryCodeBM: writer.String("BM"); break;
+    case CountryCodeBT: writer.String("BT"); break;
+    case CountryCodeBO: writer.String("BO"); break;
+    case CountryCodeBQ: writer.String("BQ"); break;
+    case CountryCodeBA: writer.String("BA"); break;
+    case CountryCodeBW: writer.String("BW"); break;
+    case CountryCodeBV: writer.String("BV"); break;
+    case CountryCodeBR: writer.String("BR"); break;
+    case CountryCodeIO: writer.String("IO"); break;
+    case CountryCodeBN: writer.String("BN"); break;
+    case CountryCodeBG: writer.String("BG"); break;
+    case CountryCodeBF: writer.String("BF"); break;
+    case CountryCodeBI: writer.String("BI"); break;
+    case CountryCodeKH: writer.String("KH"); break;
+    case CountryCodeCM: writer.String("CM"); break;
+    case CountryCodeCA: writer.String("CA"); break;
+    case CountryCodeCV: writer.String("CV"); break;
+    case CountryCodeKY: writer.String("KY"); break;
+    case CountryCodeCF: writer.String("CF"); break;
+    case CountryCodeTD: writer.String("TD"); break;
+    case CountryCodeCL: writer.String("CL"); break;
+    case CountryCodeCN: writer.String("CN"); break;
+    case CountryCodeCX: writer.String("CX"); break;
+    case CountryCodeCC: writer.String("CC"); break;
+    case CountryCodeCO: writer.String("CO"); break;
+    case CountryCodeKM: writer.String("KM"); break;
+    case CountryCodeCG: writer.String("CG"); break;
+    case CountryCodeCD: writer.String("CD"); break;
+    case CountryCodeCK: writer.String("CK"); break;
+    case CountryCodeCR: writer.String("CR"); break;
+    case CountryCodeCI: writer.String("CI"); break;
+    case CountryCodeHR: writer.String("HR"); break;
+    case CountryCodeCU: writer.String("CU"); break;
+    case CountryCodeCW: writer.String("CW"); break;
+    case CountryCodeCY: writer.String("CY"); break;
+    case CountryCodeCZ: writer.String("CZ"); break;
+    case CountryCodeDK: writer.String("DK"); break;
+    case CountryCodeDJ: writer.String("DJ"); break;
+    case CountryCodeDM: writer.String("DM"); break;
+    case CountryCodeDO: writer.String("DO"); break;
+    case CountryCodeEC: writer.String("EC"); break;
+    case CountryCodeEG: writer.String("EG"); break;
+    case CountryCodeSV: writer.String("SV"); break;
+    case CountryCodeGQ: writer.String("GQ"); break;
+    case CountryCodeER: writer.String("ER"); break;
+    case CountryCodeEE: writer.String("EE"); break;
+    case CountryCodeET: writer.String("ET"); break;
+    case CountryCodeFK: writer.String("FK"); break;
+    case CountryCodeFO: writer.String("FO"); break;
+    case CountryCodeFJ: writer.String("FJ"); break;
+    case CountryCodeFI: writer.String("FI"); break;
+    case CountryCodeFR: writer.String("FR"); break;
+    case CountryCodeGF: writer.String("GF"); break;
+    case CountryCodePF: writer.String("PF"); break;
+    case CountryCodeTF: writer.String("TF"); break;
+    case CountryCodeGA: writer.String("GA"); break;
+    case CountryCodeGM: writer.String("GM"); break;
+    case CountryCodeGE: writer.String("GE"); break;
+    case CountryCodeDE: writer.String("DE"); break;
+    case CountryCodeGH: writer.String("GH"); break;
+    case CountryCodeGI: writer.String("GI"); break;
+    case CountryCodeGR: writer.String("GR"); break;
+    case CountryCodeGL: writer.String("GL"); break;
+    case CountryCodeGD: writer.String("GD"); break;
+    case CountryCodeGP: writer.String("GP"); break;
+    case CountryCodeGU: writer.String("GU"); break;
+    case CountryCodeGT: writer.String("GT"); break;
+    case CountryCodeGG: writer.String("GG"); break;
+    case CountryCodeGN: writer.String("GN"); break;
+    case CountryCodeGW: writer.String("GW"); break;
+    case CountryCodeGY: writer.String("GY"); break;
+    case CountryCodeHT: writer.String("HT"); break;
+    case CountryCodeHM: writer.String("HM"); break;
+    case CountryCodeVA: writer.String("VA"); break;
+    case CountryCodeHN: writer.String("HN"); break;
+    case CountryCodeHK: writer.String("HK"); break;
+    case CountryCodeHU: writer.String("HU"); break;
+    case CountryCodeIS: writer.String("IS"); break;
+    case CountryCodeIN: writer.String("IN"); break;
+    case CountryCodeID: writer.String("ID"); break;
+    case CountryCodeIR: writer.String("IR"); break;
+    case CountryCodeIQ: writer.String("IQ"); break;
+    case CountryCodeIE: writer.String("IE"); break;
+    case CountryCodeIM: writer.String("IM"); break;
+    case CountryCodeIL: writer.String("IL"); break;
+    case CountryCodeIT: writer.String("IT"); break;
+    case CountryCodeJM: writer.String("JM"); break;
+    case CountryCodeJP: writer.String("JP"); break;
+    case CountryCodeJE: writer.String("JE"); break;
+    case CountryCodeJO: writer.String("JO"); break;
+    case CountryCodeKZ: writer.String("KZ"); break;
+    case CountryCodeKE: writer.String("KE"); break;
+    case CountryCodeKI: writer.String("KI"); break;
+    case CountryCodeKP: writer.String("KP"); break;
+    case CountryCodeKR: writer.String("KR"); break;
+    case CountryCodeKW: writer.String("KW"); break;
+    case CountryCodeKG: writer.String("KG"); break;
+    case CountryCodeLA: writer.String("LA"); break;
+    case CountryCodeLV: writer.String("LV"); break;
+    case CountryCodeLB: writer.String("LB"); break;
+    case CountryCodeLS: writer.String("LS"); break;
+    case CountryCodeLR: writer.String("LR"); break;
+    case CountryCodeLY: writer.String("LY"); break;
+    case CountryCodeLI: writer.String("LI"); break;
+    case CountryCodeLT: writer.String("LT"); break;
+    case CountryCodeLU: writer.String("LU"); break;
+    case CountryCodeMO: writer.String("MO"); break;
+    case CountryCodeMK: writer.String("MK"); break;
+    case CountryCodeMG: writer.String("MG"); break;
+    case CountryCodeMW: writer.String("MW"); break;
+    case CountryCodeMY: writer.String("MY"); break;
+    case CountryCodeMV: writer.String("MV"); break;
+    case CountryCodeML: writer.String("ML"); break;
+    case CountryCodeMT: writer.String("MT"); break;
+    case CountryCodeMH: writer.String("MH"); break;
+    case CountryCodeMQ: writer.String("MQ"); break;
+    case CountryCodeMR: writer.String("MR"); break;
+    case CountryCodeMU: writer.String("MU"); break;
+    case CountryCodeYT: writer.String("YT"); break;
+    case CountryCodeMX: writer.String("MX"); break;
+    case CountryCodeFM: writer.String("FM"); break;
+    case CountryCodeMD: writer.String("MD"); break;
+    case CountryCodeMC: writer.String("MC"); break;
+    case CountryCodeMN: writer.String("MN"); break;
+    case CountryCodeME: writer.String("ME"); break;
+    case CountryCodeMS: writer.String("MS"); break;
+    case CountryCodeMA: writer.String("MA"); break;
+    case CountryCodeMZ: writer.String("MZ"); break;
+    case CountryCodeMM: writer.String("MM"); break;
+    case CountryCodeNA: writer.String("NA"); break;
+    case CountryCodeNR: writer.String("NR"); break;
+    case CountryCodeNP: writer.String("NP"); break;
+    case CountryCodeNL: writer.String("NL"); break;
+    case CountryCodeNC: writer.String("NC"); break;
+    case CountryCodeNZ: writer.String("NZ"); break;
+    case CountryCodeNI: writer.String("NI"); break;
+    case CountryCodeNE: writer.String("NE"); break;
+    case CountryCodeNG: writer.String("NG"); break;
+    case CountryCodeNU: writer.String("NU"); break;
+    case CountryCodeNF: writer.String("NF"); break;
+    case CountryCodeMP: writer.String("MP"); break;
+    case CountryCodeNO: writer.String("NO"); break;
+    case CountryCodeOM: writer.String("OM"); break;
+    case CountryCodePK: writer.String("PK"); break;
+    case CountryCodePW: writer.String("PW"); break;
+    case CountryCodePS: writer.String("PS"); break;
+    case CountryCodePA: writer.String("PA"); break;
+    case CountryCodePG: writer.String("PG"); break;
+    case CountryCodePY: writer.String("PY"); break;
+    case CountryCodePE: writer.String("PE"); break;
+    case CountryCodePH: writer.String("PH"); break;
+    case CountryCodePN: writer.String("PN"); break;
+    case CountryCodePL: writer.String("PL"); break;
+    case CountryCodePT: writer.String("PT"); break;
+    case CountryCodePR: writer.String("PR"); break;
+    case CountryCodeQA: writer.String("QA"); break;
+    case CountryCodeRE: writer.String("RE"); break;
+    case CountryCodeRO: writer.String("RO"); break;
+    case CountryCodeRU: writer.String("RU"); break;
+    case CountryCodeRW: writer.String("RW"); break;
+    case CountryCodeBL: writer.String("BL"); break;
+    case CountryCodeSH: writer.String("SH"); break;
+    case CountryCodeKN: writer.String("KN"); break;
+    case CountryCodeLC: writer.String("LC"); break;
+    case CountryCodeMF: writer.String("MF"); break;
+    case CountryCodePM: writer.String("PM"); break;
+    case CountryCodeVC: writer.String("VC"); break;
+    case CountryCodeWS: writer.String("WS"); break;
+    case CountryCodeSM: writer.String("SM"); break;
+    case CountryCodeST: writer.String("ST"); break;
+    case CountryCodeSA: writer.String("SA"); break;
+    case CountryCodeSN: writer.String("SN"); break;
+    case CountryCodeRS: writer.String("RS"); break;
+    case CountryCodeSC: writer.String("SC"); break;
+    case CountryCodeSL: writer.String("SL"); break;
+    case CountryCodeSG: writer.String("SG"); break;
+    case CountryCodeSX: writer.String("SX"); break;
+    case CountryCodeSK: writer.String("SK"); break;
+    case CountryCodeSI: writer.String("SI"); break;
+    case CountryCodeSB: writer.String("SB"); break;
+    case CountryCodeSO: writer.String("SO"); break;
+    case CountryCodeZA: writer.String("ZA"); break;
+    case CountryCodeGS: writer.String("GS"); break;
+    case CountryCodeSS: writer.String("SS"); break;
+    case CountryCodeES: writer.String("ES"); break;
+    case CountryCodeLK: writer.String("LK"); break;
+    case CountryCodeSD: writer.String("SD"); break;
+    case CountryCodeSR: writer.String("SR"); break;
+    case CountryCodeSJ: writer.String("SJ"); break;
+    case CountryCodeSZ: writer.String("SZ"); break;
+    case CountryCodeSE: writer.String("SE"); break;
+    case CountryCodeCH: writer.String("CH"); break;
+    case CountryCodeSY: writer.String("SY"); break;
+    case CountryCodeTW: writer.String("TW"); break;
+    case CountryCodeTJ: writer.String("TJ"); break;
+    case CountryCodeTZ: writer.String("TZ"); break;
+    case CountryCodeTH: writer.String("TH"); break;
+    case CountryCodeTL: writer.String("TL"); break;
+    case CountryCodeTG: writer.String("TG"); break;
+    case CountryCodeTK: writer.String("TK"); break;
+    case CountryCodeTO: writer.String("TO"); break;
+    case CountryCodeTT: writer.String("TT"); break;
+    case CountryCodeTN: writer.String("TN"); break;
+    case CountryCodeTR: writer.String("TR"); break;
+    case CountryCodeTM: writer.String("TM"); break;
+    case CountryCodeTC: writer.String("TC"); break;
+    case CountryCodeTV: writer.String("TV"); break;
+    case CountryCodeUG: writer.String("UG"); break;
+    case CountryCodeUA: writer.String("UA"); break;
+    case CountryCodeAE: writer.String("AE"); break;
+    case CountryCodeGB: writer.String("GB"); break;
+    case CountryCodeUS: writer.String("US"); break;
+    case CountryCodeUM: writer.String("UM"); break;
+    case CountryCodeUY: writer.String("UY"); break;
+    case CountryCodeUZ: writer.String("UZ"); break;
+    case CountryCodeVU: writer.String("VU"); break;
+    case CountryCodeVE: writer.String("VE"); break;
+    case CountryCodeVN: writer.String("VN"); break;
+    case CountryCodeVG: writer.String("VG"); break;
+    case CountryCodeVI: writer.String("VI"); break;
+    case CountryCodeWF: writer.String("WF"); break;
+    case CountryCodeEH: writer.String("EH"); break;
+    case CountryCodeYE: writer.String("YE"); break;
+    case CountryCodeZM: writer.String("ZM"); break;
+    case CountryCodeZW: writer.String("ZW"); break;
+
+    }
+}
+
+CountryCode PlayFab::ClientModels::readCountryCodeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, CountryCode> _CountryCodeMap;
+    if (_CountryCodeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _CountryCodeMap["AF"] = CountryCodeAF;
+        _CountryCodeMap["AX"] = CountryCodeAX;
+        _CountryCodeMap["AL"] = CountryCodeAL;
+        _CountryCodeMap["DZ"] = CountryCodeDZ;
+        _CountryCodeMap["AS"] = CountryCodeAS;
+        _CountryCodeMap["AD"] = CountryCodeAD;
+        _CountryCodeMap["AO"] = CountryCodeAO;
+        _CountryCodeMap["AI"] = CountryCodeAI;
+        _CountryCodeMap["AQ"] = CountryCodeAQ;
+        _CountryCodeMap["AG"] = CountryCodeAG;
+        _CountryCodeMap["AR"] = CountryCodeAR;
+        _CountryCodeMap["AM"] = CountryCodeAM;
+        _CountryCodeMap["AW"] = CountryCodeAW;
+        _CountryCodeMap["AU"] = CountryCodeAU;
+        _CountryCodeMap["AT"] = CountryCodeAT;
+        _CountryCodeMap["AZ"] = CountryCodeAZ;
+        _CountryCodeMap["BS"] = CountryCodeBS;
+        _CountryCodeMap["BH"] = CountryCodeBH;
+        _CountryCodeMap["BD"] = CountryCodeBD;
+        _CountryCodeMap["BB"] = CountryCodeBB;
+        _CountryCodeMap["BY"] = CountryCodeBY;
+        _CountryCodeMap["BE"] = CountryCodeBE;
+        _CountryCodeMap["BZ"] = CountryCodeBZ;
+        _CountryCodeMap["BJ"] = CountryCodeBJ;
+        _CountryCodeMap["BM"] = CountryCodeBM;
+        _CountryCodeMap["BT"] = CountryCodeBT;
+        _CountryCodeMap["BO"] = CountryCodeBO;
+        _CountryCodeMap["BQ"] = CountryCodeBQ;
+        _CountryCodeMap["BA"] = CountryCodeBA;
+        _CountryCodeMap["BW"] = CountryCodeBW;
+        _CountryCodeMap["BV"] = CountryCodeBV;
+        _CountryCodeMap["BR"] = CountryCodeBR;
+        _CountryCodeMap["IO"] = CountryCodeIO;
+        _CountryCodeMap["BN"] = CountryCodeBN;
+        _CountryCodeMap["BG"] = CountryCodeBG;
+        _CountryCodeMap["BF"] = CountryCodeBF;
+        _CountryCodeMap["BI"] = CountryCodeBI;
+        _CountryCodeMap["KH"] = CountryCodeKH;
+        _CountryCodeMap["CM"] = CountryCodeCM;
+        _CountryCodeMap["CA"] = CountryCodeCA;
+        _CountryCodeMap["CV"] = CountryCodeCV;
+        _CountryCodeMap["KY"] = CountryCodeKY;
+        _CountryCodeMap["CF"] = CountryCodeCF;
+        _CountryCodeMap["TD"] = CountryCodeTD;
+        _CountryCodeMap["CL"] = CountryCodeCL;
+        _CountryCodeMap["CN"] = CountryCodeCN;
+        _CountryCodeMap["CX"] = CountryCodeCX;
+        _CountryCodeMap["CC"] = CountryCodeCC;
+        _CountryCodeMap["CO"] = CountryCodeCO;
+        _CountryCodeMap["KM"] = CountryCodeKM;
+        _CountryCodeMap["CG"] = CountryCodeCG;
+        _CountryCodeMap["CD"] = CountryCodeCD;
+        _CountryCodeMap["CK"] = CountryCodeCK;
+        _CountryCodeMap["CR"] = CountryCodeCR;
+        _CountryCodeMap["CI"] = CountryCodeCI;
+        _CountryCodeMap["HR"] = CountryCodeHR;
+        _CountryCodeMap["CU"] = CountryCodeCU;
+        _CountryCodeMap["CW"] = CountryCodeCW;
+        _CountryCodeMap["CY"] = CountryCodeCY;
+        _CountryCodeMap["CZ"] = CountryCodeCZ;
+        _CountryCodeMap["DK"] = CountryCodeDK;
+        _CountryCodeMap["DJ"] = CountryCodeDJ;
+        _CountryCodeMap["DM"] = CountryCodeDM;
+        _CountryCodeMap["DO"] = CountryCodeDO;
+        _CountryCodeMap["EC"] = CountryCodeEC;
+        _CountryCodeMap["EG"] = CountryCodeEG;
+        _CountryCodeMap["SV"] = CountryCodeSV;
+        _CountryCodeMap["GQ"] = CountryCodeGQ;
+        _CountryCodeMap["ER"] = CountryCodeER;
+        _CountryCodeMap["EE"] = CountryCodeEE;
+        _CountryCodeMap["ET"] = CountryCodeET;
+        _CountryCodeMap["FK"] = CountryCodeFK;
+        _CountryCodeMap["FO"] = CountryCodeFO;
+        _CountryCodeMap["FJ"] = CountryCodeFJ;
+        _CountryCodeMap["FI"] = CountryCodeFI;
+        _CountryCodeMap["FR"] = CountryCodeFR;
+        _CountryCodeMap["GF"] = CountryCodeGF;
+        _CountryCodeMap["PF"] = CountryCodePF;
+        _CountryCodeMap["TF"] = CountryCodeTF;
+        _CountryCodeMap["GA"] = CountryCodeGA;
+        _CountryCodeMap["GM"] = CountryCodeGM;
+        _CountryCodeMap["GE"] = CountryCodeGE;
+        _CountryCodeMap["DE"] = CountryCodeDE;
+        _CountryCodeMap["GH"] = CountryCodeGH;
+        _CountryCodeMap["GI"] = CountryCodeGI;
+        _CountryCodeMap["GR"] = CountryCodeGR;
+        _CountryCodeMap["GL"] = CountryCodeGL;
+        _CountryCodeMap["GD"] = CountryCodeGD;
+        _CountryCodeMap["GP"] = CountryCodeGP;
+        _CountryCodeMap["GU"] = CountryCodeGU;
+        _CountryCodeMap["GT"] = CountryCodeGT;
+        _CountryCodeMap["GG"] = CountryCodeGG;
+        _CountryCodeMap["GN"] = CountryCodeGN;
+        _CountryCodeMap["GW"] = CountryCodeGW;
+        _CountryCodeMap["GY"] = CountryCodeGY;
+        _CountryCodeMap["HT"] = CountryCodeHT;
+        _CountryCodeMap["HM"] = CountryCodeHM;
+        _CountryCodeMap["VA"] = CountryCodeVA;
+        _CountryCodeMap["HN"] = CountryCodeHN;
+        _CountryCodeMap["HK"] = CountryCodeHK;
+        _CountryCodeMap["HU"] = CountryCodeHU;
+        _CountryCodeMap["IS"] = CountryCodeIS;
+        _CountryCodeMap["IN"] = CountryCodeIN;
+        _CountryCodeMap["ID"] = CountryCodeID;
+        _CountryCodeMap["IR"] = CountryCodeIR;
+        _CountryCodeMap["IQ"] = CountryCodeIQ;
+        _CountryCodeMap["IE"] = CountryCodeIE;
+        _CountryCodeMap["IM"] = CountryCodeIM;
+        _CountryCodeMap["IL"] = CountryCodeIL;
+        _CountryCodeMap["IT"] = CountryCodeIT;
+        _CountryCodeMap["JM"] = CountryCodeJM;
+        _CountryCodeMap["JP"] = CountryCodeJP;
+        _CountryCodeMap["JE"] = CountryCodeJE;
+        _CountryCodeMap["JO"] = CountryCodeJO;
+        _CountryCodeMap["KZ"] = CountryCodeKZ;
+        _CountryCodeMap["KE"] = CountryCodeKE;
+        _CountryCodeMap["KI"] = CountryCodeKI;
+        _CountryCodeMap["KP"] = CountryCodeKP;
+        _CountryCodeMap["KR"] = CountryCodeKR;
+        _CountryCodeMap["KW"] = CountryCodeKW;
+        _CountryCodeMap["KG"] = CountryCodeKG;
+        _CountryCodeMap["LA"] = CountryCodeLA;
+        _CountryCodeMap["LV"] = CountryCodeLV;
+        _CountryCodeMap["LB"] = CountryCodeLB;
+        _CountryCodeMap["LS"] = CountryCodeLS;
+        _CountryCodeMap["LR"] = CountryCodeLR;
+        _CountryCodeMap["LY"] = CountryCodeLY;
+        _CountryCodeMap["LI"] = CountryCodeLI;
+        _CountryCodeMap["LT"] = CountryCodeLT;
+        _CountryCodeMap["LU"] = CountryCodeLU;
+        _CountryCodeMap["MO"] = CountryCodeMO;
+        _CountryCodeMap["MK"] = CountryCodeMK;
+        _CountryCodeMap["MG"] = CountryCodeMG;
+        _CountryCodeMap["MW"] = CountryCodeMW;
+        _CountryCodeMap["MY"] = CountryCodeMY;
+        _CountryCodeMap["MV"] = CountryCodeMV;
+        _CountryCodeMap["ML"] = CountryCodeML;
+        _CountryCodeMap["MT"] = CountryCodeMT;
+        _CountryCodeMap["MH"] = CountryCodeMH;
+        _CountryCodeMap["MQ"] = CountryCodeMQ;
+        _CountryCodeMap["MR"] = CountryCodeMR;
+        _CountryCodeMap["MU"] = CountryCodeMU;
+        _CountryCodeMap["YT"] = CountryCodeYT;
+        _CountryCodeMap["MX"] = CountryCodeMX;
+        _CountryCodeMap["FM"] = CountryCodeFM;
+        _CountryCodeMap["MD"] = CountryCodeMD;
+        _CountryCodeMap["MC"] = CountryCodeMC;
+        _CountryCodeMap["MN"] = CountryCodeMN;
+        _CountryCodeMap["ME"] = CountryCodeME;
+        _CountryCodeMap["MS"] = CountryCodeMS;
+        _CountryCodeMap["MA"] = CountryCodeMA;
+        _CountryCodeMap["MZ"] = CountryCodeMZ;
+        _CountryCodeMap["MM"] = CountryCodeMM;
+        _CountryCodeMap["NA"] = CountryCodeNA;
+        _CountryCodeMap["NR"] = CountryCodeNR;
+        _CountryCodeMap["NP"] = CountryCodeNP;
+        _CountryCodeMap["NL"] = CountryCodeNL;
+        _CountryCodeMap["NC"] = CountryCodeNC;
+        _CountryCodeMap["NZ"] = CountryCodeNZ;
+        _CountryCodeMap["NI"] = CountryCodeNI;
+        _CountryCodeMap["NE"] = CountryCodeNE;
+        _CountryCodeMap["NG"] = CountryCodeNG;
+        _CountryCodeMap["NU"] = CountryCodeNU;
+        _CountryCodeMap["NF"] = CountryCodeNF;
+        _CountryCodeMap["MP"] = CountryCodeMP;
+        _CountryCodeMap["NO"] = CountryCodeNO;
+        _CountryCodeMap["OM"] = CountryCodeOM;
+        _CountryCodeMap["PK"] = CountryCodePK;
+        _CountryCodeMap["PW"] = CountryCodePW;
+        _CountryCodeMap["PS"] = CountryCodePS;
+        _CountryCodeMap["PA"] = CountryCodePA;
+        _CountryCodeMap["PG"] = CountryCodePG;
+        _CountryCodeMap["PY"] = CountryCodePY;
+        _CountryCodeMap["PE"] = CountryCodePE;
+        _CountryCodeMap["PH"] = CountryCodePH;
+        _CountryCodeMap["PN"] = CountryCodePN;
+        _CountryCodeMap["PL"] = CountryCodePL;
+        _CountryCodeMap["PT"] = CountryCodePT;
+        _CountryCodeMap["PR"] = CountryCodePR;
+        _CountryCodeMap["QA"] = CountryCodeQA;
+        _CountryCodeMap["RE"] = CountryCodeRE;
+        _CountryCodeMap["RO"] = CountryCodeRO;
+        _CountryCodeMap["RU"] = CountryCodeRU;
+        _CountryCodeMap["RW"] = CountryCodeRW;
+        _CountryCodeMap["BL"] = CountryCodeBL;
+        _CountryCodeMap["SH"] = CountryCodeSH;
+        _CountryCodeMap["KN"] = CountryCodeKN;
+        _CountryCodeMap["LC"] = CountryCodeLC;
+        _CountryCodeMap["MF"] = CountryCodeMF;
+        _CountryCodeMap["PM"] = CountryCodePM;
+        _CountryCodeMap["VC"] = CountryCodeVC;
+        _CountryCodeMap["WS"] = CountryCodeWS;
+        _CountryCodeMap["SM"] = CountryCodeSM;
+        _CountryCodeMap["ST"] = CountryCodeST;
+        _CountryCodeMap["SA"] = CountryCodeSA;
+        _CountryCodeMap["SN"] = CountryCodeSN;
+        _CountryCodeMap["RS"] = CountryCodeRS;
+        _CountryCodeMap["SC"] = CountryCodeSC;
+        _CountryCodeMap["SL"] = CountryCodeSL;
+        _CountryCodeMap["SG"] = CountryCodeSG;
+        _CountryCodeMap["SX"] = CountryCodeSX;
+        _CountryCodeMap["SK"] = CountryCodeSK;
+        _CountryCodeMap["SI"] = CountryCodeSI;
+        _CountryCodeMap["SB"] = CountryCodeSB;
+        _CountryCodeMap["SO"] = CountryCodeSO;
+        _CountryCodeMap["ZA"] = CountryCodeZA;
+        _CountryCodeMap["GS"] = CountryCodeGS;
+        _CountryCodeMap["SS"] = CountryCodeSS;
+        _CountryCodeMap["ES"] = CountryCodeES;
+        _CountryCodeMap["LK"] = CountryCodeLK;
+        _CountryCodeMap["SD"] = CountryCodeSD;
+        _CountryCodeMap["SR"] = CountryCodeSR;
+        _CountryCodeMap["SJ"] = CountryCodeSJ;
+        _CountryCodeMap["SZ"] = CountryCodeSZ;
+        _CountryCodeMap["SE"] = CountryCodeSE;
+        _CountryCodeMap["CH"] = CountryCodeCH;
+        _CountryCodeMap["SY"] = CountryCodeSY;
+        _CountryCodeMap["TW"] = CountryCodeTW;
+        _CountryCodeMap["TJ"] = CountryCodeTJ;
+        _CountryCodeMap["TZ"] = CountryCodeTZ;
+        _CountryCodeMap["TH"] = CountryCodeTH;
+        _CountryCodeMap["TL"] = CountryCodeTL;
+        _CountryCodeMap["TG"] = CountryCodeTG;
+        _CountryCodeMap["TK"] = CountryCodeTK;
+        _CountryCodeMap["TO"] = CountryCodeTO;
+        _CountryCodeMap["TT"] = CountryCodeTT;
+        _CountryCodeMap["TN"] = CountryCodeTN;
+        _CountryCodeMap["TR"] = CountryCodeTR;
+        _CountryCodeMap["TM"] = CountryCodeTM;
+        _CountryCodeMap["TC"] = CountryCodeTC;
+        _CountryCodeMap["TV"] = CountryCodeTV;
+        _CountryCodeMap["UG"] = CountryCodeUG;
+        _CountryCodeMap["UA"] = CountryCodeUA;
+        _CountryCodeMap["AE"] = CountryCodeAE;
+        _CountryCodeMap["GB"] = CountryCodeGB;
+        _CountryCodeMap["US"] = CountryCodeUS;
+        _CountryCodeMap["UM"] = CountryCodeUM;
+        _CountryCodeMap["UY"] = CountryCodeUY;
+        _CountryCodeMap["UZ"] = CountryCodeUZ;
+        _CountryCodeMap["VU"] = CountryCodeVU;
+        _CountryCodeMap["VE"] = CountryCodeVE;
+        _CountryCodeMap["VN"] = CountryCodeVN;
+        _CountryCodeMap["VG"] = CountryCodeVG;
+        _CountryCodeMap["VI"] = CountryCodeVI;
+        _CountryCodeMap["WF"] = CountryCodeWF;
+        _CountryCodeMap["EH"] = CountryCodeEH;
+        _CountryCodeMap["YE"] = CountryCodeYE;
+        _CountryCodeMap["ZM"] = CountryCodeZM;
+        _CountryCodeMap["ZW"] = CountryCodeZW;
+
+    }
+
+    auto output = _CountryCodeMap.find(obj.GetString());
+    if (output != _CountryCodeMap.end())
+        return output->second;
+
+    return CountryCodeAF; // Basically critical fail
 }
 
 CreateSharedGroupRequest::~CreateSharedGroupRequest()
@@ -2543,6 +3126,7 @@ void PlayFab::ClientModels::writeUserOriginationEnumJSON(UserOrigination enumVal
     case UserOriginationXboxLive: writer.String("XboxLive"); break;
     case UserOriginationParse: writer.String("Parse"); break;
     case UserOriginationTwitch: writer.String("Twitch"); break;
+    case UserOriginationWindowsHello: writer.String("WindowsHello"); break;
 
     }
 }
@@ -2570,6 +3154,7 @@ UserOrigination PlayFab::ClientModels::readUserOriginationFromValue(const rapidj
         _UserOriginationMap["XboxLive"] = UserOriginationXboxLive;
         _UserOriginationMap["Parse"] = UserOriginationParse;
         _UserOriginationMap["Twitch"] = UserOriginationTwitch;
+        _UserOriginationMap["WindowsHello"] = UserOriginationWindowsHello;
 
     }
 
@@ -2595,6 +3180,7 @@ void UserTitleInfo::writeJSON(PFStringJsonWriter& writer)
     if (LastLogin.notNull()) { writer.String("LastLogin"); writeDatetime(LastLogin, writer); }
     if (FirstLogin.notNull()) { writer.String("FirstLogin"); writeDatetime(FirstLogin, writer); }
     if (isBanned.notNull()) { writer.String("isBanned"); writer.Bool(isBanned); }
+    if (AvatarUrl.length() > 0) { writer.String("AvatarUrl"); writer.String(AvatarUrl.c_str()); }
 
     writer.EndObject();
 }
@@ -2613,6 +3199,8 @@ bool UserTitleInfo::readFromValue(const rapidjson::Value& obj)
     if (FirstLogin_member != obj.MemberEnd() && !FirstLogin_member->value.IsNull()) FirstLogin = readDatetime(FirstLogin_member->value);
     const Value::ConstMemberIterator isBanned_member = obj.FindMember("isBanned");
     if (isBanned_member != obj.MemberEnd() && !isBanned_member->value.IsNull()) isBanned = isBanned_member->value.GetBool();
+    const Value::ConstMemberIterator AvatarUrl_member = obj.FindMember("AvatarUrl");
+    if (AvatarUrl_member != obj.MemberEnd() && !AvatarUrl_member->value.IsNull()) AvatarUrl = AvatarUrl_member->value.GetString();
 
     return true;
 }
@@ -3431,6 +4019,8 @@ void GetFriendLeaderboardAroundPlayerRequest::writeJSON(PFStringJsonWriter& writ
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
     if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
+    writer.String("Version"); writer.Int(Version);
+    writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion);
 
     writer.EndObject();
 }
@@ -3447,12 +4037,396 @@ bool GetFriendLeaderboardAroundPlayerRequest::readFromValue(const rapidjson::Val
     if (IncludeSteamFriends_member != obj.MemberEnd() && !IncludeSteamFriends_member->value.IsNull()) IncludeSteamFriends = IncludeSteamFriends_member->value.GetBool();
     const Value::ConstMemberIterator IncludeFacebookFriends_member = obj.FindMember("IncludeFacebookFriends");
     if (IncludeFacebookFriends_member != obj.MemberEnd() && !IncludeFacebookFriends_member->value.IsNull()) IncludeFacebookFriends = IncludeFacebookFriends_member->value.GetBool();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator UseSpecificVersion_member = obj.FindMember("UseSpecificVersion");
+    if (UseSpecificVersion_member != obj.MemberEnd() && !UseSpecificVersion_member->value.IsNull()) UseSpecificVersion = UseSpecificVersion_member->value.GetBool();
+
+    return true;
+}
+void PlayFab::ClientModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case LoginIdentityProviderUnknown: writer.String("Unknown"); break;
+    case LoginIdentityProviderPlayFab: writer.String("PlayFab"); break;
+    case LoginIdentityProviderCustom: writer.String("Custom"); break;
+    case LoginIdentityProviderGameCenter: writer.String("GameCenter"); break;
+    case LoginIdentityProviderGooglePlay: writer.String("GooglePlay"); break;
+    case LoginIdentityProviderSteam: writer.String("Steam"); break;
+    case LoginIdentityProviderXBoxLive: writer.String("XBoxLive"); break;
+    case LoginIdentityProviderPSN: writer.String("PSN"); break;
+    case LoginIdentityProviderKongregate: writer.String("Kongregate"); break;
+    case LoginIdentityProviderFacebook: writer.String("Facebook"); break;
+    case LoginIdentityProviderIOSDevice: writer.String("IOSDevice"); break;
+    case LoginIdentityProviderAndroidDevice: writer.String("AndroidDevice"); break;
+    case LoginIdentityProviderTwitch: writer.String("Twitch"); break;
+    case LoginIdentityProviderWindowsHello: writer.String("WindowsHello"); break;
+
+    }
+}
+
+LoginIdentityProvider PlayFab::ClientModels::readLoginIdentityProviderFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, LoginIdentityProvider> _LoginIdentityProviderMap;
+    if (_LoginIdentityProviderMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _LoginIdentityProviderMap["Unknown"] = LoginIdentityProviderUnknown;
+        _LoginIdentityProviderMap["PlayFab"] = LoginIdentityProviderPlayFab;
+        _LoginIdentityProviderMap["Custom"] = LoginIdentityProviderCustom;
+        _LoginIdentityProviderMap["GameCenter"] = LoginIdentityProviderGameCenter;
+        _LoginIdentityProviderMap["GooglePlay"] = LoginIdentityProviderGooglePlay;
+        _LoginIdentityProviderMap["Steam"] = LoginIdentityProviderSteam;
+        _LoginIdentityProviderMap["XBoxLive"] = LoginIdentityProviderXBoxLive;
+        _LoginIdentityProviderMap["PSN"] = LoginIdentityProviderPSN;
+        _LoginIdentityProviderMap["Kongregate"] = LoginIdentityProviderKongregate;
+        _LoginIdentityProviderMap["Facebook"] = LoginIdentityProviderFacebook;
+        _LoginIdentityProviderMap["IOSDevice"] = LoginIdentityProviderIOSDevice;
+        _LoginIdentityProviderMap["AndroidDevice"] = LoginIdentityProviderAndroidDevice;
+        _LoginIdentityProviderMap["Twitch"] = LoginIdentityProviderTwitch;
+        _LoginIdentityProviderMap["WindowsHello"] = LoginIdentityProviderWindowsHello;
+
+    }
+
+    auto output = _LoginIdentityProviderMap.find(obj.GetString());
+    if (output != _LoginIdentityProviderMap.end())
+        return output->second;
+
+    return LoginIdentityProviderUnknown; // Basically critical fail
+}
+
+PlayerLocation::~PlayerLocation()
+{
+
+}
+
+void PlayerLocation::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("ContinentCode"); writeContinentCodeEnumJSON(pfContinentCode, writer);
+    writer.String("CountryCode"); writeCountryCodeEnumJSON(pfCountryCode, writer);
+    if (City.length() > 0) { writer.String("City"); writer.String(City.c_str()); }
+    if (Latitude.notNull()) { writer.String("Latitude"); writer.Double(Latitude); }
+    if (Longitude.notNull()) { writer.String("Longitude"); writer.Double(Longitude); }
+
+    writer.EndObject();
+}
+
+bool PlayerLocation::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ContinentCode_member = obj.FindMember("ContinentCode");
+    if (ContinentCode_member != obj.MemberEnd() && !ContinentCode_member->value.IsNull()) pfContinentCode = readContinentCodeFromValue(ContinentCode_member->value);
+    const Value::ConstMemberIterator CountryCode_member = obj.FindMember("CountryCode");
+    if (CountryCode_member != obj.MemberEnd() && !CountryCode_member->value.IsNull()) pfCountryCode = readCountryCodeFromValue(CountryCode_member->value);
+    const Value::ConstMemberIterator City_member = obj.FindMember("City");
+    if (City_member != obj.MemberEnd() && !City_member->value.IsNull()) City = City_member->value.GetString();
+    const Value::ConstMemberIterator Latitude_member = obj.FindMember("Latitude");
+    if (Latitude_member != obj.MemberEnd() && !Latitude_member->value.IsNull()) Latitude = Latitude_member->value.GetDouble();
+    const Value::ConstMemberIterator Longitude_member = obj.FindMember("Longitude");
+    if (Longitude_member != obj.MemberEnd() && !Longitude_member->value.IsNull()) Longitude = Longitude_member->value.GetDouble();
+
+    return true;
+}
+void PlayFab::ClientModels::writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case PushNotificationPlatformApplePushNotificationService: writer.String("ApplePushNotificationService"); break;
+    case PushNotificationPlatformGoogleCloudMessaging: writer.String("GoogleCloudMessaging"); break;
+
+    }
+}
+
+PushNotificationPlatform PlayFab::ClientModels::readPushNotificationPlatformFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, PushNotificationPlatform> _PushNotificationPlatformMap;
+    if (_PushNotificationPlatformMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _PushNotificationPlatformMap["ApplePushNotificationService"] = PushNotificationPlatformApplePushNotificationService;
+        _PushNotificationPlatformMap["GoogleCloudMessaging"] = PushNotificationPlatformGoogleCloudMessaging;
+
+    }
+
+    auto output = _PushNotificationPlatformMap.find(obj.GetString());
+    if (output != _PushNotificationPlatformMap.end())
+        return output->second;
+
+    return PushNotificationPlatformApplePushNotificationService; // Basically critical fail
+}
+
+PushNotificationRegistration::~PushNotificationRegistration()
+{
+
+}
+
+void PushNotificationRegistration::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Platform.notNull()) { writer.String("Platform"); writePushNotificationPlatformEnumJSON(Platform, writer); }
+    if (NotificationEndpointARN.length() > 0) { writer.String("NotificationEndpointARN"); writer.String(NotificationEndpointARN.c_str()); }
+
+    writer.EndObject();
+}
+
+bool PushNotificationRegistration::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Platform_member = obj.FindMember("Platform");
+    if (Platform_member != obj.MemberEnd() && !Platform_member->value.IsNull()) Platform = readPushNotificationPlatformFromValue(Platform_member->value);
+    const Value::ConstMemberIterator NotificationEndpointARN_member = obj.FindMember("NotificationEndpointARN");
+    if (NotificationEndpointARN_member != obj.MemberEnd() && !NotificationEndpointARN_member->value.IsNull()) NotificationEndpointARN = NotificationEndpointARN_member->value.GetString();
+
+    return true;
+}
+
+PlayerLinkedAccount::~PlayerLinkedAccount()
+{
+
+}
+
+void PlayerLinkedAccount::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Platform.notNull()) { writer.String("Platform"); writeLoginIdentityProviderEnumJSON(Platform, writer); }
+    if (PlatformUserId.length() > 0) { writer.String("PlatformUserId"); writer.String(PlatformUserId.c_str()); }
+    if (Username.length() > 0) { writer.String("Username"); writer.String(Username.c_str()); }
+    if (Email.length() > 0) { writer.String("Email"); writer.String(Email.c_str()); }
+
+    writer.EndObject();
+}
+
+bool PlayerLinkedAccount::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Platform_member = obj.FindMember("Platform");
+    if (Platform_member != obj.MemberEnd() && !Platform_member->value.IsNull()) Platform = readLoginIdentityProviderFromValue(Platform_member->value);
+    const Value::ConstMemberIterator PlatformUserId_member = obj.FindMember("PlatformUserId");
+    if (PlatformUserId_member != obj.MemberEnd() && !PlatformUserId_member->value.IsNull()) PlatformUserId = PlatformUserId_member->value.GetString();
+    const Value::ConstMemberIterator Username_member = obj.FindMember("Username");
+    if (Username_member != obj.MemberEnd() && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
+    const Value::ConstMemberIterator Email_member = obj.FindMember("Email");
+    if (Email_member != obj.MemberEnd() && !Email_member->value.IsNull()) Email = Email_member->value.GetString();
+
+    return true;
+}
+
+PlayerStatistic::~PlayerStatistic()
+{
+
+}
+
+void PlayerStatistic::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
+    writer.String("StatisticVersion"); writer.Int(StatisticVersion);
+    writer.String("StatisticValue"); writer.Int(StatisticValue);
+    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+
+    writer.EndObject();
+}
+
+bool PlayerStatistic::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
+    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
+    const Value::ConstMemberIterator StatisticVersion_member = obj.FindMember("StatisticVersion");
+    if (StatisticVersion_member != obj.MemberEnd() && !StatisticVersion_member->value.IsNull()) StatisticVersion = StatisticVersion_member->value.GetInt();
+    const Value::ConstMemberIterator StatisticValue_member = obj.FindMember("StatisticValue");
+    if (StatisticValue_member != obj.MemberEnd() && !StatisticValue_member->value.IsNull()) StatisticValue = StatisticValue_member->value.GetInt();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+
+    return true;
+}
+
+PlayerProfile::~PlayerProfile()
+{
+
+}
+
+void PlayerProfile::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (PlayerId.length() > 0) { writer.String("PlayerId"); writer.String(PlayerId.c_str()); }
+    if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
+    if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
+    if (PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
+    if (Origination.notNull()) { writer.String("Origination"); writeLoginIdentityProviderEnumJSON(Origination, writer); }
+    if (Created.notNull()) { writer.String("Created"); writeDatetime(Created, writer); }
+    if (LastLogin.notNull()) { writer.String("LastLogin"); writeDatetime(LastLogin, writer); }
+    if (BannedUntil.notNull()) { writer.String("BannedUntil"); writeDatetime(BannedUntil, writer); }
+    if (AvatarUrl.length() > 0) { writer.String("AvatarUrl"); writer.String(AvatarUrl.c_str()); }
+    if (!Statistics.empty()) {
+    writer.String("Statistics");
+    writer.StartObject();
+    for (std::map<std::string, Int32>::iterator iter = Statistics.begin(); iter != Statistics.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.Int(iter->second);
+    }
+    writer.EndObject();
+     }
+    if (TotalValueToDateInUSD.notNull()) { writer.String("TotalValueToDateInUSD"); writer.Uint(TotalValueToDateInUSD); }
+    if (!ValuesToDate.empty()) {
+    writer.String("ValuesToDate");
+    writer.StartObject();
+    for (std::map<std::string, Uint32>::iterator iter = ValuesToDate.begin(); iter != ValuesToDate.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.Uint(iter->second);
+    }
+    writer.EndObject();
+     }
+    if (!Tags.empty()) {
+    writer.String("Tags");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = Tags.begin(); iter != Tags.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+     }
+    if (!Locations.empty()) {
+    writer.String("Locations");
+    writer.StartObject();
+    for (std::map<std::string, PlayerLocation>::iterator iter = Locations.begin(); iter != Locations.end(); ++iter) {
+        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+    }
+    writer.EndObject();
+     }
+    if (!VirtualCurrencyBalances.empty()) {
+    writer.String("VirtualCurrencyBalances");
+    writer.StartObject();
+    for (std::map<std::string, Int32>::iterator iter = VirtualCurrencyBalances.begin(); iter != VirtualCurrencyBalances.end(); ++iter) {
+        writer.String(iter->first.c_str()); writer.Int(iter->second);
+    }
+    writer.EndObject();
+     }
+    if (!AdCampaignAttributions.empty()) {
+    writer.String("AdCampaignAttributions");
+    writer.StartArray();
+    for (std::list<AdCampaignAttribution>::iterator iter = AdCampaignAttributions.begin(); iter != AdCampaignAttributions.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+    if (!PushNotificationRegistrations.empty()) {
+    writer.String("PushNotificationRegistrations");
+    writer.StartArray();
+    for (std::list<PushNotificationRegistration>::iterator iter = PushNotificationRegistrations.begin(); iter != PushNotificationRegistrations.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+    if (!LinkedAccounts.empty()) {
+    writer.String("LinkedAccounts");
+    writer.StartArray();
+    for (std::list<PlayerLinkedAccount>::iterator iter = LinkedAccounts.begin(); iter != LinkedAccounts.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+    if (!PlayerStatistics.empty()) {
+    writer.String("PlayerStatistics");
+    writer.StartArray();
+    for (std::list<PlayerStatistic>::iterator iter = PlayerStatistics.begin(); iter != PlayerStatistics.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
+
+    writer.EndObject();
+}
+
+bool PlayerProfile::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayerId_member = obj.FindMember("PlayerId");
+    if (PlayerId_member != obj.MemberEnd() && !PlayerId_member->value.IsNull()) PlayerId = PlayerId_member->value.GetString();
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator PublisherId_member = obj.FindMember("PublisherId");
+    if (PublisherId_member != obj.MemberEnd() && !PublisherId_member->value.IsNull()) PublisherId = PublisherId_member->value.GetString();
+    const Value::ConstMemberIterator Origination_member = obj.FindMember("Origination");
+    if (Origination_member != obj.MemberEnd() && !Origination_member->value.IsNull()) Origination = readLoginIdentityProviderFromValue(Origination_member->value);
+    const Value::ConstMemberIterator Created_member = obj.FindMember("Created");
+    if (Created_member != obj.MemberEnd() && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
+    const Value::ConstMemberIterator LastLogin_member = obj.FindMember("LastLogin");
+    if (LastLogin_member != obj.MemberEnd() && !LastLogin_member->value.IsNull()) LastLogin = readDatetime(LastLogin_member->value);
+    const Value::ConstMemberIterator BannedUntil_member = obj.FindMember("BannedUntil");
+    if (BannedUntil_member != obj.MemberEnd() && !BannedUntil_member->value.IsNull()) BannedUntil = readDatetime(BannedUntil_member->value);
+    const Value::ConstMemberIterator AvatarUrl_member = obj.FindMember("AvatarUrl");
+    if (AvatarUrl_member != obj.MemberEnd() && !AvatarUrl_member->value.IsNull()) AvatarUrl = AvatarUrl_member->value.GetString();
+    const Value::ConstMemberIterator Statistics_member = obj.FindMember("Statistics");
+    if (Statistics_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Statistics_member->value.MemberBegin(); iter != Statistics_member->value.MemberEnd(); ++iter) {
+            Statistics[iter->name.GetString()] = iter->value.GetInt();
+        }
+    }
+    const Value::ConstMemberIterator TotalValueToDateInUSD_member = obj.FindMember("TotalValueToDateInUSD");
+    if (TotalValueToDateInUSD_member != obj.MemberEnd() && !TotalValueToDateInUSD_member->value.IsNull()) TotalValueToDateInUSD = TotalValueToDateInUSD_member->value.GetUint();
+    const Value::ConstMemberIterator ValuesToDate_member = obj.FindMember("ValuesToDate");
+    if (ValuesToDate_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = ValuesToDate_member->value.MemberBegin(); iter != ValuesToDate_member->value.MemberEnd(); ++iter) {
+            ValuesToDate[iter->name.GetString()] = iter->value.GetUint();
+        }
+    }
+    const Value::ConstMemberIterator Tags_member = obj.FindMember("Tags");
+    if (Tags_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Tags_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Tags.push_back(memberList[i].GetString());
+        }
+    }
+    const Value::ConstMemberIterator Locations_member = obj.FindMember("Locations");
+    if (Locations_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Locations_member->value.MemberBegin(); iter != Locations_member->value.MemberEnd(); ++iter) {
+            Locations[iter->name.GetString()] = PlayerLocation(iter->value);
+        }
+    }
+    const Value::ConstMemberIterator VirtualCurrencyBalances_member = obj.FindMember("VirtualCurrencyBalances");
+    if (VirtualCurrencyBalances_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = VirtualCurrencyBalances_member->value.MemberBegin(); iter != VirtualCurrencyBalances_member->value.MemberEnd(); ++iter) {
+            VirtualCurrencyBalances[iter->name.GetString()] = iter->value.GetInt();
+        }
+    }
+    const Value::ConstMemberIterator AdCampaignAttributions_member = obj.FindMember("AdCampaignAttributions");
+    if (AdCampaignAttributions_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = AdCampaignAttributions_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            AdCampaignAttributions.push_back(AdCampaignAttribution(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator PushNotificationRegistrations_member = obj.FindMember("PushNotificationRegistrations");
+    if (PushNotificationRegistrations_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = PushNotificationRegistrations_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            PushNotificationRegistrations.push_back(PushNotificationRegistration(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator LinkedAccounts_member = obj.FindMember("LinkedAccounts");
+    if (LinkedAccounts_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = LinkedAccounts_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            LinkedAccounts.push_back(PlayerLinkedAccount(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator PlayerStatistics_member = obj.FindMember("PlayerStatistics");
+    if (PlayerStatistics_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = PlayerStatistics_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            PlayerStatistics.push_back(PlayerStatistic(memberList[i]));
+        }
+    }
 
     return true;
 }
 
 PlayerLeaderboardEntry::~PlayerLeaderboardEntry()
 {
+    if (Profile != NULL) delete Profile;
 
 }
 
@@ -3464,6 +4438,7 @@ void PlayerLeaderboardEntry::writeJSON(PFStringJsonWriter& writer)
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
     writer.String("StatValue"); writer.Int(StatValue);
     writer.String("Position"); writer.Int(Position);
+    if (Profile != NULL) { writer.String("Profile"); Profile->writeJSON(writer); }
 
     writer.EndObject();
 }
@@ -3478,6 +4453,8 @@ bool PlayerLeaderboardEntry::readFromValue(const rapidjson::Value& obj)
     if (StatValue_member != obj.MemberEnd() && !StatValue_member->value.IsNull()) StatValue = StatValue_member->value.GetInt();
     const Value::ConstMemberIterator Position_member = obj.FindMember("Position");
     if (Position_member != obj.MemberEnd() && !Position_member->value.IsNull()) Position = Position_member->value.GetInt();
+    const Value::ConstMemberIterator Profile_member = obj.FindMember("Profile");
+    if (Profile_member != obj.MemberEnd() && !Profile_member->value.IsNull()) Profile = new PlayerProfile(Profile_member->value);
 
     return true;
 }
@@ -3499,6 +4476,8 @@ void GetFriendLeaderboardAroundPlayerResult::writeJSON(PFStringJsonWriter& write
     }
     writer.EndArray();
      }
+    writer.String("Version"); writer.Int(Version);
+    if (NextReset.notNull()) { writer.String("NextReset"); writeDatetime(NextReset, writer); }
 
     writer.EndObject();
 }
@@ -3512,6 +4491,10 @@ bool GetFriendLeaderboardAroundPlayerResult::readFromValue(const rapidjson::Valu
             Leaderboard.push_back(PlayerLeaderboardEntry(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator NextReset_member = obj.FindMember("NextReset");
+    if (NextReset_member != obj.MemberEnd() && !NextReset_member->value.IsNull()) NextReset = readDatetime(NextReset_member->value);
 
     return true;
 }
@@ -3530,6 +4513,8 @@ void GetFriendLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
     if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
     if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
     if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
+    writer.String("Version"); writer.Int(Version);
+    writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion);
 
     writer.EndObject();
 }
@@ -3546,6 +4531,10 @@ bool GetFriendLeaderboardRequest::readFromValue(const rapidjson::Value& obj)
     if (IncludeSteamFriends_member != obj.MemberEnd() && !IncludeSteamFriends_member->value.IsNull()) IncludeSteamFriends = IncludeSteamFriends_member->value.GetBool();
     const Value::ConstMemberIterator IncludeFacebookFriends_member = obj.FindMember("IncludeFacebookFriends");
     if (IncludeFacebookFriends_member != obj.MemberEnd() && !IncludeFacebookFriends_member->value.IsNull()) IncludeFacebookFriends = IncludeFacebookFriends_member->value.GetBool();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator UseSpecificVersion_member = obj.FindMember("UseSpecificVersion");
+    if (UseSpecificVersion_member != obj.MemberEnd() && !UseSpecificVersion_member->value.IsNull()) UseSpecificVersion = UseSpecificVersion_member->value.GetBool();
 
     return true;
 }
@@ -3686,6 +4675,8 @@ void GetLeaderboardAroundPlayerRequest::writeJSON(PFStringJsonWriter& writer)
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
+    writer.String("Version"); writer.Int(Version);
+    writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion);
 
     writer.EndObject();
 }
@@ -3698,6 +4689,10 @@ bool GetLeaderboardAroundPlayerRequest::readFromValue(const rapidjson::Value& ob
     if (StatisticName_member != obj.MemberEnd() && !StatisticName_member->value.IsNull()) StatisticName = StatisticName_member->value.GetString();
     const Value::ConstMemberIterator MaxResultsCount_member = obj.FindMember("MaxResultsCount");
     if (MaxResultsCount_member != obj.MemberEnd() && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator UseSpecificVersion_member = obj.FindMember("UseSpecificVersion");
+    if (UseSpecificVersion_member != obj.MemberEnd() && !UseSpecificVersion_member->value.IsNull()) UseSpecificVersion = UseSpecificVersion_member->value.GetBool();
 
     return true;
 }
@@ -3719,6 +4714,8 @@ void GetLeaderboardAroundPlayerResult::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
+    writer.String("Version"); writer.Int(Version);
+    if (NextReset.notNull()) { writer.String("NextReset"); writeDatetime(NextReset, writer); }
 
     writer.EndObject();
 }
@@ -3732,6 +4729,10 @@ bool GetLeaderboardAroundPlayerResult::readFromValue(const rapidjson::Value& obj
             Leaderboard.push_back(PlayerLeaderboardEntry(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator NextReset_member = obj.FindMember("NextReset");
+    if (NextReset_member != obj.MemberEnd() && !NextReset_member->value.IsNull()) NextReset = readDatetime(NextReset_member->value);
 
     return true;
 }
@@ -3807,6 +4808,8 @@ void GetLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     writer.String("StartPosition"); writer.Int(StartPosition);
     if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
+    writer.String("Version"); writer.Int(Version);
+    writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion);
 
     writer.EndObject();
 }
@@ -3819,6 +4822,10 @@ bool GetLeaderboardRequest::readFromValue(const rapidjson::Value& obj)
     if (StartPosition_member != obj.MemberEnd() && !StartPosition_member->value.IsNull()) StartPosition = StartPosition_member->value.GetInt();
     const Value::ConstMemberIterator MaxResultsCount_member = obj.FindMember("MaxResultsCount");
     if (MaxResultsCount_member != obj.MemberEnd() && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator UseSpecificVersion_member = obj.FindMember("UseSpecificVersion");
+    if (UseSpecificVersion_member != obj.MemberEnd() && !UseSpecificVersion_member->value.IsNull()) UseSpecificVersion = UseSpecificVersion_member->value.GetBool();
 
     return true;
 }
@@ -3840,6 +4847,8 @@ void GetLeaderboardResult::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
+    writer.String("Version"); writer.Int(Version);
+    if (NextReset.notNull()) { writer.String("NextReset"); writeDatetime(NextReset, writer); }
 
     writer.EndObject();
 }
@@ -3853,6 +4862,10 @@ bool GetLeaderboardResult::readFromValue(const rapidjson::Value& obj)
             Leaderboard.push_back(PlayerLeaderboardEntry(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+    const Value::ConstMemberIterator NextReset_member = obj.FindMember("NextReset");
+    if (NextReset_member != obj.MemberEnd() && !NextReset_member->value.IsNull()) NextReset = readDatetime(NextReset_member->value);
 
     return true;
 }
@@ -6074,6 +7087,53 @@ bool GetUserInventoryResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetWindowsHelloChallengeRequest::~GetWindowsHelloChallengeRequest()
+{
+
+}
+
+void GetWindowsHelloChallengeRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("TitleId"); writer.String(TitleId.c_str());
+    writer.String("PublicKeyHint"); writer.String(PublicKeyHint.c_str());
+
+    writer.EndObject();
+}
+
+bool GetWindowsHelloChallengeRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator PublicKeyHint_member = obj.FindMember("PublicKeyHint");
+    if (PublicKeyHint_member != obj.MemberEnd() && !PublicKeyHint_member->value.IsNull()) PublicKeyHint = PublicKeyHint_member->value.GetString();
+
+    return true;
+}
+
+GetWindowsHelloChallengeResponse::~GetWindowsHelloChallengeResponse()
+{
+
+}
+
+void GetWindowsHelloChallengeResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Challenge.length() > 0) { writer.String("Challenge"); writer.String(Challenge.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetWindowsHelloChallengeResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Challenge_member = obj.FindMember("Challenge");
+    if (Challenge_member != obj.MemberEnd() && !Challenge_member->value.IsNull()) Challenge = Challenge_member->value.GetString();
+
+    return true;
+}
+
 GrantCharacterToUserRequest::~GrantCharacterToUserRequest()
 {
 
@@ -6587,6 +7647,56 @@ bool LinkTwitchAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+LinkWindowsHelloAccountRequest::~LinkWindowsHelloAccountRequest()
+{
+
+}
+
+void LinkWindowsHelloAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("UserName"); writer.String(UserName.c_str());
+    writer.String("PublicKey"); writer.String(PublicKey.c_str());
+    if (DeviceName.length() > 0) { writer.String("DeviceName"); writer.String(DeviceName.c_str()); }
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
+
+    writer.EndObject();
+}
+
+bool LinkWindowsHelloAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator UserName_member = obj.FindMember("UserName");
+    if (UserName_member != obj.MemberEnd() && !UserName_member->value.IsNull()) UserName = UserName_member->value.GetString();
+    const Value::ConstMemberIterator PublicKey_member = obj.FindMember("PublicKey");
+    if (PublicKey_member != obj.MemberEnd() && !PublicKey_member->value.IsNull()) PublicKey = PublicKey_member->value.GetString();
+    const Value::ConstMemberIterator DeviceName_member = obj.FindMember("DeviceName");
+    if (DeviceName_member != obj.MemberEnd() && !DeviceName_member->value.IsNull()) DeviceName = DeviceName_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
+
+    return true;
+}
+
+LinkWindowsHelloAccountResponse::~LinkWindowsHelloAccountResponse()
+{
+
+}
+
+void LinkWindowsHelloAccountResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool LinkWindowsHelloAccountResponse::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 ListUsersCharactersRequest::~ListUsersCharactersRequest()
 {
 
@@ -7068,6 +8178,38 @@ bool LoginWithTwitchRequest::readFromValue(const rapidjson::Value& obj)
     if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
     const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
     if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
+    const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
+    if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
+
+    return true;
+}
+
+LoginWithWindowsHelloRequest::~LoginWithWindowsHelloRequest()
+{
+    if (InfoRequestParameters != NULL) delete InfoRequestParameters;
+
+}
+
+void LoginWithWindowsHelloRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("TitleId"); writer.String(TitleId.c_str());
+    writer.String("ChallengeSignature"); writer.String(ChallengeSignature.c_str());
+    writer.String("PublicKeyHint"); writer.String(PublicKeyHint.c_str());
+    if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool LoginWithWindowsHelloRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator ChallengeSignature_member = obj.FindMember("ChallengeSignature");
+    if (ChallengeSignature_member != obj.MemberEnd() && !ChallengeSignature_member->value.IsNull()) ChallengeSignature = ChallengeSignature_member->value.GetString();
+    const Value::ConstMemberIterator PublicKeyHint_member = obj.FindMember("PublicKeyHint");
+    if (PublicKeyHint_member != obj.MemberEnd() && !PublicKeyHint_member->value.IsNull()) PublicKeyHint = PublicKeyHint_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
 
@@ -7775,6 +8917,41 @@ bool RegisterPlayFabUserResult::readFromValue(const rapidjson::Value& obj)
     if (Username_member != obj.MemberEnd() && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
     const Value::ConstMemberIterator SettingsForUser_member = obj.FindMember("SettingsForUser");
     if (SettingsForUser_member != obj.MemberEnd() && !SettingsForUser_member->value.IsNull()) SettingsForUser = new UserSettings(SettingsForUser_member->value);
+
+    return true;
+}
+
+RegisterWithWindowsHelloRequest::~RegisterWithWindowsHelloRequest()
+{
+    if (InfoRequestParameters != NULL) delete InfoRequestParameters;
+
+}
+
+void RegisterWithWindowsHelloRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("TitleId"); writer.String(TitleId.c_str());
+    writer.String("UserName"); writer.String(UserName.c_str());
+    writer.String("PublicKey"); writer.String(PublicKey.c_str());
+    if (DeviceName.length() > 0) { writer.String("DeviceName"); writer.String(DeviceName.c_str()); }
+    if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool RegisterWithWindowsHelloRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator UserName_member = obj.FindMember("UserName");
+    if (UserName_member != obj.MemberEnd() && !UserName_member->value.IsNull()) UserName = UserName_member->value.GetString();
+    const Value::ConstMemberIterator PublicKey_member = obj.FindMember("PublicKey");
+    if (PublicKey_member != obj.MemberEnd() && !PublicKey_member->value.IsNull()) PublicKey = PublicKey_member->value.GetString();
+    const Value::ConstMemberIterator DeviceName_member = obj.FindMember("DeviceName");
+    if (DeviceName_member != obj.MemberEnd() && !DeviceName_member->value.IsNull()) DeviceName = DeviceName_member->value.GetString();
+    const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
+    if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
 
     return true;
 }
@@ -8689,6 +9866,47 @@ bool UnlinkTwitchAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UnlinkWindowsHelloAccountRequest::~UnlinkWindowsHelloAccountRequest()
+{
+
+}
+
+void UnlinkWindowsHelloAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PublicKeyHint"); writer.String(PublicKeyHint.c_str());
+
+    writer.EndObject();
+}
+
+bool UnlinkWindowsHelloAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PublicKeyHint_member = obj.FindMember("PublicKeyHint");
+    if (PublicKeyHint_member != obj.MemberEnd() && !PublicKeyHint_member->value.IsNull()) PublicKeyHint = PublicKeyHint_member->value.GetString();
+
+    return true;
+}
+
+UnlinkWindowsHelloAccountResponse::~UnlinkWindowsHelloAccountResponse()
+{
+
+}
+
+void UnlinkWindowsHelloAccountResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool UnlinkWindowsHelloAccountResponse::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 UnlockContainerInstanceRequest::~UnlockContainerInstanceRequest()
 {
 
@@ -8798,6 +10016,28 @@ bool UnlockContainerItemResult::readFromValue(const rapidjson::Value& obj)
             VirtualCurrency[iter->name.GetString()] = iter->value.GetUint();
         }
     }
+
+    return true;
+}
+
+UpdateAvatarUrlRequest::~UpdateAvatarUrlRequest()
+{
+
+}
+
+void UpdateAvatarUrlRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("ImageUrl"); writer.String(ImageUrl.c_str());
+
+    writer.EndObject();
+}
+
+bool UpdateAvatarUrlRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ImageUrl_member = obj.FindMember("ImageUrl");
+    if (ImageUrl_member != obj.MemberEnd() && !ImageUrl_member->value.IsNull()) ImageUrl = ImageUrl_member->value.GetString();
 
     return true;
 }
@@ -9320,6 +10560,56 @@ void ValidateIOSReceiptResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool ValidateIOSReceiptResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+ValidateWindowsReceiptRequest::~ValidateWindowsReceiptRequest()
+{
+
+}
+
+void ValidateWindowsReceiptRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Receipt"); writer.String(Receipt.c_str());
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+    writer.String("CurrencyCode"); writer.String(CurrencyCode.c_str());
+    writer.String("PurchasePrice"); writer.Uint(PurchasePrice);
+
+    writer.EndObject();
+}
+
+bool ValidateWindowsReceiptRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Receipt_member = obj.FindMember("Receipt");
+    if (Receipt_member != obj.MemberEnd() && !Receipt_member->value.IsNull()) Receipt = Receipt_member->value.GetString();
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator CurrencyCode_member = obj.FindMember("CurrencyCode");
+    if (CurrencyCode_member != obj.MemberEnd() && !CurrencyCode_member->value.IsNull()) CurrencyCode = CurrencyCode_member->value.GetString();
+    const Value::ConstMemberIterator PurchasePrice_member = obj.FindMember("PurchasePrice");
+    if (PurchasePrice_member != obj.MemberEnd() && !PurchasePrice_member->value.IsNull()) PurchasePrice = PurchasePrice_member->value.GetUint();
+
+    return true;
+}
+
+ValidateWindowsReceiptResult::~ValidateWindowsReceiptResult()
+{
+
+}
+
+void ValidateWindowsReceiptResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool ValidateWindowsReceiptResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;

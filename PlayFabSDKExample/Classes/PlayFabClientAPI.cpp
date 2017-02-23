@@ -60,6 +60,102 @@ void PlayFabClientAPI::OnGetPhotonAuthenticationTokenResult(int httpStatus, Http
     delete request;
 }
 
+void PlayFabClientAPI::GetWindowsHelloChallenge(
+    GetWindowsHelloChallengeRequest& request,
+    ProcessApiCallback<GetWindowsHelloChallengeResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetWindowsHelloChallenge"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetWindowsHelloChallengeResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetWindowsHelloChallengeResult, userData);
+}
+
+void PlayFabClientAPI::OnGetWindowsHelloChallengeResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetWindowsHelloChallengeResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<GetWindowsHelloChallengeResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::LinkWindowsHello(
+    LinkWindowsHelloAccountRequest& request,
+    ProcessApiCallback<LinkWindowsHelloAccountResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LinkWindowsHello"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkWindowsHelloAccountResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkWindowsHelloResult, userData);
+}
+
+void PlayFabClientAPI::OnLinkWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    LinkWindowsHelloAccountResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<LinkWindowsHelloAccountResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::LoginWithAndroidDeviceID(
     LoginWithAndroidDeviceIDRequest& request,
     ProcessApiCallback<LoginResult> callback,
@@ -632,6 +728,58 @@ void PlayFabClientAPI::OnLoginWithTwitchResult(int httpStatus, HttpRequest* requ
     delete request;
 }
 
+void PlayFabClientAPI::LoginWithWindowsHello(
+    LoginWithWindowsHelloRequest& request,
+    ProcessApiCallback<LoginResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    if (PlayFabSettings::titleId.length() > 0)
+        request.TitleId = PlayFabSettings::titleId;
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithWindowsHello"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithWindowsHelloResult, userData);
+}
+
+void PlayFabClientAPI::OnLoginWithWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    LoginResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.length() > 0)
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::RegisterPlayFabUser(
     RegisterPlayFabUserRequest& request,
     ProcessApiCallback<RegisterPlayFabUserResult> callback,
@@ -671,6 +819,106 @@ void PlayFabClientAPI::OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* 
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<RegisterPlayFabUserResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::RegisterWithWindowsHello(
+    RegisterWithWindowsHelloRequest& request,
+    ProcessApiCallback<LoginResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    if (PlayFabSettings::titleId.length() > 0)
+        request.TitleId = PlayFabSettings::titleId;
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/RegisterWithWindowsHello"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRegisterWithWindowsHelloResult, userData);
+}
+
+void PlayFabClientAPI::OnRegisterWithWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    LoginResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.length() > 0)
+            (static_cast<PlayFabClientAPI*>(userData))->mUserSessionTicket = outResult.SessionTicket;
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::UnlinkWindowsHello(
+    UnlinkWindowsHelloAccountRequest& request,
+    ProcessApiCallback<UnlinkWindowsHelloAccountResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/UnlinkWindowsHello"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkWindowsHelloAccountResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkWindowsHelloResult, userData);
+}
+
+void PlayFabClientAPI::OnUnlinkWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    UnlinkWindowsHelloAccountResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<UnlinkWindowsHelloAccountResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2207,6 +2455,54 @@ void PlayFabClientAPI::OnUnlinkTwitchResult(int httpStatus, HttpRequest* request
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<UnlinkTwitchAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::UpdateAvatarUrl(
+    UpdateAvatarUrlRequest& request,
+    ProcessApiCallback<EmptyResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/UpdateAvatarUrl"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUpdateAvatarUrlResult, userData);
+}
+
+void PlayFabClientAPI::OnUpdateAvatarUrlResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    EmptyResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5809,6 +6105,54 @@ void PlayFabClientAPI::OnGetPlayerTagsResult(int httpStatus, HttpRequest* reques
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<GetPlayerTagsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::ValidateWindowsStoreReceipt(
+    ValidateWindowsReceiptRequest& request,
+    ProcessApiCallback<ValidateWindowsReceiptResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/ValidateWindowsStoreReceipt"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ValidateWindowsReceiptResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnValidateWindowsStoreReceiptResult, userData);
+}
+
+void PlayFabClientAPI::OnValidateWindowsStoreReceiptResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ValidateWindowsReceiptResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<ValidateWindowsReceiptResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

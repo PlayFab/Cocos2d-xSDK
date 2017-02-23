@@ -3404,6 +3404,7 @@ void PlayFab::AdminModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProvi
     case LoginIdentityProviderIOSDevice: writer.String("IOSDevice"); break;
     case LoginIdentityProviderAndroidDevice: writer.String("AndroidDevice"); break;
     case LoginIdentityProviderTwitch: writer.String("Twitch"); break;
+    case LoginIdentityProviderWindowsHello: writer.String("WindowsHello"); break;
 
     }
 }
@@ -3427,6 +3428,7 @@ LoginIdentityProvider PlayFab::AdminModels::readLoginIdentityProviderFromValue(c
         _LoginIdentityProviderMap["IOSDevice"] = LoginIdentityProviderIOSDevice;
         _LoginIdentityProviderMap["AndroidDevice"] = LoginIdentityProviderAndroidDevice;
         _LoginIdentityProviderMap["Twitch"] = LoginIdentityProviderTwitch;
+        _LoginIdentityProviderMap["WindowsHello"] = LoginIdentityProviderWindowsHello;
 
     }
 
@@ -3602,6 +3604,7 @@ void PlayerProfile::writeJSON(PFStringJsonWriter& writer)
     if (Created.notNull()) { writer.String("Created"); writeDatetime(Created, writer); }
     if (LastLogin.notNull()) { writer.String("LastLogin"); writeDatetime(LastLogin, writer); }
     if (BannedUntil.notNull()) { writer.String("BannedUntil"); writeDatetime(BannedUntil, writer); }
+    if (AvatarUrl.length() > 0) { writer.String("AvatarUrl"); writer.String(AvatarUrl.c_str()); }
     if (!Statistics.empty()) {
     writer.String("Statistics");
     writer.StartObject();
@@ -3697,6 +3700,8 @@ bool PlayerProfile::readFromValue(const rapidjson::Value& obj)
     if (LastLogin_member != obj.MemberEnd() && !LastLogin_member->value.IsNull()) LastLogin = readDatetime(LastLogin_member->value);
     const Value::ConstMemberIterator BannedUntil_member = obj.FindMember("BannedUntil");
     if (BannedUntil_member != obj.MemberEnd() && !BannedUntil_member->value.IsNull()) BannedUntil = readDatetime(BannedUntil_member->value);
+    const Value::ConstMemberIterator AvatarUrl_member = obj.FindMember("AvatarUrl");
+    if (AvatarUrl_member != obj.MemberEnd() && !AvatarUrl_member->value.IsNull()) AvatarUrl = AvatarUrl_member->value.GetString();
     const Value::ConstMemberIterator Statistics_member = obj.FindMember("Statistics");
     if (Statistics_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Statistics_member->value.MemberBegin(); iter != Statistics_member->value.MemberEnd(); ++iter) {
@@ -5843,6 +5848,7 @@ void PlayFab::AdminModels::writeUserOriginationEnumJSON(UserOrigination enumVal,
     case UserOriginationXboxLive: writer.String("XboxLive"); break;
     case UserOriginationParse: writer.String("Parse"); break;
     case UserOriginationTwitch: writer.String("Twitch"); break;
+    case UserOriginationWindowsHello: writer.String("WindowsHello"); break;
 
     }
 }
@@ -5870,6 +5876,7 @@ UserOrigination PlayFab::AdminModels::readUserOriginationFromValue(const rapidjs
         _UserOriginationMap["XboxLive"] = UserOriginationXboxLive;
         _UserOriginationMap["Parse"] = UserOriginationParse;
         _UserOriginationMap["Twitch"] = UserOriginationTwitch;
+        _UserOriginationMap["WindowsHello"] = UserOriginationWindowsHello;
 
     }
 
@@ -5895,6 +5902,7 @@ void UserTitleInfo::writeJSON(PFStringJsonWriter& writer)
     if (LastLogin.notNull()) { writer.String("LastLogin"); writeDatetime(LastLogin, writer); }
     if (FirstLogin.notNull()) { writer.String("FirstLogin"); writeDatetime(FirstLogin, writer); }
     if (isBanned.notNull()) { writer.String("isBanned"); writer.Bool(isBanned); }
+    if (AvatarUrl.length() > 0) { writer.String("AvatarUrl"); writer.String(AvatarUrl.c_str()); }
 
     writer.EndObject();
 }
@@ -5913,6 +5921,8 @@ bool UserTitleInfo::readFromValue(const rapidjson::Value& obj)
     if (FirstLogin_member != obj.MemberEnd() && !FirstLogin_member->value.IsNull()) FirstLogin = readDatetime(FirstLogin_member->value);
     const Value::ConstMemberIterator isBanned_member = obj.FindMember("isBanned");
     if (isBanned_member != obj.MemberEnd() && !isBanned_member->value.IsNull()) isBanned = isBanned_member->value.GetBool();
+    const Value::ConstMemberIterator AvatarUrl_member = obj.FindMember("AvatarUrl");
+    if (AvatarUrl_member != obj.MemberEnd() && !AvatarUrl_member->value.IsNull()) AvatarUrl = AvatarUrl_member->value.GetString();
 
     return true;
 }

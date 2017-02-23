@@ -275,7 +275,11 @@ namespace PlayFab
         PlayFabErrorInvalidAdPlacementAndReward = 1268,
         PlayFabErrorAllAdPlacementViewsAlreadyConsumed = 1269,
         PlayFabErrorGoogleOAuthNotConfiguredForTitle = 1270,
-        PlayFabErrorGoogleOAuthError = 1271
+        PlayFabErrorGoogleOAuthError = 1271,
+        PlayFabErrorUserNotFriend = 1272,
+        PlayFabErrorInvalidSignature = 1273,
+        PlayFabErrorInvalidPublicKey = 1274,
+        PlayFabErrorGoogleOAuthNoIdTokenIncludedInResponse = 1275
     };
 
     struct PlayFabError
