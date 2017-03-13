@@ -2559,6 +2559,7 @@ void PlayFab::AdminModels::writeEffectTypeEnumJSON(EffectType enumVal, PFStringJ
     switch (enumVal)
     {
     case EffectTypeAllow: writer.String("Allow"); break;
+    case EffectTypeDeny: writer.String("Deny"); break;
 
     }
 }
@@ -2570,6 +2571,7 @@ EffectType PlayFab::AdminModels::readEffectTypeFromValue(const rapidjson::Value&
     {
         // Auto-generate the map on the first use
         _EffectTypeMap["Allow"] = EffectTypeAllow;
+        _EffectTypeMap["Deny"] = EffectTypeDeny;
 
     }
 
@@ -3936,6 +3938,39 @@ StatisticVersionArchivalStatus PlayFab::AdminModels::readStatisticVersionArchiva
 
     return StatisticVersionArchivalStatusNotScheduled; // Basically critical fail
 }
+void PlayFab::AdminModels::writeStatisticVersionStatusEnumJSON(StatisticVersionStatus enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case StatisticVersionStatusActive: writer.String("Active"); break;
+    case StatisticVersionStatusSnapshotPending: writer.String("SnapshotPending"); break;
+    case StatisticVersionStatusSnapshot: writer.String("Snapshot"); break;
+    case StatisticVersionStatusArchivalPending: writer.String("ArchivalPending"); break;
+    case StatisticVersionStatusArchived: writer.String("Archived"); break;
+
+    }
+}
+
+StatisticVersionStatus PlayFab::AdminModels::readStatisticVersionStatusFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, StatisticVersionStatus> _StatisticVersionStatusMap;
+    if (_StatisticVersionStatusMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _StatisticVersionStatusMap["Active"] = StatisticVersionStatusActive;
+        _StatisticVersionStatusMap["SnapshotPending"] = StatisticVersionStatusSnapshotPending;
+        _StatisticVersionStatusMap["Snapshot"] = StatisticVersionStatusSnapshot;
+        _StatisticVersionStatusMap["ArchivalPending"] = StatisticVersionStatusArchivalPending;
+        _StatisticVersionStatusMap["Archived"] = StatisticVersionStatusArchived;
+
+    }
+
+    auto output = _StatisticVersionStatusMap.find(obj.GetString());
+    if (output != _StatisticVersionStatusMap.end())
+        return output->second;
+
+    return StatisticVersionStatusActive; // Basically critical fail
+}
 
 PlayerStatisticVersion::~PlayerStatisticVersion()
 {
@@ -3953,6 +3988,7 @@ void PlayerStatisticVersion::writeJSON(PFStringJsonWriter& writer)
     if (ScheduledDeactivationTime.notNull()) { writer.String("ScheduledDeactivationTime"); writeDatetime(ScheduledDeactivationTime, writer); }
     if (DeactivationTime.notNull()) { writer.String("DeactivationTime"); writeDatetime(DeactivationTime, writer); }
     if (ArchivalStatus.notNull()) { writer.String("ArchivalStatus"); writeStatisticVersionArchivalStatusEnumJSON(ArchivalStatus, writer); }
+    if (Status.notNull()) { writer.String("Status"); writeStatisticVersionStatusEnumJSON(Status, writer); }
     if (ArchiveDownloadUrl.length() > 0) { writer.String("ArchiveDownloadUrl"); writer.String(ArchiveDownloadUrl.c_str()); }
 
     writer.EndObject();
@@ -3974,6 +4010,8 @@ bool PlayerStatisticVersion::readFromValue(const rapidjson::Value& obj)
     if (DeactivationTime_member != obj.MemberEnd() && !DeactivationTime_member->value.IsNull()) DeactivationTime = readDatetime(DeactivationTime_member->value);
     const Value::ConstMemberIterator ArchivalStatus_member = obj.FindMember("ArchivalStatus");
     if (ArchivalStatus_member != obj.MemberEnd() && !ArchivalStatus_member->value.IsNull()) ArchivalStatus = readStatisticVersionArchivalStatusFromValue(ArchivalStatus_member->value);
+    const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
+    if (Status_member != obj.MemberEnd() && !Status_member->value.IsNull()) Status = readStatisticVersionStatusFromValue(Status_member->value);
     const Value::ConstMemberIterator ArchiveDownloadUrl_member = obj.FindMember("ArchiveDownloadUrl");
     if (ArchiveDownloadUrl_member != obj.MemberEnd() && !ArchiveDownloadUrl_member->value.IsNull()) ArchiveDownloadUrl = ArchiveDownloadUrl_member->value.GetString();
 
