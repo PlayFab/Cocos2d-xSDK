@@ -279,7 +279,17 @@ namespace PlayFab
         PlayFabErrorUserNotFriend = 1272,
         PlayFabErrorInvalidSignature = 1273,
         PlayFabErrorInvalidPublicKey = 1274,
-        PlayFabErrorGoogleOAuthNoIdTokenIncludedInResponse = 1275
+        PlayFabErrorGoogleOAuthNoIdTokenIncludedInResponse = 1275,
+        PlayFabErrorStatisticUpdateInProgress = 1276,
+        PlayFabErrorLeaderboardVersionNotAvailable = 1277,
+        PlayFabErrorStatisticAlreadyHasPrizeTable = 1279,
+        PlayFabErrorPrizeTableHasOverlappingRanks = 1280,
+        PlayFabErrorPrizeTableHasMissingRanks = 1281,
+        PlayFabErrorPrizeTableRankStartsAtZero = 1282,
+        PlayFabErrorInvalidStatistic = 1283,
+        PlayFabErrorExpressionParseFailure = 1284,
+        PlayFabErrorExpressionInvokeFailure = 1285,
+        PlayFabErrorExpressionTooLong = 1286
     };
 
     struct PlayFabError

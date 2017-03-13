@@ -1921,7 +1921,8 @@ namespace PlayFab
 
         enum EffectType
         {
-            EffectTypeAllow
+            EffectTypeAllow,
+            EffectTypeDeny
         };
 
         void writeEffectTypeEnumJSON(EffectType enumVal, PFStringJsonWriter& writer);
@@ -3090,6 +3091,18 @@ namespace PlayFab
         void writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, PFStringJsonWriter& writer);
         StatisticVersionArchivalStatus readStatisticVersionArchivalStatusFromValue(const rapidjson::Value& obj);
 
+        enum StatisticVersionStatus
+        {
+            StatisticVersionStatusActive,
+            StatisticVersionStatusSnapshotPending,
+            StatisticVersionStatusSnapshot,
+            StatisticVersionStatusArchivalPending,
+            StatisticVersionStatusArchived
+        };
+
+        void writeStatisticVersionStatusEnumJSON(StatisticVersionStatus enumVal, PFStringJsonWriter& writer);
+        StatisticVersionStatus readStatisticVersionStatusFromValue(const rapidjson::Value& obj);
+
         struct PlayerStatisticVersion : public PlayFabBaseModel
         {
             std::string StatisticName;
@@ -3098,7 +3111,9 @@ namespace PlayFab
             time_t ActivationTime;
             OptionalTime ScheduledDeactivationTime;
             OptionalTime DeactivationTime;
+            // Deprecated - Use 'Status' instead
             Boxed<StatisticVersionArchivalStatus> ArchivalStatus;
+            Boxed<StatisticVersionStatus> Status;
             std::string ArchiveDownloadUrl;
 
             PlayerStatisticVersion() :
@@ -3110,6 +3125,7 @@ namespace PlayFab
                 ScheduledDeactivationTime(),
                 DeactivationTime(),
                 ArchivalStatus(),
+                Status(),
                 ArchiveDownloadUrl()
             {}
 
@@ -3122,6 +3138,7 @@ namespace PlayFab
                 ScheduledDeactivationTime(src.ScheduledDeactivationTime),
                 DeactivationTime(src.DeactivationTime),
                 ArchivalStatus(src.ArchivalStatus),
+                Status(src.Status),
                 ArchiveDownloadUrl(src.ArchiveDownloadUrl)
             {}
 
