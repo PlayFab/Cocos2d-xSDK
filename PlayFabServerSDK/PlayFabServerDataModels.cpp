@@ -3885,8 +3885,8 @@ void GetFriendLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
     if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
     if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
-    writer.String("Version"); writer.Int(Version);
-    writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion);
+    if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
+    if (UseSpecificVersion.notNull()) { writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion); }
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
 
     writer.EndObject();
@@ -4060,8 +4060,8 @@ void GetLeaderboardAroundUserRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
-    writer.String("Version"); writer.Int(Version);
-    writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion);
+    if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
+    if (UseSpecificVersion.notNull()) { writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion); }
 
     writer.EndObject();
 }
@@ -4675,8 +4675,8 @@ void GetLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("StartPosition"); writer.Int(StartPosition);
     writer.String("MaxResultsCount"); writer.Int(MaxResultsCount);
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
-    writer.String("Version"); writer.Int(Version);
-    writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion);
+    if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
+    if (UseSpecificVersion.notNull()) { writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion); }
 
     writer.EndObject();
 }

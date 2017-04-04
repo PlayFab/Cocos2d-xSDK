@@ -3162,8 +3162,8 @@ namespace PlayFab
             Int32 MaxResultsCount;
             OptionalBool IncludeSteamFriends;
             OptionalBool IncludeFacebookFriends;
-            Int32 Version;
-            bool UseSpecificVersion;
+            OptionalInt32 Version;
+            OptionalBool UseSpecificVersion;
             PlayerProfileViewConstraints* ProfileConstraints;
 
             GetFriendLeaderboardRequest() :
@@ -3174,8 +3174,8 @@ namespace PlayFab
                 MaxResultsCount(0),
                 IncludeSteamFriends(),
                 IncludeFacebookFriends(),
-                Version(0),
-                UseSpecificVersion(false),
+                Version(),
+                UseSpecificVersion(),
                 ProfileConstraints(NULL)
             {}
 
@@ -3327,8 +3327,8 @@ namespace PlayFab
             std::string PlayFabId;
             Int32 MaxResultsCount;
             PlayerProfileViewConstraints* ProfileConstraints;
-            Int32 Version;
-            bool UseSpecificVersion;
+            OptionalInt32 Version;
+            OptionalBool UseSpecificVersion;
 
             GetLeaderboardAroundUserRequest() :
                 PlayFabBaseModel(),
@@ -3336,8 +3336,8 @@ namespace PlayFab
                 PlayFabId(),
                 MaxResultsCount(0),
                 ProfileConstraints(NULL),
-                Version(0),
-                UseSpecificVersion(false)
+                Version(),
+                UseSpecificVersion()
             {}
 
             GetLeaderboardAroundUserRequest(const GetLeaderboardAroundUserRequest& src) :
@@ -3811,8 +3811,8 @@ namespace PlayFab
             Int32 StartPosition;
             Int32 MaxResultsCount;
             PlayerProfileViewConstraints* ProfileConstraints;
-            Int32 Version;
-            bool UseSpecificVersion;
+            OptionalInt32 Version;
+            OptionalBool UseSpecificVersion;
 
             GetLeaderboardRequest() :
                 PlayFabBaseModel(),
@@ -3820,8 +3820,8 @@ namespace PlayFab
                 StartPosition(0),
                 MaxResultsCount(0),
                 ProfileConstraints(NULL),
-                Version(0),
-                UseSpecificVersion(false)
+                Version(),
+                UseSpecificVersion()
             {}
 
             GetLeaderboardRequest(const GetLeaderboardRequest& src) :

@@ -4081,8 +4081,8 @@ void GetFriendLeaderboardAroundPlayerRequest::writeJSON(PFStringJsonWriter& writ
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
     if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
-    writer.String("Version"); writer.Int(Version);
-    writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion);
+    if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
+    if (UseSpecificVersion.notNull()) { writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion); }
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
 
     writer.EndObject();
@@ -4640,8 +4640,8 @@ void GetFriendLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
     if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
     if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
     if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
-    writer.String("Version"); writer.Int(Version);
-    writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion);
+    if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
+    if (UseSpecificVersion.notNull()) { writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion); }
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
 
     writer.EndObject();
@@ -4806,8 +4806,8 @@ void GetLeaderboardAroundPlayerRequest::writeJSON(PFStringJsonWriter& writer)
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
-    writer.String("Version"); writer.Int(Version);
-    writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion);
+    if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
+    if (UseSpecificVersion.notNull()) { writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion); }
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
 
     writer.EndObject();
@@ -4943,8 +4943,8 @@ void GetLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     writer.String("StartPosition"); writer.Int(StartPosition);
     if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
-    writer.String("Version"); writer.Int(Version);
-    writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion);
+    if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
+    if (UseSpecificVersion.notNull()) { writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion); }
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
 
     writer.EndObject();
@@ -7563,7 +7563,6 @@ void LinkGoogleAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     if (ServerAuthCode.length() > 0) { writer.String("ServerAuthCode"); writer.String(ServerAuthCode.c_str()); }
-    if (AccessToken.length() > 0) { writer.String("AccessToken"); writer.String(AccessToken.c_str()); }
     if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
 
     writer.EndObject();
@@ -7573,8 +7572,6 @@ bool LinkGoogleAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator ServerAuthCode_member = obj.FindMember("ServerAuthCode");
     if (ServerAuthCode_member != obj.MemberEnd() && !ServerAuthCode_member->value.IsNull()) ServerAuthCode = ServerAuthCode_member->value.GetString();
-    const Value::ConstMemberIterator AccessToken_member = obj.FindMember("AccessToken");
-    if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
     const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
     if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
 
@@ -8001,8 +7998,10 @@ void LoginWithCustomIDRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("TitleId"); writer.String(TitleId.c_str());
-    writer.String("CustomId"); writer.String(CustomId.c_str());
+    if (CustomId.length() > 0) { writer.String("CustomId"); writer.String(CustomId.c_str()); }
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
+    if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
+    if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
 
     writer.EndObject();
@@ -8016,6 +8015,10 @@ bool LoginWithCustomIDRequest::readFromValue(const rapidjson::Value& obj)
     if (CustomId_member != obj.MemberEnd() && !CustomId_member->value.IsNull()) CustomId = CustomId_member->value.GetString();
     const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
     if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
+    const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
+    if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
+    const Value::ConstMemberIterator EncryptedRequest_member = obj.FindMember("EncryptedRequest");
+    if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
 
@@ -8130,7 +8133,6 @@ void LoginWithGoogleAccountRequest::writeJSON(PFStringJsonWriter& writer)
 
     writer.String("TitleId"); writer.String(TitleId.c_str());
     if (ServerAuthCode.length() > 0) { writer.String("ServerAuthCode"); writer.String(ServerAuthCode.c_str()); }
-    if (AccessToken.length() > 0) { writer.String("AccessToken"); writer.String(AccessToken.c_str()); }
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
 
@@ -8143,8 +8145,6 @@ bool LoginWithGoogleAccountRequest::readFromValue(const rapidjson::Value& obj)
     if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
     const Value::ConstMemberIterator ServerAuthCode_member = obj.FindMember("ServerAuthCode");
     if (ServerAuthCode_member != obj.MemberEnd() && !ServerAuthCode_member->value.IsNull()) ServerAuthCode = ServerAuthCode_member->value.GetString();
-    const Value::ConstMemberIterator AccessToken_member = obj.FindMember("AccessToken");
-    if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
     const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
     if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");

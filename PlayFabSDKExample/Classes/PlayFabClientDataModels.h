@@ -3212,8 +3212,8 @@ namespace PlayFab
             std::string PlayFabId;
             OptionalBool IncludeSteamFriends;
             OptionalBool IncludeFacebookFriends;
-            Int32 Version;
-            bool UseSpecificVersion;
+            OptionalInt32 Version;
+            OptionalBool UseSpecificVersion;
             PlayerProfileViewConstraints* ProfileConstraints;
 
             GetFriendLeaderboardAroundPlayerRequest() :
@@ -3223,8 +3223,8 @@ namespace PlayFab
                 PlayFabId(),
                 IncludeSteamFriends(),
                 IncludeFacebookFriends(),
-                Version(0),
-                UseSpecificVersion(false),
+                Version(),
+                UseSpecificVersion(),
                 ProfileConstraints(NULL)
             {}
 
@@ -3646,8 +3646,8 @@ namespace PlayFab
             OptionalInt32 MaxResultsCount;
             OptionalBool IncludeSteamFriends;
             OptionalBool IncludeFacebookFriends;
-            Int32 Version;
-            bool UseSpecificVersion;
+            OptionalInt32 Version;
+            OptionalBool UseSpecificVersion;
             PlayerProfileViewConstraints* ProfileConstraints;
 
             GetFriendLeaderboardRequest() :
@@ -3657,8 +3657,8 @@ namespace PlayFab
                 MaxResultsCount(),
                 IncludeSteamFriends(),
                 IncludeFacebookFriends(),
-                Version(0),
-                UseSpecificVersion(false),
+                Version(),
+                UseSpecificVersion(),
                 ProfileConstraints(NULL)
             {}
 
@@ -3802,8 +3802,8 @@ namespace PlayFab
             std::string PlayFabId;
             std::string StatisticName;
             OptionalInt32 MaxResultsCount;
-            Int32 Version;
-            bool UseSpecificVersion;
+            OptionalInt32 Version;
+            OptionalBool UseSpecificVersion;
             PlayerProfileViewConstraints* ProfileConstraints;
 
             GetLeaderboardAroundPlayerRequest() :
@@ -3811,8 +3811,8 @@ namespace PlayFab
                 PlayFabId(),
                 StatisticName(),
                 MaxResultsCount(),
-                Version(0),
-                UseSpecificVersion(false),
+                Version(),
+                UseSpecificVersion(),
                 ProfileConstraints(NULL)
             {}
 
@@ -3926,8 +3926,8 @@ namespace PlayFab
             std::string StatisticName;
             Int32 StartPosition;
             OptionalInt32 MaxResultsCount;
-            Int32 Version;
-            bool UseSpecificVersion;
+            OptionalInt32 Version;
+            OptionalBool UseSpecificVersion;
             PlayerProfileViewConstraints* ProfileConstraints;
 
             GetLeaderboardRequest() :
@@ -3935,8 +3935,8 @@ namespace PlayFab
                 StatisticName(),
                 StartPosition(0),
                 MaxResultsCount(),
-                Version(0),
-                UseSpecificVersion(false),
+                Version(),
+                UseSpecificVersion(),
                 ProfileConstraints(NULL)
             {}
 
@@ -5150,6 +5150,7 @@ namespace PlayFab
             std::string TransactionId;
             std::string TransactionStatus;
             time_t PurchaseDate;
+            // Deprecated - Use '' instead
             std::list<ItemInstance> Items;
 
             GetPurchaseResult() :
@@ -6125,21 +6126,17 @@ namespace PlayFab
         struct LinkGoogleAccountRequest : public PlayFabBaseModel
         {
             std::string ServerAuthCode;
-            // Deprecated - Use 'ServerAuthCode' instead
-            std::string AccessToken;
             OptionalBool ForceLink;
 
             LinkGoogleAccountRequest() :
                 PlayFabBaseModel(),
                 ServerAuthCode(),
-                AccessToken(),
                 ForceLink()
             {}
 
             LinkGoogleAccountRequest(const LinkGoogleAccountRequest& src) :
                 PlayFabBaseModel(),
                 ServerAuthCode(src.ServerAuthCode),
-                AccessToken(src.AccessToken),
                 ForceLink(src.ForceLink)
             {}
 
@@ -6601,6 +6598,8 @@ namespace PlayFab
             std::string TitleId;
             std::string CustomId;
             OptionalBool CreateAccount;
+            std::string PlayerSecret;
+            std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             LoginWithCustomIDRequest() :
@@ -6608,6 +6607,8 @@ namespace PlayFab
                 TitleId(),
                 CustomId(),
                 CreateAccount(),
+                PlayerSecret(),
+                EncryptedRequest(),
                 InfoRequestParameters(NULL)
             {}
 
@@ -6616,6 +6617,8 @@ namespace PlayFab
                 TitleId(src.TitleId),
                 CustomId(src.CustomId),
                 CreateAccount(src.CreateAccount),
+                PlayerSecret(src.PlayerSecret),
+                EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
 
@@ -6736,8 +6739,6 @@ namespace PlayFab
         {
             std::string TitleId;
             std::string ServerAuthCode;
-            // Deprecated - Use 'ServerAuthCode' instead
-            std::string AccessToken;
             OptionalBool CreateAccount;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
@@ -6745,7 +6746,6 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 TitleId(),
                 ServerAuthCode(),
-                AccessToken(),
                 CreateAccount(),
                 InfoRequestParameters(NULL)
             {}
@@ -6754,7 +6754,6 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 TitleId(src.TitleId),
                 ServerAuthCode(src.ServerAuthCode),
-                AccessToken(src.AccessToken),
                 CreateAccount(src.CreateAccount),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
