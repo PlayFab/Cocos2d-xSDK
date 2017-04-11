@@ -6555,30 +6555,36 @@ namespace PlayFab
 
         struct LoginWithAndroidDeviceIDRequest : public PlayFabBaseModel
         {
-            std::string TitleId;
             std::string AndroidDeviceId;
             std::string OS;
             std::string AndroidDevice;
             OptionalBool CreateAccount;
+            std::string TitleId;
+            std::string EncryptedRequest;
+            std::string PlayerSecret;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             LoginWithAndroidDeviceIDRequest() :
                 PlayFabBaseModel(),
-                TitleId(),
                 AndroidDeviceId(),
                 OS(),
                 AndroidDevice(),
                 CreateAccount(),
+                TitleId(),
+                EncryptedRequest(),
+                PlayerSecret(),
                 InfoRequestParameters(NULL)
             {}
 
             LoginWithAndroidDeviceIDRequest(const LoginWithAndroidDeviceIDRequest& src) :
                 PlayFabBaseModel(),
-                TitleId(src.TitleId),
                 AndroidDeviceId(src.AndroidDeviceId),
                 OS(src.OS),
                 AndroidDevice(src.AndroidDevice),
                 CreateAccount(src.CreateAccount),
+                TitleId(src.TitleId),
+                EncryptedRequest(src.EncryptedRequest),
+                PlayerSecret(src.PlayerSecret),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
 
@@ -6595,30 +6601,30 @@ namespace PlayFab
 
         struct LoginWithCustomIDRequest : public PlayFabBaseModel
         {
-            std::string TitleId;
             std::string CustomId;
             OptionalBool CreateAccount;
-            std::string PlayerSecret;
+            std::string TitleId;
             std::string EncryptedRequest;
+            std::string PlayerSecret;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             LoginWithCustomIDRequest() :
                 PlayFabBaseModel(),
-                TitleId(),
                 CustomId(),
                 CreateAccount(),
-                PlayerSecret(),
+                TitleId(),
                 EncryptedRequest(),
+                PlayerSecret(),
                 InfoRequestParameters(NULL)
             {}
 
             LoginWithCustomIDRequest(const LoginWithCustomIDRequest& src) :
                 PlayFabBaseModel(),
-                TitleId(src.TitleId),
                 CustomId(src.CustomId),
                 CreateAccount(src.CreateAccount),
-                PlayerSecret(src.PlayerSecret),
+                TitleId(src.TitleId),
                 EncryptedRequest(src.EncryptedRequest),
+                PlayerSecret(src.PlayerSecret),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
 
@@ -6669,24 +6675,30 @@ namespace PlayFab
 
         struct LoginWithFacebookRequest : public PlayFabBaseModel
         {
-            std::string TitleId;
             std::string AccessToken;
             OptionalBool CreateAccount;
+            std::string TitleId;
+            std::string EncryptedRequest;
+            std::string PlayerSecret;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             LoginWithFacebookRequest() :
                 PlayFabBaseModel(),
-                TitleId(),
                 AccessToken(),
                 CreateAccount(),
+                TitleId(),
+                EncryptedRequest(),
+                PlayerSecret(),
                 InfoRequestParameters(NULL)
             {}
 
             LoginWithFacebookRequest(const LoginWithFacebookRequest& src) :
                 PlayFabBaseModel(),
-                TitleId(src.TitleId),
                 AccessToken(src.AccessToken),
                 CreateAccount(src.CreateAccount),
+                TitleId(src.TitleId),
+                EncryptedRequest(src.EncryptedRequest),
+                PlayerSecret(src.PlayerSecret),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
 
@@ -6703,24 +6715,30 @@ namespace PlayFab
 
         struct LoginWithGameCenterRequest : public PlayFabBaseModel
         {
-            std::string TitleId;
             std::string PlayerId;
             OptionalBool CreateAccount;
+            std::string TitleId;
+            std::string EncryptedRequest;
+            std::string PlayerSecret;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             LoginWithGameCenterRequest() :
                 PlayFabBaseModel(),
-                TitleId(),
                 PlayerId(),
                 CreateAccount(),
+                TitleId(),
+                EncryptedRequest(),
+                PlayerSecret(),
                 InfoRequestParameters(NULL)
             {}
 
             LoginWithGameCenterRequest(const LoginWithGameCenterRequest& src) :
                 PlayFabBaseModel(),
-                TitleId(src.TitleId),
                 PlayerId(src.PlayerId),
                 CreateAccount(src.CreateAccount),
+                TitleId(src.TitleId),
+                EncryptedRequest(src.EncryptedRequest),
+                PlayerSecret(src.PlayerSecret),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
 
@@ -6737,24 +6755,30 @@ namespace PlayFab
 
         struct LoginWithGoogleAccountRequest : public PlayFabBaseModel
         {
-            std::string TitleId;
             std::string ServerAuthCode;
             OptionalBool CreateAccount;
+            std::string TitleId;
+            std::string EncryptedRequest;
+            std::string PlayerSecret;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             LoginWithGoogleAccountRequest() :
                 PlayFabBaseModel(),
-                TitleId(),
                 ServerAuthCode(),
                 CreateAccount(),
+                TitleId(),
+                EncryptedRequest(),
+                PlayerSecret(),
                 InfoRequestParameters(NULL)
             {}
 
             LoginWithGoogleAccountRequest(const LoginWithGoogleAccountRequest& src) :
                 PlayFabBaseModel(),
-                TitleId(src.TitleId),
                 ServerAuthCode(src.ServerAuthCode),
                 CreateAccount(src.CreateAccount),
+                TitleId(src.TitleId),
+                EncryptedRequest(src.EncryptedRequest),
+                PlayerSecret(src.PlayerSecret),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
 
@@ -6771,31 +6795,37 @@ namespace PlayFab
 
         struct LoginWithIOSDeviceIDRequest : public PlayFabBaseModel
         {
-            std::string TitleId;
             std::string DeviceId;
             std::string OS;
             std::string DeviceModel;
-            GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
             OptionalBool CreateAccount;
+            std::string TitleId;
+            std::string EncryptedRequest;
+            std::string PlayerSecret;
+            GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             LoginWithIOSDeviceIDRequest() :
                 PlayFabBaseModel(),
-                TitleId(),
                 DeviceId(),
                 OS(),
                 DeviceModel(),
-                InfoRequestParameters(NULL),
-                CreateAccount()
+                CreateAccount(),
+                TitleId(),
+                EncryptedRequest(),
+                PlayerSecret(),
+                InfoRequestParameters(NULL)
             {}
 
             LoginWithIOSDeviceIDRequest(const LoginWithIOSDeviceIDRequest& src) :
                 PlayFabBaseModel(),
-                TitleId(src.TitleId),
                 DeviceId(src.DeviceId),
                 OS(src.OS),
                 DeviceModel(src.DeviceModel),
-                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
-                CreateAccount(src.CreateAccount)
+                CreateAccount(src.CreateAccount),
+                TitleId(src.TitleId),
+                EncryptedRequest(src.EncryptedRequest),
+                PlayerSecret(src.PlayerSecret),
+                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
 
             LoginWithIOSDeviceIDRequest(const rapidjson::Value& obj) : LoginWithIOSDeviceIDRequest()
@@ -6811,28 +6841,34 @@ namespace PlayFab
 
         struct LoginWithKongregateRequest : public PlayFabBaseModel
         {
-            std::string TitleId;
             std::string KongregateId;
             std::string AuthTicket;
             OptionalBool CreateAccount;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            std::string TitleId;
+            std::string EncryptedRequest;
+            std::string PlayerSecret;
 
             LoginWithKongregateRequest() :
                 PlayFabBaseModel(),
-                TitleId(),
                 KongregateId(),
                 AuthTicket(),
                 CreateAccount(),
-                InfoRequestParameters(NULL)
+                InfoRequestParameters(NULL),
+                TitleId(),
+                EncryptedRequest(),
+                PlayerSecret()
             {}
 
             LoginWithKongregateRequest(const LoginWithKongregateRequest& src) :
                 PlayFabBaseModel(),
-                TitleId(src.TitleId),
                 KongregateId(src.KongregateId),
                 AuthTicket(src.AuthTicket),
                 CreateAccount(src.CreateAccount),
-                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
+                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                TitleId(src.TitleId),
+                EncryptedRequest(src.EncryptedRequest),
+                PlayerSecret(src.PlayerSecret)
             {}
 
             LoginWithKongregateRequest(const rapidjson::Value& obj) : LoginWithKongregateRequest()
@@ -6882,24 +6918,30 @@ namespace PlayFab
 
         struct LoginWithSteamRequest : public PlayFabBaseModel
         {
-            std::string TitleId;
             std::string SteamTicket;
             OptionalBool CreateAccount;
+            std::string TitleId;
+            std::string EncryptedRequest;
+            std::string PlayerSecret;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             LoginWithSteamRequest() :
                 PlayFabBaseModel(),
-                TitleId(),
                 SteamTicket(),
                 CreateAccount(),
+                TitleId(),
+                EncryptedRequest(),
+                PlayerSecret(),
                 InfoRequestParameters(NULL)
             {}
 
             LoginWithSteamRequest(const LoginWithSteamRequest& src) :
                 PlayFabBaseModel(),
-                TitleId(src.TitleId),
                 SteamTicket(src.SteamTicket),
                 CreateAccount(src.CreateAccount),
+                TitleId(src.TitleId),
+                EncryptedRequest(src.EncryptedRequest),
+                PlayerSecret(src.PlayerSecret),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
 
@@ -6916,24 +6958,30 @@ namespace PlayFab
 
         struct LoginWithTwitchRequest : public PlayFabBaseModel
         {
-            std::string TitleId;
             std::string AccessToken;
             OptionalBool CreateAccount;
+            std::string TitleId;
+            std::string EncryptedRequest;
+            std::string PlayerSecret;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             LoginWithTwitchRequest() :
                 PlayFabBaseModel(),
-                TitleId(),
                 AccessToken(),
                 CreateAccount(),
+                TitleId(),
+                EncryptedRequest(),
+                PlayerSecret(),
                 InfoRequestParameters(NULL)
             {}
 
             LoginWithTwitchRequest(const LoginWithTwitchRequest& src) :
                 PlayFabBaseModel(),
-                TitleId(src.TitleId),
                 AccessToken(src.AccessToken),
                 CreateAccount(src.CreateAccount),
+                TitleId(src.TitleId),
+                EncryptedRequest(src.EncryptedRequest),
+                PlayerSecret(src.PlayerSecret),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
 
@@ -7524,31 +7572,40 @@ namespace PlayFab
 
         struct RegisterPlayFabUserRequest : public PlayFabBaseModel
         {
-            std::string TitleId;
             std::string Username;
             std::string Email;
             std::string Password;
             OptionalBool RequireBothUsernameAndEmail;
             std::string DisplayName;
+            std::string TitleId;
+            std::string EncryptedRequest;
+            std::string PlayerSecret;
+            GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             RegisterPlayFabUserRequest() :
                 PlayFabBaseModel(),
-                TitleId(),
                 Username(),
                 Email(),
                 Password(),
                 RequireBothUsernameAndEmail(),
-                DisplayName()
+                DisplayName(),
+                TitleId(),
+                EncryptedRequest(),
+                PlayerSecret(),
+                InfoRequestParameters(NULL)
             {}
 
             RegisterPlayFabUserRequest(const RegisterPlayFabUserRequest& src) :
                 PlayFabBaseModel(),
-                TitleId(src.TitleId),
                 Username(src.Username),
                 Email(src.Email),
                 Password(src.Password),
                 RequireBothUsernameAndEmail(src.RequireBothUsernameAndEmail),
-                DisplayName(src.DisplayName)
+                DisplayName(src.DisplayName),
+                TitleId(src.TitleId),
+                EncryptedRequest(src.EncryptedRequest),
+                PlayerSecret(src.PlayerSecret),
+                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
 
             RegisterPlayFabUserRequest(const rapidjson::Value& obj) : RegisterPlayFabUserRequest()
@@ -7598,27 +7655,33 @@ namespace PlayFab
 
         struct RegisterWithWindowsHelloRequest : public PlayFabBaseModel
         {
-            std::string TitleId;
             std::string UserName;
             std::string PublicKey;
             std::string DeviceName;
+            std::string TitleId;
+            std::string EncryptedRequest;
+            std::string PlayerSecret;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
 
             RegisterWithWindowsHelloRequest() :
                 PlayFabBaseModel(),
-                TitleId(),
                 UserName(),
                 PublicKey(),
                 DeviceName(),
+                TitleId(),
+                EncryptedRequest(),
+                PlayerSecret(),
                 InfoRequestParameters(NULL)
             {}
 
             RegisterWithWindowsHelloRequest(const RegisterWithWindowsHelloRequest& src) :
                 PlayFabBaseModel(),
-                TitleId(src.TitleId),
                 UserName(src.UserName),
                 PublicKey(src.PublicKey),
                 DeviceName(src.DeviceName),
+                TitleId(src.TitleId),
+                EncryptedRequest(src.EncryptedRequest),
+                PlayerSecret(src.PlayerSecret),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL)
             {}
 

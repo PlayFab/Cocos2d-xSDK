@@ -299,7 +299,8 @@ namespace PlayFab
         PlayFabErrorSecretKeyNotFound = 1293,
         PlayFabErrorPlayerSecretAlreadyConfigured = 1294,
         PlayFabErrorAPIRequestsDisabledForTitle = 1295,
-        PlayFabErrorInvalidSharedSecretKey = 1296
+        PlayFabErrorInvalidSharedSecretKey = 1296,
+        PlayFabErrorPrizeTableHasNoRanks = 1297
     };
 
     struct PlayFabError

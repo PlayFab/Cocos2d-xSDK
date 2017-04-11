@@ -510,6 +510,41 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum Conditionals
+        {
+            ConditionalsAny,
+            ConditionalsTrue,
+            ConditionalsFalse
+        };
+
+        void writeConditionalsEnumJSON(Conditionals enumVal, PFStringJsonWriter& writer);
+        Conditionals readConditionalsFromValue(const rapidjson::Value& obj);
+
+        struct ApiCondition : public PlayFabBaseModel
+        {
+            Boxed<Conditionals> HasSignatureOrEncryption;
+
+            ApiCondition() :
+                PlayFabBaseModel(),
+                HasSignatureOrEncryption()
+            {}
+
+            ApiCondition(const ApiCondition& src) :
+                PlayFabBaseModel(),
+                HasSignatureOrEncryption(src.HasSignatureOrEncryption)
+            {}
+
+            ApiCondition(const rapidjson::Value& obj) : ApiCondition()
+            {
+                readFromValue(obj);
+            }
+
+            ~ApiCondition();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct BanInfo : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -3266,6 +3301,7 @@ namespace PlayFab
             EffectType Effect;
             std::string Principal;
             std::string Comment;
+            ApiCondition* ApiConditions;
 
             PermissionStatement() :
                 PlayFabBaseModel(),
@@ -3273,7 +3309,8 @@ namespace PlayFab
                 Action(),
                 Effect(),
                 Principal(),
-                Comment()
+                Comment(),
+                ApiConditions(NULL)
             {}
 
             PermissionStatement(const PermissionStatement& src) :
@@ -3282,7 +3319,8 @@ namespace PlayFab
                 Action(src.Action),
                 Effect(src.Effect),
                 Principal(src.Principal),
-                Comment(src.Comment)
+                Comment(src.Comment),
+                ApiConditions(src.ApiConditions ? new ApiCondition(*src.ApiConditions) : NULL)
             {}
 
             PermissionStatement(const rapidjson::Value& obj) : PermissionStatement()
