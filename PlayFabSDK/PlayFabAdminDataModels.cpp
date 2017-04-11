@@ -567,6 +567,57 @@ bool AddVirtualCurrencyTypesRequest::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::AdminModels::writeConditionalsEnumJSON(Conditionals enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case ConditionalsAny: writer.String("Any"); break;
+    case ConditionalsTrue: writer.String("True"); break;
+    case ConditionalsFalse: writer.String("False"); break;
+
+    }
+}
+
+Conditionals PlayFab::AdminModels::readConditionalsFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, Conditionals> _ConditionalsMap;
+    if (_ConditionalsMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _ConditionalsMap["Any"] = ConditionalsAny;
+        _ConditionalsMap["True"] = ConditionalsTrue;
+        _ConditionalsMap["False"] = ConditionalsFalse;
+
+    }
+
+    auto output = _ConditionalsMap.find(obj.GetString());
+    if (output != _ConditionalsMap.end())
+        return output->second;
+
+    return ConditionalsAny; // Basically critical fail
+}
+
+ApiCondition::~ApiCondition()
+{
+
+}
+
+void ApiCondition::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (HasSignatureOrEncryption.notNull()) { writer.String("HasSignatureOrEncryption"); writeConditionalsEnumJSON(HasSignatureOrEncryption, writer); }
+
+    writer.EndObject();
+}
+
+bool ApiCondition::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator HasSignatureOrEncryption_member = obj.FindMember("HasSignatureOrEncryption");
+    if (HasSignatureOrEncryption_member != obj.MemberEnd() && !HasSignatureOrEncryption_member->value.IsNull()) HasSignatureOrEncryption = readConditionalsFromValue(HasSignatureOrEncryption_member->value);
+
+    return true;
+}
 
 BanInfo::~BanInfo()
 {
@@ -4137,6 +4188,7 @@ bool GetPolicyRequest::readFromValue(const rapidjson::Value& obj)
 
 PermissionStatement::~PermissionStatement()
 {
+    if (ApiConditions != NULL) delete ApiConditions;
 
 }
 
@@ -4149,6 +4201,7 @@ void PermissionStatement::writeJSON(PFStringJsonWriter& writer)
     writer.String("Effect"); writeEffectTypeEnumJSON(Effect, writer);
     writer.String("Principal"); writer.String(Principal.c_str());
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
+    if (ApiConditions != NULL) { writer.String("ApiConditions"); ApiConditions->writeJSON(writer); }
 
     writer.EndObject();
 }
@@ -4165,6 +4218,8 @@ bool PermissionStatement::readFromValue(const rapidjson::Value& obj)
     if (Principal_member != obj.MemberEnd() && !Principal_member->value.IsNull()) Principal = Principal_member->value.GetString();
     const Value::ConstMemberIterator Comment_member = obj.FindMember("Comment");
     if (Comment_member != obj.MemberEnd() && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
+    const Value::ConstMemberIterator ApiConditions_member = obj.FindMember("ApiConditions");
+    if (ApiConditions_member != obj.MemberEnd() && !ApiConditions_member->value.IsNull()) ApiConditions = new ApiCondition(ApiConditions_member->value);
 
     return true;
 }

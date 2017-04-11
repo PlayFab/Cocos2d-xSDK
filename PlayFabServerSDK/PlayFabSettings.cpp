@@ -5,9 +5,9 @@ namespace PlayFab
 {
     IHttpRequester* PlayFabSettings::httpRequester = new HttpRequesterCURL();
 
-    const std::string PlayFabSettings::sdkVersion = "0.21.170403";
+    const std::string PlayFabSettings::sdkVersion = "0.22.170411";
     const std::string PlayFabSettings::buildIdentifier = "jbuild_cocos2d-xsdk_0";
-    const std::string PlayFabSettings::versionString = "Cocos2d-xSDK-0.21.170403";
+    const std::string PlayFabSettings::versionString = "Cocos2d-xSDK-0.22.170411";
 
     bool PlayFabSettings::useDevelopmentEnvironment = false;
     std::string PlayFabSettings::serverURL;
