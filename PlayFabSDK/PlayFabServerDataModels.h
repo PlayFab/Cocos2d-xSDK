@@ -2333,7 +2333,9 @@ namespace PlayFab
             std::string FunctionName;
             Int32 Revision;
             MultitypeVar FunctionResult;
+            OptionalBool FunctionResultTooLarge;
             std::list<LogStatement> Logs;
+            OptionalBool LogsTooLarge;
             double ExecutionTimeSeconds;
             double ProcessorTimeSeconds;
             Uint32 MemoryConsumedBytes;
@@ -2346,7 +2348,9 @@ namespace PlayFab
                 FunctionName(),
                 Revision(0),
                 FunctionResult(),
+                FunctionResultTooLarge(),
                 Logs(),
+                LogsTooLarge(),
                 ExecutionTimeSeconds(0),
                 ProcessorTimeSeconds(0),
                 MemoryConsumedBytes(0),
@@ -2360,7 +2364,9 @@ namespace PlayFab
                 FunctionName(src.FunctionName),
                 Revision(src.Revision),
                 FunctionResult(src.FunctionResult),
+                FunctionResultTooLarge(src.FunctionResultTooLarge),
                 Logs(src.Logs),
+                LogsTooLarge(src.LogsTooLarge),
                 ExecutionTimeSeconds(src.ExecutionTimeSeconds),
                 ProcessorTimeSeconds(src.ProcessorTimeSeconds),
                 MemoryConsumedBytes(src.MemoryConsumedBytes),

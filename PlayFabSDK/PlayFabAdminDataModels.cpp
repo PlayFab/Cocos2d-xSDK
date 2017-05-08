@@ -1168,6 +1168,7 @@ void ExecuteCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
     if (FunctionName.length() > 0) { writer.String("FunctionName"); writer.String(FunctionName.c_str()); }
     writer.String("Revision"); writer.Int(Revision);
     if (FunctionResult.notNull()) { writer.String("FunctionResult"); FunctionResult.writeJSON(writer); }
+    if (FunctionResultTooLarge.notNull()) { writer.String("FunctionResultTooLarge"); writer.Bool(FunctionResultTooLarge); }
     if (!Logs.empty()) {
     writer.String("Logs");
     writer.StartArray();
@@ -1176,6 +1177,7 @@ void ExecuteCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
+    if (LogsTooLarge.notNull()) { writer.String("LogsTooLarge"); writer.Bool(LogsTooLarge); }
     writer.String("ExecutionTimeSeconds"); writer.Double(ExecutionTimeSeconds);
     writer.String("ProcessorTimeSeconds"); writer.Double(ProcessorTimeSeconds);
     writer.String("MemoryConsumedBytes"); writer.Uint(MemoryConsumedBytes);
@@ -1194,6 +1196,8 @@ bool ExecuteCloudScriptResult::readFromValue(const rapidjson::Value& obj)
     if (Revision_member != obj.MemberEnd() && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
     const Value::ConstMemberIterator FunctionResult_member = obj.FindMember("FunctionResult");
     if (FunctionResult_member != obj.MemberEnd() && !FunctionResult_member->value.IsNull()) FunctionResult = MultitypeVar(FunctionResult_member->value);
+    const Value::ConstMemberIterator FunctionResultTooLarge_member = obj.FindMember("FunctionResultTooLarge");
+    if (FunctionResultTooLarge_member != obj.MemberEnd() && !FunctionResultTooLarge_member->value.IsNull()) FunctionResultTooLarge = FunctionResultTooLarge_member->value.GetBool();
     const Value::ConstMemberIterator Logs_member = obj.FindMember("Logs");
     if (Logs_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Logs_member->value;
@@ -1201,6 +1205,8 @@ bool ExecuteCloudScriptResult::readFromValue(const rapidjson::Value& obj)
             Logs.push_back(LogStatement(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator LogsTooLarge_member = obj.FindMember("LogsTooLarge");
+    if (LogsTooLarge_member != obj.MemberEnd() && !LogsTooLarge_member->value.IsNull()) LogsTooLarge = LogsTooLarge_member->value.GetBool();
     const Value::ConstMemberIterator ExecutionTimeSeconds_member = obj.FindMember("ExecutionTimeSeconds");
     if (ExecutionTimeSeconds_member != obj.MemberEnd() && !ExecutionTimeSeconds_member->value.IsNull()) ExecutionTimeSeconds = ExecutionTimeSeconds_member->value.GetDouble();
     const Value::ConstMemberIterator ProcessorTimeSeconds_member = obj.FindMember("ProcessorTimeSeconds");
@@ -3956,39 +3962,6 @@ bool GetPlayerStatisticVersionsRequest::readFromValue(const rapidjson::Value& ob
 
     return true;
 }
-void PlayFab::AdminModels::writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, PFStringJsonWriter& writer)
-{
-    switch (enumVal)
-    {
-    case StatisticVersionArchivalStatusNotScheduled: writer.String("NotScheduled"); break;
-    case StatisticVersionArchivalStatusScheduled: writer.String("Scheduled"); break;
-    case StatisticVersionArchivalStatusQueued: writer.String("Queued"); break;
-    case StatisticVersionArchivalStatusInProgress: writer.String("InProgress"); break;
-    case StatisticVersionArchivalStatusComplete: writer.String("Complete"); break;
-
-    }
-}
-
-StatisticVersionArchivalStatus PlayFab::AdminModels::readStatisticVersionArchivalStatusFromValue(const rapidjson::Value& obj)
-{
-    static std::map<std::string, StatisticVersionArchivalStatus> _StatisticVersionArchivalStatusMap;
-    if (_StatisticVersionArchivalStatusMap.size() == 0)
-    {
-        // Auto-generate the map on the first use
-        _StatisticVersionArchivalStatusMap["NotScheduled"] = StatisticVersionArchivalStatusNotScheduled;
-        _StatisticVersionArchivalStatusMap["Scheduled"] = StatisticVersionArchivalStatusScheduled;
-        _StatisticVersionArchivalStatusMap["Queued"] = StatisticVersionArchivalStatusQueued;
-        _StatisticVersionArchivalStatusMap["InProgress"] = StatisticVersionArchivalStatusInProgress;
-        _StatisticVersionArchivalStatusMap["Complete"] = StatisticVersionArchivalStatusComplete;
-
-    }
-
-    auto output = _StatisticVersionArchivalStatusMap.find(obj.GetString());
-    if (output != _StatisticVersionArchivalStatusMap.end())
-        return output->second;
-
-    return StatisticVersionArchivalStatusNotScheduled; // Basically critical fail
-}
 void PlayFab::AdminModels::writeStatisticVersionStatusEnumJSON(StatisticVersionStatus enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -4038,7 +4011,6 @@ void PlayerStatisticVersion::writeJSON(PFStringJsonWriter& writer)
     writer.String("ActivationTime"); writeDatetime(ActivationTime, writer);
     if (ScheduledDeactivationTime.notNull()) { writer.String("ScheduledDeactivationTime"); writeDatetime(ScheduledDeactivationTime, writer); }
     if (DeactivationTime.notNull()) { writer.String("DeactivationTime"); writeDatetime(DeactivationTime, writer); }
-    if (ArchivalStatus.notNull()) { writer.String("ArchivalStatus"); writeStatisticVersionArchivalStatusEnumJSON(ArchivalStatus, writer); }
     if (Status.notNull()) { writer.String("Status"); writeStatisticVersionStatusEnumJSON(Status, writer); }
     if (ArchiveDownloadUrl.length() > 0) { writer.String("ArchiveDownloadUrl"); writer.String(ArchiveDownloadUrl.c_str()); }
 
@@ -4059,8 +4031,6 @@ bool PlayerStatisticVersion::readFromValue(const rapidjson::Value& obj)
     if (ScheduledDeactivationTime_member != obj.MemberEnd() && !ScheduledDeactivationTime_member->value.IsNull()) ScheduledDeactivationTime = readDatetime(ScheduledDeactivationTime_member->value);
     const Value::ConstMemberIterator DeactivationTime_member = obj.FindMember("DeactivationTime");
     if (DeactivationTime_member != obj.MemberEnd() && !DeactivationTime_member->value.IsNull()) DeactivationTime = readDatetime(DeactivationTime_member->value);
-    const Value::ConstMemberIterator ArchivalStatus_member = obj.FindMember("ArchivalStatus");
-    if (ArchivalStatus_member != obj.MemberEnd() && !ArchivalStatus_member->value.IsNull()) ArchivalStatus = readStatisticVersionArchivalStatusFromValue(ArchivalStatus_member->value);
     const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
     if (Status_member != obj.MemberEnd() && !Status_member->value.IsNull()) Status = readStatisticVersionStatusFromValue(Status_member->value);
     const Value::ConstMemberIterator ArchiveDownloadUrl_member = obj.FindMember("ArchiveDownloadUrl");
@@ -7520,6 +7490,39 @@ bool SetupPushNotificationResult::readFromValue(const rapidjson::Value& obj)
     if (ARN_member != obj.MemberEnd() && !ARN_member->value.IsNull()) ARN = ARN_member->value.GetString();
 
     return true;
+}
+void PlayFab::AdminModels::writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case StatisticVersionArchivalStatusNotScheduled: writer.String("NotScheduled"); break;
+    case StatisticVersionArchivalStatusScheduled: writer.String("Scheduled"); break;
+    case StatisticVersionArchivalStatusQueued: writer.String("Queued"); break;
+    case StatisticVersionArchivalStatusInProgress: writer.String("InProgress"); break;
+    case StatisticVersionArchivalStatusComplete: writer.String("Complete"); break;
+
+    }
+}
+
+StatisticVersionArchivalStatus PlayFab::AdminModels::readStatisticVersionArchivalStatusFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, StatisticVersionArchivalStatus> _StatisticVersionArchivalStatusMap;
+    if (_StatisticVersionArchivalStatusMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _StatisticVersionArchivalStatusMap["NotScheduled"] = StatisticVersionArchivalStatusNotScheduled;
+        _StatisticVersionArchivalStatusMap["Scheduled"] = StatisticVersionArchivalStatusScheduled;
+        _StatisticVersionArchivalStatusMap["Queued"] = StatisticVersionArchivalStatusQueued;
+        _StatisticVersionArchivalStatusMap["InProgress"] = StatisticVersionArchivalStatusInProgress;
+        _StatisticVersionArchivalStatusMap["Complete"] = StatisticVersionArchivalStatusComplete;
+
+    }
+
+    auto output = _StatisticVersionArchivalStatusMap.find(obj.GetString());
+    if (output != _StatisticVersionArchivalStatusMap.end())
+        return output->second;
+
+    return StatisticVersionArchivalStatusNotScheduled; // Basically critical fail
 }
 
 SubtractUserVirtualCurrencyRequest::~SubtractUserVirtualCurrencyRequest()

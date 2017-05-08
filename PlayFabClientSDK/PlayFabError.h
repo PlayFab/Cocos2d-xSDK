@@ -300,7 +300,13 @@ namespace PlayFab
         PlayFabErrorPlayerSecretAlreadyConfigured = 1294,
         PlayFabErrorAPIRequestsDisabledForTitle = 1295,
         PlayFabErrorInvalidSharedSecretKey = 1296,
-        PlayFabErrorPrizeTableHasNoRanks = 1297
+        PlayFabErrorPrizeTableHasNoRanks = 1297,
+        PlayFabErrorProfileDoesNotExist = 1298,
+        PlayFabErrorContentS3OriginBucketNotConfigured = 1299,
+        PlayFabErrorInvalidEnvironmentForReceipt = 1300,
+        PlayFabErrorEncryptedRequestNotAllowed = 1301,
+        PlayFabErrorSignedRequestNotAllowed = 1302,
+        PlayFabErrorRequestViewConstraintParamsNotAllowed = 1303
     };
 
     struct PlayFabError

@@ -995,7 +995,9 @@ namespace PlayFab
             std::string FunctionName;
             Int32 Revision;
             MultitypeVar FunctionResult;
+            OptionalBool FunctionResultTooLarge;
             std::list<LogStatement> Logs;
+            OptionalBool LogsTooLarge;
             double ExecutionTimeSeconds;
             double ProcessorTimeSeconds;
             Uint32 MemoryConsumedBytes;
@@ -1008,7 +1010,9 @@ namespace PlayFab
                 FunctionName(),
                 Revision(0),
                 FunctionResult(),
+                FunctionResultTooLarge(),
                 Logs(),
+                LogsTooLarge(),
                 ExecutionTimeSeconds(0),
                 ProcessorTimeSeconds(0),
                 MemoryConsumedBytes(0),
@@ -1022,7 +1026,9 @@ namespace PlayFab
                 FunctionName(src.FunctionName),
                 Revision(src.Revision),
                 FunctionResult(src.FunctionResult),
+                FunctionResultTooLarge(src.FunctionResultTooLarge),
                 Logs(src.Logs),
+                LogsTooLarge(src.LogsTooLarge),
                 ExecutionTimeSeconds(src.ExecutionTimeSeconds),
                 ProcessorTimeSeconds(src.ProcessorTimeSeconds),
                 MemoryConsumedBytes(src.MemoryConsumedBytes),
@@ -3114,18 +3120,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        enum StatisticVersionArchivalStatus
-        {
-            StatisticVersionArchivalStatusNotScheduled,
-            StatisticVersionArchivalStatusScheduled,
-            StatisticVersionArchivalStatusQueued,
-            StatisticVersionArchivalStatusInProgress,
-            StatisticVersionArchivalStatusComplete
-        };
-
-        void writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, PFStringJsonWriter& writer);
-        StatisticVersionArchivalStatus readStatisticVersionArchivalStatusFromValue(const rapidjson::Value& obj);
-
         enum StatisticVersionStatus
         {
             StatisticVersionStatusActive,
@@ -3146,8 +3140,6 @@ namespace PlayFab
             time_t ActivationTime;
             OptionalTime ScheduledDeactivationTime;
             OptionalTime DeactivationTime;
-            // Deprecated - Use 'Status' instead
-            Boxed<StatisticVersionArchivalStatus> ArchivalStatus;
             Boxed<StatisticVersionStatus> Status;
             std::string ArchiveDownloadUrl;
 
@@ -3159,7 +3151,6 @@ namespace PlayFab
                 ActivationTime(0),
                 ScheduledDeactivationTime(),
                 DeactivationTime(),
-                ArchivalStatus(),
                 Status(),
                 ArchiveDownloadUrl()
             {}
@@ -3172,7 +3163,6 @@ namespace PlayFab
                 ActivationTime(src.ActivationTime),
                 ScheduledDeactivationTime(src.ScheduledDeactivationTime),
                 DeactivationTime(src.DeactivationTime),
-                ArchivalStatus(src.ArchivalStatus),
                 Status(src.Status),
                 ArchiveDownloadUrl(src.ArchiveDownloadUrl)
             {}
@@ -6319,6 +6309,18 @@ namespace PlayFab
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
         };
+
+        enum StatisticVersionArchivalStatus
+        {
+            StatisticVersionArchivalStatusNotScheduled,
+            StatisticVersionArchivalStatusScheduled,
+            StatisticVersionArchivalStatusQueued,
+            StatisticVersionArchivalStatusInProgress,
+            StatisticVersionArchivalStatusComplete
+        };
+
+        void writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, PFStringJsonWriter& writer);
+        StatisticVersionArchivalStatus readStatisticVersionArchivalStatusFromValue(const rapidjson::Value& obj);
 
         struct SubtractUserVirtualCurrencyRequest : public PlayFabBaseModel
         {
