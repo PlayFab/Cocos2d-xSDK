@@ -2952,6 +2952,7 @@ void ExecuteCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
     if (FunctionName.length() > 0) { writer.String("FunctionName"); writer.String(FunctionName.c_str()); }
     writer.String("Revision"); writer.Int(Revision);
     if (FunctionResult.notNull()) { writer.String("FunctionResult"); FunctionResult.writeJSON(writer); }
+    if (FunctionResultTooLarge.notNull()) { writer.String("FunctionResultTooLarge"); writer.Bool(FunctionResultTooLarge); }
     if (!Logs.empty()) {
     writer.String("Logs");
     writer.StartArray();
@@ -2960,6 +2961,7 @@ void ExecuteCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
+    if (LogsTooLarge.notNull()) { writer.String("LogsTooLarge"); writer.Bool(LogsTooLarge); }
     writer.String("ExecutionTimeSeconds"); writer.Double(ExecutionTimeSeconds);
     writer.String("ProcessorTimeSeconds"); writer.Double(ProcessorTimeSeconds);
     writer.String("MemoryConsumedBytes"); writer.Uint(MemoryConsumedBytes);
@@ -2978,6 +2980,8 @@ bool ExecuteCloudScriptResult::readFromValue(const rapidjson::Value& obj)
     if (Revision_member != obj.MemberEnd() && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
     const Value::ConstMemberIterator FunctionResult_member = obj.FindMember("FunctionResult");
     if (FunctionResult_member != obj.MemberEnd() && !FunctionResult_member->value.IsNull()) FunctionResult = MultitypeVar(FunctionResult_member->value);
+    const Value::ConstMemberIterator FunctionResultTooLarge_member = obj.FindMember("FunctionResultTooLarge");
+    if (FunctionResultTooLarge_member != obj.MemberEnd() && !FunctionResultTooLarge_member->value.IsNull()) FunctionResultTooLarge = FunctionResultTooLarge_member->value.GetBool();
     const Value::ConstMemberIterator Logs_member = obj.FindMember("Logs");
     if (Logs_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Logs_member->value;
@@ -2985,6 +2989,8 @@ bool ExecuteCloudScriptResult::readFromValue(const rapidjson::Value& obj)
             Logs.push_back(LogStatement(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator LogsTooLarge_member = obj.FindMember("LogsTooLarge");
+    if (LogsTooLarge_member != obj.MemberEnd() && !LogsTooLarge_member->value.IsNull()) LogsTooLarge = LogsTooLarge_member->value.GetBool();
     const Value::ConstMemberIterator ExecutionTimeSeconds_member = obj.FindMember("ExecutionTimeSeconds");
     if (ExecutionTimeSeconds_member != obj.MemberEnd() && !ExecutionTimeSeconds_member->value.IsNull()) ExecutionTimeSeconds = ExecutionTimeSeconds_member->value.GetDouble();
     const Value::ConstMemberIterator ProcessorTimeSeconds_member = obj.FindMember("ProcessorTimeSeconds");

@@ -1807,7 +1807,7 @@ void PlayFabClientAPI::LinkWindowsHello(
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LinkWindowsHello"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
     if (callback != nullptr)
         httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkWindowsHelloAccountResponse>(callback)));
@@ -2431,7 +2431,7 @@ void PlayFabClientAPI::UnlinkWindowsHello(
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/UnlinkWindowsHello"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
     if (callback != nullptr)
         httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkWindowsHelloAccountResponse>(callback)));
@@ -6129,7 +6129,7 @@ void PlayFabClientAPI::ValidateWindowsStoreReceipt(
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/ValidateWindowsStoreReceipt"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
 
     if (callback != nullptr)
         httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ValidateWindowsReceiptResult>(callback)));
