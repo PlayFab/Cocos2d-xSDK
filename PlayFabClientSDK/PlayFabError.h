@@ -306,7 +306,10 @@ namespace PlayFab
         PlayFabErrorInvalidEnvironmentForReceipt = 1300,
         PlayFabErrorEncryptedRequestNotAllowed = 1301,
         PlayFabErrorSignedRequestNotAllowed = 1302,
-        PlayFabErrorRequestViewConstraintParamsNotAllowed = 1303
+        PlayFabErrorRequestViewConstraintParamsNotAllowed = 1303,
+        PlayFabErrorBadPartnerConfiguration = 1304,
+        PlayFabErrorXboxBPCertificateFailure = 1305,
+        PlayFabErrorXboxXASSExchangeFailure = 1306
     };
 
     struct PlayFabError

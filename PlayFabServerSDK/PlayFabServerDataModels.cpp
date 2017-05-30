@@ -4747,6 +4747,7 @@ bool GetLeaderboardResult::readFromValue(const rapidjson::Value& obj)
 
 GetPlayerCombinedInfoRequestParams::~GetPlayerCombinedInfoRequestParams()
 {
+    if (ProfileConstraints != NULL) delete ProfileConstraints;
 
 }
 
@@ -4795,6 +4796,8 @@ void GetPlayerCombinedInfoRequestParams::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
+    writer.String("GetPlayerProfile"); writer.Bool(GetPlayerProfile);
+    if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
 
     writer.EndObject();
 }
@@ -4847,6 +4850,10 @@ bool GetPlayerCombinedInfoRequestParams::readFromValue(const rapidjson::Value& o
             PlayerStatisticNames.push_back(memberList[i].GetString());
         }
     }
+    const Value::ConstMemberIterator GetPlayerProfile_member = obj.FindMember("GetPlayerProfile");
+    if (GetPlayerProfile_member != obj.MemberEnd() && !GetPlayerProfile_member->value.IsNull()) GetPlayerProfile = GetPlayerProfile_member->value.GetBool();
+    const Value::ConstMemberIterator ProfileConstraints_member = obj.FindMember("ProfileConstraints");
+    if (ProfileConstraints_member != obj.MemberEnd() && !ProfileConstraints_member->value.IsNull()) ProfileConstraints = new PlayerProfileViewConstraints(ProfileConstraints_member->value);
 
     return true;
 }
@@ -4907,6 +4914,7 @@ bool StatisticValue::readFromValue(const rapidjson::Value& obj)
 GetPlayerCombinedInfoResultPayload::~GetPlayerCombinedInfoResultPayload()
 {
     if (AccountInfo != NULL) delete AccountInfo;
+    if (PlayerProfile != NULL) delete PlayerProfile;
 
 }
 
@@ -4989,6 +4997,7 @@ void GetPlayerCombinedInfoResultPayload::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
+    if (PlayerProfile != NULL) { writer.String("PlayerProfile"); PlayerProfile->writeJSON(writer); }
 
     writer.EndObject();
 }
@@ -5059,6 +5068,8 @@ bool GetPlayerCombinedInfoResultPayload::readFromValue(const rapidjson::Value& o
             PlayerStatistics.push_back(StatisticValue(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator PlayerProfile_member = obj.FindMember("PlayerProfile");
+    if (PlayerProfile_member != obj.MemberEnd() && !PlayerProfile_member->value.IsNull()) PlayerProfile = new PlayerProfileModel(PlayerProfile_member->value);
 
     return true;
 }
@@ -5085,6 +5096,55 @@ bool GetPlayerCombinedInfoResult::readFromValue(const rapidjson::Value& obj)
     if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
     const Value::ConstMemberIterator InfoResultPayload_member = obj.FindMember("InfoResultPayload");
     if (InfoResultPayload_member != obj.MemberEnd() && !InfoResultPayload_member->value.IsNull()) InfoResultPayload = new GetPlayerCombinedInfoResultPayload(InfoResultPayload_member->value);
+
+    return true;
+}
+
+GetPlayerProfileRequest::~GetPlayerProfileRequest()
+{
+    if (ProfileConstraints != NULL) delete ProfileConstraints;
+
+}
+
+void GetPlayerProfileRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool GetPlayerProfileRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator ProfileConstraints_member = obj.FindMember("ProfileConstraints");
+    if (ProfileConstraints_member != obj.MemberEnd() && !ProfileConstraints_member->value.IsNull()) ProfileConstraints = new PlayerProfileViewConstraints(ProfileConstraints_member->value);
+
+    return true;
+}
+
+GetPlayerProfileResult::~GetPlayerProfileResult()
+{
+    if (PlayerProfile != NULL) delete PlayerProfile;
+
+}
+
+void GetPlayerProfileResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (PlayerProfile != NULL) { writer.String("PlayerProfile"); PlayerProfile->writeJSON(writer); }
+
+    writer.EndObject();
+}
+
+bool GetPlayerProfileResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayerProfile_member = obj.FindMember("PlayerProfile");
+    if (PlayerProfile_member != obj.MemberEnd() && !PlayerProfile_member->value.IsNull()) PlayerProfile = new PlayerProfileModel(PlayerProfile_member->value);
 
     return true;
 }
@@ -7976,7 +8036,6 @@ void ReportPlayerServerRequest::writeJSON(PFStringJsonWriter& writer)
 
     writer.String("ReporterId"); writer.String(ReporterId.c_str());
     writer.String("ReporteeId"); writer.String(ReporteeId.c_str());
-    if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
 
     writer.EndObject();
@@ -7988,8 +8047,6 @@ bool ReportPlayerServerRequest::readFromValue(const rapidjson::Value& obj)
     if (ReporterId_member != obj.MemberEnd() && !ReporterId_member->value.IsNull()) ReporterId = ReporterId_member->value.GetString();
     const Value::ConstMemberIterator ReporteeId_member = obj.FindMember("ReporteeId");
     if (ReporteeId_member != obj.MemberEnd() && !ReporteeId_member->value.IsNull()) ReporteeId = ReporteeId_member->value.GetString();
-    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
-    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
     const Value::ConstMemberIterator Comment_member = obj.FindMember("Comment");
     if (Comment_member != obj.MemberEnd() && !Comment_member->value.IsNull()) Comment = Comment_member->value.GetString();
 
@@ -8005,7 +8062,7 @@ void ReportPlayerServerResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    writer.String("Updated"); writer.Bool(Updated);
+    if (Updated.notNull()) { writer.String("Updated"); writer.Bool(Updated); }
     writer.String("SubmissionsRemaining"); writer.Int(SubmissionsRemaining);
 
     writer.EndObject();

@@ -3897,6 +3897,8 @@ namespace PlayFab
             std::list<std::string> TitleDataKeys;
             bool GetPlayerStatistics;
             std::list<std::string> PlayerStatisticNames;
+            bool GetPlayerProfile;
+            PlayerProfileViewConstraints* ProfileConstraints;
 
             GetPlayerCombinedInfoRequestParams() :
                 PlayFabBaseModel(),
@@ -3912,7 +3914,9 @@ namespace PlayFab
                 GetTitleData(false),
                 TitleDataKeys(),
                 GetPlayerStatistics(false),
-                PlayerStatisticNames()
+                PlayerStatisticNames(),
+                GetPlayerProfile(false),
+                ProfileConstraints(NULL)
             {}
 
             GetPlayerCombinedInfoRequestParams(const GetPlayerCombinedInfoRequestParams& src) :
@@ -3929,7 +3933,9 @@ namespace PlayFab
                 GetTitleData(src.GetTitleData),
                 TitleDataKeys(src.TitleDataKeys),
                 GetPlayerStatistics(src.GetPlayerStatistics),
-                PlayerStatisticNames(src.PlayerStatisticNames)
+                PlayerStatisticNames(src.PlayerStatisticNames),
+                GetPlayerProfile(src.GetPlayerProfile),
+                ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL)
             {}
 
             GetPlayerCombinedInfoRequestParams(const rapidjson::Value& obj) : GetPlayerCombinedInfoRequestParams()
@@ -4016,6 +4022,7 @@ namespace PlayFab
             std::list<CharacterInventory> CharacterInventories;
             std::map<std::string, std::string> TitleData;
             std::list<StatisticValue> PlayerStatistics;
+            PlayerProfileModel* PlayerProfile;
 
             GetPlayerCombinedInfoResultPayload() :
                 PlayFabBaseModel(),
@@ -4030,7 +4037,8 @@ namespace PlayFab
                 CharacterList(),
                 CharacterInventories(),
                 TitleData(),
-                PlayerStatistics()
+                PlayerStatistics(),
+                PlayerProfile(NULL)
             {}
 
             GetPlayerCombinedInfoResultPayload(const GetPlayerCombinedInfoResultPayload& src) :
@@ -4046,7 +4054,8 @@ namespace PlayFab
                 CharacterList(src.CharacterList),
                 CharacterInventories(src.CharacterInventories),
                 TitleData(src.TitleData),
-                PlayerStatistics(src.PlayerStatistics)
+                PlayerStatistics(src.PlayerStatistics),
+                PlayerProfile(src.PlayerProfile ? new PlayerProfileModel(*src.PlayerProfile) : NULL)
             {}
 
             GetPlayerCombinedInfoResultPayload(const rapidjson::Value& obj) : GetPlayerCombinedInfoResultPayload()
@@ -4083,6 +4092,59 @@ namespace PlayFab
             }
 
             ~GetPlayerCombinedInfoResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerProfileRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            PlayerProfileViewConstraints* ProfileConstraints;
+
+            GetPlayerProfileRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                ProfileConstraints(NULL)
+            {}
+
+            GetPlayerProfileRequest(const GetPlayerProfileRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL)
+            {}
+
+            GetPlayerProfileRequest(const rapidjson::Value& obj) : GetPlayerProfileRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerProfileRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerProfileResult : public PlayFabBaseModel
+        {
+            PlayerProfileModel* PlayerProfile;
+
+            GetPlayerProfileResult() :
+                PlayFabBaseModel(),
+                PlayerProfile(NULL)
+            {}
+
+            GetPlayerProfileResult(const GetPlayerProfileResult& src) :
+                PlayFabBaseModel(),
+                PlayerProfile(src.PlayerProfile ? new PlayerProfileModel(*src.PlayerProfile) : NULL)
+            {}
+
+            GetPlayerProfileResult(const rapidjson::Value& obj) : GetPlayerProfileResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerProfileResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -6564,14 +6626,12 @@ namespace PlayFab
         {
             std::string ReporterId;
             std::string ReporteeId;
-            std::string TitleId;
             std::string Comment;
 
             ReportPlayerServerRequest() :
                 PlayFabBaseModel(),
                 ReporterId(),
                 ReporteeId(),
-                TitleId(),
                 Comment()
             {}
 
@@ -6579,7 +6639,6 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 ReporterId(src.ReporterId),
                 ReporteeId(src.ReporteeId),
-                TitleId(src.TitleId),
                 Comment(src.Comment)
             {}
 
@@ -6596,12 +6655,13 @@ namespace PlayFab
 
         struct ReportPlayerServerResult : public PlayFabBaseModel
         {
-            bool Updated;
+            // Deprecated - Do not use
+            OptionalBool Updated;
             Int32 SubmissionsRemaining;
 
             ReportPlayerServerResult() :
                 PlayFabBaseModel(),
-                Updated(false),
+                Updated(),
                 SubmissionsRemaining(0)
             {}
 
