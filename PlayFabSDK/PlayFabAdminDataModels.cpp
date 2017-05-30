@@ -4954,7 +4954,7 @@ void ScheduledTask::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     if (TaskId.length() > 0) { writer.String("TaskId"); writer.String(TaskId.c_str()); }
-    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    writer.String("Name"); writer.String(Name.c_str());
     if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
     if (Schedule.length() > 0) { writer.String("Schedule"); writer.String(Schedule.c_str()); }
     writer.String("IsActive"); writer.Bool(IsActive);
