@@ -4340,150 +4340,6 @@ void PlayFabClientAPI::OnSetFriendTagsResult(int httpStatus, HttpRequest* reques
     delete request;
 }
 
-void PlayFabClientAPI::RegisterForIOSPushNotification(
-    RegisterForIOSPushNotificationRequest& request,
-    ProcessApiCallback<RegisterForIOSPushNotificationResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-    )
-{
-    
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/RegisterForIOSPushNotification"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RegisterForIOSPushNotificationResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRegisterForIOSPushNotificationResult, userData);
-}
-
-void PlayFabClientAPI::OnRegisterForIOSPushNotificationResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    RegisterForIOSPushNotificationResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<RegisterForIOSPushNotificationResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
-void PlayFabClientAPI::RestoreIOSPurchases(
-    RestoreIOSPurchasesRequest& request,
-    ProcessApiCallback<RestoreIOSPurchasesResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-    )
-{
-    
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/RestoreIOSPurchases"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RestoreIOSPurchasesResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRestoreIOSPurchasesResult, userData);
-}
-
-void PlayFabClientAPI::OnRestoreIOSPurchasesResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    RestoreIOSPurchasesResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<RestoreIOSPurchasesResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
-void PlayFabClientAPI::ValidateIOSReceipt(
-    ValidateIOSReceiptRequest& request,
-    ProcessApiCallback<ValidateIOSReceiptResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-    )
-{
-    
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/ValidateIOSReceipt"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ValidateIOSReceiptResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnValidateIOSReceiptResult, userData);
-}
-
-void PlayFabClientAPI::OnValidateIOSReceiptResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    ValidateIOSReceiptResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<ValidateIOSReceiptResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
 void PlayFabClientAPI::GetCurrentGames(
     CurrentGamesRequest& request,
     ProcessApiCallback<CurrentGamesResult> callback,
@@ -4663,102 +4519,6 @@ void PlayFabClientAPI::OnStartGameResult(int httpStatus, HttpRequest* request, v
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<StartGameResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
-void PlayFabClientAPI::AndroidDevicePushNotificationRegistration(
-    AndroidDevicePushNotificationRegistrationRequest& request,
-    ProcessApiCallback<AndroidDevicePushNotificationRegistrationResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-    )
-{
-    
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/AndroidDevicePushNotificationRegistration"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AndroidDevicePushNotificationRegistrationResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAndroidDevicePushNotificationRegistrationResult, userData);
-}
-
-void PlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    AndroidDevicePushNotificationRegistrationResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<AndroidDevicePushNotificationRegistrationResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
-void PlayFabClientAPI::ValidateGooglePlayPurchase(
-    ValidateGooglePlayPurchaseRequest& request,
-    ProcessApiCallback<ValidateGooglePlayPurchaseResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-    )
-{
-    
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/ValidateGooglePlayPurchase"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ValidateGooglePlayPurchaseResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnValidateGooglePlayPurchaseResult, userData);
-}
-
-void PlayFabClientAPI::OnValidateGooglePlayPurchaseResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    ValidateGooglePlayPurchaseResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<ValidateGooglePlayPurchaseResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5732,54 +5492,6 @@ void PlayFabClientAPI::OnUpdateCharacterDataResult(int httpStatus, HttpRequest* 
     delete request;
 }
 
-void PlayFabClientAPI::ValidateAmazonIAPReceipt(
-    ValidateAmazonReceiptRequest& request,
-    ProcessApiCallback<ValidateAmazonReceiptResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-    )
-{
-    
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/ValidateAmazonIAPReceipt"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ValidateAmazonReceiptResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnValidateAmazonIAPReceiptResult, userData);
-}
-
-void PlayFabClientAPI::OnValidateAmazonIAPReceiptResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    ValidateAmazonReceiptResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<ValidateAmazonReceiptResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
 void PlayFabClientAPI::AcceptTrade(
     AcceptTradeRequest& request,
     ProcessApiCallback<AcceptTradeResponse> callback,
@@ -6153,6 +5865,294 @@ void PlayFabClientAPI::OnGetPlayerTagsResult(int httpStatus, HttpRequest* reques
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<GetPlayerTagsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::AndroidDevicePushNotificationRegistration(
+    AndroidDevicePushNotificationRegistrationRequest& request,
+    ProcessApiCallback<AndroidDevicePushNotificationRegistrationResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/AndroidDevicePushNotificationRegistration"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AndroidDevicePushNotificationRegistrationResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAndroidDevicePushNotificationRegistrationResult, userData);
+}
+
+void PlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    AndroidDevicePushNotificationRegistrationResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<AndroidDevicePushNotificationRegistrationResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::RegisterForIOSPushNotification(
+    RegisterForIOSPushNotificationRequest& request,
+    ProcessApiCallback<RegisterForIOSPushNotificationResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/RegisterForIOSPushNotification"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RegisterForIOSPushNotificationResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRegisterForIOSPushNotificationResult, userData);
+}
+
+void PlayFabClientAPI::OnRegisterForIOSPushNotificationResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    RegisterForIOSPushNotificationResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<RegisterForIOSPushNotificationResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::RestoreIOSPurchases(
+    RestoreIOSPurchasesRequest& request,
+    ProcessApiCallback<RestoreIOSPurchasesResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/RestoreIOSPurchases"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RestoreIOSPurchasesResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRestoreIOSPurchasesResult, userData);
+}
+
+void PlayFabClientAPI::OnRestoreIOSPurchasesResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    RestoreIOSPurchasesResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<RestoreIOSPurchasesResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::ValidateAmazonIAPReceipt(
+    ValidateAmazonReceiptRequest& request,
+    ProcessApiCallback<ValidateAmazonReceiptResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/ValidateAmazonIAPReceipt"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ValidateAmazonReceiptResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnValidateAmazonIAPReceiptResult, userData);
+}
+
+void PlayFabClientAPI::OnValidateAmazonIAPReceiptResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ValidateAmazonReceiptResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<ValidateAmazonReceiptResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::ValidateGooglePlayPurchase(
+    ValidateGooglePlayPurchaseRequest& request,
+    ProcessApiCallback<ValidateGooglePlayPurchaseResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/ValidateGooglePlayPurchase"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ValidateGooglePlayPurchaseResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnValidateGooglePlayPurchaseResult, userData);
+}
+
+void PlayFabClientAPI::OnValidateGooglePlayPurchaseResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ValidateGooglePlayPurchaseResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<ValidateGooglePlayPurchaseResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::ValidateIOSReceipt(
+    ValidateIOSReceiptRequest& request,
+    ProcessApiCallback<ValidateIOSReceiptResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/ValidateIOSReceipt"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", mUserSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ValidateIOSReceiptResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnValidateIOSReceiptResult, userData);
+}
+
+void PlayFabClientAPI::OnValidateIOSReceiptResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ValidateIOSReceiptResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<ValidateIOSReceiptResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

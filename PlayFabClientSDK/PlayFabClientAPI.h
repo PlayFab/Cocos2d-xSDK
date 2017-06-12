@@ -107,15 +107,10 @@ namespace PlayFab
         static void GetFriendsList(ClientModels::GetFriendsListRequest& request, ProcessApiCallback<ClientModels::GetFriendsListResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveFriend(ClientModels::RemoveFriendRequest& request, ProcessApiCallback<ClientModels::RemoveFriendResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetFriendTags(ClientModels::SetFriendTagsRequest& request, ProcessApiCallback<ClientModels::SetFriendTagsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void RegisterForIOSPushNotification(ClientModels::RegisterForIOSPushNotificationRequest& request, ProcessApiCallback<ClientModels::RegisterForIOSPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void RestoreIOSPurchases(ClientModels::RestoreIOSPurchasesRequest& request, ProcessApiCallback<ClientModels::RestoreIOSPurchasesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ValidateIOSReceipt(ClientModels::ValidateIOSReceiptRequest& request, ProcessApiCallback<ClientModels::ValidateIOSReceiptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCurrentGames(ClientModels::CurrentGamesRequest& request, ProcessApiCallback<ClientModels::CurrentGamesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetGameServerRegions(ClientModels::GameServerRegionsRequest& request, ProcessApiCallback<ClientModels::GameServerRegionsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void Matchmake(ClientModels::MatchmakeRequest& request, ProcessApiCallback<ClientModels::MatchmakeResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void StartGame(ClientModels::StartGameRequest& request, ProcessApiCallback<ClientModels::StartGameResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void AndroidDevicePushNotificationRegistration(ClientModels::AndroidDevicePushNotificationRegistrationRequest& request, ProcessApiCallback<ClientModels::AndroidDevicePushNotificationRegistrationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ValidateGooglePlayPurchase(ClientModels::ValidateGooglePlayPurchaseRequest& request, ProcessApiCallback<ClientModels::ValidateGooglePlayPurchaseResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void WriteCharacterEvent(ClientModels::WriteClientCharacterEventRequest& request, ProcessApiCallback<ClientModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void WritePlayerEvent(ClientModels::WriteClientPlayerEventRequest& request, ProcessApiCallback<ClientModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void WriteTitleEvent(ClientModels::WriteTitleEventRequest& request, ProcessApiCallback<ClientModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -136,7 +131,6 @@ namespace PlayFab
         static void GetCharacterData(ClientModels::GetCharacterDataRequest& request, ProcessApiCallback<ClientModels::GetCharacterDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCharacterReadOnlyData(ClientModels::GetCharacterDataRequest& request, ProcessApiCallback<ClientModels::GetCharacterDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateCharacterData(ClientModels::UpdateCharacterDataRequest& request, ProcessApiCallback<ClientModels::UpdateCharacterDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ValidateAmazonIAPReceipt(ClientModels::ValidateAmazonReceiptRequest& request, ProcessApiCallback<ClientModels::ValidateAmazonReceiptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AcceptTrade(ClientModels::AcceptTradeRequest& request, ProcessApiCallback<ClientModels::AcceptTradeResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CancelTrade(ClientModels::CancelTradeRequest& request, ProcessApiCallback<ClientModels::CancelTradeResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerTrades(ClientModels::GetPlayerTradesRequest& request, ProcessApiCallback<ClientModels::GetPlayerTradesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -145,6 +139,12 @@ namespace PlayFab
         static void AttributeInstall(ClientModels::AttributeInstallRequest& request, ProcessApiCallback<ClientModels::AttributeInstallResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerSegments(ProcessApiCallback<ClientModels::GetPlayerSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerTags(ClientModels::GetPlayerTagsRequest& request, ProcessApiCallback<ClientModels::GetPlayerTagsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void AndroidDevicePushNotificationRegistration(ClientModels::AndroidDevicePushNotificationRegistrationRequest& request, ProcessApiCallback<ClientModels::AndroidDevicePushNotificationRegistrationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RegisterForIOSPushNotification(ClientModels::RegisterForIOSPushNotificationRequest& request, ProcessApiCallback<ClientModels::RegisterForIOSPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RestoreIOSPurchases(ClientModels::RestoreIOSPurchasesRequest& request, ProcessApiCallback<ClientModels::RestoreIOSPurchasesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ValidateAmazonIAPReceipt(ClientModels::ValidateAmazonReceiptRequest& request, ProcessApiCallback<ClientModels::ValidateAmazonReceiptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ValidateGooglePlayPurchase(ClientModels::ValidateGooglePlayPurchaseRequest& request, ProcessApiCallback<ClientModels::ValidateGooglePlayPurchaseResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ValidateIOSReceipt(ClientModels::ValidateIOSReceiptRequest& request, ProcessApiCallback<ClientModels::ValidateIOSReceiptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ValidateWindowsStoreReceipt(ClientModels::ValidateWindowsReceiptRequest& request, ProcessApiCallback<ClientModels::ValidateWindowsReceiptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
@@ -241,15 +241,10 @@ namespace PlayFab
         static void OnGetFriendsListResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveFriendResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetFriendTagsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnRegisterForIOSPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnRestoreIOSPurchasesResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnValidateIOSReceiptResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCurrentGamesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetGameServerRegionsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnMatchmakeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnStartGameResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnAndroidDevicePushNotificationRegistrationResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnValidateGooglePlayPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnWriteCharacterEventResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnWritePlayerEventResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnWriteTitleEventResult(int httpStatus, HttpRequest* request, void* userData);
@@ -270,7 +265,6 @@ namespace PlayFab
         static void OnGetCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCharacterReadOnlyDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateCharacterDataResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnValidateAmazonIAPReceiptResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAcceptTradeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCancelTradeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerTradesResult(int httpStatus, HttpRequest* request, void* userData);
@@ -279,6 +273,12 @@ namespace PlayFab
         static void OnAttributeInstallResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerTagsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnAndroidDevicePushNotificationRegistrationResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRegisterForIOSPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRestoreIOSPurchasesResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnValidateAmazonIAPReceiptResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnValidateGooglePlayPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnValidateIOSReceiptResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnValidateWindowsStoreReceiptResult(int httpStatus, HttpRequest* request, void* userData);
 
         // Private, Client-Specific

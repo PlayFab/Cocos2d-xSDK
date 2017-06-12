@@ -89,7 +89,6 @@ namespace PlayFab
         static void SetGameServerInstanceData(ServerModels::SetGameServerInstanceDataRequest& request, ProcessApiCallback<ServerModels::SetGameServerInstanceDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetGameServerInstanceState(ServerModels::SetGameServerInstanceStateRequest& request, ProcessApiCallback<ServerModels::SetGameServerInstanceStateResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetGameServerInstanceTags(ServerModels::SetGameServerInstanceTagsRequest& request, ProcessApiCallback<ServerModels::SetGameServerInstanceTagsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void AwardSteamAchievement(ServerModels::AwardSteamAchievementRequest& request, ProcessApiCallback<ServerModels::AwardSteamAchievementResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void WriteCharacterEvent(ServerModels::WriteServerCharacterEventRequest& request, ProcessApiCallback<ServerModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void WritePlayerEvent(ServerModels::WriteServerPlayerEventRequest& request, ProcessApiCallback<ServerModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void WriteTitleEvent(ServerModels::WriteTitleEventRequest& request, ProcessApiCallback<ServerModels::WriteEventResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -122,6 +121,7 @@ namespace PlayFab
         static void GetPlayersInSegment(ServerModels::GetPlayersInSegmentRequest& request, ProcessApiCallback<ServerModels::GetPlayersInSegmentResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerTags(ServerModels::GetPlayerTagsRequest& request, ProcessApiCallback<ServerModels::GetPlayerTagsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemovePlayerTag(ServerModels::RemovePlayerTagRequest& request, ProcessApiCallback<ServerModels::RemovePlayerTagResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void AwardSteamAchievement(ServerModels::AwardSteamAchievementRequest& request, ProcessApiCallback<ServerModels::AwardSteamAchievementResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
@@ -203,7 +203,6 @@ namespace PlayFab
         static void OnSetGameServerInstanceDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetGameServerInstanceStateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetGameServerInstanceTagsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnAwardSteamAchievementResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnWriteCharacterEventResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnWritePlayerEventResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnWriteTitleEventResult(int httpStatus, HttpRequest* request, void* userData);
@@ -236,6 +235,7 @@ namespace PlayFab
         static void OnGetPlayersInSegmentResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerTagsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemovePlayerTagResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnAwardSteamAchievementResult(int httpStatus, HttpRequest* request, void* userData);
     };
 };
 #endif

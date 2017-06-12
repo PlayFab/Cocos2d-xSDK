@@ -3610,54 +3610,6 @@ void PlayFabServerAPI::OnSetGameServerInstanceTagsResult(int httpStatus, HttpReq
     delete request;
 }
 
-void PlayFabServerAPI::AwardSteamAchievement(
-    AwardSteamAchievementRequest& request,
-    ProcessApiCallback<AwardSteamAchievementResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-    )
-{
-    
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/AwardSteamAchievement"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AwardSteamAchievementResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAwardSteamAchievementResult, userData);
-}
-
-void PlayFabServerAPI::OnAwardSteamAchievementResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    AwardSteamAchievementResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<AwardSteamAchievementResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
 void PlayFabServerAPI::WriteCharacterEvent(
     WriteServerCharacterEventRequest& request,
     ProcessApiCallback<WriteEventResponse> callback,
@@ -5181,6 +5133,54 @@ void PlayFabServerAPI::OnRemovePlayerTagResult(int httpStatus, HttpRequest* requ
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<RemovePlayerTagResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabServerAPI::AwardSteamAchievement(
+    AwardSteamAchievementRequest& request,
+    ProcessApiCallback<AwardSteamAchievementResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/AwardSteamAchievement"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AwardSteamAchievementResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAwardSteamAchievementResult, userData);
+}
+
+void PlayFabServerAPI::OnAwardSteamAchievementResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    AwardSteamAchievementResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<AwardSteamAchievementResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
