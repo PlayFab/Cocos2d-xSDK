@@ -4088,7 +4088,6 @@ void GetFriendLeaderboardAroundPlayerRequest::writeJSON(PFStringJsonWriter& writ
     if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
     if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
     if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
-    if (UseSpecificVersion.notNull()) { writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion); }
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
 
     writer.EndObject();
@@ -4108,8 +4107,6 @@ bool GetFriendLeaderboardAroundPlayerRequest::readFromValue(const rapidjson::Val
     if (IncludeFacebookFriends_member != obj.MemberEnd() && !IncludeFacebookFriends_member->value.IsNull()) IncludeFacebookFriends = IncludeFacebookFriends_member->value.GetBool();
     const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
     if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
-    const Value::ConstMemberIterator UseSpecificVersion_member = obj.FindMember("UseSpecificVersion");
-    if (UseSpecificVersion_member != obj.MemberEnd() && !UseSpecificVersion_member->value.IsNull()) UseSpecificVersion = UseSpecificVersion_member->value.GetBool();
     const Value::ConstMemberIterator ProfileConstraints_member = obj.FindMember("ProfileConstraints");
     if (ProfileConstraints_member != obj.MemberEnd() && !ProfileConstraints_member->value.IsNull()) ProfileConstraints = new PlayerProfileViewConstraints(ProfileConstraints_member->value);
 
@@ -4647,7 +4644,6 @@ void GetFriendLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
     if (IncludeSteamFriends.notNull()) { writer.String("IncludeSteamFriends"); writer.Bool(IncludeSteamFriends); }
     if (IncludeFacebookFriends.notNull()) { writer.String("IncludeFacebookFriends"); writer.Bool(IncludeFacebookFriends); }
     if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
-    if (UseSpecificVersion.notNull()) { writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion); }
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
 
     writer.EndObject();
@@ -4667,8 +4663,6 @@ bool GetFriendLeaderboardRequest::readFromValue(const rapidjson::Value& obj)
     if (IncludeFacebookFriends_member != obj.MemberEnd() && !IncludeFacebookFriends_member->value.IsNull()) IncludeFacebookFriends = IncludeFacebookFriends_member->value.GetBool();
     const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
     if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
-    const Value::ConstMemberIterator UseSpecificVersion_member = obj.FindMember("UseSpecificVersion");
-    if (UseSpecificVersion_member != obj.MemberEnd() && !UseSpecificVersion_member->value.IsNull()) UseSpecificVersion = UseSpecificVersion_member->value.GetBool();
     const Value::ConstMemberIterator ProfileConstraints_member = obj.FindMember("ProfileConstraints");
     if (ProfileConstraints_member != obj.MemberEnd() && !ProfileConstraints_member->value.IsNull()) ProfileConstraints = new PlayerProfileViewConstraints(ProfileConstraints_member->value);
 
@@ -4813,7 +4807,6 @@ void GetLeaderboardAroundPlayerRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
     if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
-    if (UseSpecificVersion.notNull()) { writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion); }
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
 
     writer.EndObject();
@@ -4829,8 +4822,6 @@ bool GetLeaderboardAroundPlayerRequest::readFromValue(const rapidjson::Value& ob
     if (MaxResultsCount_member != obj.MemberEnd() && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
     const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
     if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
-    const Value::ConstMemberIterator UseSpecificVersion_member = obj.FindMember("UseSpecificVersion");
-    if (UseSpecificVersion_member != obj.MemberEnd() && !UseSpecificVersion_member->value.IsNull()) UseSpecificVersion = UseSpecificVersion_member->value.GetBool();
     const Value::ConstMemberIterator ProfileConstraints_member = obj.FindMember("ProfileConstraints");
     if (ProfileConstraints_member != obj.MemberEnd() && !ProfileConstraints_member->value.IsNull()) ProfileConstraints = new PlayerProfileViewConstraints(ProfileConstraints_member->value);
 
@@ -4950,7 +4941,6 @@ void GetLeaderboardRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("StartPosition"); writer.Int(StartPosition);
     if (MaxResultsCount.notNull()) { writer.String("MaxResultsCount"); writer.Int(MaxResultsCount); }
     if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
-    if (UseSpecificVersion.notNull()) { writer.String("UseSpecificVersion"); writer.Bool(UseSpecificVersion); }
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
 
     writer.EndObject();
@@ -4966,8 +4956,6 @@ bool GetLeaderboardRequest::readFromValue(const rapidjson::Value& obj)
     if (MaxResultsCount_member != obj.MemberEnd() && !MaxResultsCount_member->value.IsNull()) MaxResultsCount = MaxResultsCount_member->value.GetInt();
     const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
     if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
-    const Value::ConstMemberIterator UseSpecificVersion_member = obj.FindMember("UseSpecificVersion");
-    if (UseSpecificVersion_member != obj.MemberEnd() && !UseSpecificVersion_member->value.IsNull()) UseSpecificVersion = UseSpecificVersion_member->value.GetBool();
     const Value::ConstMemberIterator ProfileConstraints_member = obj.FindMember("ProfileConstraints");
     if (ProfileConstraints_member != obj.MemberEnd() && !ProfileConstraints_member->value.IsNull()) ProfileConstraints = new PlayerProfileViewConstraints(ProfileConstraints_member->value);
 
@@ -7067,6 +7055,53 @@ bool GetTitleNewsResult::readFromValue(const rapidjson::Value& obj)
             News.push_back(TitleNewsItem(memberList[i]));
         }
     }
+
+    return true;
+}
+
+GetTitlePublicKeyRequest::~GetTitlePublicKeyRequest()
+{
+
+}
+
+void GetTitlePublicKeyRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("TitleId"); writer.String(TitleId.c_str());
+    writer.String("TitleSharedSecret"); writer.String(TitleSharedSecret.c_str());
+
+    writer.EndObject();
+}
+
+bool GetTitlePublicKeyRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator TitleSharedSecret_member = obj.FindMember("TitleSharedSecret");
+    if (TitleSharedSecret_member != obj.MemberEnd() && !TitleSharedSecret_member->value.IsNull()) TitleSharedSecret = TitleSharedSecret_member->value.GetString();
+
+    return true;
+}
+
+GetTitlePublicKeyResult::~GetTitlePublicKeyResult()
+{
+
+}
+
+void GetTitlePublicKeyResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (RSAPublicKey.length() > 0) { writer.String("RSAPublicKey"); writer.String(RSAPublicKey.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetTitlePublicKeyResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator RSAPublicKey_member = obj.FindMember("RSAPublicKey");
+    if (RSAPublicKey_member != obj.MemberEnd() && !RSAPublicKey_member->value.IsNull()) RSAPublicKey = RSAPublicKey_member->value.GetString();
 
     return true;
 }
@@ -9531,6 +9566,50 @@ void SetFriendTagsResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool SetFriendTagsResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+SetPlayerSecretRequest::~SetPlayerSecretRequest()
+{
+
+}
+
+void SetPlayerSecretRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
+    if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
+
+    writer.EndObject();
+}
+
+bool SetPlayerSecretRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
+    if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
+    const Value::ConstMemberIterator EncryptedRequest_member = obj.FindMember("EncryptedRequest");
+    if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
+
+    return true;
+}
+
+SetPlayerSecretResult::~SetPlayerSecretResult()
+{
+
+}
+
+void SetPlayerSecretResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool SetPlayerSecretResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;

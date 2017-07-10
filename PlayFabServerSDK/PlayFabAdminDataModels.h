@@ -1503,6 +1503,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct CreatePlayerSharedSecretRequest : public PlayFabBaseModel
+        {
+            std::string FriendlyName;
+
+            CreatePlayerSharedSecretRequest() :
+                PlayFabBaseModel(),
+                FriendlyName()
+            {}
+
+            CreatePlayerSharedSecretRequest(const CreatePlayerSharedSecretRequest& src) :
+                PlayFabBaseModel(),
+                FriendlyName(src.FriendlyName)
+            {}
+
+            CreatePlayerSharedSecretRequest(const rapidjson::Value& obj) : CreatePlayerSharedSecretRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreatePlayerSharedSecretRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreatePlayerSharedSecretResult : public PlayFabBaseModel
+        {
+            std::string SecretKey;
+
+            CreatePlayerSharedSecretResult() :
+                PlayFabBaseModel(),
+                SecretKey()
+            {}
+
+            CreatePlayerSharedSecretResult(const CreatePlayerSharedSecretResult& src) :
+                PlayFabBaseModel(),
+                SecretKey(src.SecretKey)
+            {}
+
+            CreatePlayerSharedSecretResult(const rapidjson::Value& obj) : CreatePlayerSharedSecretResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreatePlayerSharedSecretResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum StatisticResetIntervalOption
         {
             StatisticResetIntervalOptionNever,
@@ -1830,6 +1880,53 @@ namespace PlayFab
             }
 
             ~DeleteContentRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeletePlayerSharedSecretRequest : public PlayFabBaseModel
+        {
+            std::string SecretKey;
+
+            DeletePlayerSharedSecretRequest() :
+                PlayFabBaseModel(),
+                SecretKey()
+            {}
+
+            DeletePlayerSharedSecretRequest(const DeletePlayerSharedSecretRequest& src) :
+                PlayFabBaseModel(),
+                SecretKey(src.SecretKey)
+            {}
+
+            DeletePlayerSharedSecretRequest(const rapidjson::Value& obj) : DeletePlayerSharedSecretRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeletePlayerSharedSecretRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeletePlayerSharedSecretResult : public PlayFabBaseModel
+        {
+
+            DeletePlayerSharedSecretResult() :
+                PlayFabBaseModel()
+            {}
+
+            DeletePlayerSharedSecretResult(const DeletePlayerSharedSecretResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            DeletePlayerSharedSecretResult(const rapidjson::Value& obj) : DeletePlayerSharedSecretResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeletePlayerSharedSecretResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -2711,6 +2808,84 @@ namespace PlayFab
             }
 
             ~GetPlayerSegmentsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerSharedSecretsRequest : public PlayFabBaseModel
+        {
+
+            GetPlayerSharedSecretsRequest() :
+                PlayFabBaseModel()
+            {}
+
+            GetPlayerSharedSecretsRequest(const GetPlayerSharedSecretsRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            GetPlayerSharedSecretsRequest(const rapidjson::Value& obj) : GetPlayerSharedSecretsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerSharedSecretsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SharedSecret : public PlayFabBaseModel
+        {
+            std::string SecretKey;
+            std::string FriendlyName;
+            bool Disabled;
+
+            SharedSecret() :
+                PlayFabBaseModel(),
+                SecretKey(),
+                FriendlyName(),
+                Disabled(false)
+            {}
+
+            SharedSecret(const SharedSecret& src) :
+                PlayFabBaseModel(),
+                SecretKey(src.SecretKey),
+                FriendlyName(src.FriendlyName),
+                Disabled(src.Disabled)
+            {}
+
+            SharedSecret(const rapidjson::Value& obj) : SharedSecret()
+            {
+                readFromValue(obj);
+            }
+
+            ~SharedSecret();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerSharedSecretsResult : public PlayFabBaseModel
+        {
+            std::list<SharedSecret> SharedSecrets;
+
+            GetPlayerSharedSecretsResult() :
+                PlayFabBaseModel(),
+                SharedSecrets()
+            {}
+
+            GetPlayerSharedSecretsResult(const GetPlayerSharedSecretsResult& src) :
+                PlayFabBaseModel(),
+                SharedSecrets(src.SharedSecrets)
+            {}
+
+            GetPlayerSharedSecretsResult(const rapidjson::Value& obj) : GetPlayerSharedSecretsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerSharedSecretsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -5426,6 +5601,16 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum PushSetupPlatform
+        {
+            PushSetupPlatformGCM,
+            PushSetupPlatformAPNS,
+            PushSetupPlatformAPNS_SANDBOX
+        };
+
+        void writePushSetupPlatformEnumJSON(PushSetupPlatform enumVal, PFStringJsonWriter& writer);
+        PushSetupPlatform readPushSetupPlatformFromValue(const rapidjson::Value& obj);
+
         struct RandomResultTable : public PlayFabBaseModel
         {
             std::string TableId;
@@ -6098,6 +6283,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct SetPlayerSecretRequest : public PlayFabBaseModel
+        {
+            std::string PlayerSecret;
+            std::string PlayFabId;
+
+            SetPlayerSecretRequest() :
+                PlayFabBaseModel(),
+                PlayerSecret(),
+                PlayFabId()
+            {}
+
+            SetPlayerSecretRequest(const SetPlayerSecretRequest& src) :
+                PlayFabBaseModel(),
+                PlayerSecret(src.PlayerSecret),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            SetPlayerSecretRequest(const rapidjson::Value& obj) : SetPlayerSecretRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetPlayerSecretRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetPlayerSecretResult : public PlayFabBaseModel
+        {
+
+            SetPlayerSecretResult() :
+                PlayFabBaseModel()
+            {}
+
+            SetPlayerSecretResult(const SetPlayerSecretResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            SetPlayerSecretResult(const rapidjson::Value& obj) : SetPlayerSecretResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetPlayerSecretResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct SetPublishedRevisionRequest : public PlayFabBaseModel
         {
             Int32 Version;
@@ -6251,7 +6486,7 @@ namespace PlayFab
         struct SetupPushNotificationRequest : public PlayFabBaseModel
         {
             std::string Name;
-            std::string Platform;
+            PushSetupPlatform Platform;
             std::string Key;
             std::string Credential;
             bool OverwriteOldARN;
@@ -6553,6 +6788,59 @@ namespace PlayFab
             }
 
             ~UpdateCloudScriptResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdatePlayerSharedSecretRequest : public PlayFabBaseModel
+        {
+            std::string SecretKey;
+            std::string FriendlyName;
+            bool Disabled;
+
+            UpdatePlayerSharedSecretRequest() :
+                PlayFabBaseModel(),
+                SecretKey(),
+                FriendlyName(),
+                Disabled(false)
+            {}
+
+            UpdatePlayerSharedSecretRequest(const UpdatePlayerSharedSecretRequest& src) :
+                PlayFabBaseModel(),
+                SecretKey(src.SecretKey),
+                FriendlyName(src.FriendlyName),
+                Disabled(src.Disabled)
+            {}
+
+            UpdatePlayerSharedSecretRequest(const rapidjson::Value& obj) : UpdatePlayerSharedSecretRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdatePlayerSharedSecretRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdatePlayerSharedSecretResult : public PlayFabBaseModel
+        {
+
+            UpdatePlayerSharedSecretResult() :
+                PlayFabBaseModel()
+            {}
+
+            UpdatePlayerSharedSecretResult(const UpdatePlayerSharedSecretResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            UpdatePlayerSharedSecretResult(const rapidjson::Value& obj) : UpdatePlayerSharedSecretResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdatePlayerSharedSecretResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -78,7 +78,7 @@ NS_CC_BEGIN
 //
 
 
-inline void nomalize_point(float x, float y, particle_point* out)
+inline void normalize_point(float x, float y, particle_point* out)
 {
     float n = x * x + y * y;
     // Already normalized.
@@ -185,6 +185,9 @@ void ParticleData::release()
     CC_SAFE_FREE(modeB.radius);
 }
 
+Vector<ParticleSystem*> ParticleSystem::__allInstances;
+float ParticleSystem::__totalParticleCountFactor = 1.0f;
+
 ParticleSystem::ParticleSystem()
 : _isBlendAdditive(false)
 , _isAutoRemoveOnFinish(false)
@@ -260,6 +263,17 @@ ParticleSystem* ParticleSystem::createWithTotalParticles(int numberOfParticles)
     }
     CC_SAFE_DELETE(ret);
     return ret;
+}
+
+// static
+Vector<ParticleSystem*>& ParticleSystem::getAllParticleSystems()
+{
+    return __allInstances;
+}
+
+void ParticleSystem::setTotalParticleCountFactor(float factor)
+{
+    __totalParticleCountFactor = factor;
 }
 
 bool ParticleSystem::init()
@@ -793,6 +807,8 @@ void ParticleSystem::onEnter()
     
     // update after action in run!
     this->scheduleUpdateWithPriority(1);
+
+    __allInstances.pushBack(this);
 }
 
 void ParticleSystem::onExit()
@@ -807,6 +823,12 @@ void ParticleSystem::onExit()
     
     this->unscheduleUpdate();
     Node::onExit();
+
+    auto iter = std::find(std::begin(__allInstances), std::end(__allInstances), this);
+    if (iter != std::end(__allInstances))
+    {
+        __allInstances.erase(iter);
+    }
 }
 
 void ParticleSystem::stopSystem()
@@ -839,15 +861,17 @@ void ParticleSystem::update(float dt)
     if (_isActive && _emissionRate)
     {
         float rate = 1.0f / _emissionRate;
+        int totalParticles = static_cast<int>(_totalParticles * __totalParticleCountFactor);
+        
         //issue #1201, prevent bursts of particles, due to too high emitCounter
-        if (_particleCount < _totalParticles)
+        if (_particleCount < totalParticles)
         {
             _emitCounter += dt;
             if (_emitCounter < 0.f)
                 _emitCounter = 0.f;
         }
         
-        int emitCount = MIN(_totalParticles - _particleCount, _emitCounter / rate);
+        int emitCount = MIN(totalParticles - _particleCount, _emitCounter / rate);
         addParticles(emitCount);
         _emitCounter -= rate * emitCount;
         
@@ -904,7 +928,7 @@ void ParticleSystem::update(float dt)
                 // radial acceleration
                 if (_particleData.posx[i] || _particleData.posy[i])
                 {
-                    nomalize_point(_particleData.posx[i], _particleData.posy[i], &radial);
+                    normalize_point(_particleData.posx[i], _particleData.posy[i], &radial);
                 }
                 tangential = radial;
                 radial.x *= _particleData.modeA.radialAccel[i];
