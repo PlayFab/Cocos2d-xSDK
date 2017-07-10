@@ -314,6 +314,7 @@ void RegisterGameRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
+    if (LobbyId.length() > 0) { writer.String("LobbyId"); writer.String(LobbyId.c_str()); }
     writer.String("ServerHost"); writer.String(ServerHost.c_str());
     writer.String("ServerPort"); writer.String(ServerPort.c_str());
     writer.String("Build"); writer.String(Build.c_str());
@@ -333,6 +334,8 @@ void RegisterGameRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool RegisterGameRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator LobbyId_member = obj.FindMember("LobbyId");
+    if (LobbyId_member != obj.MemberEnd() && !LobbyId_member->value.IsNull()) LobbyId = LobbyId_member->value.GetString();
     const Value::ConstMemberIterator ServerHost_member = obj.FindMember("ServerHost");
     if (ServerHost_member != obj.MemberEnd() && !ServerHost_member->value.IsNull()) ServerHost = ServerHost_member->value.GetString();
     const Value::ConstMemberIterator ServerPort_member = obj.FindMember("ServerPort");

@@ -3219,7 +3219,6 @@ namespace PlayFab
             OptionalBool IncludeSteamFriends;
             OptionalBool IncludeFacebookFriends;
             OptionalInt32 Version;
-            OptionalBool UseSpecificVersion;
             PlayerProfileViewConstraints* ProfileConstraints;
 
             GetFriendLeaderboardAroundPlayerRequest() :
@@ -3230,7 +3229,6 @@ namespace PlayFab
                 IncludeSteamFriends(),
                 IncludeFacebookFriends(),
                 Version(),
-                UseSpecificVersion(),
                 ProfileConstraints(NULL)
             {}
 
@@ -3242,7 +3240,6 @@ namespace PlayFab
                 IncludeSteamFriends(src.IncludeSteamFriends),
                 IncludeFacebookFriends(src.IncludeFacebookFriends),
                 Version(src.Version),
-                UseSpecificVersion(src.UseSpecificVersion),
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL)
             {}
 
@@ -3653,7 +3650,6 @@ namespace PlayFab
             OptionalBool IncludeSteamFriends;
             OptionalBool IncludeFacebookFriends;
             OptionalInt32 Version;
-            OptionalBool UseSpecificVersion;
             PlayerProfileViewConstraints* ProfileConstraints;
 
             GetFriendLeaderboardRequest() :
@@ -3664,7 +3660,6 @@ namespace PlayFab
                 IncludeSteamFriends(),
                 IncludeFacebookFriends(),
                 Version(),
-                UseSpecificVersion(),
                 ProfileConstraints(NULL)
             {}
 
@@ -3676,7 +3671,6 @@ namespace PlayFab
                 IncludeSteamFriends(src.IncludeSteamFriends),
                 IncludeFacebookFriends(src.IncludeFacebookFriends),
                 Version(src.Version),
-                UseSpecificVersion(src.UseSpecificVersion),
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL)
             {}
 
@@ -3809,7 +3803,6 @@ namespace PlayFab
             std::string StatisticName;
             OptionalInt32 MaxResultsCount;
             OptionalInt32 Version;
-            OptionalBool UseSpecificVersion;
             PlayerProfileViewConstraints* ProfileConstraints;
 
             GetLeaderboardAroundPlayerRequest() :
@@ -3818,7 +3811,6 @@ namespace PlayFab
                 StatisticName(),
                 MaxResultsCount(),
                 Version(),
-                UseSpecificVersion(),
                 ProfileConstraints(NULL)
             {}
 
@@ -3828,7 +3820,6 @@ namespace PlayFab
                 StatisticName(src.StatisticName),
                 MaxResultsCount(src.MaxResultsCount),
                 Version(src.Version),
-                UseSpecificVersion(src.UseSpecificVersion),
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL)
             {}
 
@@ -3933,7 +3924,6 @@ namespace PlayFab
             Int32 StartPosition;
             OptionalInt32 MaxResultsCount;
             OptionalInt32 Version;
-            OptionalBool UseSpecificVersion;
             PlayerProfileViewConstraints* ProfileConstraints;
 
             GetLeaderboardRequest() :
@@ -3942,7 +3932,6 @@ namespace PlayFab
                 StartPosition(0),
                 MaxResultsCount(),
                 Version(),
-                UseSpecificVersion(),
                 ProfileConstraints(NULL)
             {}
 
@@ -3952,7 +3941,6 @@ namespace PlayFab
                 StartPosition(src.StartPosition),
                 MaxResultsCount(src.MaxResultsCount),
                 Version(src.Version),
-                UseSpecificVersion(src.UseSpecificVersion),
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL)
             {}
 
@@ -5662,6 +5650,59 @@ namespace PlayFab
             }
 
             ~GetTitleNewsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetTitlePublicKeyRequest : public PlayFabBaseModel
+        {
+            std::string TitleId;
+            std::string TitleSharedSecret;
+
+            GetTitlePublicKeyRequest() :
+                PlayFabBaseModel(),
+                TitleId(),
+                TitleSharedSecret()
+            {}
+
+            GetTitlePublicKeyRequest(const GetTitlePublicKeyRequest& src) :
+                PlayFabBaseModel(),
+                TitleId(src.TitleId),
+                TitleSharedSecret(src.TitleSharedSecret)
+            {}
+
+            GetTitlePublicKeyRequest(const rapidjson::Value& obj) : GetTitlePublicKeyRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetTitlePublicKeyRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetTitlePublicKeyResult : public PlayFabBaseModel
+        {
+            std::string RSAPublicKey;
+
+            GetTitlePublicKeyResult() :
+                PlayFabBaseModel(),
+                RSAPublicKey()
+            {}
+
+            GetTitlePublicKeyResult(const GetTitlePublicKeyResult& src) :
+                PlayFabBaseModel(),
+                RSAPublicKey(src.RSAPublicKey)
+            {}
+
+            GetTitlePublicKeyResult(const rapidjson::Value& obj) : GetTitlePublicKeyResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetTitlePublicKeyResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -8103,6 +8144,56 @@ namespace PlayFab
             }
 
             ~SetFriendTagsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetPlayerSecretRequest : public PlayFabBaseModel
+        {
+            std::string PlayerSecret;
+            std::string EncryptedRequest;
+
+            SetPlayerSecretRequest() :
+                PlayFabBaseModel(),
+                PlayerSecret(),
+                EncryptedRequest()
+            {}
+
+            SetPlayerSecretRequest(const SetPlayerSecretRequest& src) :
+                PlayFabBaseModel(),
+                PlayerSecret(src.PlayerSecret),
+                EncryptedRequest(src.EncryptedRequest)
+            {}
+
+            SetPlayerSecretRequest(const rapidjson::Value& obj) : SetPlayerSecretRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetPlayerSecretRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetPlayerSecretResult : public PlayFabBaseModel
+        {
+
+            SetPlayerSecretResult() :
+                PlayFabBaseModel()
+            {}
+
+            SetPlayerSecretResult(const SetPlayerSecretResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            SetPlayerSecretResult(const rapidjson::Value& obj) : SetPlayerSecretResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetPlayerSecretResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

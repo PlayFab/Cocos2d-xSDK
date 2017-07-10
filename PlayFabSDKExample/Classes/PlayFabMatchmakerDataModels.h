@@ -290,6 +290,7 @@ namespace PlayFab
 
         struct RegisterGameRequest : public PlayFabBaseModel
         {
+            std::string LobbyId;
             std::string ServerHost;
             std::string ServerPort;
             std::string Build;
@@ -299,6 +300,7 @@ namespace PlayFab
 
             RegisterGameRequest() :
                 PlayFabBaseModel(),
+                LobbyId(),
                 ServerHost(),
                 ServerPort(),
                 Build(),
@@ -309,6 +311,7 @@ namespace PlayFab
 
             RegisterGameRequest(const RegisterGameRequest& src) :
                 PlayFabBaseModel(),
+                LobbyId(src.LobbyId),
                 ServerHost(src.ServerHost),
                 ServerPort(src.ServerPort),
                 Build(src.Build),

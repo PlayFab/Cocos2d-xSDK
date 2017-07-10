@@ -3169,7 +3169,6 @@ namespace PlayFab
             OptionalBool IncludeSteamFriends;
             OptionalBool IncludeFacebookFriends;
             OptionalInt32 Version;
-            OptionalBool UseSpecificVersion;
             PlayerProfileViewConstraints* ProfileConstraints;
 
             GetFriendLeaderboardRequest() :
@@ -3181,7 +3180,6 @@ namespace PlayFab
                 IncludeSteamFriends(),
                 IncludeFacebookFriends(),
                 Version(),
-                UseSpecificVersion(),
                 ProfileConstraints(NULL)
             {}
 
@@ -3194,7 +3192,6 @@ namespace PlayFab
                 IncludeSteamFriends(src.IncludeSteamFriends),
                 IncludeFacebookFriends(src.IncludeFacebookFriends),
                 Version(src.Version),
-                UseSpecificVersion(src.UseSpecificVersion),
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL)
             {}
 
@@ -3334,7 +3331,6 @@ namespace PlayFab
             Int32 MaxResultsCount;
             PlayerProfileViewConstraints* ProfileConstraints;
             OptionalInt32 Version;
-            OptionalBool UseSpecificVersion;
 
             GetLeaderboardAroundUserRequest() :
                 PlayFabBaseModel(),
@@ -3342,8 +3338,7 @@ namespace PlayFab
                 PlayFabId(),
                 MaxResultsCount(0),
                 ProfileConstraints(NULL),
-                Version(),
-                UseSpecificVersion()
+                Version()
             {}
 
             GetLeaderboardAroundUserRequest(const GetLeaderboardAroundUserRequest& src) :
@@ -3352,8 +3347,7 @@ namespace PlayFab
                 PlayFabId(src.PlayFabId),
                 MaxResultsCount(src.MaxResultsCount),
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL),
-                Version(src.Version),
-                UseSpecificVersion(src.UseSpecificVersion)
+                Version(src.Version)
             {}
 
             GetLeaderboardAroundUserRequest(const rapidjson::Value& obj) : GetLeaderboardAroundUserRequest()
@@ -3818,7 +3812,6 @@ namespace PlayFab
             Int32 MaxResultsCount;
             PlayerProfileViewConstraints* ProfileConstraints;
             OptionalInt32 Version;
-            OptionalBool UseSpecificVersion;
 
             GetLeaderboardRequest() :
                 PlayFabBaseModel(),
@@ -3826,8 +3819,7 @@ namespace PlayFab
                 StartPosition(0),
                 MaxResultsCount(0),
                 ProfileConstraints(NULL),
-                Version(),
-                UseSpecificVersion()
+                Version()
             {}
 
             GetLeaderboardRequest(const GetLeaderboardRequest& src) :
@@ -3836,8 +3828,7 @@ namespace PlayFab
                 StartPosition(src.StartPosition),
                 MaxResultsCount(src.MaxResultsCount),
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL),
-                Version(src.Version),
-                UseSpecificVersion(src.UseSpecificVersion)
+                Version(src.Version)
             {}
 
             GetLeaderboardRequest(const rapidjson::Value& obj) : GetLeaderboardRequest()
@@ -6250,6 +6241,46 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct PushNotificationPackage : public PlayFabBaseModel
+        {
+            std::string ScheduleDate;
+            std::string Title;
+            std::string Message;
+            std::string Icon;
+            std::string Sound;
+            std::string CustomData;
+
+            PushNotificationPackage() :
+                PlayFabBaseModel(),
+                ScheduleDate(),
+                Title(),
+                Message(),
+                Icon(),
+                Sound(),
+                CustomData()
+            {}
+
+            PushNotificationPackage(const PushNotificationPackage& src) :
+                PlayFabBaseModel(),
+                ScheduleDate(src.ScheduleDate),
+                Title(src.Title),
+                Message(src.Message),
+                Icon(src.Icon),
+                Sound(src.Sound),
+                CustomData(src.CustomData)
+            {}
+
+            PushNotificationPackage(const rapidjson::Value& obj) : PushNotificationPackage()
+            {
+                readFromValue(obj);
+            }
+
+            ~PushNotificationPackage();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct RedeemCouponRequest : public PlayFabBaseModel
         {
             std::string CouponCode;
@@ -6431,6 +6462,7 @@ namespace PlayFab
 
         struct RegisterGameRequest : public PlayFabBaseModel
         {
+            std::string LobbyId;
             std::string ServerHost;
             std::string ServerPort;
             std::string Build;
@@ -6440,6 +6472,7 @@ namespace PlayFab
 
             RegisterGameRequest() :
                 PlayFabBaseModel(),
+                LobbyId(),
                 ServerHost(),
                 ServerPort(),
                 Build(),
@@ -6450,6 +6483,7 @@ namespace PlayFab
 
             RegisterGameRequest(const RegisterGameRequest& src) :
                 PlayFabBaseModel(),
+                LobbyId(src.LobbyId),
                 ServerHost(src.ServerHost),
                 ServerPort(src.ServerPort),
                 Build(src.Build),
@@ -6838,13 +6872,16 @@ namespace PlayFab
         struct SendPushNotificationRequest : public PlayFabBaseModel
         {
             std::string Recipient;
+            // Deprecated - Use 'Package' instead
             std::string Message;
+            PushNotificationPackage* Package;
             std::string Subject;
 
             SendPushNotificationRequest() :
                 PlayFabBaseModel(),
                 Recipient(),
                 Message(),
+                Package(NULL),
                 Subject()
             {}
 
@@ -6852,6 +6889,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Recipient(src.Recipient),
                 Message(src.Message),
+                Package(src.Package ? new PushNotificationPackage(*src.Package) : NULL),
                 Subject(src.Subject)
             {}
 
@@ -7064,6 +7102,56 @@ namespace PlayFab
             }
 
             ~SetGameServerInstanceTagsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetPlayerSecretRequest : public PlayFabBaseModel
+        {
+            std::string PlayerSecret;
+            std::string PlayFabId;
+
+            SetPlayerSecretRequest() :
+                PlayFabBaseModel(),
+                PlayerSecret(),
+                PlayFabId()
+            {}
+
+            SetPlayerSecretRequest(const SetPlayerSecretRequest& src) :
+                PlayFabBaseModel(),
+                PlayerSecret(src.PlayerSecret),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            SetPlayerSecretRequest(const rapidjson::Value& obj) : SetPlayerSecretRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetPlayerSecretRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetPlayerSecretResult : public PlayFabBaseModel
+        {
+
+            SetPlayerSecretResult() :
+                PlayFabBaseModel()
+            {}
+
+            SetPlayerSecretResult(const SetPlayerSecretResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            SetPlayerSecretResult(const rapidjson::Value& obj) : SetPlayerSecretResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetPlayerSecretResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
