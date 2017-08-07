@@ -309,7 +309,26 @@ namespace PlayFab
         PlayFabErrorRequestViewConstraintParamsNotAllowed = 1303,
         PlayFabErrorBadPartnerConfiguration = 1304,
         PlayFabErrorXboxBPCertificateFailure = 1305,
-        PlayFabErrorXboxXASSExchangeFailure = 1306
+        PlayFabErrorXboxXASSExchangeFailure = 1306,
+        PlayFabErrorInvalidEntityId = 1307,
+        PlayFabErrorStatisticValueAggregationOverflow = 1308,
+        PlayFabErrorEmailMessageFromAddressIsMissing = 1309,
+        PlayFabErrorEmailMessageToAddressIsMissing = 1310,
+        PlayFabErrorSmtpServerAuthenticationError = 1311,
+        PlayFabErrorSmtpServerLimitExceeded = 1312,
+        PlayFabErrorSmtpServerInsufficientStorage = 1313,
+        PlayFabErrorSmtpServerCommunicationError = 1314,
+        PlayFabErrorSmtpServerGeneralFailure = 1315,
+        PlayFabErrorEmailClientTimeout = 1316,
+        PlayFabErrorEmailClientCanceledTask = 1317,
+        PlayFabErrorEmailTemplateMissing = 1318,
+        PlayFabErrorInvalidHostForTitleId = 1319,
+        PlayFabErrorEmailConfirmationTokenDoesNotExist = 1320,
+        PlayFabErrorEmailConfirmationTokenExpired = 1321,
+        PlayFabErrorAccountDeleted = 1322,
+        PlayFabErrorPlayerSecretNotConfigured = 1323,
+        PlayFabErrorInvalidSignatureTime = 1324,
+        PlayFabErrorNoContactEmailAddressFound = 1325
     };
 
     struct PlayFabError

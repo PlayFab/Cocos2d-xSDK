@@ -2049,6 +2049,63 @@ bool ConsumeItemResult::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::ServerModels::writeEmailVerificationStatusEnumJSON(EmailVerificationStatus enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case EmailVerificationStatusUnverified: writer.String("Unverified"); break;
+    case EmailVerificationStatusPending: writer.String("Pending"); break;
+    case EmailVerificationStatusConfirmed: writer.String("Confirmed"); break;
+
+    }
+}
+
+EmailVerificationStatus PlayFab::ServerModels::readEmailVerificationStatusFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, EmailVerificationStatus> _EmailVerificationStatusMap;
+    if (_EmailVerificationStatusMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _EmailVerificationStatusMap["Unverified"] = EmailVerificationStatusUnverified;
+        _EmailVerificationStatusMap["Pending"] = EmailVerificationStatusPending;
+        _EmailVerificationStatusMap["Confirmed"] = EmailVerificationStatusConfirmed;
+
+    }
+
+    auto output = _EmailVerificationStatusMap.find(obj.GetString());
+    if (output != _EmailVerificationStatusMap.end())
+        return output->second;
+
+    return EmailVerificationStatusUnverified; // Basically critical fail
+}
+
+ContactEmailInfo::~ContactEmailInfo()
+{
+
+}
+
+void ContactEmailInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    if (EmailAddress.length() > 0) { writer.String("EmailAddress"); writer.String(EmailAddress.c_str()); }
+    if (VerificationStatus.notNull()) { writer.String("VerificationStatus"); writeEmailVerificationStatusEnumJSON(VerificationStatus, writer); }
+
+    writer.EndObject();
+}
+
+bool ContactEmailInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator EmailAddress_member = obj.FindMember("EmailAddress");
+    if (EmailAddress_member != obj.MemberEnd() && !EmailAddress_member->value.IsNull()) EmailAddress = EmailAddress_member->value.GetString();
+    const Value::ConstMemberIterator VerificationStatus_member = obj.FindMember("VerificationStatus");
+    if (VerificationStatus_member != obj.MemberEnd() && !VerificationStatus_member->value.IsNull()) VerificationStatus = readEmailVerificationStatusFromValue(VerificationStatus_member->value);
+
+    return true;
+}
 void PlayFab::ServerModels::writeContinentCodeEnumJSON(ContinentCode enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -5417,6 +5474,14 @@ void PlayerProfile::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
+    if (!ContactEmailAddresses.empty()) {
+    writer.String("ContactEmailAddresses");
+    writer.StartArray();
+    for (std::list<ContactEmailInfo>::iterator iter = ContactEmailAddresses.begin(); iter != ContactEmailAddresses.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
 
     writer.EndObject();
 }
@@ -5500,6 +5565,13 @@ bool PlayerProfile::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = PlayerStatistics_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             PlayerStatistics.push_back(PlayerStatistic(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator ContactEmailAddresses_member = obj.FindMember("ContactEmailAddresses");
+    if (ContactEmailAddresses_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = ContactEmailAddresses_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            ContactEmailAddresses.push_back(ContactEmailInfo(memberList[i]));
         }
     }
 
