@@ -1128,6 +1128,47 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum EmailVerificationStatus
+        {
+            EmailVerificationStatusUnverified,
+            EmailVerificationStatusPending,
+            EmailVerificationStatusConfirmed
+        };
+
+        void writeEmailVerificationStatusEnumJSON(EmailVerificationStatus enumVal, PFStringJsonWriter& writer);
+        EmailVerificationStatus readEmailVerificationStatusFromValue(const rapidjson::Value& obj);
+
+        struct ContactEmailInfo : public PlayFabBaseModel
+        {
+            std::string Name;
+            std::string EmailAddress;
+            Boxed<EmailVerificationStatus> VerificationStatus;
+
+            ContactEmailInfo() :
+                PlayFabBaseModel(),
+                Name(),
+                EmailAddress(),
+                VerificationStatus()
+            {}
+
+            ContactEmailInfo(const ContactEmailInfo& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                EmailAddress(src.EmailAddress),
+                VerificationStatus(src.VerificationStatus)
+            {}
+
+            ContactEmailInfo(const rapidjson::Value& obj) : ContactEmailInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~ContactEmailInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ContentInfo : public PlayFabBaseModel
         {
             std::string Key;
@@ -1880,6 +1921,53 @@ namespace PlayFab
             }
 
             ~DeleteContentRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeletePlayerRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+
+            DeletePlayerRequest() :
+                PlayFabBaseModel(),
+                PlayFabId()
+            {}
+
+            DeletePlayerRequest(const DeletePlayerRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            DeletePlayerRequest(const rapidjson::Value& obj) : DeletePlayerRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeletePlayerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeletePlayerResult : public PlayFabBaseModel
+        {
+
+            DeletePlayerResult() :
+                PlayFabBaseModel()
+            {}
+
+            DeletePlayerResult(const DeletePlayerResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            DeletePlayerResult(const rapidjson::Value& obj) : DeletePlayerResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeletePlayerResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -3109,6 +3197,7 @@ namespace PlayFab
             std::list<PushNotificationRegistration> PushNotificationRegistrations;
             std::list<PlayerLinkedAccount> LinkedAccounts;
             std::list<PlayerStatistic> PlayerStatistics;
+            std::list<ContactEmailInfo> ContactEmailAddresses;
 
             PlayerProfile() :
                 PlayFabBaseModel(),
@@ -3130,7 +3219,8 @@ namespace PlayFab
                 AdCampaignAttributions(),
                 PushNotificationRegistrations(),
                 LinkedAccounts(),
-                PlayerStatistics()
+                PlayerStatistics(),
+                ContactEmailAddresses()
             {}
 
             PlayerProfile(const PlayerProfile& src) :
@@ -3153,7 +3243,8 @@ namespace PlayFab
                 AdCampaignAttributions(src.AdCampaignAttributions),
                 PushNotificationRegistrations(src.PushNotificationRegistrations),
                 LinkedAccounts(src.LinkedAccounts),
-                PlayerStatistics(src.PlayerStatistics)
+                PlayerStatistics(src.PlayerStatistics),
+                ContactEmailAddresses(src.ContactEmailAddresses)
             {}
 
             PlayerProfile(const rapidjson::Value& obj) : PlayerProfile()
@@ -5867,6 +5958,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct UserCredentials : public PlayFabBaseModel
         {
             std::string Username;
@@ -5892,6 +5984,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct ResetUsersRequest : public PlayFabBaseModel
         {
             std::list<UserCredentials> Users;
