@@ -1155,6 +1155,34 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct ContactEmailInfoModel : public PlayFabBaseModel
+        {
+            std::string Name;
+            std::string EmailAddress;
+
+            ContactEmailInfoModel() :
+                PlayFabBaseModel(),
+                Name(),
+                EmailAddress()
+            {}
+
+            ContactEmailInfoModel(const ContactEmailInfoModel& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                EmailAddress(src.EmailAddress)
+            {}
+
+            ContactEmailInfoModel(const rapidjson::Value& obj) : ContactEmailInfoModel()
+            {
+                readFromValue(obj);
+            }
+
+            ~ContactEmailInfoModel();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum ContinentCode
         {
             ContinentCodeAF,
@@ -1714,7 +1742,9 @@ namespace PlayFab
             OptionalInt32 MaxPlayers;
             std::list<std::string> PlayerUserIds;
             Uint32 RunTime;
-            Boxed<GameInstanceState> GameServerState;
+            // Deprecated - Use 'GameServerStateEnum' instead
+            OptionalInt32 GameServerState;
+            Boxed<GameInstanceState> GameServerStateEnum;
             std::string GameServerData;
             std::map<std::string, std::string> Tags;
             OptionalTime LastHeartbeat;
@@ -1732,6 +1762,7 @@ namespace PlayFab
                 PlayerUserIds(),
                 RunTime(0),
                 GameServerState(),
+                GameServerStateEnum(),
                 GameServerData(),
                 Tags(),
                 LastHeartbeat(),
@@ -1750,6 +1781,7 @@ namespace PlayFab
                 PlayerUserIds(src.PlayerUserIds),
                 RunTime(src.RunTime),
                 GameServerState(src.GameServerState),
+                GameServerStateEnum(src.GameServerStateEnum),
                 GameServerData(src.GameServerData),
                 Tags(src.Tags),
                 LastHeartbeat(src.LastHeartbeat),
@@ -2364,6 +2396,7 @@ namespace PlayFab
             std::list<TagModel> Tags;
             std::list<PushNotificationRegistrationModel> PushNotificationRegistrations;
             std::list<LinkedPlatformAccountModel> LinkedAccounts;
+            std::list<ContactEmailInfoModel> ContactEmailAddresses;
             std::list<AdCampaignAttributionModel> AdCampaignAttributions;
             OptionalUint32 TotalValueToDateInUSD;
             std::list<ValueToDateModel> ValuesToDate;
@@ -2385,6 +2418,7 @@ namespace PlayFab
                 Tags(),
                 PushNotificationRegistrations(),
                 LinkedAccounts(),
+                ContactEmailAddresses(),
                 AdCampaignAttributions(),
                 TotalValueToDateInUSD(),
                 ValuesToDate(),
@@ -2407,6 +2441,7 @@ namespace PlayFab
                 Tags(src.Tags),
                 PushNotificationRegistrations(src.PushNotificationRegistrations),
                 LinkedAccounts(src.LinkedAccounts),
+                ContactEmailAddresses(src.ContactEmailAddresses),
                 AdCampaignAttributions(src.AdCampaignAttributions),
                 TotalValueToDateInUSD(src.TotalValueToDateInUSD),
                 ValuesToDate(src.ValuesToDate),
@@ -3481,6 +3516,7 @@ namespace PlayFab
             bool ShowCampaignAttributions;
             bool ShowPushNotificationRegistrations;
             bool ShowLinkedAccounts;
+            bool ShowContactEmailAddresses;
             bool ShowTotalValueToDateInUsd;
             bool ShowValuesToDate;
             bool ShowTags;
@@ -3498,6 +3534,7 @@ namespace PlayFab
                 ShowCampaignAttributions(false),
                 ShowPushNotificationRegistrations(false),
                 ShowLinkedAccounts(false),
+                ShowContactEmailAddresses(false),
                 ShowTotalValueToDateInUsd(false),
                 ShowValuesToDate(false),
                 ShowTags(false),
@@ -3516,6 +3553,7 @@ namespace PlayFab
                 ShowCampaignAttributions(src.ShowCampaignAttributions),
                 ShowPushNotificationRegistrations(src.ShowPushNotificationRegistrations),
                 ShowLinkedAccounts(src.ShowLinkedAccounts),
+                ShowContactEmailAddresses(src.ShowContactEmailAddresses),
                 ShowTotalValueToDateInUsd(src.ShowTotalValueToDateInUsd),
                 ShowValuesToDate(src.ShowValuesToDate),
                 ShowTags(src.ShowTags),
@@ -7981,19 +8019,15 @@ namespace PlayFab
 
         struct ReportPlayerClientResult : public PlayFabBaseModel
         {
-            // Deprecated - Do not use
-            OptionalBool Updated;
             Int32 SubmissionsRemaining;
 
             ReportPlayerClientResult() :
                 PlayFabBaseModel(),
-                Updated(),
                 SubmissionsRemaining(0)
             {}
 
             ReportPlayerClientResult(const ReportPlayerClientResult& src) :
                 PlayFabBaseModel(),
-                Updated(src.Updated),
                 SubmissionsRemaining(src.SubmissionsRemaining)
             {}
 
