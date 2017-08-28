@@ -332,7 +332,15 @@ namespace PlayFab
         PlayFabErrorInvalidAuthToken = 1326,
         PlayFabErrorAuthTokenDoesNotExist = 1327,
         PlayFabErrorAuthTokenExpired = 1328,
-        PlayFabErrorAuthTokenAlreadyUsedToResetPassword = 1329
+        PlayFabErrorAuthTokenAlreadyUsedToResetPassword = 1329,
+        PlayFabErrorMembershipNameTooLong = 1330,
+        PlayFabErrorMembershipNotFound = 1331,
+        PlayFabErrorGoogleServiceAccountInvalid = 1332,
+        PlayFabErrorGoogleServiceAccountParseFailure = 1333,
+        PlayFabErrorEntityTokenMissing = 1334,
+        PlayFabErrorEntityTokenInvalid = 1335,
+        PlayFabErrorEntityTokenExpired = 1336,
+        PlayFabErrorEntityTokenRevoked = 1337
     };
 
     struct PlayFabError

@@ -2106,6 +2106,31 @@ bool ContactEmailInfo::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+
+ContactEmailInfoModel::~ContactEmailInfoModel()
+{
+
+}
+
+void ContactEmailInfoModel::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    if (EmailAddress.length() > 0) { writer.String("EmailAddress"); writer.String(EmailAddress.c_str()); }
+
+    writer.EndObject();
+}
+
+bool ContactEmailInfoModel::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator EmailAddress_member = obj.FindMember("EmailAddress");
+    if (EmailAddress_member != obj.MemberEnd() && !EmailAddress_member->value.IsNull()) EmailAddress = EmailAddress_member->value.GetString();
+
+    return true;
+}
 void PlayFab::ServerModels::writeContinentCodeEnumJSON(ContinentCode enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -3447,6 +3472,14 @@ void PlayerProfileModel::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
+    if (!ContactEmailAddresses.empty()) {
+    writer.String("ContactEmailAddresses");
+    writer.StartArray();
+    for (std::list<ContactEmailInfoModel>::iterator iter = ContactEmailAddresses.begin(); iter != ContactEmailAddresses.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+     }
     if (!AdCampaignAttributions.empty()) {
     writer.String("AdCampaignAttributions");
     writer.StartArray();
@@ -3530,6 +3563,13 @@ bool PlayerProfileModel::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = LinkedAccounts_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             LinkedAccounts.push_back(LinkedPlatformAccountModel(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator ContactEmailAddresses_member = obj.FindMember("ContactEmailAddresses");
+    if (ContactEmailAddresses_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = ContactEmailAddresses_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            ContactEmailAddresses.push_back(ContactEmailInfoModel(memberList[i]));
         }
     }
     const Value::ConstMemberIterator AdCampaignAttributions_member = obj.FindMember("AdCampaignAttributions");
@@ -4333,6 +4373,7 @@ void PlayerProfileViewConstraints::writeJSON(PFStringJsonWriter& writer)
     writer.String("ShowCampaignAttributions"); writer.Bool(ShowCampaignAttributions);
     writer.String("ShowPushNotificationRegistrations"); writer.Bool(ShowPushNotificationRegistrations);
     writer.String("ShowLinkedAccounts"); writer.Bool(ShowLinkedAccounts);
+    writer.String("ShowContactEmailAddresses"); writer.Bool(ShowContactEmailAddresses);
     writer.String("ShowTotalValueToDateInUsd"); writer.Bool(ShowTotalValueToDateInUsd);
     writer.String("ShowValuesToDate"); writer.Bool(ShowValuesToDate);
     writer.String("ShowTags"); writer.Bool(ShowTags);
@@ -4362,6 +4403,8 @@ bool PlayerProfileViewConstraints::readFromValue(const rapidjson::Value& obj)
     if (ShowPushNotificationRegistrations_member != obj.MemberEnd() && !ShowPushNotificationRegistrations_member->value.IsNull()) ShowPushNotificationRegistrations = ShowPushNotificationRegistrations_member->value.GetBool();
     const Value::ConstMemberIterator ShowLinkedAccounts_member = obj.FindMember("ShowLinkedAccounts");
     if (ShowLinkedAccounts_member != obj.MemberEnd() && !ShowLinkedAccounts_member->value.IsNull()) ShowLinkedAccounts = ShowLinkedAccounts_member->value.GetBool();
+    const Value::ConstMemberIterator ShowContactEmailAddresses_member = obj.FindMember("ShowContactEmailAddresses");
+    if (ShowContactEmailAddresses_member != obj.MemberEnd() && !ShowContactEmailAddresses_member->value.IsNull()) ShowContactEmailAddresses = ShowContactEmailAddresses_member->value.GetBool();
     const Value::ConstMemberIterator ShowTotalValueToDateInUsd_member = obj.FindMember("ShowTotalValueToDateInUsd");
     if (ShowTotalValueToDateInUsd_member != obj.MemberEnd() && !ShowTotalValueToDateInUsd_member->value.IsNull()) ShowTotalValueToDateInUsd = ShowTotalValueToDateInUsd_member->value.GetBool();
     const Value::ConstMemberIterator ShowValuesToDate_member = obj.FindMember("ShowValuesToDate");
@@ -8173,7 +8216,6 @@ void ReportPlayerServerResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
-    if (Updated.notNull()) { writer.String("Updated"); writer.Bool(Updated); }
     writer.String("SubmissionsRemaining"); writer.Int(SubmissionsRemaining);
 
     writer.EndObject();
@@ -8181,8 +8223,6 @@ void ReportPlayerServerResult::writeJSON(PFStringJsonWriter& writer)
 
 bool ReportPlayerServerResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator Updated_member = obj.FindMember("Updated");
-    if (Updated_member != obj.MemberEnd() && !Updated_member->value.IsNull()) Updated = Updated_member->value.GetBool();
     const Value::ConstMemberIterator SubmissionsRemaining_member = obj.FindMember("SubmissionsRemaining");
     if (SubmissionsRemaining_member != obj.MemberEnd() && !SubmissionsRemaining_member->value.IsNull()) SubmissionsRemaining = SubmissionsRemaining_member->value.GetInt();
 
@@ -8373,6 +8413,14 @@ void SendPushNotificationRequest::writeJSON(PFStringJsonWriter& writer)
     if (Message.length() > 0) { writer.String("Message"); writer.String(Message.c_str()); }
     if (Package != NULL) { writer.String("Package"); Package->writeJSON(writer); }
     if (Subject.length() > 0) { writer.String("Subject"); writer.String(Subject.c_str()); }
+    if (!TargetPlatforms.empty()) {
+    writer.String("TargetPlatforms");
+    writer.StartArray();
+    for (std::list<PushNotificationPlatform>::iterator iter = TargetPlatforms.begin(); iter != TargetPlatforms.end(); iter++) {
+        writePushNotificationPlatformEnumJSON(*iter, writer);
+    }
+    writer.EndArray();
+     }
 
     writer.EndObject();
 }
@@ -8387,6 +8435,13 @@ bool SendPushNotificationRequest::readFromValue(const rapidjson::Value& obj)
     if (Package_member != obj.MemberEnd() && !Package_member->value.IsNull()) Package = new PushNotificationPackage(Package_member->value);
     const Value::ConstMemberIterator Subject_member = obj.FindMember("Subject");
     if (Subject_member != obj.MemberEnd() && !Subject_member->value.IsNull()) Subject = Subject_member->value.GetString();
+    const Value::ConstMemberIterator TargetPlatforms_member = obj.FindMember("TargetPlatforms");
+    if (TargetPlatforms_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = TargetPlatforms_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            TargetPlatforms.push_back(readPushNotificationPlatformFromValue(memberList[i]));
+        }
+    }
 
     return true;
 }
