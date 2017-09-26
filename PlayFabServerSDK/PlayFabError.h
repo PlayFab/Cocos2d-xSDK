@@ -340,7 +340,13 @@ namespace PlayFab
         PlayFabErrorEntityTokenMissing = 1334,
         PlayFabErrorEntityTokenInvalid = 1335,
         PlayFabErrorEntityTokenExpired = 1336,
-        PlayFabErrorEntityTokenRevoked = 1337
+        PlayFabErrorEntityTokenRevoked = 1337,
+        PlayFabErrorInvalidProductForSubscription = 1338,
+        PlayFabErrorXboxInaccessible = 1339,
+        PlayFabErrorSubscriptionAlreadyTaken = 1340,
+        PlayFabErrorSmtpAddonNotEnabled = 1341,
+        PlayFabErrorAPIConcurrentRequestLimitExceeded = 1342,
+        PlayFabErrorXboxRejectedXSTSExchangeRequest = 1343
     };
 
     struct PlayFabError

@@ -34,19 +34,19 @@ namespace PlayFab
 
         struct ActionsOnPlayersInSegmentTaskParameter : public PlayFabBaseModel
         {
-            std::string SegmentId;
             std::string ActionId;
+            std::string SegmentId;
 
             ActionsOnPlayersInSegmentTaskParameter() :
                 PlayFabBaseModel(),
-                SegmentId(),
-                ActionId()
+                ActionId(),
+                SegmentId()
             {}
 
             ActionsOnPlayersInSegmentTaskParameter(const ActionsOnPlayersInSegmentTaskParameter& src) :
                 PlayFabBaseModel(),
-                SegmentId(src.SegmentId),
-                ActionId(src.ActionId)
+                ActionId(src.ActionId),
+                SegmentId(src.SegmentId)
             {}
 
             ActionsOnPlayersInSegmentTaskParameter(const rapidjson::Value& obj) : ActionsOnPlayersInSegmentTaskParameter()
@@ -55,34 +55,6 @@ namespace PlayFab
             }
 
             ~ActionsOnPlayersInSegmentTaskParameter();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct NameIdentifier : public PlayFabBaseModel
-        {
-            std::string Name;
-            std::string Id;
-
-            NameIdentifier() :
-                PlayFabBaseModel(),
-                Name(),
-                Id()
-            {}
-
-            NameIdentifier(const NameIdentifier& src) :
-                PlayFabBaseModel(),
-                Name(src.Name),
-                Id(src.Id)
-            {}
-
-            NameIdentifier(const rapidjson::Value& obj) : NameIdentifier()
-            {
-                readFromValue(obj);
-            }
-
-            ~NameIdentifier();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -101,50 +73,77 @@ namespace PlayFab
         void writeTaskInstanceStatusEnumJSON(TaskInstanceStatus enumVal, PFStringJsonWriter& writer);
         TaskInstanceStatus readTaskInstanceStatusFromValue(const rapidjson::Value& obj);
 
-        // Deprecated - Do not use
+        struct NameIdentifier : public PlayFabBaseModel
+        {
+            std::string Id;
+            std::string Name;
+
+            NameIdentifier() :
+                PlayFabBaseModel(),
+                Id(),
+                Name()
+            {}
+
+            NameIdentifier(const NameIdentifier& src) :
+                PlayFabBaseModel(),
+                Id(src.Id),
+                Name(src.Name)
+            {}
+
+            NameIdentifier(const rapidjson::Value& obj) : NameIdentifier()
+            {
+                readFromValue(obj);
+            }
+
+            ~NameIdentifier();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ActionsOnPlayersInSegmentTaskSummary : public PlayFabBaseModel
         {
-            std::string TaskInstanceId;
-            NameIdentifier* TaskIdentifier;
-            time_t StartedAt;
             OptionalTime CompletedAt;
-            Boxed<TaskInstanceStatus> Status;
-            OptionalDouble PercentComplete;
-            OptionalDouble EstimatedSecondsRemaining;
-            std::string ScheduledByUserId;
             std::string ErrorMessage;
             OptionalBool ErrorWasFatal;
+            OptionalDouble EstimatedSecondsRemaining;
+            OptionalDouble PercentComplete;
+            std::string ScheduledByUserId;
+            time_t StartedAt;
+            Boxed<TaskInstanceStatus> Status;
+            NameIdentifier* TaskIdentifier;
+            std::string TaskInstanceId;
             OptionalInt32 TotalPlayersInSegment;
             OptionalInt32 TotalPlayersProcessed;
 
             ActionsOnPlayersInSegmentTaskSummary() :
                 PlayFabBaseModel(),
-                TaskInstanceId(),
-                TaskIdentifier(NULL),
-                StartedAt(0),
                 CompletedAt(),
-                Status(),
-                PercentComplete(),
-                EstimatedSecondsRemaining(),
-                ScheduledByUserId(),
                 ErrorMessage(),
                 ErrorWasFatal(),
+                EstimatedSecondsRemaining(),
+                PercentComplete(),
+                ScheduledByUserId(),
+                StartedAt(0),
+                Status(),
+                TaskIdentifier(NULL),
+                TaskInstanceId(),
                 TotalPlayersInSegment(),
                 TotalPlayersProcessed()
             {}
 
             ActionsOnPlayersInSegmentTaskSummary(const ActionsOnPlayersInSegmentTaskSummary& src) :
                 PlayFabBaseModel(),
-                TaskInstanceId(src.TaskInstanceId),
-                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
-                StartedAt(src.StartedAt),
                 CompletedAt(src.CompletedAt),
-                Status(src.Status),
-                PercentComplete(src.PercentComplete),
-                EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
-                ScheduledByUserId(src.ScheduledByUserId),
                 ErrorMessage(src.ErrorMessage),
                 ErrorWasFatal(src.ErrorWasFatal),
+                EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
+                PercentComplete(src.PercentComplete),
+                ScheduledByUserId(src.ScheduledByUserId),
+                StartedAt(src.StartedAt),
+                Status(src.Status),
+                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
+                TaskInstanceId(src.TaskInstanceId),
                 TotalPlayersInSegment(src.TotalPlayersInSegment),
                 TotalPlayersProcessed(src.TotalPlayersProcessed)
             {}
@@ -162,22 +161,22 @@ namespace PlayFab
 
         struct AdCampaignAttribution : public PlayFabBaseModel
         {
-            std::string Platform;
-            std::string CampaignId;
             time_t AttributedAt;
+            std::string CampaignId;
+            std::string Platform;
 
             AdCampaignAttribution() :
                 PlayFabBaseModel(),
-                Platform(),
+                AttributedAt(0),
                 CampaignId(),
-                AttributedAt(0)
+                Platform()
             {}
 
             AdCampaignAttribution(const AdCampaignAttribution& src) :
                 PlayFabBaseModel(),
-                Platform(src.Platform),
+                AttributedAt(src.AttributedAt),
                 CampaignId(src.CampaignId),
-                AttributedAt(src.AttributedAt)
+                Platform(src.Platform)
             {}
 
             AdCampaignAttribution(const rapidjson::Value& obj) : AdCampaignAttribution()
@@ -193,22 +192,22 @@ namespace PlayFab
 
         struct AdCampaignAttributionModel : public PlayFabBaseModel
         {
-            std::string Platform;
-            std::string CampaignId;
             time_t AttributedAt;
+            std::string CampaignId;
+            std::string Platform;
 
             AdCampaignAttributionModel() :
                 PlayFabBaseModel(),
-                Platform(),
+                AttributedAt(0),
                 CampaignId(),
-                AttributedAt(0)
+                Platform()
             {}
 
             AdCampaignAttributionModel(const AdCampaignAttributionModel& src) :
                 PlayFabBaseModel(),
-                Platform(src.Platform),
+                AttributedAt(src.AttributedAt),
                 CampaignId(src.CampaignId),
-                AttributedAt(src.AttributedAt)
+                Platform(src.Platform)
             {}
 
             AdCampaignAttributionModel(const rapidjson::Value& obj) : AdCampaignAttributionModel()
@@ -224,22 +223,22 @@ namespace PlayFab
 
         struct AddNewsRequest : public PlayFabBaseModel
         {
+            std::string Body;
             OptionalTime Timestamp;
             std::string Title;
-            std::string Body;
 
             AddNewsRequest() :
                 PlayFabBaseModel(),
+                Body(),
                 Timestamp(),
-                Title(),
-                Body()
+                Title()
             {}
 
             AddNewsRequest(const AddNewsRequest& src) :
                 PlayFabBaseModel(),
+                Body(src.Body),
                 Timestamp(src.Timestamp),
-                Title(src.Title),
-                Body(src.Body)
+                Title(src.Title)
             {}
 
             AddNewsRequest(const rapidjson::Value& obj) : AddNewsRequest()
@@ -344,32 +343,32 @@ namespace PlayFab
 
         struct AddServerBuildRequest : public PlayFabBaseModel
         {
+            std::list<Region> ActiveRegions;
             std::string BuildId;
             std::string CommandLineTemplate;
-            std::string ExecutablePath;
-            std::list<Region> ActiveRegions;
             std::string Comment;
+            std::string ExecutablePath;
             Int32 MaxGamesPerHost;
             Int32 MinFreeGameSlots;
 
             AddServerBuildRequest() :
                 PlayFabBaseModel(),
+                ActiveRegions(),
                 BuildId(),
                 CommandLineTemplate(),
-                ExecutablePath(),
-                ActiveRegions(),
                 Comment(),
+                ExecutablePath(),
                 MaxGamesPerHost(0),
                 MinFreeGameSlots(0)
             {}
 
             AddServerBuildRequest(const AddServerBuildRequest& src) :
                 PlayFabBaseModel(),
+                ActiveRegions(src.ActiveRegions),
                 BuildId(src.BuildId),
                 CommandLineTemplate(src.CommandLineTemplate),
-                ExecutablePath(src.ExecutablePath),
-                ActiveRegions(src.ActiveRegions),
                 Comment(src.Comment),
+                ExecutablePath(src.ExecutablePath),
                 MaxGamesPerHost(src.MaxGamesPerHost),
                 MinFreeGameSlots(src.MinFreeGameSlots)
             {}
@@ -399,43 +398,43 @@ namespace PlayFab
 
         struct AddServerBuildResult : public PlayFabBaseModel
         {
-            std::string BuildId;
             std::list<Region> ActiveRegions;
+            std::string BuildId;
+            std::string CommandLineTemplate;
+            std::string Comment;
+            std::string ExecutablePath;
             Int32 MaxGamesPerHost;
             Int32 MinFreeGameSlots;
-            std::string CommandLineTemplate;
-            std::string ExecutablePath;
-            std::string Comment;
+            Boxed<GameBuildStatus> Status;
             time_t Timestamp;
             std::string TitleId;
-            Boxed<GameBuildStatus> Status;
 
             AddServerBuildResult() :
                 PlayFabBaseModel(),
-                BuildId(),
                 ActiveRegions(),
+                BuildId(),
+                CommandLineTemplate(),
+                Comment(),
+                ExecutablePath(),
                 MaxGamesPerHost(0),
                 MinFreeGameSlots(0),
-                CommandLineTemplate(),
-                ExecutablePath(),
-                Comment(),
+                Status(),
                 Timestamp(0),
-                TitleId(),
-                Status()
+                TitleId()
             {}
 
             AddServerBuildResult(const AddServerBuildResult& src) :
                 PlayFabBaseModel(),
-                BuildId(src.BuildId),
                 ActiveRegions(src.ActiveRegions),
+                BuildId(src.BuildId),
+                CommandLineTemplate(src.CommandLineTemplate),
+                Comment(src.Comment),
+                ExecutablePath(src.ExecutablePath),
                 MaxGamesPerHost(src.MaxGamesPerHost),
                 MinFreeGameSlots(src.MinFreeGameSlots),
-                CommandLineTemplate(src.CommandLineTemplate),
-                ExecutablePath(src.ExecutablePath),
-                Comment(src.Comment),
+                Status(src.Status),
                 Timestamp(src.Timestamp),
-                TitleId(src.TitleId),
-                Status(src.Status)
+                TitleId(src.TitleId)
             {}
 
             AddServerBuildResult(const rapidjson::Value& obj) : AddServerBuildResult()
@@ -451,22 +450,22 @@ namespace PlayFab
 
         struct AddUserVirtualCurrencyRequest : public PlayFabBaseModel
         {
+            Int32 Amount;
             std::string PlayFabId;
             std::string VirtualCurrency;
-            Int32 Amount;
 
             AddUserVirtualCurrencyRequest() :
                 PlayFabBaseModel(),
+                Amount(0),
                 PlayFabId(),
-                VirtualCurrency(),
-                Amount(0)
+                VirtualCurrency()
             {}
 
             AddUserVirtualCurrencyRequest(const AddUserVirtualCurrencyRequest& src) :
                 PlayFabBaseModel(),
+                Amount(src.Amount),
                 PlayFabId(src.PlayFabId),
-                VirtualCurrency(src.VirtualCurrency),
-                Amount(src.Amount)
+                VirtualCurrency(src.VirtualCurrency)
             {}
 
             AddUserVirtualCurrencyRequest(const rapidjson::Value& obj) : AddUserVirtualCurrencyRequest()
@@ -485,16 +484,16 @@ namespace PlayFab
             std::string CurrencyCode;
             std::string DisplayName;
             OptionalInt32 InitialDeposit;
-            OptionalInt32 RechargeRate;
             OptionalInt32 RechargeMax;
+            OptionalInt32 RechargeRate;
 
             VirtualCurrencyData() :
                 PlayFabBaseModel(),
                 CurrencyCode(),
                 DisplayName(),
                 InitialDeposit(),
-                RechargeRate(),
-                RechargeMax()
+                RechargeMax(),
+                RechargeRate()
             {}
 
             VirtualCurrencyData(const VirtualCurrencyData& src) :
@@ -502,8 +501,8 @@ namespace PlayFab
                 CurrencyCode(src.CurrencyCode),
                 DisplayName(src.DisplayName),
                 InitialDeposit(src.InitialDeposit),
-                RechargeRate(src.RechargeRate),
-                RechargeMax(src.RechargeMax)
+                RechargeMax(src.RechargeMax),
+                RechargeRate(src.RechargeRate)
             {}
 
             VirtualCurrencyData(const rapidjson::Value& obj) : VirtualCurrencyData()
@@ -579,37 +578,37 @@ namespace PlayFab
 
         struct BanInfo : public PlayFabBaseModel
         {
-            std::string PlayFabId;
+            bool Active;
             std::string BanId;
-            std::string IPAddress;
-            std::string MACAddress;
             OptionalTime Created;
             OptionalTime Expires;
+            std::string IPAddress;
+            std::string MACAddress;
+            std::string PlayFabId;
             std::string Reason;
-            bool Active;
 
             BanInfo() :
                 PlayFabBaseModel(),
-                PlayFabId(),
+                Active(false),
                 BanId(),
-                IPAddress(),
-                MACAddress(),
                 Created(),
                 Expires(),
-                Reason(),
-                Active(false)
+                IPAddress(),
+                MACAddress(),
+                PlayFabId(),
+                Reason()
             {}
 
             BanInfo(const BanInfo& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
+                Active(src.Active),
                 BanId(src.BanId),
-                IPAddress(src.IPAddress),
-                MACAddress(src.MACAddress),
                 Created(src.Created),
                 Expires(src.Expires),
-                Reason(src.Reason),
-                Active(src.Active)
+                IPAddress(src.IPAddress),
+                MACAddress(src.MACAddress),
+                PlayFabId(src.PlayFabId),
+                Reason(src.Reason)
             {}
 
             BanInfo(const rapidjson::Value& obj) : BanInfo()
@@ -625,28 +624,28 @@ namespace PlayFab
 
         struct BanRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
+            OptionalUint32 DurationInHours;
             std::string IPAddress;
             std::string MACAddress;
+            std::string PlayFabId;
             std::string Reason;
-            OptionalUint32 DurationInHours;
 
             BanRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
+                DurationInHours(),
                 IPAddress(),
                 MACAddress(),
-                Reason(),
-                DurationInHours()
+                PlayFabId(),
+                Reason()
             {}
 
             BanRequest(const BanRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
+                DurationInHours(src.DurationInHours),
                 IPAddress(src.IPAddress),
                 MACAddress(src.MACAddress),
-                Reason(src.Reason),
-                DurationInHours(src.DurationInHours)
+                PlayFabId(src.PlayFabId),
+                Reason(src.Reason)
             {}
 
             BanRequest(const rapidjson::Value& obj) : BanRequest()
@@ -732,6 +731,37 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct CatalogItemBundleInfo : public PlayFabBaseModel
+        {
+            std::list<std::string> BundledItems;
+            std::list<std::string> BundledResultTables;
+            std::map<std::string, Uint32> BundledVirtualCurrencies;
+
+            CatalogItemBundleInfo() :
+                PlayFabBaseModel(),
+                BundledItems(),
+                BundledResultTables(),
+                BundledVirtualCurrencies()
+            {}
+
+            CatalogItemBundleInfo(const CatalogItemBundleInfo& src) :
+                PlayFabBaseModel(),
+                BundledItems(src.BundledItems),
+                BundledResultTables(src.BundledResultTables),
+                BundledVirtualCurrencies(src.BundledVirtualCurrencies)
+            {}
+
+            CatalogItemBundleInfo(const rapidjson::Value& obj) : CatalogItemBundleInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~CatalogItemBundleInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CatalogItemConsumableInfo : public PlayFabBaseModel
         {
             OptionalUint32 UsageCount;
@@ -765,23 +795,23 @@ namespace PlayFab
 
         struct CatalogItemContainerInfo : public PlayFabBaseModel
         {
-            std::string KeyItemId;
             std::list<std::string> ItemContents;
+            std::string KeyItemId;
             std::list<std::string> ResultTableContents;
             std::map<std::string, Uint32> VirtualCurrencyContents;
 
             CatalogItemContainerInfo() :
                 PlayFabBaseModel(),
-                KeyItemId(),
                 ItemContents(),
+                KeyItemId(),
                 ResultTableContents(),
                 VirtualCurrencyContents()
             {}
 
             CatalogItemContainerInfo(const CatalogItemContainerInfo& src) :
                 PlayFabBaseModel(),
-                KeyItemId(src.KeyItemId),
                 ItemContents(src.ItemContents),
+                KeyItemId(src.KeyItemId),
                 ResultTableContents(src.ResultTableContents),
                 VirtualCurrencyContents(src.VirtualCurrencyContents)
             {}
@@ -797,100 +827,69 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct CatalogItemBundleInfo : public PlayFabBaseModel
-        {
-            std::list<std::string> BundledItems;
-            std::list<std::string> BundledResultTables;
-            std::map<std::string, Uint32> BundledVirtualCurrencies;
-
-            CatalogItemBundleInfo() :
-                PlayFabBaseModel(),
-                BundledItems(),
-                BundledResultTables(),
-                BundledVirtualCurrencies()
-            {}
-
-            CatalogItemBundleInfo(const CatalogItemBundleInfo& src) :
-                PlayFabBaseModel(),
-                BundledItems(src.BundledItems),
-                BundledResultTables(src.BundledResultTables),
-                BundledVirtualCurrencies(src.BundledVirtualCurrencies)
-            {}
-
-            CatalogItemBundleInfo(const rapidjson::Value& obj) : CatalogItemBundleInfo()
-            {
-                readFromValue(obj);
-            }
-
-            ~CatalogItemBundleInfo();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct CatalogItem : public PlayFabBaseModel
         {
-            std::string ItemId;
-            std::string ItemClass;
-            std::string CatalogVersion;
-            std::string DisplayName;
-            std::string Description;
-            std::map<std::string, Uint32> VirtualCurrencyPrices;
-            std::map<std::string, Uint32> RealCurrencyPrices;
-            std::list<std::string> Tags;
-            std::string CustomData;
-            CatalogItemConsumableInfo* Consumable;
-            CatalogItemContainerInfo* Container;
             CatalogItemBundleInfo* Bundle;
             bool CanBecomeCharacter;
+            std::string CatalogVersion;
+            CatalogItemConsumableInfo* Consumable;
+            CatalogItemContainerInfo* Container;
+            std::string CustomData;
+            std::string Description;
+            std::string DisplayName;
+            Int32 InitialLimitedEditionCount;
+            bool IsLimitedEdition;
             bool IsStackable;
             bool IsTradable;
+            std::string ItemClass;
+            std::string ItemId;
             std::string ItemImageUrl;
-            bool IsLimitedEdition;
-            Int32 InitialLimitedEditionCount;
+            std::map<std::string, Uint32> RealCurrencyPrices;
+            std::list<std::string> Tags;
+            std::map<std::string, Uint32> VirtualCurrencyPrices;
 
             CatalogItem() :
                 PlayFabBaseModel(),
-                ItemId(),
-                ItemClass(),
-                CatalogVersion(),
-                DisplayName(),
-                Description(),
-                VirtualCurrencyPrices(),
-                RealCurrencyPrices(),
-                Tags(),
-                CustomData(),
-                Consumable(NULL),
-                Container(NULL),
                 Bundle(NULL),
                 CanBecomeCharacter(false),
+                CatalogVersion(),
+                Consumable(NULL),
+                Container(NULL),
+                CustomData(),
+                Description(),
+                DisplayName(),
+                InitialLimitedEditionCount(0),
+                IsLimitedEdition(false),
                 IsStackable(false),
                 IsTradable(false),
+                ItemClass(),
+                ItemId(),
                 ItemImageUrl(),
-                IsLimitedEdition(false),
-                InitialLimitedEditionCount(0)
+                RealCurrencyPrices(),
+                Tags(),
+                VirtualCurrencyPrices()
             {}
 
             CatalogItem(const CatalogItem& src) :
                 PlayFabBaseModel(),
-                ItemId(src.ItemId),
-                ItemClass(src.ItemClass),
-                CatalogVersion(src.CatalogVersion),
-                DisplayName(src.DisplayName),
-                Description(src.Description),
-                VirtualCurrencyPrices(src.VirtualCurrencyPrices),
-                RealCurrencyPrices(src.RealCurrencyPrices),
-                Tags(src.Tags),
-                CustomData(src.CustomData),
-                Consumable(src.Consumable ? new CatalogItemConsumableInfo(*src.Consumable) : NULL),
-                Container(src.Container ? new CatalogItemContainerInfo(*src.Container) : NULL),
                 Bundle(src.Bundle ? new CatalogItemBundleInfo(*src.Bundle) : NULL),
                 CanBecomeCharacter(src.CanBecomeCharacter),
+                CatalogVersion(src.CatalogVersion),
+                Consumable(src.Consumable ? new CatalogItemConsumableInfo(*src.Consumable) : NULL),
+                Container(src.Container ? new CatalogItemContainerInfo(*src.Container) : NULL),
+                CustomData(src.CustomData),
+                Description(src.Description),
+                DisplayName(src.DisplayName),
+                InitialLimitedEditionCount(src.InitialLimitedEditionCount),
+                IsLimitedEdition(src.IsLimitedEdition),
                 IsStackable(src.IsStackable),
                 IsTradable(src.IsTradable),
+                ItemClass(src.ItemClass),
+                ItemId(src.ItemId),
                 ItemImageUrl(src.ItemImageUrl),
-                IsLimitedEdition(src.IsLimitedEdition),
-                InitialLimitedEditionCount(src.InitialLimitedEditionCount)
+                RealCurrencyPrices(src.RealCurrencyPrices),
+                Tags(src.Tags),
+                VirtualCurrencyPrices(src.VirtualCurrencyPrices)
             {}
 
             CatalogItem(const rapidjson::Value& obj) : CatalogItem()
@@ -906,19 +905,19 @@ namespace PlayFab
 
         struct CloudScriptFile : public PlayFabBaseModel
         {
-            std::string Filename;
             std::string FileContents;
+            std::string Filename;
 
             CloudScriptFile() :
                 PlayFabBaseModel(),
-                Filename(),
-                FileContents()
+                FileContents(),
+                Filename()
             {}
 
             CloudScriptFile(const CloudScriptFile& src) :
                 PlayFabBaseModel(),
-                Filename(src.Filename),
-                FileContents(src.FileContents)
+                FileContents(src.FileContents),
+                Filename(src.Filename)
             {}
 
             CloudScriptFile(const rapidjson::Value& obj) : CloudScriptFile()
@@ -934,19 +933,19 @@ namespace PlayFab
 
         struct CloudScriptTaskParameter : public PlayFabBaseModel
         {
-            std::string FunctionName;
             MultitypeVar Argument;
+            std::string FunctionName;
 
             CloudScriptTaskParameter() :
                 PlayFabBaseModel(),
-                FunctionName(),
-                Argument()
+                Argument(),
+                FunctionName()
             {}
 
             CloudScriptTaskParameter(const CloudScriptTaskParameter& src) :
                 PlayFabBaseModel(),
-                FunctionName(src.FunctionName),
-                Argument(src.Argument)
+                Argument(src.Argument),
+                FunctionName(src.FunctionName)
             {}
 
             CloudScriptTaskParameter(const rapidjson::Value& obj) : CloudScriptTaskParameter()
@@ -955,37 +954,6 @@ namespace PlayFab
             }
 
             ~CloudScriptTaskParameter();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct LogStatement : public PlayFabBaseModel
-        {
-            std::string Level;
-            std::string Message;
-            MultitypeVar Data;
-
-            LogStatement() :
-                PlayFabBaseModel(),
-                Level(),
-                Message(),
-                Data()
-            {}
-
-            LogStatement(const LogStatement& src) :
-                PlayFabBaseModel(),
-                Level(src.Level),
-                Message(src.Message),
-                Data(src.Data)
-            {}
-
-            LogStatement(const rapidjson::Value& obj) : LogStatement()
-            {
-                readFromValue(obj);
-            }
-
-            ~LogStatement();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1022,51 +990,82 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct LogStatement : public PlayFabBaseModel
+        {
+            MultitypeVar Data;
+            std::string Level;
+            std::string Message;
+
+            LogStatement() :
+                PlayFabBaseModel(),
+                Data(),
+                Level(),
+                Message()
+            {}
+
+            LogStatement(const LogStatement& src) :
+                PlayFabBaseModel(),
+                Data(src.Data),
+                Level(src.Level),
+                Message(src.Message)
+            {}
+
+            LogStatement(const rapidjson::Value& obj) : LogStatement()
+            {
+                readFromValue(obj);
+            }
+
+            ~LogStatement();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ExecuteCloudScriptResult : public PlayFabBaseModel
         {
+            Int32 APIRequestsIssued;
+            ScriptExecutionError* Error;
+            double ExecutionTimeSeconds;
             std::string FunctionName;
-            Int32 Revision;
             MultitypeVar FunctionResult;
             OptionalBool FunctionResultTooLarge;
+            Int32 HttpRequestsIssued;
             std::list<LogStatement> Logs;
             OptionalBool LogsTooLarge;
-            double ExecutionTimeSeconds;
-            double ProcessorTimeSeconds;
             Uint32 MemoryConsumedBytes;
-            Int32 APIRequestsIssued;
-            Int32 HttpRequestsIssued;
-            ScriptExecutionError* Error;
+            double ProcessorTimeSeconds;
+            Int32 Revision;
 
             ExecuteCloudScriptResult() :
                 PlayFabBaseModel(),
+                APIRequestsIssued(0),
+                Error(NULL),
+                ExecutionTimeSeconds(0),
                 FunctionName(),
-                Revision(0),
                 FunctionResult(),
                 FunctionResultTooLarge(),
+                HttpRequestsIssued(0),
                 Logs(),
                 LogsTooLarge(),
-                ExecutionTimeSeconds(0),
-                ProcessorTimeSeconds(0),
                 MemoryConsumedBytes(0),
-                APIRequestsIssued(0),
-                HttpRequestsIssued(0),
-                Error(NULL)
+                ProcessorTimeSeconds(0),
+                Revision(0)
             {}
 
             ExecuteCloudScriptResult(const ExecuteCloudScriptResult& src) :
                 PlayFabBaseModel(),
+                APIRequestsIssued(src.APIRequestsIssued),
+                Error(src.Error ? new ScriptExecutionError(*src.Error) : NULL),
+                ExecutionTimeSeconds(src.ExecutionTimeSeconds),
                 FunctionName(src.FunctionName),
-                Revision(src.Revision),
                 FunctionResult(src.FunctionResult),
                 FunctionResultTooLarge(src.FunctionResultTooLarge),
+                HttpRequestsIssued(src.HttpRequestsIssued),
                 Logs(src.Logs),
                 LogsTooLarge(src.LogsTooLarge),
-                ExecutionTimeSeconds(src.ExecutionTimeSeconds),
-                ProcessorTimeSeconds(src.ProcessorTimeSeconds),
                 MemoryConsumedBytes(src.MemoryConsumedBytes),
-                APIRequestsIssued(src.APIRequestsIssued),
-                HttpRequestsIssued(src.HttpRequestsIssued),
-                Error(src.Error ? new ScriptExecutionError(*src.Error) : NULL)
+                ProcessorTimeSeconds(src.ProcessorTimeSeconds),
+                Revision(src.Revision)
             {}
 
             ExecuteCloudScriptResult(const rapidjson::Value& obj) : ExecuteCloudScriptResult()
@@ -1082,40 +1081,40 @@ namespace PlayFab
 
         struct CloudScriptTaskSummary : public PlayFabBaseModel
         {
-            std::string TaskInstanceId;
-            NameIdentifier* TaskIdentifier;
-            time_t StartedAt;
             OptionalTime CompletedAt;
-            Boxed<TaskInstanceStatus> Status;
-            OptionalDouble PercentComplete;
             OptionalDouble EstimatedSecondsRemaining;
-            std::string ScheduledByUserId;
+            OptionalDouble PercentComplete;
             ExecuteCloudScriptResult* Result;
+            std::string ScheduledByUserId;
+            time_t StartedAt;
+            Boxed<TaskInstanceStatus> Status;
+            NameIdentifier* TaskIdentifier;
+            std::string TaskInstanceId;
 
             CloudScriptTaskSummary() :
                 PlayFabBaseModel(),
-                TaskInstanceId(),
-                TaskIdentifier(NULL),
-                StartedAt(0),
                 CompletedAt(),
-                Status(),
-                PercentComplete(),
                 EstimatedSecondsRemaining(),
+                PercentComplete(),
+                Result(NULL),
                 ScheduledByUserId(),
-                Result(NULL)
+                StartedAt(0),
+                Status(),
+                TaskIdentifier(NULL),
+                TaskInstanceId()
             {}
 
             CloudScriptTaskSummary(const CloudScriptTaskSummary& src) :
                 PlayFabBaseModel(),
-                TaskInstanceId(src.TaskInstanceId),
-                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
-                StartedAt(src.StartedAt),
                 CompletedAt(src.CompletedAt),
-                Status(src.Status),
-                PercentComplete(src.PercentComplete),
                 EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
+                PercentComplete(src.PercentComplete),
+                Result(src.Result ? new ExecuteCloudScriptResult(*src.Result) : NULL),
                 ScheduledByUserId(src.ScheduledByUserId),
-                Result(src.Result ? new ExecuteCloudScriptResult(*src.Result) : NULL)
+                StartedAt(src.StartedAt),
+                Status(src.Status),
+                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
+                TaskInstanceId(src.TaskInstanceId)
             {}
 
             CloudScriptTaskSummary(const rapidjson::Value& obj) : CloudScriptTaskSummary()
@@ -1131,22 +1130,22 @@ namespace PlayFab
 
         struct CloudScriptVersionStatus : public PlayFabBaseModel
         {
-            Int32 Version;
-            Int32 PublishedRevision;
             Int32 LatestRevision;
+            Int32 PublishedRevision;
+            Int32 Version;
 
             CloudScriptVersionStatus() :
                 PlayFabBaseModel(),
-                Version(0),
+                LatestRevision(0),
                 PublishedRevision(0),
-                LatestRevision(0)
+                Version(0)
             {}
 
             CloudScriptVersionStatus(const CloudScriptVersionStatus& src) :
                 PlayFabBaseModel(),
-                Version(src.Version),
+                LatestRevision(src.LatestRevision),
                 PublishedRevision(src.PublishedRevision),
-                LatestRevision(src.LatestRevision)
+                Version(src.Version)
             {}
 
             CloudScriptVersionStatus(const rapidjson::Value& obj) : CloudScriptVersionStatus()
@@ -1172,21 +1171,21 @@ namespace PlayFab
 
         struct ContactEmailInfo : public PlayFabBaseModel
         {
-            std::string Name;
             std::string EmailAddress;
+            std::string Name;
             Boxed<EmailVerificationStatus> VerificationStatus;
 
             ContactEmailInfo() :
                 PlayFabBaseModel(),
-                Name(),
                 EmailAddress(),
+                Name(),
                 VerificationStatus()
             {}
 
             ContactEmailInfo(const ContactEmailInfo& src) :
                 PlayFabBaseModel(),
-                Name(src.Name),
                 EmailAddress(src.EmailAddress),
+                Name(src.Name),
                 VerificationStatus(src.VerificationStatus)
             {}
 
@@ -1203,19 +1202,19 @@ namespace PlayFab
 
         struct ContactEmailInfoModel : public PlayFabBaseModel
         {
-            std::string Name;
             std::string EmailAddress;
+            std::string Name;
 
             ContactEmailInfoModel() :
                 PlayFabBaseModel(),
-                Name(),
-                EmailAddress()
+                EmailAddress(),
+                Name()
             {}
 
             ContactEmailInfoModel(const ContactEmailInfoModel& src) :
                 PlayFabBaseModel(),
-                Name(src.Name),
-                EmailAddress(src.EmailAddress)
+                EmailAddress(src.EmailAddress),
+                Name(src.Name)
             {}
 
             ContactEmailInfoModel(const rapidjson::Value& obj) : ContactEmailInfoModel()
@@ -1232,21 +1231,21 @@ namespace PlayFab
         struct ContentInfo : public PlayFabBaseModel
         {
             std::string Key;
-            Uint32 Size;
             time_t LastModified;
+            Uint32 Size;
 
             ContentInfo() :
                 PlayFabBaseModel(),
                 Key(),
-                Size(0),
-                LastModified(0)
+                LastModified(0),
+                Size(0)
             {}
 
             ContentInfo(const ContentInfo& src) :
                 PlayFabBaseModel(),
                 Key(src.Key),
-                Size(src.Size),
-                LastModified(src.LastModified)
+                LastModified(src.LastModified),
+                Size(src.Size)
             {}
 
             ContentInfo(const rapidjson::Value& obj) : ContentInfo()
@@ -1532,28 +1531,28 @@ namespace PlayFab
 
         struct CreateActionsOnPlayerSegmentTaskRequest : public PlayFabBaseModel
         {
-            std::string Name;
             std::string Description;
-            std::string Schedule;
             bool IsActive;
+            std::string Name;
             ActionsOnPlayersInSegmentTaskParameter Parameter;
+            std::string Schedule;
 
             CreateActionsOnPlayerSegmentTaskRequest() :
                 PlayFabBaseModel(),
-                Name(),
                 Description(),
-                Schedule(),
                 IsActive(false),
-                Parameter()
+                Name(),
+                Parameter(),
+                Schedule()
             {}
 
             CreateActionsOnPlayerSegmentTaskRequest(const CreateActionsOnPlayerSegmentTaskRequest& src) :
                 PlayFabBaseModel(),
-                Name(src.Name),
                 Description(src.Description),
-                Schedule(src.Schedule),
                 IsActive(src.IsActive),
-                Parameter(src.Parameter)
+                Name(src.Name),
+                Parameter(src.Parameter),
+                Schedule(src.Schedule)
             {}
 
             CreateActionsOnPlayerSegmentTaskRequest(const rapidjson::Value& obj) : CreateActionsOnPlayerSegmentTaskRequest()
@@ -1569,28 +1568,28 @@ namespace PlayFab
 
         struct CreateCloudScriptTaskRequest : public PlayFabBaseModel
         {
-            std::string Name;
             std::string Description;
-            std::string Schedule;
             bool IsActive;
+            std::string Name;
             CloudScriptTaskParameter Parameter;
+            std::string Schedule;
 
             CreateCloudScriptTaskRequest() :
                 PlayFabBaseModel(),
-                Name(),
                 Description(),
-                Schedule(),
                 IsActive(false),
-                Parameter()
+                Name(),
+                Parameter(),
+                Schedule()
             {}
 
             CreateCloudScriptTaskRequest(const CreateCloudScriptTaskRequest& src) :
                 PlayFabBaseModel(),
-                Name(src.Name),
                 Description(src.Description),
-                Schedule(src.Schedule),
                 IsActive(src.IsActive),
-                Parameter(src.Parameter)
+                Name(src.Name),
+                Parameter(src.Parameter),
+                Schedule(src.Schedule)
             {}
 
             CreateCloudScriptTaskRequest(const rapidjson::Value& obj) : CreateCloudScriptTaskRequest()
@@ -1654,6 +1653,17 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum StatisticAggregationMethod
+        {
+            StatisticAggregationMethodLast,
+            StatisticAggregationMethodMin,
+            StatisticAggregationMethodMax,
+            StatisticAggregationMethodSum
+        };
+
+        void writeStatisticAggregationMethodEnumJSON(StatisticAggregationMethod enumVal, PFStringJsonWriter& writer);
+        StatisticAggregationMethod readStatisticAggregationMethodFromValue(const rapidjson::Value& obj);
+
         enum StatisticResetIntervalOption
         {
             StatisticResetIntervalOptionNever,
@@ -1666,35 +1676,24 @@ namespace PlayFab
         void writeStatisticResetIntervalOptionEnumJSON(StatisticResetIntervalOption enumVal, PFStringJsonWriter& writer);
         StatisticResetIntervalOption readStatisticResetIntervalOptionFromValue(const rapidjson::Value& obj);
 
-        enum StatisticAggregationMethod
-        {
-            StatisticAggregationMethodLast,
-            StatisticAggregationMethodMin,
-            StatisticAggregationMethodMax,
-            StatisticAggregationMethodSum
-        };
-
-        void writeStatisticAggregationMethodEnumJSON(StatisticAggregationMethod enumVal, PFStringJsonWriter& writer);
-        StatisticAggregationMethod readStatisticAggregationMethodFromValue(const rapidjson::Value& obj);
-
         struct CreatePlayerStatisticDefinitionRequest : public PlayFabBaseModel
         {
+            Boxed<StatisticAggregationMethod> AggregationMethod;
             std::string StatisticName;
             Boxed<StatisticResetIntervalOption> VersionChangeInterval;
-            Boxed<StatisticAggregationMethod> AggregationMethod;
 
             CreatePlayerStatisticDefinitionRequest() :
                 PlayFabBaseModel(),
+                AggregationMethod(),
                 StatisticName(),
-                VersionChangeInterval(),
-                AggregationMethod()
+                VersionChangeInterval()
             {}
 
             CreatePlayerStatisticDefinitionRequest(const CreatePlayerStatisticDefinitionRequest& src) :
                 PlayFabBaseModel(),
+                AggregationMethod(src.AggregationMethod),
                 StatisticName(src.StatisticName),
-                VersionChangeInterval(src.VersionChangeInterval),
-                AggregationMethod(src.AggregationMethod)
+                VersionChangeInterval(src.VersionChangeInterval)
             {}
 
             CreatePlayerStatisticDefinitionRequest(const rapidjson::Value& obj) : CreatePlayerStatisticDefinitionRequest()
@@ -1710,25 +1709,25 @@ namespace PlayFab
 
         struct PlayerStatisticDefinition : public PlayFabBaseModel
         {
-            std::string StatisticName;
-            Uint32 CurrentVersion;
-            Boxed<StatisticResetIntervalOption> VersionChangeInterval;
             Boxed<StatisticAggregationMethod> AggregationMethod;
+            Uint32 CurrentVersion;
+            std::string StatisticName;
+            Boxed<StatisticResetIntervalOption> VersionChangeInterval;
 
             PlayerStatisticDefinition() :
                 PlayFabBaseModel(),
-                StatisticName(),
+                AggregationMethod(),
                 CurrentVersion(0),
-                VersionChangeInterval(),
-                AggregationMethod()
+                StatisticName(),
+                VersionChangeInterval()
             {}
 
             PlayerStatisticDefinition(const PlayerStatisticDefinition& src) :
                 PlayFabBaseModel(),
-                StatisticName(src.StatisticName),
+                AggregationMethod(src.AggregationMethod),
                 CurrentVersion(src.CurrentVersion),
-                VersionChangeInterval(src.VersionChangeInterval),
-                AggregationMethod(src.AggregationMethod)
+                StatisticName(src.StatisticName),
+                VersionChangeInterval(src.VersionChangeInterval)
             {}
 
             PlayerStatisticDefinition(const rapidjson::Value& obj) : PlayerStatisticDefinition()
@@ -2239,23 +2238,23 @@ namespace PlayFab
         struct GameModeInfo : public PlayFabBaseModel
         {
             std::string Gamemode;
-            Uint32 MinPlayerCount;
             Uint32 MaxPlayerCount;
+            Uint32 MinPlayerCount;
             OptionalBool StartOpen;
 
             GameModeInfo() :
                 PlayFabBaseModel(),
                 Gamemode(),
-                MinPlayerCount(0),
                 MaxPlayerCount(0),
+                MinPlayerCount(0),
                 StartOpen()
             {}
 
             GameModeInfo(const GameModeInfo& src) :
                 PlayFabBaseModel(),
                 Gamemode(src.Gamemode),
-                MinPlayerCount(src.MinPlayerCount),
                 MaxPlayerCount(src.MaxPlayerCount),
+                MinPlayerCount(src.MinPlayerCount),
                 StartOpen(src.StartOpen)
             {}
 
@@ -2273,19 +2272,19 @@ namespace PlayFab
         // Deprecated - Do not use
         struct GetActionGroupResult : public PlayFabBaseModel
         {
-            std::string Name;
             std::string Id;
+            std::string Name;
 
             GetActionGroupResult() :
                 PlayFabBaseModel(),
-                Name(),
-                Id()
+                Id(),
+                Name()
             {}
 
             GetActionGroupResult(const GetActionGroupResult& src) :
                 PlayFabBaseModel(),
-                Name(src.Name),
-                Id(src.Id)
+                Id(src.Id),
+                Name(src.Name)
             {}
 
             GetActionGroupResult(const rapidjson::Value& obj) : GetActionGroupResult()
@@ -2299,22 +2298,21 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        // Deprecated - Do not use
         struct GetActionsOnPlayersInSegmentTaskInstanceResult : public PlayFabBaseModel
         {
-            ActionsOnPlayersInSegmentTaskSummary* Summary;
             ActionsOnPlayersInSegmentTaskParameter* Parameter;
+            ActionsOnPlayersInSegmentTaskSummary* Summary;
 
             GetActionsOnPlayersInSegmentTaskInstanceResult() :
                 PlayFabBaseModel(),
-                Summary(NULL),
-                Parameter(NULL)
+                Parameter(NULL),
+                Summary(NULL)
             {}
 
             GetActionsOnPlayersInSegmentTaskInstanceResult(const GetActionsOnPlayersInSegmentTaskInstanceResult& src) :
                 PlayFabBaseModel(),
-                Summary(src.Summary ? new ActionsOnPlayersInSegmentTaskSummary(*src.Summary) : NULL),
-                Parameter(src.Parameter ? new ActionsOnPlayersInSegmentTaskParameter(*src.Parameter) : NULL)
+                Parameter(src.Parameter ? new ActionsOnPlayersInSegmentTaskParameter(*src.Parameter) : NULL),
+                Summary(src.Summary ? new ActionsOnPlayersInSegmentTaskSummary(*src.Summary) : NULL)
             {}
 
             GetActionsOnPlayersInSegmentTaskInstanceResult(const rapidjson::Value& obj) : GetActionsOnPlayersInSegmentTaskInstanceResult()
@@ -2401,22 +2399,22 @@ namespace PlayFab
 
         struct GetSegmentResult : public PlayFabBaseModel
         {
+            std::string ABTestParent;
             std::string Id;
             std::string Name;
-            std::string ABTestParent;
 
             GetSegmentResult() :
                 PlayFabBaseModel(),
+                ABTestParent(),
                 Id(),
-                Name(),
-                ABTestParent()
+                Name()
             {}
 
             GetSegmentResult(const GetSegmentResult& src) :
                 PlayFabBaseModel(),
+                ABTestParent(src.ABTestParent),
                 Id(src.Id),
-                Name(src.Name),
-                ABTestParent(src.ABTestParent)
+                Name(src.Name)
             {}
 
             GetSegmentResult(const rapidjson::Value& obj) : GetSegmentResult()
@@ -2507,19 +2505,19 @@ namespace PlayFab
 
         struct GetCloudScriptRevisionRequest : public PlayFabBaseModel
         {
-            OptionalInt32 Version;
             OptionalInt32 Revision;
+            OptionalInt32 Version;
 
             GetCloudScriptRevisionRequest() :
                 PlayFabBaseModel(),
-                Version(),
-                Revision()
+                Revision(),
+                Version()
             {}
 
             GetCloudScriptRevisionRequest(const GetCloudScriptRevisionRequest& src) :
                 PlayFabBaseModel(),
-                Version(src.Version),
-                Revision(src.Revision)
+                Revision(src.Revision),
+                Version(src.Version)
             {}
 
             GetCloudScriptRevisionRequest(const rapidjson::Value& obj) : GetCloudScriptRevisionRequest()
@@ -2535,28 +2533,28 @@ namespace PlayFab
 
         struct GetCloudScriptRevisionResult : public PlayFabBaseModel
         {
-            Int32 Version;
-            Int32 Revision;
             time_t CreatedAt;
             std::list<CloudScriptFile> Files;
             bool IsPublished;
+            Int32 Revision;
+            Int32 Version;
 
             GetCloudScriptRevisionResult() :
                 PlayFabBaseModel(),
-                Version(0),
-                Revision(0),
                 CreatedAt(0),
                 Files(),
-                IsPublished(false)
+                IsPublished(false),
+                Revision(0),
+                Version(0)
             {}
 
             GetCloudScriptRevisionResult(const GetCloudScriptRevisionResult& src) :
                 PlayFabBaseModel(),
-                Version(src.Version),
-                Revision(src.Revision),
                 CreatedAt(src.CreatedAt),
                 Files(src.Files),
-                IsPublished(src.IsPublished)
+                IsPublished(src.IsPublished),
+                Revision(src.Revision),
+                Version(src.Version)
             {}
 
             GetCloudScriptRevisionResult(const rapidjson::Value& obj) : GetCloudScriptRevisionResult()
@@ -2572,19 +2570,19 @@ namespace PlayFab
 
         struct GetCloudScriptTaskInstanceResult : public PlayFabBaseModel
         {
-            CloudScriptTaskSummary* Summary;
             CloudScriptTaskParameter* Parameter;
+            CloudScriptTaskSummary* Summary;
 
             GetCloudScriptTaskInstanceResult() :
                 PlayFabBaseModel(),
-                Summary(NULL),
-                Parameter(NULL)
+                Parameter(NULL),
+                Summary(NULL)
             {}
 
             GetCloudScriptTaskInstanceResult(const GetCloudScriptTaskInstanceResult& src) :
                 PlayFabBaseModel(),
-                Summary(src.Summary ? new CloudScriptTaskSummary(*src.Summary) : NULL),
-                Parameter(src.Parameter ? new CloudScriptTaskParameter(*src.Parameter) : NULL)
+                Parameter(src.Parameter ? new CloudScriptTaskParameter(*src.Parameter) : NULL),
+                Summary(src.Summary ? new CloudScriptTaskSummary(*src.Summary) : NULL)
             {}
 
             GetCloudScriptTaskInstanceResult(const rapidjson::Value& obj) : GetCloudScriptTaskInstanceResult()
@@ -2672,22 +2670,22 @@ namespace PlayFab
 
         struct GetContentListResult : public PlayFabBaseModel
         {
+            std::list<ContentInfo> Contents;
             Int32 ItemCount;
             Uint32 TotalSize;
-            std::list<ContentInfo> Contents;
 
             GetContentListResult() :
                 PlayFabBaseModel(),
+                Contents(),
                 ItemCount(0),
-                TotalSize(0),
-                Contents()
+                TotalSize(0)
             {}
 
             GetContentListResult(const GetContentListResult& src) :
                 PlayFabBaseModel(),
+                Contents(src.Contents),
                 ItemCount(src.ItemCount),
-                TotalSize(src.TotalSize),
-                Contents(src.Contents)
+                TotalSize(src.TotalSize)
             {}
 
             GetContentListResult(const rapidjson::Value& obj) : GetContentListResult()
@@ -2703,19 +2701,19 @@ namespace PlayFab
 
         struct GetContentUploadUrlRequest : public PlayFabBaseModel
         {
-            std::string Key;
             std::string ContentType;
+            std::string Key;
 
             GetContentUploadUrlRequest() :
                 PlayFabBaseModel(),
-                Key(),
-                ContentType()
+                ContentType(),
+                Key()
             {}
 
             GetContentUploadUrlRequest(const GetContentUploadUrlRequest& src) :
                 PlayFabBaseModel(),
-                Key(src.Key),
-                ContentType(src.ContentType)
+                ContentType(src.ContentType),
+                Key(src.Key)
             {}
 
             GetContentUploadUrlRequest(const rapidjson::Value& obj) : GetContentUploadUrlRequest()
@@ -2756,25 +2754,25 @@ namespace PlayFab
 
         struct GetDataReportRequest : public PlayFabBaseModel
         {
+            Int32 Day;
+            Int32 Month;
             std::string ReportName;
             Int32 Year;
-            Int32 Month;
-            Int32 Day;
 
             GetDataReportRequest() :
                 PlayFabBaseModel(),
-                ReportName(),
-                Year(0),
+                Day(0),
                 Month(0),
-                Day(0)
+                ReportName(),
+                Year(0)
             {}
 
             GetDataReportRequest(const GetDataReportRequest& src) :
                 PlayFabBaseModel(),
-                ReportName(src.ReportName),
-                Year(src.Year),
+                Day(src.Day),
                 Month(src.Month),
-                Day(src.Day)
+                ReportName(src.ReportName),
+                Year(src.Year)
             {}
 
             GetDataReportRequest(const rapidjson::Value& obj) : GetDataReportRequest()
@@ -2840,43 +2838,43 @@ namespace PlayFab
 
         struct GetMatchmakerGameInfoResult : public PlayFabBaseModel
         {
-            std::string LobbyId;
-            std::string TitleId;
-            time_t StartTime;
-            OptionalTime EndTime;
-            std::string Mode;
             std::string BuildVersion;
-            Boxed<Region> pfRegion;
+            OptionalTime EndTime;
+            std::string LobbyId;
+            std::string Mode;
             std::list<std::string> Players;
+            Boxed<Region> pfRegion;
             std::string ServerAddress;
             Uint32 ServerPort;
+            time_t StartTime;
+            std::string TitleId;
 
             GetMatchmakerGameInfoResult() :
                 PlayFabBaseModel(),
-                LobbyId(),
-                TitleId(),
-                StartTime(0),
-                EndTime(),
-                Mode(),
                 BuildVersion(),
-                pfRegion(),
+                EndTime(),
+                LobbyId(),
+                Mode(),
                 Players(),
+                pfRegion(),
                 ServerAddress(),
-                ServerPort(0)
+                ServerPort(0),
+                StartTime(0),
+                TitleId()
             {}
 
             GetMatchmakerGameInfoResult(const GetMatchmakerGameInfoResult& src) :
                 PlayFabBaseModel(),
-                LobbyId(src.LobbyId),
-                TitleId(src.TitleId),
-                StartTime(src.StartTime),
-                EndTime(src.EndTime),
-                Mode(src.Mode),
                 BuildVersion(src.BuildVersion),
-                pfRegion(src.pfRegion),
+                EndTime(src.EndTime),
+                LobbyId(src.LobbyId),
+                Mode(src.Mode),
                 Players(src.Players),
+                pfRegion(src.pfRegion),
                 ServerAddress(src.ServerAddress),
-                ServerPort(src.ServerPort)
+                ServerPort(src.ServerPort),
+                StartTime(src.StartTime),
+                TitleId(src.TitleId)
             {}
 
             GetMatchmakerGameInfoResult(const rapidjson::Value& obj) : GetMatchmakerGameInfoResult()
@@ -2942,58 +2940,61 @@ namespace PlayFab
 
         struct PlayerProfileViewConstraints : public PlayFabBaseModel
         {
-            bool ShowDisplayName;
-            bool ShowCreated;
-            bool ShowOrigination;
-            bool ShowLastLogin;
+            bool ShowAvatarUrl;
             bool ShowBannedUntil;
-            bool ShowStatistics;
             bool ShowCampaignAttributions;
-            bool ShowPushNotificationRegistrations;
-            bool ShowLinkedAccounts;
             bool ShowContactEmailAddresses;
+            bool ShowCreated;
+            bool ShowDisplayName;
+            bool ShowLastLogin;
+            bool ShowLinkedAccounts;
+            bool ShowLocations;
+            bool ShowMemberships;
+            bool ShowOrigination;
+            bool ShowPushNotificationRegistrations;
+            bool ShowStatistics;
+            bool ShowTags;
             bool ShowTotalValueToDateInUsd;
             bool ShowValuesToDate;
-            bool ShowTags;
-            bool ShowLocations;
-            bool ShowAvatarUrl;
 
             PlayerProfileViewConstraints() :
                 PlayFabBaseModel(),
-                ShowDisplayName(false),
-                ShowCreated(false),
-                ShowOrigination(false),
-                ShowLastLogin(false),
+                ShowAvatarUrl(false),
                 ShowBannedUntil(false),
-                ShowStatistics(false),
                 ShowCampaignAttributions(false),
-                ShowPushNotificationRegistrations(false),
-                ShowLinkedAccounts(false),
                 ShowContactEmailAddresses(false),
-                ShowTotalValueToDateInUsd(false),
-                ShowValuesToDate(false),
-                ShowTags(false),
+                ShowCreated(false),
+                ShowDisplayName(false),
+                ShowLastLogin(false),
+                ShowLinkedAccounts(false),
                 ShowLocations(false),
-                ShowAvatarUrl(false)
+                ShowMemberships(false),
+                ShowOrigination(false),
+                ShowPushNotificationRegistrations(false),
+                ShowStatistics(false),
+                ShowTags(false),
+                ShowTotalValueToDateInUsd(false),
+                ShowValuesToDate(false)
             {}
 
             PlayerProfileViewConstraints(const PlayerProfileViewConstraints& src) :
                 PlayFabBaseModel(),
-                ShowDisplayName(src.ShowDisplayName),
-                ShowCreated(src.ShowCreated),
-                ShowOrigination(src.ShowOrigination),
-                ShowLastLogin(src.ShowLastLogin),
+                ShowAvatarUrl(src.ShowAvatarUrl),
                 ShowBannedUntil(src.ShowBannedUntil),
-                ShowStatistics(src.ShowStatistics),
                 ShowCampaignAttributions(src.ShowCampaignAttributions),
-                ShowPushNotificationRegistrations(src.ShowPushNotificationRegistrations),
-                ShowLinkedAccounts(src.ShowLinkedAccounts),
                 ShowContactEmailAddresses(src.ShowContactEmailAddresses),
-                ShowTotalValueToDateInUsd(src.ShowTotalValueToDateInUsd),
-                ShowValuesToDate(src.ShowValuesToDate),
-                ShowTags(src.ShowTags),
+                ShowCreated(src.ShowCreated),
+                ShowDisplayName(src.ShowDisplayName),
+                ShowLastLogin(src.ShowLastLogin),
+                ShowLinkedAccounts(src.ShowLinkedAccounts),
                 ShowLocations(src.ShowLocations),
-                ShowAvatarUrl(src.ShowAvatarUrl)
+                ShowMemberships(src.ShowMemberships),
+                ShowOrigination(src.ShowOrigination),
+                ShowPushNotificationRegistrations(src.ShowPushNotificationRegistrations),
+                ShowStatistics(src.ShowStatistics),
+                ShowTags(src.ShowTags),
+                ShowTotalValueToDateInUsd(src.ShowTotalValueToDateInUsd),
+                ShowValuesToDate(src.ShowValuesToDate)
             {}
 
             PlayerProfileViewConstraints(const rapidjson::Value& obj) : PlayerProfileViewConstraints()
@@ -3056,28 +3057,62 @@ namespace PlayFab
         void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);
         LoginIdentityProvider readLoginIdentityProviderFromValue(const rapidjson::Value& obj);
 
+        struct LinkedPlatformAccountModel : public PlayFabBaseModel
+        {
+            std::string Email;
+            Boxed<LoginIdentityProvider> Platform;
+            std::string PlatformUserId;
+            std::string Username;
+
+            LinkedPlatformAccountModel() :
+                PlayFabBaseModel(),
+                Email(),
+                Platform(),
+                PlatformUserId(),
+                Username()
+            {}
+
+            LinkedPlatformAccountModel(const LinkedPlatformAccountModel& src) :
+                PlayFabBaseModel(),
+                Email(src.Email),
+                Platform(src.Platform),
+                PlatformUserId(src.PlatformUserId),
+                Username(src.Username)
+            {}
+
+            LinkedPlatformAccountModel(const rapidjson::Value& obj) : LinkedPlatformAccountModel()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkedPlatformAccountModel();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct LocationModel : public PlayFabBaseModel
         {
+            std::string City;
             Boxed<ContinentCode> pfContinentCode;
             Boxed<CountryCode> pfCountryCode;
-            std::string City;
             OptionalDouble Latitude;
             OptionalDouble Longitude;
 
             LocationModel() :
                 PlayFabBaseModel(),
+                City(),
                 pfContinentCode(),
                 pfCountryCode(),
-                City(),
                 Latitude(),
                 Longitude()
             {}
 
             LocationModel(const LocationModel& src) :
                 PlayFabBaseModel(),
+                City(src.City),
                 pfContinentCode(src.pfContinentCode),
                 pfCountryCode(src.pfCountryCode),
-                City(src.City),
                 Latitude(src.Latitude),
                 Longitude(src.Longitude)
             {}
@@ -3088,6 +3123,169 @@ namespace PlayFab
             }
 
             ~LocationModel();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum SubscriptionProviderStatus
+        {
+            SubscriptionProviderStatusNoError,
+            SubscriptionProviderStatusCancelled,
+            SubscriptionProviderStatusUnknownError,
+            SubscriptionProviderStatusBillingError,
+            SubscriptionProviderStatusProductUnavailable,
+            SubscriptionProviderStatusCustomerDidNotAcceptPriceChange,
+            SubscriptionProviderStatusFreeTrial,
+            SubscriptionProviderStatusPaymentPending
+        };
+
+        void writeSubscriptionProviderStatusEnumJSON(SubscriptionProviderStatus enumVal, PFStringJsonWriter& writer);
+        SubscriptionProviderStatus readSubscriptionProviderStatusFromValue(const rapidjson::Value& obj);
+
+        struct SubscriptionModel : public PlayFabBaseModel
+        {
+            time_t Expiration;
+            time_t InitialSubscriptionTime;
+            bool IsActive;
+            Boxed<SubscriptionProviderStatus> Status;
+            std::string SubscriptionId;
+            std::string SubscriptionItemId;
+            std::string SubscriptionProvider;
+
+            SubscriptionModel() :
+                PlayFabBaseModel(),
+                Expiration(0),
+                InitialSubscriptionTime(0),
+                IsActive(false),
+                Status(),
+                SubscriptionId(),
+                SubscriptionItemId(),
+                SubscriptionProvider()
+            {}
+
+            SubscriptionModel(const SubscriptionModel& src) :
+                PlayFabBaseModel(),
+                Expiration(src.Expiration),
+                InitialSubscriptionTime(src.InitialSubscriptionTime),
+                IsActive(src.IsActive),
+                Status(src.Status),
+                SubscriptionId(src.SubscriptionId),
+                SubscriptionItemId(src.SubscriptionItemId),
+                SubscriptionProvider(src.SubscriptionProvider)
+            {}
+
+            SubscriptionModel(const rapidjson::Value& obj) : SubscriptionModel()
+            {
+                readFromValue(obj);
+            }
+
+            ~SubscriptionModel();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct MembershipModel : public PlayFabBaseModel
+        {
+            bool IsActive;
+            time_t MembershipExpiration;
+            std::string MembershipId;
+            OptionalTime OverrideExpiration;
+            std::list<SubscriptionModel> Subscriptions;
+
+            MembershipModel() :
+                PlayFabBaseModel(),
+                IsActive(false),
+                MembershipExpiration(0),
+                MembershipId(),
+                OverrideExpiration(),
+                Subscriptions()
+            {}
+
+            MembershipModel(const MembershipModel& src) :
+                PlayFabBaseModel(),
+                IsActive(src.IsActive),
+                MembershipExpiration(src.MembershipExpiration),
+                MembershipId(src.MembershipId),
+                OverrideExpiration(src.OverrideExpiration),
+                Subscriptions(src.Subscriptions)
+            {}
+
+            MembershipModel(const rapidjson::Value& obj) : MembershipModel()
+            {
+                readFromValue(obj);
+            }
+
+            ~MembershipModel();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum PushNotificationPlatform
+        {
+            PushNotificationPlatformApplePushNotificationService,
+            PushNotificationPlatformGoogleCloudMessaging
+        };
+
+        void writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, PFStringJsonWriter& writer);
+        PushNotificationPlatform readPushNotificationPlatformFromValue(const rapidjson::Value& obj);
+
+        struct PushNotificationRegistrationModel : public PlayFabBaseModel
+        {
+            std::string NotificationEndpointARN;
+            Boxed<PushNotificationPlatform> Platform;
+
+            PushNotificationRegistrationModel() :
+                PlayFabBaseModel(),
+                NotificationEndpointARN(),
+                Platform()
+            {}
+
+            PushNotificationRegistrationModel(const PushNotificationRegistrationModel& src) :
+                PlayFabBaseModel(),
+                NotificationEndpointARN(src.NotificationEndpointARN),
+                Platform(src.Platform)
+            {}
+
+            PushNotificationRegistrationModel(const rapidjson::Value& obj) : PushNotificationRegistrationModel()
+            {
+                readFromValue(obj);
+            }
+
+            ~PushNotificationRegistrationModel();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct StatisticModel : public PlayFabBaseModel
+        {
+            std::string Name;
+            Int32 Value;
+            Int32 Version;
+
+            StatisticModel() :
+                PlayFabBaseModel(),
+                Name(),
+                Value(0),
+                Version(0)
+            {}
+
+            StatisticModel(const StatisticModel& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                Value(src.Value),
+                Version(src.Version)
+            {}
+
+            StatisticModel(const rapidjson::Value& obj) : StatisticModel()
+            {
+                readFromValue(obj);
+            }
+
+            ~StatisticModel();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -3113,77 +3311,6 @@ namespace PlayFab
             }
 
             ~TagModel();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        enum PushNotificationPlatform
-        {
-            PushNotificationPlatformApplePushNotificationService,
-            PushNotificationPlatformGoogleCloudMessaging
-        };
-
-        void writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, PFStringJsonWriter& writer);
-        PushNotificationPlatform readPushNotificationPlatformFromValue(const rapidjson::Value& obj);
-
-        struct PushNotificationRegistrationModel : public PlayFabBaseModel
-        {
-            Boxed<PushNotificationPlatform> Platform;
-            std::string NotificationEndpointARN;
-
-            PushNotificationRegistrationModel() :
-                PlayFabBaseModel(),
-                Platform(),
-                NotificationEndpointARN()
-            {}
-
-            PushNotificationRegistrationModel(const PushNotificationRegistrationModel& src) :
-                PlayFabBaseModel(),
-                Platform(src.Platform),
-                NotificationEndpointARN(src.NotificationEndpointARN)
-            {}
-
-            PushNotificationRegistrationModel(const rapidjson::Value& obj) : PushNotificationRegistrationModel()
-            {
-                readFromValue(obj);
-            }
-
-            ~PushNotificationRegistrationModel();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct LinkedPlatformAccountModel : public PlayFabBaseModel
-        {
-            Boxed<LoginIdentityProvider> Platform;
-            std::string PlatformUserId;
-            std::string Username;
-            std::string Email;
-
-            LinkedPlatformAccountModel() :
-                PlayFabBaseModel(),
-                Platform(),
-                PlatformUserId(),
-                Username(),
-                Email()
-            {}
-
-            LinkedPlatformAccountModel(const LinkedPlatformAccountModel& src) :
-                PlayFabBaseModel(),
-                Platform(src.Platform),
-                PlatformUserId(src.PlatformUserId),
-                Username(src.Username),
-                Email(src.Email)
-            {}
-
-            LinkedPlatformAccountModel(const rapidjson::Value& obj) : LinkedPlatformAccountModel()
-            {
-                readFromValue(obj);
-            }
-
-            ~LinkedPlatformAccountModel();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -3248,103 +3375,75 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct StatisticModel : public PlayFabBaseModel
-        {
-            std::string Name;
-            Int32 Version;
-            Int32 Value;
-
-            StatisticModel() :
-                PlayFabBaseModel(),
-                Name(),
-                Version(0),
-                Value(0)
-            {}
-
-            StatisticModel(const StatisticModel& src) :
-                PlayFabBaseModel(),
-                Name(src.Name),
-                Version(src.Version),
-                Value(src.Value)
-            {}
-
-            StatisticModel(const rapidjson::Value& obj) : StatisticModel()
-            {
-                readFromValue(obj);
-            }
-
-            ~StatisticModel();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct PlayerProfileModel : public PlayFabBaseModel
         {
-            std::string PublisherId;
-            std::string TitleId;
-            std::string PlayerId;
-            OptionalTime Created;
-            Boxed<LoginIdentityProvider> Origination;
-            OptionalTime LastLogin;
-            OptionalTime BannedUntil;
-            std::list<LocationModel> Locations;
-            std::string DisplayName;
-            std::string AvatarUrl;
-            std::list<TagModel> Tags;
-            std::list<PushNotificationRegistrationModel> PushNotificationRegistrations;
-            std::list<LinkedPlatformAccountModel> LinkedAccounts;
-            std::list<ContactEmailInfoModel> ContactEmailAddresses;
             std::list<AdCampaignAttributionModel> AdCampaignAttributions;
+            std::string AvatarUrl;
+            OptionalTime BannedUntil;
+            std::list<ContactEmailInfoModel> ContactEmailAddresses;
+            OptionalTime Created;
+            std::string DisplayName;
+            OptionalTime LastLogin;
+            std::list<LinkedPlatformAccountModel> LinkedAccounts;
+            std::list<LocationModel> Locations;
+            std::list<MembershipModel> Memberships;
+            Boxed<LoginIdentityProvider> Origination;
+            std::string PlayerId;
+            std::string PublisherId;
+            std::list<PushNotificationRegistrationModel> PushNotificationRegistrations;
+            std::list<StatisticModel> Statistics;
+            std::list<TagModel> Tags;
+            std::string TitleId;
             OptionalUint32 TotalValueToDateInUSD;
             std::list<ValueToDateModel> ValuesToDate;
             std::list<VirtualCurrencyBalanceModel> VirtualCurrencyBalances;
-            std::list<StatisticModel> Statistics;
 
             PlayerProfileModel() :
                 PlayFabBaseModel(),
-                PublisherId(),
-                TitleId(),
-                PlayerId(),
-                Created(),
-                Origination(),
-                LastLogin(),
-                BannedUntil(),
-                Locations(),
-                DisplayName(),
-                AvatarUrl(),
-                Tags(),
-                PushNotificationRegistrations(),
-                LinkedAccounts(),
-                ContactEmailAddresses(),
                 AdCampaignAttributions(),
+                AvatarUrl(),
+                BannedUntil(),
+                ContactEmailAddresses(),
+                Created(),
+                DisplayName(),
+                LastLogin(),
+                LinkedAccounts(),
+                Locations(),
+                Memberships(),
+                Origination(),
+                PlayerId(),
+                PublisherId(),
+                PushNotificationRegistrations(),
+                Statistics(),
+                Tags(),
+                TitleId(),
                 TotalValueToDateInUSD(),
                 ValuesToDate(),
-                VirtualCurrencyBalances(),
-                Statistics()
+                VirtualCurrencyBalances()
             {}
 
             PlayerProfileModel(const PlayerProfileModel& src) :
                 PlayFabBaseModel(),
-                PublisherId(src.PublisherId),
-                TitleId(src.TitleId),
-                PlayerId(src.PlayerId),
-                Created(src.Created),
-                Origination(src.Origination),
-                LastLogin(src.LastLogin),
-                BannedUntil(src.BannedUntil),
-                Locations(src.Locations),
-                DisplayName(src.DisplayName),
-                AvatarUrl(src.AvatarUrl),
-                Tags(src.Tags),
-                PushNotificationRegistrations(src.PushNotificationRegistrations),
-                LinkedAccounts(src.LinkedAccounts),
-                ContactEmailAddresses(src.ContactEmailAddresses),
                 AdCampaignAttributions(src.AdCampaignAttributions),
+                AvatarUrl(src.AvatarUrl),
+                BannedUntil(src.BannedUntil),
+                ContactEmailAddresses(src.ContactEmailAddresses),
+                Created(src.Created),
+                DisplayName(src.DisplayName),
+                LastLogin(src.LastLogin),
+                LinkedAccounts(src.LinkedAccounts),
+                Locations(src.Locations),
+                Memberships(src.Memberships),
+                Origination(src.Origination),
+                PlayerId(src.PlayerId),
+                PublisherId(src.PublisherId),
+                PushNotificationRegistrations(src.PushNotificationRegistrations),
+                Statistics(src.Statistics),
+                Tags(src.Tags),
+                TitleId(src.TitleId),
                 TotalValueToDateInUSD(src.TotalValueToDateInUSD),
                 ValuesToDate(src.ValuesToDate),
-                VirtualCurrencyBalances(src.VirtualCurrencyBalances),
-                Statistics(src.Statistics)
+                VirtualCurrencyBalances(src.VirtualCurrencyBalances)
             {}
 
             PlayerProfileModel(const rapidjson::Value& obj) : PlayerProfileModel()
@@ -3432,22 +3531,22 @@ namespace PlayFab
 
         struct SharedSecret : public PlayFabBaseModel
         {
-            std::string SecretKey;
-            std::string FriendlyName;
             bool Disabled;
+            std::string FriendlyName;
+            std::string SecretKey;
 
             SharedSecret() :
                 PlayFabBaseModel(),
-                SecretKey(),
+                Disabled(false),
                 FriendlyName(),
-                Disabled(false)
+                SecretKey()
             {}
 
             SharedSecret(const SharedSecret& src) :
                 PlayFabBaseModel(),
-                SecretKey(src.SecretKey),
+                Disabled(src.Disabled),
                 FriendlyName(src.FriendlyName),
-                Disabled(src.Disabled)
+                SecretKey(src.SecretKey)
             {}
 
             SharedSecret(const rapidjson::Value& obj) : SharedSecret()
@@ -3488,25 +3587,25 @@ namespace PlayFab
 
         struct GetPlayersInSegmentRequest : public PlayFabBaseModel
         {
-            std::string SegmentId;
-            OptionalUint32 SecondsToLive;
-            OptionalUint32 MaxBatchSize;
             std::string ContinuationToken;
+            OptionalUint32 MaxBatchSize;
+            OptionalUint32 SecondsToLive;
+            std::string SegmentId;
 
             GetPlayersInSegmentRequest() :
                 PlayFabBaseModel(),
-                SegmentId(),
-                SecondsToLive(),
+                ContinuationToken(),
                 MaxBatchSize(),
-                ContinuationToken()
+                SecondsToLive(),
+                SegmentId()
             {}
 
             GetPlayersInSegmentRequest(const GetPlayersInSegmentRequest& src) :
                 PlayFabBaseModel(),
-                SegmentId(src.SegmentId),
-                SecondsToLive(src.SecondsToLive),
+                ContinuationToken(src.ContinuationToken),
                 MaxBatchSize(src.MaxBatchSize),
-                ContinuationToken(src.ContinuationToken)
+                SecondsToLive(src.SecondsToLive),
+                SegmentId(src.SegmentId)
             {}
 
             GetPlayersInSegmentRequest(const rapidjson::Value& obj) : GetPlayersInSegmentRequest()
@@ -3520,28 +3619,62 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct PlayerLinkedAccount : public PlayFabBaseModel
+        {
+            std::string Email;
+            Boxed<LoginIdentityProvider> Platform;
+            std::string PlatformUserId;
+            std::string Username;
+
+            PlayerLinkedAccount() :
+                PlayFabBaseModel(),
+                Email(),
+                Platform(),
+                PlatformUserId(),
+                Username()
+            {}
+
+            PlayerLinkedAccount(const PlayerLinkedAccount& src) :
+                PlayFabBaseModel(),
+                Email(src.Email),
+                Platform(src.Platform),
+                PlatformUserId(src.PlatformUserId),
+                Username(src.Username)
+            {}
+
+            PlayerLinkedAccount(const rapidjson::Value& obj) : PlayerLinkedAccount()
+            {
+                readFromValue(obj);
+            }
+
+            ~PlayerLinkedAccount();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct PlayerLocation : public PlayFabBaseModel
         {
+            std::string City;
             ContinentCode pfContinentCode;
             CountryCode pfCountryCode;
-            std::string City;
             OptionalDouble Latitude;
             OptionalDouble Longitude;
 
             PlayerLocation() :
                 PlayFabBaseModel(),
+                City(),
                 pfContinentCode(),
                 pfCountryCode(),
-                City(),
                 Latitude(),
                 Longitude()
             {}
 
             PlayerLocation(const PlayerLocation& src) :
                 PlayFabBaseModel(),
+                City(src.City),
                 pfContinentCode(src.pfContinentCode),
                 pfCountryCode(src.pfCountryCode),
-                City(src.City),
                 Latitude(src.Latitude),
                 Longitude(src.Longitude)
             {}
@@ -3557,89 +3690,27 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct PushNotificationRegistration : public PlayFabBaseModel
-        {
-            Boxed<PushNotificationPlatform> Platform;
-            std::string NotificationEndpointARN;
-
-            PushNotificationRegistration() :
-                PlayFabBaseModel(),
-                Platform(),
-                NotificationEndpointARN()
-            {}
-
-            PushNotificationRegistration(const PushNotificationRegistration& src) :
-                PlayFabBaseModel(),
-                Platform(src.Platform),
-                NotificationEndpointARN(src.NotificationEndpointARN)
-            {}
-
-            PushNotificationRegistration(const rapidjson::Value& obj) : PushNotificationRegistration()
-            {
-                readFromValue(obj);
-            }
-
-            ~PushNotificationRegistration();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct PlayerLinkedAccount : public PlayFabBaseModel
-        {
-            Boxed<LoginIdentityProvider> Platform;
-            std::string PlatformUserId;
-            std::string Username;
-            std::string Email;
-
-            PlayerLinkedAccount() :
-                PlayFabBaseModel(),
-                Platform(),
-                PlatformUserId(),
-                Username(),
-                Email()
-            {}
-
-            PlayerLinkedAccount(const PlayerLinkedAccount& src) :
-                PlayFabBaseModel(),
-                Platform(src.Platform),
-                PlatformUserId(src.PlatformUserId),
-                Username(src.Username),
-                Email(src.Email)
-            {}
-
-            PlayerLinkedAccount(const rapidjson::Value& obj) : PlayerLinkedAccount()
-            {
-                readFromValue(obj);
-            }
-
-            ~PlayerLinkedAccount();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct PlayerStatistic : public PlayFabBaseModel
         {
             std::string Id;
-            Int32 StatisticVersion;
-            Int32 StatisticValue;
             std::string Name;
+            Int32 StatisticValue;
+            Int32 StatisticVersion;
 
             PlayerStatistic() :
                 PlayFabBaseModel(),
                 Id(),
-                StatisticVersion(0),
+                Name(),
                 StatisticValue(0),
-                Name()
+                StatisticVersion(0)
             {}
 
             PlayerStatistic(const PlayerStatistic& src) :
                 PlayFabBaseModel(),
                 Id(src.Id),
-                StatisticVersion(src.StatisticVersion),
+                Name(src.Name),
                 StatisticValue(src.StatisticValue),
-                Name(src.Name)
+                StatisticVersion(src.StatisticVersion)
             {}
 
             PlayerStatistic(const rapidjson::Value& obj) : PlayerStatistic()
@@ -3653,75 +3724,103 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct PushNotificationRegistration : public PlayFabBaseModel
+        {
+            std::string NotificationEndpointARN;
+            Boxed<PushNotificationPlatform> Platform;
+
+            PushNotificationRegistration() :
+                PlayFabBaseModel(),
+                NotificationEndpointARN(),
+                Platform()
+            {}
+
+            PushNotificationRegistration(const PushNotificationRegistration& src) :
+                PlayFabBaseModel(),
+                NotificationEndpointARN(src.NotificationEndpointARN),
+                Platform(src.Platform)
+            {}
+
+            PushNotificationRegistration(const rapidjson::Value& obj) : PushNotificationRegistration()
+            {
+                readFromValue(obj);
+            }
+
+            ~PushNotificationRegistration();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct PlayerProfile : public PlayFabBaseModel
         {
-            std::string PlayerId;
-            std::string TitleId;
-            std::string DisplayName;
-            std::string PublisherId;
-            Boxed<LoginIdentityProvider> Origination;
-            OptionalTime Created;
-            OptionalTime LastLogin;
-            OptionalTime BannedUntil;
+            std::list<AdCampaignAttribution> AdCampaignAttributions;
             std::string AvatarUrl;
+            OptionalTime BannedUntil;
+            std::list<ContactEmailInfo> ContactEmailAddresses;
+            OptionalTime Created;
+            std::string DisplayName;
+            OptionalTime LastLogin;
+            std::list<PlayerLinkedAccount> LinkedAccounts;
+            std::map<std::string, PlayerLocation> Locations;
+            Boxed<LoginIdentityProvider> Origination;
+            std::string PlayerId;
+            std::list<PlayerStatistic> PlayerStatistics;
+            std::string PublisherId;
+            std::list<PushNotificationRegistration> PushNotificationRegistrations;
             std::map<std::string, Int32> Statistics;
+            std::list<std::string> Tags;
+            std::string TitleId;
             OptionalUint32 TotalValueToDateInUSD;
             std::map<std::string, Uint32> ValuesToDate;
-            std::list<std::string> Tags;
-            std::map<std::string, PlayerLocation> Locations;
             std::map<std::string, Int32> VirtualCurrencyBalances;
-            std::list<AdCampaignAttribution> AdCampaignAttributions;
-            std::list<PushNotificationRegistration> PushNotificationRegistrations;
-            std::list<PlayerLinkedAccount> LinkedAccounts;
-            std::list<PlayerStatistic> PlayerStatistics;
-            std::list<ContactEmailInfo> ContactEmailAddresses;
 
             PlayerProfile() :
                 PlayFabBaseModel(),
-                PlayerId(),
-                TitleId(),
-                DisplayName(),
-                PublisherId(),
-                Origination(),
-                Created(),
-                LastLogin(),
-                BannedUntil(),
+                AdCampaignAttributions(),
                 AvatarUrl(),
+                BannedUntil(),
+                ContactEmailAddresses(),
+                Created(),
+                DisplayName(),
+                LastLogin(),
+                LinkedAccounts(),
+                Locations(),
+                Origination(),
+                PlayerId(),
+                PlayerStatistics(),
+                PublisherId(),
+                PushNotificationRegistrations(),
                 Statistics(),
+                Tags(),
+                TitleId(),
                 TotalValueToDateInUSD(),
                 ValuesToDate(),
-                Tags(),
-                Locations(),
-                VirtualCurrencyBalances(),
-                AdCampaignAttributions(),
-                PushNotificationRegistrations(),
-                LinkedAccounts(),
-                PlayerStatistics(),
-                ContactEmailAddresses()
+                VirtualCurrencyBalances()
             {}
 
             PlayerProfile(const PlayerProfile& src) :
                 PlayFabBaseModel(),
-                PlayerId(src.PlayerId),
-                TitleId(src.TitleId),
-                DisplayName(src.DisplayName),
-                PublisherId(src.PublisherId),
-                Origination(src.Origination),
-                Created(src.Created),
-                LastLogin(src.LastLogin),
-                BannedUntil(src.BannedUntil),
+                AdCampaignAttributions(src.AdCampaignAttributions),
                 AvatarUrl(src.AvatarUrl),
+                BannedUntil(src.BannedUntil),
+                ContactEmailAddresses(src.ContactEmailAddresses),
+                Created(src.Created),
+                DisplayName(src.DisplayName),
+                LastLogin(src.LastLogin),
+                LinkedAccounts(src.LinkedAccounts),
+                Locations(src.Locations),
+                Origination(src.Origination),
+                PlayerId(src.PlayerId),
+                PlayerStatistics(src.PlayerStatistics),
+                PublisherId(src.PublisherId),
+                PushNotificationRegistrations(src.PushNotificationRegistrations),
                 Statistics(src.Statistics),
+                Tags(src.Tags),
+                TitleId(src.TitleId),
                 TotalValueToDateInUSD(src.TotalValueToDateInUSD),
                 ValuesToDate(src.ValuesToDate),
-                Tags(src.Tags),
-                Locations(src.Locations),
-                VirtualCurrencyBalances(src.VirtualCurrencyBalances),
-                AdCampaignAttributions(src.AdCampaignAttributions),
-                PushNotificationRegistrations(src.PushNotificationRegistrations),
-                LinkedAccounts(src.LinkedAccounts),
-                PlayerStatistics(src.PlayerStatistics),
-                ContactEmailAddresses(src.ContactEmailAddresses)
+                VirtualCurrencyBalances(src.VirtualCurrencyBalances)
             {}
 
             PlayerProfile(const rapidjson::Value& obj) : PlayerProfile()
@@ -3737,22 +3836,22 @@ namespace PlayFab
 
         struct GetPlayersInSegmentResult : public PlayFabBaseModel
         {
-            Int32 ProfilesInSegment;
             std::string ContinuationToken;
             std::list<PlayerProfile> PlayerProfiles;
+            Int32 ProfilesInSegment;
 
             GetPlayersInSegmentResult() :
                 PlayFabBaseModel(),
-                ProfilesInSegment(0),
                 ContinuationToken(),
-                PlayerProfiles()
+                PlayerProfiles(),
+                ProfilesInSegment(0)
             {}
 
             GetPlayersInSegmentResult(const GetPlayersInSegmentResult& src) :
                 PlayFabBaseModel(),
-                ProfilesInSegment(src.ProfilesInSegment),
                 ContinuationToken(src.ContinuationToken),
-                PlayerProfiles(src.PlayerProfiles)
+                PlayerProfiles(src.PlayerProfiles),
+                ProfilesInSegment(src.ProfilesInSegment)
             {}
 
             GetPlayersInSegmentResult(const rapidjson::Value& obj) : GetPlayersInSegmentResult()
@@ -3877,37 +3976,37 @@ namespace PlayFab
 
         struct PlayerStatisticVersion : public PlayFabBaseModel
         {
-            std::string StatisticName;
-            Uint32 Version;
-            OptionalTime ScheduledActivationTime;
             time_t ActivationTime;
-            OptionalTime ScheduledDeactivationTime;
-            OptionalTime DeactivationTime;
-            Boxed<StatisticVersionStatus> Status;
             std::string ArchiveDownloadUrl;
+            OptionalTime DeactivationTime;
+            OptionalTime ScheduledActivationTime;
+            OptionalTime ScheduledDeactivationTime;
+            std::string StatisticName;
+            Boxed<StatisticVersionStatus> Status;
+            Uint32 Version;
 
             PlayerStatisticVersion() :
                 PlayFabBaseModel(),
-                StatisticName(),
-                Version(0),
-                ScheduledActivationTime(),
                 ActivationTime(0),
-                ScheduledDeactivationTime(),
+                ArchiveDownloadUrl(),
                 DeactivationTime(),
+                ScheduledActivationTime(),
+                ScheduledDeactivationTime(),
+                StatisticName(),
                 Status(),
-                ArchiveDownloadUrl()
+                Version(0)
             {}
 
             PlayerStatisticVersion(const PlayerStatisticVersion& src) :
                 PlayFabBaseModel(),
-                StatisticName(src.StatisticName),
-                Version(src.Version),
-                ScheduledActivationTime(src.ScheduledActivationTime),
                 ActivationTime(src.ActivationTime),
-                ScheduledDeactivationTime(src.ScheduledDeactivationTime),
+                ArchiveDownloadUrl(src.ArchiveDownloadUrl),
                 DeactivationTime(src.DeactivationTime),
+                ScheduledActivationTime(src.ScheduledActivationTime),
+                ScheduledDeactivationTime(src.ScheduledDeactivationTime),
+                StatisticName(src.StatisticName),
                 Status(src.Status),
-                ArchiveDownloadUrl(src.ArchiveDownloadUrl)
+                Version(src.Version)
             {}
 
             PlayerStatisticVersion(const rapidjson::Value& obj) : PlayerStatisticVersion()
@@ -3948,19 +4047,19 @@ namespace PlayFab
 
         struct GetPlayerTagsRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::string Namespace;
+            std::string PlayFabId;
 
             GetPlayerTagsRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
-                Namespace()
+                Namespace(),
+                PlayFabId()
             {}
 
             GetPlayerTagsRequest(const GetPlayerTagsRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                Namespace(src.Namespace)
+                Namespace(src.Namespace),
+                PlayFabId(src.PlayFabId)
             {}
 
             GetPlayerTagsRequest(const rapidjson::Value& obj) : GetPlayerTagsRequest()
@@ -4029,31 +4128,31 @@ namespace PlayFab
 
         struct PermissionStatement : public PlayFabBaseModel
         {
-            std::string Resource;
             std::string Action;
+            ApiCondition* ApiConditions;
+            std::string Comment;
             EffectType Effect;
             std::string Principal;
-            std::string Comment;
-            ApiCondition* ApiConditions;
+            std::string Resource;
 
             PermissionStatement() :
                 PlayFabBaseModel(),
-                Resource(),
                 Action(),
+                ApiConditions(NULL),
+                Comment(),
                 Effect(),
                 Principal(),
-                Comment(),
-                ApiConditions(NULL)
+                Resource()
             {}
 
             PermissionStatement(const PermissionStatement& src) :
                 PlayFabBaseModel(),
-                Resource(src.Resource),
                 Action(src.Action),
+                ApiConditions(src.ApiConditions ? new ApiCondition(*src.ApiConditions) : NULL),
+                Comment(src.Comment),
                 Effect(src.Effect),
                 Principal(src.Principal),
-                Comment(src.Comment),
-                ApiConditions(src.ApiConditions ? new ApiCondition(*src.ApiConditions) : NULL)
+                Resource(src.Resource)
             {}
 
             PermissionStatement(const rapidjson::Value& obj) : PermissionStatement()
@@ -4181,21 +4280,21 @@ namespace PlayFab
 
         struct ResultTableNode : public PlayFabBaseModel
         {
-            ResultTableNodeType ResultItemType;
             std::string ResultItem;
+            ResultTableNodeType ResultItemType;
             Int32 Weight;
 
             ResultTableNode() :
                 PlayFabBaseModel(),
-                ResultItemType(),
                 ResultItem(),
+                ResultItemType(),
                 Weight(0)
             {}
 
             ResultTableNode(const ResultTableNode& src) :
                 PlayFabBaseModel(),
-                ResultItemType(src.ResultItemType),
                 ResultItem(src.ResultItem),
+                ResultItemType(src.ResultItemType),
                 Weight(src.Weight)
             {}
 
@@ -4213,21 +4312,21 @@ namespace PlayFab
         struct RandomResultTableListing : public PlayFabBaseModel
         {
             std::string CatalogVersion;
-            std::string TableId;
             std::list<ResultTableNode> Nodes;
+            std::string TableId;
 
             RandomResultTableListing() :
                 PlayFabBaseModel(),
                 CatalogVersion(),
-                TableId(),
-                Nodes()
+                Nodes(),
+                TableId()
             {}
 
             RandomResultTableListing(const RandomResultTableListing& src) :
                 PlayFabBaseModel(),
                 CatalogVersion(src.CatalogVersion),
-                TableId(src.TableId),
-                Nodes(src.Nodes)
+                Nodes(src.Nodes),
+                TableId(src.TableId)
             {}
 
             RandomResultTableListing(const rapidjson::Value& obj) : RandomResultTableListing()
@@ -4293,40 +4392,40 @@ namespace PlayFab
 
         struct GetServerBuildInfoResult : public PlayFabBaseModel
         {
-            std::string BuildId;
             std::list<Region> ActiveRegions;
+            std::string BuildId;
+            std::string Comment;
+            std::string ErrorMessage;
             Int32 MaxGamesPerHost;
             Int32 MinFreeGameSlots;
-            std::string Comment;
+            Boxed<GameBuildStatus> Status;
             time_t Timestamp;
             std::string TitleId;
-            Boxed<GameBuildStatus> Status;
-            std::string ErrorMessage;
 
             GetServerBuildInfoResult() :
                 PlayFabBaseModel(),
-                BuildId(),
                 ActiveRegions(),
+                BuildId(),
+                Comment(),
+                ErrorMessage(),
                 MaxGamesPerHost(0),
                 MinFreeGameSlots(0),
-                Comment(),
-                Timestamp(0),
-                TitleId(),
                 Status(),
-                ErrorMessage()
+                Timestamp(0),
+                TitleId()
             {}
 
             GetServerBuildInfoResult(const GetServerBuildInfoResult& src) :
                 PlayFabBaseModel(),
-                BuildId(src.BuildId),
                 ActiveRegions(src.ActiveRegions),
+                BuildId(src.BuildId),
+                Comment(src.Comment),
+                ErrorMessage(src.ErrorMessage),
                 MaxGamesPerHost(src.MaxGamesPerHost),
                 MinFreeGameSlots(src.MinFreeGameSlots),
-                Comment(src.Comment),
-                Timestamp(src.Timestamp),
-                TitleId(src.TitleId),
                 Status(src.Status),
-                ErrorMessage(src.ErrorMessage)
+                Timestamp(src.Timestamp),
+                TitleId(src.TitleId)
             {}
 
             GetServerBuildInfoResult(const rapidjson::Value& obj) : GetServerBuildInfoResult()
@@ -4418,38 +4517,32 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct StoreItem : public PlayFabBaseModel
+        struct StoreMarketingModel : public PlayFabBaseModel
         {
-            std::string ItemId;
-            std::map<std::string, Uint32> VirtualCurrencyPrices;
-            std::map<std::string, Uint32> RealCurrencyPrices;
-            MultitypeVar CustomData;
-            OptionalUint32 DisplayPosition;
+            std::string Description;
+            std::string DisplayName;
+            MultitypeVar Metadata;
 
-            StoreItem() :
+            StoreMarketingModel() :
                 PlayFabBaseModel(),
-                ItemId(),
-                VirtualCurrencyPrices(),
-                RealCurrencyPrices(),
-                CustomData(),
-                DisplayPosition()
+                Description(),
+                DisplayName(),
+                Metadata()
             {}
 
-            StoreItem(const StoreItem& src) :
+            StoreMarketingModel(const StoreMarketingModel& src) :
                 PlayFabBaseModel(),
-                ItemId(src.ItemId),
-                VirtualCurrencyPrices(src.VirtualCurrencyPrices),
-                RealCurrencyPrices(src.RealCurrencyPrices),
-                CustomData(src.CustomData),
-                DisplayPosition(src.DisplayPosition)
+                Description(src.Description),
+                DisplayName(src.DisplayName),
+                Metadata(src.Metadata)
             {}
 
-            StoreItem(const rapidjson::Value& obj) : StoreItem()
+            StoreMarketingModel(const rapidjson::Value& obj) : StoreMarketingModel()
             {
                 readFromValue(obj);
             }
 
-            ~StoreItem();
+            ~StoreMarketingModel();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -4467,32 +4560,38 @@ namespace PlayFab
         void writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer);
         SourceType readSourceTypeFromValue(const rapidjson::Value& obj);
 
-        struct StoreMarketingModel : public PlayFabBaseModel
+        struct StoreItem : public PlayFabBaseModel
         {
-            std::string DisplayName;
-            std::string Description;
-            MultitypeVar Metadata;
+            MultitypeVar CustomData;
+            OptionalUint32 DisplayPosition;
+            std::string ItemId;
+            std::map<std::string, Uint32> RealCurrencyPrices;
+            std::map<std::string, Uint32> VirtualCurrencyPrices;
 
-            StoreMarketingModel() :
+            StoreItem() :
                 PlayFabBaseModel(),
-                DisplayName(),
-                Description(),
-                Metadata()
+                CustomData(),
+                DisplayPosition(),
+                ItemId(),
+                RealCurrencyPrices(),
+                VirtualCurrencyPrices()
             {}
 
-            StoreMarketingModel(const StoreMarketingModel& src) :
+            StoreItem(const StoreItem& src) :
                 PlayFabBaseModel(),
-                DisplayName(src.DisplayName),
-                Description(src.Description),
-                Metadata(src.Metadata)
+                CustomData(src.CustomData),
+                DisplayPosition(src.DisplayPosition),
+                ItemId(src.ItemId),
+                RealCurrencyPrices(src.RealCurrencyPrices),
+                VirtualCurrencyPrices(src.VirtualCurrencyPrices)
             {}
 
-            StoreMarketingModel(const rapidjson::Value& obj) : StoreMarketingModel()
+            StoreItem(const rapidjson::Value& obj) : StoreItem()
             {
                 readFromValue(obj);
             }
 
-            ~StoreMarketingModel();
+            ~StoreItem();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -4500,28 +4599,28 @@ namespace PlayFab
 
         struct GetStoreItemsResult : public PlayFabBaseModel
         {
-            std::list<StoreItem> Store;
-            Boxed<SourceType> Source;
             std::string CatalogVersion;
-            std::string StoreId;
             StoreMarketingModel* MarketingData;
+            Boxed<SourceType> Source;
+            std::list<StoreItem> Store;
+            std::string StoreId;
 
             GetStoreItemsResult() :
                 PlayFabBaseModel(),
-                Store(),
-                Source(),
                 CatalogVersion(),
-                StoreId(),
-                MarketingData(NULL)
+                MarketingData(NULL),
+                Source(),
+                Store(),
+                StoreId()
             {}
 
             GetStoreItemsResult(const GetStoreItemsResult& src) :
                 PlayFabBaseModel(),
-                Store(src.Store),
-                Source(src.Source),
                 CatalogVersion(src.CatalogVersion),
-                StoreId(src.StoreId),
-                MarketingData(src.MarketingData ? new StoreMarketingModel(*src.MarketingData) : NULL)
+                MarketingData(src.MarketingData ? new StoreMarketingModel(*src.MarketingData) : NULL),
+                Source(src.Source),
+                Store(src.Store),
+                StoreId(src.StoreId)
             {}
 
             GetStoreItemsResult(const rapidjson::Value& obj) : GetStoreItemsResult()
@@ -4562,25 +4661,25 @@ namespace PlayFab
 
         struct GetTaskInstancesRequest : public PlayFabBaseModel
         {
-            NameIdentifier* TaskIdentifier;
-            Boxed<TaskInstanceStatus> StatusFilter;
             OptionalTime StartedAtRangeFrom;
             OptionalTime StartedAtRangeTo;
+            Boxed<TaskInstanceStatus> StatusFilter;
+            NameIdentifier* TaskIdentifier;
 
             GetTaskInstancesRequest() :
                 PlayFabBaseModel(),
-                TaskIdentifier(NULL),
-                StatusFilter(),
                 StartedAtRangeFrom(),
-                StartedAtRangeTo()
+                StartedAtRangeTo(),
+                StatusFilter(),
+                TaskIdentifier(NULL)
             {}
 
             GetTaskInstancesRequest(const GetTaskInstancesRequest& src) :
                 PlayFabBaseModel(),
-                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
-                StatusFilter(src.StatusFilter),
                 StartedAtRangeFrom(src.StartedAtRangeFrom),
-                StartedAtRangeTo(src.StartedAtRangeTo)
+                StartedAtRangeTo(src.StartedAtRangeTo),
+                StatusFilter(src.StatusFilter),
+                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL)
             {}
 
             GetTaskInstancesRequest(const rapidjson::Value& obj) : GetTaskInstancesRequest()
@@ -4605,39 +4704,39 @@ namespace PlayFab
 
         struct TaskInstanceBasicSummary : public PlayFabBaseModel
         {
-            std::string TaskInstanceId;
-            NameIdentifier* TaskIdentifier;
-            time_t StartedAt;
             OptionalTime CompletedAt;
-            Boxed<TaskInstanceStatus> Status;
-            OptionalDouble PercentComplete;
             OptionalDouble EstimatedSecondsRemaining;
+            OptionalDouble PercentComplete;
             std::string ScheduledByUserId;
+            time_t StartedAt;
+            Boxed<TaskInstanceStatus> Status;
+            NameIdentifier* TaskIdentifier;
+            std::string TaskInstanceId;
             Boxed<ScheduledTaskType> Type;
 
             TaskInstanceBasicSummary() :
                 PlayFabBaseModel(),
-                TaskInstanceId(),
-                TaskIdentifier(NULL),
-                StartedAt(0),
                 CompletedAt(),
-                Status(),
-                PercentComplete(),
                 EstimatedSecondsRemaining(),
+                PercentComplete(),
                 ScheduledByUserId(),
+                StartedAt(0),
+                Status(),
+                TaskIdentifier(NULL),
+                TaskInstanceId(),
                 Type()
             {}
 
             TaskInstanceBasicSummary(const TaskInstanceBasicSummary& src) :
                 PlayFabBaseModel(),
-                TaskInstanceId(src.TaskInstanceId),
-                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
-                StartedAt(src.StartedAt),
                 CompletedAt(src.CompletedAt),
-                Status(src.Status),
-                PercentComplete(src.PercentComplete),
                 EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
+                PercentComplete(src.PercentComplete),
                 ScheduledByUserId(src.ScheduledByUserId),
+                StartedAt(src.StartedAt),
+                Status(src.Status),
+                TaskIdentifier(src.TaskIdentifier ? new NameIdentifier(*src.TaskIdentifier) : NULL),
+                TaskInstanceId(src.TaskInstanceId),
                 Type(src.Type)
             {}
 
@@ -4704,40 +4803,40 @@ namespace PlayFab
 
         struct ScheduledTask : public PlayFabBaseModel
         {
-            std::string TaskId;
-            std::string Name;
             std::string Description;
-            std::string Schedule;
             bool IsActive;
-            Boxed<ScheduledTaskType> Type;
-            MultitypeVar Parameter;
             OptionalTime LastRunTime;
+            std::string Name;
             OptionalTime NextRunTime;
+            MultitypeVar Parameter;
+            std::string Schedule;
+            std::string TaskId;
+            Boxed<ScheduledTaskType> Type;
 
             ScheduledTask() :
                 PlayFabBaseModel(),
-                TaskId(),
-                Name(),
                 Description(),
-                Schedule(),
                 IsActive(false),
-                Type(),
-                Parameter(),
                 LastRunTime(),
-                NextRunTime()
+                Name(),
+                NextRunTime(),
+                Parameter(),
+                Schedule(),
+                TaskId(),
+                Type()
             {}
 
             ScheduledTask(const ScheduledTask& src) :
                 PlayFabBaseModel(),
-                TaskId(src.TaskId),
-                Name(src.Name),
                 Description(src.Description),
-                Schedule(src.Schedule),
                 IsActive(src.IsActive),
-                Type(src.Type),
-                Parameter(src.Parameter),
                 LastRunTime(src.LastRunTime),
-                NextRunTime(src.NextRunTime)
+                Name(src.Name),
+                NextRunTime(src.NextRunTime),
+                Parameter(src.Parameter),
+                Schedule(src.Schedule),
+                TaskId(src.TaskId),
+                Type(src.Type)
             {}
 
             ScheduledTask(const rapidjson::Value& obj) : ScheduledTask()
@@ -4878,22 +4977,22 @@ namespace PlayFab
 
         struct GetUserDataRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
-            std::list<std::string> Keys;
             OptionalUint32 IfChangedFromDataVersion;
+            std::list<std::string> Keys;
+            std::string PlayFabId;
 
             GetUserDataRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
+                IfChangedFromDataVersion(),
                 Keys(),
-                IfChangedFromDataVersion()
+                PlayFabId()
             {}
 
             GetUserDataRequest(const GetUserDataRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
+                IfChangedFromDataVersion(src.IfChangedFromDataVersion),
                 Keys(src.Keys),
-                IfChangedFromDataVersion(src.IfChangedFromDataVersion)
+                PlayFabId(src.PlayFabId)
             {}
 
             GetUserDataRequest(const rapidjson::Value& obj) : GetUserDataRequest()
@@ -4918,22 +5017,22 @@ namespace PlayFab
 
         struct UserDataRecord : public PlayFabBaseModel
         {
-            std::string Value;
             time_t LastUpdated;
             Boxed<UserDataPermission> Permission;
+            std::string Value;
 
             UserDataRecord() :
                 PlayFabBaseModel(),
-                Value(),
                 LastUpdated(0),
-                Permission()
+                Permission(),
+                Value()
             {}
 
             UserDataRecord(const UserDataRecord& src) :
                 PlayFabBaseModel(),
-                Value(src.Value),
                 LastUpdated(src.LastUpdated),
-                Permission(src.Permission)
+                Permission(src.Permission),
+                Value(src.Value)
             {}
 
             UserDataRecord(const rapidjson::Value& obj) : UserDataRecord()
@@ -4949,22 +5048,22 @@ namespace PlayFab
 
         struct GetUserDataResult : public PlayFabBaseModel
         {
-            std::string PlayFabId;
-            Uint32 DataVersion;
             std::map<std::string, UserDataRecord> Data;
+            Uint32 DataVersion;
+            std::string PlayFabId;
 
             GetUserDataResult() :
                 PlayFabBaseModel(),
-                PlayFabId(),
+                Data(),
                 DataVersion(0),
-                Data()
+                PlayFabId()
             {}
 
             GetUserDataResult(const GetUserDataResult& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
+                Data(src.Data),
                 DataVersion(src.DataVersion),
-                Data(src.Data)
+                PlayFabId(src.PlayFabId)
             {}
 
             GetUserDataResult(const rapidjson::Value& obj) : GetUserDataResult()
@@ -5005,58 +5104,58 @@ namespace PlayFab
 
         struct ItemInstance : public PlayFabBaseModel
         {
+            std::string Annotation;
+            std::list<std::string> BundleContents;
+            std::string BundleParent;
+            std::string CatalogVersion;
+            std::map<std::string, std::string> CustomData;
+            std::string DisplayName;
+            OptionalTime Expiration;
+            std::string ItemClass;
             std::string ItemId;
             std::string ItemInstanceId;
-            std::string ItemClass;
             OptionalTime PurchaseDate;
-            OptionalTime Expiration;
             OptionalInt32 RemainingUses;
-            OptionalInt32 UsesIncrementedBy;
-            std::string Annotation;
-            std::string CatalogVersion;
-            std::string BundleParent;
-            std::string DisplayName;
             std::string UnitCurrency;
             Uint32 UnitPrice;
-            std::list<std::string> BundleContents;
-            std::map<std::string, std::string> CustomData;
+            OptionalInt32 UsesIncrementedBy;
 
             ItemInstance() :
                 PlayFabBaseModel(),
+                Annotation(),
+                BundleContents(),
+                BundleParent(),
+                CatalogVersion(),
+                CustomData(),
+                DisplayName(),
+                Expiration(),
+                ItemClass(),
                 ItemId(),
                 ItemInstanceId(),
-                ItemClass(),
                 PurchaseDate(),
-                Expiration(),
                 RemainingUses(),
-                UsesIncrementedBy(),
-                Annotation(),
-                CatalogVersion(),
-                BundleParent(),
-                DisplayName(),
                 UnitCurrency(),
                 UnitPrice(0),
-                BundleContents(),
-                CustomData()
+                UsesIncrementedBy()
             {}
 
             ItemInstance(const ItemInstance& src) :
                 PlayFabBaseModel(),
+                Annotation(src.Annotation),
+                BundleContents(src.BundleContents),
+                BundleParent(src.BundleParent),
+                CatalogVersion(src.CatalogVersion),
+                CustomData(src.CustomData),
+                DisplayName(src.DisplayName),
+                Expiration(src.Expiration),
+                ItemClass(src.ItemClass),
                 ItemId(src.ItemId),
                 ItemInstanceId(src.ItemInstanceId),
-                ItemClass(src.ItemClass),
                 PurchaseDate(src.PurchaseDate),
-                Expiration(src.Expiration),
                 RemainingUses(src.RemainingUses),
-                UsesIncrementedBy(src.UsesIncrementedBy),
-                Annotation(src.Annotation),
-                CatalogVersion(src.CatalogVersion),
-                BundleParent(src.BundleParent),
-                DisplayName(src.DisplayName),
                 UnitCurrency(src.UnitCurrency),
                 UnitPrice(src.UnitPrice),
-                BundleContents(src.BundleContents),
-                CustomData(src.CustomData)
+                UsesIncrementedBy(src.UsesIncrementedBy)
             {}
 
             ItemInstance(const rapidjson::Value& obj) : ItemInstance()
@@ -5072,22 +5171,22 @@ namespace PlayFab
 
         struct VirtualCurrencyRechargeTime : public PlayFabBaseModel
         {
-            Int32 SecondsToRecharge;
-            time_t RechargeTime;
             Int32 RechargeMax;
+            time_t RechargeTime;
+            Int32 SecondsToRecharge;
 
             VirtualCurrencyRechargeTime() :
                 PlayFabBaseModel(),
-                SecondsToRecharge(0),
+                RechargeMax(0),
                 RechargeTime(0),
-                RechargeMax(0)
+                SecondsToRecharge(0)
             {}
 
             VirtualCurrencyRechargeTime(const VirtualCurrencyRechargeTime& src) :
                 PlayFabBaseModel(),
-                SecondsToRecharge(src.SecondsToRecharge),
+                RechargeMax(src.RechargeMax),
                 RechargeTime(src.RechargeTime),
-                RechargeMax(src.RechargeMax)
+                SecondsToRecharge(src.SecondsToRecharge)
             {}
 
             VirtualCurrencyRechargeTime(const rapidjson::Value& obj) : VirtualCurrencyRechargeTime()
@@ -5103,23 +5202,23 @@ namespace PlayFab
 
         struct GetUserInventoryResult : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::list<ItemInstance> Inventory;
+            std::string PlayFabId;
             std::map<std::string, Int32> VirtualCurrency;
             std::map<std::string, VirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes;
 
             GetUserInventoryResult() :
                 PlayFabBaseModel(),
-                PlayFabId(),
                 Inventory(),
+                PlayFabId(),
                 VirtualCurrency(),
                 VirtualCurrencyRechargeTimes()
             {}
 
             GetUserInventoryResult(const GetUserInventoryResult& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
                 Inventory(src.Inventory),
+                PlayFabId(src.PlayFabId),
                 VirtualCurrency(src.VirtualCurrency),
                 VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes)
             {}
@@ -5137,67 +5236,67 @@ namespace PlayFab
 
         struct GrantedItemInstance : public PlayFabBaseModel
         {
-            std::string PlayFabId;
+            std::string Annotation;
+            std::list<std::string> BundleContents;
+            std::string BundleParent;
+            std::string CatalogVersion;
             std::string CharacterId;
-            bool Result;
+            std::map<std::string, std::string> CustomData;
+            std::string DisplayName;
+            OptionalTime Expiration;
+            std::string ItemClass;
             std::string ItemId;
             std::string ItemInstanceId;
-            std::string ItemClass;
+            std::string PlayFabId;
             OptionalTime PurchaseDate;
-            OptionalTime Expiration;
             OptionalInt32 RemainingUses;
-            OptionalInt32 UsesIncrementedBy;
-            std::string Annotation;
-            std::string CatalogVersion;
-            std::string BundleParent;
-            std::string DisplayName;
+            bool Result;
             std::string UnitCurrency;
             Uint32 UnitPrice;
-            std::list<std::string> BundleContents;
-            std::map<std::string, std::string> CustomData;
+            OptionalInt32 UsesIncrementedBy;
 
             GrantedItemInstance() :
                 PlayFabBaseModel(),
-                PlayFabId(),
+                Annotation(),
+                BundleContents(),
+                BundleParent(),
+                CatalogVersion(),
                 CharacterId(),
-                Result(false),
+                CustomData(),
+                DisplayName(),
+                Expiration(),
+                ItemClass(),
                 ItemId(),
                 ItemInstanceId(),
-                ItemClass(),
+                PlayFabId(),
                 PurchaseDate(),
-                Expiration(),
                 RemainingUses(),
-                UsesIncrementedBy(),
-                Annotation(),
-                CatalogVersion(),
-                BundleParent(),
-                DisplayName(),
+                Result(false),
                 UnitCurrency(),
                 UnitPrice(0),
-                BundleContents(),
-                CustomData()
+                UsesIncrementedBy()
             {}
 
             GrantedItemInstance(const GrantedItemInstance& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
+                Annotation(src.Annotation),
+                BundleContents(src.BundleContents),
+                BundleParent(src.BundleParent),
+                CatalogVersion(src.CatalogVersion),
                 CharacterId(src.CharacterId),
-                Result(src.Result),
+                CustomData(src.CustomData),
+                DisplayName(src.DisplayName),
+                Expiration(src.Expiration),
+                ItemClass(src.ItemClass),
                 ItemId(src.ItemId),
                 ItemInstanceId(src.ItemInstanceId),
-                ItemClass(src.ItemClass),
+                PlayFabId(src.PlayFabId),
                 PurchaseDate(src.PurchaseDate),
-                Expiration(src.Expiration),
                 RemainingUses(src.RemainingUses),
-                UsesIncrementedBy(src.UsesIncrementedBy),
-                Annotation(src.Annotation),
-                CatalogVersion(src.CatalogVersion),
-                BundleParent(src.BundleParent),
-                DisplayName(src.DisplayName),
+                Result(src.Result),
                 UnitCurrency(src.UnitCurrency),
                 UnitPrice(src.UnitPrice),
-                BundleContents(src.BundleContents),
-                CustomData(src.CustomData)
+                UsesIncrementedBy(src.UsesIncrementedBy)
             {}
 
             GrantedItemInstance(const rapidjson::Value& obj) : GrantedItemInstance()
@@ -5213,31 +5312,31 @@ namespace PlayFab
 
         struct ItemGrant : public PlayFabBaseModel
         {
-            std::string PlayFabId;
-            std::string ItemId;
             std::string Annotation;
             std::string CharacterId;
             std::map<std::string, std::string> Data;
+            std::string ItemId;
             std::list<std::string> KeysToRemove;
+            std::string PlayFabId;
 
             ItemGrant() :
                 PlayFabBaseModel(),
-                PlayFabId(),
-                ItemId(),
                 Annotation(),
                 CharacterId(),
                 Data(),
-                KeysToRemove()
+                ItemId(),
+                KeysToRemove(),
+                PlayFabId()
             {}
 
             ItemGrant(const ItemGrant& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                ItemId(src.ItemId),
                 Annotation(src.Annotation),
                 CharacterId(src.CharacterId),
                 Data(src.Data),
-                KeysToRemove(src.KeysToRemove)
+                ItemId(src.ItemId),
+                KeysToRemove(src.KeysToRemove),
+                PlayFabId(src.PlayFabId)
             {}
 
             ItemGrant(const rapidjson::Value& obj) : ItemGrant()
@@ -5450,25 +5549,25 @@ namespace PlayFab
 
         struct LookupUserAccountInfoRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::string Email;
-            std::string Username;
+            std::string PlayFabId;
             std::string TitleDisplayName;
+            std::string Username;
 
             LookupUserAccountInfoRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
                 Email(),
-                Username(),
-                TitleDisplayName()
+                PlayFabId(),
+                TitleDisplayName(),
+                Username()
             {}
 
             LookupUserAccountInfoRequest(const LookupUserAccountInfoRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
                 Email(src.Email),
-                Username(src.Username),
-                TitleDisplayName(src.TitleDisplayName)
+                PlayFabId(src.PlayFabId),
+                TitleDisplayName(src.TitleDisplayName),
+                Username(src.Username)
             {}
 
             LookupUserAccountInfoRequest(const rapidjson::Value& obj) : LookupUserAccountInfoRequest()
@@ -5482,94 +5581,51 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        enum UserOrigination
+        struct UserAndroidDeviceInfo : public PlayFabBaseModel
         {
-            UserOriginationOrganic,
-            UserOriginationSteam,
-            UserOriginationGoogle,
-            UserOriginationAmazon,
-            UserOriginationFacebook,
-            UserOriginationKongregate,
-            UserOriginationGamersFirst,
-            UserOriginationUnknown,
-            UserOriginationIOS,
-            UserOriginationLoadTest,
-            UserOriginationAndroid,
-            UserOriginationPSN,
-            UserOriginationGameCenter,
-            UserOriginationCustomId,
-            UserOriginationXboxLive,
-            UserOriginationParse,
-            UserOriginationTwitch,
-            UserOriginationWindowsHello
-        };
+            std::string AndroidDeviceId;
 
-        void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
-        UserOrigination readUserOriginationFromValue(const rapidjson::Value& obj);
-
-        struct UserTitleInfo : public PlayFabBaseModel
-        {
-            std::string DisplayName;
-            Boxed<UserOrigination> Origination;
-            time_t Created;
-            OptionalTime LastLogin;
-            OptionalTime FirstLogin;
-            OptionalBool isBanned;
-            std::string AvatarUrl;
-
-            UserTitleInfo() :
+            UserAndroidDeviceInfo() :
                 PlayFabBaseModel(),
-                DisplayName(),
-                Origination(),
-                Created(0),
-                LastLogin(),
-                FirstLogin(),
-                isBanned(),
-                AvatarUrl()
+                AndroidDeviceId()
             {}
 
-            UserTitleInfo(const UserTitleInfo& src) :
+            UserAndroidDeviceInfo(const UserAndroidDeviceInfo& src) :
                 PlayFabBaseModel(),
-                DisplayName(src.DisplayName),
-                Origination(src.Origination),
-                Created(src.Created),
-                LastLogin(src.LastLogin),
-                FirstLogin(src.FirstLogin),
-                isBanned(src.isBanned),
-                AvatarUrl(src.AvatarUrl)
+                AndroidDeviceId(src.AndroidDeviceId)
             {}
 
-            UserTitleInfo(const rapidjson::Value& obj) : UserTitleInfo()
+            UserAndroidDeviceInfo(const rapidjson::Value& obj) : UserAndroidDeviceInfo()
             {
                 readFromValue(obj);
             }
 
-            ~UserTitleInfo();
+            ~UserAndroidDeviceInfo();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct UserPrivateAccountInfo : public PlayFabBaseModel
+        struct UserCustomIdInfo : public PlayFabBaseModel
         {
-            std::string Email;
+            std::string CustomId;
 
-            UserPrivateAccountInfo() :
+            UserCustomIdInfo() :
                 PlayFabBaseModel(),
-                Email()
+                CustomId()
             {}
 
-            UserPrivateAccountInfo(const UserPrivateAccountInfo& src) :
+            UserCustomIdInfo(const UserCustomIdInfo& src) :
                 PlayFabBaseModel(),
-                Email(src.Email)
+                CustomId(src.CustomId)
             {}
 
-            UserPrivateAccountInfo(const rapidjson::Value& obj) : UserPrivateAccountInfo()
+            UserCustomIdInfo(const rapidjson::Value& obj) : UserCustomIdInfo()
             {
                 readFromValue(obj);
             }
 
-            ~UserPrivateAccountInfo();
+            ~UserCustomIdInfo();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -5603,52 +5659,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        enum TitleActivationStatus
-        {
-            TitleActivationStatusNone,
-            TitleActivationStatusActivatedTitleKey,
-            TitleActivationStatusPendingSteam,
-            TitleActivationStatusActivatedSteam,
-            TitleActivationStatusRevokedSteam
-        };
-
-        void writeTitleActivationStatusEnumJSON(TitleActivationStatus enumVal, PFStringJsonWriter& writer);
-        TitleActivationStatus readTitleActivationStatusFromValue(const rapidjson::Value& obj);
-
-        struct UserSteamInfo : public PlayFabBaseModel
-        {
-            std::string SteamId;
-            std::string SteamCountry;
-            Boxed<Currency> SteamCurrency;
-            Boxed<TitleActivationStatus> SteamActivationStatus;
-
-            UserSteamInfo() :
-                PlayFabBaseModel(),
-                SteamId(),
-                SteamCountry(),
-                SteamCurrency(),
-                SteamActivationStatus()
-            {}
-
-            UserSteamInfo(const UserSteamInfo& src) :
-                PlayFabBaseModel(),
-                SteamId(src.SteamId),
-                SteamCountry(src.SteamCountry),
-                SteamCurrency(src.SteamCurrency),
-                SteamActivationStatus(src.SteamActivationStatus)
-            {}
-
-            UserSteamInfo(const rapidjson::Value& obj) : UserSteamInfo()
-            {
-                readFromValue(obj);
-            }
-
-            ~UserSteamInfo();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct UserGameCenterInfo : public PlayFabBaseModel
         {
             std::string GameCenterId;
@@ -5674,6 +5684,40 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UserGoogleInfo : public PlayFabBaseModel
+        {
+            std::string GoogleEmail;
+            std::string GoogleGender;
+            std::string GoogleId;
+            std::string GoogleLocale;
+
+            UserGoogleInfo() :
+                PlayFabBaseModel(),
+                GoogleEmail(),
+                GoogleGender(),
+                GoogleId(),
+                GoogleLocale()
+            {}
+
+            UserGoogleInfo(const UserGoogleInfo& src) :
+                PlayFabBaseModel(),
+                GoogleEmail(src.GoogleEmail),
+                GoogleGender(src.GoogleGender),
+                GoogleId(src.GoogleId),
+                GoogleLocale(src.GoogleLocale)
+            {}
+
+            UserGoogleInfo(const rapidjson::Value& obj) : UserGoogleInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~UserGoogleInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UserIosDeviceInfo : public PlayFabBaseModel
         {
             std::string IosDeviceId;
@@ -5694,31 +5738,6 @@ namespace PlayFab
             }
 
             ~UserIosDeviceInfo();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct UserAndroidDeviceInfo : public PlayFabBaseModel
-        {
-            std::string AndroidDeviceId;
-
-            UserAndroidDeviceInfo() :
-                PlayFabBaseModel(),
-                AndroidDeviceId()
-            {}
-
-            UserAndroidDeviceInfo(const UserAndroidDeviceInfo& src) :
-                PlayFabBaseModel(),
-                AndroidDeviceId(src.AndroidDeviceId)
-            {}
-
-            UserAndroidDeviceInfo(const rapidjson::Value& obj) : UserAndroidDeviceInfo()
-            {
-                readFromValue(obj);
-            }
-
-            ~UserAndroidDeviceInfo();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -5752,29 +5771,26 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct UserTwitchInfo : public PlayFabBaseModel
+        struct UserPrivateAccountInfo : public PlayFabBaseModel
         {
-            std::string TwitchId;
-            std::string TwitchUserName;
+            std::string Email;
 
-            UserTwitchInfo() :
+            UserPrivateAccountInfo() :
                 PlayFabBaseModel(),
-                TwitchId(),
-                TwitchUserName()
+                Email()
             {}
 
-            UserTwitchInfo(const UserTwitchInfo& src) :
+            UserPrivateAccountInfo(const UserPrivateAccountInfo& src) :
                 PlayFabBaseModel(),
-                TwitchId(src.TwitchId),
-                TwitchUserName(src.TwitchUserName)
+                Email(src.Email)
             {}
 
-            UserTwitchInfo(const rapidjson::Value& obj) : UserTwitchInfo()
+            UserPrivateAccountInfo(const rapidjson::Value& obj) : UserPrivateAccountInfo()
             {
                 readFromValue(obj);
             }
 
-            ~UserTwitchInfo();
+            ~UserPrivateAccountInfo();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -5808,35 +5824,143 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct UserGoogleInfo : public PlayFabBaseModel
+        enum TitleActivationStatus
         {
-            std::string GoogleId;
-            std::string GoogleEmail;
-            std::string GoogleLocale;
-            std::string GoogleGender;
+            TitleActivationStatusNone,
+            TitleActivationStatusActivatedTitleKey,
+            TitleActivationStatusPendingSteam,
+            TitleActivationStatusActivatedSteam,
+            TitleActivationStatusRevokedSteam
+        };
 
-            UserGoogleInfo() :
+        void writeTitleActivationStatusEnumJSON(TitleActivationStatus enumVal, PFStringJsonWriter& writer);
+        TitleActivationStatus readTitleActivationStatusFromValue(const rapidjson::Value& obj);
+
+        struct UserSteamInfo : public PlayFabBaseModel
+        {
+            Boxed<TitleActivationStatus> SteamActivationStatus;
+            std::string SteamCountry;
+            Boxed<Currency> SteamCurrency;
+            std::string SteamId;
+
+            UserSteamInfo() :
                 PlayFabBaseModel(),
-                GoogleId(),
-                GoogleEmail(),
-                GoogleLocale(),
-                GoogleGender()
+                SteamActivationStatus(),
+                SteamCountry(),
+                SteamCurrency(),
+                SteamId()
             {}
 
-            UserGoogleInfo(const UserGoogleInfo& src) :
+            UserSteamInfo(const UserSteamInfo& src) :
                 PlayFabBaseModel(),
-                GoogleId(src.GoogleId),
-                GoogleEmail(src.GoogleEmail),
-                GoogleLocale(src.GoogleLocale),
-                GoogleGender(src.GoogleGender)
+                SteamActivationStatus(src.SteamActivationStatus),
+                SteamCountry(src.SteamCountry),
+                SteamCurrency(src.SteamCurrency),
+                SteamId(src.SteamId)
             {}
 
-            UserGoogleInfo(const rapidjson::Value& obj) : UserGoogleInfo()
+            UserSteamInfo(const rapidjson::Value& obj) : UserSteamInfo()
             {
                 readFromValue(obj);
             }
 
-            ~UserGoogleInfo();
+            ~UserSteamInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum UserOrigination
+        {
+            UserOriginationOrganic,
+            UserOriginationSteam,
+            UserOriginationGoogle,
+            UserOriginationAmazon,
+            UserOriginationFacebook,
+            UserOriginationKongregate,
+            UserOriginationGamersFirst,
+            UserOriginationUnknown,
+            UserOriginationIOS,
+            UserOriginationLoadTest,
+            UserOriginationAndroid,
+            UserOriginationPSN,
+            UserOriginationGameCenter,
+            UserOriginationCustomId,
+            UserOriginationXboxLive,
+            UserOriginationParse,
+            UserOriginationTwitch,
+            UserOriginationWindowsHello
+        };
+
+        void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
+        UserOrigination readUserOriginationFromValue(const rapidjson::Value& obj);
+
+        struct UserTitleInfo : public PlayFabBaseModel
+        {
+            std::string AvatarUrl;
+            time_t Created;
+            std::string DisplayName;
+            OptionalTime FirstLogin;
+            OptionalBool isBanned;
+            OptionalTime LastLogin;
+            Boxed<UserOrigination> Origination;
+
+            UserTitleInfo() :
+                PlayFabBaseModel(),
+                AvatarUrl(),
+                Created(0),
+                DisplayName(),
+                FirstLogin(),
+                isBanned(),
+                LastLogin(),
+                Origination()
+            {}
+
+            UserTitleInfo(const UserTitleInfo& src) :
+                PlayFabBaseModel(),
+                AvatarUrl(src.AvatarUrl),
+                Created(src.Created),
+                DisplayName(src.DisplayName),
+                FirstLogin(src.FirstLogin),
+                isBanned(src.isBanned),
+                LastLogin(src.LastLogin),
+                Origination(src.Origination)
+            {}
+
+            UserTitleInfo(const rapidjson::Value& obj) : UserTitleInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~UserTitleInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UserTwitchInfo : public PlayFabBaseModel
+        {
+            std::string TwitchId;
+            std::string TwitchUserName;
+
+            UserTwitchInfo() :
+                PlayFabBaseModel(),
+                TwitchId(),
+                TwitchUserName()
+            {}
+
+            UserTwitchInfo(const UserTwitchInfo& src) :
+                PlayFabBaseModel(),
+                TwitchId(src.TwitchId),
+                TwitchUserName(src.TwitchUserName)
+            {}
+
+            UserTwitchInfo(const rapidjson::Value& obj) : UserTwitchInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~UserTwitchInfo();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -5867,88 +5991,63 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct UserCustomIdInfo : public PlayFabBaseModel
-        {
-            std::string CustomId;
-
-            UserCustomIdInfo() :
-                PlayFabBaseModel(),
-                CustomId()
-            {}
-
-            UserCustomIdInfo(const UserCustomIdInfo& src) :
-                PlayFabBaseModel(),
-                CustomId(src.CustomId)
-            {}
-
-            UserCustomIdInfo(const rapidjson::Value& obj) : UserCustomIdInfo()
-            {
-                readFromValue(obj);
-            }
-
-            ~UserCustomIdInfo();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct UserAccountInfo : public PlayFabBaseModel
         {
-            std::string PlayFabId;
-            time_t Created;
-            std::string Username;
-            UserTitleInfo* TitleInfo;
-            UserPrivateAccountInfo* PrivateInfo;
-            UserFacebookInfo* FacebookInfo;
-            UserSteamInfo* SteamInfo;
-            UserGameCenterInfo* GameCenterInfo;
-            UserIosDeviceInfo* IosDeviceInfo;
             UserAndroidDeviceInfo* AndroidDeviceInfo;
-            UserKongregateInfo* KongregateInfo;
-            UserTwitchInfo* TwitchInfo;
-            UserPsnInfo* PsnInfo;
-            UserGoogleInfo* GoogleInfo;
-            UserXboxInfo* XboxInfo;
+            time_t Created;
             UserCustomIdInfo* CustomIdInfo;
+            UserFacebookInfo* FacebookInfo;
+            UserGameCenterInfo* GameCenterInfo;
+            UserGoogleInfo* GoogleInfo;
+            UserIosDeviceInfo* IosDeviceInfo;
+            UserKongregateInfo* KongregateInfo;
+            std::string PlayFabId;
+            UserPrivateAccountInfo* PrivateInfo;
+            UserPsnInfo* PsnInfo;
+            UserSteamInfo* SteamInfo;
+            UserTitleInfo* TitleInfo;
+            UserTwitchInfo* TwitchInfo;
+            std::string Username;
+            UserXboxInfo* XboxInfo;
 
             UserAccountInfo() :
                 PlayFabBaseModel(),
-                PlayFabId(),
-                Created(0),
-                Username(),
-                TitleInfo(NULL),
-                PrivateInfo(NULL),
-                FacebookInfo(NULL),
-                SteamInfo(NULL),
-                GameCenterInfo(NULL),
-                IosDeviceInfo(NULL),
                 AndroidDeviceInfo(NULL),
-                KongregateInfo(NULL),
-                TwitchInfo(NULL),
-                PsnInfo(NULL),
+                Created(0),
+                CustomIdInfo(NULL),
+                FacebookInfo(NULL),
+                GameCenterInfo(NULL),
                 GoogleInfo(NULL),
-                XboxInfo(NULL),
-                CustomIdInfo(NULL)
+                IosDeviceInfo(NULL),
+                KongregateInfo(NULL),
+                PlayFabId(),
+                PrivateInfo(NULL),
+                PsnInfo(NULL),
+                SteamInfo(NULL),
+                TitleInfo(NULL),
+                TwitchInfo(NULL),
+                Username(),
+                XboxInfo(NULL)
             {}
 
             UserAccountInfo(const UserAccountInfo& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                Created(src.Created),
-                Username(src.Username),
-                TitleInfo(src.TitleInfo ? new UserTitleInfo(*src.TitleInfo) : NULL),
-                PrivateInfo(src.PrivateInfo ? new UserPrivateAccountInfo(*src.PrivateInfo) : NULL),
-                FacebookInfo(src.FacebookInfo ? new UserFacebookInfo(*src.FacebookInfo) : NULL),
-                SteamInfo(src.SteamInfo ? new UserSteamInfo(*src.SteamInfo) : NULL),
-                GameCenterInfo(src.GameCenterInfo ? new UserGameCenterInfo(*src.GameCenterInfo) : NULL),
-                IosDeviceInfo(src.IosDeviceInfo ? new UserIosDeviceInfo(*src.IosDeviceInfo) : NULL),
                 AndroidDeviceInfo(src.AndroidDeviceInfo ? new UserAndroidDeviceInfo(*src.AndroidDeviceInfo) : NULL),
-                KongregateInfo(src.KongregateInfo ? new UserKongregateInfo(*src.KongregateInfo) : NULL),
-                TwitchInfo(src.TwitchInfo ? new UserTwitchInfo(*src.TwitchInfo) : NULL),
-                PsnInfo(src.PsnInfo ? new UserPsnInfo(*src.PsnInfo) : NULL),
+                Created(src.Created),
+                CustomIdInfo(src.CustomIdInfo ? new UserCustomIdInfo(*src.CustomIdInfo) : NULL),
+                FacebookInfo(src.FacebookInfo ? new UserFacebookInfo(*src.FacebookInfo) : NULL),
+                GameCenterInfo(src.GameCenterInfo ? new UserGameCenterInfo(*src.GameCenterInfo) : NULL),
                 GoogleInfo(src.GoogleInfo ? new UserGoogleInfo(*src.GoogleInfo) : NULL),
-                XboxInfo(src.XboxInfo ? new UserXboxInfo(*src.XboxInfo) : NULL),
-                CustomIdInfo(src.CustomIdInfo ? new UserCustomIdInfo(*src.CustomIdInfo) : NULL)
+                IosDeviceInfo(src.IosDeviceInfo ? new UserIosDeviceInfo(*src.IosDeviceInfo) : NULL),
+                KongregateInfo(src.KongregateInfo ? new UserKongregateInfo(*src.KongregateInfo) : NULL),
+                PlayFabId(src.PlayFabId),
+                PrivateInfo(src.PrivateInfo ? new UserPrivateAccountInfo(*src.PrivateInfo) : NULL),
+                PsnInfo(src.PsnInfo ? new UserPsnInfo(*src.PsnInfo) : NULL),
+                SteamInfo(src.SteamInfo ? new UserSteamInfo(*src.SteamInfo) : NULL),
+                TitleInfo(src.TitleInfo ? new UserTitleInfo(*src.TitleInfo) : NULL),
+                TwitchInfo(src.TwitchInfo ? new UserTwitchInfo(*src.TwitchInfo) : NULL),
+                Username(src.Username),
+                XboxInfo(src.XboxInfo ? new UserXboxInfo(*src.XboxInfo) : NULL)
             {}
 
             UserAccountInfo(const rapidjson::Value& obj) : UserAccountInfo()
@@ -6039,37 +6138,37 @@ namespace PlayFab
 
         struct ModifyServerBuildRequest : public PlayFabBaseModel
         {
-            std::string BuildId;
-            OptionalTime Timestamp;
             std::list<Region> ActiveRegions;
+            std::string BuildId;
+            std::string CommandLineTemplate;
+            std::string Comment;
+            std::string ExecutablePath;
             Int32 MaxGamesPerHost;
             Int32 MinFreeGameSlots;
-            std::string CommandLineTemplate;
-            std::string ExecutablePath;
-            std::string Comment;
+            OptionalTime Timestamp;
 
             ModifyServerBuildRequest() :
                 PlayFabBaseModel(),
-                BuildId(),
-                Timestamp(),
                 ActiveRegions(),
+                BuildId(),
+                CommandLineTemplate(),
+                Comment(),
+                ExecutablePath(),
                 MaxGamesPerHost(0),
                 MinFreeGameSlots(0),
-                CommandLineTemplate(),
-                ExecutablePath(),
-                Comment()
+                Timestamp()
             {}
 
             ModifyServerBuildRequest(const ModifyServerBuildRequest& src) :
                 PlayFabBaseModel(),
-                BuildId(src.BuildId),
-                Timestamp(src.Timestamp),
                 ActiveRegions(src.ActiveRegions),
+                BuildId(src.BuildId),
+                CommandLineTemplate(src.CommandLineTemplate),
+                Comment(src.Comment),
+                ExecutablePath(src.ExecutablePath),
                 MaxGamesPerHost(src.MaxGamesPerHost),
                 MinFreeGameSlots(src.MinFreeGameSlots),
-                CommandLineTemplate(src.CommandLineTemplate),
-                ExecutablePath(src.ExecutablePath),
-                Comment(src.Comment)
+                Timestamp(src.Timestamp)
             {}
 
             ModifyServerBuildRequest(const rapidjson::Value& obj) : ModifyServerBuildRequest()
@@ -6085,43 +6184,43 @@ namespace PlayFab
 
         struct ModifyServerBuildResult : public PlayFabBaseModel
         {
-            std::string BuildId;
             std::list<Region> ActiveRegions;
+            std::string BuildId;
+            std::string CommandLineTemplate;
+            std::string Comment;
+            std::string ExecutablePath;
             Int32 MaxGamesPerHost;
             Int32 MinFreeGameSlots;
-            std::string CommandLineTemplate;
-            std::string ExecutablePath;
-            std::string Comment;
+            Boxed<GameBuildStatus> Status;
             time_t Timestamp;
             std::string TitleId;
-            Boxed<GameBuildStatus> Status;
 
             ModifyServerBuildResult() :
                 PlayFabBaseModel(),
-                BuildId(),
                 ActiveRegions(),
+                BuildId(),
+                CommandLineTemplate(),
+                Comment(),
+                ExecutablePath(),
                 MaxGamesPerHost(0),
                 MinFreeGameSlots(0),
-                CommandLineTemplate(),
-                ExecutablePath(),
-                Comment(),
+                Status(),
                 Timestamp(0),
-                TitleId(),
-                Status()
+                TitleId()
             {}
 
             ModifyServerBuildResult(const ModifyServerBuildResult& src) :
                 PlayFabBaseModel(),
-                BuildId(src.BuildId),
                 ActiveRegions(src.ActiveRegions),
+                BuildId(src.BuildId),
+                CommandLineTemplate(src.CommandLineTemplate),
+                Comment(src.Comment),
+                ExecutablePath(src.ExecutablePath),
                 MaxGamesPerHost(src.MaxGamesPerHost),
                 MinFreeGameSlots(src.MinFreeGameSlots),
-                CommandLineTemplate(src.CommandLineTemplate),
-                ExecutablePath(src.ExecutablePath),
-                Comment(src.Comment),
+                Status(src.Status),
                 Timestamp(src.Timestamp),
-                TitleId(src.TitleId),
-                Status(src.Status)
+                TitleId(src.TitleId)
             {}
 
             ModifyServerBuildResult(const rapidjson::Value& obj) : ModifyServerBuildResult()
@@ -6137,25 +6236,25 @@ namespace PlayFab
 
         struct ModifyUserVirtualCurrencyResult : public PlayFabBaseModel
         {
+            Int32 Balance;
+            Int32 BalanceChange;
             std::string PlayFabId;
             std::string VirtualCurrency;
-            Int32 BalanceChange;
-            Int32 Balance;
 
             ModifyUserVirtualCurrencyResult() :
                 PlayFabBaseModel(),
-                PlayFabId(),
-                VirtualCurrency(),
+                Balance(0),
                 BalanceChange(0),
-                Balance(0)
+                PlayFabId(),
+                VirtualCurrency()
             {}
 
             ModifyUserVirtualCurrencyResult(const ModifyUserVirtualCurrencyResult& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                VirtualCurrency(src.VirtualCurrency),
+                Balance(src.Balance),
                 BalanceChange(src.BalanceChange),
-                Balance(src.Balance)
+                PlayFabId(src.PlayFabId),
+                VirtualCurrency(src.VirtualCurrency)
             {}
 
             ModifyUserVirtualCurrencyResult(const rapidjson::Value& obj) : ModifyUserVirtualCurrencyResult()
@@ -6181,19 +6280,19 @@ namespace PlayFab
 
         struct RandomResultTable : public PlayFabBaseModel
         {
-            std::string TableId;
             std::list<ResultTableNode> Nodes;
+            std::string TableId;
 
             RandomResultTable() :
                 PlayFabBaseModel(),
-                TableId(),
-                Nodes()
+                Nodes(),
+                TableId()
             {}
 
             RandomResultTable(const RandomResultTable& src) :
                 PlayFabBaseModel(),
-                TableId(src.TableId),
-                Nodes(src.Nodes)
+                Nodes(src.Nodes),
+                TableId(src.TableId)
             {}
 
             RandomResultTable(const rapidjson::Value& obj) : RandomResultTable()
@@ -6209,21 +6308,21 @@ namespace PlayFab
 
         struct RefundPurchaseRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::string OrderId;
+            std::string PlayFabId;
             std::string Reason;
 
             RefundPurchaseRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
                 OrderId(),
+                PlayFabId(),
                 Reason()
             {}
 
             RefundPurchaseRequest(const RefundPurchaseRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
                 OrderId(src.OrderId),
+                PlayFabId(src.PlayFabId),
                 Reason(src.Reason)
             {}
 
@@ -6387,19 +6486,19 @@ namespace PlayFab
 
         struct ResetCharacterStatisticsRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::string CharacterId;
+            std::string PlayFabId;
 
             ResetCharacterStatisticsRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
-                CharacterId()
+                CharacterId(),
+                PlayFabId()
             {}
 
             ResetCharacterStatisticsRequest(const ResetCharacterStatisticsRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                CharacterId(src.CharacterId)
+                CharacterId(src.CharacterId),
+                PlayFabId(src.PlayFabId)
             {}
 
             ResetCharacterStatisticsRequest(const rapidjson::Value& obj) : ResetCharacterStatisticsRequest()
@@ -6546,25 +6645,25 @@ namespace PlayFab
 
         struct ResolvePurchaseDisputeRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::string OrderId;
-            std::string Reason;
             ResolutionOutcome Outcome;
+            std::string PlayFabId;
+            std::string Reason;
 
             ResolvePurchaseDisputeRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
                 OrderId(),
-                Reason(),
-                Outcome()
+                Outcome(),
+                PlayFabId(),
+                Reason()
             {}
 
             ResolvePurchaseDisputeRequest(const ResolvePurchaseDisputeRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
                 OrderId(src.OrderId),
-                Reason(src.Reason),
-                Outcome(src.Outcome)
+                Outcome(src.Outcome),
+                PlayFabId(src.PlayFabId),
+                Reason(src.Reason)
             {}
 
             ResolvePurchaseDisputeRequest(const rapidjson::Value& obj) : ResolvePurchaseDisputeRequest()
@@ -6705,22 +6804,22 @@ namespace PlayFab
 
         struct RevokeInventoryItemRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::string CharacterId;
             std::string ItemInstanceId;
+            std::string PlayFabId;
 
             RevokeInventoryItemRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
                 CharacterId(),
-                ItemInstanceId()
+                ItemInstanceId(),
+                PlayFabId()
             {}
 
             RevokeInventoryItemRequest(const RevokeInventoryItemRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
                 CharacterId(src.CharacterId),
-                ItemInstanceId(src.ItemInstanceId)
+                ItemInstanceId(src.ItemInstanceId),
+                PlayFabId(src.PlayFabId)
             {}
 
             RevokeInventoryItemRequest(const rapidjson::Value& obj) : RevokeInventoryItemRequest()
@@ -6905,19 +7004,19 @@ namespace PlayFab
 
         struct SetPublishedRevisionRequest : public PlayFabBaseModel
         {
-            Int32 Version;
             Int32 Revision;
+            Int32 Version;
 
             SetPublishedRevisionRequest() :
                 PlayFabBaseModel(),
-                Version(0),
-                Revision(0)
+                Revision(0),
+                Version(0)
             {}
 
             SetPublishedRevisionRequest(const SetPublishedRevisionRequest& src) :
                 PlayFabBaseModel(),
-                Version(src.Version),
-                Revision(src.Revision)
+                Revision(src.Revision),
+                Version(src.Version)
             {}
 
             SetPublishedRevisionRequest(const rapidjson::Value& obj) : SetPublishedRevisionRequest()
@@ -7055,28 +7154,28 @@ namespace PlayFab
 
         struct SetupPushNotificationRequest : public PlayFabBaseModel
         {
-            std::string Name;
-            PushSetupPlatform Platform;
-            std::string Key;
             std::string Credential;
+            std::string Key;
+            std::string Name;
             bool OverwriteOldARN;
+            PushSetupPlatform Platform;
 
             SetupPushNotificationRequest() :
                 PlayFabBaseModel(),
-                Name(),
-                Platform(),
-                Key(),
                 Credential(),
-                OverwriteOldARN(false)
+                Key(),
+                Name(),
+                OverwriteOldARN(false),
+                Platform()
             {}
 
             SetupPushNotificationRequest(const SetupPushNotificationRequest& src) :
                 PlayFabBaseModel(),
-                Name(src.Name),
-                Platform(src.Platform),
-                Key(src.Key),
                 Credential(src.Credential),
-                OverwriteOldARN(src.OverwriteOldARN)
+                Key(src.Key),
+                Name(src.Name),
+                OverwriteOldARN(src.OverwriteOldARN),
+                Platform(src.Platform)
             {}
 
             SetupPushNotificationRequest(const rapidjson::Value& obj) : SetupPushNotificationRequest()
@@ -7129,22 +7228,22 @@ namespace PlayFab
 
         struct SubtractUserVirtualCurrencyRequest : public PlayFabBaseModel
         {
+            Int32 Amount;
             std::string PlayFabId;
             std::string VirtualCurrency;
-            Int32 Amount;
 
             SubtractUserVirtualCurrencyRequest() :
                 PlayFabBaseModel(),
+                Amount(0),
                 PlayFabId(),
-                VirtualCurrency(),
-                Amount(0)
+                VirtualCurrency()
             {}
 
             SubtractUserVirtualCurrencyRequest(const SubtractUserVirtualCurrencyRequest& src) :
                 PlayFabBaseModel(),
+                Amount(src.Amount),
                 PlayFabId(src.PlayFabId),
-                VirtualCurrency(src.VirtualCurrency),
-                Amount(src.Amount)
+                VirtualCurrency(src.VirtualCurrency)
             {}
 
             SubtractUserVirtualCurrencyRequest(const rapidjson::Value& obj) : SubtractUserVirtualCurrencyRequest()
@@ -7160,34 +7259,34 @@ namespace PlayFab
 
         struct UpdateBanRequest : public PlayFabBaseModel
         {
+            OptionalBool Active;
             std::string BanId;
-            std::string Reason;
             OptionalTime Expires;
             std::string IPAddress;
             std::string MACAddress;
             OptionalBool Permanent;
-            OptionalBool Active;
+            std::string Reason;
 
             UpdateBanRequest() :
                 PlayFabBaseModel(),
+                Active(),
                 BanId(),
-                Reason(),
                 Expires(),
                 IPAddress(),
                 MACAddress(),
                 Permanent(),
-                Active()
+                Reason()
             {}
 
             UpdateBanRequest(const UpdateBanRequest& src) :
                 PlayFabBaseModel(),
+                Active(src.Active),
                 BanId(src.BanId),
-                Reason(src.Reason),
                 Expires(src.Expires),
                 IPAddress(src.IPAddress),
                 MACAddress(src.MACAddress),
                 Permanent(src.Permanent),
-                Active(src.Active)
+                Reason(src.Reason)
             {}
 
             UpdateBanRequest(const rapidjson::Value& obj) : UpdateBanRequest()
@@ -7253,22 +7352,22 @@ namespace PlayFab
 
         struct UpdateCatalogItemsRequest : public PlayFabBaseModel
         {
+            std::list<CatalogItem> Catalog;
             std::string CatalogVersion;
             OptionalBool SetAsDefaultCatalog;
-            std::list<CatalogItem> Catalog;
 
             UpdateCatalogItemsRequest() :
                 PlayFabBaseModel(),
+                Catalog(),
                 CatalogVersion(),
-                SetAsDefaultCatalog(),
-                Catalog()
+                SetAsDefaultCatalog()
             {}
 
             UpdateCatalogItemsRequest(const UpdateCatalogItemsRequest& src) :
                 PlayFabBaseModel(),
+                Catalog(src.Catalog),
                 CatalogVersion(src.CatalogVersion),
-                SetAsDefaultCatalog(src.SetAsDefaultCatalog),
-                Catalog(src.Catalog)
+                SetAsDefaultCatalog(src.SetAsDefaultCatalog)
             {}
 
             UpdateCatalogItemsRequest(const rapidjson::Value& obj) : UpdateCatalogItemsRequest()
@@ -7306,22 +7405,22 @@ namespace PlayFab
 
         struct UpdateCloudScriptRequest : public PlayFabBaseModel
         {
+            std::string DeveloperPlayFabId;
             std::list<CloudScriptFile> Files;
             bool Publish;
-            std::string DeveloperPlayFabId;
 
             UpdateCloudScriptRequest() :
                 PlayFabBaseModel(),
+                DeveloperPlayFabId(),
                 Files(),
-                Publish(false),
-                DeveloperPlayFabId()
+                Publish(false)
             {}
 
             UpdateCloudScriptRequest(const UpdateCloudScriptRequest& src) :
                 PlayFabBaseModel(),
+                DeveloperPlayFabId(src.DeveloperPlayFabId),
                 Files(src.Files),
-                Publish(src.Publish),
-                DeveloperPlayFabId(src.DeveloperPlayFabId)
+                Publish(src.Publish)
             {}
 
             UpdateCloudScriptRequest(const rapidjson::Value& obj) : UpdateCloudScriptRequest()
@@ -7337,19 +7436,19 @@ namespace PlayFab
 
         struct UpdateCloudScriptResult : public PlayFabBaseModel
         {
-            Int32 Version;
             Int32 Revision;
+            Int32 Version;
 
             UpdateCloudScriptResult() :
                 PlayFabBaseModel(),
-                Version(0),
-                Revision(0)
+                Revision(0),
+                Version(0)
             {}
 
             UpdateCloudScriptResult(const UpdateCloudScriptResult& src) :
                 PlayFabBaseModel(),
-                Version(src.Version),
-                Revision(src.Revision)
+                Revision(src.Revision),
+                Version(src.Version)
             {}
 
             UpdateCloudScriptResult(const rapidjson::Value& obj) : UpdateCloudScriptResult()
@@ -7365,22 +7464,22 @@ namespace PlayFab
 
         struct UpdatePlayerSharedSecretRequest : public PlayFabBaseModel
         {
-            std::string SecretKey;
-            std::string FriendlyName;
             bool Disabled;
+            std::string FriendlyName;
+            std::string SecretKey;
 
             UpdatePlayerSharedSecretRequest() :
                 PlayFabBaseModel(),
-                SecretKey(),
+                Disabled(false),
                 FriendlyName(),
-                Disabled(false)
+                SecretKey()
             {}
 
             UpdatePlayerSharedSecretRequest(const UpdatePlayerSharedSecretRequest& src) :
                 PlayFabBaseModel(),
-                SecretKey(src.SecretKey),
+                Disabled(src.Disabled),
                 FriendlyName(src.FriendlyName),
-                Disabled(src.Disabled)
+                SecretKey(src.SecretKey)
             {}
 
             UpdatePlayerSharedSecretRequest(const rapidjson::Value& obj) : UpdatePlayerSharedSecretRequest()
@@ -7418,22 +7517,22 @@ namespace PlayFab
 
         struct UpdatePlayerStatisticDefinitionRequest : public PlayFabBaseModel
         {
+            Boxed<StatisticAggregationMethod> AggregationMethod;
             std::string StatisticName;
             Boxed<StatisticResetIntervalOption> VersionChangeInterval;
-            Boxed<StatisticAggregationMethod> AggregationMethod;
 
             UpdatePlayerStatisticDefinitionRequest() :
                 PlayFabBaseModel(),
+                AggregationMethod(),
                 StatisticName(),
-                VersionChangeInterval(),
-                AggregationMethod()
+                VersionChangeInterval()
             {}
 
             UpdatePlayerStatisticDefinitionRequest(const UpdatePlayerStatisticDefinitionRequest& src) :
                 PlayFabBaseModel(),
+                AggregationMethod(src.AggregationMethod),
                 StatisticName(src.StatisticName),
-                VersionChangeInterval(src.VersionChangeInterval),
-                AggregationMethod(src.AggregationMethod)
+                VersionChangeInterval(src.VersionChangeInterval)
             {}
 
             UpdatePlayerStatisticDefinitionRequest(const rapidjson::Value& obj) : UpdatePlayerStatisticDefinitionRequest()
@@ -7474,22 +7573,22 @@ namespace PlayFab
 
         struct UpdatePolicyRequest : public PlayFabBaseModel
         {
+            bool OverwritePolicy;
             std::string PolicyName;
             std::list<PermissionStatement> Statements;
-            bool OverwritePolicy;
 
             UpdatePolicyRequest() :
                 PlayFabBaseModel(),
+                OverwritePolicy(false),
                 PolicyName(),
-                Statements(),
-                OverwritePolicy(false)
+                Statements()
             {}
 
             UpdatePolicyRequest(const UpdatePolicyRequest& src) :
                 PlayFabBaseModel(),
+                OverwritePolicy(src.OverwritePolicy),
                 PolicyName(src.PolicyName),
-                Statements(src.Statements),
-                OverwritePolicy(src.OverwritePolicy)
+                Statements(src.Statements)
             {}
 
             UpdatePolicyRequest(const rapidjson::Value& obj) : UpdatePolicyRequest()
@@ -7584,24 +7683,24 @@ namespace PlayFab
         struct UpdateStoreItemsRequest : public PlayFabBaseModel
         {
             std::string CatalogVersion;
-            std::string StoreId;
             StoreMarketingModel* MarketingData;
             std::list<StoreItem> Store;
+            std::string StoreId;
 
             UpdateStoreItemsRequest() :
                 PlayFabBaseModel(),
                 CatalogVersion(),
-                StoreId(),
                 MarketingData(NULL),
-                Store()
+                Store(),
+                StoreId()
             {}
 
             UpdateStoreItemsRequest(const UpdateStoreItemsRequest& src) :
                 PlayFabBaseModel(),
                 CatalogVersion(src.CatalogVersion),
-                StoreId(src.StoreId),
                 MarketingData(src.MarketingData ? new StoreMarketingModel(*src.MarketingData) : NULL),
-                Store(src.Store)
+                Store(src.Store),
+                StoreId(src.StoreId)
             {}
 
             UpdateStoreItemsRequest(const rapidjson::Value& obj) : UpdateStoreItemsRequest()
@@ -7639,34 +7738,34 @@ namespace PlayFab
 
         struct UpdateTaskRequest : public PlayFabBaseModel
         {
-            NameIdentifier* Identifier;
-            std::string Name;
             std::string Description;
-            std::string Schedule;
+            NameIdentifier* Identifier;
             bool IsActive;
-            ScheduledTaskType Type;
+            std::string Name;
             MultitypeVar Parameter;
+            std::string Schedule;
+            ScheduledTaskType Type;
 
             UpdateTaskRequest() :
                 PlayFabBaseModel(),
-                Identifier(NULL),
-                Name(),
                 Description(),
-                Schedule(),
+                Identifier(NULL),
                 IsActive(false),
-                Type(),
-                Parameter()
+                Name(),
+                Parameter(),
+                Schedule(),
+                Type()
             {}
 
             UpdateTaskRequest(const UpdateTaskRequest& src) :
                 PlayFabBaseModel(),
-                Identifier(src.Identifier ? new NameIdentifier(*src.Identifier) : NULL),
-                Name(src.Name),
                 Description(src.Description),
-                Schedule(src.Schedule),
+                Identifier(src.Identifier ? new NameIdentifier(*src.Identifier) : NULL),
                 IsActive(src.IsActive),
-                Type(src.Type),
-                Parameter(src.Parameter)
+                Name(src.Name),
+                Parameter(src.Parameter),
+                Schedule(src.Schedule),
+                Type(src.Type)
             {}
 
             UpdateTaskRequest(const rapidjson::Value& obj) : UpdateTaskRequest()
@@ -7682,25 +7781,25 @@ namespace PlayFab
 
         struct UpdateUserDataRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::map<std::string, std::string> Data;
             std::list<std::string> KeysToRemove;
             Boxed<UserDataPermission> Permission;
+            std::string PlayFabId;
 
             UpdateUserDataRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
                 Data(),
                 KeysToRemove(),
-                Permission()
+                Permission(),
+                PlayFabId()
             {}
 
             UpdateUserDataRequest(const UpdateUserDataRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
                 Data(src.Data),
                 KeysToRemove(src.KeysToRemove),
-                Permission(src.Permission)
+                Permission(src.Permission),
+                PlayFabId(src.PlayFabId)
             {}
 
             UpdateUserDataRequest(const rapidjson::Value& obj) : UpdateUserDataRequest()
@@ -7741,22 +7840,22 @@ namespace PlayFab
 
         struct UpdateUserInternalDataRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::map<std::string, std::string> Data;
             std::list<std::string> KeysToRemove;
+            std::string PlayFabId;
 
             UpdateUserInternalDataRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
                 Data(),
-                KeysToRemove()
+                KeysToRemove(),
+                PlayFabId()
             {}
 
             UpdateUserInternalDataRequest(const UpdateUserInternalDataRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
                 Data(src.Data),
-                KeysToRemove(src.KeysToRemove)
+                KeysToRemove(src.KeysToRemove),
+                PlayFabId(src.PlayFabId)
             {}
 
             UpdateUserInternalDataRequest(const rapidjson::Value& obj) : UpdateUserInternalDataRequest()
@@ -7772,19 +7871,19 @@ namespace PlayFab
 
         struct UpdateUserTitleDisplayNameRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             std::string DisplayName;
+            std::string PlayFabId;
 
             UpdateUserTitleDisplayNameRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
-                DisplayName()
+                DisplayName(),
+                PlayFabId()
             {}
 
             UpdateUserTitleDisplayNameRequest(const UpdateUserTitleDisplayNameRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                DisplayName(src.DisplayName)
+                DisplayName(src.DisplayName),
+                PlayFabId(src.PlayFabId)
             {}
 
             UpdateUserTitleDisplayNameRequest(const rapidjson::Value& obj) : UpdateUserTitleDisplayNameRequest()
