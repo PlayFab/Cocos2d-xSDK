@@ -109,58 +109,58 @@ namespace PlayFab
 
         struct ItemInstance : public PlayFabBaseModel
         {
+            std::string Annotation;
+            std::list<std::string> BundleContents;
+            std::string BundleParent;
+            std::string CatalogVersion;
+            std::map<std::string, std::string> CustomData;
+            std::string DisplayName;
+            OptionalTime Expiration;
+            std::string ItemClass;
             std::string ItemId;
             std::string ItemInstanceId;
-            std::string ItemClass;
             OptionalTime PurchaseDate;
-            OptionalTime Expiration;
             OptionalInt32 RemainingUses;
-            OptionalInt32 UsesIncrementedBy;
-            std::string Annotation;
-            std::string CatalogVersion;
-            std::string BundleParent;
-            std::string DisplayName;
             std::string UnitCurrency;
             Uint32 UnitPrice;
-            std::list<std::string> BundleContents;
-            std::map<std::string, std::string> CustomData;
+            OptionalInt32 UsesIncrementedBy;
 
             ItemInstance() :
                 PlayFabBaseModel(),
+                Annotation(),
+                BundleContents(),
+                BundleParent(),
+                CatalogVersion(),
+                CustomData(),
+                DisplayName(),
+                Expiration(),
+                ItemClass(),
                 ItemId(),
                 ItemInstanceId(),
-                ItemClass(),
                 PurchaseDate(),
-                Expiration(),
                 RemainingUses(),
-                UsesIncrementedBy(),
-                Annotation(),
-                CatalogVersion(),
-                BundleParent(),
-                DisplayName(),
                 UnitCurrency(),
                 UnitPrice(0),
-                BundleContents(),
-                CustomData()
+                UsesIncrementedBy()
             {}
 
             ItemInstance(const ItemInstance& src) :
                 PlayFabBaseModel(),
+                Annotation(src.Annotation),
+                BundleContents(src.BundleContents),
+                BundleParent(src.BundleParent),
+                CatalogVersion(src.CatalogVersion),
+                CustomData(src.CustomData),
+                DisplayName(src.DisplayName),
+                Expiration(src.Expiration),
+                ItemClass(src.ItemClass),
                 ItemId(src.ItemId),
                 ItemInstanceId(src.ItemInstanceId),
-                ItemClass(src.ItemClass),
                 PurchaseDate(src.PurchaseDate),
-                Expiration(src.Expiration),
                 RemainingUses(src.RemainingUses),
-                UsesIncrementedBy(src.UsesIncrementedBy),
-                Annotation(src.Annotation),
-                CatalogVersion(src.CatalogVersion),
-                BundleParent(src.BundleParent),
-                DisplayName(src.DisplayName),
                 UnitCurrency(src.UnitCurrency),
                 UnitPrice(src.UnitPrice),
-                BundleContents(src.BundleContents),
-                CustomData(src.CustomData)
+                UsesIncrementedBy(src.UsesIncrementedBy)
             {}
 
             ItemInstance(const rapidjson::Value& obj) : ItemInstance()
@@ -290,33 +290,33 @@ namespace PlayFab
 
         struct RegisterGameRequest : public PlayFabBaseModel
         {
+            std::string Build;
+            std::string GameMode;
             std::string LobbyId;
+            Region pfRegion;
             std::string ServerHost;
             std::string ServerPort;
-            std::string Build;
-            Region pfRegion;
-            std::string GameMode;
             std::map<std::string, std::string> Tags;
 
             RegisterGameRequest() :
                 PlayFabBaseModel(),
+                Build(),
+                GameMode(),
                 LobbyId(),
+                pfRegion(),
                 ServerHost(),
                 ServerPort(),
-                Build(),
-                pfRegion(),
-                GameMode(),
                 Tags()
             {}
 
             RegisterGameRequest(const RegisterGameRequest& src) :
                 PlayFabBaseModel(),
+                Build(src.Build),
+                GameMode(src.GameMode),
                 LobbyId(src.LobbyId),
+                pfRegion(src.pfRegion),
                 ServerHost(src.ServerHost),
                 ServerPort(src.ServerPort),
-                Build(src.Build),
-                pfRegion(src.pfRegion),
-                GameMode(src.GameMode),
                 Tags(src.Tags)
             {}
 
@@ -359,27 +359,27 @@ namespace PlayFab
         struct StartGameRequest : public PlayFabBaseModel
         {
             std::string Build;
-            Region pfRegion;
-            std::string GameMode;
             std::string CustomCommandLineData;
             std::string ExternalMatchmakerEventEndpoint;
+            std::string GameMode;
+            Region pfRegion;
 
             StartGameRequest() :
                 PlayFabBaseModel(),
                 Build(),
-                pfRegion(),
-                GameMode(),
                 CustomCommandLineData(),
-                ExternalMatchmakerEventEndpoint()
+                ExternalMatchmakerEventEndpoint(),
+                GameMode(),
+                pfRegion()
             {}
 
             StartGameRequest(const StartGameRequest& src) :
                 PlayFabBaseModel(),
                 Build(src.Build),
-                pfRegion(src.pfRegion),
-                GameMode(src.GameMode),
                 CustomCommandLineData(src.CustomCommandLineData),
-                ExternalMatchmakerEventEndpoint(src.ExternalMatchmakerEventEndpoint)
+                ExternalMatchmakerEventEndpoint(src.ExternalMatchmakerEventEndpoint),
+                GameMode(src.GameMode),
+                pfRegion(src.pfRegion)
             {}
 
             StartGameRequest(const rapidjson::Value& obj) : StartGameRequest()
@@ -426,19 +426,19 @@ namespace PlayFab
 
         struct UserInfoRequest : public PlayFabBaseModel
         {
-            std::string PlayFabId;
             Int32 MinCatalogVersion;
+            std::string PlayFabId;
 
             UserInfoRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
-                MinCatalogVersion(0)
+                MinCatalogVersion(0),
+                PlayFabId()
             {}
 
             UserInfoRequest(const UserInfoRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                MinCatalogVersion(src.MinCatalogVersion)
+                MinCatalogVersion(src.MinCatalogVersion),
+                PlayFabId(src.PlayFabId)
             {}
 
             UserInfoRequest(const rapidjson::Value& obj) : UserInfoRequest()
@@ -454,22 +454,22 @@ namespace PlayFab
 
         struct VirtualCurrencyRechargeTime : public PlayFabBaseModel
         {
-            Int32 SecondsToRecharge;
-            time_t RechargeTime;
             Int32 RechargeMax;
+            time_t RechargeTime;
+            Int32 SecondsToRecharge;
 
             VirtualCurrencyRechargeTime() :
                 PlayFabBaseModel(),
-                SecondsToRecharge(0),
+                RechargeMax(0),
                 RechargeTime(0),
-                RechargeMax(0)
+                SecondsToRecharge(0)
             {}
 
             VirtualCurrencyRechargeTime(const VirtualCurrencyRechargeTime& src) :
                 PlayFabBaseModel(),
-                SecondsToRecharge(src.SecondsToRecharge),
+                RechargeMax(src.RechargeMax),
                 RechargeTime(src.RechargeTime),
-                RechargeMax(src.RechargeMax)
+                SecondsToRecharge(src.SecondsToRecharge)
             {}
 
             VirtualCurrencyRechargeTime(const rapidjson::Value& obj) : VirtualCurrencyRechargeTime()
@@ -485,37 +485,37 @@ namespace PlayFab
 
         struct UserInfoResponse : public PlayFabBaseModel
         {
-            std::string PlayFabId;
-            std::string Username;
-            std::string TitleDisplayName;
             std::list<ItemInstance> Inventory;
+            bool IsDeveloper;
+            std::string PlayFabId;
+            std::string SteamId;
+            std::string TitleDisplayName;
+            std::string Username;
             std::map<std::string, Int32> VirtualCurrency;
             std::map<std::string, VirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes;
-            bool IsDeveloper;
-            std::string SteamId;
 
             UserInfoResponse() :
                 PlayFabBaseModel(),
-                PlayFabId(),
-                Username(),
-                TitleDisplayName(),
                 Inventory(),
-                VirtualCurrency(),
-                VirtualCurrencyRechargeTimes(),
                 IsDeveloper(false),
-                SteamId()
+                PlayFabId(),
+                SteamId(),
+                TitleDisplayName(),
+                Username(),
+                VirtualCurrency(),
+                VirtualCurrencyRechargeTimes()
             {}
 
             UserInfoResponse(const UserInfoResponse& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                Username(src.Username),
-                TitleDisplayName(src.TitleDisplayName),
                 Inventory(src.Inventory),
-                VirtualCurrency(src.VirtualCurrency),
-                VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes),
                 IsDeveloper(src.IsDeveloper),
-                SteamId(src.SteamId)
+                PlayFabId(src.PlayFabId),
+                SteamId(src.SteamId),
+                TitleDisplayName(src.TitleDisplayName),
+                Username(src.Username),
+                VirtualCurrency(src.VirtualCurrency),
+                VirtualCurrencyRechargeTimes(src.VirtualCurrencyRechargeTimes)
             {}
 
             UserInfoResponse(const rapidjson::Value& obj) : UserInfoResponse()
