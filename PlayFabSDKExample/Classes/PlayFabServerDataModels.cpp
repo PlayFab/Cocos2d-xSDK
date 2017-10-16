@@ -3744,83 +3744,6 @@ GameInstanceState PlayFab::ServerModels::readGameInstanceStateFromValue(const ra
     return GameInstanceStateOpen; // Basically critical fail
 }
 
-GetActionGroupResult::~GetActionGroupResult()
-{
-
-}
-
-void GetActionGroupResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
-    writer.String("Name"); writer.String(Name.c_str());
-
-    writer.EndObject();
-}
-
-bool GetActionGroupResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
-    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
-    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
-    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-
-    return true;
-}
-
-GetAllActionGroupsRequest::~GetAllActionGroupsRequest()
-{
-
-}
-
-void GetAllActionGroupsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool GetAllActionGroupsRequest::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-GetAllActionGroupsResult::~GetAllActionGroupsResult()
-{
-
-}
-
-void GetAllActionGroupsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("ActionGroups");
-    writer.StartArray();
-    for (std::list<GetActionGroupResult>::iterator iter = ActionGroups.begin(); iter != ActionGroups.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-    
-
-    writer.EndObject();
-}
-
-bool GetAllActionGroupsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator ActionGroups_member = obj.FindMember("ActionGroups");
-    if (ActionGroups_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = ActionGroups_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            ActionGroups.push_back(GetActionGroupResult(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
 GetAllSegmentsRequest::~GetAllSegmentsRequest()
 {
 
@@ -7809,6 +7732,7 @@ void PushNotificationPackage::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
 
+    writer.String("Badge"); writer.Int(Badge);
     if (CustomData.length() > 0) { writer.String("CustomData"); writer.String(CustomData.c_str()); }
     if (Icon.length() > 0) { writer.String("Icon"); writer.String(Icon.c_str()); }
     writer.String("Message"); writer.String(Message.c_str());
@@ -7821,6 +7745,8 @@ void PushNotificationPackage::writeJSON(PFStringJsonWriter& writer)
 
 bool PushNotificationPackage::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator Badge_member = obj.FindMember("Badge");
+    if (Badge_member != obj.MemberEnd() && !Badge_member->value.IsNull()) Badge = Badge_member->value.GetInt();
     const Value::ConstMemberIterator CustomData_member = obj.FindMember("CustomData");
     if (CustomData_member != obj.MemberEnd() && !CustomData_member->value.IsNull()) CustomData = CustomData_member->value.GetString();
     const Value::ConstMemberIterator Icon_member = obj.FindMember("Icon");

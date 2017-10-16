@@ -1737,8 +1737,6 @@ namespace PlayFab
             std::string BuildVersion;
             std::string GameMode;
             std::string GameServerData;
-            // Deprecated - Use 'GameServerStateEnum' instead
-            OptionalInt32 GameServerState;
             Boxed<GameInstanceState> GameServerStateEnum;
             OptionalTime LastHeartbeat;
             std::string LobbyID;
@@ -1756,7 +1754,6 @@ namespace PlayFab
                 BuildVersion(),
                 GameMode(),
                 GameServerData(),
-                GameServerState(),
                 GameServerStateEnum(),
                 LastHeartbeat(),
                 LobbyID(),
@@ -1775,7 +1772,6 @@ namespace PlayFab
                 BuildVersion(src.BuildVersion),
                 GameMode(src.GameMode),
                 GameServerData(src.GameServerData),
-                GameServerState(src.GameServerState),
                 GameServerStateEnum(src.GameServerStateEnum),
                 LastHeartbeat(src.LastHeartbeat),
                 LobbyID(src.LobbyID),
