@@ -2925,31 +2925,6 @@ bool GameModeInfo::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-GetActionGroupResult::~GetActionGroupResult()
-{
-
-}
-
-void GetActionGroupResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
-    writer.String("Name"); writer.String(Name.c_str());
-
-    writer.EndObject();
-}
-
-bool GetActionGroupResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
-    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
-    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
-    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-
-    return true;
-}
-
 GetActionsOnPlayersInSegmentTaskInstanceResult::~GetActionsOnPlayersInSegmentTaskInstanceResult()
 {
     if (Parameter != NULL) delete Parameter;
@@ -2973,58 +2948,6 @@ bool GetActionsOnPlayersInSegmentTaskInstanceResult::readFromValue(const rapidjs
     if (Parameter_member != obj.MemberEnd() && !Parameter_member->value.IsNull()) Parameter = new ActionsOnPlayersInSegmentTaskParameter(Parameter_member->value);
     const Value::ConstMemberIterator Summary_member = obj.FindMember("Summary");
     if (Summary_member != obj.MemberEnd() && !Summary_member->value.IsNull()) Summary = new ActionsOnPlayersInSegmentTaskSummary(Summary_member->value);
-
-    return true;
-}
-
-GetAllActionGroupsRequest::~GetAllActionGroupsRequest()
-{
-
-}
-
-void GetAllActionGroupsRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-
-    writer.EndObject();
-}
-
-bool GetAllActionGroupsRequest::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-GetAllActionGroupsResult::~GetAllActionGroupsResult()
-{
-
-}
-
-void GetAllActionGroupsResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("ActionGroups");
-    writer.StartArray();
-    for (std::list<GetActionGroupResult>::iterator iter = ActionGroups.begin(); iter != ActionGroups.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-    
-
-    writer.EndObject();
-}
-
-bool GetAllActionGroupsResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator ActionGroups_member = obj.FindMember("ActionGroups");
-    if (ActionGroups_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = ActionGroups_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            ActionGroups.push_back(GetActionGroupResult(memberList[i]));
-        }
-    }
 
     return true;
 }

@@ -2269,35 +2269,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        // Deprecated - Do not use
-        struct GetActionGroupResult : public PlayFabBaseModel
-        {
-            std::string Id;
-            std::string Name;
-
-            GetActionGroupResult() :
-                PlayFabBaseModel(),
-                Id(),
-                Name()
-            {}
-
-            GetActionGroupResult(const GetActionGroupResult& src) :
-                PlayFabBaseModel(),
-                Id(src.Id),
-                Name(src.Name)
-            {}
-
-            GetActionGroupResult(const rapidjson::Value& obj) : GetActionGroupResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~GetActionGroupResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct GetActionsOnPlayersInSegmentTaskInstanceResult : public PlayFabBaseModel
         {
             ActionsOnPlayersInSegmentTaskParameter* Parameter;
@@ -2321,55 +2292,6 @@ namespace PlayFab
             }
 
             ~GetActionsOnPlayersInSegmentTaskInstanceResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        // Deprecated - Do not use
-        struct GetAllActionGroupsRequest : public PlayFabBaseModel
-        {
-
-            GetAllActionGroupsRequest() :
-                PlayFabBaseModel()
-            {}
-
-            GetAllActionGroupsRequest(const GetAllActionGroupsRequest& src) :
-                PlayFabBaseModel()
-            {}
-
-            GetAllActionGroupsRequest(const rapidjson::Value& obj) : GetAllActionGroupsRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~GetAllActionGroupsRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        // Deprecated - Do not use
-        struct GetAllActionGroupsResult : public PlayFabBaseModel
-        {
-            std::list<GetActionGroupResult> ActionGroups;
-
-            GetAllActionGroupsResult() :
-                PlayFabBaseModel(),
-                ActionGroups()
-            {}
-
-            GetAllActionGroupsResult(const GetAllActionGroupsResult& src) :
-                PlayFabBaseModel(),
-                ActionGroups(src.ActionGroups)
-            {}
-
-            GetAllActionGroupsResult(const rapidjson::Value& obj) : GetAllActionGroupsResult()
-            {
-                readFromValue(obj);
-            }
-
-            ~GetAllActionGroupsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

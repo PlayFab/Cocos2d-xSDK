@@ -33,8 +33,6 @@ namespace PlayFab
         // Deprecated - Use 'DeleteUser' instead
         static void DeleteUsers(AdminModels::DeleteUsersRequest& request, ProcessApiCallback<AdminModels::DeleteUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetActionsOnPlayersInSegmentTaskInstance(AdminModels::GetTaskInstanceRequest& request, ProcessApiCallback<AdminModels::GetActionsOnPlayersInSegmentTaskInstanceResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'GetTasks' instead
-        static void GetAllActionGroups(ProcessApiCallback<AdminModels::GetAllActionGroupsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAllSegments(ProcessApiCallback<AdminModels::GetAllSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCatalogItems(AdminModels::GetCatalogItemsRequest& request, ProcessApiCallback<AdminModels::GetCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCloudScriptRevision(AdminModels::GetCloudScriptRevisionRequest& request, ProcessApiCallback<AdminModels::GetCloudScriptRevisionResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -139,7 +137,6 @@ namespace PlayFab
         static void OnDeleteTaskResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetActionsOnPlayersInSegmentTaskInstanceResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetAllActionGroupsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAllSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCloudScriptRevisionResult(int httpStatus, HttpRequest* request, void* userData);

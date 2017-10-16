@@ -30,8 +30,6 @@ namespace PlayFab
         static void DeregisterGame(ServerModels::DeregisterGameRequest& request, ProcessApiCallback<ServerModels::DeregisterGameResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void EvaluateRandomResultTable(ServerModels::EvaluateRandomResultTableRequest& request, ProcessApiCallback<ServerModels::EvaluateRandomResultTableResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ExecuteCloudScript(ServerModels::ExecuteCloudScriptServerRequest& request, ProcessApiCallback<ServerModels::ExecuteCloudScriptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'GetAllSegments' instead
-        static void GetAllActionGroups(ProcessApiCallback<ServerModels::GetAllActionGroupsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAllSegments(ProcessApiCallback<ServerModels::GetAllSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAllUsersCharacters(ServerModels::ListUsersCharactersRequest& request, ProcessApiCallback<ServerModels::ListUsersCharactersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCatalogItems(ServerModels::GetCatalogItemsRequest& request, ProcessApiCallback<ServerModels::GetCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -146,7 +144,6 @@ namespace PlayFab
         static void OnDeregisterGameResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnEvaluateRandomResultTableResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnExecuteCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetAllActionGroupsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAllSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAllUsersCharactersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
