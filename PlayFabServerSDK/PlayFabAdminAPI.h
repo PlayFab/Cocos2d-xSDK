@@ -30,8 +30,7 @@ namespace PlayFab
         static void DeletePlayerSharedSecret(AdminModels::DeletePlayerSharedSecretRequest& request, ProcessApiCallback<AdminModels::DeletePlayerSharedSecretResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteStore(AdminModels::DeleteStoreRequest& request, ProcessApiCallback<AdminModels::DeleteStoreResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteTask(AdminModels::DeleteTaskRequest& request, ProcessApiCallback<AdminModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'DeleteUser' instead
-        static void DeleteUsers(AdminModels::DeleteUsersRequest& request, ProcessApiCallback<AdminModels::DeleteUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void DeleteTitle(ProcessApiCallback<AdminModels::DeleteTitleResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetActionsOnPlayersInSegmentTaskInstance(AdminModels::GetTaskInstanceRequest& request, ProcessApiCallback<AdminModels::GetActionsOnPlayersInSegmentTaskInstanceResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAllSegments(ProcessApiCallback<AdminModels::GetAllSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetCatalogItems(AdminModels::GetCatalogItemsRequest& request, ProcessApiCallback<AdminModels::GetCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -79,8 +78,6 @@ namespace PlayFab
         static void RemoveServerBuild(AdminModels::RemoveServerBuildRequest& request, ProcessApiCallback<AdminModels::RemoveServerBuildResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveVirtualCurrencyTypes(AdminModels::RemoveVirtualCurrencyTypesRequest& request, ProcessApiCallback<AdminModels::BlankResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ResetCharacterStatistics(AdminModels::ResetCharacterStatisticsRequest& request, ProcessApiCallback<AdminModels::ResetCharacterStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'DeletePlayer' instead
-        static void ResetUsers(AdminModels::ResetUsersRequest& request, ProcessApiCallback<AdminModels::BlankResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ResetUserStatistics(AdminModels::ResetUserStatisticsRequest& request, ProcessApiCallback<AdminModels::ResetUserStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ResolvePurchaseDispute(AdminModels::ResolvePurchaseDisputeRequest& request, ProcessApiCallback<AdminModels::ResolvePurchaseDisputeResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RevokeAllBansForUser(AdminModels::RevokeAllBansForUserRequest& request, ProcessApiCallback<AdminModels::RevokeAllBansForUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -135,7 +132,7 @@ namespace PlayFab
         static void OnDeletePlayerSharedSecretResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteStoreResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteTaskResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnDeleteTitleResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetActionsOnPlayersInSegmentTaskInstanceResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAllSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
@@ -183,7 +180,6 @@ namespace PlayFab
         static void OnRemoveServerBuildResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveVirtualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnResetCharacterStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnResetUsersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnResetUserStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnResolvePurchaseDisputeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRevokeAllBansForUserResult(int httpStatus, HttpRequest* request, void* userData);

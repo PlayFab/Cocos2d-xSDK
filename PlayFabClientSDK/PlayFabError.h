@@ -346,7 +346,13 @@ namespace PlayFab
         PlayFabErrorSubscriptionAlreadyTaken = 1340,
         PlayFabErrorSmtpAddonNotEnabled = 1341,
         PlayFabErrorAPIConcurrentRequestLimitExceeded = 1342,
-        PlayFabErrorXboxRejectedXSTSExchangeRequest = 1343
+        PlayFabErrorXboxRejectedXSTSExchangeRequest = 1343,
+        PlayFabErrorVariableNotDefined = 1344,
+        PlayFabErrorTemplateVersionNotDefined = 1345,
+        PlayFabErrorFileTooLarge = 1346,
+        PlayFabErrorTitleDeleted = 1347,
+        PlayFabErrorTitleContainsUserAccounts = 1348,
+        PlayFabErrorTitleDeletionPlayerCleanupFailure = 1349
     };
 
     struct PlayFabError

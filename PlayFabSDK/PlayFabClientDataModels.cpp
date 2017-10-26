@@ -1396,6 +1396,35 @@ bool ConsumeItemResult::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::ClientModels::writeEmailVerificationStatusEnumJSON(EmailVerificationStatus enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case EmailVerificationStatusUnverified: writer.String("Unverified"); break;
+    case EmailVerificationStatusPending: writer.String("Pending"); break;
+    case EmailVerificationStatusConfirmed: writer.String("Confirmed"); break;
+
+    }
+}
+
+EmailVerificationStatus PlayFab::ClientModels::readEmailVerificationStatusFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, EmailVerificationStatus> _EmailVerificationStatusMap;
+    if (_EmailVerificationStatusMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _EmailVerificationStatusMap["Unverified"] = EmailVerificationStatusUnverified;
+        _EmailVerificationStatusMap["Pending"] = EmailVerificationStatusPending;
+        _EmailVerificationStatusMap["Confirmed"] = EmailVerificationStatusConfirmed;
+
+    }
+
+    auto output = _EmailVerificationStatusMap.find(obj.GetString());
+    if (output != _EmailVerificationStatusMap.end())
+        return output->second;
+
+    return EmailVerificationStatusUnverified; // Basically critical fail
+}
 
 ContactEmailInfoModel::~ContactEmailInfoModel()
 {
@@ -1408,6 +1437,7 @@ void ContactEmailInfoModel::writeJSON(PFStringJsonWriter& writer)
 
     if (EmailAddress.length() > 0) { writer.String("EmailAddress"); writer.String(EmailAddress.c_str()); }
     if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    if (VerificationStatus.notNull()) { writer.String("VerificationStatus"); writeEmailVerificationStatusEnumJSON(VerificationStatus, writer); }
 
     writer.EndObject();
 }
@@ -1418,6 +1448,8 @@ bool ContactEmailInfoModel::readFromValue(const rapidjson::Value& obj)
     if (EmailAddress_member != obj.MemberEnd() && !EmailAddress_member->value.IsNull()) EmailAddress = EmailAddress_member->value.GetString();
     const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
     if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator VerificationStatus_member = obj.FindMember("VerificationStatus");
+    if (VerificationStatus_member != obj.MemberEnd() && !VerificationStatus_member->value.IsNull()) VerificationStatus = readEmailVerificationStatusFromValue(VerificationStatus_member->value);
 
     return true;
 }
@@ -2497,6 +2529,7 @@ void GameInfo::writeJSON(PFStringJsonWriter& writer)
     if (pfRegion.notNull()) { writer.String("Region"); writeRegionEnumJSON(pfRegion, writer); }
     writer.String("RunTime"); writer.Uint(RunTime);
     if (ServerHostname.length() > 0) { writer.String("ServerHostname"); writer.String(ServerHostname.c_str()); }
+    if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     if (ServerPort.notNull()) { writer.String("ServerPort"); writer.Int(ServerPort); }
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
     if (!Tags.empty()) {
@@ -2540,6 +2573,8 @@ bool GameInfo::readFromValue(const rapidjson::Value& obj)
     if (RunTime_member != obj.MemberEnd() && !RunTime_member->value.IsNull()) RunTime = RunTime_member->value.GetUint();
     const Value::ConstMemberIterator ServerHostname_member = obj.FindMember("ServerHostname");
     if (ServerHostname_member != obj.MemberEnd() && !ServerHostname_member->value.IsNull()) ServerHostname = ServerHostname_member->value.GetString();
+    const Value::ConstMemberIterator ServerIPV6Address_member = obj.FindMember("ServerIPV6Address");
+    if (ServerIPV6Address_member != obj.MemberEnd() && !ServerIPV6Address_member->value.IsNull()) ServerIPV6Address = ServerIPV6Address_member->value.GetString();
     const Value::ConstMemberIterator ServerPort_member = obj.FindMember("ServerPort");
     if (ServerPort_member != obj.MemberEnd() && !ServerPort_member->value.IsNull()) ServerPort = ServerPort_member->value.GetInt();
     const Value::ConstMemberIterator StatisticName_member = obj.FindMember("StatisticName");
@@ -8775,6 +8810,7 @@ void MatchmakeResult::writeJSON(PFStringJsonWriter& writer)
     if (LobbyID.length() > 0) { writer.String("LobbyID"); writer.String(LobbyID.c_str()); }
     if (PollWaitTimeMS.notNull()) { writer.String("PollWaitTimeMS"); writer.Int(PollWaitTimeMS); }
     if (ServerHostname.length() > 0) { writer.String("ServerHostname"); writer.String(ServerHostname.c_str()); }
+    if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     if (ServerPort.notNull()) { writer.String("ServerPort"); writer.Int(ServerPort); }
     if (Status.notNull()) { writer.String("Status"); writeMatchmakeStatusEnumJSON(Status, writer); }
     if (Ticket.length() > 0) { writer.String("Ticket"); writer.String(Ticket.c_str()); }
@@ -8792,6 +8828,8 @@ bool MatchmakeResult::readFromValue(const rapidjson::Value& obj)
     if (PollWaitTimeMS_member != obj.MemberEnd() && !PollWaitTimeMS_member->value.IsNull()) PollWaitTimeMS = PollWaitTimeMS_member->value.GetInt();
     const Value::ConstMemberIterator ServerHostname_member = obj.FindMember("ServerHostname");
     if (ServerHostname_member != obj.MemberEnd() && !ServerHostname_member->value.IsNull()) ServerHostname = ServerHostname_member->value.GetString();
+    const Value::ConstMemberIterator ServerIPV6Address_member = obj.FindMember("ServerIPV6Address");
+    if (ServerIPV6Address_member != obj.MemberEnd() && !ServerIPV6Address_member->value.IsNull()) ServerIPV6Address = ServerIPV6Address_member->value.GetString();
     const Value::ConstMemberIterator ServerPort_member = obj.FindMember("ServerPort");
     if (ServerPort_member != obj.MemberEnd() && !ServerPort_member->value.IsNull()) ServerPort = ServerPort_member->value.GetInt();
     const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
@@ -9859,6 +9897,7 @@ void StartGameResult::writeJSON(PFStringJsonWriter& writer)
     if (LobbyID.length() > 0) { writer.String("LobbyID"); writer.String(LobbyID.c_str()); }
     if (Password.length() > 0) { writer.String("Password"); writer.String(Password.c_str()); }
     if (ServerHostname.length() > 0) { writer.String("ServerHostname"); writer.String(ServerHostname.c_str()); }
+    if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     if (ServerPort.notNull()) { writer.String("ServerPort"); writer.Int(ServerPort); }
     if (Ticket.length() > 0) { writer.String("Ticket"); writer.String(Ticket.c_str()); }
 
@@ -9875,6 +9914,8 @@ bool StartGameResult::readFromValue(const rapidjson::Value& obj)
     if (Password_member != obj.MemberEnd() && !Password_member->value.IsNull()) Password = Password_member->value.GetString();
     const Value::ConstMemberIterator ServerHostname_member = obj.FindMember("ServerHostname");
     if (ServerHostname_member != obj.MemberEnd() && !ServerHostname_member->value.IsNull()) ServerHostname = ServerHostname_member->value.GetString();
+    const Value::ConstMemberIterator ServerIPV6Address_member = obj.FindMember("ServerIPV6Address");
+    if (ServerIPV6Address_member != obj.MemberEnd() && !ServerIPV6Address_member->value.IsNull()) ServerIPV6Address = ServerIPV6Address_member->value.GetString();
     const Value::ConstMemberIterator ServerPort_member = obj.FindMember("ServerPort");
     if (ServerPort_member != obj.MemberEnd() && !ServerPort_member->value.IsNull()) ServerPort = ServerPort_member->value.GetInt();
     const Value::ConstMemberIterator Ticket_member = obj.FindMember("Ticket");

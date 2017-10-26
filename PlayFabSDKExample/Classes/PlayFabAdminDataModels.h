@@ -1204,17 +1204,20 @@ namespace PlayFab
         {
             std::string EmailAddress;
             std::string Name;
+            Boxed<EmailVerificationStatus> VerificationStatus;
 
             ContactEmailInfoModel() :
                 PlayFabBaseModel(),
                 EmailAddress(),
-                Name()
+                Name(),
+                VerificationStatus()
             {}
 
             ContactEmailInfoModel(const ContactEmailInfoModel& src) :
                 PlayFabBaseModel(),
                 EmailAddress(src.EmailAddress),
-                Name(src.Name)
+                Name(src.Name),
+                VerificationStatus(src.VerificationStatus)
             {}
 
             ContactEmailInfoModel(const rapidjson::Value& obj) : ContactEmailInfoModel()
@@ -2149,6 +2152,50 @@ namespace PlayFab
             }
 
             ~DeleteTaskRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeleteTitleRequest : public PlayFabBaseModel
+        {
+
+            DeleteTitleRequest() :
+                PlayFabBaseModel()
+            {}
+
+            DeleteTitleRequest(const DeleteTitleRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            DeleteTitleRequest(const rapidjson::Value& obj) : DeleteTitleRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteTitleRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeleteTitleResult : public PlayFabBaseModel
+        {
+
+            DeleteTitleResult() :
+                PlayFabBaseModel()
+            {}
+
+            DeleteTitleResult(const DeleteTitleResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            DeleteTitleResult(const rapidjson::Value& obj) : DeleteTitleResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteTitleResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -6451,58 +6498,6 @@ namespace PlayFab
             }
 
             ~ResetCharacterStatisticsResult();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        // Deprecated - Do not use
-        struct UserCredentials : public PlayFabBaseModel
-        {
-            std::string Username;
-
-            UserCredentials() :
-                PlayFabBaseModel(),
-                Username()
-            {}
-
-            UserCredentials(const UserCredentials& src) :
-                PlayFabBaseModel(),
-                Username(src.Username)
-            {}
-
-            UserCredentials(const rapidjson::Value& obj) : UserCredentials()
-            {
-                readFromValue(obj);
-            }
-
-            ~UserCredentials();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        // Deprecated - Do not use
-        struct ResetUsersRequest : public PlayFabBaseModel
-        {
-            std::list<UserCredentials> Users;
-
-            ResetUsersRequest() :
-                PlayFabBaseModel(),
-                Users()
-            {}
-
-            ResetUsersRequest(const ResetUsersRequest& src) :
-                PlayFabBaseModel(),
-                Users(src.Users)
-            {}
-
-            ResetUsersRequest(const rapidjson::Value& obj) : ResetUsersRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~ResetUsersRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

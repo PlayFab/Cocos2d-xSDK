@@ -2054,6 +2054,7 @@ void ContactEmailInfoModel::writeJSON(PFStringJsonWriter& writer)
 
     if (EmailAddress.length() > 0) { writer.String("EmailAddress"); writer.String(EmailAddress.c_str()); }
     if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    if (VerificationStatus.notNull()) { writer.String("VerificationStatus"); writeEmailVerificationStatusEnumJSON(VerificationStatus, writer); }
 
     writer.EndObject();
 }
@@ -2064,6 +2065,8 @@ bool ContactEmailInfoModel::readFromValue(const rapidjson::Value& obj)
     if (EmailAddress_member != obj.MemberEnd() && !EmailAddress_member->value.IsNull()) EmailAddress = EmailAddress_member->value.GetString();
     const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
     if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator VerificationStatus_member = obj.FindMember("VerificationStatus");
+    if (VerificationStatus_member != obj.MemberEnd() && !VerificationStatus_member->value.IsNull()) VerificationStatus = readEmailVerificationStatusFromValue(VerificationStatus_member->value);
 
     return true;
 }
@@ -7974,6 +7977,7 @@ void RegisterGameRequest::writeJSON(PFStringJsonWriter& writer)
     if (LobbyId.length() > 0) { writer.String("LobbyId"); writer.String(LobbyId.c_str()); }
     writer.String("Region"); writeRegionEnumJSON(pfRegion, writer);
     writer.String("ServerHost"); writer.String(ServerHost.c_str());
+    if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     writer.String("ServerPort"); writer.String(ServerPort.c_str());
     if (!Tags.empty()) {
     writer.String("Tags");
@@ -7999,6 +8003,8 @@ bool RegisterGameRequest::readFromValue(const rapidjson::Value& obj)
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
     const Value::ConstMemberIterator ServerHost_member = obj.FindMember("ServerHost");
     if (ServerHost_member != obj.MemberEnd() && !ServerHost_member->value.IsNull()) ServerHost = ServerHost_member->value.GetString();
+    const Value::ConstMemberIterator ServerIPV6Address_member = obj.FindMember("ServerIPV6Address");
+    if (ServerIPV6Address_member != obj.MemberEnd() && !ServerIPV6Address_member->value.IsNull()) ServerIPV6Address = ServerIPV6Address_member->value.GetString();
     const Value::ConstMemberIterator ServerPort_member = obj.FindMember("ServerPort");
     if (ServerPort_member != obj.MemberEnd() && !ServerPort_member->value.IsNull()) ServerPort = ServerPort_member->value.GetString();
     const Value::ConstMemberIterator Tags_member = obj.FindMember("Tags");

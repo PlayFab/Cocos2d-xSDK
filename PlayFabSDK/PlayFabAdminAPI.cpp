@@ -778,33 +778,33 @@ void PlayFabAdminAPI::OnDeleteTaskResult(int httpStatus, HttpRequest* request, v
     delete request;
 }
 
-void PlayFabAdminAPI::DeleteUsers(
-    DeleteUsersRequest& request,
-    ProcessApiCallback<DeleteUsersResult> callback,
+void PlayFabAdminAPI::DeleteTitle(
+    
+    ProcessApiCallback<DeleteTitleResult> callback,
     ErrorCallback errorCallback,
     void* userData
     )
 {
     
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/DeleteUsers"));
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/DeleteTitle"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<DeleteUsersResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<DeleteTitleResult>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody(request.toJSONString());
+    httpRequest->SetBody("{}");
     httpRequest->CompressBody();
 
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnDeleteUsersResult, userData);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnDeleteTitleResult, userData);
 }
 
-void PlayFabAdminAPI::OnDeleteUsersResult(int httpStatus, HttpRequest* request, void* userData)
+void PlayFabAdminAPI::OnDeleteTitleResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    DeleteUsersResult outResult;
+    DeleteTitleResult outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
@@ -812,7 +812,7 @@ void PlayFabAdminAPI::OnDeleteUsersResult(int httpStatus, HttpRequest* request, 
 
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<DeleteUsersResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<DeleteTitleResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3069,54 +3069,6 @@ void PlayFabAdminAPI::OnResetCharacterStatisticsResult(int httpStatus, HttpReque
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<ResetCharacterStatisticsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
-void PlayFabAdminAPI::ResetUsers(
-    ResetUsersRequest& request,
-    ProcessApiCallback<BlankResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-    )
-{
-    
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/ResetUsers"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<BlankResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnResetUsersResult, userData);
-}
-
-void PlayFabAdminAPI::OnResetUsersResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    BlankResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<BlankResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
