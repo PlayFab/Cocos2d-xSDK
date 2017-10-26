@@ -1395,6 +1395,7 @@ void ContactEmailInfoModel::writeJSON(PFStringJsonWriter& writer)
 
     if (EmailAddress.length() > 0) { writer.String("EmailAddress"); writer.String(EmailAddress.c_str()); }
     if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    if (VerificationStatus.notNull()) { writer.String("VerificationStatus"); writeEmailVerificationStatusEnumJSON(VerificationStatus, writer); }
 
     writer.EndObject();
 }
@@ -1405,6 +1406,8 @@ bool ContactEmailInfoModel::readFromValue(const rapidjson::Value& obj)
     if (EmailAddress_member != obj.MemberEnd() && !EmailAddress_member->value.IsNull()) EmailAddress = EmailAddress_member->value.GetString();
     const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
     if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator VerificationStatus_member = obj.FindMember("VerificationStatus");
+    if (VerificationStatus_member != obj.MemberEnd() && !VerificationStatus_member->value.IsNull()) VerificationStatus = readEmailVerificationStatusFromValue(VerificationStatus_member->value);
 
     return true;
 }
@@ -2789,6 +2792,44 @@ bool DeleteTaskRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator Identifier_member = obj.FindMember("Identifier");
     if (Identifier_member != obj.MemberEnd() && !Identifier_member->value.IsNull()) Identifier = new NameIdentifier(Identifier_member->value);
+
+    return true;
+}
+
+DeleteTitleRequest::~DeleteTitleRequest()
+{
+
+}
+
+void DeleteTitleRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool DeleteTitleRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+DeleteTitleResult::~DeleteTitleResult()
+{
+
+}
+
+void DeleteTitleResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool DeleteTitleResult::readFromValue(const rapidjson::Value& obj)
+{
 
     return true;
 }
@@ -7783,61 +7824,6 @@ void ResetCharacterStatisticsResult::writeJSON(PFStringJsonWriter& writer)
 
 bool ResetCharacterStatisticsResult::readFromValue(const rapidjson::Value& obj)
 {
-
-    return true;
-}
-
-UserCredentials::~UserCredentials()
-{
-
-}
-
-void UserCredentials::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("Username"); writer.String(Username.c_str());
-
-    writer.EndObject();
-}
-
-bool UserCredentials::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Username_member = obj.FindMember("Username");
-    if (Username_member != obj.MemberEnd() && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
-
-    return true;
-}
-
-ResetUsersRequest::~ResetUsersRequest()
-{
-
-}
-
-void ResetUsersRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    writer.String("Users");
-    writer.StartArray();
-    for (std::list<UserCredentials>::iterator iter = Users.begin(); iter != Users.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-    
-
-    writer.EndObject();
-}
-
-bool ResetUsersRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Users_member = obj.FindMember("Users");
-    if (Users_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Users_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Users.push_back(UserCredentials(memberList[i]));
-        }
-    }
 
     return true;
 }

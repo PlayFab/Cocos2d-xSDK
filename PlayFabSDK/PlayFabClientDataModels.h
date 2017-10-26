@@ -1155,21 +1155,34 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum EmailVerificationStatus
+        {
+            EmailVerificationStatusUnverified,
+            EmailVerificationStatusPending,
+            EmailVerificationStatusConfirmed
+        };
+
+        void writeEmailVerificationStatusEnumJSON(EmailVerificationStatus enumVal, PFStringJsonWriter& writer);
+        EmailVerificationStatus readEmailVerificationStatusFromValue(const rapidjson::Value& obj);
+
         struct ContactEmailInfoModel : public PlayFabBaseModel
         {
             std::string EmailAddress;
             std::string Name;
+            Boxed<EmailVerificationStatus> VerificationStatus;
 
             ContactEmailInfoModel() :
                 PlayFabBaseModel(),
                 EmailAddress(),
-                Name()
+                Name(),
+                VerificationStatus()
             {}
 
             ContactEmailInfoModel(const ContactEmailInfoModel& src) :
                 PlayFabBaseModel(),
                 EmailAddress(src.EmailAddress),
-                Name(src.Name)
+                Name(src.Name),
+                VerificationStatus(src.VerificationStatus)
             {}
 
             ContactEmailInfoModel(const rapidjson::Value& obj) : ContactEmailInfoModel()
@@ -1745,6 +1758,7 @@ namespace PlayFab
             Boxed<Region> pfRegion;
             Uint32 RunTime;
             std::string ServerHostname;
+            std::string ServerIPV6Address;
             OptionalInt32 ServerPort;
             std::string StatisticName;
             std::map<std::string, std::string> Tags;
@@ -1762,6 +1776,7 @@ namespace PlayFab
                 pfRegion(),
                 RunTime(0),
                 ServerHostname(),
+                ServerIPV6Address(),
                 ServerPort(),
                 StatisticName(),
                 Tags()
@@ -1780,6 +1795,7 @@ namespace PlayFab
                 pfRegion(src.pfRegion),
                 RunTime(src.RunTime),
                 ServerHostname(src.ServerHostname),
+                ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort),
                 StatisticName(src.StatisticName),
                 Tags(src.Tags)
@@ -7343,6 +7359,7 @@ namespace PlayFab
             std::string LobbyID;
             OptionalInt32 PollWaitTimeMS;
             std::string ServerHostname;
+            std::string ServerIPV6Address;
             OptionalInt32 ServerPort;
             Boxed<MatchmakeStatus> Status;
             std::string Ticket;
@@ -7353,6 +7370,7 @@ namespace PlayFab
                 LobbyID(),
                 PollWaitTimeMS(),
                 ServerHostname(),
+                ServerIPV6Address(),
                 ServerPort(),
                 Status(),
                 Ticket()
@@ -7364,6 +7382,7 @@ namespace PlayFab
                 LobbyID(src.LobbyID),
                 PollWaitTimeMS(src.PollWaitTimeMS),
                 ServerHostname(src.ServerHostname),
+                ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort),
                 Status(src.Status),
                 Ticket(src.Ticket)
@@ -8385,6 +8404,7 @@ namespace PlayFab
             std::string LobbyID;
             std::string Password;
             std::string ServerHostname;
+            std::string ServerIPV6Address;
             OptionalInt32 ServerPort;
             std::string Ticket;
 
@@ -8394,6 +8414,7 @@ namespace PlayFab
                 LobbyID(),
                 Password(),
                 ServerHostname(),
+                ServerIPV6Address(),
                 ServerPort(),
                 Ticket()
             {}
@@ -8404,6 +8425,7 @@ namespace PlayFab
                 LobbyID(src.LobbyID),
                 Password(src.Password),
                 ServerHostname(src.ServerHostname),
+                ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort),
                 Ticket(src.Ticket)
             {}

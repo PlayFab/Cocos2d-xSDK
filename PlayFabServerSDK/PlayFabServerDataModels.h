@@ -1679,17 +1679,20 @@ namespace PlayFab
         {
             std::string EmailAddress;
             std::string Name;
+            Boxed<EmailVerificationStatus> VerificationStatus;
 
             ContactEmailInfoModel() :
                 PlayFabBaseModel(),
                 EmailAddress(),
-                Name()
+                Name(),
+                VerificationStatus()
             {}
 
             ContactEmailInfoModel(const ContactEmailInfoModel& src) :
                 PlayFabBaseModel(),
                 EmailAddress(src.EmailAddress),
-                Name(src.Name)
+                Name(src.Name),
+                VerificationStatus(src.VerificationStatus)
             {}
 
             ContactEmailInfoModel(const rapidjson::Value& obj) : ContactEmailInfoModel()
@@ -6510,6 +6513,7 @@ namespace PlayFab
             std::string LobbyId;
             Region pfRegion;
             std::string ServerHost;
+            std::string ServerIPV6Address;
             std::string ServerPort;
             std::map<std::string, std::string> Tags;
 
@@ -6520,6 +6524,7 @@ namespace PlayFab
                 LobbyId(),
                 pfRegion(),
                 ServerHost(),
+                ServerIPV6Address(),
                 ServerPort(),
                 Tags()
             {}
@@ -6531,6 +6536,7 @@ namespace PlayFab
                 LobbyId(src.LobbyId),
                 pfRegion(src.pfRegion),
                 ServerHost(src.ServerHost),
+                ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort),
                 Tags(src.Tags)
             {}

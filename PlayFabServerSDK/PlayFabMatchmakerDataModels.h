@@ -295,6 +295,7 @@ namespace PlayFab
             std::string LobbyId;
             Region pfRegion;
             std::string ServerHost;
+            std::string ServerIPV6Address;
             std::string ServerPort;
             std::map<std::string, std::string> Tags;
 
@@ -305,6 +306,7 @@ namespace PlayFab
                 LobbyId(),
                 pfRegion(),
                 ServerHost(),
+                ServerIPV6Address(),
                 ServerPort(),
                 Tags()
             {}
@@ -316,6 +318,7 @@ namespace PlayFab
                 LobbyId(src.LobbyId),
                 pfRegion(src.pfRegion),
                 ServerHost(src.ServerHost),
+                ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort),
                 Tags(src.Tags)
             {}
@@ -397,12 +400,14 @@ namespace PlayFab
         {
             std::string GameID;
             std::string ServerHostname;
+            std::string ServerIPV6Address;
             Uint32 ServerPort;
 
             StartGameResponse() :
                 PlayFabBaseModel(),
                 GameID(),
                 ServerHostname(),
+                ServerIPV6Address(),
                 ServerPort(0)
             {}
 
@@ -410,6 +415,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 GameID(src.GameID),
                 ServerHostname(src.ServerHostname),
+                ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort)
             {}
 
