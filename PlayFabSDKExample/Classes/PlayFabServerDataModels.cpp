@@ -8383,6 +8383,53 @@ bool RevokeInventoryResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+SendCustomAccountRecoveryEmailRequest::~SendCustomAccountRecoveryEmailRequest()
+{
+
+}
+
+void SendCustomAccountRecoveryEmailRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (Email.length() > 0) { writer.String("Email"); writer.String(Email.c_str()); }
+    writer.String("EmailTemplateId"); writer.String(EmailTemplateId.c_str());
+    if (Username.length() > 0) { writer.String("Username"); writer.String(Username.c_str()); }
+
+    writer.EndObject();
+}
+
+bool SendCustomAccountRecoveryEmailRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Email_member = obj.FindMember("Email");
+    if (Email_member != obj.MemberEnd() && !Email_member->value.IsNull()) Email = Email_member->value.GetString();
+    const Value::ConstMemberIterator EmailTemplateId_member = obj.FindMember("EmailTemplateId");
+    if (EmailTemplateId_member != obj.MemberEnd() && !EmailTemplateId_member->value.IsNull()) EmailTemplateId = EmailTemplateId_member->value.GetString();
+    const Value::ConstMemberIterator Username_member = obj.FindMember("Username");
+    if (Username_member != obj.MemberEnd() && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
+
+    return true;
+}
+
+SendCustomAccountRecoveryEmailResult::~SendCustomAccountRecoveryEmailResult()
+{
+
+}
+
+void SendCustomAccountRecoveryEmailResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool SendCustomAccountRecoveryEmailResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 SendPushNotificationRequest::~SendPushNotificationRequest()
 {
     if (Package != NULL) delete Package;

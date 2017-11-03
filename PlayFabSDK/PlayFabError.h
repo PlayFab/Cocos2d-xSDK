@@ -352,7 +352,10 @@ namespace PlayFab
         PlayFabErrorFileTooLarge = 1346,
         PlayFabErrorTitleDeleted = 1347,
         PlayFabErrorTitleContainsUserAccounts = 1348,
-        PlayFabErrorTitleDeletionPlayerCleanupFailure = 1349
+        PlayFabErrorTitleDeletionPlayerCleanupFailure = 1349,
+        PlayFabErrorEntityFileOperationPending = 1350,
+        PlayFabErrorNoEntityFileOperationPending = 1351,
+        PlayFabErrorEntityProfileVersionMismatch = 1352
     };
 
     struct PlayFabError

@@ -3706,6 +3706,54 @@ void PlayFabServerAPI::OnRevokeInventoryItemResult(int httpStatus, HttpRequest* 
     delete request;
 }
 
+void PlayFabServerAPI::SendCustomAccountRecoveryEmail(
+    SendCustomAccountRecoveryEmailRequest& request,
+    ProcessApiCallback<SendCustomAccountRecoveryEmailResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/SendCustomAccountRecoveryEmail"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<SendCustomAccountRecoveryEmailResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnSendCustomAccountRecoveryEmailResult, userData);
+}
+
+void PlayFabServerAPI::OnSendCustomAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    SendCustomAccountRecoveryEmailResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<SendCustomAccountRecoveryEmailResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabServerAPI::SendPushNotification(
     SendPushNotificationRequest& request,
     ProcessApiCallback<SendPushNotificationResult> callback,

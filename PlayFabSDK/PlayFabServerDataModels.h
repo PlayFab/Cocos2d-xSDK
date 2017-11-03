@@ -6914,6 +6914,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct SendCustomAccountRecoveryEmailRequest : public PlayFabBaseModel
+        {
+            std::string Email;
+            std::string EmailTemplateId;
+            std::string Username;
+
+            SendCustomAccountRecoveryEmailRequest() :
+                PlayFabBaseModel(),
+                Email(),
+                EmailTemplateId(),
+                Username()
+            {}
+
+            SendCustomAccountRecoveryEmailRequest(const SendCustomAccountRecoveryEmailRequest& src) :
+                PlayFabBaseModel(),
+                Email(src.Email),
+                EmailTemplateId(src.EmailTemplateId),
+                Username(src.Username)
+            {}
+
+            SendCustomAccountRecoveryEmailRequest(const rapidjson::Value& obj) : SendCustomAccountRecoveryEmailRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SendCustomAccountRecoveryEmailRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SendCustomAccountRecoveryEmailResult : public PlayFabBaseModel
+        {
+
+            SendCustomAccountRecoveryEmailResult() :
+                PlayFabBaseModel()
+            {}
+
+            SendCustomAccountRecoveryEmailResult(const SendCustomAccountRecoveryEmailResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            SendCustomAccountRecoveryEmailResult(const rapidjson::Value& obj) : SendCustomAccountRecoveryEmailResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~SendCustomAccountRecoveryEmailResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct SendPushNotificationRequest : public PlayFabBaseModel
         {
             std::list<AdvancedPushPlatformMsg> AdvancedPlatformDelivery;

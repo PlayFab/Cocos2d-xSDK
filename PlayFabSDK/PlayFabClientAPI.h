@@ -21,6 +21,7 @@ namespace PlayFab
         static void AcceptTrade(ClientModels::AcceptTradeRequest& request, ProcessApiCallback<ClientModels::AcceptTradeResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddFriend(ClientModels::AddFriendRequest& request, ProcessApiCallback<ClientModels::AddFriendResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddGenericID(ClientModels::AddGenericIDRequest& request, ProcessApiCallback<ClientModels::AddGenericIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void AddOrUpdateContactEmail(ClientModels::AddOrUpdateContactEmailRequest& request, ProcessApiCallback<ClientModels::AddOrUpdateContactEmailResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddSharedGroupMembers(ClientModels::AddSharedGroupMembersRequest& request, ProcessApiCallback<ClientModels::AddSharedGroupMembersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddUsernamePassword(ClientModels::AddUsernamePasswordRequest& request, ProcessApiCallback<ClientModels::AddUsernamePasswordResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddUserVirtualCurrency(ClientModels::AddUserVirtualCurrencyRequest& request, ProcessApiCallback<ClientModels::ModifyUserVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -110,6 +111,7 @@ namespace PlayFab
         static void RegisterForIOSPushNotification(ClientModels::RegisterForIOSPushNotificationRequest& request, ProcessApiCallback<ClientModels::RegisterForIOSPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RegisterPlayFabUser(ClientModels::RegisterPlayFabUserRequest& request, ProcessApiCallback<ClientModels::RegisterPlayFabUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RegisterWithWindowsHello(ClientModels::RegisterWithWindowsHelloRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RemoveContactEmail(ProcessApiCallback<ClientModels::RemoveContactEmailResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveFriend(ClientModels::RemoveFriendRequest& request, ProcessApiCallback<ClientModels::RemoveFriendResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveGenericID(ClientModels::RemoveGenericIDRequest& request, ProcessApiCallback<ClientModels::RemoveGenericIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveSharedGroupMembers(ClientModels::RemoveSharedGroupMembersRequest& request, ProcessApiCallback<ClientModels::RemoveSharedGroupMembersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -157,6 +159,7 @@ namespace PlayFab
         static void OnAcceptTradeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddFriendResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddGenericIDResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnAddOrUpdateContactEmailResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddUsernamePasswordResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
@@ -246,6 +249,7 @@ namespace PlayFab
         static void OnRegisterForIOSPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRegisterWithWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRemoveContactEmailResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveFriendResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveGenericIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);

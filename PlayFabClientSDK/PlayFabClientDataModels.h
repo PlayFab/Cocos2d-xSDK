@@ -303,6 +303,53 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct AddOrUpdateContactEmailRequest : public PlayFabBaseModel
+        {
+            std::string EmailAddress;
+
+            AddOrUpdateContactEmailRequest() :
+                PlayFabBaseModel(),
+                EmailAddress()
+            {}
+
+            AddOrUpdateContactEmailRequest(const AddOrUpdateContactEmailRequest& src) :
+                PlayFabBaseModel(),
+                EmailAddress(src.EmailAddress)
+            {}
+
+            AddOrUpdateContactEmailRequest(const rapidjson::Value& obj) : AddOrUpdateContactEmailRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~AddOrUpdateContactEmailRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct AddOrUpdateContactEmailResult : public PlayFabBaseModel
+        {
+
+            AddOrUpdateContactEmailResult() :
+                PlayFabBaseModel()
+            {}
+
+            AddOrUpdateContactEmailResult(const AddOrUpdateContactEmailResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            AddOrUpdateContactEmailResult(const rapidjson::Value& obj) : AddOrUpdateContactEmailResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~AddOrUpdateContactEmailResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct AddSharedGroupMembersRequest : public PlayFabBaseModel
         {
             std::list<std::string> PlayFabIds;
@@ -7959,6 +8006,50 @@ namespace PlayFab
             }
 
             ~RegisterWithWindowsHelloRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RemoveContactEmailRequest : public PlayFabBaseModel
+        {
+
+            RemoveContactEmailRequest() :
+                PlayFabBaseModel()
+            {}
+
+            RemoveContactEmailRequest(const RemoveContactEmailRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            RemoveContactEmailRequest(const rapidjson::Value& obj) : RemoveContactEmailRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RemoveContactEmailRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RemoveContactEmailResult : public PlayFabBaseModel
+        {
+
+            RemoveContactEmailResult() :
+                PlayFabBaseModel()
+            {}
+
+            RemoveContactEmailResult(const RemoveContactEmailResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            RemoveContactEmailResult(const rapidjson::Value& obj) : RemoveContactEmailResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RemoveContactEmailResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

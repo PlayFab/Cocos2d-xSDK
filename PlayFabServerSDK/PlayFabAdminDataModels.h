@@ -576,6 +576,14 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum AuthTokenType
+        {
+            AuthTokenTypeEmail
+        };
+
+        void writeAuthTokenTypeEnumJSON(AuthTokenType enumVal, PFStringJsonWriter& writer);
+        AuthTokenType readAuthTokenTypeFromValue(const rapidjson::Value& obj);
+
         struct BanInfo : public PlayFabBaseModel
         {
             bool Active;
@@ -2902,6 +2910,59 @@ namespace PlayFab
             }
 
             ~GetMatchmakerGameModesResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerIdFromAuthTokenRequest : public PlayFabBaseModel
+        {
+            std::string Token;
+            AuthTokenType TokenType;
+
+            GetPlayerIdFromAuthTokenRequest() :
+                PlayFabBaseModel(),
+                Token(),
+                TokenType()
+            {}
+
+            GetPlayerIdFromAuthTokenRequest(const GetPlayerIdFromAuthTokenRequest& src) :
+                PlayFabBaseModel(),
+                Token(src.Token),
+                TokenType(src.TokenType)
+            {}
+
+            GetPlayerIdFromAuthTokenRequest(const rapidjson::Value& obj) : GetPlayerIdFromAuthTokenRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerIdFromAuthTokenRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayerIdFromAuthTokenResult : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+
+            GetPlayerIdFromAuthTokenResult() :
+                PlayFabBaseModel(),
+                PlayFabId()
+            {}
+
+            GetPlayerIdFromAuthTokenResult(const GetPlayerIdFromAuthTokenResult& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            GetPlayerIdFromAuthTokenResult(const rapidjson::Value& obj) : GetPlayerIdFromAuthTokenResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayerIdFromAuthTokenResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -6498,6 +6559,56 @@ namespace PlayFab
             }
 
             ~ResetCharacterStatisticsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ResetPasswordRequest : public PlayFabBaseModel
+        {
+            std::string Password;
+            std::string Token;
+
+            ResetPasswordRequest() :
+                PlayFabBaseModel(),
+                Password(),
+                Token()
+            {}
+
+            ResetPasswordRequest(const ResetPasswordRequest& src) :
+                PlayFabBaseModel(),
+                Password(src.Password),
+                Token(src.Token)
+            {}
+
+            ResetPasswordRequest(const rapidjson::Value& obj) : ResetPasswordRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ResetPasswordRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ResetPasswordResult : public PlayFabBaseModel
+        {
+
+            ResetPasswordResult() :
+                PlayFabBaseModel()
+            {}
+
+            ResetPasswordResult(const ResetPasswordResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            ResetPasswordResult(const rapidjson::Value& obj) : ResetPasswordResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~ResetPasswordResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
