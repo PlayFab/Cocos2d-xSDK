@@ -646,6 +646,31 @@ bool ApiCondition::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::AdminModels::writeAuthTokenTypeEnumJSON(AuthTokenType enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case AuthTokenTypeEmail: writer.String("Email"); break;
+
+    }
+}
+
+AuthTokenType PlayFab::AdminModels::readAuthTokenTypeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, AuthTokenType> _AuthTokenTypeMap;
+    if (_AuthTokenTypeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _AuthTokenTypeMap["Email"] = AuthTokenTypeEmail;
+
+    }
+
+    auto output = _AuthTokenTypeMap.find(obj.GetString());
+    if (output != _AuthTokenTypeMap.end())
+        return output->second;
+
+    return AuthTokenTypeEmail; // Basically critical fail
+}
 
 BanInfo::~BanInfo()
 {
@@ -3578,6 +3603,53 @@ bool GetMatchmakerGameModesResult::readFromValue(const rapidjson::Value& obj)
             GameModes.push_back(GameModeInfo(memberList[i]));
         }
     }
+
+    return true;
+}
+
+GetPlayerIdFromAuthTokenRequest::~GetPlayerIdFromAuthTokenRequest()
+{
+
+}
+
+void GetPlayerIdFromAuthTokenRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Token"); writer.String(Token.c_str());
+    writer.String("TokenType"); writeAuthTokenTypeEnumJSON(TokenType, writer);
+
+    writer.EndObject();
+}
+
+bool GetPlayerIdFromAuthTokenRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Token_member = obj.FindMember("Token");
+    if (Token_member != obj.MemberEnd() && !Token_member->value.IsNull()) Token = Token_member->value.GetString();
+    const Value::ConstMemberIterator TokenType_member = obj.FindMember("TokenType");
+    if (TokenType_member != obj.MemberEnd() && !TokenType_member->value.IsNull()) TokenType = readAuthTokenTypeFromValue(TokenType_member->value);
+
+    return true;
+}
+
+GetPlayerIdFromAuthTokenResult::~GetPlayerIdFromAuthTokenResult()
+{
+
+}
+
+void GetPlayerIdFromAuthTokenResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetPlayerIdFromAuthTokenResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
 
     return true;
 }
@@ -7823,6 +7895,50 @@ void ResetCharacterStatisticsResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool ResetCharacterStatisticsResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+ResetPasswordRequest::~ResetPasswordRequest()
+{
+
+}
+
+void ResetPasswordRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Password"); writer.String(Password.c_str());
+    writer.String("Token"); writer.String(Token.c_str());
+
+    writer.EndObject();
+}
+
+bool ResetPasswordRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Password_member = obj.FindMember("Password");
+    if (Password_member != obj.MemberEnd() && !Password_member->value.IsNull()) Password = Password_member->value.GetString();
+    const Value::ConstMemberIterator Token_member = obj.FindMember("Token");
+    if (Token_member != obj.MemberEnd() && !Token_member->value.IsNull()) Token = Token_member->value.GetString();
+
+    return true;
+}
+
+ResetPasswordResult::~ResetPasswordResult()
+{
+
+}
+
+void ResetPasswordResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool ResetPasswordResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;

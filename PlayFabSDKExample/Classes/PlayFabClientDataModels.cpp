@@ -370,6 +370,47 @@ bool AddGenericIDResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+AddOrUpdateContactEmailRequest::~AddOrUpdateContactEmailRequest()
+{
+
+}
+
+void AddOrUpdateContactEmailRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("EmailAddress"); writer.String(EmailAddress.c_str());
+
+    writer.EndObject();
+}
+
+bool AddOrUpdateContactEmailRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator EmailAddress_member = obj.FindMember("EmailAddress");
+    if (EmailAddress_member != obj.MemberEnd() && !EmailAddress_member->value.IsNull()) EmailAddress = EmailAddress_member->value.GetString();
+
+    return true;
+}
+
+AddOrUpdateContactEmailResult::~AddOrUpdateContactEmailResult()
+{
+
+}
+
+void AddOrUpdateContactEmailResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool AddOrUpdateContactEmailResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 AddSharedGroupMembersRequest::~AddSharedGroupMembersRequest()
 {
 
@@ -9475,6 +9516,44 @@ bool RegisterWithWindowsHelloRequest::readFromValue(const rapidjson::Value& obj)
     if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
     const Value::ConstMemberIterator UserName_member = obj.FindMember("UserName");
     if (UserName_member != obj.MemberEnd() && !UserName_member->value.IsNull()) UserName = UserName_member->value.GetString();
+
+    return true;
+}
+
+RemoveContactEmailRequest::~RemoveContactEmailRequest()
+{
+
+}
+
+void RemoveContactEmailRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool RemoveContactEmailRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+RemoveContactEmailResult::~RemoveContactEmailResult()
+{
+
+}
+
+void RemoveContactEmailResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool RemoveContactEmailResult::readFromValue(const rapidjson::Value& obj)
+{
 
     return true;
 }
