@@ -43,6 +43,7 @@ namespace PlayFab
         static void GetMatchmakerGameInfo(AdminModels::GetMatchmakerGameInfoRequest& request, ProcessApiCallback<AdminModels::GetMatchmakerGameInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetMatchmakerGameModes(AdminModels::GetMatchmakerGameModesRequest& request, ProcessApiCallback<AdminModels::GetMatchmakerGameModesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerIdFromAuthToken(AdminModels::GetPlayerIdFromAuthTokenRequest& request, ProcessApiCallback<AdminModels::GetPlayerIdFromAuthTokenResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayerProfile(AdminModels::GetPlayerProfileRequest& request, ProcessApiCallback<AdminModels::GetPlayerProfileResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerSegments(AdminModels::GetPlayersSegmentsRequest& request, ProcessApiCallback<AdminModels::GetPlayerSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerSharedSecrets(ProcessApiCallback<AdminModels::GetPlayerSharedSecretsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayersInSegment(AdminModels::GetPlayersInSegmentRequest& request, ProcessApiCallback<AdminModels::GetPlayersInSegmentResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -147,6 +148,7 @@ namespace PlayFab
         static void OnGetMatchmakerGameInfoResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetMatchmakerGameModesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerIdFromAuthTokenResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayerProfileResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerSharedSecretsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayersInSegmentResult(int httpStatus, HttpRequest* request, void* userData);

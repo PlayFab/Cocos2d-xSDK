@@ -92,6 +92,7 @@ namespace PlayFab
         static void RevokeBans(ServerModels::RevokeBansRequest& request, ProcessApiCallback<ServerModels::RevokeBansResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RevokeInventoryItem(ServerModels::RevokeInventoryItemRequest& request, ProcessApiCallback<ServerModels::RevokeInventoryResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendCustomAccountRecoveryEmail(ServerModels::SendCustomAccountRecoveryEmailRequest& request, ProcessApiCallback<ServerModels::SendCustomAccountRecoveryEmailResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void SendEmailFromTemplate(ServerModels::SendEmailFromTemplateRequest& request, ProcessApiCallback<ServerModels::SendEmailFromTemplateResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendPushNotification(ServerModels::SendPushNotificationRequest& request, ProcessApiCallback<ServerModels::SendPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetFriendTags(ServerModels::SetFriendTagsRequest& request, ProcessApiCallback<ServerModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetGameServerInstanceData(ServerModels::SetGameServerInstanceDataRequest& request, ProcessApiCallback<ServerModels::SetGameServerInstanceDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -207,6 +208,7 @@ namespace PlayFab
         static void OnRevokeBansResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRevokeInventoryItemResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendCustomAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnSendEmailFromTemplateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetFriendTagsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetGameServerInstanceDataResult(int httpStatus, HttpRequest* request, void* userData);
