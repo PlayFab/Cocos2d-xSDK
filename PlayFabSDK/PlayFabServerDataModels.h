@@ -6967,6 +6967,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct SendEmailFromTemplateRequest : public PlayFabBaseModel
+        {
+            std::string EmailTemplateId;
+            std::string PlayFabId;
+
+            SendEmailFromTemplateRequest() :
+                PlayFabBaseModel(),
+                EmailTemplateId(),
+                PlayFabId()
+            {}
+
+            SendEmailFromTemplateRequest(const SendEmailFromTemplateRequest& src) :
+                PlayFabBaseModel(),
+                EmailTemplateId(src.EmailTemplateId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            SendEmailFromTemplateRequest(const rapidjson::Value& obj) : SendEmailFromTemplateRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SendEmailFromTemplateRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SendEmailFromTemplateResult : public PlayFabBaseModel
+        {
+
+            SendEmailFromTemplateResult() :
+                PlayFabBaseModel()
+            {}
+
+            SendEmailFromTemplateResult(const SendEmailFromTemplateResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            SendEmailFromTemplateResult(const rapidjson::Value& obj) : SendEmailFromTemplateResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~SendEmailFromTemplateResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct SendPushNotificationRequest : public PlayFabBaseModel
         {
             std::list<AdvancedPushPlatformMsg> AdvancedPlatformDelivery;

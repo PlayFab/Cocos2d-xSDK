@@ -8430,6 +8430,50 @@ bool SendCustomAccountRecoveryEmailResult::readFromValue(const rapidjson::Value&
     return true;
 }
 
+SendEmailFromTemplateRequest::~SendEmailFromTemplateRequest()
+{
+
+}
+
+void SendEmailFromTemplateRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("EmailTemplateId"); writer.String(EmailTemplateId.c_str());
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+
+    writer.EndObject();
+}
+
+bool SendEmailFromTemplateRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator EmailTemplateId_member = obj.FindMember("EmailTemplateId");
+    if (EmailTemplateId_member != obj.MemberEnd() && !EmailTemplateId_member->value.IsNull()) EmailTemplateId = EmailTemplateId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
+SendEmailFromTemplateResult::~SendEmailFromTemplateResult()
+{
+
+}
+
+void SendEmailFromTemplateResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool SendEmailFromTemplateResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 SendPushNotificationRequest::~SendPushNotificationRequest()
 {
     if (Package != NULL) delete Package;
