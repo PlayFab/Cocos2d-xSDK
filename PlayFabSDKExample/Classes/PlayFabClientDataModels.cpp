@@ -2670,6 +2670,39 @@ bool CurrentGamesResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeviceInfoRequest::~DeviceInfoRequest()
+{
+
+}
+
+void DeviceInfoRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (!Info.empty()) {
+    writer.String("Info");
+    writer.StartObject();
+    for (std::map<std::string, MultitypeVar>::iterator iter = Info.begin(); iter != Info.end(); ++iter) {
+        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+    }
+    writer.EndObject();
+     }
+
+    writer.EndObject();
+}
+
+bool DeviceInfoRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Info_member = obj.FindMember("Info");
+    if (Info_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Info_member->value.MemberBegin(); iter != Info_member->value.MemberEnd(); ++iter) {
+            Info[iter->name.GetString()] = MultitypeVar(iter->value);
+        }
+    }
+
+    return true;
+}
+
 EmptyResult::~EmptyResult()
 {
 
@@ -3290,31 +3323,6 @@ bool ValueToDateModel::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-VirtualCurrencyBalanceModel::~VirtualCurrencyBalanceModel()
-{
-
-}
-
-void VirtualCurrencyBalanceModel::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (Currency.length() > 0) { writer.String("Currency"); writer.String(Currency.c_str()); }
-    writer.String("TotalValue"); writer.Int(TotalValue);
-
-    writer.EndObject();
-}
-
-bool VirtualCurrencyBalanceModel::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Currency_member = obj.FindMember("Currency");
-    if (Currency_member != obj.MemberEnd() && !Currency_member->value.IsNull()) Currency = Currency_member->value.GetString();
-    const Value::ConstMemberIterator TotalValue_member = obj.FindMember("TotalValue");
-    if (TotalValue_member != obj.MemberEnd() && !TotalValue_member->value.IsNull()) TotalValue = TotalValue_member->value.GetInt();
-
-    return true;
-}
-
 PlayerProfileModel::~PlayerProfileModel()
 {
 
@@ -3406,14 +3414,6 @@ void PlayerProfileModel::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
-    if (!VirtualCurrencyBalances.empty()) {
-    writer.String("VirtualCurrencyBalances");
-    writer.StartArray();
-    for (std::list<VirtualCurrencyBalanceModel>::iterator iter = VirtualCurrencyBalances.begin(); iter != VirtualCurrencyBalances.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
 
     writer.EndObject();
 }
@@ -3501,13 +3501,6 @@ bool PlayerProfileModel::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = ValuesToDate_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ValuesToDate.push_back(ValueToDateModel(memberList[i]));
-        }
-    }
-    const Value::ConstMemberIterator VirtualCurrencyBalances_member = obj.FindMember("VirtualCurrencyBalances");
-    if (VirtualCurrencyBalances_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = VirtualCurrencyBalances_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            VirtualCurrencyBalances.push_back(VirtualCurrencyBalanceModel(memberList[i]));
         }
     }
 
@@ -5268,6 +5261,53 @@ bool GetLeaderboardResult::readFromValue(const rapidjson::Value& obj)
     if (NextReset_member != obj.MemberEnd() && !NextReset_member->value.IsNull()) NextReset = readDatetime(NextReset_member->value);
     const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
     if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+
+    return true;
+}
+
+GetPaymentTokenRequest::~GetPaymentTokenRequest()
+{
+
+}
+
+void GetPaymentTokenRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("TokenProvider"); writer.String(TokenProvider.c_str());
+
+    writer.EndObject();
+}
+
+bool GetPaymentTokenRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TokenProvider_member = obj.FindMember("TokenProvider");
+    if (TokenProvider_member != obj.MemberEnd() && !TokenProvider_member->value.IsNull()) TokenProvider = TokenProvider_member->value.GetString();
+
+    return true;
+}
+
+GetPaymentTokenResult::~GetPaymentTokenResult()
+{
+
+}
+
+void GetPaymentTokenResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (OrderId.length() > 0) { writer.String("OrderId"); writer.String(OrderId.c_str()); }
+    if (ProviderToken.length() > 0) { writer.String("ProviderToken"); writer.String(ProviderToken.c_str()); }
+
+    writer.EndObject();
+}
+
+bool GetPaymentTokenResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator OrderId_member = obj.FindMember("OrderId");
+    if (OrderId_member != obj.MemberEnd() && !OrderId_member->value.IsNull()) OrderId = OrderId_member->value.GetString();
+    const Value::ConstMemberIterator ProviderToken_member = obj.FindMember("ProviderToken");
+    if (ProviderToken_member != obj.MemberEnd() && !ProviderToken_member->value.IsNull()) ProviderToken = ProviderToken_member->value.GetString();
 
     return true;
 }

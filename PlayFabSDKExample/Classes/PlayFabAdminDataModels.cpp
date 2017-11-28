@@ -1102,6 +1102,53 @@ bool CatalogItem::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+CheckLimitedEditionItemAvailabilityRequest::~CheckLimitedEditionItemAvailabilityRequest()
+{
+
+}
+
+void CheckLimitedEditionItemAvailabilityRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+    writer.String("ItemId"); writer.String(ItemId.c_str());
+
+    writer.EndObject();
+}
+
+bool CheckLimitedEditionItemAvailabilityRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator ItemId_member = obj.FindMember("ItemId");
+    if (ItemId_member != obj.MemberEnd() && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
+
+    return true;
+}
+
+CheckLimitedEditionItemAvailabilityResult::~CheckLimitedEditionItemAvailabilityResult()
+{
+
+}
+
+void CheckLimitedEditionItemAvailabilityResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Amount"); writer.Int(Amount);
+
+    writer.EndObject();
+}
+
+bool CheckLimitedEditionItemAvailabilityResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Amount_member = obj.FindMember("Amount");
+    if (Amount_member != obj.MemberEnd() && !Amount_member->value.IsNull()) Amount = Amount_member->value.GetInt();
+
+    return true;
+}
+
 CloudScriptFile::~CloudScriptFile()
 {
 
@@ -4118,31 +4165,6 @@ bool ValueToDateModel::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-VirtualCurrencyBalanceModel::~VirtualCurrencyBalanceModel()
-{
-
-}
-
-void VirtualCurrencyBalanceModel::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (Currency.length() > 0) { writer.String("Currency"); writer.String(Currency.c_str()); }
-    writer.String("TotalValue"); writer.Int(TotalValue);
-
-    writer.EndObject();
-}
-
-bool VirtualCurrencyBalanceModel::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Currency_member = obj.FindMember("Currency");
-    if (Currency_member != obj.MemberEnd() && !Currency_member->value.IsNull()) Currency = Currency_member->value.GetString();
-    const Value::ConstMemberIterator TotalValue_member = obj.FindMember("TotalValue");
-    if (TotalValue_member != obj.MemberEnd() && !TotalValue_member->value.IsNull()) TotalValue = TotalValue_member->value.GetInt();
-
-    return true;
-}
-
 PlayerProfileModel::~PlayerProfileModel()
 {
 
@@ -4234,14 +4256,6 @@ void PlayerProfileModel::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
-    if (!VirtualCurrencyBalances.empty()) {
-    writer.String("VirtualCurrencyBalances");
-    writer.StartArray();
-    for (std::list<VirtualCurrencyBalanceModel>::iterator iter = VirtualCurrencyBalances.begin(); iter != VirtualCurrencyBalances.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
 
     writer.EndObject();
 }
@@ -4329,13 +4343,6 @@ bool PlayerProfileModel::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = ValuesToDate_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ValuesToDate.push_back(ValueToDateModel(memberList[i]));
-        }
-    }
-    const Value::ConstMemberIterator VirtualCurrencyBalances_member = obj.FindMember("VirtualCurrencyBalances");
-    if (VirtualCurrencyBalances_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = VirtualCurrencyBalances_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            VirtualCurrencyBalances.push_back(VirtualCurrencyBalanceModel(memberList[i]));
         }
     }
 
@@ -6706,6 +6713,53 @@ bool GrantItemsToUsersResult::readFromValue(const rapidjson::Value& obj)
             ItemGrantResults.push_back(GrantedItemInstance(memberList[i]));
         }
     }
+
+    return true;
+}
+
+IncrementLimitedEditionItemAvailabilityRequest::~IncrementLimitedEditionItemAvailabilityRequest()
+{
+
+}
+
+void IncrementLimitedEditionItemAvailabilityRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+    writer.String("Amount"); writer.Int(Amount);
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+    writer.String("ItemId"); writer.String(ItemId.c_str());
+
+    writer.EndObject();
+}
+
+bool IncrementLimitedEditionItemAvailabilityRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Amount_member = obj.FindMember("Amount");
+    if (Amount_member != obj.MemberEnd() && !Amount_member->value.IsNull()) Amount = Amount_member->value.GetInt();
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator ItemId_member = obj.FindMember("ItemId");
+    if (ItemId_member != obj.MemberEnd() && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
+
+    return true;
+}
+
+IncrementLimitedEditionItemAvailabilityResult::~IncrementLimitedEditionItemAvailabilityResult()
+{
+
+}
+
+void IncrementLimitedEditionItemAvailabilityResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+
+
+    writer.EndObject();
+}
+
+bool IncrementLimitedEditionItemAvailabilityResult::readFromValue(const rapidjson::Value& obj)
+{
 
     return true;
 }

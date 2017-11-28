@@ -1890,6 +1890,31 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct DeviceInfoRequest : public PlayFabBaseModel
+        {
+            std::map<std::string, MultitypeVar> Info;
+
+            DeviceInfoRequest() :
+                PlayFabBaseModel(),
+                Info()
+            {}
+
+            DeviceInfoRequest(const DeviceInfoRequest& src) :
+                PlayFabBaseModel(),
+                Info(src.Info)
+            {}
+
+            DeviceInfoRequest(const rapidjson::Value& obj) : DeviceInfoRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeviceInfoRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct EmptyResult : public PlayFabBaseModel
         {
 
@@ -2461,34 +2486,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct VirtualCurrencyBalanceModel : public PlayFabBaseModel
-        {
-            std::string Currency;
-            Int32 TotalValue;
-
-            VirtualCurrencyBalanceModel() :
-                PlayFabBaseModel(),
-                Currency(),
-                TotalValue(0)
-            {}
-
-            VirtualCurrencyBalanceModel(const VirtualCurrencyBalanceModel& src) :
-                PlayFabBaseModel(),
-                Currency(src.Currency),
-                TotalValue(src.TotalValue)
-            {}
-
-            VirtualCurrencyBalanceModel(const rapidjson::Value& obj) : VirtualCurrencyBalanceModel()
-            {
-                readFromValue(obj);
-            }
-
-            ~VirtualCurrencyBalanceModel();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct PlayerProfileModel : public PlayFabBaseModel
         {
             std::list<AdCampaignAttributionModel> AdCampaignAttributions;
@@ -2510,7 +2507,6 @@ namespace PlayFab
             std::string TitleId;
             OptionalUint32 TotalValueToDateInUSD;
             std::list<ValueToDateModel> ValuesToDate;
-            std::list<VirtualCurrencyBalanceModel> VirtualCurrencyBalances;
 
             PlayerProfileModel() :
                 PlayFabBaseModel(),
@@ -2532,8 +2528,7 @@ namespace PlayFab
                 Tags(),
                 TitleId(),
                 TotalValueToDateInUSD(),
-                ValuesToDate(),
-                VirtualCurrencyBalances()
+                ValuesToDate()
             {}
 
             PlayerProfileModel(const PlayerProfileModel& src) :
@@ -2556,8 +2551,7 @@ namespace PlayFab
                 Tags(src.Tags),
                 TitleId(src.TitleId),
                 TotalValueToDateInUSD(src.TotalValueToDateInUSD),
-                ValuesToDate(src.ValuesToDate),
-                VirtualCurrencyBalances(src.VirtualCurrencyBalances)
+                ValuesToDate(src.ValuesToDate)
             {}
 
             PlayerProfileModel(const rapidjson::Value& obj) : PlayerProfileModel()
@@ -4185,6 +4179,59 @@ namespace PlayFab
             }
 
             ~GetLeaderboardResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPaymentTokenRequest : public PlayFabBaseModel
+        {
+            std::string TokenProvider;
+
+            GetPaymentTokenRequest() :
+                PlayFabBaseModel(),
+                TokenProvider()
+            {}
+
+            GetPaymentTokenRequest(const GetPaymentTokenRequest& src) :
+                PlayFabBaseModel(),
+                TokenProvider(src.TokenProvider)
+            {}
+
+            GetPaymentTokenRequest(const rapidjson::Value& obj) : GetPaymentTokenRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPaymentTokenRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPaymentTokenResult : public PlayFabBaseModel
+        {
+            std::string OrderId;
+            std::string ProviderToken;
+
+            GetPaymentTokenResult() :
+                PlayFabBaseModel(),
+                OrderId(),
+                ProviderToken()
+            {}
+
+            GetPaymentTokenResult(const GetPaymentTokenResult& src) :
+                PlayFabBaseModel(),
+                OrderId(src.OrderId),
+                ProviderToken(src.ProviderToken)
+            {}
+
+            GetPaymentTokenResult(const rapidjson::Value& obj) : GetPaymentTokenResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPaymentTokenResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

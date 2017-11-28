@@ -911,6 +911,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct CheckLimitedEditionItemAvailabilityRequest : public PlayFabBaseModel
+        {
+            std::string CatalogVersion;
+            std::string ItemId;
+
+            CheckLimitedEditionItemAvailabilityRequest() :
+                PlayFabBaseModel(),
+                CatalogVersion(),
+                ItemId()
+            {}
+
+            CheckLimitedEditionItemAvailabilityRequest(const CheckLimitedEditionItemAvailabilityRequest& src) :
+                PlayFabBaseModel(),
+                CatalogVersion(src.CatalogVersion),
+                ItemId(src.ItemId)
+            {}
+
+            CheckLimitedEditionItemAvailabilityRequest(const rapidjson::Value& obj) : CheckLimitedEditionItemAvailabilityRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CheckLimitedEditionItemAvailabilityRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CheckLimitedEditionItemAvailabilityResult : public PlayFabBaseModel
+        {
+            Int32 Amount;
+
+            CheckLimitedEditionItemAvailabilityResult() :
+                PlayFabBaseModel(),
+                Amount(0)
+            {}
+
+            CheckLimitedEditionItemAvailabilityResult(const CheckLimitedEditionItemAvailabilityResult& src) :
+                PlayFabBaseModel(),
+                Amount(src.Amount)
+            {}
+
+            CheckLimitedEditionItemAvailabilityResult(const rapidjson::Value& obj) : CheckLimitedEditionItemAvailabilityResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~CheckLimitedEditionItemAvailabilityResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CloudScriptFile : public PlayFabBaseModel
         {
             std::string FileContents;
@@ -3377,34 +3430,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct VirtualCurrencyBalanceModel : public PlayFabBaseModel
-        {
-            std::string Currency;
-            Int32 TotalValue;
-
-            VirtualCurrencyBalanceModel() :
-                PlayFabBaseModel(),
-                Currency(),
-                TotalValue(0)
-            {}
-
-            VirtualCurrencyBalanceModel(const VirtualCurrencyBalanceModel& src) :
-                PlayFabBaseModel(),
-                Currency(src.Currency),
-                TotalValue(src.TotalValue)
-            {}
-
-            VirtualCurrencyBalanceModel(const rapidjson::Value& obj) : VirtualCurrencyBalanceModel()
-            {
-                readFromValue(obj);
-            }
-
-            ~VirtualCurrencyBalanceModel();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct PlayerProfileModel : public PlayFabBaseModel
         {
             std::list<AdCampaignAttributionModel> AdCampaignAttributions;
@@ -3426,7 +3451,6 @@ namespace PlayFab
             std::string TitleId;
             OptionalUint32 TotalValueToDateInUSD;
             std::list<ValueToDateModel> ValuesToDate;
-            std::list<VirtualCurrencyBalanceModel> VirtualCurrencyBalances;
 
             PlayerProfileModel() :
                 PlayFabBaseModel(),
@@ -3448,8 +3472,7 @@ namespace PlayFab
                 Tags(),
                 TitleId(),
                 TotalValueToDateInUSD(),
-                ValuesToDate(),
-                VirtualCurrencyBalances()
+                ValuesToDate()
             {}
 
             PlayerProfileModel(const PlayerProfileModel& src) :
@@ -3472,8 +3495,7 @@ namespace PlayFab
                 Tags(src.Tags),
                 TitleId(src.TitleId),
                 TotalValueToDateInUSD(src.TotalValueToDateInUSD),
-                ValuesToDate(src.ValuesToDate),
-                VirtualCurrencyBalances(src.VirtualCurrencyBalances)
+                ValuesToDate(src.ValuesToDate)
             {}
 
             PlayerProfileModel(const rapidjson::Value& obj) : PlayerProfileModel()
@@ -5428,6 +5450,59 @@ namespace PlayFab
             }
 
             ~GrantItemsToUsersResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct IncrementLimitedEditionItemAvailabilityRequest : public PlayFabBaseModel
+        {
+            Int32 Amount;
+            std::string CatalogVersion;
+            std::string ItemId;
+
+            IncrementLimitedEditionItemAvailabilityRequest() :
+                PlayFabBaseModel(),
+                Amount(0),
+                CatalogVersion(),
+                ItemId()
+            {}
+
+            IncrementLimitedEditionItemAvailabilityRequest(const IncrementLimitedEditionItemAvailabilityRequest& src) :
+                PlayFabBaseModel(),
+                Amount(src.Amount),
+                CatalogVersion(src.CatalogVersion),
+                ItemId(src.ItemId)
+            {}
+
+            IncrementLimitedEditionItemAvailabilityRequest(const rapidjson::Value& obj) : IncrementLimitedEditionItemAvailabilityRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~IncrementLimitedEditionItemAvailabilityRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct IncrementLimitedEditionItemAvailabilityResult : public PlayFabBaseModel
+        {
+
+            IncrementLimitedEditionItemAvailabilityResult() :
+                PlayFabBaseModel()
+            {}
+
+            IncrementLimitedEditionItemAvailabilityResult(const IncrementLimitedEditionItemAvailabilityResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            IncrementLimitedEditionItemAvailabilityResult(const rapidjson::Value& obj) : IncrementLimitedEditionItemAvailabilityResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~IncrementLimitedEditionItemAvailabilityResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

@@ -2766,34 +2766,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct VirtualCurrencyBalanceModel : public PlayFabBaseModel
-        {
-            std::string Currency;
-            Int32 TotalValue;
-
-            VirtualCurrencyBalanceModel() :
-                PlayFabBaseModel(),
-                Currency(),
-                TotalValue(0)
-            {}
-
-            VirtualCurrencyBalanceModel(const VirtualCurrencyBalanceModel& src) :
-                PlayFabBaseModel(),
-                Currency(src.Currency),
-                TotalValue(src.TotalValue)
-            {}
-
-            VirtualCurrencyBalanceModel(const rapidjson::Value& obj) : VirtualCurrencyBalanceModel()
-            {
-                readFromValue(obj);
-            }
-
-            ~VirtualCurrencyBalanceModel();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct PlayerProfileModel : public PlayFabBaseModel
         {
             std::list<AdCampaignAttributionModel> AdCampaignAttributions;
@@ -2815,7 +2787,6 @@ namespace PlayFab
             std::string TitleId;
             OptionalUint32 TotalValueToDateInUSD;
             std::list<ValueToDateModel> ValuesToDate;
-            std::list<VirtualCurrencyBalanceModel> VirtualCurrencyBalances;
 
             PlayerProfileModel() :
                 PlayFabBaseModel(),
@@ -2837,8 +2808,7 @@ namespace PlayFab
                 Tags(),
                 TitleId(),
                 TotalValueToDateInUSD(),
-                ValuesToDate(),
-                VirtualCurrencyBalances()
+                ValuesToDate()
             {}
 
             PlayerProfileModel(const PlayerProfileModel& src) :
@@ -2861,8 +2831,7 @@ namespace PlayFab
                 Tags(src.Tags),
                 TitleId(src.TitleId),
                 TotalValueToDateInUSD(src.TotalValueToDateInUSD),
-                ValuesToDate(src.ValuesToDate),
-                VirtualCurrencyBalances(src.VirtualCurrencyBalances)
+                ValuesToDate(src.ValuesToDate)
             {}
 
             PlayerProfileModel(const rapidjson::Value& obj) : PlayerProfileModel()
@@ -6289,8 +6258,6 @@ namespace PlayFab
             std::string CustomData;
             std::string Icon;
             std::string Message;
-            // Deprecated - Use 'CustomData' instead
-            std::string ScheduleDate;
             std::string Sound;
             std::string Title;
 
@@ -6300,7 +6267,6 @@ namespace PlayFab
                 CustomData(),
                 Icon(),
                 Message(),
-                ScheduleDate(),
                 Sound(),
                 Title()
             {}
@@ -6311,7 +6277,6 @@ namespace PlayFab
                 CustomData(src.CustomData),
                 Icon(src.Icon),
                 Message(src.Message),
-                ScheduleDate(src.ScheduleDate),
                 Sound(src.Sound),
                 Title(src.Title)
             {}
