@@ -50,6 +50,7 @@ namespace PlayFab
         static void GetLeaderboardAroundCharacter(ClientModels::GetLeaderboardAroundCharacterRequest& request, ProcessApiCallback<ClientModels::GetLeaderboardAroundCharacterResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboardAroundPlayer(ClientModels::GetLeaderboardAroundPlayerRequest& request, ProcessApiCallback<ClientModels::GetLeaderboardAroundPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLeaderboardForUserCharacters(ClientModels::GetLeaderboardForUsersCharactersRequest& request, ProcessApiCallback<ClientModels::GetLeaderboardForUsersCharactersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPaymentToken(ClientModels::GetPaymentTokenRequest& request, ProcessApiCallback<ClientModels::GetPaymentTokenResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPhotonAuthenticationToken(ClientModels::GetPhotonAuthenticationTokenRequest& request, ProcessApiCallback<ClientModels::GetPhotonAuthenticationTokenResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerCombinedInfo(ClientModels::GetPlayerCombinedInfoRequest& request, ProcessApiCallback<ClientModels::GetPlayerCombinedInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerProfile(ClientModels::GetPlayerProfileRequest& request, ProcessApiCallback<ClientModels::GetPlayerProfileResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -115,6 +116,7 @@ namespace PlayFab
         static void RemoveFriend(ClientModels::RemoveFriendRequest& request, ProcessApiCallback<ClientModels::RemoveFriendResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveGenericID(ClientModels::RemoveGenericIDRequest& request, ProcessApiCallback<ClientModels::RemoveGenericIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveSharedGroupMembers(ClientModels::RemoveSharedGroupMembersRequest& request, ProcessApiCallback<ClientModels::RemoveSharedGroupMembersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ReportDeviceInfo(ClientModels::DeviceInfoRequest& request, ProcessApiCallback<ClientModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ReportPlayer(ClientModels::ReportPlayerClientRequest& request, ProcessApiCallback<ClientModels::ReportPlayerClientResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RestoreIOSPurchases(ClientModels::RestoreIOSPurchasesRequest& request, ProcessApiCallback<ClientModels::RestoreIOSPurchasesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendAccountRecoveryEmail(ClientModels::SendAccountRecoveryEmailRequest& request, ProcessApiCallback<ClientModels::SendAccountRecoveryEmailResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -188,6 +190,7 @@ namespace PlayFab
         static void OnGetLeaderboardAroundCharacterResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardAroundPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetLeaderboardForUserCharactersResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPaymentTokenResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPhotonAuthenticationTokenResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerCombinedInfoResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerProfileResult(int httpStatus, HttpRequest* request, void* userData);
@@ -253,6 +256,7 @@ namespace PlayFab
         static void OnRemoveFriendResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveGenericIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnReportDeviceInfoResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnReportPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRestoreIOSPurchasesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);

@@ -346,6 +346,54 @@ void PlayFabAdminAPI::OnBanUsersResult(int httpStatus, HttpRequest* request, voi
     delete request;
 }
 
+void PlayFabAdminAPI::CheckLimitedEditionItemAvailability(
+    CheckLimitedEditionItemAvailabilityRequest& request,
+    ProcessApiCallback<CheckLimitedEditionItemAvailabilityResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/CheckLimitedEditionItemAvailability"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<CheckLimitedEditionItemAvailabilityResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnCheckLimitedEditionItemAvailabilityResult, userData);
+}
+
+void PlayFabAdminAPI::OnCheckLimitedEditionItemAvailabilityResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    CheckLimitedEditionItemAvailabilityResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<CheckLimitedEditionItemAvailabilityResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabAdminAPI::CreateActionsOnPlayersInSegmentTask(
     CreateActionsOnPlayerSegmentTaskRequest& request,
     ProcessApiCallback<CreateTaskResult> callback,
@@ -2685,6 +2733,54 @@ void PlayFabAdminAPI::OnGrantItemsToUsersResult(int httpStatus, HttpRequest* req
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<GrantItemsToUsersResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabAdminAPI::IncrementLimitedEditionItemAvailability(
+    IncrementLimitedEditionItemAvailabilityRequest& request,
+    ProcessApiCallback<IncrementLimitedEditionItemAvailabilityResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+    )
+{
+    
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/IncrementLimitedEditionItemAvailability"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<IncrementLimitedEditionItemAvailabilityResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnIncrementLimitedEditionItemAvailabilityResult, userData);
+}
+
+void PlayFabAdminAPI::OnIncrementLimitedEditionItemAvailabilityResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    IncrementLimitedEditionItemAvailabilityResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<IncrementLimitedEditionItemAvailabilityResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

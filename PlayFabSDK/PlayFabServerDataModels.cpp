@@ -3434,31 +3434,6 @@ bool ValueToDateModel::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-VirtualCurrencyBalanceModel::~VirtualCurrencyBalanceModel()
-{
-
-}
-
-void VirtualCurrencyBalanceModel::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-
-    if (Currency.length() > 0) { writer.String("Currency"); writer.String(Currency.c_str()); }
-    writer.String("TotalValue"); writer.Int(TotalValue);
-
-    writer.EndObject();
-}
-
-bool VirtualCurrencyBalanceModel::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Currency_member = obj.FindMember("Currency");
-    if (Currency_member != obj.MemberEnd() && !Currency_member->value.IsNull()) Currency = Currency_member->value.GetString();
-    const Value::ConstMemberIterator TotalValue_member = obj.FindMember("TotalValue");
-    if (TotalValue_member != obj.MemberEnd() && !TotalValue_member->value.IsNull()) TotalValue = TotalValue_member->value.GetInt();
-
-    return true;
-}
-
 PlayerProfileModel::~PlayerProfileModel()
 {
 
@@ -3550,14 +3525,6 @@ void PlayerProfileModel::writeJSON(PFStringJsonWriter& writer)
     }
     writer.EndArray();
      }
-    if (!VirtualCurrencyBalances.empty()) {
-    writer.String("VirtualCurrencyBalances");
-    writer.StartArray();
-    for (std::list<VirtualCurrencyBalanceModel>::iterator iter = VirtualCurrencyBalances.begin(); iter != VirtualCurrencyBalances.end(); iter++) {
-        iter->writeJSON(writer);
-    }
-    writer.EndArray();
-     }
 
     writer.EndObject();
 }
@@ -3645,13 +3612,6 @@ bool PlayerProfileModel::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = ValuesToDate_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             ValuesToDate.push_back(ValueToDateModel(memberList[i]));
-        }
-    }
-    const Value::ConstMemberIterator VirtualCurrencyBalances_member = obj.FindMember("VirtualCurrencyBalances");
-    if (VirtualCurrencyBalances_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = VirtualCurrencyBalances_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            VirtualCurrencyBalances.push_back(VirtualCurrencyBalanceModel(memberList[i]));
         }
     }
 
@@ -7739,7 +7699,6 @@ void PushNotificationPackage::writeJSON(PFStringJsonWriter& writer)
     if (CustomData.length() > 0) { writer.String("CustomData"); writer.String(CustomData.c_str()); }
     if (Icon.length() > 0) { writer.String("Icon"); writer.String(Icon.c_str()); }
     writer.String("Message"); writer.String(Message.c_str());
-    if (ScheduleDate.length() > 0) { writer.String("ScheduleDate"); writer.String(ScheduleDate.c_str()); }
     if (Sound.length() > 0) { writer.String("Sound"); writer.String(Sound.c_str()); }
     writer.String("Title"); writer.String(Title.c_str());
 
@@ -7756,8 +7715,6 @@ bool PushNotificationPackage::readFromValue(const rapidjson::Value& obj)
     if (Icon_member != obj.MemberEnd() && !Icon_member->value.IsNull()) Icon = Icon_member->value.GetString();
     const Value::ConstMemberIterator Message_member = obj.FindMember("Message");
     if (Message_member != obj.MemberEnd() && !Message_member->value.IsNull()) Message = Message_member->value.GetString();
-    const Value::ConstMemberIterator ScheduleDate_member = obj.FindMember("ScheduleDate");
-    if (ScheduleDate_member != obj.MemberEnd() && !ScheduleDate_member->value.IsNull()) ScheduleDate = ScheduleDate_member->value.GetString();
     const Value::ConstMemberIterator Sound_member = obj.FindMember("Sound");
     if (Sound_member != obj.MemberEnd() && !Sound_member->value.IsNull()) Sound = Sound_member->value.GetString();
     const Value::ConstMemberIterator Title_member = obj.FindMember("Title");
