@@ -1,6 +1,7 @@
 Debug.win32/
 bin/
 build/
+PlayFabSDKExample/
 
 *.suo
 *.sdf
