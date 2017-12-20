@@ -38,18 +38,9 @@ This package contains three different versions of the PlayFab SDK.
 * PlayFabClientSDK - This version contains only client libraries and is designed for integration with your game client
 * PlayFabServerSDK - Contains server and admin APIs designed to be called from your custom logic server or build process
 * PlayFabSDK - Contains all APIs in one SDK, as well as a unit-test project
-* PlayFabSdkExample - A pre-built example using PlayFabSDK, which runs a full set of tests verifying that PlayFab works on the supported platforms.
-
-## 4. testTitleData.json file required for example unit-test-project
-
-This sdk includes an optional example project that is used by PlayFab to verify sdk features are fully functional.
-
-Please read about the testTitleData.json format, and purpose here:
-* https://github.com/PlayFab/SDKGenerator/blob/master/JenkinsConsoleUtility/testTitleData.md
-The file location is read from the hard-coded loction of: TEST_TITLE_DATA_LOC in PlayFabApiTest.h, you can redirect this to an input that matches your file location
 
 
-## 5. Troubleshooting:
+## 4. Troubleshooting:
 
 For a complete list of available APIs, check out the [online documentation](http://api.playfab.com/Documentation/).
 
@@ -62,16 +53,15 @@ Our Developer Success Team can assist with answering any questions as well as pr
 [Forums, Support and Knowledge Base](https://community.playfab.com/index.html)
 
 
-## 6. Acknowledgements
+## 5. Acknowledgements
 
 Special thanks to the team at Mingle Games (http://mingle-games.com/) for their assistance in expanding mobile support for this SDK!
 
 
-## 7. Copyright and Licensing Information:
+## 6. Copyright and Licensing Information:
 
   Apache License --
   Version 2.0, January 2004
   http://www.apache.org/licenses/
 
   Full details available within the LICENSE file.
-
