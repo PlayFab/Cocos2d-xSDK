@@ -357,7 +357,9 @@ namespace PlayFab
         PlayFabErrorNoEntityFileOperationPending = 1351,
         PlayFabErrorEntityProfileVersionMismatch = 1352,
         PlayFabErrorTemplateVersionTooOld = 1353,
-        PlayFabErrorMembershipDefinitionInUse = 1354
+        PlayFabErrorMembershipDefinitionInUse = 1354,
+        PlayFabErrorPaymentPageNotConfigured = 1355,
+        PlayFabErrorFailedLoginAttemptRateLimitExceeded = 1356
     };
 
     struct PlayFabError
