@@ -15,9 +15,8 @@ void PlayFabMatchmakerAPI::AuthUser(
     ProcessApiCallback<AuthUserResponse> callback,
     ErrorCallback errorCallback,
     void* userData
-    )
+)
 {
-    
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Matchmaker/AuthUser"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
@@ -41,7 +40,6 @@ void PlayFabMatchmakerAPI::OnAuthUserResult(int httpStatus, HttpRequest* request
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<AuthUserResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
@@ -63,9 +61,8 @@ void PlayFabMatchmakerAPI::PlayerJoined(
     ProcessApiCallback<PlayerJoinedResponse> callback,
     ErrorCallback errorCallback,
     void* userData
-    )
+)
 {
-    
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Matchmaker/PlayerJoined"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
@@ -89,7 +86,6 @@ void PlayFabMatchmakerAPI::OnPlayerJoinedResult(int httpStatus, HttpRequest* req
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<PlayerJoinedResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
@@ -111,9 +107,8 @@ void PlayFabMatchmakerAPI::PlayerLeft(
     ProcessApiCallback<PlayerLeftResponse> callback,
     ErrorCallback errorCallback,
     void* userData
-    )
+)
 {
-    
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Matchmaker/PlayerLeft"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
@@ -137,7 +132,6 @@ void PlayFabMatchmakerAPI::OnPlayerLeftResult(int httpStatus, HttpRequest* reque
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<PlayerLeftResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
@@ -159,9 +153,8 @@ void PlayFabMatchmakerAPI::StartGame(
     ProcessApiCallback<StartGameResponse> callback,
     ErrorCallback errorCallback,
     void* userData
-    )
+)
 {
-    
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Matchmaker/StartGame"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
@@ -185,7 +178,6 @@ void PlayFabMatchmakerAPI::OnStartGameResult(int httpStatus, HttpRequest* reques
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<StartGameResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
@@ -207,9 +199,8 @@ void PlayFabMatchmakerAPI::UserInfo(
     ProcessApiCallback<UserInfoResponse> callback,
     ErrorCallback errorCallback,
     void* userData
-    )
+)
 {
-    
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Matchmaker/UserInfo"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
@@ -233,7 +224,6 @@ void PlayFabMatchmakerAPI::OnUserInfoResult(int httpStatus, HttpRequest* request
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<UserInfoResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());

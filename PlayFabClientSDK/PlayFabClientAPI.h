@@ -292,9 +292,6 @@ namespace PlayFab
         static void OnWriteCharacterEventResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnWritePlayerEventResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnWriteTitleEventResult(int httpStatus, HttpRequest* request, void* userData);
-
-        // Private, Client-Specific
-        static std::string mUserSessionTicket;
     };
 };
 #endif
