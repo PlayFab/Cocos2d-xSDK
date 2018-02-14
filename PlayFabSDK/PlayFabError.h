@@ -359,7 +359,21 @@ namespace PlayFab
         PlayFabErrorTemplateVersionTooOld = 1353,
         PlayFabErrorMembershipDefinitionInUse = 1354,
         PlayFabErrorPaymentPageNotConfigured = 1355,
-        PlayFabErrorFailedLoginAttemptRateLimitExceeded = 1356
+        PlayFabErrorFailedLoginAttemptRateLimitExceeded = 1356,
+        PlayFabErrorEntityBlockedByGroup = 1357,
+        PlayFabErrorEntityIsNotGroupOrRole = 1358,
+        PlayFabErrorEntityIsAlreadyMember = 1359,
+        PlayFabErrorMalformedGroupTemplate = 1360,
+        PlayFabErrorGroupInvitationNotFound = 1361,
+        PlayFabErrorGroupJoinRequestNotFound = 1362,
+        PlayFabErrorOutstandingInvitationAcceptedInstead = 1363,
+        PlayFabErrorOutstandingJoinRequestAcceptedInstead = 1364,
+        PlayFabErrorRoleIsGroupDefaultMember = 1365,
+        PlayFabErrorRoleIsGroupAdmin = 1366,
+        PlayFabErrorRoleNameNotAvailable = 1367,
+        PlayFabErrorGroupNameNotAvailable = 1368,
+        PlayFabErrorEmailReportAlreadySent = 1369,
+        PlayFabErrorEmailReportRecipientBlacklisted = 1370
     };
 
     struct PlayFabError

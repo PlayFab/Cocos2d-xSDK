@@ -8346,6 +8346,7 @@ void SendAccountRecoveryEmailRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
 
     writer.String("Email"); writer.String(Email.c_str());
+    if (EmailTemplateId.length() > 0) { writer.String("EmailTemplateId"); writer.String(EmailTemplateId.c_str()); }
 
     writer.EndObject();
 }
@@ -8354,6 +8355,8 @@ bool SendAccountRecoveryEmailRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator Email_member = obj.FindMember("Email");
     if (Email_member != obj.MemberEnd() && !Email_member->value.IsNull()) Email = Email_member->value.GetString();
+    const Value::ConstMemberIterator EmailTemplateId_member = obj.FindMember("EmailTemplateId");
+    if (EmailTemplateId_member != obj.MemberEnd() && !EmailTemplateId_member->value.IsNull()) EmailTemplateId = EmailTemplateId_member->value.GetString();
 
     return true;
 }

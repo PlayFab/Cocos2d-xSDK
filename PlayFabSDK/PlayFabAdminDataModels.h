@@ -7011,15 +7011,18 @@ namespace PlayFab
         struct SendAccountRecoveryEmailRequest : public PlayFabBaseModel
         {
             std::string Email;
+            std::string EmailTemplateId;
 
             SendAccountRecoveryEmailRequest() :
                 PlayFabBaseModel(),
-                Email()
+                Email(),
+                EmailTemplateId()
             {}
 
             SendAccountRecoveryEmailRequest(const SendAccountRecoveryEmailRequest& src) :
                 PlayFabBaseModel(),
-                Email(src.Email)
+                Email(src.Email),
+                EmailTemplateId(src.EmailTemplateId)
             {}
 
             SendAccountRecoveryEmailRequest(const rapidjson::Value& obj) : SendAccountRecoveryEmailRequest()
