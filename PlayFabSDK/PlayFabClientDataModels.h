@@ -1937,6 +1937,40 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct EntityTokenResponse : public PlayFabBaseModel
+        {
+            std::string EntityId;
+            std::string EntityToken;
+            std::string EntityType;
+            OptionalTime TokenExpiration;
+
+            EntityTokenResponse() :
+                PlayFabBaseModel(),
+                EntityId(),
+                EntityToken(),
+                EntityType(),
+                TokenExpiration()
+            {}
+
+            EntityTokenResponse(const EntityTokenResponse& src) :
+                PlayFabBaseModel(),
+                EntityId(src.EntityId),
+                EntityToken(src.EntityToken),
+                EntityType(src.EntityType),
+                TokenExpiration(src.TokenExpiration)
+            {}
+
+            EntityTokenResponse(const rapidjson::Value& obj) : EntityTokenResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~EntityTokenResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ExecuteCloudScriptRequest : public PlayFabBaseModel
         {
             std::string FunctionName;
@@ -6874,6 +6908,7 @@ namespace PlayFab
 
         struct LoginResult : public PlayFabBaseModel
         {
+            EntityTokenResponse* EntityToken;
             GetPlayerCombinedInfoResultPayload* InfoResultPayload;
             OptionalTime LastLoginTime;
             bool NewlyCreated;
@@ -6883,6 +6918,7 @@ namespace PlayFab
 
             LoginResult() :
                 PlayFabBaseModel(),
+                EntityToken(NULL),
                 InfoResultPayload(NULL),
                 LastLoginTime(),
                 NewlyCreated(false),
@@ -6893,6 +6929,7 @@ namespace PlayFab
 
             LoginResult(const LoginResult& src) :
                 PlayFabBaseModel(),
+                EntityToken(src.EntityToken ? new EntityTokenResponse(*src.EntityToken) : NULL),
                 InfoResultPayload(src.InfoResultPayload ? new GetPlayerCombinedInfoResultPayload(*src.InfoResultPayload) : NULL),
                 LastLoginTime(src.LastLoginTime),
                 NewlyCreated(src.NewlyCreated),
@@ -6919,6 +6956,7 @@ namespace PlayFab
             OptionalBool CreateAccount;
             std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string OS;
             std::string PlayerSecret;
             std::string TitleId;
@@ -6930,6 +6968,7 @@ namespace PlayFab
                 CreateAccount(),
                 EncryptedRequest(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 OS(),
                 PlayerSecret(),
                 TitleId()
@@ -6942,6 +6981,7 @@ namespace PlayFab
                 CreateAccount(src.CreateAccount),
                 EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 OS(src.OS),
                 PlayerSecret(src.PlayerSecret),
                 TitleId(src.TitleId)
@@ -6964,6 +7004,7 @@ namespace PlayFab
             std::string CustomId;
             std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string PlayerSecret;
             std::string TitleId;
 
@@ -6973,6 +7014,7 @@ namespace PlayFab
                 CustomId(),
                 EncryptedRequest(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 PlayerSecret(),
                 TitleId()
             {}
@@ -6983,6 +7025,7 @@ namespace PlayFab
                 CustomId(src.CustomId),
                 EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 PlayerSecret(src.PlayerSecret),
                 TitleId(src.TitleId)
             {}
@@ -7002,6 +7045,7 @@ namespace PlayFab
         {
             std::string Email;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string Password;
             std::string TitleId;
 
@@ -7009,6 +7053,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Email(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 Password(),
                 TitleId()
             {}
@@ -7017,6 +7062,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Email(src.Email),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 Password(src.Password),
                 TitleId(src.TitleId)
             {}
@@ -7038,6 +7084,7 @@ namespace PlayFab
             OptionalBool CreateAccount;
             std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string PlayerSecret;
             std::string TitleId;
 
@@ -7047,6 +7094,7 @@ namespace PlayFab
                 CreateAccount(),
                 EncryptedRequest(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 PlayerSecret(),
                 TitleId()
             {}
@@ -7057,6 +7105,7 @@ namespace PlayFab
                 CreateAccount(src.CreateAccount),
                 EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 PlayerSecret(src.PlayerSecret),
                 TitleId(src.TitleId)
             {}
@@ -7077,6 +7126,7 @@ namespace PlayFab
             OptionalBool CreateAccount;
             std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string PlayerId;
             std::string PlayerSecret;
             std::string TitleId;
@@ -7086,6 +7136,7 @@ namespace PlayFab
                 CreateAccount(),
                 EncryptedRequest(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 PlayerId(),
                 PlayerSecret(),
                 TitleId()
@@ -7096,6 +7147,7 @@ namespace PlayFab
                 CreateAccount(src.CreateAccount),
                 EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 PlayerId(src.PlayerId),
                 PlayerSecret(src.PlayerSecret),
                 TitleId(src.TitleId)
@@ -7117,6 +7169,7 @@ namespace PlayFab
             OptionalBool CreateAccount;
             std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string PlayerSecret;
             std::string ServerAuthCode;
             std::string TitleId;
@@ -7126,6 +7179,7 @@ namespace PlayFab
                 CreateAccount(),
                 EncryptedRequest(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 PlayerSecret(),
                 ServerAuthCode(),
                 TitleId()
@@ -7136,6 +7190,7 @@ namespace PlayFab
                 CreateAccount(src.CreateAccount),
                 EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 PlayerSecret(src.PlayerSecret),
                 ServerAuthCode(src.ServerAuthCode),
                 TitleId(src.TitleId)
@@ -7159,6 +7214,7 @@ namespace PlayFab
             std::string DeviceModel;
             std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string OS;
             std::string PlayerSecret;
             std::string TitleId;
@@ -7170,6 +7226,7 @@ namespace PlayFab
                 DeviceModel(),
                 EncryptedRequest(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 OS(),
                 PlayerSecret(),
                 TitleId()
@@ -7182,6 +7239,7 @@ namespace PlayFab
                 DeviceModel(src.DeviceModel),
                 EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 OS(src.OS),
                 PlayerSecret(src.PlayerSecret),
                 TitleId(src.TitleId)
@@ -7205,6 +7263,7 @@ namespace PlayFab
             std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
             std::string KongregateId;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string PlayerSecret;
             std::string TitleId;
 
@@ -7215,6 +7274,7 @@ namespace PlayFab
                 EncryptedRequest(),
                 InfoRequestParameters(NULL),
                 KongregateId(),
+                LoginTitlePlayerAccountEntity(),
                 PlayerSecret(),
                 TitleId()
             {}
@@ -7226,6 +7286,7 @@ namespace PlayFab
                 EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
                 KongregateId(src.KongregateId),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 PlayerSecret(src.PlayerSecret),
                 TitleId(src.TitleId)
             {}
@@ -7244,6 +7305,7 @@ namespace PlayFab
         struct LoginWithPlayFabRequest : public PlayFabBaseModel
         {
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string Password;
             std::string TitleId;
             std::string Username;
@@ -7251,6 +7313,7 @@ namespace PlayFab
             LoginWithPlayFabRequest() :
                 PlayFabBaseModel(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 Password(),
                 TitleId(),
                 Username()
@@ -7259,6 +7322,7 @@ namespace PlayFab
             LoginWithPlayFabRequest(const LoginWithPlayFabRequest& src) :
                 PlayFabBaseModel(),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 Password(src.Password),
                 TitleId(src.TitleId),
                 Username(src.Username)
@@ -7280,6 +7344,7 @@ namespace PlayFab
             OptionalBool CreateAccount;
             std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string PlayerSecret;
             std::string SteamTicket;
             std::string TitleId;
@@ -7289,6 +7354,7 @@ namespace PlayFab
                 CreateAccount(),
                 EncryptedRequest(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 PlayerSecret(),
                 SteamTicket(),
                 TitleId()
@@ -7299,6 +7365,7 @@ namespace PlayFab
                 CreateAccount(src.CreateAccount),
                 EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 PlayerSecret(src.PlayerSecret),
                 SteamTicket(src.SteamTicket),
                 TitleId(src.TitleId)
@@ -7321,6 +7388,7 @@ namespace PlayFab
             OptionalBool CreateAccount;
             std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string PlayerSecret;
             std::string TitleId;
 
@@ -7330,6 +7398,7 @@ namespace PlayFab
                 CreateAccount(),
                 EncryptedRequest(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 PlayerSecret(),
                 TitleId()
             {}
@@ -7340,6 +7409,7 @@ namespace PlayFab
                 CreateAccount(src.CreateAccount),
                 EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 PlayerSecret(src.PlayerSecret),
                 TitleId(src.TitleId)
             {}
@@ -7359,6 +7429,7 @@ namespace PlayFab
         {
             std::string ChallengeSignature;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string PublicKeyHint;
             std::string TitleId;
 
@@ -7366,6 +7437,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 ChallengeSignature(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 PublicKeyHint(),
                 TitleId()
             {}
@@ -7374,6 +7446,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 ChallengeSignature(src.ChallengeSignature),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 PublicKeyHint(src.PublicKeyHint),
                 TitleId(src.TitleId)
             {}
@@ -7938,6 +8011,7 @@ namespace PlayFab
             std::string Email;
             std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string Password;
             std::string PlayerSecret;
             OptionalBool RequireBothUsernameAndEmail;
@@ -7950,6 +8024,7 @@ namespace PlayFab
                 Email(),
                 EncryptedRequest(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 Password(),
                 PlayerSecret(),
                 RequireBothUsernameAndEmail(),
@@ -7963,6 +8038,7 @@ namespace PlayFab
                 Email(src.Email),
                 EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 Password(src.Password),
                 PlayerSecret(src.PlayerSecret),
                 RequireBothUsernameAndEmail(src.RequireBothUsernameAndEmail),
@@ -8020,6 +8096,7 @@ namespace PlayFab
             std::string DeviceName;
             std::string EncryptedRequest;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            OptionalBool LoginTitlePlayerAccountEntity;
             std::string PlayerSecret;
             std::string PublicKey;
             std::string TitleId;
@@ -8030,6 +8107,7 @@ namespace PlayFab
                 DeviceName(),
                 EncryptedRequest(),
                 InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
                 PlayerSecret(),
                 PublicKey(),
                 TitleId(),
@@ -8041,6 +8119,7 @@ namespace PlayFab
                 DeviceName(src.DeviceName),
                 EncryptedRequest(src.EncryptedRequest),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 PlayerSecret(src.PlayerSecret),
                 PublicKey(src.PublicKey),
                 TitleId(src.TitleId),
@@ -8349,17 +8428,20 @@ namespace PlayFab
         struct SendAccountRecoveryEmailRequest : public PlayFabBaseModel
         {
             std::string Email;
+            std::string EmailTemplateId;
             std::string TitleId;
 
             SendAccountRecoveryEmailRequest() :
                 PlayFabBaseModel(),
                 Email(),
+                EmailTemplateId(),
                 TitleId()
             {}
 
             SendAccountRecoveryEmailRequest(const SendAccountRecoveryEmailRequest& src) :
                 PlayFabBaseModel(),
                 Email(src.Email),
+                EmailTemplateId(src.EmailTemplateId),
                 TitleId(src.TitleId)
             {}
 
