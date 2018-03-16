@@ -13,9 +13,7 @@ AbortTaskInstanceRequest::~AbortTaskInstanceRequest()
 void AbortTaskInstanceRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str());
-
     writer.EndObject();
 }
 
@@ -35,10 +33,8 @@ ActionsOnPlayersInSegmentTaskParameter::~ActionsOnPlayersInSegmentTaskParameter(
 void ActionsOnPlayersInSegmentTaskParameter::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("ActionId"); writer.String(ActionId.c_str());
     writer.String("SegmentId"); writer.String(SegmentId.c_str());
-
     writer.EndObject();
 }
 
@@ -95,10 +91,8 @@ NameIdentifier::~NameIdentifier()
 void NameIdentifier::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
     if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
-
     writer.EndObject();
 }
 
@@ -121,7 +115,6 @@ ActionsOnPlayersInSegmentTaskSummary::~ActionsOnPlayersInSegmentTaskSummary()
 void ActionsOnPlayersInSegmentTaskSummary::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CompletedAt.notNull()) { writer.String("CompletedAt"); writeDatetime(CompletedAt, writer); }
     if (ErrorMessage.length() > 0) { writer.String("ErrorMessage"); writer.String(ErrorMessage.c_str()); }
     if (ErrorWasFatal.notNull()) { writer.String("ErrorWasFatal"); writer.Bool(ErrorWasFatal); }
@@ -134,7 +127,6 @@ void ActionsOnPlayersInSegmentTaskSummary::writeJSON(PFStringJsonWriter& writer)
     if (TaskInstanceId.length() > 0) { writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str()); }
     if (TotalPlayersInSegment.notNull()) { writer.String("TotalPlayersInSegment"); writer.Int(TotalPlayersInSegment); }
     if (TotalPlayersProcessed.notNull()) { writer.String("TotalPlayersProcessed"); writer.Int(TotalPlayersProcessed); }
-
     writer.EndObject();
 }
 
@@ -176,11 +168,9 @@ AdCampaignAttribution::~AdCampaignAttribution()
 void AdCampaignAttribution::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("AttributedAt"); writeDatetime(AttributedAt, writer);
     if (CampaignId.length() > 0) { writer.String("CampaignId"); writer.String(CampaignId.c_str()); }
     if (Platform.length() > 0) { writer.String("Platform"); writer.String(Platform.c_str()); }
-
     writer.EndObject();
 }
 
@@ -204,11 +194,9 @@ AdCampaignAttributionModel::~AdCampaignAttributionModel()
 void AdCampaignAttributionModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("AttributedAt"); writeDatetime(AttributedAt, writer);
     if (CampaignId.length() > 0) { writer.String("CampaignId"); writer.String(CampaignId.c_str()); }
     if (Platform.length() > 0) { writer.String("Platform"); writer.String(Platform.c_str()); }
-
     writer.EndObject();
 }
 
@@ -232,11 +220,9 @@ AddNewsRequest::~AddNewsRequest()
 void AddNewsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Body"); writer.String(Body.c_str());
     if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
     writer.String("Title"); writer.String(Title.c_str());
-
     writer.EndObject();
 }
 
@@ -260,9 +246,7 @@ AddNewsResult::~AddNewsResult()
 void AddNewsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (NewsId.length() > 0) { writer.String("NewsId"); writer.String(NewsId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -282,10 +266,8 @@ AddPlayerTagRequest::~AddPlayerTagRequest()
 void AddPlayerTagRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     writer.String("TagName"); writer.String(TagName.c_str());
-
     writer.EndObject();
 }
 
@@ -307,8 +289,6 @@ AddPlayerTagResult::~AddPlayerTagResult()
 void AddPlayerTagResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -363,22 +343,20 @@ AddServerBuildRequest::~AddServerBuildRequest()
 void AddServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!ActiveRegions.empty()) {
-    writer.String("ActiveRegions");
-    writer.StartArray();
-    for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
-        writeRegionEnumJSON(*iter, writer);
+        writer.String("ActiveRegions");
+        writer.StartArray();
+        for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
+            writeRegionEnumJSON(*iter, writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     writer.String("BuildId"); writer.String(BuildId.c_str());
     if (CommandLineTemplate.length() > 0) { writer.String("CommandLineTemplate"); writer.String(CommandLineTemplate.c_str()); }
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
     if (ExecutablePath.length() > 0) { writer.String("ExecutablePath"); writer.String(ExecutablePath.c_str()); }
     writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
     writer.String("MinFreeGameSlots"); writer.Int(MinFreeGameSlots);
-
     writer.EndObject();
 }
 
@@ -448,15 +426,14 @@ AddServerBuildResult::~AddServerBuildResult()
 void AddServerBuildResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!ActiveRegions.empty()) {
-    writer.String("ActiveRegions");
-    writer.StartArray();
-    for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
-        writeRegionEnumJSON(*iter, writer);
+        writer.String("ActiveRegions");
+        writer.StartArray();
+        for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
+            writeRegionEnumJSON(*iter, writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
     if (CommandLineTemplate.length() > 0) { writer.String("CommandLineTemplate"); writer.String(CommandLineTemplate.c_str()); }
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
@@ -466,7 +443,6 @@ void AddServerBuildResult::writeJSON(PFStringJsonWriter& writer)
     if (Status.notNull()) { writer.String("Status"); writeGameBuildStatusEnumJSON(Status, writer); }
     writer.String("Timestamp"); writeDatetime(Timestamp, writer);
     if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -509,11 +485,9 @@ AddUserVirtualCurrencyRequest::~AddUserVirtualCurrencyRequest()
 void AddUserVirtualCurrencyRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Amount"); writer.Int(Amount);
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     writer.String("VirtualCurrency"); writer.String(VirtualCurrency.c_str());
-
     writer.EndObject();
 }
 
@@ -537,13 +511,11 @@ VirtualCurrencyData::~VirtualCurrencyData()
 void VirtualCurrencyData::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("CurrencyCode"); writer.String(CurrencyCode.c_str());
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
     if (InitialDeposit.notNull()) { writer.String("InitialDeposit"); writer.Int(InitialDeposit); }
     if (RechargeMax.notNull()) { writer.String("RechargeMax"); writer.Int(RechargeMax); }
     if (RechargeRate.notNull()) { writer.String("RechargeRate"); writer.Int(RechargeRate); }
-
     writer.EndObject();
 }
 
@@ -571,15 +543,12 @@ AddVirtualCurrencyTypesRequest::~AddVirtualCurrencyTypesRequest()
 void AddVirtualCurrencyTypesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("VirtualCurrencies");
     writer.StartArray();
     for (std::list<VirtualCurrencyData>::iterator iter = VirtualCurrencies.begin(); iter != VirtualCurrencies.end(); iter++) {
         iter->writeJSON(writer);
     }
     writer.EndArray();
-    
-
     writer.EndObject();
 }
 
@@ -633,9 +602,7 @@ ApiCondition::~ApiCondition()
 void ApiCondition::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (HasSignatureOrEncryption.notNull()) { writer.String("HasSignatureOrEncryption"); writeConditionalsEnumJSON(HasSignatureOrEncryption, writer); }
-
     writer.EndObject();
 }
 
@@ -680,7 +647,6 @@ BanInfo::~BanInfo()
 void BanInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Active"); writer.Bool(Active);
     if (BanId.length() > 0) { writer.String("BanId"); writer.String(BanId.c_str()); }
     if (Created.notNull()) { writer.String("Created"); writeDatetime(Created, writer); }
@@ -689,7 +655,6 @@ void BanInfo::writeJSON(PFStringJsonWriter& writer)
     if (MACAddress.length() > 0) { writer.String("MACAddress"); writer.String(MACAddress.c_str()); }
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (Reason.length() > 0) { writer.String("Reason"); writer.String(Reason.c_str()); }
-
     writer.EndObject();
 }
 
@@ -723,13 +688,11 @@ BanRequest::~BanRequest()
 void BanRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (DurationInHours.notNull()) { writer.String("DurationInHours"); writer.Uint(DurationInHours); }
     if (IPAddress.length() > 0) { writer.String("IPAddress"); writer.String(IPAddress.c_str()); }
     if (MACAddress.length() > 0) { writer.String("MACAddress"); writer.String(MACAddress.c_str()); }
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     if (Reason.length() > 0) { writer.String("Reason"); writer.String(Reason.c_str()); }
-
     writer.EndObject();
 }
 
@@ -757,15 +720,12 @@ BanUsersRequest::~BanUsersRequest()
 void BanUsersRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Bans");
     writer.StartArray();
     for (std::list<BanRequest>::iterator iter = Bans.begin(); iter != Bans.end(); iter++) {
         iter->writeJSON(writer);
     }
     writer.EndArray();
-    
-
     writer.EndObject();
 }
 
@@ -790,16 +750,14 @@ BanUsersResult::~BanUsersResult()
 void BanUsersResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!BanData.empty()) {
-    writer.String("BanData");
-    writer.StartArray();
-    for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("BanData");
+        writer.StartArray();
+        for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -824,8 +782,6 @@ BlankResult::~BlankResult()
 void BlankResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -843,32 +799,30 @@ CatalogItemBundleInfo::~CatalogItemBundleInfo()
 void CatalogItemBundleInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!BundledItems.empty()) {
-    writer.String("BundledItems");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = BundledItems.begin(); iter != BundledItems.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("BundledItems");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = BundledItems.begin(); iter != BundledItems.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (!BundledResultTables.empty()) {
-    writer.String("BundledResultTables");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = BundledResultTables.begin(); iter != BundledResultTables.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("BundledResultTables");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = BundledResultTables.begin(); iter != BundledResultTables.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (!BundledVirtualCurrencies.empty()) {
-    writer.String("BundledVirtualCurrencies");
-    writer.StartObject();
-    for (std::map<std::string, Uint32>::iterator iter = BundledVirtualCurrencies.begin(); iter != BundledVirtualCurrencies.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        writer.String("BundledVirtualCurrencies");
+        writer.StartObject();
+        for (std::map<std::string, Uint32>::iterator iter = BundledVirtualCurrencies.begin(); iter != BundledVirtualCurrencies.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
-
     writer.EndObject();
 }
 
@@ -906,11 +860,9 @@ CatalogItemConsumableInfo::~CatalogItemConsumableInfo()
 void CatalogItemConsumableInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (UsageCount.notNull()) { writer.String("UsageCount"); writer.Uint(UsageCount); }
     if (UsagePeriod.notNull()) { writer.String("UsagePeriod"); writer.Uint(UsagePeriod); }
     if (UsagePeriodGroup.length() > 0) { writer.String("UsagePeriodGroup"); writer.String(UsagePeriodGroup.c_str()); }
-
     writer.EndObject();
 }
 
@@ -934,33 +886,31 @@ CatalogItemContainerInfo::~CatalogItemContainerInfo()
 void CatalogItemContainerInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!ItemContents.empty()) {
-    writer.String("ItemContents");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = ItemContents.begin(); iter != ItemContents.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("ItemContents");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = ItemContents.begin(); iter != ItemContents.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (KeyItemId.length() > 0) { writer.String("KeyItemId"); writer.String(KeyItemId.c_str()); }
     if (!ResultTableContents.empty()) {
-    writer.String("ResultTableContents");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = ResultTableContents.begin(); iter != ResultTableContents.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("ResultTableContents");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = ResultTableContents.begin(); iter != ResultTableContents.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (!VirtualCurrencyContents.empty()) {
-    writer.String("VirtualCurrencyContents");
-    writer.StartObject();
-    for (std::map<std::string, Uint32>::iterator iter = VirtualCurrencyContents.begin(); iter != VirtualCurrencyContents.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        writer.String("VirtualCurrencyContents");
+        writer.StartObject();
+        for (std::map<std::string, Uint32>::iterator iter = VirtualCurrencyContents.begin(); iter != VirtualCurrencyContents.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
-
     writer.EndObject();
 }
 
@@ -1003,7 +953,6 @@ CatalogItem::~CatalogItem()
 void CatalogItem::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Bundle != NULL) { writer.String("Bundle"); Bundle->writeJSON(writer); }
     writer.String("CanBecomeCharacter"); writer.Bool(CanBecomeCharacter);
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
@@ -1020,30 +969,29 @@ void CatalogItem::writeJSON(PFStringJsonWriter& writer)
     writer.String("ItemId"); writer.String(ItemId.c_str());
     if (ItemImageUrl.length() > 0) { writer.String("ItemImageUrl"); writer.String(ItemImageUrl.c_str()); }
     if (!RealCurrencyPrices.empty()) {
-    writer.String("RealCurrencyPrices");
-    writer.StartObject();
-    for (std::map<std::string, Uint32>::iterator iter = RealCurrencyPrices.begin(); iter != RealCurrencyPrices.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        writer.String("RealCurrencyPrices");
+        writer.StartObject();
+        for (std::map<std::string, Uint32>::iterator iter = RealCurrencyPrices.begin(); iter != RealCurrencyPrices.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (!Tags.empty()) {
-    writer.String("Tags");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = Tags.begin(); iter != Tags.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("Tags");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = Tags.begin(); iter != Tags.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (!VirtualCurrencyPrices.empty()) {
-    writer.String("VirtualCurrencyPrices");
-    writer.StartObject();
-    for (std::map<std::string, Uint32>::iterator iter = VirtualCurrencyPrices.begin(); iter != VirtualCurrencyPrices.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        writer.String("VirtualCurrencyPrices");
+        writer.StartObject();
+        for (std::map<std::string, Uint32>::iterator iter = VirtualCurrencyPrices.begin(); iter != VirtualCurrencyPrices.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
-
     writer.EndObject();
 }
 
@@ -1110,10 +1058,8 @@ CheckLimitedEditionItemAvailabilityRequest::~CheckLimitedEditionItemAvailability
 void CheckLimitedEditionItemAvailabilityRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     writer.String("ItemId"); writer.String(ItemId.c_str());
-
     writer.EndObject();
 }
 
@@ -1135,9 +1081,7 @@ CheckLimitedEditionItemAvailabilityResult::~CheckLimitedEditionItemAvailabilityR
 void CheckLimitedEditionItemAvailabilityResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Amount"); writer.Int(Amount);
-
     writer.EndObject();
 }
 
@@ -1157,10 +1101,8 @@ CloudScriptFile::~CloudScriptFile()
 void CloudScriptFile::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("FileContents"); writer.String(FileContents.c_str());
     writer.String("Filename"); writer.String(Filename.c_str());
-
     writer.EndObject();
 }
 
@@ -1182,10 +1124,8 @@ CloudScriptTaskParameter::~CloudScriptTaskParameter()
 void CloudScriptTaskParameter::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Argument.notNull()) { writer.String("Argument"); Argument.writeJSON(writer); }
     if (FunctionName.length() > 0) { writer.String("FunctionName"); writer.String(FunctionName.c_str()); }
-
     writer.EndObject();
 }
 
@@ -1207,11 +1147,9 @@ ScriptExecutionError::~ScriptExecutionError()
 void ScriptExecutionError::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Error.length() > 0) { writer.String("Error"); writer.String(Error.c_str()); }
     if (Message.length() > 0) { writer.String("Message"); writer.String(Message.c_str()); }
     if (StackTrace.length() > 0) { writer.String("StackTrace"); writer.String(StackTrace.c_str()); }
-
     writer.EndObject();
 }
 
@@ -1235,11 +1173,9 @@ LogStatement::~LogStatement()
 void LogStatement::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Data.notNull()) { writer.String("Data"); Data.writeJSON(writer); }
     if (Level.length() > 0) { writer.String("Level"); writer.String(Level.c_str()); }
     if (Message.length() > 0) { writer.String("Message"); writer.String(Message.c_str()); }
-
     writer.EndObject();
 }
 
@@ -1264,7 +1200,6 @@ ExecuteCloudScriptResult::~ExecuteCloudScriptResult()
 void ExecuteCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("APIRequestsIssued"); writer.Int(APIRequestsIssued);
     if (Error != NULL) { writer.String("Error"); Error->writeJSON(writer); }
     writer.String("ExecutionTimeSeconds"); writer.Double(ExecutionTimeSeconds);
@@ -1273,18 +1208,17 @@ void ExecuteCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
     if (FunctionResultTooLarge.notNull()) { writer.String("FunctionResultTooLarge"); writer.Bool(FunctionResultTooLarge); }
     writer.String("HttpRequestsIssued"); writer.Int(HttpRequestsIssued);
     if (!Logs.empty()) {
-    writer.String("Logs");
-    writer.StartArray();
-    for (std::list<LogStatement>::iterator iter = Logs.begin(); iter != Logs.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Logs");
+        writer.StartArray();
+        for (std::list<LogStatement>::iterator iter = Logs.begin(); iter != Logs.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (LogsTooLarge.notNull()) { writer.String("LogsTooLarge"); writer.Bool(LogsTooLarge); }
     writer.String("MemoryConsumedBytes"); writer.Uint(MemoryConsumedBytes);
     writer.String("ProcessorTimeSeconds"); writer.Double(ProcessorTimeSeconds);
     writer.String("Revision"); writer.Int(Revision);
-
     writer.EndObject();
 }
 
@@ -1333,7 +1267,6 @@ CloudScriptTaskSummary::~CloudScriptTaskSummary()
 void CloudScriptTaskSummary::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CompletedAt.notNull()) { writer.String("CompletedAt"); writeDatetime(CompletedAt, writer); }
     if (EstimatedSecondsRemaining.notNull()) { writer.String("EstimatedSecondsRemaining"); writer.Double(EstimatedSecondsRemaining); }
     if (PercentComplete.notNull()) { writer.String("PercentComplete"); writer.Double(PercentComplete); }
@@ -1343,7 +1276,6 @@ void CloudScriptTaskSummary::writeJSON(PFStringJsonWriter& writer)
     if (Status.notNull()) { writer.String("Status"); writeTaskInstanceStatusEnumJSON(Status, writer); }
     if (TaskIdentifier != NULL) { writer.String("TaskIdentifier"); TaskIdentifier->writeJSON(writer); }
     if (TaskInstanceId.length() > 0) { writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -1379,11 +1311,9 @@ CloudScriptVersionStatus::~CloudScriptVersionStatus()
 void CloudScriptVersionStatus::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("LatestRevision"); writer.Int(LatestRevision);
     writer.String("PublishedRevision"); writer.Int(PublishedRevision);
     writer.String("Version"); writer.Int(Version);
-
     writer.EndObject();
 }
 
@@ -1436,11 +1366,9 @@ ContactEmailInfo::~ContactEmailInfo()
 void ContactEmailInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (EmailAddress.length() > 0) { writer.String("EmailAddress"); writer.String(EmailAddress.c_str()); }
     if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
     if (VerificationStatus.notNull()) { writer.String("VerificationStatus"); writeEmailVerificationStatusEnumJSON(VerificationStatus, writer); }
-
     writer.EndObject();
 }
 
@@ -1464,11 +1392,9 @@ ContactEmailInfoModel::~ContactEmailInfoModel()
 void ContactEmailInfoModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (EmailAddress.length() > 0) { writer.String("EmailAddress"); writer.String(EmailAddress.c_str()); }
     if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
     if (VerificationStatus.notNull()) { writer.String("VerificationStatus"); writeEmailVerificationStatusEnumJSON(VerificationStatus, writer); }
-
     writer.EndObject();
 }
 
@@ -1492,11 +1418,9 @@ ContentInfo::~ContentInfo()
 void ContentInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Key.length() > 0) { writer.String("Key"); writer.String(Key.c_str()); }
     writer.String("LastModified"); writeDatetime(LastModified, writer);
     writer.String("Size"); writer.Uint(Size);
-
     writer.EndObject();
 }
 
@@ -2078,13 +2002,11 @@ CreateActionsOnPlayerSegmentTaskRequest::~CreateActionsOnPlayerSegmentTaskReques
 void CreateActionsOnPlayerSegmentTaskRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
     writer.String("IsActive"); writer.Bool(IsActive);
     writer.String("Name"); writer.String(Name.c_str());
     writer.String("Parameter"); Parameter.writeJSON(writer);
     if (Schedule.length() > 0) { writer.String("Schedule"); writer.String(Schedule.c_str()); }
-
     writer.EndObject();
 }
 
@@ -2112,13 +2034,11 @@ CreateCloudScriptTaskRequest::~CreateCloudScriptTaskRequest()
 void CreateCloudScriptTaskRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
     writer.String("IsActive"); writer.Bool(IsActive);
     writer.String("Name"); writer.String(Name.c_str());
     writer.String("Parameter"); Parameter.writeJSON(writer);
     if (Schedule.length() > 0) { writer.String("Schedule"); writer.String(Schedule.c_str()); }
-
     writer.EndObject();
 }
 
@@ -2146,9 +2066,7 @@ CreatePlayerSharedSecretRequest::~CreatePlayerSharedSecretRequest()
 void CreatePlayerSharedSecretRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (FriendlyName.length() > 0) { writer.String("FriendlyName"); writer.String(FriendlyName.c_str()); }
-
     writer.EndObject();
 }
 
@@ -2168,9 +2086,7 @@ CreatePlayerSharedSecretResult::~CreatePlayerSharedSecretResult()
 void CreatePlayerSharedSecretResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (SecretKey.length() > 0) { writer.String("SecretKey"); writer.String(SecretKey.c_str()); }
-
     writer.EndObject();
 }
 
@@ -2254,11 +2170,9 @@ CreatePlayerStatisticDefinitionRequest::~CreatePlayerStatisticDefinitionRequest(
 void CreatePlayerStatisticDefinitionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (AggregationMethod.notNull()) { writer.String("AggregationMethod"); writeStatisticAggregationMethodEnumJSON(AggregationMethod, writer); }
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
-
     writer.EndObject();
 }
 
@@ -2282,12 +2196,10 @@ PlayerStatisticDefinition::~PlayerStatisticDefinition()
 void PlayerStatisticDefinition::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (AggregationMethod.notNull()) { writer.String("AggregationMethod"); writeStatisticAggregationMethodEnumJSON(AggregationMethod, writer); }
     writer.String("CurrentVersion"); writer.Uint(CurrentVersion);
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
     if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
-
     writer.EndObject();
 }
 
@@ -2314,9 +2226,7 @@ CreatePlayerStatisticDefinitionResult::~CreatePlayerStatisticDefinitionResult()
 void CreatePlayerStatisticDefinitionResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Statistic != NULL) { writer.String("Statistic"); Statistic->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -2336,9 +2246,7 @@ CreateTaskResult::~CreateTaskResult()
 void CreateTaskResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (TaskId.length() > 0) { writer.String("TaskId"); writer.String(TaskId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -2705,9 +2613,7 @@ DeleteContentRequest::~DeleteContentRequest()
 void DeleteContentRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Key"); writer.String(Key.c_str());
-
     writer.EndObject();
 }
 
@@ -2727,9 +2633,7 @@ DeletePlayerRequest::~DeletePlayerRequest()
 void DeletePlayerRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -2749,8 +2653,6 @@ DeletePlayerResult::~DeletePlayerResult()
 void DeletePlayerResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -2768,9 +2670,7 @@ DeletePlayerSharedSecretRequest::~DeletePlayerSharedSecretRequest()
 void DeletePlayerSharedSecretRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (SecretKey.length() > 0) { writer.String("SecretKey"); writer.String(SecretKey.c_str()); }
-
     writer.EndObject();
 }
 
@@ -2790,8 +2690,6 @@ DeletePlayerSharedSecretResult::~DeletePlayerSharedSecretResult()
 void DeletePlayerSharedSecretResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -2809,10 +2707,8 @@ DeleteStoreRequest::~DeleteStoreRequest()
 void DeleteStoreRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     writer.String("StoreId"); writer.String(StoreId.c_str());
-
     writer.EndObject();
 }
 
@@ -2834,8 +2730,6 @@ DeleteStoreResult::~DeleteStoreResult()
 void DeleteStoreResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -2854,9 +2748,7 @@ DeleteTaskRequest::~DeleteTaskRequest()
 void DeleteTaskRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Identifier != NULL) { writer.String("Identifier"); Identifier->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -2876,8 +2768,6 @@ DeleteTitleRequest::~DeleteTitleRequest()
 void DeleteTitleRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -2895,8 +2785,6 @@ DeleteTitleResult::~DeleteTitleResult()
 void DeleteTitleResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -2914,16 +2802,13 @@ DeleteUsersRequest::~DeleteUsersRequest()
 void DeleteUsersRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayFabIds");
     writer.StartArray();
     for (std::list<std::string>::iterator iter = PlayFabIds.begin(); iter != PlayFabIds.end(); iter++) {
         writer.String(iter->c_str());
     }
     writer.EndArray();
-    
     writer.String("TitleId"); writer.String(TitleId.c_str());
-
     writer.EndObject();
 }
 
@@ -2950,8 +2835,6 @@ DeleteUsersResult::~DeleteUsersResult()
 void DeleteUsersResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -2996,8 +2879,6 @@ EmptyResult::~EmptyResult()
 void EmptyResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -3015,12 +2896,10 @@ GameModeInfo::~GameModeInfo()
 void GameModeInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Gamemode"); writer.String(Gamemode.c_str());
     writer.String("MaxPlayerCount"); writer.Uint(MaxPlayerCount);
     writer.String("MinPlayerCount"); writer.Uint(MinPlayerCount);
     if (StartOpen.notNull()) { writer.String("StartOpen"); writer.Bool(StartOpen); }
-
     writer.EndObject();
 }
 
@@ -3037,6 +2916,749 @@ bool GameModeInfo::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case GenericErrorCodesSuccess: writer.String("Success"); break;
+    case GenericErrorCodesInvalidParams: writer.String("InvalidParams"); break;
+    case GenericErrorCodesAccountNotFound: writer.String("AccountNotFound"); break;
+    case GenericErrorCodesAccountBanned: writer.String("AccountBanned"); break;
+    case GenericErrorCodesInvalidUsernameOrPassword: writer.String("InvalidUsernameOrPassword"); break;
+    case GenericErrorCodesInvalidTitleId: writer.String("InvalidTitleId"); break;
+    case GenericErrorCodesInvalidEmailAddress: writer.String("InvalidEmailAddress"); break;
+    case GenericErrorCodesEmailAddressNotAvailable: writer.String("EmailAddressNotAvailable"); break;
+    case GenericErrorCodesInvalidUsername: writer.String("InvalidUsername"); break;
+    case GenericErrorCodesInvalidPassword: writer.String("InvalidPassword"); break;
+    case GenericErrorCodesUsernameNotAvailable: writer.String("UsernameNotAvailable"); break;
+    case GenericErrorCodesInvalidSteamTicket: writer.String("InvalidSteamTicket"); break;
+    case GenericErrorCodesAccountAlreadyLinked: writer.String("AccountAlreadyLinked"); break;
+    case GenericErrorCodesLinkedAccountAlreadyClaimed: writer.String("LinkedAccountAlreadyClaimed"); break;
+    case GenericErrorCodesInvalidFacebookToken: writer.String("InvalidFacebookToken"); break;
+    case GenericErrorCodesAccountNotLinked: writer.String("AccountNotLinked"); break;
+    case GenericErrorCodesFailedByPaymentProvider: writer.String("FailedByPaymentProvider"); break;
+    case GenericErrorCodesCouponCodeNotFound: writer.String("CouponCodeNotFound"); break;
+    case GenericErrorCodesInvalidContainerItem: writer.String("InvalidContainerItem"); break;
+    case GenericErrorCodesContainerNotOwned: writer.String("ContainerNotOwned"); break;
+    case GenericErrorCodesKeyNotOwned: writer.String("KeyNotOwned"); break;
+    case GenericErrorCodesInvalidItemIdInTable: writer.String("InvalidItemIdInTable"); break;
+    case GenericErrorCodesInvalidReceipt: writer.String("InvalidReceipt"); break;
+    case GenericErrorCodesReceiptAlreadyUsed: writer.String("ReceiptAlreadyUsed"); break;
+    case GenericErrorCodesReceiptCancelled: writer.String("ReceiptCancelled"); break;
+    case GenericErrorCodesGameNotFound: writer.String("GameNotFound"); break;
+    case GenericErrorCodesGameModeNotFound: writer.String("GameModeNotFound"); break;
+    case GenericErrorCodesInvalidGoogleToken: writer.String("InvalidGoogleToken"); break;
+    case GenericErrorCodesUserIsNotPartOfDeveloper: writer.String("UserIsNotPartOfDeveloper"); break;
+    case GenericErrorCodesInvalidTitleForDeveloper: writer.String("InvalidTitleForDeveloper"); break;
+    case GenericErrorCodesTitleNameConflicts: writer.String("TitleNameConflicts"); break;
+    case GenericErrorCodesUserisNotValid: writer.String("UserisNotValid"); break;
+    case GenericErrorCodesValueAlreadyExists: writer.String("ValueAlreadyExists"); break;
+    case GenericErrorCodesBuildNotFound: writer.String("BuildNotFound"); break;
+    case GenericErrorCodesPlayerNotInGame: writer.String("PlayerNotInGame"); break;
+    case GenericErrorCodesInvalidTicket: writer.String("InvalidTicket"); break;
+    case GenericErrorCodesInvalidDeveloper: writer.String("InvalidDeveloper"); break;
+    case GenericErrorCodesInvalidOrderInfo: writer.String("InvalidOrderInfo"); break;
+    case GenericErrorCodesRegistrationIncomplete: writer.String("RegistrationIncomplete"); break;
+    case GenericErrorCodesInvalidPlatform: writer.String("InvalidPlatform"); break;
+    case GenericErrorCodesUnknownError: writer.String("UnknownError"); break;
+    case GenericErrorCodesSteamApplicationNotOwned: writer.String("SteamApplicationNotOwned"); break;
+    case GenericErrorCodesWrongSteamAccount: writer.String("WrongSteamAccount"); break;
+    case GenericErrorCodesTitleNotActivated: writer.String("TitleNotActivated"); break;
+    case GenericErrorCodesRegistrationSessionNotFound: writer.String("RegistrationSessionNotFound"); break;
+    case GenericErrorCodesNoSuchMod: writer.String("NoSuchMod"); break;
+    case GenericErrorCodesFileNotFound: writer.String("FileNotFound"); break;
+    case GenericErrorCodesDuplicateEmail: writer.String("DuplicateEmail"); break;
+    case GenericErrorCodesItemNotFound: writer.String("ItemNotFound"); break;
+    case GenericErrorCodesItemNotOwned: writer.String("ItemNotOwned"); break;
+    case GenericErrorCodesItemNotRecycleable: writer.String("ItemNotRecycleable"); break;
+    case GenericErrorCodesItemNotAffordable: writer.String("ItemNotAffordable"); break;
+    case GenericErrorCodesInvalidVirtualCurrency: writer.String("InvalidVirtualCurrency"); break;
+    case GenericErrorCodesWrongVirtualCurrency: writer.String("WrongVirtualCurrency"); break;
+    case GenericErrorCodesWrongPrice: writer.String("WrongPrice"); break;
+    case GenericErrorCodesNonPositiveValue: writer.String("NonPositiveValue"); break;
+    case GenericErrorCodesInvalidRegion: writer.String("InvalidRegion"); break;
+    case GenericErrorCodesRegionAtCapacity: writer.String("RegionAtCapacity"); break;
+    case GenericErrorCodesServerFailedToStart: writer.String("ServerFailedToStart"); break;
+    case GenericErrorCodesNameNotAvailable: writer.String("NameNotAvailable"); break;
+    case GenericErrorCodesInsufficientFunds: writer.String("InsufficientFunds"); break;
+    case GenericErrorCodesInvalidDeviceID: writer.String("InvalidDeviceID"); break;
+    case GenericErrorCodesInvalidPushNotificationToken: writer.String("InvalidPushNotificationToken"); break;
+    case GenericErrorCodesNoRemainingUses: writer.String("NoRemainingUses"); break;
+    case GenericErrorCodesInvalidPaymentProvider: writer.String("InvalidPaymentProvider"); break;
+    case GenericErrorCodesPurchaseInitializationFailure: writer.String("PurchaseInitializationFailure"); break;
+    case GenericErrorCodesDuplicateUsername: writer.String("DuplicateUsername"); break;
+    case GenericErrorCodesInvalidBuyerInfo: writer.String("InvalidBuyerInfo"); break;
+    case GenericErrorCodesNoGameModeParamsSet: writer.String("NoGameModeParamsSet"); break;
+    case GenericErrorCodesBodyTooLarge: writer.String("BodyTooLarge"); break;
+    case GenericErrorCodesReservedWordInBody: writer.String("ReservedWordInBody"); break;
+    case GenericErrorCodesInvalidTypeInBody: writer.String("InvalidTypeInBody"); break;
+    case GenericErrorCodesInvalidRequest: writer.String("InvalidRequest"); break;
+    case GenericErrorCodesReservedEventName: writer.String("ReservedEventName"); break;
+    case GenericErrorCodesInvalidUserStatistics: writer.String("InvalidUserStatistics"); break;
+    case GenericErrorCodesNotAuthenticated: writer.String("NotAuthenticated"); break;
+    case GenericErrorCodesStreamAlreadyExists: writer.String("StreamAlreadyExists"); break;
+    case GenericErrorCodesErrorCreatingStream: writer.String("ErrorCreatingStream"); break;
+    case GenericErrorCodesStreamNotFound: writer.String("StreamNotFound"); break;
+    case GenericErrorCodesInvalidAccount: writer.String("InvalidAccount"); break;
+    case GenericErrorCodesPurchaseDoesNotExist: writer.String("PurchaseDoesNotExist"); break;
+    case GenericErrorCodesInvalidPurchaseTransactionStatus: writer.String("InvalidPurchaseTransactionStatus"); break;
+    case GenericErrorCodesAPINotEnabledForGameClientAccess: writer.String("APINotEnabledForGameClientAccess"); break;
+    case GenericErrorCodesNoPushNotificationARNForTitle: writer.String("NoPushNotificationARNForTitle"); break;
+    case GenericErrorCodesBuildAlreadyExists: writer.String("BuildAlreadyExists"); break;
+    case GenericErrorCodesBuildPackageDoesNotExist: writer.String("BuildPackageDoesNotExist"); break;
+    case GenericErrorCodesCustomAnalyticsEventsNotEnabledForTitle: writer.String("CustomAnalyticsEventsNotEnabledForTitle"); break;
+    case GenericErrorCodesInvalidSharedGroupId: writer.String("InvalidSharedGroupId"); break;
+    case GenericErrorCodesNotAuthorized: writer.String("NotAuthorized"); break;
+    case GenericErrorCodesMissingTitleGoogleProperties: writer.String("MissingTitleGoogleProperties"); break;
+    case GenericErrorCodesInvalidItemProperties: writer.String("InvalidItemProperties"); break;
+    case GenericErrorCodesInvalidPSNAuthCode: writer.String("InvalidPSNAuthCode"); break;
+    case GenericErrorCodesInvalidItemId: writer.String("InvalidItemId"); break;
+    case GenericErrorCodesPushNotEnabledForAccount: writer.String("PushNotEnabledForAccount"); break;
+    case GenericErrorCodesPushServiceError: writer.String("PushServiceError"); break;
+    case GenericErrorCodesReceiptDoesNotContainInAppItems: writer.String("ReceiptDoesNotContainInAppItems"); break;
+    case GenericErrorCodesReceiptContainsMultipleInAppItems: writer.String("ReceiptContainsMultipleInAppItems"); break;
+    case GenericErrorCodesInvalidBundleID: writer.String("InvalidBundleID"); break;
+    case GenericErrorCodesJavascriptException: writer.String("JavascriptException"); break;
+    case GenericErrorCodesInvalidSessionTicket: writer.String("InvalidSessionTicket"); break;
+    case GenericErrorCodesUnableToConnectToDatabase: writer.String("UnableToConnectToDatabase"); break;
+    case GenericErrorCodesInternalServerError: writer.String("InternalServerError"); break;
+    case GenericErrorCodesInvalidReportDate: writer.String("InvalidReportDate"); break;
+    case GenericErrorCodesReportNotAvailable: writer.String("ReportNotAvailable"); break;
+    case GenericErrorCodesDatabaseThroughputExceeded: writer.String("DatabaseThroughputExceeded"); break;
+    case GenericErrorCodesInvalidGameTicket: writer.String("InvalidGameTicket"); break;
+    case GenericErrorCodesExpiredGameTicket: writer.String("ExpiredGameTicket"); break;
+    case GenericErrorCodesGameTicketDoesNotMatchLobby: writer.String("GameTicketDoesNotMatchLobby"); break;
+    case GenericErrorCodesLinkedDeviceAlreadyClaimed: writer.String("LinkedDeviceAlreadyClaimed"); break;
+    case GenericErrorCodesDeviceAlreadyLinked: writer.String("DeviceAlreadyLinked"); break;
+    case GenericErrorCodesDeviceNotLinked: writer.String("DeviceNotLinked"); break;
+    case GenericErrorCodesPartialFailure: writer.String("PartialFailure"); break;
+    case GenericErrorCodesPublisherNotSet: writer.String("PublisherNotSet"); break;
+    case GenericErrorCodesServiceUnavailable: writer.String("ServiceUnavailable"); break;
+    case GenericErrorCodesVersionNotFound: writer.String("VersionNotFound"); break;
+    case GenericErrorCodesRevisionNotFound: writer.String("RevisionNotFound"); break;
+    case GenericErrorCodesInvalidPublisherId: writer.String("InvalidPublisherId"); break;
+    case GenericErrorCodesDownstreamServiceUnavailable: writer.String("DownstreamServiceUnavailable"); break;
+    case GenericErrorCodesAPINotIncludedInTitleUsageTier: writer.String("APINotIncludedInTitleUsageTier"); break;
+    case GenericErrorCodesDAULimitExceeded: writer.String("DAULimitExceeded"); break;
+    case GenericErrorCodesAPIRequestLimitExceeded: writer.String("APIRequestLimitExceeded"); break;
+    case GenericErrorCodesInvalidAPIEndpoint: writer.String("InvalidAPIEndpoint"); break;
+    case GenericErrorCodesBuildNotAvailable: writer.String("BuildNotAvailable"); break;
+    case GenericErrorCodesConcurrentEditError: writer.String("ConcurrentEditError"); break;
+    case GenericErrorCodesContentNotFound: writer.String("ContentNotFound"); break;
+    case GenericErrorCodesCharacterNotFound: writer.String("CharacterNotFound"); break;
+    case GenericErrorCodesCloudScriptNotFound: writer.String("CloudScriptNotFound"); break;
+    case GenericErrorCodesContentQuotaExceeded: writer.String("ContentQuotaExceeded"); break;
+    case GenericErrorCodesInvalidCharacterStatistics: writer.String("InvalidCharacterStatistics"); break;
+    case GenericErrorCodesPhotonNotEnabledForTitle: writer.String("PhotonNotEnabledForTitle"); break;
+    case GenericErrorCodesPhotonApplicationNotFound: writer.String("PhotonApplicationNotFound"); break;
+    case GenericErrorCodesPhotonApplicationNotAssociatedWithTitle: writer.String("PhotonApplicationNotAssociatedWithTitle"); break;
+    case GenericErrorCodesInvalidEmailOrPassword: writer.String("InvalidEmailOrPassword"); break;
+    case GenericErrorCodesFacebookAPIError: writer.String("FacebookAPIError"); break;
+    case GenericErrorCodesInvalidContentType: writer.String("InvalidContentType"); break;
+    case GenericErrorCodesKeyLengthExceeded: writer.String("KeyLengthExceeded"); break;
+    case GenericErrorCodesDataLengthExceeded: writer.String("DataLengthExceeded"); break;
+    case GenericErrorCodesTooManyKeys: writer.String("TooManyKeys"); break;
+    case GenericErrorCodesFreeTierCannotHaveVirtualCurrency: writer.String("FreeTierCannotHaveVirtualCurrency"); break;
+    case GenericErrorCodesMissingAmazonSharedKey: writer.String("MissingAmazonSharedKey"); break;
+    case GenericErrorCodesAmazonValidationError: writer.String("AmazonValidationError"); break;
+    case GenericErrorCodesInvalidPSNIssuerId: writer.String("InvalidPSNIssuerId"); break;
+    case GenericErrorCodesPSNInaccessible: writer.String("PSNInaccessible"); break;
+    case GenericErrorCodesExpiredAuthToken: writer.String("ExpiredAuthToken"); break;
+    case GenericErrorCodesFailedToGetEntitlements: writer.String("FailedToGetEntitlements"); break;
+    case GenericErrorCodesFailedToConsumeEntitlement: writer.String("FailedToConsumeEntitlement"); break;
+    case GenericErrorCodesTradeAcceptingUserNotAllowed: writer.String("TradeAcceptingUserNotAllowed"); break;
+    case GenericErrorCodesTradeInventoryItemIsAssignedToCharacter: writer.String("TradeInventoryItemIsAssignedToCharacter"); break;
+    case GenericErrorCodesTradeInventoryItemIsBundle: writer.String("TradeInventoryItemIsBundle"); break;
+    case GenericErrorCodesTradeStatusNotValidForCancelling: writer.String("TradeStatusNotValidForCancelling"); break;
+    case GenericErrorCodesTradeStatusNotValidForAccepting: writer.String("TradeStatusNotValidForAccepting"); break;
+    case GenericErrorCodesTradeDoesNotExist: writer.String("TradeDoesNotExist"); break;
+    case GenericErrorCodesTradeCancelled: writer.String("TradeCancelled"); break;
+    case GenericErrorCodesTradeAlreadyFilled: writer.String("TradeAlreadyFilled"); break;
+    case GenericErrorCodesTradeWaitForStatusTimeout: writer.String("TradeWaitForStatusTimeout"); break;
+    case GenericErrorCodesTradeInventoryItemExpired: writer.String("TradeInventoryItemExpired"); break;
+    case GenericErrorCodesTradeMissingOfferedAndAcceptedItems: writer.String("TradeMissingOfferedAndAcceptedItems"); break;
+    case GenericErrorCodesTradeAcceptedItemIsBundle: writer.String("TradeAcceptedItemIsBundle"); break;
+    case GenericErrorCodesTradeAcceptedItemIsStackable: writer.String("TradeAcceptedItemIsStackable"); break;
+    case GenericErrorCodesTradeInventoryItemInvalidStatus: writer.String("TradeInventoryItemInvalidStatus"); break;
+    case GenericErrorCodesTradeAcceptedCatalogItemInvalid: writer.String("TradeAcceptedCatalogItemInvalid"); break;
+    case GenericErrorCodesTradeAllowedUsersInvalid: writer.String("TradeAllowedUsersInvalid"); break;
+    case GenericErrorCodesTradeInventoryItemDoesNotExist: writer.String("TradeInventoryItemDoesNotExist"); break;
+    case GenericErrorCodesTradeInventoryItemIsConsumed: writer.String("TradeInventoryItemIsConsumed"); break;
+    case GenericErrorCodesTradeInventoryItemIsStackable: writer.String("TradeInventoryItemIsStackable"); break;
+    case GenericErrorCodesTradeAcceptedItemsMismatch: writer.String("TradeAcceptedItemsMismatch"); break;
+    case GenericErrorCodesInvalidKongregateToken: writer.String("InvalidKongregateToken"); break;
+    case GenericErrorCodesFeatureNotConfiguredForTitle: writer.String("FeatureNotConfiguredForTitle"); break;
+    case GenericErrorCodesNoMatchingCatalogItemForReceipt: writer.String("NoMatchingCatalogItemForReceipt"); break;
+    case GenericErrorCodesInvalidCurrencyCode: writer.String("InvalidCurrencyCode"); break;
+    case GenericErrorCodesNoRealMoneyPriceForCatalogItem: writer.String("NoRealMoneyPriceForCatalogItem"); break;
+    case GenericErrorCodesTradeInventoryItemIsNotTradable: writer.String("TradeInventoryItemIsNotTradable"); break;
+    case GenericErrorCodesTradeAcceptedCatalogItemIsNotTradable: writer.String("TradeAcceptedCatalogItemIsNotTradable"); break;
+    case GenericErrorCodesUsersAlreadyFriends: writer.String("UsersAlreadyFriends"); break;
+    case GenericErrorCodesLinkedIdentifierAlreadyClaimed: writer.String("LinkedIdentifierAlreadyClaimed"); break;
+    case GenericErrorCodesCustomIdNotLinked: writer.String("CustomIdNotLinked"); break;
+    case GenericErrorCodesTotalDataSizeExceeded: writer.String("TotalDataSizeExceeded"); break;
+    case GenericErrorCodesDeleteKeyConflict: writer.String("DeleteKeyConflict"); break;
+    case GenericErrorCodesInvalidXboxLiveToken: writer.String("InvalidXboxLiveToken"); break;
+    case GenericErrorCodesExpiredXboxLiveToken: writer.String("ExpiredXboxLiveToken"); break;
+    case GenericErrorCodesResettableStatisticVersionRequired: writer.String("ResettableStatisticVersionRequired"); break;
+    case GenericErrorCodesNotAuthorizedByTitle: writer.String("NotAuthorizedByTitle"); break;
+    case GenericErrorCodesNoPartnerEnabled: writer.String("NoPartnerEnabled"); break;
+    case GenericErrorCodesInvalidPartnerResponse: writer.String("InvalidPartnerResponse"); break;
+    case GenericErrorCodesAPINotEnabledForGameServerAccess: writer.String("APINotEnabledForGameServerAccess"); break;
+    case GenericErrorCodesStatisticNotFound: writer.String("StatisticNotFound"); break;
+    case GenericErrorCodesStatisticNameConflict: writer.String("StatisticNameConflict"); break;
+    case GenericErrorCodesStatisticVersionClosedForWrites: writer.String("StatisticVersionClosedForWrites"); break;
+    case GenericErrorCodesStatisticVersionInvalid: writer.String("StatisticVersionInvalid"); break;
+    case GenericErrorCodesAPIClientRequestRateLimitExceeded: writer.String("APIClientRequestRateLimitExceeded"); break;
+    case GenericErrorCodesInvalidJSONContent: writer.String("InvalidJSONContent"); break;
+    case GenericErrorCodesInvalidDropTable: writer.String("InvalidDropTable"); break;
+    case GenericErrorCodesStatisticVersionAlreadyIncrementedForScheduledInterval: writer.String("StatisticVersionAlreadyIncrementedForScheduledInterval"); break;
+    case GenericErrorCodesStatisticCountLimitExceeded: writer.String("StatisticCountLimitExceeded"); break;
+    case GenericErrorCodesStatisticVersionIncrementRateExceeded: writer.String("StatisticVersionIncrementRateExceeded"); break;
+    case GenericErrorCodesContainerKeyInvalid: writer.String("ContainerKeyInvalid"); break;
+    case GenericErrorCodesCloudScriptExecutionTimeLimitExceeded: writer.String("CloudScriptExecutionTimeLimitExceeded"); break;
+    case GenericErrorCodesNoWritePermissionsForEvent: writer.String("NoWritePermissionsForEvent"); break;
+    case GenericErrorCodesCloudScriptFunctionArgumentSizeExceeded: writer.String("CloudScriptFunctionArgumentSizeExceeded"); break;
+    case GenericErrorCodesCloudScriptAPIRequestCountExceeded: writer.String("CloudScriptAPIRequestCountExceeded"); break;
+    case GenericErrorCodesCloudScriptAPIRequestError: writer.String("CloudScriptAPIRequestError"); break;
+    case GenericErrorCodesCloudScriptHTTPRequestError: writer.String("CloudScriptHTTPRequestError"); break;
+    case GenericErrorCodesInsufficientGuildRole: writer.String("InsufficientGuildRole"); break;
+    case GenericErrorCodesGuildNotFound: writer.String("GuildNotFound"); break;
+    case GenericErrorCodesOverLimit: writer.String("OverLimit"); break;
+    case GenericErrorCodesEventNotFound: writer.String("EventNotFound"); break;
+    case GenericErrorCodesInvalidEventField: writer.String("InvalidEventField"); break;
+    case GenericErrorCodesInvalidEventName: writer.String("InvalidEventName"); break;
+    case GenericErrorCodesCatalogNotConfigured: writer.String("CatalogNotConfigured"); break;
+    case GenericErrorCodesOperationNotSupportedForPlatform: writer.String("OperationNotSupportedForPlatform"); break;
+    case GenericErrorCodesSegmentNotFound: writer.String("SegmentNotFound"); break;
+    case GenericErrorCodesStoreNotFound: writer.String("StoreNotFound"); break;
+    case GenericErrorCodesInvalidStatisticName: writer.String("InvalidStatisticName"); break;
+    case GenericErrorCodesTitleNotQualifiedForLimit: writer.String("TitleNotQualifiedForLimit"); break;
+    case GenericErrorCodesInvalidServiceLimitLevel: writer.String("InvalidServiceLimitLevel"); break;
+    case GenericErrorCodesServiceLimitLevelInTransition: writer.String("ServiceLimitLevelInTransition"); break;
+    case GenericErrorCodesCouponAlreadyRedeemed: writer.String("CouponAlreadyRedeemed"); break;
+    case GenericErrorCodesGameServerBuildSizeLimitExceeded: writer.String("GameServerBuildSizeLimitExceeded"); break;
+    case GenericErrorCodesGameServerBuildCountLimitExceeded: writer.String("GameServerBuildCountLimitExceeded"); break;
+    case GenericErrorCodesVirtualCurrencyCountLimitExceeded: writer.String("VirtualCurrencyCountLimitExceeded"); break;
+    case GenericErrorCodesVirtualCurrencyCodeExists: writer.String("VirtualCurrencyCodeExists"); break;
+    case GenericErrorCodesTitleNewsItemCountLimitExceeded: writer.String("TitleNewsItemCountLimitExceeded"); break;
+    case GenericErrorCodesInvalidTwitchToken: writer.String("InvalidTwitchToken"); break;
+    case GenericErrorCodesTwitchResponseError: writer.String("TwitchResponseError"); break;
+    case GenericErrorCodesProfaneDisplayName: writer.String("ProfaneDisplayName"); break;
+    case GenericErrorCodesUserAlreadyAdded: writer.String("UserAlreadyAdded"); break;
+    case GenericErrorCodesInvalidVirtualCurrencyCode: writer.String("InvalidVirtualCurrencyCode"); break;
+    case GenericErrorCodesVirtualCurrencyCannotBeDeleted: writer.String("VirtualCurrencyCannotBeDeleted"); break;
+    case GenericErrorCodesIdentifierAlreadyClaimed: writer.String("IdentifierAlreadyClaimed"); break;
+    case GenericErrorCodesIdentifierNotLinked: writer.String("IdentifierNotLinked"); break;
+    case GenericErrorCodesInvalidContinuationToken: writer.String("InvalidContinuationToken"); break;
+    case GenericErrorCodesExpiredContinuationToken: writer.String("ExpiredContinuationToken"); break;
+    case GenericErrorCodesInvalidSegment: writer.String("InvalidSegment"); break;
+    case GenericErrorCodesInvalidSessionId: writer.String("InvalidSessionId"); break;
+    case GenericErrorCodesSessionLogNotFound: writer.String("SessionLogNotFound"); break;
+    case GenericErrorCodesInvalidSearchTerm: writer.String("InvalidSearchTerm"); break;
+    case GenericErrorCodesTwoFactorAuthenticationTokenRequired: writer.String("TwoFactorAuthenticationTokenRequired"); break;
+    case GenericErrorCodesGameServerHostCountLimitExceeded: writer.String("GameServerHostCountLimitExceeded"); break;
+    case GenericErrorCodesPlayerTagCountLimitExceeded: writer.String("PlayerTagCountLimitExceeded"); break;
+    case GenericErrorCodesRequestAlreadyRunning: writer.String("RequestAlreadyRunning"); break;
+    case GenericErrorCodesActionGroupNotFound: writer.String("ActionGroupNotFound"); break;
+    case GenericErrorCodesMaximumSegmentBulkActionJobsRunning: writer.String("MaximumSegmentBulkActionJobsRunning"); break;
+    case GenericErrorCodesNoActionsOnPlayersInSegmentJob: writer.String("NoActionsOnPlayersInSegmentJob"); break;
+    case GenericErrorCodesDuplicateStatisticName: writer.String("DuplicateStatisticName"); break;
+    case GenericErrorCodesScheduledTaskNameConflict: writer.String("ScheduledTaskNameConflict"); break;
+    case GenericErrorCodesScheduledTaskCreateConflict: writer.String("ScheduledTaskCreateConflict"); break;
+    case GenericErrorCodesInvalidScheduledTaskName: writer.String("InvalidScheduledTaskName"); break;
+    case GenericErrorCodesInvalidTaskSchedule: writer.String("InvalidTaskSchedule"); break;
+    case GenericErrorCodesSteamNotEnabledForTitle: writer.String("SteamNotEnabledForTitle"); break;
+    case GenericErrorCodesLimitNotAnUpgradeOption: writer.String("LimitNotAnUpgradeOption"); break;
+    case GenericErrorCodesNoSecretKeyEnabledForCloudScript: writer.String("NoSecretKeyEnabledForCloudScript"); break;
+    case GenericErrorCodesTaskNotFound: writer.String("TaskNotFound"); break;
+    case GenericErrorCodesTaskInstanceNotFound: writer.String("TaskInstanceNotFound"); break;
+    case GenericErrorCodesInvalidIdentityProviderId: writer.String("InvalidIdentityProviderId"); break;
+    case GenericErrorCodesMisconfiguredIdentityProvider: writer.String("MisconfiguredIdentityProvider"); break;
+    case GenericErrorCodesInvalidScheduledTaskType: writer.String("InvalidScheduledTaskType"); break;
+    case GenericErrorCodesBillingInformationRequired: writer.String("BillingInformationRequired"); break;
+    case GenericErrorCodesLimitedEditionItemUnavailable: writer.String("LimitedEditionItemUnavailable"); break;
+    case GenericErrorCodesInvalidAdPlacementAndReward: writer.String("InvalidAdPlacementAndReward"); break;
+    case GenericErrorCodesAllAdPlacementViewsAlreadyConsumed: writer.String("AllAdPlacementViewsAlreadyConsumed"); break;
+    case GenericErrorCodesGoogleOAuthNotConfiguredForTitle: writer.String("GoogleOAuthNotConfiguredForTitle"); break;
+    case GenericErrorCodesGoogleOAuthError: writer.String("GoogleOAuthError"); break;
+    case GenericErrorCodesUserNotFriend: writer.String("UserNotFriend"); break;
+    case GenericErrorCodesInvalidSignature: writer.String("InvalidSignature"); break;
+    case GenericErrorCodesInvalidPublicKey: writer.String("InvalidPublicKey"); break;
+    case GenericErrorCodesGoogleOAuthNoIdTokenIncludedInResponse: writer.String("GoogleOAuthNoIdTokenIncludedInResponse"); break;
+    case GenericErrorCodesStatisticUpdateInProgress: writer.String("StatisticUpdateInProgress"); break;
+    case GenericErrorCodesLeaderboardVersionNotAvailable: writer.String("LeaderboardVersionNotAvailable"); break;
+    case GenericErrorCodesStatisticAlreadyHasPrizeTable: writer.String("StatisticAlreadyHasPrizeTable"); break;
+    case GenericErrorCodesPrizeTableHasOverlappingRanks: writer.String("PrizeTableHasOverlappingRanks"); break;
+    case GenericErrorCodesPrizeTableHasMissingRanks: writer.String("PrizeTableHasMissingRanks"); break;
+    case GenericErrorCodesPrizeTableRankStartsAtZero: writer.String("PrizeTableRankStartsAtZero"); break;
+    case GenericErrorCodesInvalidStatistic: writer.String("InvalidStatistic"); break;
+    case GenericErrorCodesExpressionParseFailure: writer.String("ExpressionParseFailure"); break;
+    case GenericErrorCodesExpressionInvokeFailure: writer.String("ExpressionInvokeFailure"); break;
+    case GenericErrorCodesExpressionTooLong: writer.String("ExpressionTooLong"); break;
+    case GenericErrorCodesDataUpdateRateExceeded: writer.String("DataUpdateRateExceeded"); break;
+    case GenericErrorCodesRestrictedEmailDomain: writer.String("RestrictedEmailDomain"); break;
+    case GenericErrorCodesEncryptionKeyDisabled: writer.String("EncryptionKeyDisabled"); break;
+    case GenericErrorCodesEncryptionKeyMissing: writer.String("EncryptionKeyMissing"); break;
+    case GenericErrorCodesEncryptionKeyBroken: writer.String("EncryptionKeyBroken"); break;
+    case GenericErrorCodesNoSharedSecretKeyConfigured: writer.String("NoSharedSecretKeyConfigured"); break;
+    case GenericErrorCodesSecretKeyNotFound: writer.String("SecretKeyNotFound"); break;
+    case GenericErrorCodesPlayerSecretAlreadyConfigured: writer.String("PlayerSecretAlreadyConfigured"); break;
+    case GenericErrorCodesAPIRequestsDisabledForTitle: writer.String("APIRequestsDisabledForTitle"); break;
+    case GenericErrorCodesInvalidSharedSecretKey: writer.String("InvalidSharedSecretKey"); break;
+    case GenericErrorCodesPrizeTableHasNoRanks: writer.String("PrizeTableHasNoRanks"); break;
+    case GenericErrorCodesProfileDoesNotExist: writer.String("ProfileDoesNotExist"); break;
+    case GenericErrorCodesContentS3OriginBucketNotConfigured: writer.String("ContentS3OriginBucketNotConfigured"); break;
+    case GenericErrorCodesInvalidEnvironmentForReceipt: writer.String("InvalidEnvironmentForReceipt"); break;
+    case GenericErrorCodesEncryptedRequestNotAllowed: writer.String("EncryptedRequestNotAllowed"); break;
+    case GenericErrorCodesSignedRequestNotAllowed: writer.String("SignedRequestNotAllowed"); break;
+    case GenericErrorCodesRequestViewConstraintParamsNotAllowed: writer.String("RequestViewConstraintParamsNotAllowed"); break;
+    case GenericErrorCodesBadPartnerConfiguration: writer.String("BadPartnerConfiguration"); break;
+    case GenericErrorCodesXboxBPCertificateFailure: writer.String("XboxBPCertificateFailure"); break;
+    case GenericErrorCodesXboxXASSExchangeFailure: writer.String("XboxXASSExchangeFailure"); break;
+    case GenericErrorCodesInvalidEntityId: writer.String("InvalidEntityId"); break;
+    case GenericErrorCodesStatisticValueAggregationOverflow: writer.String("StatisticValueAggregationOverflow"); break;
+    case GenericErrorCodesEmailMessageFromAddressIsMissing: writer.String("EmailMessageFromAddressIsMissing"); break;
+    case GenericErrorCodesEmailMessageToAddressIsMissing: writer.String("EmailMessageToAddressIsMissing"); break;
+    case GenericErrorCodesSmtpServerAuthenticationError: writer.String("SmtpServerAuthenticationError"); break;
+    case GenericErrorCodesSmtpServerLimitExceeded: writer.String("SmtpServerLimitExceeded"); break;
+    case GenericErrorCodesSmtpServerInsufficientStorage: writer.String("SmtpServerInsufficientStorage"); break;
+    case GenericErrorCodesSmtpServerCommunicationError: writer.String("SmtpServerCommunicationError"); break;
+    case GenericErrorCodesSmtpServerGeneralFailure: writer.String("SmtpServerGeneralFailure"); break;
+    case GenericErrorCodesEmailClientTimeout: writer.String("EmailClientTimeout"); break;
+    case GenericErrorCodesEmailClientCanceledTask: writer.String("EmailClientCanceledTask"); break;
+    case GenericErrorCodesEmailTemplateMissing: writer.String("EmailTemplateMissing"); break;
+    case GenericErrorCodesInvalidHostForTitleId: writer.String("InvalidHostForTitleId"); break;
+    case GenericErrorCodesEmailConfirmationTokenDoesNotExist: writer.String("EmailConfirmationTokenDoesNotExist"); break;
+    case GenericErrorCodesEmailConfirmationTokenExpired: writer.String("EmailConfirmationTokenExpired"); break;
+    case GenericErrorCodesAccountDeleted: writer.String("AccountDeleted"); break;
+    case GenericErrorCodesPlayerSecretNotConfigured: writer.String("PlayerSecretNotConfigured"); break;
+    case GenericErrorCodesInvalidSignatureTime: writer.String("InvalidSignatureTime"); break;
+    case GenericErrorCodesNoContactEmailAddressFound: writer.String("NoContactEmailAddressFound"); break;
+    case GenericErrorCodesInvalidAuthToken: writer.String("InvalidAuthToken"); break;
+    case GenericErrorCodesAuthTokenDoesNotExist: writer.String("AuthTokenDoesNotExist"); break;
+    case GenericErrorCodesAuthTokenExpired: writer.String("AuthTokenExpired"); break;
+    case GenericErrorCodesAuthTokenAlreadyUsedToResetPassword: writer.String("AuthTokenAlreadyUsedToResetPassword"); break;
+    case GenericErrorCodesMembershipNameTooLong: writer.String("MembershipNameTooLong"); break;
+    case GenericErrorCodesMembershipNotFound: writer.String("MembershipNotFound"); break;
+    case GenericErrorCodesGoogleServiceAccountInvalid: writer.String("GoogleServiceAccountInvalid"); break;
+    case GenericErrorCodesGoogleServiceAccountParseFailure: writer.String("GoogleServiceAccountParseFailure"); break;
+    case GenericErrorCodesEntityTokenMissing: writer.String("EntityTokenMissing"); break;
+    case GenericErrorCodesEntityTokenInvalid: writer.String("EntityTokenInvalid"); break;
+    case GenericErrorCodesEntityTokenExpired: writer.String("EntityTokenExpired"); break;
+    case GenericErrorCodesEntityTokenRevoked: writer.String("EntityTokenRevoked"); break;
+    case GenericErrorCodesInvalidProductForSubscription: writer.String("InvalidProductForSubscription"); break;
+    case GenericErrorCodesXboxInaccessible: writer.String("XboxInaccessible"); break;
+    case GenericErrorCodesSubscriptionAlreadyTaken: writer.String("SubscriptionAlreadyTaken"); break;
+    case GenericErrorCodesSmtpAddonNotEnabled: writer.String("SmtpAddonNotEnabled"); break;
+    case GenericErrorCodesAPIConcurrentRequestLimitExceeded: writer.String("APIConcurrentRequestLimitExceeded"); break;
+    case GenericErrorCodesXboxRejectedXSTSExchangeRequest: writer.String("XboxRejectedXSTSExchangeRequest"); break;
+    case GenericErrorCodesVariableNotDefined: writer.String("VariableNotDefined"); break;
+    case GenericErrorCodesTemplateVersionNotDefined: writer.String("TemplateVersionNotDefined"); break;
+    case GenericErrorCodesFileTooLarge: writer.String("FileTooLarge"); break;
+    case GenericErrorCodesTitleDeleted: writer.String("TitleDeleted"); break;
+    case GenericErrorCodesTitleContainsUserAccounts: writer.String("TitleContainsUserAccounts"); break;
+    case GenericErrorCodesTitleDeletionPlayerCleanupFailure: writer.String("TitleDeletionPlayerCleanupFailure"); break;
+    case GenericErrorCodesEntityFileOperationPending: writer.String("EntityFileOperationPending"); break;
+    case GenericErrorCodesNoEntityFileOperationPending: writer.String("NoEntityFileOperationPending"); break;
+    case GenericErrorCodesEntityProfileVersionMismatch: writer.String("EntityProfileVersionMismatch"); break;
+    case GenericErrorCodesTemplateVersionTooOld: writer.String("TemplateVersionTooOld"); break;
+    case GenericErrorCodesMembershipDefinitionInUse: writer.String("MembershipDefinitionInUse"); break;
+    case GenericErrorCodesPaymentPageNotConfigured: writer.String("PaymentPageNotConfigured"); break;
+    case GenericErrorCodesFailedLoginAttemptRateLimitExceeded: writer.String("FailedLoginAttemptRateLimitExceeded"); break;
+    case GenericErrorCodesEntityBlockedByGroup: writer.String("EntityBlockedByGroup"); break;
+    case GenericErrorCodesRoleDoesNotExist: writer.String("RoleDoesNotExist"); break;
+    case GenericErrorCodesEntityIsAlreadyMember: writer.String("EntityIsAlreadyMember"); break;
+    case GenericErrorCodesDuplicateRoleId: writer.String("DuplicateRoleId"); break;
+    case GenericErrorCodesGroupInvitationNotFound: writer.String("GroupInvitationNotFound"); break;
+    case GenericErrorCodesGroupApplicationNotFound: writer.String("GroupApplicationNotFound"); break;
+    case GenericErrorCodesOutstandingInvitationAcceptedInstead: writer.String("OutstandingInvitationAcceptedInstead"); break;
+    case GenericErrorCodesOutstandingApplicationAcceptedInstead: writer.String("OutstandingApplicationAcceptedInstead"); break;
+    case GenericErrorCodesRoleIsGroupDefaultMember: writer.String("RoleIsGroupDefaultMember"); break;
+    case GenericErrorCodesRoleIsGroupAdmin: writer.String("RoleIsGroupAdmin"); break;
+    case GenericErrorCodesRoleNameNotAvailable: writer.String("RoleNameNotAvailable"); break;
+    case GenericErrorCodesGroupNameNotAvailable: writer.String("GroupNameNotAvailable"); break;
+    case GenericErrorCodesEmailReportAlreadySent: writer.String("EmailReportAlreadySent"); break;
+    case GenericErrorCodesEmailReportRecipientBlacklisted: writer.String("EmailReportRecipientBlacklisted"); break;
+
+    }
+}
+
+GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, GenericErrorCodes> _GenericErrorCodesMap;
+    if (_GenericErrorCodesMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _GenericErrorCodesMap["Success"] = GenericErrorCodesSuccess;
+        _GenericErrorCodesMap["InvalidParams"] = GenericErrorCodesInvalidParams;
+        _GenericErrorCodesMap["AccountNotFound"] = GenericErrorCodesAccountNotFound;
+        _GenericErrorCodesMap["AccountBanned"] = GenericErrorCodesAccountBanned;
+        _GenericErrorCodesMap["InvalidUsernameOrPassword"] = GenericErrorCodesInvalidUsernameOrPassword;
+        _GenericErrorCodesMap["InvalidTitleId"] = GenericErrorCodesInvalidTitleId;
+        _GenericErrorCodesMap["InvalidEmailAddress"] = GenericErrorCodesInvalidEmailAddress;
+        _GenericErrorCodesMap["EmailAddressNotAvailable"] = GenericErrorCodesEmailAddressNotAvailable;
+        _GenericErrorCodesMap["InvalidUsername"] = GenericErrorCodesInvalidUsername;
+        _GenericErrorCodesMap["InvalidPassword"] = GenericErrorCodesInvalidPassword;
+        _GenericErrorCodesMap["UsernameNotAvailable"] = GenericErrorCodesUsernameNotAvailable;
+        _GenericErrorCodesMap["InvalidSteamTicket"] = GenericErrorCodesInvalidSteamTicket;
+        _GenericErrorCodesMap["AccountAlreadyLinked"] = GenericErrorCodesAccountAlreadyLinked;
+        _GenericErrorCodesMap["LinkedAccountAlreadyClaimed"] = GenericErrorCodesLinkedAccountAlreadyClaimed;
+        _GenericErrorCodesMap["InvalidFacebookToken"] = GenericErrorCodesInvalidFacebookToken;
+        _GenericErrorCodesMap["AccountNotLinked"] = GenericErrorCodesAccountNotLinked;
+        _GenericErrorCodesMap["FailedByPaymentProvider"] = GenericErrorCodesFailedByPaymentProvider;
+        _GenericErrorCodesMap["CouponCodeNotFound"] = GenericErrorCodesCouponCodeNotFound;
+        _GenericErrorCodesMap["InvalidContainerItem"] = GenericErrorCodesInvalidContainerItem;
+        _GenericErrorCodesMap["ContainerNotOwned"] = GenericErrorCodesContainerNotOwned;
+        _GenericErrorCodesMap["KeyNotOwned"] = GenericErrorCodesKeyNotOwned;
+        _GenericErrorCodesMap["InvalidItemIdInTable"] = GenericErrorCodesInvalidItemIdInTable;
+        _GenericErrorCodesMap["InvalidReceipt"] = GenericErrorCodesInvalidReceipt;
+        _GenericErrorCodesMap["ReceiptAlreadyUsed"] = GenericErrorCodesReceiptAlreadyUsed;
+        _GenericErrorCodesMap["ReceiptCancelled"] = GenericErrorCodesReceiptCancelled;
+        _GenericErrorCodesMap["GameNotFound"] = GenericErrorCodesGameNotFound;
+        _GenericErrorCodesMap["GameModeNotFound"] = GenericErrorCodesGameModeNotFound;
+        _GenericErrorCodesMap["InvalidGoogleToken"] = GenericErrorCodesInvalidGoogleToken;
+        _GenericErrorCodesMap["UserIsNotPartOfDeveloper"] = GenericErrorCodesUserIsNotPartOfDeveloper;
+        _GenericErrorCodesMap["InvalidTitleForDeveloper"] = GenericErrorCodesInvalidTitleForDeveloper;
+        _GenericErrorCodesMap["TitleNameConflicts"] = GenericErrorCodesTitleNameConflicts;
+        _GenericErrorCodesMap["UserisNotValid"] = GenericErrorCodesUserisNotValid;
+        _GenericErrorCodesMap["ValueAlreadyExists"] = GenericErrorCodesValueAlreadyExists;
+        _GenericErrorCodesMap["BuildNotFound"] = GenericErrorCodesBuildNotFound;
+        _GenericErrorCodesMap["PlayerNotInGame"] = GenericErrorCodesPlayerNotInGame;
+        _GenericErrorCodesMap["InvalidTicket"] = GenericErrorCodesInvalidTicket;
+        _GenericErrorCodesMap["InvalidDeveloper"] = GenericErrorCodesInvalidDeveloper;
+        _GenericErrorCodesMap["InvalidOrderInfo"] = GenericErrorCodesInvalidOrderInfo;
+        _GenericErrorCodesMap["RegistrationIncomplete"] = GenericErrorCodesRegistrationIncomplete;
+        _GenericErrorCodesMap["InvalidPlatform"] = GenericErrorCodesInvalidPlatform;
+        _GenericErrorCodesMap["UnknownError"] = GenericErrorCodesUnknownError;
+        _GenericErrorCodesMap["SteamApplicationNotOwned"] = GenericErrorCodesSteamApplicationNotOwned;
+        _GenericErrorCodesMap["WrongSteamAccount"] = GenericErrorCodesWrongSteamAccount;
+        _GenericErrorCodesMap["TitleNotActivated"] = GenericErrorCodesTitleNotActivated;
+        _GenericErrorCodesMap["RegistrationSessionNotFound"] = GenericErrorCodesRegistrationSessionNotFound;
+        _GenericErrorCodesMap["NoSuchMod"] = GenericErrorCodesNoSuchMod;
+        _GenericErrorCodesMap["FileNotFound"] = GenericErrorCodesFileNotFound;
+        _GenericErrorCodesMap["DuplicateEmail"] = GenericErrorCodesDuplicateEmail;
+        _GenericErrorCodesMap["ItemNotFound"] = GenericErrorCodesItemNotFound;
+        _GenericErrorCodesMap["ItemNotOwned"] = GenericErrorCodesItemNotOwned;
+        _GenericErrorCodesMap["ItemNotRecycleable"] = GenericErrorCodesItemNotRecycleable;
+        _GenericErrorCodesMap["ItemNotAffordable"] = GenericErrorCodesItemNotAffordable;
+        _GenericErrorCodesMap["InvalidVirtualCurrency"] = GenericErrorCodesInvalidVirtualCurrency;
+        _GenericErrorCodesMap["WrongVirtualCurrency"] = GenericErrorCodesWrongVirtualCurrency;
+        _GenericErrorCodesMap["WrongPrice"] = GenericErrorCodesWrongPrice;
+        _GenericErrorCodesMap["NonPositiveValue"] = GenericErrorCodesNonPositiveValue;
+        _GenericErrorCodesMap["InvalidRegion"] = GenericErrorCodesInvalidRegion;
+        _GenericErrorCodesMap["RegionAtCapacity"] = GenericErrorCodesRegionAtCapacity;
+        _GenericErrorCodesMap["ServerFailedToStart"] = GenericErrorCodesServerFailedToStart;
+        _GenericErrorCodesMap["NameNotAvailable"] = GenericErrorCodesNameNotAvailable;
+        _GenericErrorCodesMap["InsufficientFunds"] = GenericErrorCodesInsufficientFunds;
+        _GenericErrorCodesMap["InvalidDeviceID"] = GenericErrorCodesInvalidDeviceID;
+        _GenericErrorCodesMap["InvalidPushNotificationToken"] = GenericErrorCodesInvalidPushNotificationToken;
+        _GenericErrorCodesMap["NoRemainingUses"] = GenericErrorCodesNoRemainingUses;
+        _GenericErrorCodesMap["InvalidPaymentProvider"] = GenericErrorCodesInvalidPaymentProvider;
+        _GenericErrorCodesMap["PurchaseInitializationFailure"] = GenericErrorCodesPurchaseInitializationFailure;
+        _GenericErrorCodesMap["DuplicateUsername"] = GenericErrorCodesDuplicateUsername;
+        _GenericErrorCodesMap["InvalidBuyerInfo"] = GenericErrorCodesInvalidBuyerInfo;
+        _GenericErrorCodesMap["NoGameModeParamsSet"] = GenericErrorCodesNoGameModeParamsSet;
+        _GenericErrorCodesMap["BodyTooLarge"] = GenericErrorCodesBodyTooLarge;
+        _GenericErrorCodesMap["ReservedWordInBody"] = GenericErrorCodesReservedWordInBody;
+        _GenericErrorCodesMap["InvalidTypeInBody"] = GenericErrorCodesInvalidTypeInBody;
+        _GenericErrorCodesMap["InvalidRequest"] = GenericErrorCodesInvalidRequest;
+        _GenericErrorCodesMap["ReservedEventName"] = GenericErrorCodesReservedEventName;
+        _GenericErrorCodesMap["InvalidUserStatistics"] = GenericErrorCodesInvalidUserStatistics;
+        _GenericErrorCodesMap["NotAuthenticated"] = GenericErrorCodesNotAuthenticated;
+        _GenericErrorCodesMap["StreamAlreadyExists"] = GenericErrorCodesStreamAlreadyExists;
+        _GenericErrorCodesMap["ErrorCreatingStream"] = GenericErrorCodesErrorCreatingStream;
+        _GenericErrorCodesMap["StreamNotFound"] = GenericErrorCodesStreamNotFound;
+        _GenericErrorCodesMap["InvalidAccount"] = GenericErrorCodesInvalidAccount;
+        _GenericErrorCodesMap["PurchaseDoesNotExist"] = GenericErrorCodesPurchaseDoesNotExist;
+        _GenericErrorCodesMap["InvalidPurchaseTransactionStatus"] = GenericErrorCodesInvalidPurchaseTransactionStatus;
+        _GenericErrorCodesMap["APINotEnabledForGameClientAccess"] = GenericErrorCodesAPINotEnabledForGameClientAccess;
+        _GenericErrorCodesMap["NoPushNotificationARNForTitle"] = GenericErrorCodesNoPushNotificationARNForTitle;
+        _GenericErrorCodesMap["BuildAlreadyExists"] = GenericErrorCodesBuildAlreadyExists;
+        _GenericErrorCodesMap["BuildPackageDoesNotExist"] = GenericErrorCodesBuildPackageDoesNotExist;
+        _GenericErrorCodesMap["CustomAnalyticsEventsNotEnabledForTitle"] = GenericErrorCodesCustomAnalyticsEventsNotEnabledForTitle;
+        _GenericErrorCodesMap["InvalidSharedGroupId"] = GenericErrorCodesInvalidSharedGroupId;
+        _GenericErrorCodesMap["NotAuthorized"] = GenericErrorCodesNotAuthorized;
+        _GenericErrorCodesMap["MissingTitleGoogleProperties"] = GenericErrorCodesMissingTitleGoogleProperties;
+        _GenericErrorCodesMap["InvalidItemProperties"] = GenericErrorCodesInvalidItemProperties;
+        _GenericErrorCodesMap["InvalidPSNAuthCode"] = GenericErrorCodesInvalidPSNAuthCode;
+        _GenericErrorCodesMap["InvalidItemId"] = GenericErrorCodesInvalidItemId;
+        _GenericErrorCodesMap["PushNotEnabledForAccount"] = GenericErrorCodesPushNotEnabledForAccount;
+        _GenericErrorCodesMap["PushServiceError"] = GenericErrorCodesPushServiceError;
+        _GenericErrorCodesMap["ReceiptDoesNotContainInAppItems"] = GenericErrorCodesReceiptDoesNotContainInAppItems;
+        _GenericErrorCodesMap["ReceiptContainsMultipleInAppItems"] = GenericErrorCodesReceiptContainsMultipleInAppItems;
+        _GenericErrorCodesMap["InvalidBundleID"] = GenericErrorCodesInvalidBundleID;
+        _GenericErrorCodesMap["JavascriptException"] = GenericErrorCodesJavascriptException;
+        _GenericErrorCodesMap["InvalidSessionTicket"] = GenericErrorCodesInvalidSessionTicket;
+        _GenericErrorCodesMap["UnableToConnectToDatabase"] = GenericErrorCodesUnableToConnectToDatabase;
+        _GenericErrorCodesMap["InternalServerError"] = GenericErrorCodesInternalServerError;
+        _GenericErrorCodesMap["InvalidReportDate"] = GenericErrorCodesInvalidReportDate;
+        _GenericErrorCodesMap["ReportNotAvailable"] = GenericErrorCodesReportNotAvailable;
+        _GenericErrorCodesMap["DatabaseThroughputExceeded"] = GenericErrorCodesDatabaseThroughputExceeded;
+        _GenericErrorCodesMap["InvalidGameTicket"] = GenericErrorCodesInvalidGameTicket;
+        _GenericErrorCodesMap["ExpiredGameTicket"] = GenericErrorCodesExpiredGameTicket;
+        _GenericErrorCodesMap["GameTicketDoesNotMatchLobby"] = GenericErrorCodesGameTicketDoesNotMatchLobby;
+        _GenericErrorCodesMap["LinkedDeviceAlreadyClaimed"] = GenericErrorCodesLinkedDeviceAlreadyClaimed;
+        _GenericErrorCodesMap["DeviceAlreadyLinked"] = GenericErrorCodesDeviceAlreadyLinked;
+        _GenericErrorCodesMap["DeviceNotLinked"] = GenericErrorCodesDeviceNotLinked;
+        _GenericErrorCodesMap["PartialFailure"] = GenericErrorCodesPartialFailure;
+        _GenericErrorCodesMap["PublisherNotSet"] = GenericErrorCodesPublisherNotSet;
+        _GenericErrorCodesMap["ServiceUnavailable"] = GenericErrorCodesServiceUnavailable;
+        _GenericErrorCodesMap["VersionNotFound"] = GenericErrorCodesVersionNotFound;
+        _GenericErrorCodesMap["RevisionNotFound"] = GenericErrorCodesRevisionNotFound;
+        _GenericErrorCodesMap["InvalidPublisherId"] = GenericErrorCodesInvalidPublisherId;
+        _GenericErrorCodesMap["DownstreamServiceUnavailable"] = GenericErrorCodesDownstreamServiceUnavailable;
+        _GenericErrorCodesMap["APINotIncludedInTitleUsageTier"] = GenericErrorCodesAPINotIncludedInTitleUsageTier;
+        _GenericErrorCodesMap["DAULimitExceeded"] = GenericErrorCodesDAULimitExceeded;
+        _GenericErrorCodesMap["APIRequestLimitExceeded"] = GenericErrorCodesAPIRequestLimitExceeded;
+        _GenericErrorCodesMap["InvalidAPIEndpoint"] = GenericErrorCodesInvalidAPIEndpoint;
+        _GenericErrorCodesMap["BuildNotAvailable"] = GenericErrorCodesBuildNotAvailable;
+        _GenericErrorCodesMap["ConcurrentEditError"] = GenericErrorCodesConcurrentEditError;
+        _GenericErrorCodesMap["ContentNotFound"] = GenericErrorCodesContentNotFound;
+        _GenericErrorCodesMap["CharacterNotFound"] = GenericErrorCodesCharacterNotFound;
+        _GenericErrorCodesMap["CloudScriptNotFound"] = GenericErrorCodesCloudScriptNotFound;
+        _GenericErrorCodesMap["ContentQuotaExceeded"] = GenericErrorCodesContentQuotaExceeded;
+        _GenericErrorCodesMap["InvalidCharacterStatistics"] = GenericErrorCodesInvalidCharacterStatistics;
+        _GenericErrorCodesMap["PhotonNotEnabledForTitle"] = GenericErrorCodesPhotonNotEnabledForTitle;
+        _GenericErrorCodesMap["PhotonApplicationNotFound"] = GenericErrorCodesPhotonApplicationNotFound;
+        _GenericErrorCodesMap["PhotonApplicationNotAssociatedWithTitle"] = GenericErrorCodesPhotonApplicationNotAssociatedWithTitle;
+        _GenericErrorCodesMap["InvalidEmailOrPassword"] = GenericErrorCodesInvalidEmailOrPassword;
+        _GenericErrorCodesMap["FacebookAPIError"] = GenericErrorCodesFacebookAPIError;
+        _GenericErrorCodesMap["InvalidContentType"] = GenericErrorCodesInvalidContentType;
+        _GenericErrorCodesMap["KeyLengthExceeded"] = GenericErrorCodesKeyLengthExceeded;
+        _GenericErrorCodesMap["DataLengthExceeded"] = GenericErrorCodesDataLengthExceeded;
+        _GenericErrorCodesMap["TooManyKeys"] = GenericErrorCodesTooManyKeys;
+        _GenericErrorCodesMap["FreeTierCannotHaveVirtualCurrency"] = GenericErrorCodesFreeTierCannotHaveVirtualCurrency;
+        _GenericErrorCodesMap["MissingAmazonSharedKey"] = GenericErrorCodesMissingAmazonSharedKey;
+        _GenericErrorCodesMap["AmazonValidationError"] = GenericErrorCodesAmazonValidationError;
+        _GenericErrorCodesMap["InvalidPSNIssuerId"] = GenericErrorCodesInvalidPSNIssuerId;
+        _GenericErrorCodesMap["PSNInaccessible"] = GenericErrorCodesPSNInaccessible;
+        _GenericErrorCodesMap["ExpiredAuthToken"] = GenericErrorCodesExpiredAuthToken;
+        _GenericErrorCodesMap["FailedToGetEntitlements"] = GenericErrorCodesFailedToGetEntitlements;
+        _GenericErrorCodesMap["FailedToConsumeEntitlement"] = GenericErrorCodesFailedToConsumeEntitlement;
+        _GenericErrorCodesMap["TradeAcceptingUserNotAllowed"] = GenericErrorCodesTradeAcceptingUserNotAllowed;
+        _GenericErrorCodesMap["TradeInventoryItemIsAssignedToCharacter"] = GenericErrorCodesTradeInventoryItemIsAssignedToCharacter;
+        _GenericErrorCodesMap["TradeInventoryItemIsBundle"] = GenericErrorCodesTradeInventoryItemIsBundle;
+        _GenericErrorCodesMap["TradeStatusNotValidForCancelling"] = GenericErrorCodesTradeStatusNotValidForCancelling;
+        _GenericErrorCodesMap["TradeStatusNotValidForAccepting"] = GenericErrorCodesTradeStatusNotValidForAccepting;
+        _GenericErrorCodesMap["TradeDoesNotExist"] = GenericErrorCodesTradeDoesNotExist;
+        _GenericErrorCodesMap["TradeCancelled"] = GenericErrorCodesTradeCancelled;
+        _GenericErrorCodesMap["TradeAlreadyFilled"] = GenericErrorCodesTradeAlreadyFilled;
+        _GenericErrorCodesMap["TradeWaitForStatusTimeout"] = GenericErrorCodesTradeWaitForStatusTimeout;
+        _GenericErrorCodesMap["TradeInventoryItemExpired"] = GenericErrorCodesTradeInventoryItemExpired;
+        _GenericErrorCodesMap["TradeMissingOfferedAndAcceptedItems"] = GenericErrorCodesTradeMissingOfferedAndAcceptedItems;
+        _GenericErrorCodesMap["TradeAcceptedItemIsBundle"] = GenericErrorCodesTradeAcceptedItemIsBundle;
+        _GenericErrorCodesMap["TradeAcceptedItemIsStackable"] = GenericErrorCodesTradeAcceptedItemIsStackable;
+        _GenericErrorCodesMap["TradeInventoryItemInvalidStatus"] = GenericErrorCodesTradeInventoryItemInvalidStatus;
+        _GenericErrorCodesMap["TradeAcceptedCatalogItemInvalid"] = GenericErrorCodesTradeAcceptedCatalogItemInvalid;
+        _GenericErrorCodesMap["TradeAllowedUsersInvalid"] = GenericErrorCodesTradeAllowedUsersInvalid;
+        _GenericErrorCodesMap["TradeInventoryItemDoesNotExist"] = GenericErrorCodesTradeInventoryItemDoesNotExist;
+        _GenericErrorCodesMap["TradeInventoryItemIsConsumed"] = GenericErrorCodesTradeInventoryItemIsConsumed;
+        _GenericErrorCodesMap["TradeInventoryItemIsStackable"] = GenericErrorCodesTradeInventoryItemIsStackable;
+        _GenericErrorCodesMap["TradeAcceptedItemsMismatch"] = GenericErrorCodesTradeAcceptedItemsMismatch;
+        _GenericErrorCodesMap["InvalidKongregateToken"] = GenericErrorCodesInvalidKongregateToken;
+        _GenericErrorCodesMap["FeatureNotConfiguredForTitle"] = GenericErrorCodesFeatureNotConfiguredForTitle;
+        _GenericErrorCodesMap["NoMatchingCatalogItemForReceipt"] = GenericErrorCodesNoMatchingCatalogItemForReceipt;
+        _GenericErrorCodesMap["InvalidCurrencyCode"] = GenericErrorCodesInvalidCurrencyCode;
+        _GenericErrorCodesMap["NoRealMoneyPriceForCatalogItem"] = GenericErrorCodesNoRealMoneyPriceForCatalogItem;
+        _GenericErrorCodesMap["TradeInventoryItemIsNotTradable"] = GenericErrorCodesTradeInventoryItemIsNotTradable;
+        _GenericErrorCodesMap["TradeAcceptedCatalogItemIsNotTradable"] = GenericErrorCodesTradeAcceptedCatalogItemIsNotTradable;
+        _GenericErrorCodesMap["UsersAlreadyFriends"] = GenericErrorCodesUsersAlreadyFriends;
+        _GenericErrorCodesMap["LinkedIdentifierAlreadyClaimed"] = GenericErrorCodesLinkedIdentifierAlreadyClaimed;
+        _GenericErrorCodesMap["CustomIdNotLinked"] = GenericErrorCodesCustomIdNotLinked;
+        _GenericErrorCodesMap["TotalDataSizeExceeded"] = GenericErrorCodesTotalDataSizeExceeded;
+        _GenericErrorCodesMap["DeleteKeyConflict"] = GenericErrorCodesDeleteKeyConflict;
+        _GenericErrorCodesMap["InvalidXboxLiveToken"] = GenericErrorCodesInvalidXboxLiveToken;
+        _GenericErrorCodesMap["ExpiredXboxLiveToken"] = GenericErrorCodesExpiredXboxLiveToken;
+        _GenericErrorCodesMap["ResettableStatisticVersionRequired"] = GenericErrorCodesResettableStatisticVersionRequired;
+        _GenericErrorCodesMap["NotAuthorizedByTitle"] = GenericErrorCodesNotAuthorizedByTitle;
+        _GenericErrorCodesMap["NoPartnerEnabled"] = GenericErrorCodesNoPartnerEnabled;
+        _GenericErrorCodesMap["InvalidPartnerResponse"] = GenericErrorCodesInvalidPartnerResponse;
+        _GenericErrorCodesMap["APINotEnabledForGameServerAccess"] = GenericErrorCodesAPINotEnabledForGameServerAccess;
+        _GenericErrorCodesMap["StatisticNotFound"] = GenericErrorCodesStatisticNotFound;
+        _GenericErrorCodesMap["StatisticNameConflict"] = GenericErrorCodesStatisticNameConflict;
+        _GenericErrorCodesMap["StatisticVersionClosedForWrites"] = GenericErrorCodesStatisticVersionClosedForWrites;
+        _GenericErrorCodesMap["StatisticVersionInvalid"] = GenericErrorCodesStatisticVersionInvalid;
+        _GenericErrorCodesMap["APIClientRequestRateLimitExceeded"] = GenericErrorCodesAPIClientRequestRateLimitExceeded;
+        _GenericErrorCodesMap["InvalidJSONContent"] = GenericErrorCodesInvalidJSONContent;
+        _GenericErrorCodesMap["InvalidDropTable"] = GenericErrorCodesInvalidDropTable;
+        _GenericErrorCodesMap["StatisticVersionAlreadyIncrementedForScheduledInterval"] = GenericErrorCodesStatisticVersionAlreadyIncrementedForScheduledInterval;
+        _GenericErrorCodesMap["StatisticCountLimitExceeded"] = GenericErrorCodesStatisticCountLimitExceeded;
+        _GenericErrorCodesMap["StatisticVersionIncrementRateExceeded"] = GenericErrorCodesStatisticVersionIncrementRateExceeded;
+        _GenericErrorCodesMap["ContainerKeyInvalid"] = GenericErrorCodesContainerKeyInvalid;
+        _GenericErrorCodesMap["CloudScriptExecutionTimeLimitExceeded"] = GenericErrorCodesCloudScriptExecutionTimeLimitExceeded;
+        _GenericErrorCodesMap["NoWritePermissionsForEvent"] = GenericErrorCodesNoWritePermissionsForEvent;
+        _GenericErrorCodesMap["CloudScriptFunctionArgumentSizeExceeded"] = GenericErrorCodesCloudScriptFunctionArgumentSizeExceeded;
+        _GenericErrorCodesMap["CloudScriptAPIRequestCountExceeded"] = GenericErrorCodesCloudScriptAPIRequestCountExceeded;
+        _GenericErrorCodesMap["CloudScriptAPIRequestError"] = GenericErrorCodesCloudScriptAPIRequestError;
+        _GenericErrorCodesMap["CloudScriptHTTPRequestError"] = GenericErrorCodesCloudScriptHTTPRequestError;
+        _GenericErrorCodesMap["InsufficientGuildRole"] = GenericErrorCodesInsufficientGuildRole;
+        _GenericErrorCodesMap["GuildNotFound"] = GenericErrorCodesGuildNotFound;
+        _GenericErrorCodesMap["OverLimit"] = GenericErrorCodesOverLimit;
+        _GenericErrorCodesMap["EventNotFound"] = GenericErrorCodesEventNotFound;
+        _GenericErrorCodesMap["InvalidEventField"] = GenericErrorCodesInvalidEventField;
+        _GenericErrorCodesMap["InvalidEventName"] = GenericErrorCodesInvalidEventName;
+        _GenericErrorCodesMap["CatalogNotConfigured"] = GenericErrorCodesCatalogNotConfigured;
+        _GenericErrorCodesMap["OperationNotSupportedForPlatform"] = GenericErrorCodesOperationNotSupportedForPlatform;
+        _GenericErrorCodesMap["SegmentNotFound"] = GenericErrorCodesSegmentNotFound;
+        _GenericErrorCodesMap["StoreNotFound"] = GenericErrorCodesStoreNotFound;
+        _GenericErrorCodesMap["InvalidStatisticName"] = GenericErrorCodesInvalidStatisticName;
+        _GenericErrorCodesMap["TitleNotQualifiedForLimit"] = GenericErrorCodesTitleNotQualifiedForLimit;
+        _GenericErrorCodesMap["InvalidServiceLimitLevel"] = GenericErrorCodesInvalidServiceLimitLevel;
+        _GenericErrorCodesMap["ServiceLimitLevelInTransition"] = GenericErrorCodesServiceLimitLevelInTransition;
+        _GenericErrorCodesMap["CouponAlreadyRedeemed"] = GenericErrorCodesCouponAlreadyRedeemed;
+        _GenericErrorCodesMap["GameServerBuildSizeLimitExceeded"] = GenericErrorCodesGameServerBuildSizeLimitExceeded;
+        _GenericErrorCodesMap["GameServerBuildCountLimitExceeded"] = GenericErrorCodesGameServerBuildCountLimitExceeded;
+        _GenericErrorCodesMap["VirtualCurrencyCountLimitExceeded"] = GenericErrorCodesVirtualCurrencyCountLimitExceeded;
+        _GenericErrorCodesMap["VirtualCurrencyCodeExists"] = GenericErrorCodesVirtualCurrencyCodeExists;
+        _GenericErrorCodesMap["TitleNewsItemCountLimitExceeded"] = GenericErrorCodesTitleNewsItemCountLimitExceeded;
+        _GenericErrorCodesMap["InvalidTwitchToken"] = GenericErrorCodesInvalidTwitchToken;
+        _GenericErrorCodesMap["TwitchResponseError"] = GenericErrorCodesTwitchResponseError;
+        _GenericErrorCodesMap["ProfaneDisplayName"] = GenericErrorCodesProfaneDisplayName;
+        _GenericErrorCodesMap["UserAlreadyAdded"] = GenericErrorCodesUserAlreadyAdded;
+        _GenericErrorCodesMap["InvalidVirtualCurrencyCode"] = GenericErrorCodesInvalidVirtualCurrencyCode;
+        _GenericErrorCodesMap["VirtualCurrencyCannotBeDeleted"] = GenericErrorCodesVirtualCurrencyCannotBeDeleted;
+        _GenericErrorCodesMap["IdentifierAlreadyClaimed"] = GenericErrorCodesIdentifierAlreadyClaimed;
+        _GenericErrorCodesMap["IdentifierNotLinked"] = GenericErrorCodesIdentifierNotLinked;
+        _GenericErrorCodesMap["InvalidContinuationToken"] = GenericErrorCodesInvalidContinuationToken;
+        _GenericErrorCodesMap["ExpiredContinuationToken"] = GenericErrorCodesExpiredContinuationToken;
+        _GenericErrorCodesMap["InvalidSegment"] = GenericErrorCodesInvalidSegment;
+        _GenericErrorCodesMap["InvalidSessionId"] = GenericErrorCodesInvalidSessionId;
+        _GenericErrorCodesMap["SessionLogNotFound"] = GenericErrorCodesSessionLogNotFound;
+        _GenericErrorCodesMap["InvalidSearchTerm"] = GenericErrorCodesInvalidSearchTerm;
+        _GenericErrorCodesMap["TwoFactorAuthenticationTokenRequired"] = GenericErrorCodesTwoFactorAuthenticationTokenRequired;
+        _GenericErrorCodesMap["GameServerHostCountLimitExceeded"] = GenericErrorCodesGameServerHostCountLimitExceeded;
+        _GenericErrorCodesMap["PlayerTagCountLimitExceeded"] = GenericErrorCodesPlayerTagCountLimitExceeded;
+        _GenericErrorCodesMap["RequestAlreadyRunning"] = GenericErrorCodesRequestAlreadyRunning;
+        _GenericErrorCodesMap["ActionGroupNotFound"] = GenericErrorCodesActionGroupNotFound;
+        _GenericErrorCodesMap["MaximumSegmentBulkActionJobsRunning"] = GenericErrorCodesMaximumSegmentBulkActionJobsRunning;
+        _GenericErrorCodesMap["NoActionsOnPlayersInSegmentJob"] = GenericErrorCodesNoActionsOnPlayersInSegmentJob;
+        _GenericErrorCodesMap["DuplicateStatisticName"] = GenericErrorCodesDuplicateStatisticName;
+        _GenericErrorCodesMap["ScheduledTaskNameConflict"] = GenericErrorCodesScheduledTaskNameConflict;
+        _GenericErrorCodesMap["ScheduledTaskCreateConflict"] = GenericErrorCodesScheduledTaskCreateConflict;
+        _GenericErrorCodesMap["InvalidScheduledTaskName"] = GenericErrorCodesInvalidScheduledTaskName;
+        _GenericErrorCodesMap["InvalidTaskSchedule"] = GenericErrorCodesInvalidTaskSchedule;
+        _GenericErrorCodesMap["SteamNotEnabledForTitle"] = GenericErrorCodesSteamNotEnabledForTitle;
+        _GenericErrorCodesMap["LimitNotAnUpgradeOption"] = GenericErrorCodesLimitNotAnUpgradeOption;
+        _GenericErrorCodesMap["NoSecretKeyEnabledForCloudScript"] = GenericErrorCodesNoSecretKeyEnabledForCloudScript;
+        _GenericErrorCodesMap["TaskNotFound"] = GenericErrorCodesTaskNotFound;
+        _GenericErrorCodesMap["TaskInstanceNotFound"] = GenericErrorCodesTaskInstanceNotFound;
+        _GenericErrorCodesMap["InvalidIdentityProviderId"] = GenericErrorCodesInvalidIdentityProviderId;
+        _GenericErrorCodesMap["MisconfiguredIdentityProvider"] = GenericErrorCodesMisconfiguredIdentityProvider;
+        _GenericErrorCodesMap["InvalidScheduledTaskType"] = GenericErrorCodesInvalidScheduledTaskType;
+        _GenericErrorCodesMap["BillingInformationRequired"] = GenericErrorCodesBillingInformationRequired;
+        _GenericErrorCodesMap["LimitedEditionItemUnavailable"] = GenericErrorCodesLimitedEditionItemUnavailable;
+        _GenericErrorCodesMap["InvalidAdPlacementAndReward"] = GenericErrorCodesInvalidAdPlacementAndReward;
+        _GenericErrorCodesMap["AllAdPlacementViewsAlreadyConsumed"] = GenericErrorCodesAllAdPlacementViewsAlreadyConsumed;
+        _GenericErrorCodesMap["GoogleOAuthNotConfiguredForTitle"] = GenericErrorCodesGoogleOAuthNotConfiguredForTitle;
+        _GenericErrorCodesMap["GoogleOAuthError"] = GenericErrorCodesGoogleOAuthError;
+        _GenericErrorCodesMap["UserNotFriend"] = GenericErrorCodesUserNotFriend;
+        _GenericErrorCodesMap["InvalidSignature"] = GenericErrorCodesInvalidSignature;
+        _GenericErrorCodesMap["InvalidPublicKey"] = GenericErrorCodesInvalidPublicKey;
+        _GenericErrorCodesMap["GoogleOAuthNoIdTokenIncludedInResponse"] = GenericErrorCodesGoogleOAuthNoIdTokenIncludedInResponse;
+        _GenericErrorCodesMap["StatisticUpdateInProgress"] = GenericErrorCodesStatisticUpdateInProgress;
+        _GenericErrorCodesMap["LeaderboardVersionNotAvailable"] = GenericErrorCodesLeaderboardVersionNotAvailable;
+        _GenericErrorCodesMap["StatisticAlreadyHasPrizeTable"] = GenericErrorCodesStatisticAlreadyHasPrizeTable;
+        _GenericErrorCodesMap["PrizeTableHasOverlappingRanks"] = GenericErrorCodesPrizeTableHasOverlappingRanks;
+        _GenericErrorCodesMap["PrizeTableHasMissingRanks"] = GenericErrorCodesPrizeTableHasMissingRanks;
+        _GenericErrorCodesMap["PrizeTableRankStartsAtZero"] = GenericErrorCodesPrizeTableRankStartsAtZero;
+        _GenericErrorCodesMap["InvalidStatistic"] = GenericErrorCodesInvalidStatistic;
+        _GenericErrorCodesMap["ExpressionParseFailure"] = GenericErrorCodesExpressionParseFailure;
+        _GenericErrorCodesMap["ExpressionInvokeFailure"] = GenericErrorCodesExpressionInvokeFailure;
+        _GenericErrorCodesMap["ExpressionTooLong"] = GenericErrorCodesExpressionTooLong;
+        _GenericErrorCodesMap["DataUpdateRateExceeded"] = GenericErrorCodesDataUpdateRateExceeded;
+        _GenericErrorCodesMap["RestrictedEmailDomain"] = GenericErrorCodesRestrictedEmailDomain;
+        _GenericErrorCodesMap["EncryptionKeyDisabled"] = GenericErrorCodesEncryptionKeyDisabled;
+        _GenericErrorCodesMap["EncryptionKeyMissing"] = GenericErrorCodesEncryptionKeyMissing;
+        _GenericErrorCodesMap["EncryptionKeyBroken"] = GenericErrorCodesEncryptionKeyBroken;
+        _GenericErrorCodesMap["NoSharedSecretKeyConfigured"] = GenericErrorCodesNoSharedSecretKeyConfigured;
+        _GenericErrorCodesMap["SecretKeyNotFound"] = GenericErrorCodesSecretKeyNotFound;
+        _GenericErrorCodesMap["PlayerSecretAlreadyConfigured"] = GenericErrorCodesPlayerSecretAlreadyConfigured;
+        _GenericErrorCodesMap["APIRequestsDisabledForTitle"] = GenericErrorCodesAPIRequestsDisabledForTitle;
+        _GenericErrorCodesMap["InvalidSharedSecretKey"] = GenericErrorCodesInvalidSharedSecretKey;
+        _GenericErrorCodesMap["PrizeTableHasNoRanks"] = GenericErrorCodesPrizeTableHasNoRanks;
+        _GenericErrorCodesMap["ProfileDoesNotExist"] = GenericErrorCodesProfileDoesNotExist;
+        _GenericErrorCodesMap["ContentS3OriginBucketNotConfigured"] = GenericErrorCodesContentS3OriginBucketNotConfigured;
+        _GenericErrorCodesMap["InvalidEnvironmentForReceipt"] = GenericErrorCodesInvalidEnvironmentForReceipt;
+        _GenericErrorCodesMap["EncryptedRequestNotAllowed"] = GenericErrorCodesEncryptedRequestNotAllowed;
+        _GenericErrorCodesMap["SignedRequestNotAllowed"] = GenericErrorCodesSignedRequestNotAllowed;
+        _GenericErrorCodesMap["RequestViewConstraintParamsNotAllowed"] = GenericErrorCodesRequestViewConstraintParamsNotAllowed;
+        _GenericErrorCodesMap["BadPartnerConfiguration"] = GenericErrorCodesBadPartnerConfiguration;
+        _GenericErrorCodesMap["XboxBPCertificateFailure"] = GenericErrorCodesXboxBPCertificateFailure;
+        _GenericErrorCodesMap["XboxXASSExchangeFailure"] = GenericErrorCodesXboxXASSExchangeFailure;
+        _GenericErrorCodesMap["InvalidEntityId"] = GenericErrorCodesInvalidEntityId;
+        _GenericErrorCodesMap["StatisticValueAggregationOverflow"] = GenericErrorCodesStatisticValueAggregationOverflow;
+        _GenericErrorCodesMap["EmailMessageFromAddressIsMissing"] = GenericErrorCodesEmailMessageFromAddressIsMissing;
+        _GenericErrorCodesMap["EmailMessageToAddressIsMissing"] = GenericErrorCodesEmailMessageToAddressIsMissing;
+        _GenericErrorCodesMap["SmtpServerAuthenticationError"] = GenericErrorCodesSmtpServerAuthenticationError;
+        _GenericErrorCodesMap["SmtpServerLimitExceeded"] = GenericErrorCodesSmtpServerLimitExceeded;
+        _GenericErrorCodesMap["SmtpServerInsufficientStorage"] = GenericErrorCodesSmtpServerInsufficientStorage;
+        _GenericErrorCodesMap["SmtpServerCommunicationError"] = GenericErrorCodesSmtpServerCommunicationError;
+        _GenericErrorCodesMap["SmtpServerGeneralFailure"] = GenericErrorCodesSmtpServerGeneralFailure;
+        _GenericErrorCodesMap["EmailClientTimeout"] = GenericErrorCodesEmailClientTimeout;
+        _GenericErrorCodesMap["EmailClientCanceledTask"] = GenericErrorCodesEmailClientCanceledTask;
+        _GenericErrorCodesMap["EmailTemplateMissing"] = GenericErrorCodesEmailTemplateMissing;
+        _GenericErrorCodesMap["InvalidHostForTitleId"] = GenericErrorCodesInvalidHostForTitleId;
+        _GenericErrorCodesMap["EmailConfirmationTokenDoesNotExist"] = GenericErrorCodesEmailConfirmationTokenDoesNotExist;
+        _GenericErrorCodesMap["EmailConfirmationTokenExpired"] = GenericErrorCodesEmailConfirmationTokenExpired;
+        _GenericErrorCodesMap["AccountDeleted"] = GenericErrorCodesAccountDeleted;
+        _GenericErrorCodesMap["PlayerSecretNotConfigured"] = GenericErrorCodesPlayerSecretNotConfigured;
+        _GenericErrorCodesMap["InvalidSignatureTime"] = GenericErrorCodesInvalidSignatureTime;
+        _GenericErrorCodesMap["NoContactEmailAddressFound"] = GenericErrorCodesNoContactEmailAddressFound;
+        _GenericErrorCodesMap["InvalidAuthToken"] = GenericErrorCodesInvalidAuthToken;
+        _GenericErrorCodesMap["AuthTokenDoesNotExist"] = GenericErrorCodesAuthTokenDoesNotExist;
+        _GenericErrorCodesMap["AuthTokenExpired"] = GenericErrorCodesAuthTokenExpired;
+        _GenericErrorCodesMap["AuthTokenAlreadyUsedToResetPassword"] = GenericErrorCodesAuthTokenAlreadyUsedToResetPassword;
+        _GenericErrorCodesMap["MembershipNameTooLong"] = GenericErrorCodesMembershipNameTooLong;
+        _GenericErrorCodesMap["MembershipNotFound"] = GenericErrorCodesMembershipNotFound;
+        _GenericErrorCodesMap["GoogleServiceAccountInvalid"] = GenericErrorCodesGoogleServiceAccountInvalid;
+        _GenericErrorCodesMap["GoogleServiceAccountParseFailure"] = GenericErrorCodesGoogleServiceAccountParseFailure;
+        _GenericErrorCodesMap["EntityTokenMissing"] = GenericErrorCodesEntityTokenMissing;
+        _GenericErrorCodesMap["EntityTokenInvalid"] = GenericErrorCodesEntityTokenInvalid;
+        _GenericErrorCodesMap["EntityTokenExpired"] = GenericErrorCodesEntityTokenExpired;
+        _GenericErrorCodesMap["EntityTokenRevoked"] = GenericErrorCodesEntityTokenRevoked;
+        _GenericErrorCodesMap["InvalidProductForSubscription"] = GenericErrorCodesInvalidProductForSubscription;
+        _GenericErrorCodesMap["XboxInaccessible"] = GenericErrorCodesXboxInaccessible;
+        _GenericErrorCodesMap["SubscriptionAlreadyTaken"] = GenericErrorCodesSubscriptionAlreadyTaken;
+        _GenericErrorCodesMap["SmtpAddonNotEnabled"] = GenericErrorCodesSmtpAddonNotEnabled;
+        _GenericErrorCodesMap["APIConcurrentRequestLimitExceeded"] = GenericErrorCodesAPIConcurrentRequestLimitExceeded;
+        _GenericErrorCodesMap["XboxRejectedXSTSExchangeRequest"] = GenericErrorCodesXboxRejectedXSTSExchangeRequest;
+        _GenericErrorCodesMap["VariableNotDefined"] = GenericErrorCodesVariableNotDefined;
+        _GenericErrorCodesMap["TemplateVersionNotDefined"] = GenericErrorCodesTemplateVersionNotDefined;
+        _GenericErrorCodesMap["FileTooLarge"] = GenericErrorCodesFileTooLarge;
+        _GenericErrorCodesMap["TitleDeleted"] = GenericErrorCodesTitleDeleted;
+        _GenericErrorCodesMap["TitleContainsUserAccounts"] = GenericErrorCodesTitleContainsUserAccounts;
+        _GenericErrorCodesMap["TitleDeletionPlayerCleanupFailure"] = GenericErrorCodesTitleDeletionPlayerCleanupFailure;
+        _GenericErrorCodesMap["EntityFileOperationPending"] = GenericErrorCodesEntityFileOperationPending;
+        _GenericErrorCodesMap["NoEntityFileOperationPending"] = GenericErrorCodesNoEntityFileOperationPending;
+        _GenericErrorCodesMap["EntityProfileVersionMismatch"] = GenericErrorCodesEntityProfileVersionMismatch;
+        _GenericErrorCodesMap["TemplateVersionTooOld"] = GenericErrorCodesTemplateVersionTooOld;
+        _GenericErrorCodesMap["MembershipDefinitionInUse"] = GenericErrorCodesMembershipDefinitionInUse;
+        _GenericErrorCodesMap["PaymentPageNotConfigured"] = GenericErrorCodesPaymentPageNotConfigured;
+        _GenericErrorCodesMap["FailedLoginAttemptRateLimitExceeded"] = GenericErrorCodesFailedLoginAttemptRateLimitExceeded;
+        _GenericErrorCodesMap["EntityBlockedByGroup"] = GenericErrorCodesEntityBlockedByGroup;
+        _GenericErrorCodesMap["RoleDoesNotExist"] = GenericErrorCodesRoleDoesNotExist;
+        _GenericErrorCodesMap["EntityIsAlreadyMember"] = GenericErrorCodesEntityIsAlreadyMember;
+        _GenericErrorCodesMap["DuplicateRoleId"] = GenericErrorCodesDuplicateRoleId;
+        _GenericErrorCodesMap["GroupInvitationNotFound"] = GenericErrorCodesGroupInvitationNotFound;
+        _GenericErrorCodesMap["GroupApplicationNotFound"] = GenericErrorCodesGroupApplicationNotFound;
+        _GenericErrorCodesMap["OutstandingInvitationAcceptedInstead"] = GenericErrorCodesOutstandingInvitationAcceptedInstead;
+        _GenericErrorCodesMap["OutstandingApplicationAcceptedInstead"] = GenericErrorCodesOutstandingApplicationAcceptedInstead;
+        _GenericErrorCodesMap["RoleIsGroupDefaultMember"] = GenericErrorCodesRoleIsGroupDefaultMember;
+        _GenericErrorCodesMap["RoleIsGroupAdmin"] = GenericErrorCodesRoleIsGroupAdmin;
+        _GenericErrorCodesMap["RoleNameNotAvailable"] = GenericErrorCodesRoleNameNotAvailable;
+        _GenericErrorCodesMap["GroupNameNotAvailable"] = GenericErrorCodesGroupNameNotAvailable;
+        _GenericErrorCodesMap["EmailReportAlreadySent"] = GenericErrorCodesEmailReportAlreadySent;
+        _GenericErrorCodesMap["EmailReportRecipientBlacklisted"] = GenericErrorCodesEmailReportRecipientBlacklisted;
+
+    }
+
+    auto output = _GenericErrorCodesMap.find(obj.GetString());
+    if (output != _GenericErrorCodesMap.end())
+        return output->second;
+
+    return GenericErrorCodesSuccess; // Basically critical fail
+}
 
 GetActionsOnPlayersInSegmentTaskInstanceResult::~GetActionsOnPlayersInSegmentTaskInstanceResult()
 {
@@ -3048,10 +3670,8 @@ GetActionsOnPlayersInSegmentTaskInstanceResult::~GetActionsOnPlayersInSegmentTas
 void GetActionsOnPlayersInSegmentTaskInstanceResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Parameter != NULL) { writer.String("Parameter"); Parameter->writeJSON(writer); }
     if (Summary != NULL) { writer.String("Summary"); Summary->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -3073,8 +3693,6 @@ GetAllSegmentsRequest::~GetAllSegmentsRequest()
 void GetAllSegmentsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -3092,11 +3710,9 @@ GetSegmentResult::~GetSegmentResult()
 void GetSegmentResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (ABTestParent.length() > 0) { writer.String("ABTestParent"); writer.String(ABTestParent.c_str()); }
     writer.String("Id"); writer.String(Id.c_str());
     if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
-
     writer.EndObject();
 }
 
@@ -3120,16 +3736,14 @@ GetAllSegmentsResult::~GetAllSegmentsResult()
 void GetAllSegmentsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Segments.empty()) {
-    writer.String("Segments");
-    writer.StartArray();
-    for (std::list<GetSegmentResult>::iterator iter = Segments.begin(); iter != Segments.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Segments");
+        writer.StartArray();
+        for (std::list<GetSegmentResult>::iterator iter = Segments.begin(); iter != Segments.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -3154,9 +3768,7 @@ GetCatalogItemsRequest::~GetCatalogItemsRequest()
 void GetCatalogItemsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
-
     writer.EndObject();
 }
 
@@ -3176,16 +3788,14 @@ GetCatalogItemsResult::~GetCatalogItemsResult()
 void GetCatalogItemsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Catalog.empty()) {
-    writer.String("Catalog");
-    writer.StartArray();
-    for (std::list<CatalogItem>::iterator iter = Catalog.begin(); iter != Catalog.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Catalog");
+        writer.StartArray();
+        for (std::list<CatalogItem>::iterator iter = Catalog.begin(); iter != Catalog.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -3210,10 +3820,8 @@ GetCloudScriptRevisionRequest::~GetCloudScriptRevisionRequest()
 void GetCloudScriptRevisionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Revision.notNull()) { writer.String("Revision"); writer.Int(Revision); }
     if (Version.notNull()) { writer.String("Version"); writer.Int(Version); }
-
     writer.EndObject();
 }
 
@@ -3235,20 +3843,18 @@ GetCloudScriptRevisionResult::~GetCloudScriptRevisionResult()
 void GetCloudScriptRevisionResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("CreatedAt"); writeDatetime(CreatedAt, writer);
     if (!Files.empty()) {
-    writer.String("Files");
-    writer.StartArray();
-    for (std::list<CloudScriptFile>::iterator iter = Files.begin(); iter != Files.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Files");
+        writer.StartArray();
+        for (std::list<CloudScriptFile>::iterator iter = Files.begin(); iter != Files.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     writer.String("IsPublished"); writer.Bool(IsPublished);
     writer.String("Revision"); writer.Int(Revision);
     writer.String("Version"); writer.Int(Version);
-
     writer.EndObject();
 }
 
@@ -3283,10 +3889,8 @@ GetCloudScriptTaskInstanceResult::~GetCloudScriptTaskInstanceResult()
 void GetCloudScriptTaskInstanceResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Parameter != NULL) { writer.String("Parameter"); Parameter->writeJSON(writer); }
     if (Summary != NULL) { writer.String("Summary"); Summary->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -3308,8 +3912,6 @@ GetCloudScriptVersionsRequest::~GetCloudScriptVersionsRequest()
 void GetCloudScriptVersionsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -3327,16 +3929,14 @@ GetCloudScriptVersionsResult::~GetCloudScriptVersionsResult()
 void GetCloudScriptVersionsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Versions.empty()) {
-    writer.String("Versions");
-    writer.StartArray();
-    for (std::list<CloudScriptVersionStatus>::iterator iter = Versions.begin(); iter != Versions.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Versions");
+        writer.StartArray();
+        for (std::list<CloudScriptVersionStatus>::iterator iter = Versions.begin(); iter != Versions.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -3361,9 +3961,7 @@ GetContentListRequest::~GetContentListRequest()
 void GetContentListRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Prefix.length() > 0) { writer.String("Prefix"); writer.String(Prefix.c_str()); }
-
     writer.EndObject();
 }
 
@@ -3383,18 +3981,16 @@ GetContentListResult::~GetContentListResult()
 void GetContentListResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Contents.empty()) {
-    writer.String("Contents");
-    writer.StartArray();
-    for (std::list<ContentInfo>::iterator iter = Contents.begin(); iter != Contents.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Contents");
+        writer.StartArray();
+        for (std::list<ContentInfo>::iterator iter = Contents.begin(); iter != Contents.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     writer.String("ItemCount"); writer.Int(ItemCount);
     writer.String("TotalSize"); writer.Uint(TotalSize);
-
     writer.EndObject();
 }
 
@@ -3423,10 +4019,8 @@ GetContentUploadUrlRequest::~GetContentUploadUrlRequest()
 void GetContentUploadUrlRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (ContentType.length() > 0) { writer.String("ContentType"); writer.String(ContentType.c_str()); }
     writer.String("Key"); writer.String(Key.c_str());
-
     writer.EndObject();
 }
 
@@ -3448,9 +4042,7 @@ GetContentUploadUrlResult::~GetContentUploadUrlResult()
 void GetContentUploadUrlResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (URL.length() > 0) { writer.String("URL"); writer.String(URL.c_str()); }
-
     writer.EndObject();
 }
 
@@ -3470,12 +4062,10 @@ GetDataReportRequest::~GetDataReportRequest()
 void GetDataReportRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Day"); writer.Int(Day);
     writer.String("Month"); writer.Int(Month);
     writer.String("ReportName"); writer.String(ReportName.c_str());
     writer.String("Year"); writer.Int(Year);
-
     writer.EndObject();
 }
 
@@ -3501,9 +4091,7 @@ GetDataReportResult::~GetDataReportResult()
 void GetDataReportResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (DownloadUrl.length() > 0) { writer.String("DownloadUrl"); writer.String(DownloadUrl.c_str()); }
-
     writer.EndObject();
 }
 
@@ -3523,9 +4111,7 @@ GetMatchmakerGameInfoRequest::~GetMatchmakerGameInfoRequest()
 void GetMatchmakerGameInfoRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("LobbyId"); writer.String(LobbyId.c_str());
-
     writer.EndObject();
 }
 
@@ -3545,25 +4131,23 @@ GetMatchmakerGameInfoResult::~GetMatchmakerGameInfoResult()
 void GetMatchmakerGameInfoResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (BuildVersion.length() > 0) { writer.String("BuildVersion"); writer.String(BuildVersion.c_str()); }
     if (EndTime.notNull()) { writer.String("EndTime"); writeDatetime(EndTime, writer); }
     if (LobbyId.length() > 0) { writer.String("LobbyId"); writer.String(LobbyId.c_str()); }
     if (Mode.length() > 0) { writer.String("Mode"); writer.String(Mode.c_str()); }
     if (!Players.empty()) {
-    writer.String("Players");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = Players.begin(); iter != Players.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("Players");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = Players.begin(); iter != Players.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (pfRegion.notNull()) { writer.String("Region"); writeRegionEnumJSON(pfRegion, writer); }
     if (ServerAddress.length() > 0) { writer.String("ServerAddress"); writer.String(ServerAddress.c_str()); }
     writer.String("ServerPort"); writer.Uint(ServerPort);
     writer.String("StartTime"); writeDatetime(StartTime, writer);
     if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -3606,9 +4190,7 @@ GetMatchmakerGameModesRequest::~GetMatchmakerGameModesRequest()
 void GetMatchmakerGameModesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("BuildVersion"); writer.String(BuildVersion.c_str());
-
     writer.EndObject();
 }
 
@@ -3628,16 +4210,14 @@ GetMatchmakerGameModesResult::~GetMatchmakerGameModesResult()
 void GetMatchmakerGameModesResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!GameModes.empty()) {
-    writer.String("GameModes");
-    writer.StartArray();
-    for (std::list<GameModeInfo>::iterator iter = GameModes.begin(); iter != GameModes.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("GameModes");
+        writer.StartArray();
+        for (std::list<GameModeInfo>::iterator iter = GameModes.begin(); iter != GameModes.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -3662,10 +4242,8 @@ GetPlayerIdFromAuthTokenRequest::~GetPlayerIdFromAuthTokenRequest()
 void GetPlayerIdFromAuthTokenRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Token"); writer.String(Token.c_str());
     writer.String("TokenType"); writeAuthTokenTypeEnumJSON(TokenType, writer);
-
     writer.EndObject();
 }
 
@@ -3687,9 +4265,7 @@ GetPlayerIdFromAuthTokenResult::~GetPlayerIdFromAuthTokenResult()
 void GetPlayerIdFromAuthTokenResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -3709,7 +4285,6 @@ PlayerProfileViewConstraints::~PlayerProfileViewConstraints()
 void PlayerProfileViewConstraints::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("ShowAvatarUrl"); writer.Bool(ShowAvatarUrl);
     writer.String("ShowBannedUntil"); writer.Bool(ShowBannedUntil);
     writer.String("ShowCampaignAttributions"); writer.Bool(ShowCampaignAttributions);
@@ -3726,7 +4301,6 @@ void PlayerProfileViewConstraints::writeJSON(PFStringJsonWriter& writer)
     writer.String("ShowTags"); writer.Bool(ShowTags);
     writer.String("ShowTotalValueToDateInUsd"); writer.Bool(ShowTotalValueToDateInUsd);
     writer.String("ShowValuesToDate"); writer.Bool(ShowValuesToDate);
-
     writer.EndObject();
 }
 
@@ -3777,10 +4351,8 @@ GetPlayerProfileRequest::~GetPlayerProfileRequest()
 void GetPlayerProfileRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -3853,12 +4425,10 @@ LinkedPlatformAccountModel::~LinkedPlatformAccountModel()
 void LinkedPlatformAccountModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Email.length() > 0) { writer.String("Email"); writer.String(Email.c_str()); }
     if (Platform.notNull()) { writer.String("Platform"); writeLoginIdentityProviderEnumJSON(Platform, writer); }
     if (PlatformUserId.length() > 0) { writer.String("PlatformUserId"); writer.String(PlatformUserId.c_str()); }
     if (Username.length() > 0) { writer.String("Username"); writer.String(Username.c_str()); }
-
     writer.EndObject();
 }
 
@@ -3884,13 +4454,11 @@ LocationModel::~LocationModel()
 void LocationModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (City.length() > 0) { writer.String("City"); writer.String(City.c_str()); }
     if (pfContinentCode.notNull()) { writer.String("ContinentCode"); writeContinentCodeEnumJSON(pfContinentCode, writer); }
     if (pfCountryCode.notNull()) { writer.String("CountryCode"); writeCountryCodeEnumJSON(pfCountryCode, writer); }
     if (Latitude.notNull()) { writer.String("Latitude"); writer.Double(Latitude); }
     if (Longitude.notNull()) { writer.String("Longitude"); writer.Double(Longitude); }
-
     writer.EndObject();
 }
 
@@ -3957,7 +4525,6 @@ SubscriptionModel::~SubscriptionModel()
 void SubscriptionModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Expiration"); writeDatetime(Expiration, writer);
     writer.String("InitialSubscriptionTime"); writeDatetime(InitialSubscriptionTime, writer);
     writer.String("IsActive"); writer.Bool(IsActive);
@@ -3965,7 +4532,6 @@ void SubscriptionModel::writeJSON(PFStringJsonWriter& writer)
     if (SubscriptionId.length() > 0) { writer.String("SubscriptionId"); writer.String(SubscriptionId.c_str()); }
     if (SubscriptionItemId.length() > 0) { writer.String("SubscriptionItemId"); writer.String(SubscriptionItemId.c_str()); }
     if (SubscriptionProvider.length() > 0) { writer.String("SubscriptionProvider"); writer.String(SubscriptionProvider.c_str()); }
-
     writer.EndObject();
 }
 
@@ -3997,20 +4563,18 @@ MembershipModel::~MembershipModel()
 void MembershipModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("IsActive"); writer.Bool(IsActive);
     writer.String("MembershipExpiration"); writeDatetime(MembershipExpiration, writer);
     if (MembershipId.length() > 0) { writer.String("MembershipId"); writer.String(MembershipId.c_str()); }
     if (OverrideExpiration.notNull()) { writer.String("OverrideExpiration"); writeDatetime(OverrideExpiration, writer); }
     if (!Subscriptions.empty()) {
-    writer.String("Subscriptions");
-    writer.StartArray();
-    for (std::list<SubscriptionModel>::iterator iter = Subscriptions.begin(); iter != Subscriptions.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Subscriptions");
+        writer.StartArray();
+        for (std::list<SubscriptionModel>::iterator iter = Subscriptions.begin(); iter != Subscriptions.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -4070,10 +4634,8 @@ PushNotificationRegistrationModel::~PushNotificationRegistrationModel()
 void PushNotificationRegistrationModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (NotificationEndpointARN.length() > 0) { writer.String("NotificationEndpointARN"); writer.String(NotificationEndpointARN.c_str()); }
     if (Platform.notNull()) { writer.String("Platform"); writePushNotificationPlatformEnumJSON(Platform, writer); }
-
     writer.EndObject();
 }
 
@@ -4095,11 +4657,9 @@ StatisticModel::~StatisticModel()
 void StatisticModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
     writer.String("Value"); writer.Int(Value);
     writer.String("Version"); writer.Int(Version);
-
     writer.EndObject();
 }
 
@@ -4123,9 +4683,7 @@ TagModel::~TagModel()
 void TagModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (TagValue.length() > 0) { writer.String("TagValue"); writer.String(TagValue.c_str()); }
-
     writer.EndObject();
 }
 
@@ -4145,11 +4703,9 @@ ValueToDateModel::~ValueToDateModel()
 void ValueToDateModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Currency.length() > 0) { writer.String("Currency"); writer.String(Currency.c_str()); }
     writer.String("TotalValue"); writer.Uint(TotalValue);
     if (TotalValueAsDecimal.length() > 0) { writer.String("TotalValueAsDecimal"); writer.String(TotalValueAsDecimal.c_str()); }
-
     writer.EndObject();
 }
 
@@ -4173,90 +4729,88 @@ PlayerProfileModel::~PlayerProfileModel()
 void PlayerProfileModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!AdCampaignAttributions.empty()) {
-    writer.String("AdCampaignAttributions");
-    writer.StartArray();
-    for (std::list<AdCampaignAttributionModel>::iterator iter = AdCampaignAttributions.begin(); iter != AdCampaignAttributions.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("AdCampaignAttributions");
+        writer.StartArray();
+        for (std::list<AdCampaignAttributionModel>::iterator iter = AdCampaignAttributions.begin(); iter != AdCampaignAttributions.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (AvatarUrl.length() > 0) { writer.String("AvatarUrl"); writer.String(AvatarUrl.c_str()); }
     if (BannedUntil.notNull()) { writer.String("BannedUntil"); writeDatetime(BannedUntil, writer); }
     if (!ContactEmailAddresses.empty()) {
-    writer.String("ContactEmailAddresses");
-    writer.StartArray();
-    for (std::list<ContactEmailInfoModel>::iterator iter = ContactEmailAddresses.begin(); iter != ContactEmailAddresses.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("ContactEmailAddresses");
+        writer.StartArray();
+        for (std::list<ContactEmailInfoModel>::iterator iter = ContactEmailAddresses.begin(); iter != ContactEmailAddresses.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (Created.notNull()) { writer.String("Created"); writeDatetime(Created, writer); }
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
     if (LastLogin.notNull()) { writer.String("LastLogin"); writeDatetime(LastLogin, writer); }
     if (!LinkedAccounts.empty()) {
-    writer.String("LinkedAccounts");
-    writer.StartArray();
-    for (std::list<LinkedPlatformAccountModel>::iterator iter = LinkedAccounts.begin(); iter != LinkedAccounts.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("LinkedAccounts");
+        writer.StartArray();
+        for (std::list<LinkedPlatformAccountModel>::iterator iter = LinkedAccounts.begin(); iter != LinkedAccounts.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (!Locations.empty()) {
-    writer.String("Locations");
-    writer.StartArray();
-    for (std::list<LocationModel>::iterator iter = Locations.begin(); iter != Locations.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Locations");
+        writer.StartArray();
+        for (std::list<LocationModel>::iterator iter = Locations.begin(); iter != Locations.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (!Memberships.empty()) {
-    writer.String("Memberships");
-    writer.StartArray();
-    for (std::list<MembershipModel>::iterator iter = Memberships.begin(); iter != Memberships.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Memberships");
+        writer.StartArray();
+        for (std::list<MembershipModel>::iterator iter = Memberships.begin(); iter != Memberships.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (Origination.notNull()) { writer.String("Origination"); writeLoginIdentityProviderEnumJSON(Origination, writer); }
     if (PlayerId.length() > 0) { writer.String("PlayerId"); writer.String(PlayerId.c_str()); }
     if (PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
     if (!PushNotificationRegistrations.empty()) {
-    writer.String("PushNotificationRegistrations");
-    writer.StartArray();
-    for (std::list<PushNotificationRegistrationModel>::iterator iter = PushNotificationRegistrations.begin(); iter != PushNotificationRegistrations.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("PushNotificationRegistrations");
+        writer.StartArray();
+        for (std::list<PushNotificationRegistrationModel>::iterator iter = PushNotificationRegistrations.begin(); iter != PushNotificationRegistrations.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (!Statistics.empty()) {
-    writer.String("Statistics");
-    writer.StartArray();
-    for (std::list<StatisticModel>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Statistics");
+        writer.StartArray();
+        for (std::list<StatisticModel>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (!Tags.empty()) {
-    writer.String("Tags");
-    writer.StartArray();
-    for (std::list<TagModel>::iterator iter = Tags.begin(); iter != Tags.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Tags");
+        writer.StartArray();
+        for (std::list<TagModel>::iterator iter = Tags.begin(); iter != Tags.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
     if (TotalValueToDateInUSD.notNull()) { writer.String("TotalValueToDateInUSD"); writer.Uint(TotalValueToDateInUSD); }
     if (!ValuesToDate.empty()) {
-    writer.String("ValuesToDate");
-    writer.StartArray();
-    for (std::list<ValueToDateModel>::iterator iter = ValuesToDate.begin(); iter != ValuesToDate.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("ValuesToDate");
+        writer.StartArray();
+        for (std::list<ValueToDateModel>::iterator iter = ValuesToDate.begin(); iter != ValuesToDate.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -4358,9 +4912,7 @@ GetPlayerProfileResult::~GetPlayerProfileResult()
 void GetPlayerProfileResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (PlayerProfile != NULL) { writer.String("PlayerProfile"); PlayerProfile->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -4380,16 +4932,14 @@ GetPlayerSegmentsResult::~GetPlayerSegmentsResult()
 void GetPlayerSegmentsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Segments.empty()) {
-    writer.String("Segments");
-    writer.StartArray();
-    for (std::list<GetSegmentResult>::iterator iter = Segments.begin(); iter != Segments.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Segments");
+        writer.StartArray();
+        for (std::list<GetSegmentResult>::iterator iter = Segments.begin(); iter != Segments.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -4414,8 +4964,6 @@ GetPlayerSharedSecretsRequest::~GetPlayerSharedSecretsRequest()
 void GetPlayerSharedSecretsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -4433,11 +4981,9 @@ SharedSecret::~SharedSecret()
 void SharedSecret::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Disabled"); writer.Bool(Disabled);
     if (FriendlyName.length() > 0) { writer.String("FriendlyName"); writer.String(FriendlyName.c_str()); }
     if (SecretKey.length() > 0) { writer.String("SecretKey"); writer.String(SecretKey.c_str()); }
-
     writer.EndObject();
 }
 
@@ -4461,16 +5007,14 @@ GetPlayerSharedSecretsResult::~GetPlayerSharedSecretsResult()
 void GetPlayerSharedSecretsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!SharedSecrets.empty()) {
-    writer.String("SharedSecrets");
-    writer.StartArray();
-    for (std::list<SharedSecret>::iterator iter = SharedSecrets.begin(); iter != SharedSecrets.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("SharedSecrets");
+        writer.StartArray();
+        for (std::list<SharedSecret>::iterator iter = SharedSecrets.begin(); iter != SharedSecrets.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -4495,12 +5039,10 @@ GetPlayersInSegmentRequest::~GetPlayersInSegmentRequest()
 void GetPlayersInSegmentRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (ContinuationToken.length() > 0) { writer.String("ContinuationToken"); writer.String(ContinuationToken.c_str()); }
     if (MaxBatchSize.notNull()) { writer.String("MaxBatchSize"); writer.Uint(MaxBatchSize); }
     if (SecondsToLive.notNull()) { writer.String("SecondsToLive"); writer.Uint(SecondsToLive); }
     writer.String("SegmentId"); writer.String(SegmentId.c_str());
-
     writer.EndObject();
 }
 
@@ -4526,12 +5068,10 @@ PlayerLinkedAccount::~PlayerLinkedAccount()
 void PlayerLinkedAccount::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Email.length() > 0) { writer.String("Email"); writer.String(Email.c_str()); }
     if (Platform.notNull()) { writer.String("Platform"); writeLoginIdentityProviderEnumJSON(Platform, writer); }
     if (PlatformUserId.length() > 0) { writer.String("PlatformUserId"); writer.String(PlatformUserId.c_str()); }
     if (Username.length() > 0) { writer.String("Username"); writer.String(Username.c_str()); }
-
     writer.EndObject();
 }
 
@@ -4557,13 +5097,11 @@ PlayerLocation::~PlayerLocation()
 void PlayerLocation::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (City.length() > 0) { writer.String("City"); writer.String(City.c_str()); }
     writer.String("ContinentCode"); writeContinentCodeEnumJSON(pfContinentCode, writer);
     writer.String("CountryCode"); writeCountryCodeEnumJSON(pfCountryCode, writer);
     if (Latitude.notNull()) { writer.String("Latitude"); writer.Double(Latitude); }
     if (Longitude.notNull()) { writer.String("Longitude"); writer.Double(Longitude); }
-
     writer.EndObject();
 }
 
@@ -4591,12 +5129,10 @@ PlayerStatistic::~PlayerStatistic()
 void PlayerStatistic::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
     if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
     writer.String("StatisticValue"); writer.Int(StatisticValue);
     writer.String("StatisticVersion"); writer.Int(StatisticVersion);
-
     writer.EndObject();
 }
 
@@ -4622,10 +5158,8 @@ PushNotificationRegistration::~PushNotificationRegistration()
 void PushNotificationRegistration::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (NotificationEndpointARN.length() > 0) { writer.String("NotificationEndpointARN"); writer.String(NotificationEndpointARN.c_str()); }
     if (Platform.notNull()) { writer.String("Platform"); writePushNotificationPlatformEnumJSON(Platform, writer); }
-
     writer.EndObject();
 }
 
@@ -4647,98 +5181,96 @@ PlayerProfile::~PlayerProfile()
 void PlayerProfile::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!AdCampaignAttributions.empty()) {
-    writer.String("AdCampaignAttributions");
-    writer.StartArray();
-    for (std::list<AdCampaignAttribution>::iterator iter = AdCampaignAttributions.begin(); iter != AdCampaignAttributions.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("AdCampaignAttributions");
+        writer.StartArray();
+        for (std::list<AdCampaignAttribution>::iterator iter = AdCampaignAttributions.begin(); iter != AdCampaignAttributions.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (AvatarUrl.length() > 0) { writer.String("AvatarUrl"); writer.String(AvatarUrl.c_str()); }
     if (BannedUntil.notNull()) { writer.String("BannedUntil"); writeDatetime(BannedUntil, writer); }
     if (!ContactEmailAddresses.empty()) {
-    writer.String("ContactEmailAddresses");
-    writer.StartArray();
-    for (std::list<ContactEmailInfo>::iterator iter = ContactEmailAddresses.begin(); iter != ContactEmailAddresses.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("ContactEmailAddresses");
+        writer.StartArray();
+        for (std::list<ContactEmailInfo>::iterator iter = ContactEmailAddresses.begin(); iter != ContactEmailAddresses.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (Created.notNull()) { writer.String("Created"); writeDatetime(Created, writer); }
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
     if (LastLogin.notNull()) { writer.String("LastLogin"); writeDatetime(LastLogin, writer); }
     if (!LinkedAccounts.empty()) {
-    writer.String("LinkedAccounts");
-    writer.StartArray();
-    for (std::list<PlayerLinkedAccount>::iterator iter = LinkedAccounts.begin(); iter != LinkedAccounts.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("LinkedAccounts");
+        writer.StartArray();
+        for (std::list<PlayerLinkedAccount>::iterator iter = LinkedAccounts.begin(); iter != LinkedAccounts.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (!Locations.empty()) {
-    writer.String("Locations");
-    writer.StartObject();
-    for (std::map<std::string, PlayerLocation>::iterator iter = Locations.begin(); iter != Locations.end(); ++iter) {
-        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        writer.String("Locations");
+        writer.StartObject();
+        for (std::map<std::string, PlayerLocation>::iterator iter = Locations.begin(); iter != Locations.end(); ++iter) {
+            writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (Origination.notNull()) { writer.String("Origination"); writeLoginIdentityProviderEnumJSON(Origination, writer); }
     if (PlayerId.length() > 0) { writer.String("PlayerId"); writer.String(PlayerId.c_str()); }
     if (!PlayerStatistics.empty()) {
-    writer.String("PlayerStatistics");
-    writer.StartArray();
-    for (std::list<PlayerStatistic>::iterator iter = PlayerStatistics.begin(); iter != PlayerStatistics.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("PlayerStatistics");
+        writer.StartArray();
+        for (std::list<PlayerStatistic>::iterator iter = PlayerStatistics.begin(); iter != PlayerStatistics.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (PublisherId.length() > 0) { writer.String("PublisherId"); writer.String(PublisherId.c_str()); }
     if (!PushNotificationRegistrations.empty()) {
-    writer.String("PushNotificationRegistrations");
-    writer.StartArray();
-    for (std::list<PushNotificationRegistration>::iterator iter = PushNotificationRegistrations.begin(); iter != PushNotificationRegistrations.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("PushNotificationRegistrations");
+        writer.StartArray();
+        for (std::list<PushNotificationRegistration>::iterator iter = PushNotificationRegistrations.begin(); iter != PushNotificationRegistrations.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (!Statistics.empty()) {
-    writer.String("Statistics");
-    writer.StartObject();
-    for (std::map<std::string, Int32>::iterator iter = Statistics.begin(); iter != Statistics.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Int(iter->second);
+        writer.String("Statistics");
+        writer.StartObject();
+        for (std::map<std::string, Int32>::iterator iter = Statistics.begin(); iter != Statistics.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Int(iter->second);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (!Tags.empty()) {
-    writer.String("Tags");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = Tags.begin(); iter != Tags.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("Tags");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = Tags.begin(); iter != Tags.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
     if (TotalValueToDateInUSD.notNull()) { writer.String("TotalValueToDateInUSD"); writer.Uint(TotalValueToDateInUSD); }
     if (!ValuesToDate.empty()) {
-    writer.String("ValuesToDate");
-    writer.StartObject();
-    for (std::map<std::string, Uint32>::iterator iter = ValuesToDate.begin(); iter != ValuesToDate.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        writer.String("ValuesToDate");
+        writer.StartObject();
+        for (std::map<std::string, Uint32>::iterator iter = ValuesToDate.begin(); iter != ValuesToDate.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (!VirtualCurrencyBalances.empty()) {
-    writer.String("VirtualCurrencyBalances");
-    writer.StartObject();
-    for (std::map<std::string, Int32>::iterator iter = VirtualCurrencyBalances.begin(); iter != VirtualCurrencyBalances.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Int(iter->second);
+        writer.String("VirtualCurrencyBalances");
+        writer.StartObject();
+        for (std::map<std::string, Int32>::iterator iter = VirtualCurrencyBalances.begin(); iter != VirtualCurrencyBalances.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Int(iter->second);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
-
     writer.EndObject();
 }
 
@@ -4842,18 +5374,16 @@ GetPlayersInSegmentResult::~GetPlayersInSegmentResult()
 void GetPlayersInSegmentResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (ContinuationToken.length() > 0) { writer.String("ContinuationToken"); writer.String(ContinuationToken.c_str()); }
     if (!PlayerProfiles.empty()) {
-    writer.String("PlayerProfiles");
-    writer.StartArray();
-    for (std::list<PlayerProfile>::iterator iter = PlayerProfiles.begin(); iter != PlayerProfiles.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("PlayerProfiles");
+        writer.StartArray();
+        for (std::list<PlayerProfile>::iterator iter = PlayerProfiles.begin(); iter != PlayerProfiles.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     writer.String("ProfilesInSegment"); writer.Int(ProfilesInSegment);
-
     writer.EndObject();
 }
 
@@ -4882,9 +5412,7 @@ GetPlayersSegmentsRequest::~GetPlayersSegmentsRequest()
 void GetPlayersSegmentsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -4904,8 +5432,6 @@ GetPlayerStatisticDefinitionsRequest::~GetPlayerStatisticDefinitionsRequest()
 void GetPlayerStatisticDefinitionsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -4923,16 +5449,14 @@ GetPlayerStatisticDefinitionsResult::~GetPlayerStatisticDefinitionsResult()
 void GetPlayerStatisticDefinitionsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Statistics.empty()) {
-    writer.String("Statistics");
-    writer.StartArray();
-    for (std::list<PlayerStatisticDefinition>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Statistics");
+        writer.StartArray();
+        for (std::list<PlayerStatisticDefinition>::iterator iter = Statistics.begin(); iter != Statistics.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -4957,9 +5481,7 @@ GetPlayerStatisticVersionsRequest::~GetPlayerStatisticVersionsRequest()
 void GetPlayerStatisticVersionsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-
     writer.EndObject();
 }
 
@@ -5012,7 +5534,6 @@ PlayerStatisticVersion::~PlayerStatisticVersion()
 void PlayerStatisticVersion::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("ActivationTime"); writeDatetime(ActivationTime, writer);
     if (ArchiveDownloadUrl.length() > 0) { writer.String("ArchiveDownloadUrl"); writer.String(ArchiveDownloadUrl.c_str()); }
     if (DeactivationTime.notNull()) { writer.String("DeactivationTime"); writeDatetime(DeactivationTime, writer); }
@@ -5021,7 +5542,6 @@ void PlayerStatisticVersion::writeJSON(PFStringJsonWriter& writer)
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
     if (Status.notNull()) { writer.String("Status"); writeStatisticVersionStatusEnumJSON(Status, writer); }
     writer.String("Version"); writer.Uint(Version);
-
     writer.EndObject();
 }
 
@@ -5055,16 +5575,14 @@ GetPlayerStatisticVersionsResult::~GetPlayerStatisticVersionsResult()
 void GetPlayerStatisticVersionsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!StatisticVersions.empty()) {
-    writer.String("StatisticVersions");
-    writer.StartArray();
-    for (std::list<PlayerStatisticVersion>::iterator iter = StatisticVersions.begin(); iter != StatisticVersions.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("StatisticVersions");
+        writer.StartArray();
+        for (std::list<PlayerStatisticVersion>::iterator iter = StatisticVersions.begin(); iter != StatisticVersions.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -5089,10 +5607,8 @@ GetPlayerTagsRequest::~GetPlayerTagsRequest()
 void GetPlayerTagsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Namespace.length() > 0) { writer.String("Namespace"); writer.String(Namespace.c_str()); }
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -5114,7 +5630,6 @@ GetPlayerTagsResult::~GetPlayerTagsResult()
 void GetPlayerTagsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     writer.String("Tags");
     writer.StartArray();
@@ -5122,8 +5637,6 @@ void GetPlayerTagsResult::writeJSON(PFStringJsonWriter& writer)
         writer.String(iter->c_str());
     }
     writer.EndArray();
-    
-
     writer.EndObject();
 }
 
@@ -5150,9 +5663,7 @@ GetPolicyRequest::~GetPolicyRequest()
 void GetPolicyRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (PolicyName.length() > 0) { writer.String("PolicyName"); writer.String(PolicyName.c_str()); }
-
     writer.EndObject();
 }
 
@@ -5173,14 +5684,12 @@ PermissionStatement::~PermissionStatement()
 void PermissionStatement::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Action"); writer.String(Action.c_str());
     if (ApiConditions != NULL) { writer.String("ApiConditions"); ApiConditions->writeJSON(writer); }
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
     writer.String("Effect"); writeEffectTypeEnumJSON(Effect, writer);
     writer.String("Principal"); writer.String(Principal.c_str());
     writer.String("Resource"); writer.String(Resource.c_str());
-
     writer.EndObject();
 }
 
@@ -5210,17 +5719,15 @@ GetPolicyResponse::~GetPolicyResponse()
 void GetPolicyResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (PolicyName.length() > 0) { writer.String("PolicyName"); writer.String(PolicyName.c_str()); }
     if (!Statements.empty()) {
-    writer.String("Statements");
-    writer.StartArray();
-    for (std::list<PermissionStatement>::iterator iter = Statements.begin(); iter != Statements.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Statements");
+        writer.StartArray();
+        for (std::list<PermissionStatement>::iterator iter = Statements.begin(); iter != Statements.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -5247,15 +5754,12 @@ GetPublisherDataRequest::~GetPublisherDataRequest()
 void GetPublisherDataRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Keys");
     writer.StartArray();
     for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
         writer.String(iter->c_str());
     }
     writer.EndArray();
-    
-
     writer.EndObject();
 }
 
@@ -5280,16 +5784,14 @@ GetPublisherDataResult::~GetPublisherDataResult()
 void GetPublisherDataResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Data.empty()) {
-    writer.String("Data");
-    writer.StartObject();
-    for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        writer.String("Data");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
-
     writer.EndObject();
 }
 
@@ -5313,9 +5815,7 @@ GetRandomResultTablesRequest::~GetRandomResultTablesRequest()
 void GetRandomResultTablesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
-
     writer.EndObject();
 }
 
@@ -5362,11 +5862,9 @@ ResultTableNode::~ResultTableNode()
 void ResultTableNode::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("ResultItem"); writer.String(ResultItem.c_str());
     writer.String("ResultItemType"); writeResultTableNodeTypeEnumJSON(ResultItemType, writer);
     writer.String("Weight"); writer.Int(Weight);
-
     writer.EndObject();
 }
 
@@ -5390,7 +5888,6 @@ RandomResultTableListing::~RandomResultTableListing()
 void RandomResultTableListing::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     writer.String("Nodes");
     writer.StartArray();
@@ -5398,9 +5895,7 @@ void RandomResultTableListing::writeJSON(PFStringJsonWriter& writer)
         iter->writeJSON(writer);
     }
     writer.EndArray();
-    
     writer.String("TableId"); writer.String(TableId.c_str());
-
     writer.EndObject();
 }
 
@@ -5429,16 +5924,14 @@ GetRandomResultTablesResult::~GetRandomResultTablesResult()
 void GetRandomResultTablesResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Tables.empty()) {
-    writer.String("Tables");
-    writer.StartObject();
-    for (std::map<std::string, RandomResultTableListing>::iterator iter = Tables.begin(); iter != Tables.end(); ++iter) {
-        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        writer.String("Tables");
+        writer.StartObject();
+        for (std::map<std::string, RandomResultTableListing>::iterator iter = Tables.begin(); iter != Tables.end(); ++iter) {
+            writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
-
     writer.EndObject();
 }
 
@@ -5462,9 +5955,7 @@ GetServerBuildInfoRequest::~GetServerBuildInfoRequest()
 void GetServerBuildInfoRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("BuildId"); writer.String(BuildId.c_str());
-
     writer.EndObject();
 }
 
@@ -5484,15 +5975,14 @@ GetServerBuildInfoResult::~GetServerBuildInfoResult()
 void GetServerBuildInfoResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!ActiveRegions.empty()) {
-    writer.String("ActiveRegions");
-    writer.StartArray();
-    for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
-        writeRegionEnumJSON(*iter, writer);
+        writer.String("ActiveRegions");
+        writer.StartArray();
+        for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
+            writeRegionEnumJSON(*iter, writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
     if (ErrorMessage.length() > 0) { writer.String("ErrorMessage"); writer.String(ErrorMessage.c_str()); }
@@ -5501,7 +5991,6 @@ void GetServerBuildInfoResult::writeJSON(PFStringJsonWriter& writer)
     if (Status.notNull()) { writer.String("Status"); writeGameBuildStatusEnumJSON(Status, writer); }
     writer.String("Timestamp"); writeDatetime(Timestamp, writer);
     if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -5542,9 +6031,7 @@ GetServerBuildUploadURLRequest::~GetServerBuildUploadURLRequest()
 void GetServerBuildUploadURLRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("BuildId"); writer.String(BuildId.c_str());
-
     writer.EndObject();
 }
 
@@ -5564,9 +6051,7 @@ GetServerBuildUploadURLResult::~GetServerBuildUploadURLResult()
 void GetServerBuildUploadURLResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (URL.length() > 0) { writer.String("URL"); writer.String(URL.c_str()); }
-
     writer.EndObject();
 }
 
@@ -5586,10 +6071,8 @@ GetStoreItemsRequest::~GetStoreItemsRequest()
 void GetStoreItemsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     writer.String("StoreId"); writer.String(StoreId.c_str());
-
     writer.EndObject();
 }
 
@@ -5611,11 +6094,9 @@ StoreMarketingModel::~StoreMarketingModel()
 void StoreMarketingModel::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
     if (Metadata.notNull()) { writer.String("Metadata"); Metadata.writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -5672,27 +6153,25 @@ StoreItem::~StoreItem()
 void StoreItem::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CustomData.notNull()) { writer.String("CustomData"); CustomData.writeJSON(writer); }
     if (DisplayPosition.notNull()) { writer.String("DisplayPosition"); writer.Uint(DisplayPosition); }
     writer.String("ItemId"); writer.String(ItemId.c_str());
     if (!RealCurrencyPrices.empty()) {
-    writer.String("RealCurrencyPrices");
-    writer.StartObject();
-    for (std::map<std::string, Uint32>::iterator iter = RealCurrencyPrices.begin(); iter != RealCurrencyPrices.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        writer.String("RealCurrencyPrices");
+        writer.StartObject();
+        for (std::map<std::string, Uint32>::iterator iter = RealCurrencyPrices.begin(); iter != RealCurrencyPrices.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (!VirtualCurrencyPrices.empty()) {
-    writer.String("VirtualCurrencyPrices");
-    writer.StartObject();
-    for (std::map<std::string, Uint32>::iterator iter = VirtualCurrencyPrices.begin(); iter != VirtualCurrencyPrices.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        writer.String("VirtualCurrencyPrices");
+        writer.StartObject();
+        for (std::map<std::string, Uint32>::iterator iter = VirtualCurrencyPrices.begin(); iter != VirtualCurrencyPrices.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
-
     writer.EndObject();
 }
 
@@ -5729,20 +6208,18 @@ GetStoreItemsResult::~GetStoreItemsResult()
 void GetStoreItemsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     if (MarketingData != NULL) { writer.String("MarketingData"); MarketingData->writeJSON(writer); }
     if (Source.notNull()) { writer.String("Source"); writeSourceTypeEnumJSON(Source, writer); }
     if (!Store.empty()) {
-    writer.String("Store");
-    writer.StartArray();
-    for (std::list<StoreItem>::iterator iter = Store.begin(); iter != Store.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Store");
+        writer.StartArray();
+        for (std::list<StoreItem>::iterator iter = Store.begin(); iter != Store.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (StoreId.length() > 0) { writer.String("StoreId"); writer.String(StoreId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -5775,9 +6252,7 @@ GetTaskInstanceRequest::~GetTaskInstanceRequest()
 void GetTaskInstanceRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str());
-
     writer.EndObject();
 }
 
@@ -5798,12 +6273,10 @@ GetTaskInstancesRequest::~GetTaskInstancesRequest()
 void GetTaskInstancesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (StartedAtRangeFrom.notNull()) { writer.String("StartedAtRangeFrom"); writeDatetime(StartedAtRangeFrom, writer); }
     if (StartedAtRangeTo.notNull()) { writer.String("StartedAtRangeTo"); writeDatetime(StartedAtRangeTo, writer); }
     if (StatusFilter.notNull()) { writer.String("StatusFilter"); writeTaskInstanceStatusEnumJSON(StatusFilter, writer); }
     if (TaskIdentifier != NULL) { writer.String("TaskIdentifier"); TaskIdentifier->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -5857,7 +6330,6 @@ TaskInstanceBasicSummary::~TaskInstanceBasicSummary()
 void TaskInstanceBasicSummary::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CompletedAt.notNull()) { writer.String("CompletedAt"); writeDatetime(CompletedAt, writer); }
     if (EstimatedSecondsRemaining.notNull()) { writer.String("EstimatedSecondsRemaining"); writer.Double(EstimatedSecondsRemaining); }
     if (PercentComplete.notNull()) { writer.String("PercentComplete"); writer.Double(PercentComplete); }
@@ -5867,7 +6339,6 @@ void TaskInstanceBasicSummary::writeJSON(PFStringJsonWriter& writer)
     if (TaskIdentifier != NULL) { writer.String("TaskIdentifier"); TaskIdentifier->writeJSON(writer); }
     if (TaskInstanceId.length() > 0) { writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str()); }
     if (Type.notNull()) { writer.String("Type"); writeScheduledTaskTypeEnumJSON(Type, writer); }
-
     writer.EndObject();
 }
 
@@ -5903,16 +6374,14 @@ GetTaskInstancesResult::~GetTaskInstancesResult()
 void GetTaskInstancesResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Summaries.empty()) {
-    writer.String("Summaries");
-    writer.StartArray();
-    for (std::list<TaskInstanceBasicSummary>::iterator iter = Summaries.begin(); iter != Summaries.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Summaries");
+        writer.StartArray();
+        for (std::list<TaskInstanceBasicSummary>::iterator iter = Summaries.begin(); iter != Summaries.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -5938,9 +6407,7 @@ GetTasksRequest::~GetTasksRequest()
 void GetTasksRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Identifier != NULL) { writer.String("Identifier"); Identifier->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -5960,7 +6427,6 @@ ScheduledTask::~ScheduledTask()
 void ScheduledTask::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
     writer.String("IsActive"); writer.Bool(IsActive);
     if (LastRunTime.notNull()) { writer.String("LastRunTime"); writeDatetime(LastRunTime, writer); }
@@ -5970,7 +6436,6 @@ void ScheduledTask::writeJSON(PFStringJsonWriter& writer)
     if (Schedule.length() > 0) { writer.String("Schedule"); writer.String(Schedule.c_str()); }
     if (TaskId.length() > 0) { writer.String("TaskId"); writer.String(TaskId.c_str()); }
     if (Type.notNull()) { writer.String("Type"); writeScheduledTaskTypeEnumJSON(Type, writer); }
-
     writer.EndObject();
 }
 
@@ -6006,16 +6471,14 @@ GetTasksResult::~GetTasksResult()
 void GetTasksResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Tasks.empty()) {
-    writer.String("Tasks");
-    writer.StartArray();
-    for (std::list<ScheduledTask>::iterator iter = Tasks.begin(); iter != Tasks.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Tasks");
+        writer.StartArray();
+        for (std::list<ScheduledTask>::iterator iter = Tasks.begin(); iter != Tasks.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -6040,16 +6503,14 @@ GetTitleDataRequest::~GetTitleDataRequest()
 void GetTitleDataRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Keys.empty()) {
-    writer.String("Keys");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("Keys");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -6074,16 +6535,14 @@ GetTitleDataResult::~GetTitleDataResult()
 void GetTitleDataResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Data.empty()) {
-    writer.String("Data");
-    writer.StartObject();
-    for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        writer.String("Data");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
-
     writer.EndObject();
 }
 
@@ -6107,9 +6566,7 @@ GetUserBansRequest::~GetUserBansRequest()
 void GetUserBansRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -6129,16 +6586,14 @@ GetUserBansResult::~GetUserBansResult()
 void GetUserBansResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!BanData.empty()) {
-    writer.String("BanData");
-    writer.StartArray();
-    for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("BanData");
+        writer.StartArray();
+        for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -6163,18 +6618,16 @@ GetUserDataRequest::~GetUserDataRequest()
 void GetUserDataRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (IfChangedFromDataVersion.notNull()) { writer.String("IfChangedFromDataVersion"); writer.Uint(IfChangedFromDataVersion); }
     if (!Keys.empty()) {
-    writer.String("Keys");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("Keys");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = Keys.begin(); iter != Keys.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -6230,11 +6683,9 @@ UserDataRecord::~UserDataRecord()
 void UserDataRecord::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("LastUpdated"); writeDatetime(LastUpdated, writer);
     if (Permission.notNull()) { writer.String("Permission"); writeUserDataPermissionEnumJSON(Permission, writer); }
     if (Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
-
     writer.EndObject();
 }
 
@@ -6258,18 +6709,16 @@ GetUserDataResult::~GetUserDataResult()
 void GetUserDataResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Data.empty()) {
-    writer.String("Data");
-    writer.StartObject();
-    for (std::map<std::string, UserDataRecord>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
-        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        writer.String("Data");
+        writer.StartObject();
+        for (std::map<std::string, UserDataRecord>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+            writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     writer.String("DataVersion"); writer.Uint(DataVersion);
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -6297,9 +6746,7 @@ GetUserInventoryRequest::~GetUserInventoryRequest()
 void GetUserInventoryRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -6319,26 +6766,25 @@ ItemInstance::~ItemInstance()
 void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
     if (!BundleContents.empty()) {
-    writer.String("BundleContents");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = BundleContents.begin(); iter != BundleContents.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("BundleContents");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = BundleContents.begin(); iter != BundleContents.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (BundleParent.length() > 0) { writer.String("BundleParent"); writer.String(BundleParent.c_str()); }
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     if (!CustomData.empty()) {
-    writer.String("CustomData");
-    writer.StartObject();
-    for (std::map<std::string, std::string>::iterator iter = CustomData.begin(); iter != CustomData.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        writer.String("CustomData");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomData.begin(); iter != CustomData.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
     if (Expiration.notNull()) { writer.String("Expiration"); writeDatetime(Expiration, writer); }
     if (ItemClass.length() > 0) { writer.String("ItemClass"); writer.String(ItemClass.c_str()); }
@@ -6349,7 +6795,6 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
     if (UnitCurrency.length() > 0) { writer.String("UnitCurrency"); writer.String(UnitCurrency.c_str()); }
     writer.String("UnitPrice"); writer.Uint(UnitPrice);
     if (UsesIncrementedBy.notNull()) { writer.String("UsesIncrementedBy"); writer.Int(UsesIncrementedBy); }
-
     writer.EndObject();
 }
 
@@ -6406,11 +6851,9 @@ VirtualCurrencyRechargeTime::~VirtualCurrencyRechargeTime()
 void VirtualCurrencyRechargeTime::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("RechargeMax"); writer.Int(RechargeMax);
     writer.String("RechargeTime"); writeDatetime(RechargeTime, writer);
     writer.String("SecondsToRecharge"); writer.Int(SecondsToRecharge);
-
     writer.EndObject();
 }
 
@@ -6434,33 +6877,31 @@ GetUserInventoryResult::~GetUserInventoryResult()
 void GetUserInventoryResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Inventory.empty()) {
-    writer.String("Inventory");
-    writer.StartArray();
-    for (std::list<ItemInstance>::iterator iter = Inventory.begin(); iter != Inventory.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Inventory");
+        writer.StartArray();
+        for (std::list<ItemInstance>::iterator iter = Inventory.begin(); iter != Inventory.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (!VirtualCurrency.empty()) {
-    writer.String("VirtualCurrency");
-    writer.StartObject();
-    for (std::map<std::string, Int32>::iterator iter = VirtualCurrency.begin(); iter != VirtualCurrency.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Int(iter->second);
+        writer.String("VirtualCurrency");
+        writer.StartObject();
+        for (std::map<std::string, Int32>::iterator iter = VirtualCurrency.begin(); iter != VirtualCurrency.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Int(iter->second);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (!VirtualCurrencyRechargeTimes.empty()) {
-    writer.String("VirtualCurrencyRechargeTimes");
-    writer.StartObject();
-    for (std::map<std::string, VirtualCurrencyRechargeTime>::iterator iter = VirtualCurrencyRechargeTimes.begin(); iter != VirtualCurrencyRechargeTimes.end(); ++iter) {
-        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        writer.String("VirtualCurrencyRechargeTimes");
+        writer.StartObject();
+        for (std::map<std::string, VirtualCurrencyRechargeTime>::iterator iter = VirtualCurrencyRechargeTimes.begin(); iter != VirtualCurrencyRechargeTimes.end(); ++iter) {
+            writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
-
     writer.EndObject();
 }
 
@@ -6499,27 +6940,26 @@ GrantedItemInstance::~GrantedItemInstance()
 void GrantedItemInstance::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
     if (!BundleContents.empty()) {
-    writer.String("BundleContents");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = BundleContents.begin(); iter != BundleContents.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("BundleContents");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = BundleContents.begin(); iter != BundleContents.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (BundleParent.length() > 0) { writer.String("BundleParent"); writer.String(BundleParent.c_str()); }
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
     if (!CustomData.empty()) {
-    writer.String("CustomData");
-    writer.StartObject();
-    for (std::map<std::string, std::string>::iterator iter = CustomData.begin(); iter != CustomData.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        writer.String("CustomData");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomData.begin(); iter != CustomData.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
     if (Expiration.notNull()) { writer.String("Expiration"); writeDatetime(Expiration, writer); }
     if (ItemClass.length() > 0) { writer.String("ItemClass"); writer.String(ItemClass.c_str()); }
@@ -6532,7 +6972,6 @@ void GrantedItemInstance::writeJSON(PFStringJsonWriter& writer)
     if (UnitCurrency.length() > 0) { writer.String("UnitCurrency"); writer.String(UnitCurrency.c_str()); }
     writer.String("UnitPrice"); writer.Uint(UnitPrice);
     if (UsesIncrementedBy.notNull()) { writer.String("UsesIncrementedBy"); writer.Int(UsesIncrementedBy); }
-
     writer.EndObject();
 }
 
@@ -6595,28 +7034,26 @@ ItemGrant::~ItemGrant()
 void ItemGrant::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
     if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
     if (!Data.empty()) {
-    writer.String("Data");
-    writer.StartObject();
-    for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        writer.String("Data");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     writer.String("ItemId"); writer.String(ItemId.c_str());
     if (!KeysToRemove.empty()) {
-    writer.String("KeysToRemove");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = KeysToRemove.begin(); iter != KeysToRemove.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("KeysToRemove");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = KeysToRemove.begin(); iter != KeysToRemove.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -6655,7 +7092,6 @@ GrantItemsToUsersRequest::~GrantItemsToUsersRequest()
 void GrantItemsToUsersRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     writer.String("ItemGrants");
     writer.StartArray();
@@ -6663,8 +7099,6 @@ void GrantItemsToUsersRequest::writeJSON(PFStringJsonWriter& writer)
         iter->writeJSON(writer);
     }
     writer.EndArray();
-    
-
     writer.EndObject();
 }
 
@@ -6691,16 +7125,14 @@ GrantItemsToUsersResult::~GrantItemsToUsersResult()
 void GrantItemsToUsersResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!ItemGrantResults.empty()) {
-    writer.String("ItemGrantResults");
-    writer.StartArray();
-    for (std::list<GrantedItemInstance>::iterator iter = ItemGrantResults.begin(); iter != ItemGrantResults.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("ItemGrantResults");
+        writer.StartArray();
+        for (std::list<GrantedItemInstance>::iterator iter = ItemGrantResults.begin(); iter != ItemGrantResults.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -6725,11 +7157,9 @@ IncrementLimitedEditionItemAvailabilityRequest::~IncrementLimitedEditionItemAvai
 void IncrementLimitedEditionItemAvailabilityRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Amount"); writer.Int(Amount);
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     writer.String("ItemId"); writer.String(ItemId.c_str());
-
     writer.EndObject();
 }
 
@@ -6753,8 +7183,6 @@ IncrementLimitedEditionItemAvailabilityResult::~IncrementLimitedEditionItemAvail
 void IncrementLimitedEditionItemAvailabilityResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -6772,9 +7200,7 @@ IncrementPlayerStatisticVersionRequest::~IncrementPlayerStatisticVersionRequest(
 void IncrementPlayerStatisticVersionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (StatisticName.length() > 0) { writer.String("StatisticName"); writer.String(StatisticName.c_str()); }
-
     writer.EndObject();
 }
 
@@ -6795,9 +7221,7 @@ IncrementPlayerStatisticVersionResult::~IncrementPlayerStatisticVersionResult()
 void IncrementPlayerStatisticVersionResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (StatisticVersion != NULL) { writer.String("StatisticVersion"); StatisticVersion->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -6817,8 +7241,6 @@ ListBuildsRequest::~ListBuildsRequest()
 void ListBuildsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -6836,16 +7258,14 @@ ListBuildsResult::~ListBuildsResult()
 void ListBuildsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Builds.empty()) {
-    writer.String("Builds");
-    writer.StartArray();
-    for (std::list<GetServerBuildInfoResult>::iterator iter = Builds.begin(); iter != Builds.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Builds");
+        writer.StartArray();
+        for (std::list<GetServerBuildInfoResult>::iterator iter = Builds.begin(); iter != Builds.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -6870,8 +7290,6 @@ ListVirtualCurrencyTypesRequest::~ListVirtualCurrencyTypesRequest()
 void ListVirtualCurrencyTypesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -6889,16 +7307,14 @@ ListVirtualCurrencyTypesResult::~ListVirtualCurrencyTypesResult()
 void ListVirtualCurrencyTypesResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!VirtualCurrencies.empty()) {
-    writer.String("VirtualCurrencies");
-    writer.StartArray();
-    for (std::list<VirtualCurrencyData>::iterator iter = VirtualCurrencies.begin(); iter != VirtualCurrencies.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("VirtualCurrencies");
+        writer.StartArray();
+        for (std::list<VirtualCurrencyData>::iterator iter = VirtualCurrencies.begin(); iter != VirtualCurrencies.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -6923,12 +7339,10 @@ LookupUserAccountInfoRequest::~LookupUserAccountInfoRequest()
 void LookupUserAccountInfoRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Email.length() > 0) { writer.String("Email"); writer.String(Email.c_str()); }
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (TitleDisplayName.length() > 0) { writer.String("TitleDisplayName"); writer.String(TitleDisplayName.c_str()); }
     if (Username.length() > 0) { writer.String("Username"); writer.String(Username.c_str()); }
-
     writer.EndObject();
 }
 
@@ -6954,9 +7368,7 @@ UserAndroidDeviceInfo::~UserAndroidDeviceInfo()
 void UserAndroidDeviceInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (AndroidDeviceId.length() > 0) { writer.String("AndroidDeviceId"); writer.String(AndroidDeviceId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -6976,9 +7388,7 @@ UserCustomIdInfo::~UserCustomIdInfo()
 void UserCustomIdInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CustomId.length() > 0) { writer.String("CustomId"); writer.String(CustomId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -6998,10 +7408,8 @@ UserFacebookInfo::~UserFacebookInfo()
 void UserFacebookInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (FacebookId.length() > 0) { writer.String("FacebookId"); writer.String(FacebookId.c_str()); }
     if (FullName.length() > 0) { writer.String("FullName"); writer.String(FullName.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7023,9 +7431,7 @@ UserGameCenterInfo::~UserGameCenterInfo()
 void UserGameCenterInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (GameCenterId.length() > 0) { writer.String("GameCenterId"); writer.String(GameCenterId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7045,12 +7451,10 @@ UserGoogleInfo::~UserGoogleInfo()
 void UserGoogleInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (GoogleEmail.length() > 0) { writer.String("GoogleEmail"); writer.String(GoogleEmail.c_str()); }
     if (GoogleGender.length() > 0) { writer.String("GoogleGender"); writer.String(GoogleGender.c_str()); }
     if (GoogleId.length() > 0) { writer.String("GoogleId"); writer.String(GoogleId.c_str()); }
     if (GoogleLocale.length() > 0) { writer.String("GoogleLocale"); writer.String(GoogleLocale.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7076,9 +7480,7 @@ UserIosDeviceInfo::~UserIosDeviceInfo()
 void UserIosDeviceInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (IosDeviceId.length() > 0) { writer.String("IosDeviceId"); writer.String(IosDeviceId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7098,10 +7500,8 @@ UserKongregateInfo::~UserKongregateInfo()
 void UserKongregateInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (KongregateId.length() > 0) { writer.String("KongregateId"); writer.String(KongregateId.c_str()); }
     if (KongregateName.length() > 0) { writer.String("KongregateName"); writer.String(KongregateName.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7123,9 +7523,7 @@ UserPrivateAccountInfo::~UserPrivateAccountInfo()
 void UserPrivateAccountInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Email.length() > 0) { writer.String("Email"); writer.String(Email.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7145,10 +7543,8 @@ UserPsnInfo::~UserPsnInfo()
 void UserPsnInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (PsnAccountId.length() > 0) { writer.String("PsnAccountId"); writer.String(PsnAccountId.c_str()); }
     if (PsnOnlineId.length() > 0) { writer.String("PsnOnlineId"); writer.String(PsnOnlineId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7203,12 +7599,10 @@ UserSteamInfo::~UserSteamInfo()
 void UserSteamInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (SteamActivationStatus.notNull()) { writer.String("SteamActivationStatus"); writeTitleActivationStatusEnumJSON(SteamActivationStatus, writer); }
     if (SteamCountry.length() > 0) { writer.String("SteamCountry"); writer.String(SteamCountry.c_str()); }
     if (SteamCurrency.notNull()) { writer.String("SteamCurrency"); writeCurrencyEnumJSON(SteamCurrency, writer); }
     if (SteamId.length() > 0) { writer.String("SteamId"); writer.String(SteamId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7293,7 +7687,6 @@ UserTitleInfo::~UserTitleInfo()
 void UserTitleInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (AvatarUrl.length() > 0) { writer.String("AvatarUrl"); writer.String(AvatarUrl.c_str()); }
     writer.String("Created"); writeDatetime(Created, writer);
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
@@ -7301,7 +7694,6 @@ void UserTitleInfo::writeJSON(PFStringJsonWriter& writer)
     if (isBanned.notNull()) { writer.String("isBanned"); writer.Bool(isBanned); }
     if (LastLogin.notNull()) { writer.String("LastLogin"); writeDatetime(LastLogin, writer); }
     if (Origination.notNull()) { writer.String("Origination"); writeUserOriginationEnumJSON(Origination, writer); }
-
     writer.EndObject();
 }
 
@@ -7333,10 +7725,8 @@ UserTwitchInfo::~UserTwitchInfo()
 void UserTwitchInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (TwitchId.length() > 0) { writer.String("TwitchId"); writer.String(TwitchId.c_str()); }
     if (TwitchUserName.length() > 0) { writer.String("TwitchUserName"); writer.String(TwitchUserName.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7358,9 +7748,7 @@ UserXboxInfo::~UserXboxInfo()
 void UserXboxInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (XboxUserId.length() > 0) { writer.String("XboxUserId"); writer.String(XboxUserId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7393,7 +7781,6 @@ UserAccountInfo::~UserAccountInfo()
 void UserAccountInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (AndroidDeviceInfo != NULL) { writer.String("AndroidDeviceInfo"); AndroidDeviceInfo->writeJSON(writer); }
     writer.String("Created"); writeDatetime(Created, writer);
     if (CustomIdInfo != NULL) { writer.String("CustomIdInfo"); CustomIdInfo->writeJSON(writer); }
@@ -7410,7 +7797,6 @@ void UserAccountInfo::writeJSON(PFStringJsonWriter& writer)
     if (TwitchInfo != NULL) { writer.String("TwitchInfo"); TwitchInfo->writeJSON(writer); }
     if (Username.length() > 0) { writer.String("Username"); writer.String(Username.c_str()); }
     if (XboxInfo != NULL) { writer.String("XboxInfo"); XboxInfo->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -7461,9 +7847,7 @@ LookupUserAccountInfoResult::~LookupUserAccountInfoResult()
 void LookupUserAccountInfoResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (UserInfo != NULL) { writer.String("UserInfo"); UserInfo->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -7483,7 +7867,6 @@ ModifyMatchmakerGameModesRequest::~ModifyMatchmakerGameModesRequest()
 void ModifyMatchmakerGameModesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("BuildVersion"); writer.String(BuildVersion.c_str());
     writer.String("GameModes");
     writer.StartArray();
@@ -7491,8 +7874,6 @@ void ModifyMatchmakerGameModesRequest::writeJSON(PFStringJsonWriter& writer)
         iter->writeJSON(writer);
     }
     writer.EndArray();
-    
-
     writer.EndObject();
 }
 
@@ -7519,8 +7900,6 @@ ModifyMatchmakerGameModesResult::~ModifyMatchmakerGameModesResult()
 void ModifyMatchmakerGameModesResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -7538,15 +7917,14 @@ ModifyServerBuildRequest::~ModifyServerBuildRequest()
 void ModifyServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!ActiveRegions.empty()) {
-    writer.String("ActiveRegions");
-    writer.StartArray();
-    for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
-        writeRegionEnumJSON(*iter, writer);
+        writer.String("ActiveRegions");
+        writer.StartArray();
+        for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
+            writeRegionEnumJSON(*iter, writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     writer.String("BuildId"); writer.String(BuildId.c_str());
     if (CommandLineTemplate.length() > 0) { writer.String("CommandLineTemplate"); writer.String(CommandLineTemplate.c_str()); }
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
@@ -7554,7 +7932,6 @@ void ModifyServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("MaxGamesPerHost"); writer.Int(MaxGamesPerHost);
     writer.String("MinFreeGameSlots"); writer.Int(MinFreeGameSlots);
     if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
-
     writer.EndObject();
 }
 
@@ -7593,15 +7970,14 @@ ModifyServerBuildResult::~ModifyServerBuildResult()
 void ModifyServerBuildResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!ActiveRegions.empty()) {
-    writer.String("ActiveRegions");
-    writer.StartArray();
-    for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
-        writeRegionEnumJSON(*iter, writer);
+        writer.String("ActiveRegions");
+        writer.StartArray();
+        for (std::list<Region>::iterator iter = ActiveRegions.begin(); iter != ActiveRegions.end(); iter++) {
+            writeRegionEnumJSON(*iter, writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
     if (CommandLineTemplate.length() > 0) { writer.String("CommandLineTemplate"); writer.String(CommandLineTemplate.c_str()); }
     if (Comment.length() > 0) { writer.String("Comment"); writer.String(Comment.c_str()); }
@@ -7611,7 +7987,6 @@ void ModifyServerBuildResult::writeJSON(PFStringJsonWriter& writer)
     if (Status.notNull()) { writer.String("Status"); writeGameBuildStatusEnumJSON(Status, writer); }
     writer.String("Timestamp"); writeDatetime(Timestamp, writer);
     if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7654,12 +8029,10 @@ ModifyUserVirtualCurrencyResult::~ModifyUserVirtualCurrencyResult()
 void ModifyUserVirtualCurrencyResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Balance"); writer.Int(Balance);
     writer.String("BalanceChange"); writer.Int(BalanceChange);
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (VirtualCurrency.length() > 0) { writer.String("VirtualCurrency"); writer.String(VirtualCurrency.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7714,16 +8087,13 @@ RandomResultTable::~RandomResultTable()
 void RandomResultTable::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Nodes");
     writer.StartArray();
     for (std::list<ResultTableNode>::iterator iter = Nodes.begin(); iter != Nodes.end(); iter++) {
         iter->writeJSON(writer);
     }
     writer.EndArray();
-    
     writer.String("TableId"); writer.String(TableId.c_str());
-
     writer.EndObject();
 }
 
@@ -7750,11 +8120,9 @@ RefundPurchaseRequest::~RefundPurchaseRequest()
 void RefundPurchaseRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("OrderId"); writer.String(OrderId.c_str());
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     if (Reason.length() > 0) { writer.String("Reason"); writer.String(Reason.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7778,9 +8146,7 @@ RefundPurchaseResponse::~RefundPurchaseResponse()
 void RefundPurchaseResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (PurchaseStatus.length() > 0) { writer.String("PurchaseStatus"); writer.String(PurchaseStatus.c_str()); }
-
     writer.EndObject();
 }
 
@@ -7800,10 +8166,8 @@ RemovePlayerTagRequest::~RemovePlayerTagRequest()
 void RemovePlayerTagRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     writer.String("TagName"); writer.String(TagName.c_str());
-
     writer.EndObject();
 }
 
@@ -7825,8 +8189,6 @@ RemovePlayerTagResult::~RemovePlayerTagResult()
 void RemovePlayerTagResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -7844,9 +8206,7 @@ RemoveServerBuildRequest::~RemoveServerBuildRequest()
 void RemoveServerBuildRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("BuildId"); writer.String(BuildId.c_str());
-
     writer.EndObject();
 }
 
@@ -7866,8 +8226,6 @@ RemoveServerBuildResult::~RemoveServerBuildResult()
 void RemoveServerBuildResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -7885,15 +8243,12 @@ RemoveVirtualCurrencyTypesRequest::~RemoveVirtualCurrencyTypesRequest()
 void RemoveVirtualCurrencyTypesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("VirtualCurrencies");
     writer.StartArray();
     for (std::list<VirtualCurrencyData>::iterator iter = VirtualCurrencies.begin(); iter != VirtualCurrencies.end(); iter++) {
         iter->writeJSON(writer);
     }
     writer.EndArray();
-    
-
     writer.EndObject();
 }
 
@@ -7918,10 +8273,8 @@ ResetCharacterStatisticsRequest::~ResetCharacterStatisticsRequest()
 void ResetCharacterStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("CharacterId"); writer.String(CharacterId.c_str());
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -7943,8 +8296,6 @@ ResetCharacterStatisticsResult::~ResetCharacterStatisticsResult()
 void ResetCharacterStatisticsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -7962,10 +8313,8 @@ ResetPasswordRequest::~ResetPasswordRequest()
 void ResetPasswordRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Password"); writer.String(Password.c_str());
     writer.String("Token"); writer.String(Token.c_str());
-
     writer.EndObject();
 }
 
@@ -7987,8 +8336,6 @@ ResetPasswordResult::~ResetPasswordResult()
 void ResetPasswordResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -8006,9 +8353,7 @@ ResetUserStatisticsRequest::~ResetUserStatisticsRequest()
 void ResetUserStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -8028,8 +8373,6 @@ ResetUserStatisticsResult::~ResetUserStatisticsResult()
 void ResetUserStatisticsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -8076,12 +8419,10 @@ ResolvePurchaseDisputeRequest::~ResolvePurchaseDisputeRequest()
 void ResolvePurchaseDisputeRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("OrderId"); writer.String(OrderId.c_str());
     writer.String("Outcome"); writeResolutionOutcomeEnumJSON(Outcome, writer);
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     if (Reason.length() > 0) { writer.String("Reason"); writer.String(Reason.c_str()); }
-
     writer.EndObject();
 }
 
@@ -8107,9 +8448,7 @@ ResolvePurchaseDisputeResponse::~ResolvePurchaseDisputeResponse()
 void ResolvePurchaseDisputeResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (PurchaseStatus.length() > 0) { writer.String("PurchaseStatus"); writer.String(PurchaseStatus.c_str()); }
-
     writer.EndObject();
 }
 
@@ -8129,9 +8468,7 @@ RevokeAllBansForUserRequest::~RevokeAllBansForUserRequest()
 void RevokeAllBansForUserRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -8151,16 +8488,14 @@ RevokeAllBansForUserResult::~RevokeAllBansForUserResult()
 void RevokeAllBansForUserResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!BanData.empty()) {
-    writer.String("BanData");
-    writer.StartArray();
-    for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("BanData");
+        writer.StartArray();
+        for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -8185,15 +8520,12 @@ RevokeBansRequest::~RevokeBansRequest()
 void RevokeBansRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("BanIds");
     writer.StartArray();
     for (std::list<std::string>::iterator iter = BanIds.begin(); iter != BanIds.end(); iter++) {
         writer.String(iter->c_str());
     }
     writer.EndArray();
-    
-
     writer.EndObject();
 }
 
@@ -8218,16 +8550,14 @@ RevokeBansResult::~RevokeBansResult()
 void RevokeBansResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!BanData.empty()) {
-    writer.String("BanData");
-    writer.StartArray();
-    for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("BanData");
+        writer.StartArray();
+        for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -8244,6 +8574,32 @@ bool RevokeBansResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+RevokeInventoryItem::~RevokeInventoryItem()
+{
+
+}
+
+void RevokeInventoryItem::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str());
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.EndObject();
+}
+
+bool RevokeInventoryItem::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator ItemInstanceId_member = obj.FindMember("ItemInstanceId");
+    if (ItemInstanceId_member != obj.MemberEnd() && !ItemInstanceId_member->value.IsNull()) ItemInstanceId = ItemInstanceId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
 RevokeInventoryItemRequest::~RevokeInventoryItemRequest()
 {
 
@@ -8252,11 +8608,9 @@ RevokeInventoryItemRequest::~RevokeInventoryItemRequest()
 void RevokeInventoryItemRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
     writer.String("ItemInstanceId"); writer.String(ItemInstanceId.c_str());
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -8272,6 +8626,92 @@ bool RevokeInventoryItemRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+RevokeInventoryItemsRequest::~RevokeInventoryItemsRequest()
+{
+
+}
+
+void RevokeInventoryItemsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Items");
+    writer.StartArray();
+    for (std::list<RevokeInventoryItem>::iterator iter = Items.begin(); iter != Items.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    writer.EndObject();
+}
+
+bool RevokeInventoryItemsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Items_member = obj.FindMember("Items");
+    if (Items_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Items_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Items.push_back(RevokeInventoryItem(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+RevokeItemError::~RevokeItemError()
+{
+    if (Item != NULL) delete Item;
+
+}
+
+void RevokeItemError::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Error.notNull()) { writer.String("Error"); writeGenericErrorCodesEnumJSON(Error, writer); }
+    if (Item != NULL) { writer.String("Item"); Item->writeJSON(writer); }
+    writer.EndObject();
+}
+
+bool RevokeItemError::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Error_member = obj.FindMember("Error");
+    if (Error_member != obj.MemberEnd() && !Error_member->value.IsNull()) Error = readGenericErrorCodesFromValue(Error_member->value);
+    const Value::ConstMemberIterator Item_member = obj.FindMember("Item");
+    if (Item_member != obj.MemberEnd() && !Item_member->value.IsNull()) Item = new RevokeInventoryItem(Item_member->value);
+
+    return true;
+}
+
+RevokeInventoryItemsResult::~RevokeInventoryItemsResult()
+{
+
+}
+
+void RevokeInventoryItemsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!Errors.empty()) {
+        writer.String("Errors");
+        writer.StartArray();
+        for (std::list<RevokeItemError>::iterator iter = Errors.begin(); iter != Errors.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool RevokeInventoryItemsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Errors_member = obj.FindMember("Errors");
+    if (Errors_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Errors_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Errors.push_back(RevokeItemError(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 RevokeInventoryResult::~RevokeInventoryResult()
 {
 
@@ -8280,8 +8720,6 @@ RevokeInventoryResult::~RevokeInventoryResult()
 void RevokeInventoryResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -8300,9 +8738,7 @@ RunTaskRequest::~RunTaskRequest()
 void RunTaskRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Identifier != NULL) { writer.String("Identifier"); Identifier->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -8322,9 +8758,7 @@ RunTaskResult::~RunTaskResult()
 void RunTaskResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (TaskInstanceId.length() > 0) { writer.String("TaskInstanceId"); writer.String(TaskInstanceId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -8344,10 +8778,8 @@ SendAccountRecoveryEmailRequest::~SendAccountRecoveryEmailRequest()
 void SendAccountRecoveryEmailRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Email"); writer.String(Email.c_str());
     if (EmailTemplateId.length() > 0) { writer.String("EmailTemplateId"); writer.String(EmailTemplateId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -8369,8 +8801,6 @@ SendAccountRecoveryEmailResult::~SendAccountRecoveryEmailResult()
 void SendAccountRecoveryEmailResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -8388,10 +8818,8 @@ SetPlayerSecretRequest::~SetPlayerSecretRequest()
 void SetPlayerSecretRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str());
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -8413,8 +8841,6 @@ SetPlayerSecretResult::~SetPlayerSecretResult()
 void SetPlayerSecretResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -8432,10 +8858,8 @@ SetPublishedRevisionRequest::~SetPublishedRevisionRequest()
 void SetPublishedRevisionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Revision"); writer.Int(Revision);
     writer.String("Version"); writer.Int(Version);
-
     writer.EndObject();
 }
 
@@ -8457,8 +8881,6 @@ SetPublishedRevisionResult::~SetPublishedRevisionResult()
 void SetPublishedRevisionResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -8476,10 +8898,8 @@ SetPublisherDataRequest::~SetPublisherDataRequest()
 void SetPublisherDataRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Key"); writer.String(Key.c_str());
     if (Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
-
     writer.EndObject();
 }
 
@@ -8501,8 +8921,6 @@ SetPublisherDataResult::~SetPublisherDataResult()
 void SetPublisherDataResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -8520,10 +8938,8 @@ SetTitleDataRequest::~SetTitleDataRequest()
 void SetTitleDataRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Key"); writer.String(Key.c_str());
     if (Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
-
     writer.EndObject();
 }
 
@@ -8545,8 +8961,6 @@ SetTitleDataResult::~SetTitleDataResult()
 void SetTitleDataResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -8564,13 +8978,11 @@ SetupPushNotificationRequest::~SetupPushNotificationRequest()
 void SetupPushNotificationRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Credential"); writer.String(Credential.c_str());
     if (Key.length() > 0) { writer.String("Key"); writer.String(Key.c_str()); }
     writer.String("Name"); writer.String(Name.c_str());
     writer.String("OverwriteOldARN"); writer.Bool(OverwriteOldARN);
     writer.String("Platform"); writePushSetupPlatformEnumJSON(Platform, writer);
-
     writer.EndObject();
 }
 
@@ -8598,9 +9010,7 @@ SetupPushNotificationResult::~SetupPushNotificationResult()
 void SetupPushNotificationResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (ARN.length() > 0) { writer.String("ARN"); writer.String(ARN.c_str()); }
-
     writer.EndObject();
 }
 
@@ -8653,11 +9063,9 @@ SubtractUserVirtualCurrencyRequest::~SubtractUserVirtualCurrencyRequest()
 void SubtractUserVirtualCurrencyRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Amount"); writer.Int(Amount);
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     writer.String("VirtualCurrency"); writer.String(VirtualCurrency.c_str());
-
     writer.EndObject();
 }
 
@@ -8681,7 +9089,6 @@ UpdateBanRequest::~UpdateBanRequest()
 void UpdateBanRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Active.notNull()) { writer.String("Active"); writer.Bool(Active); }
     writer.String("BanId"); writer.String(BanId.c_str());
     if (Expires.notNull()) { writer.String("Expires"); writeDatetime(Expires, writer); }
@@ -8689,7 +9096,6 @@ void UpdateBanRequest::writeJSON(PFStringJsonWriter& writer)
     if (MACAddress.length() > 0) { writer.String("MACAddress"); writer.String(MACAddress.c_str()); }
     if (Permanent.notNull()) { writer.String("Permanent"); writer.Bool(Permanent); }
     if (Reason.length() > 0) { writer.String("Reason"); writer.String(Reason.c_str()); }
-
     writer.EndObject();
 }
 
@@ -8721,15 +9127,12 @@ UpdateBansRequest::~UpdateBansRequest()
 void UpdateBansRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Bans");
     writer.StartArray();
     for (std::list<UpdateBanRequest>::iterator iter = Bans.begin(); iter != Bans.end(); iter++) {
         iter->writeJSON(writer);
     }
     writer.EndArray();
-    
-
     writer.EndObject();
 }
 
@@ -8754,16 +9157,14 @@ UpdateBansResult::~UpdateBansResult()
 void UpdateBansResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!BanData.empty()) {
-    writer.String("BanData");
-    writer.StartArray();
-    for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("BanData");
+        writer.StartArray();
+        for (std::list<BanInfo>::iterator iter = BanData.begin(); iter != BanData.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -8788,18 +9189,16 @@ UpdateCatalogItemsRequest::~UpdateCatalogItemsRequest()
 void UpdateCatalogItemsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Catalog.empty()) {
-    writer.String("Catalog");
-    writer.StartArray();
-    for (std::list<CatalogItem>::iterator iter = Catalog.begin(); iter != Catalog.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Catalog");
+        writer.StartArray();
+        for (std::list<CatalogItem>::iterator iter = Catalog.begin(); iter != Catalog.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     if (SetAsDefaultCatalog.notNull()) { writer.String("SetAsDefaultCatalog"); writer.Bool(SetAsDefaultCatalog); }
-
     writer.EndObject();
 }
 
@@ -8828,8 +9227,6 @@ UpdateCatalogItemsResult::~UpdateCatalogItemsResult()
 void UpdateCatalogItemsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -8847,7 +9244,6 @@ UpdateCloudScriptRequest::~UpdateCloudScriptRequest()
 void UpdateCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (DeveloperPlayFabId.length() > 0) { writer.String("DeveloperPlayFabId"); writer.String(DeveloperPlayFabId.c_str()); }
     writer.String("Files");
     writer.StartArray();
@@ -8855,9 +9251,7 @@ void UpdateCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
         iter->writeJSON(writer);
     }
     writer.EndArray();
-    
     writer.String("Publish"); writer.Bool(Publish);
-
     writer.EndObject();
 }
 
@@ -8886,10 +9280,8 @@ UpdateCloudScriptResult::~UpdateCloudScriptResult()
 void UpdateCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Revision"); writer.Int(Revision);
     writer.String("Version"); writer.Int(Version);
-
     writer.EndObject();
 }
 
@@ -8911,11 +9303,9 @@ UpdatePlayerSharedSecretRequest::~UpdatePlayerSharedSecretRequest()
 void UpdatePlayerSharedSecretRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Disabled"); writer.Bool(Disabled);
     if (FriendlyName.length() > 0) { writer.String("FriendlyName"); writer.String(FriendlyName.c_str()); }
     if (SecretKey.length() > 0) { writer.String("SecretKey"); writer.String(SecretKey.c_str()); }
-
     writer.EndObject();
 }
 
@@ -8939,8 +9329,6 @@ UpdatePlayerSharedSecretResult::~UpdatePlayerSharedSecretResult()
 void UpdatePlayerSharedSecretResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -8958,11 +9346,9 @@ UpdatePlayerStatisticDefinitionRequest::~UpdatePlayerStatisticDefinitionRequest(
 void UpdatePlayerStatisticDefinitionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (AggregationMethod.notNull()) { writer.String("AggregationMethod"); writeStatisticAggregationMethodEnumJSON(AggregationMethod, writer); }
     writer.String("StatisticName"); writer.String(StatisticName.c_str());
     if (VersionChangeInterval.notNull()) { writer.String("VersionChangeInterval"); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
-
     writer.EndObject();
 }
 
@@ -8987,9 +9373,7 @@ UpdatePlayerStatisticDefinitionResult::~UpdatePlayerStatisticDefinitionResult()
 void UpdatePlayerStatisticDefinitionResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Statistic != NULL) { writer.String("Statistic"); Statistic->writeJSON(writer); }
-
     writer.EndObject();
 }
 
@@ -9009,7 +9393,6 @@ UpdatePolicyRequest::~UpdatePolicyRequest()
 void UpdatePolicyRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("OverwritePolicy"); writer.Bool(OverwritePolicy);
     writer.String("PolicyName"); writer.String(PolicyName.c_str());
     writer.String("Statements");
@@ -9018,8 +9401,6 @@ void UpdatePolicyRequest::writeJSON(PFStringJsonWriter& writer)
         iter->writeJSON(writer);
     }
     writer.EndArray();
-    
-
     writer.EndObject();
 }
 
@@ -9048,17 +9429,15 @@ UpdatePolicyResponse::~UpdatePolicyResponse()
 void UpdatePolicyResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (PolicyName.length() > 0) { writer.String("PolicyName"); writer.String(PolicyName.c_str()); }
     if (!Statements.empty()) {
-    writer.String("Statements");
-    writer.StartArray();
-    for (std::list<PermissionStatement>::iterator iter = Statements.begin(); iter != Statements.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Statements");
+        writer.StartArray();
+        for (std::list<PermissionStatement>::iterator iter = Statements.begin(); iter != Statements.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -9085,17 +9464,15 @@ UpdateRandomResultTablesRequest::~UpdateRandomResultTablesRequest()
 void UpdateRandomResultTablesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     if (!Tables.empty()) {
-    writer.String("Tables");
-    writer.StartArray();
-    for (std::list<RandomResultTable>::iterator iter = Tables.begin(); iter != Tables.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Tables");
+        writer.StartArray();
+        for (std::list<RandomResultTable>::iterator iter = Tables.begin(); iter != Tables.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
-
     writer.EndObject();
 }
 
@@ -9122,8 +9499,6 @@ UpdateRandomResultTablesResult::~UpdateRandomResultTablesResult()
 void UpdateRandomResultTablesResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -9142,19 +9517,17 @@ UpdateStoreItemsRequest::~UpdateStoreItemsRequest()
 void UpdateStoreItemsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     if (MarketingData != NULL) { writer.String("MarketingData"); MarketingData->writeJSON(writer); }
     if (!Store.empty()) {
-    writer.String("Store");
-    writer.StartArray();
-    for (std::list<StoreItem>::iterator iter = Store.begin(); iter != Store.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Store");
+        writer.StartArray();
+        for (std::list<StoreItem>::iterator iter = Store.begin(); iter != Store.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     writer.String("StoreId"); writer.String(StoreId.c_str());
-
     writer.EndObject();
 }
 
@@ -9185,8 +9558,6 @@ UpdateStoreItemsResult::~UpdateStoreItemsResult()
 void UpdateStoreItemsResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -9205,7 +9576,6 @@ UpdateTaskRequest::~UpdateTaskRequest()
 void UpdateTaskRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
     if (Identifier != NULL) { writer.String("Identifier"); Identifier->writeJSON(writer); }
     writer.String("IsActive"); writer.Bool(IsActive);
@@ -9213,7 +9583,6 @@ void UpdateTaskRequest::writeJSON(PFStringJsonWriter& writer)
     if (Parameter.notNull()) { writer.String("Parameter"); Parameter.writeJSON(writer); }
     if (Schedule.length() > 0) { writer.String("Schedule"); writer.String(Schedule.c_str()); }
     writer.String("Type"); writeScheduledTaskTypeEnumJSON(Type, writer);
-
     writer.EndObject();
 }
 
@@ -9245,26 +9614,24 @@ UpdateUserDataRequest::~UpdateUserDataRequest()
 void UpdateUserDataRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Data.empty()) {
-    writer.String("Data");
-    writer.StartObject();
-    for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        writer.String("Data");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (!KeysToRemove.empty()) {
-    writer.String("KeysToRemove");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = KeysToRemove.begin(); iter != KeysToRemove.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("KeysToRemove");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = KeysToRemove.begin(); iter != KeysToRemove.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (Permission.notNull()) { writer.String("Permission"); writeUserDataPermissionEnumJSON(Permission, writer); }
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -9299,9 +9666,7 @@ UpdateUserDataResult::~UpdateUserDataResult()
 void UpdateUserDataResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("DataVersion"); writer.Uint(DataVersion);
-
     writer.EndObject();
 }
 
@@ -9321,25 +9686,23 @@ UpdateUserInternalDataRequest::~UpdateUserInternalDataRequest()
 void UpdateUserInternalDataRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Data.empty()) {
-    writer.String("Data");
-    writer.StartObject();
-    for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        writer.String("Data");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = Data.begin(); iter != Data.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (!KeysToRemove.empty()) {
-    writer.String("KeysToRemove");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = KeysToRemove.begin(); iter != KeysToRemove.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("KeysToRemove");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = KeysToRemove.begin(); iter != KeysToRemove.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -9372,10 +9735,8 @@ UpdateUserTitleDisplayNameRequest::~UpdateUserTitleDisplayNameRequest()
 void UpdateUserTitleDisplayNameRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("DisplayName"); writer.String(DisplayName.c_str());
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -9397,9 +9758,7 @@ UpdateUserTitleDisplayNameResult::~UpdateUserTitleDisplayNameResult()
 void UpdateUserTitleDisplayNameResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
-
     writer.EndObject();
 }
 

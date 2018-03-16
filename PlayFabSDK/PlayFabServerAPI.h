@@ -91,6 +91,7 @@ namespace PlayFab
         static void RevokeAllBansForUser(ServerModels::RevokeAllBansForUserRequest& request, ProcessApiCallback<ServerModels::RevokeAllBansForUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RevokeBans(ServerModels::RevokeBansRequest& request, ProcessApiCallback<ServerModels::RevokeBansResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RevokeInventoryItem(ServerModels::RevokeInventoryItemRequest& request, ProcessApiCallback<ServerModels::RevokeInventoryResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RevokeInventoryItems(ServerModels::RevokeInventoryItemsRequest& request, ProcessApiCallback<ServerModels::RevokeInventoryItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendCustomAccountRecoveryEmail(ServerModels::SendCustomAccountRecoveryEmailRequest& request, ProcessApiCallback<ServerModels::SendCustomAccountRecoveryEmailResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendEmailFromTemplate(ServerModels::SendEmailFromTemplateRequest& request, ProcessApiCallback<ServerModels::SendEmailFromTemplateResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendPushNotification(ServerModels::SendPushNotificationRequest& request, ProcessApiCallback<ServerModels::SendPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -207,6 +208,7 @@ namespace PlayFab
         static void OnRevokeAllBansForUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRevokeBansResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRevokeInventoryItemResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRevokeInventoryItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendCustomAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendEmailFromTemplateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);

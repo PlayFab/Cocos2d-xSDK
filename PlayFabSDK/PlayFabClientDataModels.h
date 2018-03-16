@@ -1937,26 +1937,66 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum EntityTypes
+        {
+            EntityTypestitle,
+            EntityTypesmaster_player_account,
+            EntityTypestitle_player_account,
+            EntityTypescharacter,
+            EntityTypesgroup
+        };
+
+        void writeEntityTypesEnumJSON(EntityTypes enumVal, PFStringJsonWriter& writer);
+        EntityTypes readEntityTypesFromValue(const rapidjson::Value& obj);
+
+        struct EntityKey : public PlayFabBaseModel
+        {
+            std::string Id;
+            Boxed<EntityTypes> Type;
+            std::string TypeString;
+
+            EntityKey() :
+                PlayFabBaseModel(),
+                Id(),
+                Type(),
+                TypeString()
+            {}
+
+            EntityKey(const EntityKey& src) :
+                PlayFabBaseModel(),
+                Id(src.Id),
+                Type(src.Type),
+                TypeString(src.TypeString)
+            {}
+
+            EntityKey(const rapidjson::Value& obj) : EntityKey()
+            {
+                readFromValue(obj);
+            }
+
+            ~EntityKey();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct EntityTokenResponse : public PlayFabBaseModel
         {
-            std::string EntityId;
+            EntityKey* Entity;
             std::string EntityToken;
-            std::string EntityType;
             OptionalTime TokenExpiration;
 
             EntityTokenResponse() :
                 PlayFabBaseModel(),
-                EntityId(),
+                Entity(NULL),
                 EntityToken(),
-                EntityType(),
                 TokenExpiration()
             {}
 
             EntityTokenResponse(const EntityTokenResponse& src) :
                 PlayFabBaseModel(),
-                EntityId(src.EntityId),
+                Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 EntityToken(src.EntityToken),
-                EntityType(src.EntityType),
                 TokenExpiration(src.TokenExpiration)
             {}
 

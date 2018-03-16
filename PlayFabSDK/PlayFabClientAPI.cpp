@@ -3443,8 +3443,8 @@ void PlayFabClientAPI::OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequ
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -3494,8 +3494,8 @@ void PlayFabClientAPI::OnLoginWithCustomIDResult(int httpStatus, HttpRequest* re
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -3545,8 +3545,8 @@ void PlayFabClientAPI::OnLoginWithEmailAddressResult(int httpStatus, HttpRequest
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -3596,8 +3596,8 @@ void PlayFabClientAPI::OnLoginWithFacebookResult(int httpStatus, HttpRequest* re
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -3647,8 +3647,8 @@ void PlayFabClientAPI::OnLoginWithGameCenterResult(int httpStatus, HttpRequest* 
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -3698,8 +3698,8 @@ void PlayFabClientAPI::OnLoginWithGoogleAccountResult(int httpStatus, HttpReques
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -3749,8 +3749,8 @@ void PlayFabClientAPI::OnLoginWithIOSDeviceIDResult(int httpStatus, HttpRequest*
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -3800,8 +3800,8 @@ void PlayFabClientAPI::OnLoginWithKongregateResult(int httpStatus, HttpRequest* 
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -3851,8 +3851,8 @@ void PlayFabClientAPI::OnLoginWithPlayFabResult(int httpStatus, HttpRequest* req
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -3902,8 +3902,8 @@ void PlayFabClientAPI::OnLoginWithSteamResult(int httpStatus, HttpRequest* reque
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -3953,8 +3953,8 @@ void PlayFabClientAPI::OnLoginWithTwitchResult(int httpStatus, HttpRequest* requ
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -4004,8 +4004,8 @@ void PlayFabClientAPI::OnLoginWithWindowsHelloResult(int httpStatus, HttpRequest
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -4331,8 +4331,7 @@ void PlayFabClientAPI::OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* 
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)
@@ -4382,8 +4381,8 @@ void PlayFabClientAPI::OnRegisterWithWindowsHelloResult(int httpStatus, HttpRequ
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
-        if (outResult.SessionTicket.length() > 0)
-            PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
         MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
 
         if (request->GetResultCallback() != nullptr)

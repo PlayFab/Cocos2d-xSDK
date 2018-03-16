@@ -88,6 +88,7 @@ namespace PlayFab
         static void RevokeAllBansForUser(AdminModels::RevokeAllBansForUserRequest& request, ProcessApiCallback<AdminModels::RevokeAllBansForUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RevokeBans(AdminModels::RevokeBansRequest& request, ProcessApiCallback<AdminModels::RevokeBansResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RevokeInventoryItem(AdminModels::RevokeInventoryItemRequest& request, ProcessApiCallback<AdminModels::RevokeInventoryResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RevokeInventoryItems(AdminModels::RevokeInventoryItemsRequest& request, ProcessApiCallback<AdminModels::RevokeInventoryItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RunTask(AdminModels::RunTaskRequest& request, ProcessApiCallback<AdminModels::RunTaskResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendAccountRecoveryEmail(AdminModels::SendAccountRecoveryEmailRequest& request, ProcessApiCallback<AdminModels::SendAccountRecoveryEmailResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetCatalogItems(AdminModels::UpdateCatalogItemsRequest& request, ProcessApiCallback<AdminModels::UpdateCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -195,6 +196,7 @@ namespace PlayFab
         static void OnRevokeAllBansForUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRevokeBansResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRevokeInventoryItemResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRevokeInventoryItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRunTaskResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);

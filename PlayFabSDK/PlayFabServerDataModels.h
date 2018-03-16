@@ -2903,6 +2903,373 @@ namespace PlayFab
         void writeGameInstanceStateEnumJSON(GameInstanceState enumVal, PFStringJsonWriter& writer);
         GameInstanceState readGameInstanceStateFromValue(const rapidjson::Value& obj);
 
+        enum GenericErrorCodes
+        {
+            GenericErrorCodesSuccess,
+            GenericErrorCodesInvalidParams,
+            GenericErrorCodesAccountNotFound,
+            GenericErrorCodesAccountBanned,
+            GenericErrorCodesInvalidUsernameOrPassword,
+            GenericErrorCodesInvalidTitleId,
+            GenericErrorCodesInvalidEmailAddress,
+            GenericErrorCodesEmailAddressNotAvailable,
+            GenericErrorCodesInvalidUsername,
+            GenericErrorCodesInvalidPassword,
+            GenericErrorCodesUsernameNotAvailable,
+            GenericErrorCodesInvalidSteamTicket,
+            GenericErrorCodesAccountAlreadyLinked,
+            GenericErrorCodesLinkedAccountAlreadyClaimed,
+            GenericErrorCodesInvalidFacebookToken,
+            GenericErrorCodesAccountNotLinked,
+            GenericErrorCodesFailedByPaymentProvider,
+            GenericErrorCodesCouponCodeNotFound,
+            GenericErrorCodesInvalidContainerItem,
+            GenericErrorCodesContainerNotOwned,
+            GenericErrorCodesKeyNotOwned,
+            GenericErrorCodesInvalidItemIdInTable,
+            GenericErrorCodesInvalidReceipt,
+            GenericErrorCodesReceiptAlreadyUsed,
+            GenericErrorCodesReceiptCancelled,
+            GenericErrorCodesGameNotFound,
+            GenericErrorCodesGameModeNotFound,
+            GenericErrorCodesInvalidGoogleToken,
+            GenericErrorCodesUserIsNotPartOfDeveloper,
+            GenericErrorCodesInvalidTitleForDeveloper,
+            GenericErrorCodesTitleNameConflicts,
+            GenericErrorCodesUserisNotValid,
+            GenericErrorCodesValueAlreadyExists,
+            GenericErrorCodesBuildNotFound,
+            GenericErrorCodesPlayerNotInGame,
+            GenericErrorCodesInvalidTicket,
+            GenericErrorCodesInvalidDeveloper,
+            GenericErrorCodesInvalidOrderInfo,
+            GenericErrorCodesRegistrationIncomplete,
+            GenericErrorCodesInvalidPlatform,
+            GenericErrorCodesUnknownError,
+            GenericErrorCodesSteamApplicationNotOwned,
+            GenericErrorCodesWrongSteamAccount,
+            GenericErrorCodesTitleNotActivated,
+            GenericErrorCodesRegistrationSessionNotFound,
+            GenericErrorCodesNoSuchMod,
+            GenericErrorCodesFileNotFound,
+            GenericErrorCodesDuplicateEmail,
+            GenericErrorCodesItemNotFound,
+            GenericErrorCodesItemNotOwned,
+            GenericErrorCodesItemNotRecycleable,
+            GenericErrorCodesItemNotAffordable,
+            GenericErrorCodesInvalidVirtualCurrency,
+            GenericErrorCodesWrongVirtualCurrency,
+            GenericErrorCodesWrongPrice,
+            GenericErrorCodesNonPositiveValue,
+            GenericErrorCodesInvalidRegion,
+            GenericErrorCodesRegionAtCapacity,
+            GenericErrorCodesServerFailedToStart,
+            GenericErrorCodesNameNotAvailable,
+            GenericErrorCodesInsufficientFunds,
+            GenericErrorCodesInvalidDeviceID,
+            GenericErrorCodesInvalidPushNotificationToken,
+            GenericErrorCodesNoRemainingUses,
+            GenericErrorCodesInvalidPaymentProvider,
+            GenericErrorCodesPurchaseInitializationFailure,
+            GenericErrorCodesDuplicateUsername,
+            GenericErrorCodesInvalidBuyerInfo,
+            GenericErrorCodesNoGameModeParamsSet,
+            GenericErrorCodesBodyTooLarge,
+            GenericErrorCodesReservedWordInBody,
+            GenericErrorCodesInvalidTypeInBody,
+            GenericErrorCodesInvalidRequest,
+            GenericErrorCodesReservedEventName,
+            GenericErrorCodesInvalidUserStatistics,
+            GenericErrorCodesNotAuthenticated,
+            GenericErrorCodesStreamAlreadyExists,
+            GenericErrorCodesErrorCreatingStream,
+            GenericErrorCodesStreamNotFound,
+            GenericErrorCodesInvalidAccount,
+            GenericErrorCodesPurchaseDoesNotExist,
+            GenericErrorCodesInvalidPurchaseTransactionStatus,
+            GenericErrorCodesAPINotEnabledForGameClientAccess,
+            GenericErrorCodesNoPushNotificationARNForTitle,
+            GenericErrorCodesBuildAlreadyExists,
+            GenericErrorCodesBuildPackageDoesNotExist,
+            GenericErrorCodesCustomAnalyticsEventsNotEnabledForTitle,
+            GenericErrorCodesInvalidSharedGroupId,
+            GenericErrorCodesNotAuthorized,
+            GenericErrorCodesMissingTitleGoogleProperties,
+            GenericErrorCodesInvalidItemProperties,
+            GenericErrorCodesInvalidPSNAuthCode,
+            GenericErrorCodesInvalidItemId,
+            GenericErrorCodesPushNotEnabledForAccount,
+            GenericErrorCodesPushServiceError,
+            GenericErrorCodesReceiptDoesNotContainInAppItems,
+            GenericErrorCodesReceiptContainsMultipleInAppItems,
+            GenericErrorCodesInvalidBundleID,
+            GenericErrorCodesJavascriptException,
+            GenericErrorCodesInvalidSessionTicket,
+            GenericErrorCodesUnableToConnectToDatabase,
+            GenericErrorCodesInternalServerError,
+            GenericErrorCodesInvalidReportDate,
+            GenericErrorCodesReportNotAvailable,
+            GenericErrorCodesDatabaseThroughputExceeded,
+            GenericErrorCodesInvalidGameTicket,
+            GenericErrorCodesExpiredGameTicket,
+            GenericErrorCodesGameTicketDoesNotMatchLobby,
+            GenericErrorCodesLinkedDeviceAlreadyClaimed,
+            GenericErrorCodesDeviceAlreadyLinked,
+            GenericErrorCodesDeviceNotLinked,
+            GenericErrorCodesPartialFailure,
+            GenericErrorCodesPublisherNotSet,
+            GenericErrorCodesServiceUnavailable,
+            GenericErrorCodesVersionNotFound,
+            GenericErrorCodesRevisionNotFound,
+            GenericErrorCodesInvalidPublisherId,
+            GenericErrorCodesDownstreamServiceUnavailable,
+            GenericErrorCodesAPINotIncludedInTitleUsageTier,
+            GenericErrorCodesDAULimitExceeded,
+            GenericErrorCodesAPIRequestLimitExceeded,
+            GenericErrorCodesInvalidAPIEndpoint,
+            GenericErrorCodesBuildNotAvailable,
+            GenericErrorCodesConcurrentEditError,
+            GenericErrorCodesContentNotFound,
+            GenericErrorCodesCharacterNotFound,
+            GenericErrorCodesCloudScriptNotFound,
+            GenericErrorCodesContentQuotaExceeded,
+            GenericErrorCodesInvalidCharacterStatistics,
+            GenericErrorCodesPhotonNotEnabledForTitle,
+            GenericErrorCodesPhotonApplicationNotFound,
+            GenericErrorCodesPhotonApplicationNotAssociatedWithTitle,
+            GenericErrorCodesInvalidEmailOrPassword,
+            GenericErrorCodesFacebookAPIError,
+            GenericErrorCodesInvalidContentType,
+            GenericErrorCodesKeyLengthExceeded,
+            GenericErrorCodesDataLengthExceeded,
+            GenericErrorCodesTooManyKeys,
+            GenericErrorCodesFreeTierCannotHaveVirtualCurrency,
+            GenericErrorCodesMissingAmazonSharedKey,
+            GenericErrorCodesAmazonValidationError,
+            GenericErrorCodesInvalidPSNIssuerId,
+            GenericErrorCodesPSNInaccessible,
+            GenericErrorCodesExpiredAuthToken,
+            GenericErrorCodesFailedToGetEntitlements,
+            GenericErrorCodesFailedToConsumeEntitlement,
+            GenericErrorCodesTradeAcceptingUserNotAllowed,
+            GenericErrorCodesTradeInventoryItemIsAssignedToCharacter,
+            GenericErrorCodesTradeInventoryItemIsBundle,
+            GenericErrorCodesTradeStatusNotValidForCancelling,
+            GenericErrorCodesTradeStatusNotValidForAccepting,
+            GenericErrorCodesTradeDoesNotExist,
+            GenericErrorCodesTradeCancelled,
+            GenericErrorCodesTradeAlreadyFilled,
+            GenericErrorCodesTradeWaitForStatusTimeout,
+            GenericErrorCodesTradeInventoryItemExpired,
+            GenericErrorCodesTradeMissingOfferedAndAcceptedItems,
+            GenericErrorCodesTradeAcceptedItemIsBundle,
+            GenericErrorCodesTradeAcceptedItemIsStackable,
+            GenericErrorCodesTradeInventoryItemInvalidStatus,
+            GenericErrorCodesTradeAcceptedCatalogItemInvalid,
+            GenericErrorCodesTradeAllowedUsersInvalid,
+            GenericErrorCodesTradeInventoryItemDoesNotExist,
+            GenericErrorCodesTradeInventoryItemIsConsumed,
+            GenericErrorCodesTradeInventoryItemIsStackable,
+            GenericErrorCodesTradeAcceptedItemsMismatch,
+            GenericErrorCodesInvalidKongregateToken,
+            GenericErrorCodesFeatureNotConfiguredForTitle,
+            GenericErrorCodesNoMatchingCatalogItemForReceipt,
+            GenericErrorCodesInvalidCurrencyCode,
+            GenericErrorCodesNoRealMoneyPriceForCatalogItem,
+            GenericErrorCodesTradeInventoryItemIsNotTradable,
+            GenericErrorCodesTradeAcceptedCatalogItemIsNotTradable,
+            GenericErrorCodesUsersAlreadyFriends,
+            GenericErrorCodesLinkedIdentifierAlreadyClaimed,
+            GenericErrorCodesCustomIdNotLinked,
+            GenericErrorCodesTotalDataSizeExceeded,
+            GenericErrorCodesDeleteKeyConflict,
+            GenericErrorCodesInvalidXboxLiveToken,
+            GenericErrorCodesExpiredXboxLiveToken,
+            GenericErrorCodesResettableStatisticVersionRequired,
+            GenericErrorCodesNotAuthorizedByTitle,
+            GenericErrorCodesNoPartnerEnabled,
+            GenericErrorCodesInvalidPartnerResponse,
+            GenericErrorCodesAPINotEnabledForGameServerAccess,
+            GenericErrorCodesStatisticNotFound,
+            GenericErrorCodesStatisticNameConflict,
+            GenericErrorCodesStatisticVersionClosedForWrites,
+            GenericErrorCodesStatisticVersionInvalid,
+            GenericErrorCodesAPIClientRequestRateLimitExceeded,
+            GenericErrorCodesInvalidJSONContent,
+            GenericErrorCodesInvalidDropTable,
+            GenericErrorCodesStatisticVersionAlreadyIncrementedForScheduledInterval,
+            GenericErrorCodesStatisticCountLimitExceeded,
+            GenericErrorCodesStatisticVersionIncrementRateExceeded,
+            GenericErrorCodesContainerKeyInvalid,
+            GenericErrorCodesCloudScriptExecutionTimeLimitExceeded,
+            GenericErrorCodesNoWritePermissionsForEvent,
+            GenericErrorCodesCloudScriptFunctionArgumentSizeExceeded,
+            GenericErrorCodesCloudScriptAPIRequestCountExceeded,
+            GenericErrorCodesCloudScriptAPIRequestError,
+            GenericErrorCodesCloudScriptHTTPRequestError,
+            GenericErrorCodesInsufficientGuildRole,
+            GenericErrorCodesGuildNotFound,
+            GenericErrorCodesOverLimit,
+            GenericErrorCodesEventNotFound,
+            GenericErrorCodesInvalidEventField,
+            GenericErrorCodesInvalidEventName,
+            GenericErrorCodesCatalogNotConfigured,
+            GenericErrorCodesOperationNotSupportedForPlatform,
+            GenericErrorCodesSegmentNotFound,
+            GenericErrorCodesStoreNotFound,
+            GenericErrorCodesInvalidStatisticName,
+            GenericErrorCodesTitleNotQualifiedForLimit,
+            GenericErrorCodesInvalidServiceLimitLevel,
+            GenericErrorCodesServiceLimitLevelInTransition,
+            GenericErrorCodesCouponAlreadyRedeemed,
+            GenericErrorCodesGameServerBuildSizeLimitExceeded,
+            GenericErrorCodesGameServerBuildCountLimitExceeded,
+            GenericErrorCodesVirtualCurrencyCountLimitExceeded,
+            GenericErrorCodesVirtualCurrencyCodeExists,
+            GenericErrorCodesTitleNewsItemCountLimitExceeded,
+            GenericErrorCodesInvalidTwitchToken,
+            GenericErrorCodesTwitchResponseError,
+            GenericErrorCodesProfaneDisplayName,
+            GenericErrorCodesUserAlreadyAdded,
+            GenericErrorCodesInvalidVirtualCurrencyCode,
+            GenericErrorCodesVirtualCurrencyCannotBeDeleted,
+            GenericErrorCodesIdentifierAlreadyClaimed,
+            GenericErrorCodesIdentifierNotLinked,
+            GenericErrorCodesInvalidContinuationToken,
+            GenericErrorCodesExpiredContinuationToken,
+            GenericErrorCodesInvalidSegment,
+            GenericErrorCodesInvalidSessionId,
+            GenericErrorCodesSessionLogNotFound,
+            GenericErrorCodesInvalidSearchTerm,
+            GenericErrorCodesTwoFactorAuthenticationTokenRequired,
+            GenericErrorCodesGameServerHostCountLimitExceeded,
+            GenericErrorCodesPlayerTagCountLimitExceeded,
+            GenericErrorCodesRequestAlreadyRunning,
+            GenericErrorCodesActionGroupNotFound,
+            GenericErrorCodesMaximumSegmentBulkActionJobsRunning,
+            GenericErrorCodesNoActionsOnPlayersInSegmentJob,
+            GenericErrorCodesDuplicateStatisticName,
+            GenericErrorCodesScheduledTaskNameConflict,
+            GenericErrorCodesScheduledTaskCreateConflict,
+            GenericErrorCodesInvalidScheduledTaskName,
+            GenericErrorCodesInvalidTaskSchedule,
+            GenericErrorCodesSteamNotEnabledForTitle,
+            GenericErrorCodesLimitNotAnUpgradeOption,
+            GenericErrorCodesNoSecretKeyEnabledForCloudScript,
+            GenericErrorCodesTaskNotFound,
+            GenericErrorCodesTaskInstanceNotFound,
+            GenericErrorCodesInvalidIdentityProviderId,
+            GenericErrorCodesMisconfiguredIdentityProvider,
+            GenericErrorCodesInvalidScheduledTaskType,
+            GenericErrorCodesBillingInformationRequired,
+            GenericErrorCodesLimitedEditionItemUnavailable,
+            GenericErrorCodesInvalidAdPlacementAndReward,
+            GenericErrorCodesAllAdPlacementViewsAlreadyConsumed,
+            GenericErrorCodesGoogleOAuthNotConfiguredForTitle,
+            GenericErrorCodesGoogleOAuthError,
+            GenericErrorCodesUserNotFriend,
+            GenericErrorCodesInvalidSignature,
+            GenericErrorCodesInvalidPublicKey,
+            GenericErrorCodesGoogleOAuthNoIdTokenIncludedInResponse,
+            GenericErrorCodesStatisticUpdateInProgress,
+            GenericErrorCodesLeaderboardVersionNotAvailable,
+            GenericErrorCodesStatisticAlreadyHasPrizeTable,
+            GenericErrorCodesPrizeTableHasOverlappingRanks,
+            GenericErrorCodesPrizeTableHasMissingRanks,
+            GenericErrorCodesPrizeTableRankStartsAtZero,
+            GenericErrorCodesInvalidStatistic,
+            GenericErrorCodesExpressionParseFailure,
+            GenericErrorCodesExpressionInvokeFailure,
+            GenericErrorCodesExpressionTooLong,
+            GenericErrorCodesDataUpdateRateExceeded,
+            GenericErrorCodesRestrictedEmailDomain,
+            GenericErrorCodesEncryptionKeyDisabled,
+            GenericErrorCodesEncryptionKeyMissing,
+            GenericErrorCodesEncryptionKeyBroken,
+            GenericErrorCodesNoSharedSecretKeyConfigured,
+            GenericErrorCodesSecretKeyNotFound,
+            GenericErrorCodesPlayerSecretAlreadyConfigured,
+            GenericErrorCodesAPIRequestsDisabledForTitle,
+            GenericErrorCodesInvalidSharedSecretKey,
+            GenericErrorCodesPrizeTableHasNoRanks,
+            GenericErrorCodesProfileDoesNotExist,
+            GenericErrorCodesContentS3OriginBucketNotConfigured,
+            GenericErrorCodesInvalidEnvironmentForReceipt,
+            GenericErrorCodesEncryptedRequestNotAllowed,
+            GenericErrorCodesSignedRequestNotAllowed,
+            GenericErrorCodesRequestViewConstraintParamsNotAllowed,
+            GenericErrorCodesBadPartnerConfiguration,
+            GenericErrorCodesXboxBPCertificateFailure,
+            GenericErrorCodesXboxXASSExchangeFailure,
+            GenericErrorCodesInvalidEntityId,
+            GenericErrorCodesStatisticValueAggregationOverflow,
+            GenericErrorCodesEmailMessageFromAddressIsMissing,
+            GenericErrorCodesEmailMessageToAddressIsMissing,
+            GenericErrorCodesSmtpServerAuthenticationError,
+            GenericErrorCodesSmtpServerLimitExceeded,
+            GenericErrorCodesSmtpServerInsufficientStorage,
+            GenericErrorCodesSmtpServerCommunicationError,
+            GenericErrorCodesSmtpServerGeneralFailure,
+            GenericErrorCodesEmailClientTimeout,
+            GenericErrorCodesEmailClientCanceledTask,
+            GenericErrorCodesEmailTemplateMissing,
+            GenericErrorCodesInvalidHostForTitleId,
+            GenericErrorCodesEmailConfirmationTokenDoesNotExist,
+            GenericErrorCodesEmailConfirmationTokenExpired,
+            GenericErrorCodesAccountDeleted,
+            GenericErrorCodesPlayerSecretNotConfigured,
+            GenericErrorCodesInvalidSignatureTime,
+            GenericErrorCodesNoContactEmailAddressFound,
+            GenericErrorCodesInvalidAuthToken,
+            GenericErrorCodesAuthTokenDoesNotExist,
+            GenericErrorCodesAuthTokenExpired,
+            GenericErrorCodesAuthTokenAlreadyUsedToResetPassword,
+            GenericErrorCodesMembershipNameTooLong,
+            GenericErrorCodesMembershipNotFound,
+            GenericErrorCodesGoogleServiceAccountInvalid,
+            GenericErrorCodesGoogleServiceAccountParseFailure,
+            GenericErrorCodesEntityTokenMissing,
+            GenericErrorCodesEntityTokenInvalid,
+            GenericErrorCodesEntityTokenExpired,
+            GenericErrorCodesEntityTokenRevoked,
+            GenericErrorCodesInvalidProductForSubscription,
+            GenericErrorCodesXboxInaccessible,
+            GenericErrorCodesSubscriptionAlreadyTaken,
+            GenericErrorCodesSmtpAddonNotEnabled,
+            GenericErrorCodesAPIConcurrentRequestLimitExceeded,
+            GenericErrorCodesXboxRejectedXSTSExchangeRequest,
+            GenericErrorCodesVariableNotDefined,
+            GenericErrorCodesTemplateVersionNotDefined,
+            GenericErrorCodesFileTooLarge,
+            GenericErrorCodesTitleDeleted,
+            GenericErrorCodesTitleContainsUserAccounts,
+            GenericErrorCodesTitleDeletionPlayerCleanupFailure,
+            GenericErrorCodesEntityFileOperationPending,
+            GenericErrorCodesNoEntityFileOperationPending,
+            GenericErrorCodesEntityProfileVersionMismatch,
+            GenericErrorCodesTemplateVersionTooOld,
+            GenericErrorCodesMembershipDefinitionInUse,
+            GenericErrorCodesPaymentPageNotConfigured,
+            GenericErrorCodesFailedLoginAttemptRateLimitExceeded,
+            GenericErrorCodesEntityBlockedByGroup,
+            GenericErrorCodesRoleDoesNotExist,
+            GenericErrorCodesEntityIsAlreadyMember,
+            GenericErrorCodesDuplicateRoleId,
+            GenericErrorCodesGroupInvitationNotFound,
+            GenericErrorCodesGroupApplicationNotFound,
+            GenericErrorCodesOutstandingInvitationAcceptedInstead,
+            GenericErrorCodesOutstandingApplicationAcceptedInstead,
+            GenericErrorCodesRoleIsGroupDefaultMember,
+            GenericErrorCodesRoleIsGroupAdmin,
+            GenericErrorCodesRoleNameNotAvailable,
+            GenericErrorCodesGroupNameNotAvailable,
+            GenericErrorCodesEmailReportAlreadySent,
+            GenericErrorCodesEmailReportRecipientBlacklisted
+        };
+
+        void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
+        GenericErrorCodes readGenericErrorCodesFromValue(const rapidjson::Value& obj);
+
         struct GetAllSegmentsRequest : public PlayFabBaseModel
         {
 
@@ -6826,6 +7193,37 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct RevokeInventoryItem : public PlayFabBaseModel
+        {
+            std::string CharacterId;
+            std::string ItemInstanceId;
+            std::string PlayFabId;
+
+            RevokeInventoryItem() :
+                PlayFabBaseModel(),
+                CharacterId(),
+                ItemInstanceId(),
+                PlayFabId()
+            {}
+
+            RevokeInventoryItem(const RevokeInventoryItem& src) :
+                PlayFabBaseModel(),
+                CharacterId(src.CharacterId),
+                ItemInstanceId(src.ItemInstanceId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            RevokeInventoryItem(const rapidjson::Value& obj) : RevokeInventoryItem()
+            {
+                readFromValue(obj);
+            }
+
+            ~RevokeInventoryItem();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct RevokeInventoryItemRequest : public PlayFabBaseModel
         {
             std::string CharacterId;
@@ -6852,6 +7250,84 @@ namespace PlayFab
             }
 
             ~RevokeInventoryItemRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RevokeInventoryItemsRequest : public PlayFabBaseModel
+        {
+            std::list<RevokeInventoryItem> Items;
+
+            RevokeInventoryItemsRequest() :
+                PlayFabBaseModel(),
+                Items()
+            {}
+
+            RevokeInventoryItemsRequest(const RevokeInventoryItemsRequest& src) :
+                PlayFabBaseModel(),
+                Items(src.Items)
+            {}
+
+            RevokeInventoryItemsRequest(const rapidjson::Value& obj) : RevokeInventoryItemsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RevokeInventoryItemsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RevokeItemError : public PlayFabBaseModel
+        {
+            Boxed<GenericErrorCodes> Error;
+            RevokeInventoryItem* Item;
+
+            RevokeItemError() :
+                PlayFabBaseModel(),
+                Error(),
+                Item(NULL)
+            {}
+
+            RevokeItemError(const RevokeItemError& src) :
+                PlayFabBaseModel(),
+                Error(src.Error),
+                Item(src.Item ? new RevokeInventoryItem(*src.Item) : NULL)
+            {}
+
+            RevokeItemError(const rapidjson::Value& obj) : RevokeItemError()
+            {
+                readFromValue(obj);
+            }
+
+            ~RevokeItemError();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RevokeInventoryItemsResult : public PlayFabBaseModel
+        {
+            std::list<RevokeItemError> Errors;
+
+            RevokeInventoryItemsResult() :
+                PlayFabBaseModel(),
+                Errors()
+            {}
+
+            RevokeInventoryItemsResult(const RevokeInventoryItemsResult& src) :
+                PlayFabBaseModel(),
+                Errors(src.Errors)
+            {}
+
+            RevokeInventoryItemsResult(const rapidjson::Value& obj) : RevokeInventoryItemsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RevokeInventoryItemsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
