@@ -13,9 +13,7 @@ AuthUserRequest::~AuthUserRequest()
 void AuthUserRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("AuthorizationTicket"); writer.String(AuthorizationTicket.c_str());
-
     writer.EndObject();
 }
 
@@ -35,10 +33,8 @@ AuthUserResponse::~AuthUserResponse()
 void AuthUserResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Authorized"); writer.Bool(Authorized);
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -60,9 +56,7 @@ DeregisterGameRequest::~DeregisterGameRequest()
 void DeregisterGameRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("LobbyId"); writer.String(LobbyId.c_str());
-
     writer.EndObject();
 }
 
@@ -82,8 +76,6 @@ DeregisterGameResponse::~DeregisterGameResponse()
 void DeregisterGameResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -101,26 +93,25 @@ ItemInstance::~ItemInstance()
 void ItemInstance::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (Annotation.length() > 0) { writer.String("Annotation"); writer.String(Annotation.c_str()); }
     if (!BundleContents.empty()) {
-    writer.String("BundleContents");
-    writer.StartArray();
-    for (std::list<std::string>::iterator iter = BundleContents.begin(); iter != BundleContents.end(); iter++) {
-        writer.String(iter->c_str());
+        writer.String("BundleContents");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = BundleContents.begin(); iter != BundleContents.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     if (BundleParent.length() > 0) { writer.String("BundleParent"); writer.String(BundleParent.c_str()); }
     if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     if (!CustomData.empty()) {
-    writer.String("CustomData");
-    writer.StartObject();
-    for (std::map<std::string, std::string>::iterator iter = CustomData.begin(); iter != CustomData.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        writer.String("CustomData");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomData.begin(); iter != CustomData.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
     if (Expiration.notNull()) { writer.String("Expiration"); writeDatetime(Expiration, writer); }
     if (ItemClass.length() > 0) { writer.String("ItemClass"); writer.String(ItemClass.c_str()); }
@@ -131,7 +122,6 @@ void ItemInstance::writeJSON(PFStringJsonWriter& writer)
     if (UnitCurrency.length() > 0) { writer.String("UnitCurrency"); writer.String(UnitCurrency.c_str()); }
     writer.String("UnitPrice"); writer.Uint(UnitPrice);
     if (UsesIncrementedBy.notNull()) { writer.String("UsesIncrementedBy"); writer.Int(UsesIncrementedBy); }
-
     writer.EndObject();
 }
 
@@ -188,10 +178,8 @@ PlayerJoinedRequest::~PlayerJoinedRequest()
 void PlayerJoinedRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("LobbyId"); writer.String(LobbyId.c_str());
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -213,8 +201,6 @@ PlayerJoinedResponse::~PlayerJoinedResponse()
 void PlayerJoinedResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -232,10 +218,8 @@ PlayerLeftRequest::~PlayerLeftRequest()
 void PlayerLeftRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("LobbyId"); writer.String(LobbyId.c_str());
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -257,8 +241,6 @@ PlayerLeftResponse::~PlayerLeftResponse()
 void PlayerLeftResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
-
     writer.EndObject();
 }
 
@@ -313,7 +295,6 @@ RegisterGameRequest::~RegisterGameRequest()
 void RegisterGameRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Build"); writer.String(Build.c_str());
     writer.String("GameMode"); writer.String(GameMode.c_str());
     if (LobbyId.length() > 0) { writer.String("LobbyId"); writer.String(LobbyId.c_str()); }
@@ -322,14 +303,13 @@ void RegisterGameRequest::writeJSON(PFStringJsonWriter& writer)
     if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     writer.String("ServerPort"); writer.String(ServerPort.c_str());
     if (!Tags.empty()) {
-    writer.String("Tags");
-    writer.StartObject();
-    for (std::map<std::string, std::string>::iterator iter = Tags.begin(); iter != Tags.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        writer.String("Tags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = Tags.begin(); iter != Tags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
-
     writer.EndObject();
 }
 
@@ -367,9 +347,7 @@ RegisterGameResponse::~RegisterGameResponse()
 void RegisterGameResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (LobbyId.length() > 0) { writer.String("LobbyId"); writer.String(LobbyId.c_str()); }
-
     writer.EndObject();
 }
 
@@ -389,13 +367,11 @@ StartGameRequest::~StartGameRequest()
 void StartGameRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("Build"); writer.String(Build.c_str());
     if (CustomCommandLineData.length() > 0) { writer.String("CustomCommandLineData"); writer.String(CustomCommandLineData.c_str()); }
     writer.String("ExternalMatchmakerEventEndpoint"); writer.String(ExternalMatchmakerEventEndpoint.c_str());
     writer.String("GameMode"); writer.String(GameMode.c_str());
     writer.String("Region"); writeRegionEnumJSON(pfRegion, writer);
-
     writer.EndObject();
 }
 
@@ -423,12 +399,10 @@ StartGameResponse::~StartGameResponse()
 void StartGameResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (GameID.length() > 0) { writer.String("GameID"); writer.String(GameID.c_str()); }
     if (ServerHostname.length() > 0) { writer.String("ServerHostname"); writer.String(ServerHostname.c_str()); }
     if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     writer.String("ServerPort"); writer.Uint(ServerPort);
-
     writer.EndObject();
 }
 
@@ -454,10 +428,8 @@ UserInfoRequest::~UserInfoRequest()
 void UserInfoRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("MinCatalogVersion"); writer.Int(MinCatalogVersion);
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-
     writer.EndObject();
 }
 
@@ -479,11 +451,9 @@ VirtualCurrencyRechargeTime::~VirtualCurrencyRechargeTime()
 void VirtualCurrencyRechargeTime::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     writer.String("RechargeMax"); writer.Int(RechargeMax);
     writer.String("RechargeTime"); writeDatetime(RechargeTime, writer);
     writer.String("SecondsToRecharge"); writer.Int(SecondsToRecharge);
-
     writer.EndObject();
 }
 
@@ -507,37 +477,35 @@ UserInfoResponse::~UserInfoResponse()
 void UserInfoResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-
     if (!Inventory.empty()) {
-    writer.String("Inventory");
-    writer.StartArray();
-    for (std::list<ItemInstance>::iterator iter = Inventory.begin(); iter != Inventory.end(); iter++) {
-        iter->writeJSON(writer);
+        writer.String("Inventory");
+        writer.StartArray();
+        for (std::list<ItemInstance>::iterator iter = Inventory.begin(); iter != Inventory.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
-     }
     writer.String("IsDeveloper"); writer.Bool(IsDeveloper);
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (SteamId.length() > 0) { writer.String("SteamId"); writer.String(SteamId.c_str()); }
     if (TitleDisplayName.length() > 0) { writer.String("TitleDisplayName"); writer.String(TitleDisplayName.c_str()); }
     if (Username.length() > 0) { writer.String("Username"); writer.String(Username.c_str()); }
     if (!VirtualCurrency.empty()) {
-    writer.String("VirtualCurrency");
-    writer.StartObject();
-    for (std::map<std::string, Int32>::iterator iter = VirtualCurrency.begin(); iter != VirtualCurrency.end(); ++iter) {
-        writer.String(iter->first.c_str()); writer.Int(iter->second);
+        writer.String("VirtualCurrency");
+        writer.StartObject();
+        for (std::map<std::string, Int32>::iterator iter = VirtualCurrency.begin(); iter != VirtualCurrency.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Int(iter->second);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
     if (!VirtualCurrencyRechargeTimes.empty()) {
-    writer.String("VirtualCurrencyRechargeTimes");
-    writer.StartObject();
-    for (std::map<std::string, VirtualCurrencyRechargeTime>::iterator iter = VirtualCurrencyRechargeTimes.begin(); iter != VirtualCurrencyRechargeTimes.end(); ++iter) {
-        writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        writer.String("VirtualCurrencyRechargeTimes");
+        writer.StartObject();
+        for (std::map<std::string, VirtualCurrencyRechargeTime>::iterator iter = VirtualCurrencyRechargeTimes.begin(); iter != VirtualCurrencyRechargeTimes.end(); ++iter) {
+            writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        }
+        writer.EndObject();
     }
-    writer.EndObject();
-     }
-
     writer.EndObject();
 }
 
