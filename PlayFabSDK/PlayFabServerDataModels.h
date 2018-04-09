@@ -816,6 +816,49 @@ namespace PlayFab
         void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
         UserOrigination readUserOriginationFromValue(const rapidjson::Value& obj);
 
+        enum EntityTypes
+        {
+            EntityTypestitle,
+            EntityTypesmaster_player_account,
+            EntityTypestitle_player_account,
+            EntityTypescharacter,
+            EntityTypesgroup
+        };
+
+        void writeEntityTypesEnumJSON(EntityTypes enumVal, PFStringJsonWriter& writer);
+        EntityTypes readEntityTypesFromValue(const rapidjson::Value& obj);
+
+        struct EntityKey : public PlayFabBaseModel
+        {
+            std::string Id;
+            Boxed<EntityTypes> Type;
+            std::string TypeString;
+
+            EntityKey() :
+                PlayFabBaseModel(),
+                Id(),
+                Type(),
+                TypeString()
+            {}
+
+            EntityKey(const EntityKey& src) :
+                PlayFabBaseModel(),
+                Id(src.Id),
+                Type(src.Type),
+                TypeString(src.TypeString)
+            {}
+
+            EntityKey(const rapidjson::Value& obj) : EntityKey()
+            {
+                readFromValue(obj);
+            }
+
+            ~EntityKey();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UserTitleInfo : public PlayFabBaseModel
         {
             std::string AvatarUrl;
@@ -825,6 +868,7 @@ namespace PlayFab
             OptionalBool isBanned;
             OptionalTime LastLogin;
             Boxed<UserOrigination> Origination;
+            EntityKey* TitlePlayerAccount;
 
             UserTitleInfo() :
                 PlayFabBaseModel(),
@@ -834,7 +878,8 @@ namespace PlayFab
                 FirstLogin(),
                 isBanned(),
                 LastLogin(),
-                Origination()
+                Origination(),
+                TitlePlayerAccount(NULL)
             {}
 
             UserTitleInfo(const UserTitleInfo& src) :
@@ -845,7 +890,8 @@ namespace PlayFab
                 FirstLogin(src.FirstLogin),
                 isBanned(src.isBanned),
                 LastLogin(src.LastLogin),
-                Origination(src.Origination)
+                Origination(src.Origination),
+                TitlePlayerAccount(src.TitlePlayerAccount ? new EntityKey(*src.TitlePlayerAccount) : NULL)
             {}
 
             UserTitleInfo(const rapidjson::Value& obj) : UserTitleInfo()
@@ -3264,7 +3310,9 @@ namespace PlayFab
             GenericErrorCodesRoleNameNotAvailable,
             GenericErrorCodesGroupNameNotAvailable,
             GenericErrorCodesEmailReportAlreadySent,
-            GenericErrorCodesEmailReportRecipientBlacklisted
+            GenericErrorCodesEmailReportRecipientBlacklisted,
+            GenericErrorCodesEventNamespaceNotAllowed,
+            GenericErrorCodesEventEntityNotAllowed
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);

@@ -3968,6 +3968,7 @@ UserOrigination PlayFab::ClientModels::readUserOriginationFromValue(const rapidj
 
 UserTitleInfo::~UserTitleInfo()
 {
+    if (TitlePlayerAccount != NULL) delete TitlePlayerAccount;
 
 }
 
@@ -3981,6 +3982,7 @@ void UserTitleInfo::writeJSON(PFStringJsonWriter& writer)
     if (isBanned.notNull()) { writer.String("isBanned"); writer.Bool(isBanned); }
     if (LastLogin.notNull()) { writer.String("LastLogin"); writeDatetime(LastLogin, writer); }
     if (Origination.notNull()) { writer.String("Origination"); writeUserOriginationEnumJSON(Origination, writer); }
+    if (TitlePlayerAccount != NULL) { writer.String("TitlePlayerAccount"); TitlePlayerAccount->writeJSON(writer); }
     writer.EndObject();
 }
 
@@ -4000,6 +4002,8 @@ bool UserTitleInfo::readFromValue(const rapidjson::Value& obj)
     if (LastLogin_member != obj.MemberEnd() && !LastLogin_member->value.IsNull()) LastLogin = readDatetime(LastLogin_member->value);
     const Value::ConstMemberIterator Origination_member = obj.FindMember("Origination");
     if (Origination_member != obj.MemberEnd() && !Origination_member->value.IsNull()) Origination = readUserOriginationFromValue(Origination_member->value);
+    const Value::ConstMemberIterator TitlePlayerAccount_member = obj.FindMember("TitlePlayerAccount");
+    if (TitlePlayerAccount_member != obj.MemberEnd() && !TitlePlayerAccount_member->value.IsNull()) TitlePlayerAccount = new EntityKey(TitlePlayerAccount_member->value);
 
     return true;
 }
