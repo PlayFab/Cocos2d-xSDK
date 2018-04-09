@@ -3135,6 +3135,7 @@ namespace PlayFab
             OptionalBool isBanned;
             OptionalTime LastLogin;
             Boxed<UserOrigination> Origination;
+            EntityKey* TitlePlayerAccount;
 
             UserTitleInfo() :
                 PlayFabBaseModel(),
@@ -3144,7 +3145,8 @@ namespace PlayFab
                 FirstLogin(),
                 isBanned(),
                 LastLogin(),
-                Origination()
+                Origination(),
+                TitlePlayerAccount(NULL)
             {}
 
             UserTitleInfo(const UserTitleInfo& src) :
@@ -3155,7 +3157,8 @@ namespace PlayFab
                 FirstLogin(src.FirstLogin),
                 isBanned(src.isBanned),
                 LastLogin(src.LastLogin),
-                Origination(src.Origination)
+                Origination(src.Origination),
+                TitlePlayerAccount(src.TitlePlayerAccount ? new EntityKey(*src.TitlePlayerAccount) : NULL)
             {}
 
             UserTitleInfo(const rapidjson::Value& obj) : UserTitleInfo()
