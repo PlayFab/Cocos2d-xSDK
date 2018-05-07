@@ -8102,6 +8102,7 @@ namespace PlayFab
 
         struct RegisterPlayFabUserResult : public PlayFabBaseModel
         {
+            EntityTokenResponse* EntityToken;
             std::string PlayFabId;
             std::string SessionTicket;
             UserSettings* SettingsForUser;
@@ -8109,6 +8110,7 @@ namespace PlayFab
 
             RegisterPlayFabUserResult() :
                 PlayFabBaseModel(),
+                EntityToken(NULL),
                 PlayFabId(),
                 SessionTicket(),
                 SettingsForUser(NULL),
@@ -8117,6 +8119,7 @@ namespace PlayFab
 
             RegisterPlayFabUserResult(const RegisterPlayFabUserResult& src) :
                 PlayFabBaseModel(),
+                EntityToken(src.EntityToken ? new EntityTokenResponse(*src.EntityToken) : NULL),
                 PlayFabId(src.PlayFabId),
                 SessionTicket(src.SessionTicket),
                 SettingsForUser(src.SettingsForUser ? new UserSettings(*src.SettingsForUser) : NULL),

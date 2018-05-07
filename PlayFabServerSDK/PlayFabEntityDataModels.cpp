@@ -976,6 +976,71 @@ bool GetEntityProfileResponse::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GetEntityProfilesRequest::~GetEntityProfilesRequest()
+{
+
+}
+
+void GetEntityProfilesRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (DataAsObject.notNull()) { writer.String("DataAsObject"); writer.Bool(DataAsObject); }
+    writer.String("Entities");
+    writer.StartArray();
+    for (std::list<EntityKey>::iterator iter = Entities.begin(); iter != Entities.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    writer.EndObject();
+}
+
+bool GetEntityProfilesRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator DataAsObject_member = obj.FindMember("DataAsObject");
+    if (DataAsObject_member != obj.MemberEnd() && !DataAsObject_member->value.IsNull()) DataAsObject = DataAsObject_member->value.GetBool();
+    const Value::ConstMemberIterator Entities_member = obj.FindMember("Entities");
+    if (Entities_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Entities_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Entities.push_back(EntityKey(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetEntityProfilesResponse::~GetEntityProfilesResponse()
+{
+
+}
+
+void GetEntityProfilesResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!Profiles.empty()) {
+        writer.String("Profiles");
+        writer.StartArray();
+        for (std::list<EntityProfileBody>::iterator iter = Profiles.begin(); iter != Profiles.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool GetEntityProfilesResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Profiles_member = obj.FindMember("Profiles");
+    if (Profiles_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Profiles_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Profiles.push_back(EntityProfileBody(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 GetEntityTokenRequest::~GetEntityTokenRequest()
 {
     if (Entity != NULL) delete Entity;

@@ -949,6 +949,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetEntityProfilesRequest : public PlayFabBaseModel
+        {
+            OptionalBool DataAsObject;
+            std::list<EntityKey> Entities;
+
+            GetEntityProfilesRequest() :
+                PlayFabBaseModel(),
+                DataAsObject(),
+                Entities()
+            {}
+
+            GetEntityProfilesRequest(const GetEntityProfilesRequest& src) :
+                PlayFabBaseModel(),
+                DataAsObject(src.DataAsObject),
+                Entities(src.Entities)
+            {}
+
+            GetEntityProfilesRequest(const rapidjson::Value& obj) : GetEntityProfilesRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetEntityProfilesRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetEntityProfilesResponse : public PlayFabBaseModel
+        {
+            std::list<EntityProfileBody> Profiles;
+
+            GetEntityProfilesResponse() :
+                PlayFabBaseModel(),
+                Profiles()
+            {}
+
+            GetEntityProfilesResponse(const GetEntityProfilesResponse& src) :
+                PlayFabBaseModel(),
+                Profiles(src.Profiles)
+            {}
+
+            GetEntityProfilesResponse(const rapidjson::Value& obj) : GetEntityProfilesResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetEntityProfilesResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetEntityTokenRequest : public PlayFabBaseModel
         {
             EntityKey* Entity;
