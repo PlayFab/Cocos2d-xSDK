@@ -3626,6 +3626,7 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     switch (enumVal)
     {
     case GenericErrorCodesSuccess: writer.String("Success"); break;
+    case GenericErrorCodesUnkownError: writer.String("UnkownError"); break;
     case GenericErrorCodesInvalidParams: writer.String("InvalidParams"); break;
     case GenericErrorCodesAccountNotFound: writer.String("AccountNotFound"); break;
     case GenericErrorCodesAccountBanned: writer.String("AccountBanned"); break;
@@ -3987,6 +3988,12 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesEmailReportRecipientBlacklisted: writer.String("EmailReportRecipientBlacklisted"); break;
     case GenericErrorCodesEventNamespaceNotAllowed: writer.String("EventNamespaceNotAllowed"); break;
     case GenericErrorCodesEventEntityNotAllowed: writer.String("EventEntityNotAllowed"); break;
+    case GenericErrorCodesInvalidEntityType: writer.String("InvalidEntityType"); break;
+    case GenericErrorCodesNullTokenResultFromAad: writer.String("NullTokenResultFromAad"); break;
+    case GenericErrorCodesInvalidTokenResultFromAad: writer.String("InvalidTokenResultFromAad"); break;
+    case GenericErrorCodesNoValidCertificateForAad: writer.String("NoValidCertificateForAad"); break;
+    case GenericErrorCodesInvalidCertificateForAad: writer.String("InvalidCertificateForAad"); break;
+    case GenericErrorCodesDuplicateDropTableId: writer.String("DuplicateDropTableId"); break;
 
     }
 }
@@ -3998,6 +4005,7 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
     {
         // Auto-generate the map on the first use
         _GenericErrorCodesMap["Success"] = GenericErrorCodesSuccess;
+        _GenericErrorCodesMap["UnkownError"] = GenericErrorCodesUnkownError;
         _GenericErrorCodesMap["InvalidParams"] = GenericErrorCodesInvalidParams;
         _GenericErrorCodesMap["AccountNotFound"] = GenericErrorCodesAccountNotFound;
         _GenericErrorCodesMap["AccountBanned"] = GenericErrorCodesAccountBanned;
@@ -4359,6 +4367,12 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["EmailReportRecipientBlacklisted"] = GenericErrorCodesEmailReportRecipientBlacklisted;
         _GenericErrorCodesMap["EventNamespaceNotAllowed"] = GenericErrorCodesEventNamespaceNotAllowed;
         _GenericErrorCodesMap["EventEntityNotAllowed"] = GenericErrorCodesEventEntityNotAllowed;
+        _GenericErrorCodesMap["InvalidEntityType"] = GenericErrorCodesInvalidEntityType;
+        _GenericErrorCodesMap["NullTokenResultFromAad"] = GenericErrorCodesNullTokenResultFromAad;
+        _GenericErrorCodesMap["InvalidTokenResultFromAad"] = GenericErrorCodesInvalidTokenResultFromAad;
+        _GenericErrorCodesMap["NoValidCertificateForAad"] = GenericErrorCodesNoValidCertificateForAad;
+        _GenericErrorCodesMap["InvalidCertificateForAad"] = GenericErrorCodesInvalidCertificateForAad;
+        _GenericErrorCodesMap["DuplicateDropTableId"] = GenericErrorCodesDuplicateDropTableId;
 
     }
 

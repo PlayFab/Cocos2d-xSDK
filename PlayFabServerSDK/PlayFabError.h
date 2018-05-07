@@ -15,6 +15,7 @@ namespace PlayFab
         PlayFabErrorConnectionRefused,
         PlayFabErrorSocketError,
         PlayFabErrorSuccess = 0,
+        PlayFabErrorUnkownError = 500,
         PlayFabErrorInvalidParams = 1000,
         PlayFabErrorAccountNotFound = 1001,
         PlayFabErrorAccountBanned = 1002,
@@ -375,7 +376,13 @@ namespace PlayFab
         PlayFabErrorEmailReportAlreadySent = 1369,
         PlayFabErrorEmailReportRecipientBlacklisted = 1370,
         PlayFabErrorEventNamespaceNotAllowed = 1371,
-        PlayFabErrorEventEntityNotAllowed = 1372
+        PlayFabErrorEventEntityNotAllowed = 1372,
+        PlayFabErrorInvalidEntityType = 1373,
+        PlayFabErrorNullTokenResultFromAad = 1374,
+        PlayFabErrorInvalidTokenResultFromAad = 1375,
+        PlayFabErrorNoValidCertificateForAad = 1376,
+        PlayFabErrorInvalidCertificateForAad = 1377,
+        PlayFabErrorDuplicateDropTableId = 1378
     };
 
     struct PlayFabError

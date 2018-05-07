@@ -2952,6 +2952,7 @@ namespace PlayFab
         enum GenericErrorCodes
         {
             GenericErrorCodesSuccess,
+            GenericErrorCodesUnkownError,
             GenericErrorCodesInvalidParams,
             GenericErrorCodesAccountNotFound,
             GenericErrorCodesAccountBanned,
@@ -3312,7 +3313,13 @@ namespace PlayFab
             GenericErrorCodesEmailReportAlreadySent,
             GenericErrorCodesEmailReportRecipientBlacklisted,
             GenericErrorCodesEventNamespaceNotAllowed,
-            GenericErrorCodesEventEntityNotAllowed
+            GenericErrorCodesEventEntityNotAllowed,
+            GenericErrorCodesInvalidEntityType,
+            GenericErrorCodesNullTokenResultFromAad,
+            GenericErrorCodesInvalidTokenResultFromAad,
+            GenericErrorCodesNoValidCertificateForAad,
+            GenericErrorCodesInvalidCertificateForAad,
+            GenericErrorCodesDuplicateDropTableId
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);

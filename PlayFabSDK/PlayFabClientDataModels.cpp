@@ -9143,6 +9143,7 @@ bool RegisterPlayFabUserRequest::readFromValue(const rapidjson::Value& obj)
 
 RegisterPlayFabUserResult::~RegisterPlayFabUserResult()
 {
+    if (EntityToken != NULL) delete EntityToken;
     if (SettingsForUser != NULL) delete SettingsForUser;
 
 }
@@ -9150,6 +9151,7 @@ RegisterPlayFabUserResult::~RegisterPlayFabUserResult()
 void RegisterPlayFabUserResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (EntityToken != NULL) { writer.String("EntityToken"); EntityToken->writeJSON(writer); }
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (SessionTicket.length() > 0) { writer.String("SessionTicket"); writer.String(SessionTicket.c_str()); }
     if (SettingsForUser != NULL) { writer.String("SettingsForUser"); SettingsForUser->writeJSON(writer); }
@@ -9159,6 +9161,8 @@ void RegisterPlayFabUserResult::writeJSON(PFStringJsonWriter& writer)
 
 bool RegisterPlayFabUserResult::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator EntityToken_member = obj.FindMember("EntityToken");
+    if (EntityToken_member != obj.MemberEnd() && !EntityToken_member->value.IsNull()) EntityToken = new EntityTokenResponse(EntityToken_member->value);
     const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
     if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
     const Value::ConstMemberIterator SessionTicket_member = obj.FindMember("SessionTicket");

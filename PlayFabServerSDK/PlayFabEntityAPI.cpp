@@ -893,6 +893,52 @@ void PlayFabEntityAPI::OnGetProfileResult(int httpStatus, HttpRequest* request, 
     delete request;
 }
 
+void PlayFabEntityAPI::GetProfiles(
+    GetEntityProfilesRequest& request,
+    ProcessApiCallback<GetEntityProfilesResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Profile/GetProfiles"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetEntityProfilesResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetProfilesResult, userData);
+}
+
+void PlayFabEntityAPI::OnGetProfilesResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetEntityProfilesResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<GetEntityProfilesResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabEntityAPI::InitiateFileUploads(
     InitiateFileUploadsRequest& request,
     ProcessApiCallback<InitiateFileUploadsResponse> callback,

@@ -24,6 +24,7 @@ namespace PlayFab
         static ErrorCallback globalErrorHandler;
         static std::string entityToken;
         static std::string developerSecretKey; // You must set this value for PlayFabSdk to work properly (Found in the Game Manager for your title, at the PlayFab Website)
+        static std::string clientSessionTicket; // This is automatically set by any successful login call, or RegisterPlayFabUser
 
         static std::string getURL(const std::string& callPath)
         {

@@ -33,6 +33,7 @@ namespace PlayFab
         static void GetGroup(EntityModels::GetGroupRequest& request, ProcessApiCallback<EntityModels::GetGroupResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetObjects(EntityModels::GetObjectsRequest& request, ProcessApiCallback<EntityModels::GetObjectsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetProfile(EntityModels::GetEntityProfileRequest& request, ProcessApiCallback<EntityModels::GetEntityProfileResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetProfiles(EntityModels::GetEntityProfilesRequest& request, ProcessApiCallback<EntityModels::GetEntityProfilesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void InitiateFileUploads(EntityModels::InitiateFileUploadsRequest& request, ProcessApiCallback<EntityModels::InitiateFileUploadsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void InviteToGroup(EntityModels::InviteToGroupRequest& request, ProcessApiCallback<EntityModels::InviteToGroupResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void IsMember(EntityModels::IsMemberRequest& request, ProcessApiCallback<EntityModels::IsMemberResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -76,6 +77,7 @@ namespace PlayFab
         static void OnGetGroupResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetObjectsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetProfileResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetProfilesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnInitiateFileUploadsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnInviteToGroupResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnIsMemberResult(int httpStatus, HttpRequest* request, void* userData);
