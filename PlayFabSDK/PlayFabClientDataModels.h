@@ -1943,7 +1943,8 @@ namespace PlayFab
             EntityTypesmaster_player_account,
             EntityTypestitle_player_account,
             EntityTypescharacter,
-            EntityTypesgroup
+            EntityTypesgroup,
+            EntityTypesservice
         };
 
         void writeEntityTypesEnumJSON(EntityTypes enumVal, PFStringJsonWriter& writer);
@@ -2639,6 +2640,34 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UserPsnInfo : public PlayFabBaseModel
+        {
+            std::string PsnAccountId;
+            std::string PsnOnlineId;
+
+            UserPsnInfo() :
+                PlayFabBaseModel(),
+                PsnAccountId(),
+                PsnOnlineId()
+            {}
+
+            UserPsnInfo(const UserPsnInfo& src) :
+                PlayFabBaseModel(),
+                PsnAccountId(src.PsnAccountId),
+                PsnOnlineId(src.PsnOnlineId)
+            {}
+
+            UserPsnInfo(const rapidjson::Value& obj) : UserPsnInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~UserPsnInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum TitleActivationStatus
         {
             TitleActivationStatusNone,
@@ -2685,6 +2714,31 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UserXboxInfo : public PlayFabBaseModel
+        {
+            std::string XboxUserId;
+
+            UserXboxInfo() :
+                PlayFabBaseModel(),
+                XboxUserId()
+            {}
+
+            UserXboxInfo(const UserXboxInfo& src) :
+                PlayFabBaseModel(),
+                XboxUserId(src.XboxUserId)
+            {}
+
+            UserXboxInfo(const rapidjson::Value& obj) : UserXboxInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~UserXboxInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct FriendInfo : public PlayFabBaseModel
         {
             std::string CurrentMatchmakerLobbyId;
@@ -2692,10 +2746,12 @@ namespace PlayFab
             std::string FriendPlayFabId;
             UserGameCenterInfo* GameCenterInfo;
             PlayerProfileModel* Profile;
+            UserPsnInfo* PSNInfo;
             UserSteamInfo* SteamInfo;
             std::list<std::string> Tags;
             std::string TitleDisplayName;
             std::string Username;
+            UserXboxInfo* XboxInfo;
 
             FriendInfo() :
                 PlayFabBaseModel(),
@@ -2704,10 +2760,12 @@ namespace PlayFab
                 FriendPlayFabId(),
                 GameCenterInfo(NULL),
                 Profile(NULL),
+                PSNInfo(NULL),
                 SteamInfo(NULL),
                 Tags(),
                 TitleDisplayName(),
-                Username()
+                Username(),
+                XboxInfo(NULL)
             {}
 
             FriendInfo(const FriendInfo& src) :
@@ -2717,10 +2775,12 @@ namespace PlayFab
                 FriendPlayFabId(src.FriendPlayFabId),
                 GameCenterInfo(src.GameCenterInfo ? new UserGameCenterInfo(*src.GameCenterInfo) : NULL),
                 Profile(src.Profile ? new PlayerProfileModel(*src.Profile) : NULL),
+                PSNInfo(src.PSNInfo ? new UserPsnInfo(*src.PSNInfo) : NULL),
                 SteamInfo(src.SteamInfo ? new UserSteamInfo(*src.SteamInfo) : NULL),
                 Tags(src.Tags),
                 TitleDisplayName(src.TitleDisplayName),
-                Username(src.Username)
+                Username(src.Username),
+                XboxInfo(src.XboxInfo ? new UserXboxInfo(*src.XboxInfo) : NULL)
             {}
 
             FriendInfo(const rapidjson::Value& obj) : FriendInfo()
@@ -3073,34 +3133,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct UserPsnInfo : public PlayFabBaseModel
-        {
-            std::string PsnAccountId;
-            std::string PsnOnlineId;
-
-            UserPsnInfo() :
-                PlayFabBaseModel(),
-                PsnAccountId(),
-                PsnOnlineId()
-            {}
-
-            UserPsnInfo(const UserPsnInfo& src) :
-                PlayFabBaseModel(),
-                PsnAccountId(src.PsnAccountId),
-                PsnOnlineId(src.PsnOnlineId)
-            {}
-
-            UserPsnInfo(const rapidjson::Value& obj) : UserPsnInfo()
-            {
-                readFromValue(obj);
-            }
-
-            ~UserPsnInfo();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         enum UserOrigination
         {
             UserOriginationOrganic,
@@ -3195,31 +3227,6 @@ namespace PlayFab
             }
 
             ~UserTwitchInfo();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct UserXboxInfo : public PlayFabBaseModel
-        {
-            std::string XboxUserId;
-
-            UserXboxInfo() :
-                PlayFabBaseModel(),
-                XboxUserId()
-            {}
-
-            UserXboxInfo(const UserXboxInfo& src) :
-                PlayFabBaseModel(),
-                XboxUserId(src.XboxUserId)
-            {}
-
-            UserXboxInfo(const rapidjson::Value& obj) : UserXboxInfo()
-            {
-                readFromValue(obj);
-            }
-
-            ~UserXboxInfo();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -3812,6 +3819,7 @@ namespace PlayFab
             PlayerProfileViewConstraints* ProfileConstraints;
             std::string StatisticName;
             OptionalInt32 Version;
+            std::string XboxToken;
 
             GetFriendLeaderboardAroundPlayerRequest() :
                 PlayFabBaseModel(),
@@ -3821,7 +3829,8 @@ namespace PlayFab
                 PlayFabId(),
                 ProfileConstraints(NULL),
                 StatisticName(),
-                Version()
+                Version(),
+                XboxToken()
             {}
 
             GetFriendLeaderboardAroundPlayerRequest(const GetFriendLeaderboardAroundPlayerRequest& src) :
@@ -3832,7 +3841,8 @@ namespace PlayFab
                 PlayFabId(src.PlayFabId),
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL),
                 StatisticName(src.StatisticName),
-                Version(src.Version)
+                Version(src.Version),
+                XboxToken(src.XboxToken)
             {}
 
             GetFriendLeaderboardAroundPlayerRequest(const rapidjson::Value& obj) : GetFriendLeaderboardAroundPlayerRequest()
@@ -3923,6 +3933,7 @@ namespace PlayFab
             Int32 StartPosition;
             std::string StatisticName;
             OptionalInt32 Version;
+            std::string XboxToken;
 
             GetFriendLeaderboardRequest() :
                 PlayFabBaseModel(),
@@ -3932,7 +3943,8 @@ namespace PlayFab
                 ProfileConstraints(NULL),
                 StartPosition(0),
                 StatisticName(),
-                Version()
+                Version(),
+                XboxToken()
             {}
 
             GetFriendLeaderboardRequest(const GetFriendLeaderboardRequest& src) :
@@ -3943,7 +3955,8 @@ namespace PlayFab
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL),
                 StartPosition(src.StartPosition),
                 StatisticName(src.StatisticName),
-                Version(src.Version)
+                Version(src.Version),
+                XboxToken(src.XboxToken)
             {}
 
             GetFriendLeaderboardRequest(const rapidjson::Value& obj) : GetFriendLeaderboardRequest()
@@ -3962,19 +3975,22 @@ namespace PlayFab
             OptionalBool IncludeFacebookFriends;
             OptionalBool IncludeSteamFriends;
             PlayerProfileViewConstraints* ProfileConstraints;
+            std::string XboxToken;
 
             GetFriendsListRequest() :
                 PlayFabBaseModel(),
                 IncludeFacebookFriends(),
                 IncludeSteamFriends(),
-                ProfileConstraints(NULL)
+                ProfileConstraints(NULL),
+                XboxToken()
             {}
 
             GetFriendsListRequest(const GetFriendsListRequest& src) :
                 PlayFabBaseModel(),
                 IncludeFacebookFriends(src.IncludeFacebookFriends),
                 IncludeSteamFriends(src.IncludeSteamFriends),
-                ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL)
+                ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL),
+                XboxToken(src.XboxToken)
             {}
 
             GetFriendsListRequest(const rapidjson::Value& obj) : GetFriendsListRequest()
