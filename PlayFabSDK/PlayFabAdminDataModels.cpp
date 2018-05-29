@@ -2625,6 +2625,61 @@ bool DeleteContentRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeleteMasterPlayerAccountRequest::~DeleteMasterPlayerAccountRequest()
+{
+
+}
+
+void DeleteMasterPlayerAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.EndObject();
+}
+
+bool DeleteMasterPlayerAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
+DeleteMasterPlayerAccountResult::~DeleteMasterPlayerAccountResult()
+{
+
+}
+
+void DeleteMasterPlayerAccountResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (JobReceiptId.length() > 0) { writer.String("JobReceiptId"); writer.String(JobReceiptId.c_str()); }
+    if (!TitleIds.empty()) {
+        writer.String("TitleIds");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = TitleIds.begin(); iter != TitleIds.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool DeleteMasterPlayerAccountResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator JobReceiptId_member = obj.FindMember("JobReceiptId");
+    if (JobReceiptId_member != obj.MemberEnd() && !JobReceiptId_member->value.IsNull()) JobReceiptId = JobReceiptId_member->value.GetString();
+    const Value::ConstMemberIterator TitleIds_member = obj.FindMember("TitleIds");
+    if (TitleIds_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = TitleIds_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            TitleIds.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
 DeletePlayerRequest::~DeletePlayerRequest()
 {
 
@@ -2896,6 +2951,7 @@ void PlayFab::AdminModels::writeEntityTypesEnumJSON(EntityTypes enumVal, PFStrin
     case EntityTypestitle_player_account: writer.String("title_player_account"); break;
     case EntityTypescharacter: writer.String("character"); break;
     case EntityTypesgroup: writer.String("group"); break;
+    case EntityTypesservice: writer.String("service"); break;
 
     }
 }
@@ -2911,6 +2967,7 @@ EntityTypes PlayFab::AdminModels::readEntityTypesFromValue(const rapidjson::Valu
         _EntityTypesMap["title_player_account"] = EntityTypestitle_player_account;
         _EntityTypesMap["character"] = EntityTypescharacter;
         _EntityTypesMap["group"] = EntityTypesgroup;
+        _EntityTypesMap["service"] = EntityTypesservice;
 
     }
 
@@ -2943,6 +3000,46 @@ bool EntityKey::readFromValue(const rapidjson::Value& obj)
     if (Type_member != obj.MemberEnd() && !Type_member->value.IsNull()) Type = readEntityTypesFromValue(Type_member->value);
     const Value::ConstMemberIterator TypeString_member = obj.FindMember("TypeString");
     if (TypeString_member != obj.MemberEnd() && !TypeString_member->value.IsNull()) TypeString = TypeString_member->value.GetString();
+
+    return true;
+}
+
+ExportMasterPlayerDataRequest::~ExportMasterPlayerDataRequest()
+{
+
+}
+
+void ExportMasterPlayerDataRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.EndObject();
+}
+
+bool ExportMasterPlayerDataRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
+ExportMasterPlayerDataResult::~ExportMasterPlayerDataResult()
+{
+
+}
+
+void ExportMasterPlayerDataResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (JobReceiptId.length() > 0) { writer.String("JobReceiptId"); writer.String(JobReceiptId.c_str()); }
+    writer.EndObject();
+}
+
+bool ExportMasterPlayerDataResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator JobReceiptId_member = obj.FindMember("JobReceiptId");
+    if (JobReceiptId_member != obj.MemberEnd() && !JobReceiptId_member->value.IsNull()) JobReceiptId = JobReceiptId_member->value.GetString();
 
     return true;
 }
@@ -3348,6 +3445,16 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesNoValidCertificateForAad: writer.String("NoValidCertificateForAad"); break;
     case GenericErrorCodesInvalidCertificateForAad: writer.String("InvalidCertificateForAad"); break;
     case GenericErrorCodesDuplicateDropTableId: writer.String("DuplicateDropTableId"); break;
+    case GenericErrorCodesComputeOK: writer.String("ComputeOK"); break;
+    case GenericErrorCodesComputeAccepted: writer.String("ComputeAccepted"); break;
+    case GenericErrorCodesComputeNoContent: writer.String("ComputeNoContent"); break;
+    case GenericErrorCodesComputeBadRequest: writer.String("ComputeBadRequest"); break;
+    case GenericErrorCodesComputeUnauthorized: writer.String("ComputeUnauthorized"); break;
+    case GenericErrorCodesComputeForbidden: writer.String("ComputeForbidden"); break;
+    case GenericErrorCodesComputeNotFound: writer.String("ComputeNotFound"); break;
+    case GenericErrorCodesComputeConflict: writer.String("ComputeConflict"); break;
+    case GenericErrorCodesComputeInternalServerError: writer.String("ComputeInternalServerError"); break;
+    case GenericErrorCodesComputeServiceUnavailable: writer.String("ComputeServiceUnavailable"); break;
 
     }
 }
@@ -3727,6 +3834,16 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["NoValidCertificateForAad"] = GenericErrorCodesNoValidCertificateForAad;
         _GenericErrorCodesMap["InvalidCertificateForAad"] = GenericErrorCodesInvalidCertificateForAad;
         _GenericErrorCodesMap["DuplicateDropTableId"] = GenericErrorCodesDuplicateDropTableId;
+        _GenericErrorCodesMap["ComputeOK"] = GenericErrorCodesComputeOK;
+        _GenericErrorCodesMap["ComputeAccepted"] = GenericErrorCodesComputeAccepted;
+        _GenericErrorCodesMap["ComputeNoContent"] = GenericErrorCodesComputeNoContent;
+        _GenericErrorCodesMap["ComputeBadRequest"] = GenericErrorCodesComputeBadRequest;
+        _GenericErrorCodesMap["ComputeUnauthorized"] = GenericErrorCodesComputeUnauthorized;
+        _GenericErrorCodesMap["ComputeForbidden"] = GenericErrorCodesComputeForbidden;
+        _GenericErrorCodesMap["ComputeNotFound"] = GenericErrorCodesComputeNotFound;
+        _GenericErrorCodesMap["ComputeConflict"] = GenericErrorCodesComputeConflict;
+        _GenericErrorCodesMap["ComputeInternalServerError"] = GenericErrorCodesComputeInternalServerError;
+        _GenericErrorCodesMap["ComputeServiceUnavailable"] = GenericErrorCodesComputeServiceUnavailable;
 
     }
 
@@ -4305,6 +4422,58 @@ bool GetMatchmakerGameModesResult::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = GameModes_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             GameModes.push_back(GameModeInfo(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetPlayedTitleListRequest::~GetPlayedTitleListRequest()
+{
+
+}
+
+void GetPlayedTitleListRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.EndObject();
+}
+
+bool GetPlayedTitleListRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
+GetPlayedTitleListResult::~GetPlayedTitleListResult()
+{
+
+}
+
+void GetPlayedTitleListResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!TitleIds.empty()) {
+        writer.String("TitleIds");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = TitleIds.begin(); iter != TitleIds.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool GetPlayedTitleListResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TitleIds_member = obj.FindMember("TitleIds");
+    if (TitleIds_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = TitleIds_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            TitleIds.push_back(memberList[i].GetString());
         }
     }
 

@@ -13,6 +13,7 @@ void PlayFab::EntityModels::writeEntityTypesEnumJSON(EntityTypes enumVal, PFStri
     case EntityTypestitle_player_account: writer.String("title_player_account"); break;
     case EntityTypescharacter: writer.String("character"); break;
     case EntityTypesgroup: writer.String("group"); break;
+    case EntityTypesservice: writer.String("service"); break;
 
     }
 }
@@ -28,6 +29,7 @@ EntityTypes PlayFab::EntityModels::readEntityTypesFromValue(const rapidjson::Val
         _EntityTypesMap["title_player_account"] = EntityTypestitle_player_account;
         _EntityTypesMap["character"] = EntityTypescharacter;
         _EntityTypesMap["group"] = EntityTypesgroup;
+        _EntityTypesMap["service"] = EntityTypesservice;
 
     }
 

@@ -822,7 +822,8 @@ namespace PlayFab
             EntityTypesmaster_player_account,
             EntityTypestitle_player_account,
             EntityTypescharacter,
-            EntityTypesgroup
+            EntityTypesgroup,
+            EntityTypesservice
         };
 
         void writeEntityTypesEnumJSON(EntityTypes enumVal, PFStringJsonWriter& writer);
@@ -2898,10 +2899,12 @@ namespace PlayFab
             std::string FriendPlayFabId;
             UserGameCenterInfo* GameCenterInfo;
             PlayerProfileModel* Profile;
+            UserPsnInfo* PSNInfo;
             UserSteamInfo* SteamInfo;
             std::list<std::string> Tags;
             std::string TitleDisplayName;
             std::string Username;
+            UserXboxInfo* XboxInfo;
 
             FriendInfo() :
                 PlayFabBaseModel(),
@@ -2910,10 +2913,12 @@ namespace PlayFab
                 FriendPlayFabId(),
                 GameCenterInfo(NULL),
                 Profile(NULL),
+                PSNInfo(NULL),
                 SteamInfo(NULL),
                 Tags(),
                 TitleDisplayName(),
-                Username()
+                Username(),
+                XboxInfo(NULL)
             {}
 
             FriendInfo(const FriendInfo& src) :
@@ -2923,10 +2928,12 @@ namespace PlayFab
                 FriendPlayFabId(src.FriendPlayFabId),
                 GameCenterInfo(src.GameCenterInfo ? new UserGameCenterInfo(*src.GameCenterInfo) : NULL),
                 Profile(src.Profile ? new PlayerProfileModel(*src.Profile) : NULL),
+                PSNInfo(src.PSNInfo ? new UserPsnInfo(*src.PSNInfo) : NULL),
                 SteamInfo(src.SteamInfo ? new UserSteamInfo(*src.SteamInfo) : NULL),
                 Tags(src.Tags),
                 TitleDisplayName(src.TitleDisplayName),
-                Username(src.Username)
+                Username(src.Username),
+                XboxInfo(src.XboxInfo ? new UserXboxInfo(*src.XboxInfo) : NULL)
             {}
 
             FriendInfo(const rapidjson::Value& obj) : FriendInfo()
@@ -3319,7 +3326,17 @@ namespace PlayFab
             GenericErrorCodesInvalidTokenResultFromAad,
             GenericErrorCodesNoValidCertificateForAad,
             GenericErrorCodesInvalidCertificateForAad,
-            GenericErrorCodesDuplicateDropTableId
+            GenericErrorCodesDuplicateDropTableId,
+            GenericErrorCodesComputeOK,
+            GenericErrorCodesComputeAccepted,
+            GenericErrorCodesComputeNoContent,
+            GenericErrorCodesComputeBadRequest,
+            GenericErrorCodesComputeUnauthorized,
+            GenericErrorCodesComputeForbidden,
+            GenericErrorCodesComputeNotFound,
+            GenericErrorCodesComputeConflict,
+            GenericErrorCodesComputeInternalServerError,
+            GenericErrorCodesComputeServiceUnavailable
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
@@ -3917,6 +3934,7 @@ namespace PlayFab
             Int32 StartPosition;
             std::string StatisticName;
             OptionalInt32 Version;
+            std::string XboxToken;
 
             GetFriendLeaderboardRequest() :
                 PlayFabBaseModel(),
@@ -3927,7 +3945,8 @@ namespace PlayFab
                 ProfileConstraints(NULL),
                 StartPosition(0),
                 StatisticName(),
-                Version()
+                Version(),
+                XboxToken()
             {}
 
             GetFriendLeaderboardRequest(const GetFriendLeaderboardRequest& src) :
@@ -3939,7 +3958,8 @@ namespace PlayFab
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL),
                 StartPosition(src.StartPosition),
                 StatisticName(src.StatisticName),
-                Version(src.Version)
+                Version(src.Version),
+                XboxToken(src.XboxToken)
             {}
 
             GetFriendLeaderboardRequest(const rapidjson::Value& obj) : GetFriendLeaderboardRequest()
@@ -3959,13 +3979,15 @@ namespace PlayFab
             OptionalBool IncludeSteamFriends;
             std::string PlayFabId;
             PlayerProfileViewConstraints* ProfileConstraints;
+            std::string XboxToken;
 
             GetFriendsListRequest() :
                 PlayFabBaseModel(),
                 IncludeFacebookFriends(),
                 IncludeSteamFriends(),
                 PlayFabId(),
-                ProfileConstraints(NULL)
+                ProfileConstraints(NULL),
+                XboxToken()
             {}
 
             GetFriendsListRequest(const GetFriendsListRequest& src) :
@@ -3973,7 +3995,8 @@ namespace PlayFab
                 IncludeFacebookFriends(src.IncludeFacebookFriends),
                 IncludeSteamFriends(src.IncludeSteamFriends),
                 PlayFabId(src.PlayFabId),
-                ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL)
+                ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL),
+                XboxToken(src.XboxToken)
             {}
 
             GetFriendsListRequest(const rapidjson::Value& obj) : GetFriendsListRequest()

@@ -2049,6 +2049,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct DeleteMasterPlayerAccountRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+
+            DeleteMasterPlayerAccountRequest() :
+                PlayFabBaseModel(),
+                PlayFabId()
+            {}
+
+            DeleteMasterPlayerAccountRequest(const DeleteMasterPlayerAccountRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            DeleteMasterPlayerAccountRequest(const rapidjson::Value& obj) : DeleteMasterPlayerAccountRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteMasterPlayerAccountRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeleteMasterPlayerAccountResult : public PlayFabBaseModel
+        {
+            std::string JobReceiptId;
+            std::list<std::string> TitleIds;
+
+            DeleteMasterPlayerAccountResult() :
+                PlayFabBaseModel(),
+                JobReceiptId(),
+                TitleIds()
+            {}
+
+            DeleteMasterPlayerAccountResult(const DeleteMasterPlayerAccountResult& src) :
+                PlayFabBaseModel(),
+                JobReceiptId(src.JobReceiptId),
+                TitleIds(src.TitleIds)
+            {}
+
+            DeleteMasterPlayerAccountResult(const rapidjson::Value& obj) : DeleteMasterPlayerAccountResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteMasterPlayerAccountResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct DeletePlayerRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -2349,7 +2402,8 @@ namespace PlayFab
             EntityTypesmaster_player_account,
             EntityTypestitle_player_account,
             EntityTypescharacter,
-            EntityTypesgroup
+            EntityTypesgroup,
+            EntityTypesservice
         };
 
         void writeEntityTypesEnumJSON(EntityTypes enumVal, PFStringJsonWriter& writer);
@@ -2381,6 +2435,56 @@ namespace PlayFab
             }
 
             ~EntityKey();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ExportMasterPlayerDataRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+
+            ExportMasterPlayerDataRequest() :
+                PlayFabBaseModel(),
+                PlayFabId()
+            {}
+
+            ExportMasterPlayerDataRequest(const ExportMasterPlayerDataRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            ExportMasterPlayerDataRequest(const rapidjson::Value& obj) : ExportMasterPlayerDataRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ExportMasterPlayerDataRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ExportMasterPlayerDataResult : public PlayFabBaseModel
+        {
+            std::string JobReceiptId;
+
+            ExportMasterPlayerDataResult() :
+                PlayFabBaseModel(),
+                JobReceiptId()
+            {}
+
+            ExportMasterPlayerDataResult(const ExportMasterPlayerDataResult& src) :
+                PlayFabBaseModel(),
+                JobReceiptId(src.JobReceiptId)
+            {}
+
+            ExportMasterPlayerDataResult(const rapidjson::Value& obj) : ExportMasterPlayerDataResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~ExportMasterPlayerDataResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -2790,7 +2894,17 @@ namespace PlayFab
             GenericErrorCodesInvalidTokenResultFromAad,
             GenericErrorCodesNoValidCertificateForAad,
             GenericErrorCodesInvalidCertificateForAad,
-            GenericErrorCodesDuplicateDropTableId
+            GenericErrorCodesDuplicateDropTableId,
+            GenericErrorCodesComputeOK,
+            GenericErrorCodesComputeAccepted,
+            GenericErrorCodesComputeNoContent,
+            GenericErrorCodesComputeBadRequest,
+            GenericErrorCodesComputeUnauthorized,
+            GenericErrorCodesComputeForbidden,
+            GenericErrorCodesComputeNotFound,
+            GenericErrorCodesComputeConflict,
+            GenericErrorCodesComputeInternalServerError,
+            GenericErrorCodesComputeServiceUnavailable
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
@@ -3382,6 +3496,56 @@ namespace PlayFab
             }
 
             ~GetMatchmakerGameModesResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayedTitleListRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+
+            GetPlayedTitleListRequest() :
+                PlayFabBaseModel(),
+                PlayFabId()
+            {}
+
+            GetPlayedTitleListRequest(const GetPlayedTitleListRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            GetPlayedTitleListRequest(const rapidjson::Value& obj) : GetPlayedTitleListRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayedTitleListRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayedTitleListResult : public PlayFabBaseModel
+        {
+            std::list<std::string> TitleIds;
+
+            GetPlayedTitleListResult() :
+                PlayFabBaseModel(),
+                TitleIds()
+            {}
+
+            GetPlayedTitleListResult(const GetPlayedTitleListResult& src) :
+                PlayFabBaseModel(),
+                TitleIds(src.TitleIds)
+            {}
+
+            GetPlayedTitleListResult(const rapidjson::Value& obj) : GetPlayedTitleListResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayedTitleListResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
