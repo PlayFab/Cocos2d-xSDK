@@ -7659,34 +7659,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct NameIdentifier : public PlayFabBaseModel
-        {
-            std::string Id;
-            std::string Name;
-
-            NameIdentifier() :
-                PlayFabBaseModel(),
-                Id(),
-                Name()
-            {}
-
-            NameIdentifier(const NameIdentifier& src) :
-                PlayFabBaseModel(),
-                Id(src.Id),
-                Name(src.Name)
-            {}
-
-            NameIdentifier(const rapidjson::Value& obj) : NameIdentifier()
-            {
-                readFromValue(obj);
-            }
-
-            ~NameIdentifier();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct OpenTradeRequest : public PlayFabBaseModel
         {
             std::list<std::string> AllowedPlayerIds;

@@ -60,53 +60,6 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct DeregisterGameRequest : public PlayFabBaseModel
-        {
-            std::string LobbyId;
-
-            DeregisterGameRequest() :
-                PlayFabBaseModel(),
-                LobbyId()
-            {}
-
-            DeregisterGameRequest(const DeregisterGameRequest& src) :
-                PlayFabBaseModel(),
-                LobbyId(src.LobbyId)
-            {}
-
-            DeregisterGameRequest(const rapidjson::Value& obj) : DeregisterGameRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~DeregisterGameRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct DeregisterGameResponse : public PlayFabBaseModel
-        {
-
-            DeregisterGameResponse() :
-                PlayFabBaseModel()
-            {}
-
-            DeregisterGameResponse(const DeregisterGameResponse& src) :
-                PlayFabBaseModel()
-            {}
-
-            DeregisterGameResponse(const rapidjson::Value& obj) : DeregisterGameResponse()
-            {
-                readFromValue(obj);
-            }
-
-            ~DeregisterGameResponse();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
         struct ItemInstance : public PlayFabBaseModel
         {
             std::string Annotation;
@@ -287,77 +240,6 @@ namespace PlayFab
 
         void writeRegionEnumJSON(Region enumVal, PFStringJsonWriter& writer);
         Region readRegionFromValue(const rapidjson::Value& obj);
-
-        struct RegisterGameRequest : public PlayFabBaseModel
-        {
-            std::string Build;
-            std::string GameMode;
-            std::string LobbyId;
-            Region pfRegion;
-            std::string ServerHost;
-            std::string ServerIPV6Address;
-            std::string ServerPort;
-            std::map<std::string, std::string> Tags;
-
-            RegisterGameRequest() :
-                PlayFabBaseModel(),
-                Build(),
-                GameMode(),
-                LobbyId(),
-                pfRegion(),
-                ServerHost(),
-                ServerIPV6Address(),
-                ServerPort(),
-                Tags()
-            {}
-
-            RegisterGameRequest(const RegisterGameRequest& src) :
-                PlayFabBaseModel(),
-                Build(src.Build),
-                GameMode(src.GameMode),
-                LobbyId(src.LobbyId),
-                pfRegion(src.pfRegion),
-                ServerHost(src.ServerHost),
-                ServerIPV6Address(src.ServerIPV6Address),
-                ServerPort(src.ServerPort),
-                Tags(src.Tags)
-            {}
-
-            RegisterGameRequest(const rapidjson::Value& obj) : RegisterGameRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~RegisterGameRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct RegisterGameResponse : public PlayFabBaseModel
-        {
-            std::string LobbyId;
-
-            RegisterGameResponse() :
-                PlayFabBaseModel(),
-                LobbyId()
-            {}
-
-            RegisterGameResponse(const RegisterGameResponse& src) :
-                PlayFabBaseModel(),
-                LobbyId(src.LobbyId)
-            {}
-
-            RegisterGameResponse(const rapidjson::Value& obj) : RegisterGameResponse()
-            {
-                readFromValue(obj);
-            }
-
-            ~RegisterGameResponse();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
 
         struct StartGameRequest : public PlayFabBaseModel
         {
