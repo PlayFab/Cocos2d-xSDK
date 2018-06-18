@@ -8648,29 +8648,6 @@ bool ModifyUserVirtualCurrencyResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-NameIdentifier::~NameIdentifier()
-{
-
-}
-
-void NameIdentifier::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
-    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
-    writer.EndObject();
-}
-
-bool NameIdentifier::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
-    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
-    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
-    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-
-    return true;
-}
-
 OpenTradeRequest::~OpenTradeRequest()
 {
 
