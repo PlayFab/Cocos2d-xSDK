@@ -2959,7 +2959,6 @@ namespace PlayFab
         enum GenericErrorCodes
         {
             GenericErrorCodesSuccess,
-            GenericErrorCodesMatchmakingHopperIdInvalid,
             GenericErrorCodesUnkownError,
             GenericErrorCodesInvalidParams,
             GenericErrorCodesAccountNotFound,
@@ -3338,9 +3337,11 @@ namespace PlayFab
             GenericErrorCodesGameServerConflict,
             GenericErrorCodesGameServerInternalServerError,
             GenericErrorCodesGameServerServiceUnavailable,
-            GenericErrorCodesMatchmakingInvalidEntityKeyList,
-            GenericErrorCodesMatchmakingInvalidTicketCreatorProfile,
-            GenericErrorCodesMatchmakingInvalidUserAttributes,
+            GenericErrorCodesExplicitContentDetected,
+            GenericErrorCodesPIIContentDetected,
+            GenericErrorCodesInvalidScheduledTaskParameter,
+            GenericErrorCodesMatchmakingEntityInvalid,
+            GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingCreateRequestMissing,
             GenericErrorCodesMatchmakingCreateRequestCreatorMissing,
             GenericErrorCodesMatchmakingCreateRequestCreatorIdMissing,
@@ -3352,7 +3353,7 @@ namespace PlayFab
             GenericErrorCodesMatchmakingHopperIdMissing,
             GenericErrorCodesMatchmakingTitleIdMissing,
             GenericErrorCodesMatchmakingTicketIdIdMissing,
-            GenericErrorCodesMatchmakingUserIdMissing,
+            GenericErrorCodesMatchmakingPlayerIdMissing,
             GenericErrorCodesMatchmakingJoinRequestUserMissing,
             GenericErrorCodesMatchmakingHopperConfigNotFound,
             GenericErrorCodesMatchmakingMatchNotFound,
@@ -3365,10 +3366,12 @@ namespace PlayFab
             GenericErrorCodesMatchmakingCancelTicketServerIdentityInvalid,
             GenericErrorCodesMatchmakingCancelTicketUserIdentityMismatch,
             GenericErrorCodesMatchmakingGetMatchIdentityMismatch,
-            GenericErrorCodesMatchmakingUserIdentityMismatch,
+            GenericErrorCodesMatchmakingPlayerIdentityMismatch,
             GenericErrorCodesMatchmakingAlreadyJoinedTicket,
             GenericErrorCodesMatchmakingTicketAlreadyCompleted,
-            GenericErrorCodesMatchmakingHopperConfigInvalid
+            GenericErrorCodesMatchmakingHopperIdInvalid,
+            GenericErrorCodesMatchmakingHopperConfigInvalid,
+            GenericErrorCodesMatchmakingMemberProfileInvalid
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);

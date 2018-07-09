@@ -3636,7 +3636,6 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     switch (enumVal)
     {
     case GenericErrorCodesSuccess: writer.String("Success"); break;
-    case GenericErrorCodesMatchmakingHopperIdInvalid: writer.String("MatchmakingHopperIdInvalid"); break;
     case GenericErrorCodesUnkownError: writer.String("UnkownError"); break;
     case GenericErrorCodesInvalidParams: writer.String("InvalidParams"); break;
     case GenericErrorCodesAccountNotFound: writer.String("AccountNotFound"); break;
@@ -4015,9 +4014,11 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesGameServerConflict: writer.String("GameServerConflict"); break;
     case GenericErrorCodesGameServerInternalServerError: writer.String("GameServerInternalServerError"); break;
     case GenericErrorCodesGameServerServiceUnavailable: writer.String("GameServerServiceUnavailable"); break;
-    case GenericErrorCodesMatchmakingInvalidEntityKeyList: writer.String("MatchmakingInvalidEntityKeyList"); break;
-    case GenericErrorCodesMatchmakingInvalidTicketCreatorProfile: writer.String("MatchmakingInvalidTicketCreatorProfile"); break;
-    case GenericErrorCodesMatchmakingInvalidUserAttributes: writer.String("MatchmakingInvalidUserAttributes"); break;
+    case GenericErrorCodesExplicitContentDetected: writer.String("ExplicitContentDetected"); break;
+    case GenericErrorCodesPIIContentDetected: writer.String("PIIContentDetected"); break;
+    case GenericErrorCodesInvalidScheduledTaskParameter: writer.String("InvalidScheduledTaskParameter"); break;
+    case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
+    case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingCreateRequestMissing: writer.String("MatchmakingCreateRequestMissing"); break;
     case GenericErrorCodesMatchmakingCreateRequestCreatorMissing: writer.String("MatchmakingCreateRequestCreatorMissing"); break;
     case GenericErrorCodesMatchmakingCreateRequestCreatorIdMissing: writer.String("MatchmakingCreateRequestCreatorIdMissing"); break;
@@ -4029,7 +4030,7 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesMatchmakingHopperIdMissing: writer.String("MatchmakingHopperIdMissing"); break;
     case GenericErrorCodesMatchmakingTitleIdMissing: writer.String("MatchmakingTitleIdMissing"); break;
     case GenericErrorCodesMatchmakingTicketIdIdMissing: writer.String("MatchmakingTicketIdIdMissing"); break;
-    case GenericErrorCodesMatchmakingUserIdMissing: writer.String("MatchmakingUserIdMissing"); break;
+    case GenericErrorCodesMatchmakingPlayerIdMissing: writer.String("MatchmakingPlayerIdMissing"); break;
     case GenericErrorCodesMatchmakingJoinRequestUserMissing: writer.String("MatchmakingJoinRequestUserMissing"); break;
     case GenericErrorCodesMatchmakingHopperConfigNotFound: writer.String("MatchmakingHopperConfigNotFound"); break;
     case GenericErrorCodesMatchmakingMatchNotFound: writer.String("MatchmakingMatchNotFound"); break;
@@ -4042,10 +4043,12 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesMatchmakingCancelTicketServerIdentityInvalid: writer.String("MatchmakingCancelTicketServerIdentityInvalid"); break;
     case GenericErrorCodesMatchmakingCancelTicketUserIdentityMismatch: writer.String("MatchmakingCancelTicketUserIdentityMismatch"); break;
     case GenericErrorCodesMatchmakingGetMatchIdentityMismatch: writer.String("MatchmakingGetMatchIdentityMismatch"); break;
-    case GenericErrorCodesMatchmakingUserIdentityMismatch: writer.String("MatchmakingUserIdentityMismatch"); break;
+    case GenericErrorCodesMatchmakingPlayerIdentityMismatch: writer.String("MatchmakingPlayerIdentityMismatch"); break;
     case GenericErrorCodesMatchmakingAlreadyJoinedTicket: writer.String("MatchmakingAlreadyJoinedTicket"); break;
     case GenericErrorCodesMatchmakingTicketAlreadyCompleted: writer.String("MatchmakingTicketAlreadyCompleted"); break;
+    case GenericErrorCodesMatchmakingHopperIdInvalid: writer.String("MatchmakingHopperIdInvalid"); break;
     case GenericErrorCodesMatchmakingHopperConfigInvalid: writer.String("MatchmakingHopperConfigInvalid"); break;
+    case GenericErrorCodesMatchmakingMemberProfileInvalid: writer.String("MatchmakingMemberProfileInvalid"); break;
 
     }
 }
@@ -4057,7 +4060,6 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
     {
         // Auto-generate the map on the first use
         _GenericErrorCodesMap["Success"] = GenericErrorCodesSuccess;
-        _GenericErrorCodesMap["MatchmakingHopperIdInvalid"] = GenericErrorCodesMatchmakingHopperIdInvalid;
         _GenericErrorCodesMap["UnkownError"] = GenericErrorCodesUnkownError;
         _GenericErrorCodesMap["InvalidParams"] = GenericErrorCodesInvalidParams;
         _GenericErrorCodesMap["AccountNotFound"] = GenericErrorCodesAccountNotFound;
@@ -4436,9 +4438,11 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["GameServerConflict"] = GenericErrorCodesGameServerConflict;
         _GenericErrorCodesMap["GameServerInternalServerError"] = GenericErrorCodesGameServerInternalServerError;
         _GenericErrorCodesMap["GameServerServiceUnavailable"] = GenericErrorCodesGameServerServiceUnavailable;
-        _GenericErrorCodesMap["MatchmakingInvalidEntityKeyList"] = GenericErrorCodesMatchmakingInvalidEntityKeyList;
-        _GenericErrorCodesMap["MatchmakingInvalidTicketCreatorProfile"] = GenericErrorCodesMatchmakingInvalidTicketCreatorProfile;
-        _GenericErrorCodesMap["MatchmakingInvalidUserAttributes"] = GenericErrorCodesMatchmakingInvalidUserAttributes;
+        _GenericErrorCodesMap["ExplicitContentDetected"] = GenericErrorCodesExplicitContentDetected;
+        _GenericErrorCodesMap["PIIContentDetected"] = GenericErrorCodesPIIContentDetected;
+        _GenericErrorCodesMap["InvalidScheduledTaskParameter"] = GenericErrorCodesInvalidScheduledTaskParameter;
+        _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
+        _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingCreateRequestMissing"] = GenericErrorCodesMatchmakingCreateRequestMissing;
         _GenericErrorCodesMap["MatchmakingCreateRequestCreatorMissing"] = GenericErrorCodesMatchmakingCreateRequestCreatorMissing;
         _GenericErrorCodesMap["MatchmakingCreateRequestCreatorIdMissing"] = GenericErrorCodesMatchmakingCreateRequestCreatorIdMissing;
@@ -4450,7 +4454,7 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["MatchmakingHopperIdMissing"] = GenericErrorCodesMatchmakingHopperIdMissing;
         _GenericErrorCodesMap["MatchmakingTitleIdMissing"] = GenericErrorCodesMatchmakingTitleIdMissing;
         _GenericErrorCodesMap["MatchmakingTicketIdIdMissing"] = GenericErrorCodesMatchmakingTicketIdIdMissing;
-        _GenericErrorCodesMap["MatchmakingUserIdMissing"] = GenericErrorCodesMatchmakingUserIdMissing;
+        _GenericErrorCodesMap["MatchmakingPlayerIdMissing"] = GenericErrorCodesMatchmakingPlayerIdMissing;
         _GenericErrorCodesMap["MatchmakingJoinRequestUserMissing"] = GenericErrorCodesMatchmakingJoinRequestUserMissing;
         _GenericErrorCodesMap["MatchmakingHopperConfigNotFound"] = GenericErrorCodesMatchmakingHopperConfigNotFound;
         _GenericErrorCodesMap["MatchmakingMatchNotFound"] = GenericErrorCodesMatchmakingMatchNotFound;
@@ -4463,10 +4467,12 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["MatchmakingCancelTicketServerIdentityInvalid"] = GenericErrorCodesMatchmakingCancelTicketServerIdentityInvalid;
         _GenericErrorCodesMap["MatchmakingCancelTicketUserIdentityMismatch"] = GenericErrorCodesMatchmakingCancelTicketUserIdentityMismatch;
         _GenericErrorCodesMap["MatchmakingGetMatchIdentityMismatch"] = GenericErrorCodesMatchmakingGetMatchIdentityMismatch;
-        _GenericErrorCodesMap["MatchmakingUserIdentityMismatch"] = GenericErrorCodesMatchmakingUserIdentityMismatch;
+        _GenericErrorCodesMap["MatchmakingPlayerIdentityMismatch"] = GenericErrorCodesMatchmakingPlayerIdentityMismatch;
         _GenericErrorCodesMap["MatchmakingAlreadyJoinedTicket"] = GenericErrorCodesMatchmakingAlreadyJoinedTicket;
         _GenericErrorCodesMap["MatchmakingTicketAlreadyCompleted"] = GenericErrorCodesMatchmakingTicketAlreadyCompleted;
+        _GenericErrorCodesMap["MatchmakingHopperIdInvalid"] = GenericErrorCodesMatchmakingHopperIdInvalid;
         _GenericErrorCodesMap["MatchmakingHopperConfigInvalid"] = GenericErrorCodesMatchmakingHopperConfigInvalid;
+        _GenericErrorCodesMap["MatchmakingMemberProfileInvalid"] = GenericErrorCodesMatchmakingMemberProfileInvalid;
 
     }
 

@@ -26,6 +26,7 @@ namespace PlayFab
         static void DeleteFiles(EntityModels::DeleteFilesRequest& request, ProcessApiCallback<EntityModels::DeleteFilesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteGroup(EntityModels::DeleteGroupRequest& request, ProcessApiCallback<EntityModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteRole(EntityModels::DeleteRoleRequest& request, ProcessApiCallback<EntityModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ExecuteEntityCloudScript(EntityModels::ExecuteEntityCloudScriptRequest& request, ProcessApiCallback<EntityModels::ExecuteCloudScriptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void FinalizeFileUploads(EntityModels::FinalizeFileUploadsRequest& request, ProcessApiCallback<EntityModels::FinalizeFileUploadsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetEntityToken(EntityModels::GetEntityTokenRequest& request, ProcessApiCallback<EntityModels::GetEntityTokenResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetFiles(EntityModels::GetFilesRequest& request, ProcessApiCallback<EntityModels::GetFilesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -52,6 +53,7 @@ namespace PlayFab
         static void UnblockEntity(EntityModels::UnblockEntityRequest& request, ProcessApiCallback<EntityModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateGroup(EntityModels::UpdateGroupRequest& request, ProcessApiCallback<EntityModels::UpdateGroupResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateRole(EntityModels::UpdateGroupRoleRequest& request, ProcessApiCallback<EntityModels::UpdateGroupRoleResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void WriteEvents(EntityModels::WriteEventsRequest& request, ProcessApiCallback<EntityModels::WriteEventsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
@@ -70,6 +72,7 @@ namespace PlayFab
         static void OnDeleteFilesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteGroupResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteRoleResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnExecuteEntityCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnFinalizeFileUploadsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetEntityTokenResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetFilesResult(int httpStatus, HttpRequest* request, void* userData);
@@ -96,6 +99,7 @@ namespace PlayFab
         static void OnUnblockEntityResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateGroupResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateRoleResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnWriteEventsResult(int httpStatus, HttpRequest* request, void* userData);
     };
 };
 #endif

@@ -5590,7 +5590,7 @@ GetPlayerProfileRequest::~GetPlayerProfileRequest()
 void GetPlayerProfileRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (ProfileConstraints != NULL) { writer.String("ProfileConstraints"); ProfileConstraints->writeJSON(writer); }
     writer.EndObject();
 }
@@ -6824,6 +6824,8 @@ void PlayFab::ClientModels::writeSourceTypeEnumJSON(SourceType enumVal, PFString
     case SourceTypeGameClient: writer.String("GameClient"); break;
     case SourceTypeGameServer: writer.String("GameServer"); break;
     case SourceTypePartner: writer.String("Partner"); break;
+    case SourceTypeCustom: writer.String("Custom"); break;
+    case SourceTypeAPI: writer.String("API"); break;
 
     }
 }
@@ -6839,6 +6841,8 @@ SourceType PlayFab::ClientModels::readSourceTypeFromValue(const rapidjson::Value
         _SourceTypeMap["GameClient"] = SourceTypeGameClient;
         _SourceTypeMap["GameServer"] = SourceTypeGameServer;
         _SourceTypeMap["Partner"] = SourceTypePartner;
+        _SourceTypeMap["Custom"] = SourceTypeCustom;
+        _SourceTypeMap["API"] = SourceTypeAPI;
 
     }
 
@@ -7983,6 +7987,7 @@ void UserSettings::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("GatherDeviceInfo"); writer.Bool(GatherDeviceInfo);
+    writer.String("GatherFocusInfo"); writer.Bool(GatherFocusInfo);
     writer.String("NeedsAttribution"); writer.Bool(NeedsAttribution);
     writer.EndObject();
 }
@@ -7991,6 +7996,8 @@ bool UserSettings::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator GatherDeviceInfo_member = obj.FindMember("GatherDeviceInfo");
     if (GatherDeviceInfo_member != obj.MemberEnd() && !GatherDeviceInfo_member->value.IsNull()) GatherDeviceInfo = GatherDeviceInfo_member->value.GetBool();
+    const Value::ConstMemberIterator GatherFocusInfo_member = obj.FindMember("GatherFocusInfo");
+    if (GatherFocusInfo_member != obj.MemberEnd() && !GatherFocusInfo_member->value.IsNull()) GatherFocusInfo = GatherFocusInfo_member->value.GetBool();
     const Value::ConstMemberIterator NeedsAttribution_member = obj.FindMember("NeedsAttribution");
     if (NeedsAttribution_member != obj.MemberEnd() && !NeedsAttribution_member->value.IsNull()) NeedsAttribution = NeedsAttribution_member->value.GetBool();
 

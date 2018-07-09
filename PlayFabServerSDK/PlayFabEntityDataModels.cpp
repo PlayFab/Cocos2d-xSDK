@@ -360,6 +360,35 @@ bool ChangeMemberRoleRequest::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::EntityModels::writeCloudScriptRevisionOptionEnumJSON(CloudScriptRevisionOption enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case CloudScriptRevisionOptionLive: writer.String("Live"); break;
+    case CloudScriptRevisionOptionLatest: writer.String("Latest"); break;
+    case CloudScriptRevisionOptionSpecific: writer.String("Specific"); break;
+
+    }
+}
+
+CloudScriptRevisionOption PlayFab::EntityModels::readCloudScriptRevisionOptionFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, CloudScriptRevisionOption> _CloudScriptRevisionOptionMap;
+    if (_CloudScriptRevisionOptionMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _CloudScriptRevisionOptionMap["Live"] = CloudScriptRevisionOptionLive;
+        _CloudScriptRevisionOptionMap["Latest"] = CloudScriptRevisionOptionLatest;
+        _CloudScriptRevisionOptionMap["Specific"] = CloudScriptRevisionOptionSpecific;
+
+    }
+
+    auto output = _CloudScriptRevisionOptionMap.find(obj.GetString());
+    if (output != _CloudScriptRevisionOptionMap.end())
+        return output->second;
+
+    return CloudScriptRevisionOptionLive; // Basically critical fail
+}
 
 CreateGroupRequest::~CreateGroupRequest()
 {
@@ -827,6 +856,198 @@ bool EntityProfileBody::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator VersionNumber_member = obj.FindMember("VersionNumber");
     if (VersionNumber_member != obj.MemberEnd() && !VersionNumber_member->value.IsNull()) VersionNumber = VersionNumber_member->value.GetInt();
+
+    return true;
+}
+
+EventContents::~EventContents()
+{
+
+}
+
+void EventContents::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Entity"); Entity.writeJSON(writer);
+    writer.String("EventNamespace"); writer.String(EventNamespace.c_str());
+    writer.String("Name"); writer.String(Name.c_str());
+    if (OriginalId.length() > 0) { writer.String("OriginalId"); writer.String(OriginalId.c_str()); }
+    if (OriginalTimestamp.notNull()) { writer.String("OriginalTimestamp"); writeDatetime(OriginalTimestamp, writer); }
+    if (Payload.notNull()) { writer.String("Payload"); Payload.writeJSON(writer); }
+    if (PayloadJSON.length() > 0) { writer.String("PayloadJSON"); writer.String(PayloadJSON.c_str()); }
+    writer.EndObject();
+}
+
+bool EventContents::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
+    if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
+    const Value::ConstMemberIterator EventNamespace_member = obj.FindMember("EventNamespace");
+    if (EventNamespace_member != obj.MemberEnd() && !EventNamespace_member->value.IsNull()) EventNamespace = EventNamespace_member->value.GetString();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator OriginalId_member = obj.FindMember("OriginalId");
+    if (OriginalId_member != obj.MemberEnd() && !OriginalId_member->value.IsNull()) OriginalId = OriginalId_member->value.GetString();
+    const Value::ConstMemberIterator OriginalTimestamp_member = obj.FindMember("OriginalTimestamp");
+    if (OriginalTimestamp_member != obj.MemberEnd() && !OriginalTimestamp_member->value.IsNull()) OriginalTimestamp = readDatetime(OriginalTimestamp_member->value);
+    const Value::ConstMemberIterator Payload_member = obj.FindMember("Payload");
+    if (Payload_member != obj.MemberEnd() && !Payload_member->value.IsNull()) Payload = MultitypeVar(Payload_member->value);
+    const Value::ConstMemberIterator PayloadJSON_member = obj.FindMember("PayloadJSON");
+    if (PayloadJSON_member != obj.MemberEnd() && !PayloadJSON_member->value.IsNull()) PayloadJSON = PayloadJSON_member->value.GetString();
+
+    return true;
+}
+
+ScriptExecutionError::~ScriptExecutionError()
+{
+
+}
+
+void ScriptExecutionError::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Error.length() > 0) { writer.String("Error"); writer.String(Error.c_str()); }
+    if (Message.length() > 0) { writer.String("Message"); writer.String(Message.c_str()); }
+    if (StackTrace.length() > 0) { writer.String("StackTrace"); writer.String(StackTrace.c_str()); }
+    writer.EndObject();
+}
+
+bool ScriptExecutionError::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Error_member = obj.FindMember("Error");
+    if (Error_member != obj.MemberEnd() && !Error_member->value.IsNull()) Error = Error_member->value.GetString();
+    const Value::ConstMemberIterator Message_member = obj.FindMember("Message");
+    if (Message_member != obj.MemberEnd() && !Message_member->value.IsNull()) Message = Message_member->value.GetString();
+    const Value::ConstMemberIterator StackTrace_member = obj.FindMember("StackTrace");
+    if (StackTrace_member != obj.MemberEnd() && !StackTrace_member->value.IsNull()) StackTrace = StackTrace_member->value.GetString();
+
+    return true;
+}
+
+LogStatement::~LogStatement()
+{
+
+}
+
+void LogStatement::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Data.notNull()) { writer.String("Data"); Data.writeJSON(writer); }
+    if (Level.length() > 0) { writer.String("Level"); writer.String(Level.c_str()); }
+    if (Message.length() > 0) { writer.String("Message"); writer.String(Message.c_str()); }
+    writer.EndObject();
+}
+
+bool LogStatement::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd() && !Data_member->value.IsNull()) Data = MultitypeVar(Data_member->value);
+    const Value::ConstMemberIterator Level_member = obj.FindMember("Level");
+    if (Level_member != obj.MemberEnd() && !Level_member->value.IsNull()) Level = Level_member->value.GetString();
+    const Value::ConstMemberIterator Message_member = obj.FindMember("Message");
+    if (Message_member != obj.MemberEnd() && !Message_member->value.IsNull()) Message = Message_member->value.GetString();
+
+    return true;
+}
+
+ExecuteCloudScriptResult::~ExecuteCloudScriptResult()
+{
+    if (Error != NULL) delete Error;
+
+}
+
+void ExecuteCloudScriptResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("APIRequestsIssued"); writer.Int(APIRequestsIssued);
+    if (Error != NULL) { writer.String("Error"); Error->writeJSON(writer); }
+    writer.String("ExecutionTimeSeconds"); writer.Double(ExecutionTimeSeconds);
+    if (FunctionName.length() > 0) { writer.String("FunctionName"); writer.String(FunctionName.c_str()); }
+    if (FunctionResult.notNull()) { writer.String("FunctionResult"); FunctionResult.writeJSON(writer); }
+    if (FunctionResultTooLarge.notNull()) { writer.String("FunctionResultTooLarge"); writer.Bool(FunctionResultTooLarge); }
+    writer.String("HttpRequestsIssued"); writer.Int(HttpRequestsIssued);
+    if (!Logs.empty()) {
+        writer.String("Logs");
+        writer.StartArray();
+        for (std::list<LogStatement>::iterator iter = Logs.begin(); iter != Logs.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (LogsTooLarge.notNull()) { writer.String("LogsTooLarge"); writer.Bool(LogsTooLarge); }
+    writer.String("MemoryConsumedBytes"); writer.Uint(MemoryConsumedBytes);
+    writer.String("ProcessorTimeSeconds"); writer.Double(ProcessorTimeSeconds);
+    writer.String("Revision"); writer.Int(Revision);
+    writer.EndObject();
+}
+
+bool ExecuteCloudScriptResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator APIRequestsIssued_member = obj.FindMember("APIRequestsIssued");
+    if (APIRequestsIssued_member != obj.MemberEnd() && !APIRequestsIssued_member->value.IsNull()) APIRequestsIssued = APIRequestsIssued_member->value.GetInt();
+    const Value::ConstMemberIterator Error_member = obj.FindMember("Error");
+    if (Error_member != obj.MemberEnd() && !Error_member->value.IsNull()) Error = new ScriptExecutionError(Error_member->value);
+    const Value::ConstMemberIterator ExecutionTimeSeconds_member = obj.FindMember("ExecutionTimeSeconds");
+    if (ExecutionTimeSeconds_member != obj.MemberEnd() && !ExecutionTimeSeconds_member->value.IsNull()) ExecutionTimeSeconds = ExecutionTimeSeconds_member->value.GetDouble();
+    const Value::ConstMemberIterator FunctionName_member = obj.FindMember("FunctionName");
+    if (FunctionName_member != obj.MemberEnd() && !FunctionName_member->value.IsNull()) FunctionName = FunctionName_member->value.GetString();
+    const Value::ConstMemberIterator FunctionResult_member = obj.FindMember("FunctionResult");
+    if (FunctionResult_member != obj.MemberEnd() && !FunctionResult_member->value.IsNull()) FunctionResult = MultitypeVar(FunctionResult_member->value);
+    const Value::ConstMemberIterator FunctionResultTooLarge_member = obj.FindMember("FunctionResultTooLarge");
+    if (FunctionResultTooLarge_member != obj.MemberEnd() && !FunctionResultTooLarge_member->value.IsNull()) FunctionResultTooLarge = FunctionResultTooLarge_member->value.GetBool();
+    const Value::ConstMemberIterator HttpRequestsIssued_member = obj.FindMember("HttpRequestsIssued");
+    if (HttpRequestsIssued_member != obj.MemberEnd() && !HttpRequestsIssued_member->value.IsNull()) HttpRequestsIssued = HttpRequestsIssued_member->value.GetInt();
+    const Value::ConstMemberIterator Logs_member = obj.FindMember("Logs");
+    if (Logs_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Logs_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Logs.push_back(LogStatement(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator LogsTooLarge_member = obj.FindMember("LogsTooLarge");
+    if (LogsTooLarge_member != obj.MemberEnd() && !LogsTooLarge_member->value.IsNull()) LogsTooLarge = LogsTooLarge_member->value.GetBool();
+    const Value::ConstMemberIterator MemoryConsumedBytes_member = obj.FindMember("MemoryConsumedBytes");
+    if (MemoryConsumedBytes_member != obj.MemberEnd() && !MemoryConsumedBytes_member->value.IsNull()) MemoryConsumedBytes = MemoryConsumedBytes_member->value.GetUint();
+    const Value::ConstMemberIterator ProcessorTimeSeconds_member = obj.FindMember("ProcessorTimeSeconds");
+    if (ProcessorTimeSeconds_member != obj.MemberEnd() && !ProcessorTimeSeconds_member->value.IsNull()) ProcessorTimeSeconds = ProcessorTimeSeconds_member->value.GetDouble();
+    const Value::ConstMemberIterator Revision_member = obj.FindMember("Revision");
+    if (Revision_member != obj.MemberEnd() && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
+
+    return true;
+}
+
+ExecuteEntityCloudScriptRequest::~ExecuteEntityCloudScriptRequest()
+{
+    if (Entity != NULL) delete Entity;
+
+}
+
+void ExecuteEntityCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
+    writer.String("FunctionName"); writer.String(FunctionName.c_str());
+    if (FunctionParameter.notNull()) { writer.String("FunctionParameter"); FunctionParameter.writeJSON(writer); }
+    if (GeneratePlayStreamEvent.notNull()) { writer.String("GeneratePlayStreamEvent"); writer.Bool(GeneratePlayStreamEvent); }
+    if (RevisionSelection.notNull()) { writer.String("RevisionSelection"); writeCloudScriptRevisionOptionEnumJSON(RevisionSelection, writer); }
+    if (SpecificRevision.notNull()) { writer.String("SpecificRevision"); writer.Int(SpecificRevision); }
+    writer.EndObject();
+}
+
+bool ExecuteEntityCloudScriptRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
+    if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
+    const Value::ConstMemberIterator FunctionName_member = obj.FindMember("FunctionName");
+    if (FunctionName_member != obj.MemberEnd() && !FunctionName_member->value.IsNull()) FunctionName = FunctionName_member->value.GetString();
+    const Value::ConstMemberIterator FunctionParameter_member = obj.FindMember("FunctionParameter");
+    if (FunctionParameter_member != obj.MemberEnd() && !FunctionParameter_member->value.IsNull()) FunctionParameter = MultitypeVar(FunctionParameter_member->value);
+    const Value::ConstMemberIterator GeneratePlayStreamEvent_member = obj.FindMember("GeneratePlayStreamEvent");
+    if (GeneratePlayStreamEvent_member != obj.MemberEnd() && !GeneratePlayStreamEvent_member->value.IsNull()) GeneratePlayStreamEvent = GeneratePlayStreamEvent_member->value.GetBool();
+    const Value::ConstMemberIterator RevisionSelection_member = obj.FindMember("RevisionSelection");
+    if (RevisionSelection_member != obj.MemberEnd() && !RevisionSelection_member->value.IsNull()) RevisionSelection = readCloudScriptRevisionOptionFromValue(RevisionSelection_member->value);
+    const Value::ConstMemberIterator SpecificRevision_member = obj.FindMember("SpecificRevision");
+    if (SpecificRevision_member != obj.MemberEnd() && !SpecificRevision_member->value.IsNull()) SpecificRevision = SpecificRevision_member->value.GetInt();
 
     return true;
 }
@@ -2534,6 +2755,68 @@ bool UpdateGroupRoleResponse::readFromValue(const rapidjson::Value& obj)
     if (ProfileVersion_member != obj.MemberEnd() && !ProfileVersion_member->value.IsNull()) ProfileVersion = ProfileVersion_member->value.GetInt();
     const Value::ConstMemberIterator SetResult_member = obj.FindMember("SetResult");
     if (SetResult_member != obj.MemberEnd() && !SetResult_member->value.IsNull()) SetResult = readOperationTypesFromValue(SetResult_member->value);
+
+    return true;
+}
+
+WriteEventsRequest::~WriteEventsRequest()
+{
+
+}
+
+void WriteEventsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Events");
+    writer.StartArray();
+    for (std::list<EventContents>::iterator iter = Events.begin(); iter != Events.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    writer.EndObject();
+}
+
+bool WriteEventsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Events_member = obj.FindMember("Events");
+    if (Events_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Events_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Events.push_back(EventContents(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+WriteEventsResponse::~WriteEventsResponse()
+{
+
+}
+
+void WriteEventsResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!AssignedEventIds.empty()) {
+        writer.String("AssignedEventIds");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = AssignedEventIds.begin(); iter != AssignedEventIds.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool WriteEventsResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AssignedEventIds_member = obj.FindMember("AssignedEventIds");
+    if (AssignedEventIds_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = AssignedEventIds_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            AssignedEventIds.push_back(memberList[i].GetString());
+        }
+    }
 
     return true;
 }
