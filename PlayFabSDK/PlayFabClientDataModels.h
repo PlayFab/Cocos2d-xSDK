@@ -5738,7 +5738,9 @@ namespace PlayFab
             SourceTypeBackEnd,
             SourceTypeGameClient,
             SourceTypeGameServer,
-            SourceTypePartner
+            SourceTypePartner,
+            SourceTypeCustom,
+            SourceTypeAPI
         };
 
         void writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer);
@@ -6940,17 +6942,20 @@ namespace PlayFab
         struct UserSettings : public PlayFabBaseModel
         {
             bool GatherDeviceInfo;
+            bool GatherFocusInfo;
             bool NeedsAttribution;
 
             UserSettings() :
                 PlayFabBaseModel(),
                 GatherDeviceInfo(false),
+                GatherFocusInfo(false),
                 NeedsAttribution(false)
             {}
 
             UserSettings(const UserSettings& src) :
                 PlayFabBaseModel(),
                 GatherDeviceInfo(src.GatherDeviceInfo),
+                GatherFocusInfo(src.GatherFocusInfo),
                 NeedsAttribution(src.NeedsAttribution)
             {}
 
