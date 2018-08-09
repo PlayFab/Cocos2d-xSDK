@@ -3408,6 +3408,12 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExplicitContentDetected: writer.String("ExplicitContentDetected"); break;
     case GenericErrorCodesPIIContentDetected: writer.String("PIIContentDetected"); break;
     case GenericErrorCodesInvalidScheduledTaskParameter: writer.String("InvalidScheduledTaskParameter"); break;
+    case GenericErrorCodesPerEntityEventRateLimitExceeded: writer.String("PerEntityEventRateLimitExceeded"); break;
+    case GenericErrorCodesTitleDefaultLanguageNotSet: writer.String("TitleDefaultLanguageNotSet"); break;
+    case GenericErrorCodesEmailTemplateMissingDefaultVersion: writer.String("EmailTemplateMissingDefaultVersion"); break;
+    case GenericErrorCodesFacebookInstantGamesIdNotLinked: writer.String("FacebookInstantGamesIdNotLinked"); break;
+    case GenericErrorCodesInvalidFacebookInstantGamesSignature: writer.String("InvalidFacebookInstantGamesSignature"); break;
+    case GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle: writer.String("FacebookInstantGamesAuthNotConfiguredForTitle"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingCreateRequestMissing: writer.String("MatchmakingCreateRequestMissing"); break;
@@ -3418,12 +3424,12 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesMatchmakingTicketIdMissing: writer.String("MatchmakingTicketIdMissing"); break;
     case GenericErrorCodesMatchmakingMatchIdMissing: writer.String("MatchmakingMatchIdMissing"); break;
     case GenericErrorCodesMatchmakingMatchIdIdMissing: writer.String("MatchmakingMatchIdIdMissing"); break;
-    case GenericErrorCodesMatchmakingHopperIdMissing: writer.String("MatchmakingHopperIdMissing"); break;
+    case GenericErrorCodesMatchmakingQueueNameMissing: writer.String("MatchmakingQueueNameMissing"); break;
     case GenericErrorCodesMatchmakingTitleIdMissing: writer.String("MatchmakingTitleIdMissing"); break;
     case GenericErrorCodesMatchmakingTicketIdIdMissing: writer.String("MatchmakingTicketIdIdMissing"); break;
     case GenericErrorCodesMatchmakingPlayerIdMissing: writer.String("MatchmakingPlayerIdMissing"); break;
     case GenericErrorCodesMatchmakingJoinRequestUserMissing: writer.String("MatchmakingJoinRequestUserMissing"); break;
-    case GenericErrorCodesMatchmakingHopperConfigNotFound: writer.String("MatchmakingHopperConfigNotFound"); break;
+    case GenericErrorCodesMatchmakingQueueConfigNotFound: writer.String("MatchmakingQueueConfigNotFound"); break;
     case GenericErrorCodesMatchmakingMatchNotFound: writer.String("MatchmakingMatchNotFound"); break;
     case GenericErrorCodesMatchmakingTicketNotFound: writer.String("MatchmakingTicketNotFound"); break;
     case GenericErrorCodesMatchmakingCreateTicketServerIdentityInvalid: writer.String("MatchmakingCreateTicketServerIdentityInvalid"); break;
@@ -3437,9 +3443,12 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesMatchmakingPlayerIdentityMismatch: writer.String("MatchmakingPlayerIdentityMismatch"); break;
     case GenericErrorCodesMatchmakingAlreadyJoinedTicket: writer.String("MatchmakingAlreadyJoinedTicket"); break;
     case GenericErrorCodesMatchmakingTicketAlreadyCompleted: writer.String("MatchmakingTicketAlreadyCompleted"); break;
-    case GenericErrorCodesMatchmakingHopperIdInvalid: writer.String("MatchmakingHopperIdInvalid"); break;
-    case GenericErrorCodesMatchmakingHopperConfigInvalid: writer.String("MatchmakingHopperConfigInvalid"); break;
+    case GenericErrorCodesMatchmakingQueueNameInvalid: writer.String("MatchmakingQueueNameInvalid"); break;
+    case GenericErrorCodesMatchmakingQueueConfigInvalid: writer.String("MatchmakingQueueConfigInvalid"); break;
     case GenericErrorCodesMatchmakingMemberProfileInvalid: writer.String("MatchmakingMemberProfileInvalid"); break;
+    case GenericErrorCodesWriteAttemptedDuringExport: writer.String("WriteAttemptedDuringExport"); break;
+    case GenericErrorCodesNintendoSwitchDeviceIdNotLinked: writer.String("NintendoSwitchDeviceIdNotLinked"); break;
+    case GenericErrorCodesMatchmakingNotEnabled: writer.String("MatchmakingNotEnabled"); break;
 
     }
 }
@@ -3832,6 +3841,12 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExplicitContentDetected"] = GenericErrorCodesExplicitContentDetected;
         _GenericErrorCodesMap["PIIContentDetected"] = GenericErrorCodesPIIContentDetected;
         _GenericErrorCodesMap["InvalidScheduledTaskParameter"] = GenericErrorCodesInvalidScheduledTaskParameter;
+        _GenericErrorCodesMap["PerEntityEventRateLimitExceeded"] = GenericErrorCodesPerEntityEventRateLimitExceeded;
+        _GenericErrorCodesMap["TitleDefaultLanguageNotSet"] = GenericErrorCodesTitleDefaultLanguageNotSet;
+        _GenericErrorCodesMap["EmailTemplateMissingDefaultVersion"] = GenericErrorCodesEmailTemplateMissingDefaultVersion;
+        _GenericErrorCodesMap["FacebookInstantGamesIdNotLinked"] = GenericErrorCodesFacebookInstantGamesIdNotLinked;
+        _GenericErrorCodesMap["InvalidFacebookInstantGamesSignature"] = GenericErrorCodesInvalidFacebookInstantGamesSignature;
+        _GenericErrorCodesMap["FacebookInstantGamesAuthNotConfiguredForTitle"] = GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingCreateRequestMissing"] = GenericErrorCodesMatchmakingCreateRequestMissing;
@@ -3842,12 +3857,12 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["MatchmakingTicketIdMissing"] = GenericErrorCodesMatchmakingTicketIdMissing;
         _GenericErrorCodesMap["MatchmakingMatchIdMissing"] = GenericErrorCodesMatchmakingMatchIdMissing;
         _GenericErrorCodesMap["MatchmakingMatchIdIdMissing"] = GenericErrorCodesMatchmakingMatchIdIdMissing;
-        _GenericErrorCodesMap["MatchmakingHopperIdMissing"] = GenericErrorCodesMatchmakingHopperIdMissing;
+        _GenericErrorCodesMap["MatchmakingQueueNameMissing"] = GenericErrorCodesMatchmakingQueueNameMissing;
         _GenericErrorCodesMap["MatchmakingTitleIdMissing"] = GenericErrorCodesMatchmakingTitleIdMissing;
         _GenericErrorCodesMap["MatchmakingTicketIdIdMissing"] = GenericErrorCodesMatchmakingTicketIdIdMissing;
         _GenericErrorCodesMap["MatchmakingPlayerIdMissing"] = GenericErrorCodesMatchmakingPlayerIdMissing;
         _GenericErrorCodesMap["MatchmakingJoinRequestUserMissing"] = GenericErrorCodesMatchmakingJoinRequestUserMissing;
-        _GenericErrorCodesMap["MatchmakingHopperConfigNotFound"] = GenericErrorCodesMatchmakingHopperConfigNotFound;
+        _GenericErrorCodesMap["MatchmakingQueueConfigNotFound"] = GenericErrorCodesMatchmakingQueueConfigNotFound;
         _GenericErrorCodesMap["MatchmakingMatchNotFound"] = GenericErrorCodesMatchmakingMatchNotFound;
         _GenericErrorCodesMap["MatchmakingTicketNotFound"] = GenericErrorCodesMatchmakingTicketNotFound;
         _GenericErrorCodesMap["MatchmakingCreateTicketServerIdentityInvalid"] = GenericErrorCodesMatchmakingCreateTicketServerIdentityInvalid;
@@ -3861,9 +3876,12 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["MatchmakingPlayerIdentityMismatch"] = GenericErrorCodesMatchmakingPlayerIdentityMismatch;
         _GenericErrorCodesMap["MatchmakingAlreadyJoinedTicket"] = GenericErrorCodesMatchmakingAlreadyJoinedTicket;
         _GenericErrorCodesMap["MatchmakingTicketAlreadyCompleted"] = GenericErrorCodesMatchmakingTicketAlreadyCompleted;
-        _GenericErrorCodesMap["MatchmakingHopperIdInvalid"] = GenericErrorCodesMatchmakingHopperIdInvalid;
-        _GenericErrorCodesMap["MatchmakingHopperConfigInvalid"] = GenericErrorCodesMatchmakingHopperConfigInvalid;
+        _GenericErrorCodesMap["MatchmakingQueueNameInvalid"] = GenericErrorCodesMatchmakingQueueNameInvalid;
+        _GenericErrorCodesMap["MatchmakingQueueConfigInvalid"] = GenericErrorCodesMatchmakingQueueConfigInvalid;
         _GenericErrorCodesMap["MatchmakingMemberProfileInvalid"] = GenericErrorCodesMatchmakingMemberProfileInvalid;
+        _GenericErrorCodesMap["WriteAttemptedDuringExport"] = GenericErrorCodesWriteAttemptedDuringExport;
+        _GenericErrorCodesMap["NintendoSwitchDeviceIdNotLinked"] = GenericErrorCodesNintendoSwitchDeviceIdNotLinked;
+        _GenericErrorCodesMap["MatchmakingNotEnabled"] = GenericErrorCodesMatchmakingNotEnabled;
 
     }
 
@@ -4359,7 +4377,10 @@ void GetMatchmakerGameInfoResult::writeJSON(PFStringJsonWriter& writer)
     }
     if (pfRegion.notNull()) { writer.String("Region"); writeRegionEnumJSON(pfRegion, writer); }
     if (ServerAddress.length() > 0) { writer.String("ServerAddress"); writer.String(ServerAddress.c_str()); }
+    if (ServerIPV4Address.length() > 0) { writer.String("ServerIPV4Address"); writer.String(ServerIPV4Address.c_str()); }
+    if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     writer.String("ServerPort"); writer.Uint(ServerPort);
+    if (ServerPublicDNSName.length() > 0) { writer.String("ServerPublicDNSName"); writer.String(ServerPublicDNSName.c_str()); }
     writer.String("StartTime"); writeDatetime(StartTime, writer);
     if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
     writer.EndObject();
@@ -4386,8 +4407,14 @@ bool GetMatchmakerGameInfoResult::readFromValue(const rapidjson::Value& obj)
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
     const Value::ConstMemberIterator ServerAddress_member = obj.FindMember("ServerAddress");
     if (ServerAddress_member != obj.MemberEnd() && !ServerAddress_member->value.IsNull()) ServerAddress = ServerAddress_member->value.GetString();
+    const Value::ConstMemberIterator ServerIPV4Address_member = obj.FindMember("ServerIPV4Address");
+    if (ServerIPV4Address_member != obj.MemberEnd() && !ServerIPV4Address_member->value.IsNull()) ServerIPV4Address = ServerIPV4Address_member->value.GetString();
+    const Value::ConstMemberIterator ServerIPV6Address_member = obj.FindMember("ServerIPV6Address");
+    if (ServerIPV6Address_member != obj.MemberEnd() && !ServerIPV6Address_member->value.IsNull()) ServerIPV6Address = ServerIPV6Address_member->value.GetString();
     const Value::ConstMemberIterator ServerPort_member = obj.FindMember("ServerPort");
     if (ServerPort_member != obj.MemberEnd() && !ServerPort_member->value.IsNull()) ServerPort = ServerPort_member->value.GetUint();
+    const Value::ConstMemberIterator ServerPublicDNSName_member = obj.FindMember("ServerPublicDNSName");
+    if (ServerPublicDNSName_member != obj.MemberEnd() && !ServerPublicDNSName_member->value.IsNull()) ServerPublicDNSName = ServerPublicDNSName_member->value.GetString();
     const Value::ConstMemberIterator StartTime_member = obj.FindMember("StartTime");
     if (StartTime_member != obj.MemberEnd() && !StartTime_member->value.IsNull()) StartTime = readDatetime(StartTime_member->value);
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -4649,6 +4676,10 @@ void PlayFab::AdminModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProvi
     case LoginIdentityProviderAndroidDevice: writer.String("AndroidDevice"); break;
     case LoginIdentityProviderTwitch: writer.String("Twitch"); break;
     case LoginIdentityProviderWindowsHello: writer.String("WindowsHello"); break;
+    case LoginIdentityProviderGameServer: writer.String("GameServer"); break;
+    case LoginIdentityProviderCustomServer: writer.String("CustomServer"); break;
+    case LoginIdentityProviderNintendoSwitch: writer.String("NintendoSwitch"); break;
+    case LoginIdentityProviderFacebookInstantGames: writer.String("FacebookInstantGames"); break;
 
     }
 }
@@ -4673,6 +4704,10 @@ LoginIdentityProvider PlayFab::AdminModels::readLoginIdentityProviderFromValue(c
         _LoginIdentityProviderMap["AndroidDevice"] = LoginIdentityProviderAndroidDevice;
         _LoginIdentityProviderMap["Twitch"] = LoginIdentityProviderTwitch;
         _LoginIdentityProviderMap["WindowsHello"] = LoginIdentityProviderWindowsHello;
+        _LoginIdentityProviderMap["GameServer"] = LoginIdentityProviderGameServer;
+        _LoginIdentityProviderMap["CustomServer"] = LoginIdentityProviderCustomServer;
+        _LoginIdentityProviderMap["NintendoSwitch"] = LoginIdentityProviderNintendoSwitch;
+        _LoginIdentityProviderMap["FacebookInstantGames"] = LoginIdentityProviderFacebookInstantGames;
 
     }
 
@@ -7911,6 +7946,9 @@ void PlayFab::AdminModels::writeUserOriginationEnumJSON(UserOrigination enumVal,
     case UserOriginationParse: writer.String("Parse"); break;
     case UserOriginationTwitch: writer.String("Twitch"); break;
     case UserOriginationWindowsHello: writer.String("WindowsHello"); break;
+    case UserOriginationServerCustomId: writer.String("ServerCustomId"); break;
+    case UserOriginationNintendoSwitchDeviceId: writer.String("NintendoSwitchDeviceId"); break;
+    case UserOriginationFacebookInstantGamesId: writer.String("FacebookInstantGamesId"); break;
 
     }
 }
@@ -7939,6 +7977,9 @@ UserOrigination PlayFab::AdminModels::readUserOriginationFromValue(const rapidjs
         _UserOriginationMap["Parse"] = UserOriginationParse;
         _UserOriginationMap["Twitch"] = UserOriginationTwitch;
         _UserOriginationMap["WindowsHello"] = UserOriginationWindowsHello;
+        _UserOriginationMap["ServerCustomId"] = UserOriginationServerCustomId;
+        _UserOriginationMap["NintendoSwitchDeviceId"] = UserOriginationNintendoSwitchDeviceId;
+        _UserOriginationMap["FacebookInstantGamesId"] = UserOriginationFacebookInstantGamesId;
 
     }
 

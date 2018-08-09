@@ -932,6 +932,9 @@ void PlayFab::ServerModels::writeUserOriginationEnumJSON(UserOrigination enumVal
     case UserOriginationParse: writer.String("Parse"); break;
     case UserOriginationTwitch: writer.String("Twitch"); break;
     case UserOriginationWindowsHello: writer.String("WindowsHello"); break;
+    case UserOriginationServerCustomId: writer.String("ServerCustomId"); break;
+    case UserOriginationNintendoSwitchDeviceId: writer.String("NintendoSwitchDeviceId"); break;
+    case UserOriginationFacebookInstantGamesId: writer.String("FacebookInstantGamesId"); break;
 
     }
 }
@@ -960,6 +963,9 @@ UserOrigination PlayFab::ServerModels::readUserOriginationFromValue(const rapidj
         _UserOriginationMap["Parse"] = UserOriginationParse;
         _UserOriginationMap["Twitch"] = UserOriginationTwitch;
         _UserOriginationMap["WindowsHello"] = UserOriginationWindowsHello;
+        _UserOriginationMap["ServerCustomId"] = UserOriginationServerCustomId;
+        _UserOriginationMap["NintendoSwitchDeviceId"] = UserOriginationNintendoSwitchDeviceId;
+        _UserOriginationMap["FacebookInstantGamesId"] = UserOriginationFacebookInstantGamesId;
 
     }
 
@@ -3004,6 +3010,29 @@ bool ExecuteCloudScriptServerRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+FacebookInstantGamesPlayFabIdPair::~FacebookInstantGamesPlayFabIdPair()
+{
+
+}
+
+void FacebookInstantGamesPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (FacebookInstantGamesId.length() > 0) { writer.String("FacebookInstantGamesId"); writer.String(FacebookInstantGamesId.c_str()); }
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    writer.EndObject();
+}
+
+bool FacebookInstantGamesPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator FacebookInstantGamesId_member = obj.FindMember("FacebookInstantGamesId");
+    if (FacebookInstantGamesId_member != obj.MemberEnd() && !FacebookInstantGamesId_member->value.IsNull()) FacebookInstantGamesId = FacebookInstantGamesId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
 FacebookPlayFabIdPair::~FacebookPlayFabIdPair()
 {
 
@@ -3044,6 +3073,10 @@ void PlayFab::ServerModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProv
     case LoginIdentityProviderAndroidDevice: writer.String("AndroidDevice"); break;
     case LoginIdentityProviderTwitch: writer.String("Twitch"); break;
     case LoginIdentityProviderWindowsHello: writer.String("WindowsHello"); break;
+    case LoginIdentityProviderGameServer: writer.String("GameServer"); break;
+    case LoginIdentityProviderCustomServer: writer.String("CustomServer"); break;
+    case LoginIdentityProviderNintendoSwitch: writer.String("NintendoSwitch"); break;
+    case LoginIdentityProviderFacebookInstantGames: writer.String("FacebookInstantGames"); break;
 
     }
 }
@@ -3068,6 +3101,10 @@ LoginIdentityProvider PlayFab::ServerModels::readLoginIdentityProviderFromValue(
         _LoginIdentityProviderMap["AndroidDevice"] = LoginIdentityProviderAndroidDevice;
         _LoginIdentityProviderMap["Twitch"] = LoginIdentityProviderTwitch;
         _LoginIdentityProviderMap["WindowsHello"] = LoginIdentityProviderWindowsHello;
+        _LoginIdentityProviderMap["GameServer"] = LoginIdentityProviderGameServer;
+        _LoginIdentityProviderMap["CustomServer"] = LoginIdentityProviderCustomServer;
+        _LoginIdentityProviderMap["NintendoSwitch"] = LoginIdentityProviderNintendoSwitch;
+        _LoginIdentityProviderMap["FacebookInstantGames"] = LoginIdentityProviderFacebookInstantGames;
 
     }
 
@@ -4017,6 +4054,12 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesExplicitContentDetected: writer.String("ExplicitContentDetected"); break;
     case GenericErrorCodesPIIContentDetected: writer.String("PIIContentDetected"); break;
     case GenericErrorCodesInvalidScheduledTaskParameter: writer.String("InvalidScheduledTaskParameter"); break;
+    case GenericErrorCodesPerEntityEventRateLimitExceeded: writer.String("PerEntityEventRateLimitExceeded"); break;
+    case GenericErrorCodesTitleDefaultLanguageNotSet: writer.String("TitleDefaultLanguageNotSet"); break;
+    case GenericErrorCodesEmailTemplateMissingDefaultVersion: writer.String("EmailTemplateMissingDefaultVersion"); break;
+    case GenericErrorCodesFacebookInstantGamesIdNotLinked: writer.String("FacebookInstantGamesIdNotLinked"); break;
+    case GenericErrorCodesInvalidFacebookInstantGamesSignature: writer.String("InvalidFacebookInstantGamesSignature"); break;
+    case GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle: writer.String("FacebookInstantGamesAuthNotConfiguredForTitle"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingCreateRequestMissing: writer.String("MatchmakingCreateRequestMissing"); break;
@@ -4027,12 +4070,12 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesMatchmakingTicketIdMissing: writer.String("MatchmakingTicketIdMissing"); break;
     case GenericErrorCodesMatchmakingMatchIdMissing: writer.String("MatchmakingMatchIdMissing"); break;
     case GenericErrorCodesMatchmakingMatchIdIdMissing: writer.String("MatchmakingMatchIdIdMissing"); break;
-    case GenericErrorCodesMatchmakingHopperIdMissing: writer.String("MatchmakingHopperIdMissing"); break;
+    case GenericErrorCodesMatchmakingQueueNameMissing: writer.String("MatchmakingQueueNameMissing"); break;
     case GenericErrorCodesMatchmakingTitleIdMissing: writer.String("MatchmakingTitleIdMissing"); break;
     case GenericErrorCodesMatchmakingTicketIdIdMissing: writer.String("MatchmakingTicketIdIdMissing"); break;
     case GenericErrorCodesMatchmakingPlayerIdMissing: writer.String("MatchmakingPlayerIdMissing"); break;
     case GenericErrorCodesMatchmakingJoinRequestUserMissing: writer.String("MatchmakingJoinRequestUserMissing"); break;
-    case GenericErrorCodesMatchmakingHopperConfigNotFound: writer.String("MatchmakingHopperConfigNotFound"); break;
+    case GenericErrorCodesMatchmakingQueueConfigNotFound: writer.String("MatchmakingQueueConfigNotFound"); break;
     case GenericErrorCodesMatchmakingMatchNotFound: writer.String("MatchmakingMatchNotFound"); break;
     case GenericErrorCodesMatchmakingTicketNotFound: writer.String("MatchmakingTicketNotFound"); break;
     case GenericErrorCodesMatchmakingCreateTicketServerIdentityInvalid: writer.String("MatchmakingCreateTicketServerIdentityInvalid"); break;
@@ -4046,9 +4089,12 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesMatchmakingPlayerIdentityMismatch: writer.String("MatchmakingPlayerIdentityMismatch"); break;
     case GenericErrorCodesMatchmakingAlreadyJoinedTicket: writer.String("MatchmakingAlreadyJoinedTicket"); break;
     case GenericErrorCodesMatchmakingTicketAlreadyCompleted: writer.String("MatchmakingTicketAlreadyCompleted"); break;
-    case GenericErrorCodesMatchmakingHopperIdInvalid: writer.String("MatchmakingHopperIdInvalid"); break;
-    case GenericErrorCodesMatchmakingHopperConfigInvalid: writer.String("MatchmakingHopperConfigInvalid"); break;
+    case GenericErrorCodesMatchmakingQueueNameInvalid: writer.String("MatchmakingQueueNameInvalid"); break;
+    case GenericErrorCodesMatchmakingQueueConfigInvalid: writer.String("MatchmakingQueueConfigInvalid"); break;
     case GenericErrorCodesMatchmakingMemberProfileInvalid: writer.String("MatchmakingMemberProfileInvalid"); break;
+    case GenericErrorCodesWriteAttemptedDuringExport: writer.String("WriteAttemptedDuringExport"); break;
+    case GenericErrorCodesNintendoSwitchDeviceIdNotLinked: writer.String("NintendoSwitchDeviceIdNotLinked"); break;
+    case GenericErrorCodesMatchmakingNotEnabled: writer.String("MatchmakingNotEnabled"); break;
 
     }
 }
@@ -4441,6 +4487,12 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["ExplicitContentDetected"] = GenericErrorCodesExplicitContentDetected;
         _GenericErrorCodesMap["PIIContentDetected"] = GenericErrorCodesPIIContentDetected;
         _GenericErrorCodesMap["InvalidScheduledTaskParameter"] = GenericErrorCodesInvalidScheduledTaskParameter;
+        _GenericErrorCodesMap["PerEntityEventRateLimitExceeded"] = GenericErrorCodesPerEntityEventRateLimitExceeded;
+        _GenericErrorCodesMap["TitleDefaultLanguageNotSet"] = GenericErrorCodesTitleDefaultLanguageNotSet;
+        _GenericErrorCodesMap["EmailTemplateMissingDefaultVersion"] = GenericErrorCodesEmailTemplateMissingDefaultVersion;
+        _GenericErrorCodesMap["FacebookInstantGamesIdNotLinked"] = GenericErrorCodesFacebookInstantGamesIdNotLinked;
+        _GenericErrorCodesMap["InvalidFacebookInstantGamesSignature"] = GenericErrorCodesInvalidFacebookInstantGamesSignature;
+        _GenericErrorCodesMap["FacebookInstantGamesAuthNotConfiguredForTitle"] = GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingCreateRequestMissing"] = GenericErrorCodesMatchmakingCreateRequestMissing;
@@ -4451,12 +4503,12 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["MatchmakingTicketIdMissing"] = GenericErrorCodesMatchmakingTicketIdMissing;
         _GenericErrorCodesMap["MatchmakingMatchIdMissing"] = GenericErrorCodesMatchmakingMatchIdMissing;
         _GenericErrorCodesMap["MatchmakingMatchIdIdMissing"] = GenericErrorCodesMatchmakingMatchIdIdMissing;
-        _GenericErrorCodesMap["MatchmakingHopperIdMissing"] = GenericErrorCodesMatchmakingHopperIdMissing;
+        _GenericErrorCodesMap["MatchmakingQueueNameMissing"] = GenericErrorCodesMatchmakingQueueNameMissing;
         _GenericErrorCodesMap["MatchmakingTitleIdMissing"] = GenericErrorCodesMatchmakingTitleIdMissing;
         _GenericErrorCodesMap["MatchmakingTicketIdIdMissing"] = GenericErrorCodesMatchmakingTicketIdIdMissing;
         _GenericErrorCodesMap["MatchmakingPlayerIdMissing"] = GenericErrorCodesMatchmakingPlayerIdMissing;
         _GenericErrorCodesMap["MatchmakingJoinRequestUserMissing"] = GenericErrorCodesMatchmakingJoinRequestUserMissing;
-        _GenericErrorCodesMap["MatchmakingHopperConfigNotFound"] = GenericErrorCodesMatchmakingHopperConfigNotFound;
+        _GenericErrorCodesMap["MatchmakingQueueConfigNotFound"] = GenericErrorCodesMatchmakingQueueConfigNotFound;
         _GenericErrorCodesMap["MatchmakingMatchNotFound"] = GenericErrorCodesMatchmakingMatchNotFound;
         _GenericErrorCodesMap["MatchmakingTicketNotFound"] = GenericErrorCodesMatchmakingTicketNotFound;
         _GenericErrorCodesMap["MatchmakingCreateTicketServerIdentityInvalid"] = GenericErrorCodesMatchmakingCreateTicketServerIdentityInvalid;
@@ -4470,9 +4522,12 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["MatchmakingPlayerIdentityMismatch"] = GenericErrorCodesMatchmakingPlayerIdentityMismatch;
         _GenericErrorCodesMap["MatchmakingAlreadyJoinedTicket"] = GenericErrorCodesMatchmakingAlreadyJoinedTicket;
         _GenericErrorCodesMap["MatchmakingTicketAlreadyCompleted"] = GenericErrorCodesMatchmakingTicketAlreadyCompleted;
-        _GenericErrorCodesMap["MatchmakingHopperIdInvalid"] = GenericErrorCodesMatchmakingHopperIdInvalid;
-        _GenericErrorCodesMap["MatchmakingHopperConfigInvalid"] = GenericErrorCodesMatchmakingHopperConfigInvalid;
+        _GenericErrorCodesMap["MatchmakingQueueNameInvalid"] = GenericErrorCodesMatchmakingQueueNameInvalid;
+        _GenericErrorCodesMap["MatchmakingQueueConfigInvalid"] = GenericErrorCodesMatchmakingQueueConfigInvalid;
         _GenericErrorCodesMap["MatchmakingMemberProfileInvalid"] = GenericErrorCodesMatchmakingMemberProfileInvalid;
+        _GenericErrorCodesMap["WriteAttemptedDuringExport"] = GenericErrorCodesWriteAttemptedDuringExport;
+        _GenericErrorCodesMap["NintendoSwitchDeviceIdNotLinked"] = GenericErrorCodesNintendoSwitchDeviceIdNotLinked;
+        _GenericErrorCodesMap["MatchmakingNotEnabled"] = GenericErrorCodesMatchmakingNotEnabled;
 
     }
 
@@ -6632,6 +6687,153 @@ bool GetPlayFabIDsFromFacebookIDsResult::readFromValue(const rapidjson::Value& o
     return true;
 }
 
+GetPlayFabIDsFromFacebookInstantGamesIdsRequest::~GetPlayFabIDsFromFacebookInstantGamesIdsRequest()
+{
+
+}
+
+void GetPlayFabIDsFromFacebookInstantGamesIdsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("FacebookInstantGamesIds");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = FacebookInstantGamesIds.begin(); iter != FacebookInstantGamesIds.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromFacebookInstantGamesIdsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator FacebookInstantGamesIds_member = obj.FindMember("FacebookInstantGamesIds");
+    if (FacebookInstantGamesIds_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = FacebookInstantGamesIds_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            FacebookInstantGamesIds.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
+GetPlayFabIDsFromFacebookInstantGamesIdsResult::~GetPlayFabIDsFromFacebookInstantGamesIdsResult()
+{
+
+}
+
+void GetPlayFabIDsFromFacebookInstantGamesIdsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!Data.empty()) {
+        writer.String("Data");
+        writer.StartArray();
+        for (std::list<FacebookInstantGamesPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromFacebookInstantGamesIdsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Data_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Data.push_back(FacebookInstantGamesPlayFabIdPair(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest::~GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest()
+{
+
+}
+
+void GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("NintendoSwitchDeviceIds");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = NintendoSwitchDeviceIds.begin(); iter != NintendoSwitchDeviceIds.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator NintendoSwitchDeviceIds_member = obj.FindMember("NintendoSwitchDeviceIds");
+    if (NintendoSwitchDeviceIds_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = NintendoSwitchDeviceIds_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            NintendoSwitchDeviceIds.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
+NintendoSwitchPlayFabIdPair::~NintendoSwitchPlayFabIdPair()
+{
+
+}
+
+void NintendoSwitchPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (NintendoSwitchDeviceId.length() > 0) { writer.String("NintendoSwitchDeviceId"); writer.String(NintendoSwitchDeviceId.c_str()); }
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    writer.EndObject();
+}
+
+bool NintendoSwitchPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator NintendoSwitchDeviceId_member = obj.FindMember("NintendoSwitchDeviceId");
+    if (NintendoSwitchDeviceId_member != obj.MemberEnd() && !NintendoSwitchDeviceId_member->value.IsNull()) NintendoSwitchDeviceId = NintendoSwitchDeviceId_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
+GetPlayFabIDsFromNintendoSwitchDeviceIdsResult::~GetPlayFabIDsFromNintendoSwitchDeviceIdsResult()
+{
+
+}
+
+void GetPlayFabIDsFromNintendoSwitchDeviceIdsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!Data.empty()) {
+        writer.String("Data");
+        writer.StartArray();
+        for (std::list<NintendoSwitchPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromNintendoSwitchDeviceIdsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Data_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Data.push_back(NintendoSwitchPlayFabIdPair(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 GetPlayFabIDsFromSteamIDsRequest::~GetPlayFabIDsFromSteamIDsRequest()
 {
 
@@ -8479,9 +8681,11 @@ void RegisterGameRequest::writeJSON(PFStringJsonWriter& writer)
     writer.String("GameMode"); writer.String(GameMode.c_str());
     if (LobbyId.length() > 0) { writer.String("LobbyId"); writer.String(LobbyId.c_str()); }
     writer.String("Region"); writeRegionEnumJSON(pfRegion, writer);
-    writer.String("ServerHost"); writer.String(ServerHost.c_str());
+    if (ServerHost.length() > 0) { writer.String("ServerHost"); writer.String(ServerHost.c_str()); }
+    if (ServerIPV4Address.length() > 0) { writer.String("ServerIPV4Address"); writer.String(ServerIPV4Address.c_str()); }
     if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     writer.String("ServerPort"); writer.String(ServerPort.c_str());
+    if (ServerPublicDNSName.length() > 0) { writer.String("ServerPublicDNSName"); writer.String(ServerPublicDNSName.c_str()); }
     if (!Tags.empty()) {
         writer.String("Tags");
         writer.StartObject();
@@ -8505,10 +8709,14 @@ bool RegisterGameRequest::readFromValue(const rapidjson::Value& obj)
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
     const Value::ConstMemberIterator ServerHost_member = obj.FindMember("ServerHost");
     if (ServerHost_member != obj.MemberEnd() && !ServerHost_member->value.IsNull()) ServerHost = ServerHost_member->value.GetString();
+    const Value::ConstMemberIterator ServerIPV4Address_member = obj.FindMember("ServerIPV4Address");
+    if (ServerIPV4Address_member != obj.MemberEnd() && !ServerIPV4Address_member->value.IsNull()) ServerIPV4Address = ServerIPV4Address_member->value.GetString();
     const Value::ConstMemberIterator ServerIPV6Address_member = obj.FindMember("ServerIPV6Address");
     if (ServerIPV6Address_member != obj.MemberEnd() && !ServerIPV6Address_member->value.IsNull()) ServerIPV6Address = ServerIPV6Address_member->value.GetString();
     const Value::ConstMemberIterator ServerPort_member = obj.FindMember("ServerPort");
     if (ServerPort_member != obj.MemberEnd() && !ServerPort_member->value.IsNull()) ServerPort = ServerPort_member->value.GetString();
+    const Value::ConstMemberIterator ServerPublicDNSName_member = obj.FindMember("ServerPublicDNSName");
+    if (ServerPublicDNSName_member != obj.MemberEnd() && !ServerPublicDNSName_member->value.IsNull()) ServerPublicDNSName = ServerPublicDNSName_member->value.GetString();
     const Value::ConstMemberIterator Tags_member = obj.FindMember("Tags");
     if (Tags_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Tags_member->value.MemberBegin(); iter != Tags_member->value.MemberEnd(); ++iter) {

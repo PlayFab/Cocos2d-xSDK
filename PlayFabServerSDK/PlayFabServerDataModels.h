@@ -810,7 +810,10 @@ namespace PlayFab
             UserOriginationXboxLive,
             UserOriginationParse,
             UserOriginationTwitch,
-            UserOriginationWindowsHello
+            UserOriginationWindowsHello,
+            UserOriginationServerCustomId,
+            UserOriginationNintendoSwitchDeviceId,
+            UserOriginationFacebookInstantGamesId
         };
 
         void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
@@ -2483,6 +2486,34 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct FacebookInstantGamesPlayFabIdPair : public PlayFabBaseModel
+        {
+            std::string FacebookInstantGamesId;
+            std::string PlayFabId;
+
+            FacebookInstantGamesPlayFabIdPair() :
+                PlayFabBaseModel(),
+                FacebookInstantGamesId(),
+                PlayFabId()
+            {}
+
+            FacebookInstantGamesPlayFabIdPair(const FacebookInstantGamesPlayFabIdPair& src) :
+                PlayFabBaseModel(),
+                FacebookInstantGamesId(src.FacebookInstantGamesId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            FacebookInstantGamesPlayFabIdPair(const rapidjson::Value& obj) : FacebookInstantGamesPlayFabIdPair()
+            {
+                readFromValue(obj);
+            }
+
+            ~FacebookInstantGamesPlayFabIdPair();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct FacebookPlayFabIdPair : public PlayFabBaseModel
         {
             std::string FacebookId;
@@ -2526,7 +2557,11 @@ namespace PlayFab
             LoginIdentityProviderIOSDevice,
             LoginIdentityProviderAndroidDevice,
             LoginIdentityProviderTwitch,
-            LoginIdentityProviderWindowsHello
+            LoginIdentityProviderWindowsHello,
+            LoginIdentityProviderGameServer,
+            LoginIdentityProviderCustomServer,
+            LoginIdentityProviderNintendoSwitch,
+            LoginIdentityProviderFacebookInstantGames
         };
 
         void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);
@@ -3340,6 +3375,12 @@ namespace PlayFab
             GenericErrorCodesExplicitContentDetected,
             GenericErrorCodesPIIContentDetected,
             GenericErrorCodesInvalidScheduledTaskParameter,
+            GenericErrorCodesPerEntityEventRateLimitExceeded,
+            GenericErrorCodesTitleDefaultLanguageNotSet,
+            GenericErrorCodesEmailTemplateMissingDefaultVersion,
+            GenericErrorCodesFacebookInstantGamesIdNotLinked,
+            GenericErrorCodesInvalidFacebookInstantGamesSignature,
+            GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingCreateRequestMissing,
@@ -3350,12 +3391,12 @@ namespace PlayFab
             GenericErrorCodesMatchmakingTicketIdMissing,
             GenericErrorCodesMatchmakingMatchIdMissing,
             GenericErrorCodesMatchmakingMatchIdIdMissing,
-            GenericErrorCodesMatchmakingHopperIdMissing,
+            GenericErrorCodesMatchmakingQueueNameMissing,
             GenericErrorCodesMatchmakingTitleIdMissing,
             GenericErrorCodesMatchmakingTicketIdIdMissing,
             GenericErrorCodesMatchmakingPlayerIdMissing,
             GenericErrorCodesMatchmakingJoinRequestUserMissing,
-            GenericErrorCodesMatchmakingHopperConfigNotFound,
+            GenericErrorCodesMatchmakingQueueConfigNotFound,
             GenericErrorCodesMatchmakingMatchNotFound,
             GenericErrorCodesMatchmakingTicketNotFound,
             GenericErrorCodesMatchmakingCreateTicketServerIdentityInvalid,
@@ -3369,9 +3410,12 @@ namespace PlayFab
             GenericErrorCodesMatchmakingPlayerIdentityMismatch,
             GenericErrorCodesMatchmakingAlreadyJoinedTicket,
             GenericErrorCodesMatchmakingTicketAlreadyCompleted,
-            GenericErrorCodesMatchmakingHopperIdInvalid,
-            GenericErrorCodesMatchmakingHopperConfigInvalid,
-            GenericErrorCodesMatchmakingMemberProfileInvalid
+            GenericErrorCodesMatchmakingQueueNameInvalid,
+            GenericErrorCodesMatchmakingQueueConfigInvalid,
+            GenericErrorCodesMatchmakingMemberProfileInvalid,
+            GenericErrorCodesWriteAttemptedDuringExport,
+            GenericErrorCodesNintendoSwitchDeviceIdNotLinked,
+            GenericErrorCodesMatchmakingNotEnabled
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
@@ -5242,6 +5286,134 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayFabIDsFromFacebookInstantGamesIdsRequest : public PlayFabBaseModel
+        {
+            std::list<std::string> FacebookInstantGamesIds;
+
+            GetPlayFabIDsFromFacebookInstantGamesIdsRequest() :
+                PlayFabBaseModel(),
+                FacebookInstantGamesIds()
+            {}
+
+            GetPlayFabIDsFromFacebookInstantGamesIdsRequest(const GetPlayFabIDsFromFacebookInstantGamesIdsRequest& src) :
+                PlayFabBaseModel(),
+                FacebookInstantGamesIds(src.FacebookInstantGamesIds)
+            {}
+
+            GetPlayFabIDsFromFacebookInstantGamesIdsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromFacebookInstantGamesIdsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromFacebookInstantGamesIdsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromFacebookInstantGamesIdsResult : public PlayFabBaseModel
+        {
+            std::list<FacebookInstantGamesPlayFabIdPair> Data;
+
+            GetPlayFabIDsFromFacebookInstantGamesIdsResult() :
+                PlayFabBaseModel(),
+                Data()
+            {}
+
+            GetPlayFabIDsFromFacebookInstantGamesIdsResult(const GetPlayFabIDsFromFacebookInstantGamesIdsResult& src) :
+                PlayFabBaseModel(),
+                Data(src.Data)
+            {}
+
+            GetPlayFabIDsFromFacebookInstantGamesIdsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromFacebookInstantGamesIdsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromFacebookInstantGamesIdsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest : public PlayFabBaseModel
+        {
+            std::list<std::string> NintendoSwitchDeviceIds;
+
+            GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest() :
+                PlayFabBaseModel(),
+                NintendoSwitchDeviceIds()
+            {}
+
+            GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest(const GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest& src) :
+                PlayFabBaseModel(),
+                NintendoSwitchDeviceIds(src.NintendoSwitchDeviceIds)
+            {}
+
+            GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct NintendoSwitchPlayFabIdPair : public PlayFabBaseModel
+        {
+            std::string NintendoSwitchDeviceId;
+            std::string PlayFabId;
+
+            NintendoSwitchPlayFabIdPair() :
+                PlayFabBaseModel(),
+                NintendoSwitchDeviceId(),
+                PlayFabId()
+            {}
+
+            NintendoSwitchPlayFabIdPair(const NintendoSwitchPlayFabIdPair& src) :
+                PlayFabBaseModel(),
+                NintendoSwitchDeviceId(src.NintendoSwitchDeviceId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            NintendoSwitchPlayFabIdPair(const rapidjson::Value& obj) : NintendoSwitchPlayFabIdPair()
+            {
+                readFromValue(obj);
+            }
+
+            ~NintendoSwitchPlayFabIdPair();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromNintendoSwitchDeviceIdsResult : public PlayFabBaseModel
+        {
+            std::list<NintendoSwitchPlayFabIdPair> Data;
+
+            GetPlayFabIDsFromNintendoSwitchDeviceIdsResult() :
+                PlayFabBaseModel(),
+                Data()
+            {}
+
+            GetPlayFabIDsFromNintendoSwitchDeviceIdsResult(const GetPlayFabIDsFromNintendoSwitchDeviceIdsResult& src) :
+                PlayFabBaseModel(),
+                Data(src.Data)
+            {}
+
+            GetPlayFabIDsFromNintendoSwitchDeviceIdsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromNintendoSwitchDeviceIdsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromNintendoSwitchDeviceIdsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetPlayFabIDsFromSteamIDsRequest : public PlayFabBaseModel
         {
             std::list<std::string> SteamStringIDs;
@@ -6957,9 +7129,12 @@ namespace PlayFab
             std::string GameMode;
             std::string LobbyId;
             Region pfRegion;
+            // Deprecated - Use 'ServerIPV4Address' instead
             std::string ServerHost;
+            std::string ServerIPV4Address;
             std::string ServerIPV6Address;
             std::string ServerPort;
+            std::string ServerPublicDNSName;
             std::map<std::string, std::string> Tags;
 
             RegisterGameRequest() :
@@ -6969,8 +7144,10 @@ namespace PlayFab
                 LobbyId(),
                 pfRegion(),
                 ServerHost(),
+                ServerIPV4Address(),
                 ServerIPV6Address(),
                 ServerPort(),
+                ServerPublicDNSName(),
                 Tags()
             {}
 
@@ -6981,8 +7158,10 @@ namespace PlayFab
                 LobbyId(src.LobbyId),
                 pfRegion(src.pfRegion),
                 ServerHost(src.ServerHost),
+                ServerIPV4Address(src.ServerIPV4Address),
                 ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort),
+                ServerPublicDNSName(src.ServerPublicDNSName),
                 Tags(src.Tags)
             {}
 

@@ -2858,6 +2858,12 @@ namespace PlayFab
             GenericErrorCodesExplicitContentDetected,
             GenericErrorCodesPIIContentDetected,
             GenericErrorCodesInvalidScheduledTaskParameter,
+            GenericErrorCodesPerEntityEventRateLimitExceeded,
+            GenericErrorCodesTitleDefaultLanguageNotSet,
+            GenericErrorCodesEmailTemplateMissingDefaultVersion,
+            GenericErrorCodesFacebookInstantGamesIdNotLinked,
+            GenericErrorCodesInvalidFacebookInstantGamesSignature,
+            GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingCreateRequestMissing,
@@ -2868,12 +2874,12 @@ namespace PlayFab
             GenericErrorCodesMatchmakingTicketIdMissing,
             GenericErrorCodesMatchmakingMatchIdMissing,
             GenericErrorCodesMatchmakingMatchIdIdMissing,
-            GenericErrorCodesMatchmakingHopperIdMissing,
+            GenericErrorCodesMatchmakingQueueNameMissing,
             GenericErrorCodesMatchmakingTitleIdMissing,
             GenericErrorCodesMatchmakingTicketIdIdMissing,
             GenericErrorCodesMatchmakingPlayerIdMissing,
             GenericErrorCodesMatchmakingJoinRequestUserMissing,
-            GenericErrorCodesMatchmakingHopperConfigNotFound,
+            GenericErrorCodesMatchmakingQueueConfigNotFound,
             GenericErrorCodesMatchmakingMatchNotFound,
             GenericErrorCodesMatchmakingTicketNotFound,
             GenericErrorCodesMatchmakingCreateTicketServerIdentityInvalid,
@@ -2887,9 +2893,12 @@ namespace PlayFab
             GenericErrorCodesMatchmakingPlayerIdentityMismatch,
             GenericErrorCodesMatchmakingAlreadyJoinedTicket,
             GenericErrorCodesMatchmakingTicketAlreadyCompleted,
-            GenericErrorCodesMatchmakingHopperIdInvalid,
-            GenericErrorCodesMatchmakingHopperConfigInvalid,
-            GenericErrorCodesMatchmakingMemberProfileInvalid
+            GenericErrorCodesMatchmakingQueueNameInvalid,
+            GenericErrorCodesMatchmakingQueueConfigInvalid,
+            GenericErrorCodesMatchmakingMemberProfileInvalid,
+            GenericErrorCodesWriteAttemptedDuringExport,
+            GenericErrorCodesNintendoSwitchDeviceIdNotLinked,
+            GenericErrorCodesMatchmakingNotEnabled
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
@@ -3392,8 +3401,12 @@ namespace PlayFab
             std::string Mode;
             std::list<std::string> Players;
             Boxed<Region> pfRegion;
+            // Deprecated - Use 'ServerIPV4Address' instead
             std::string ServerAddress;
+            std::string ServerIPV4Address;
+            std::string ServerIPV6Address;
             Uint32 ServerPort;
+            std::string ServerPublicDNSName;
             time_t StartTime;
             std::string TitleId;
 
@@ -3406,7 +3419,10 @@ namespace PlayFab
                 Players(),
                 pfRegion(),
                 ServerAddress(),
+                ServerIPV4Address(),
+                ServerIPV6Address(),
                 ServerPort(0),
+                ServerPublicDNSName(),
                 StartTime(0),
                 TitleId()
             {}
@@ -3420,7 +3436,10 @@ namespace PlayFab
                 Players(src.Players),
                 pfRegion(src.pfRegion),
                 ServerAddress(src.ServerAddress),
+                ServerIPV4Address(src.ServerIPV4Address),
+                ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort),
+                ServerPublicDNSName(src.ServerPublicDNSName),
                 StartTime(src.StartTime),
                 TitleId(src.TitleId)
             {}
@@ -3702,7 +3721,11 @@ namespace PlayFab
             LoginIdentityProviderIOSDevice,
             LoginIdentityProviderAndroidDevice,
             LoginIdentityProviderTwitch,
-            LoginIdentityProviderWindowsHello
+            LoginIdentityProviderWindowsHello,
+            LoginIdentityProviderGameServer,
+            LoginIdentityProviderCustomServer,
+            LoginIdentityProviderNintendoSwitch,
+            LoginIdentityProviderFacebookInstantGames
         };
 
         void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);
@@ -6564,7 +6587,10 @@ namespace PlayFab
             UserOriginationXboxLive,
             UserOriginationParse,
             UserOriginationTwitch,
-            UserOriginationWindowsHello
+            UserOriginationWindowsHello,
+            UserOriginationServerCustomId,
+            UserOriginationNintendoSwitchDeviceId,
+            UserOriginationFacebookInstantGamesId
         };
 
         void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);

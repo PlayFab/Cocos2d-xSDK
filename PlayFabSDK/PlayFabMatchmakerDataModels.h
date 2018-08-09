@@ -281,24 +281,31 @@ namespace PlayFab
         struct StartGameResponse : public PlayFabBaseModel
         {
             std::string GameID;
+            // Deprecated - Use 'ServerIPV4Address' instead
             std::string ServerHostname;
+            std::string ServerIPV4Address;
             std::string ServerIPV6Address;
             Uint32 ServerPort;
+            std::string ServerPublicDNSName;
 
             StartGameResponse() :
                 PlayFabBaseModel(),
                 GameID(),
                 ServerHostname(),
+                ServerIPV4Address(),
                 ServerIPV6Address(),
-                ServerPort(0)
+                ServerPort(0),
+                ServerPublicDNSName()
             {}
 
             StartGameResponse(const StartGameResponse& src) :
                 PlayFabBaseModel(),
                 GameID(src.GameID),
                 ServerHostname(src.ServerHostname),
+                ServerIPV4Address(src.ServerIPV4Address),
                 ServerIPV6Address(src.ServerIPV6Address),
-                ServerPort(src.ServerPort)
+                ServerPort(src.ServerPort),
+                ServerPublicDNSName(src.ServerPublicDNSName)
             {}
 
             StartGameResponse(const rapidjson::Value& obj) : StartGameResponse()

@@ -396,6 +396,12 @@ namespace PlayFab
         PlayFabErrorExplicitContentDetected = 1389,
         PlayFabErrorPIIContentDetected = 1390,
         PlayFabErrorInvalidScheduledTaskParameter = 1391,
+        PlayFabErrorPerEntityEventRateLimitExceeded = 1392,
+        PlayFabErrorTitleDefaultLanguageNotSet = 1393,
+        PlayFabErrorEmailTemplateMissingDefaultVersion = 1394,
+        PlayFabErrorFacebookInstantGamesIdNotLinked = 1395,
+        PlayFabErrorInvalidFacebookInstantGamesSignature = 1396,
+        PlayFabErrorFacebookInstantGamesAuthNotConfiguredForTitle = 1397,
         PlayFabErrorMatchmakingEntityInvalid = 2001,
         PlayFabErrorMatchmakingPlayerAttributesInvalid = 2002,
         PlayFabErrorMatchmakingCreateRequestMissing = 2003,
@@ -406,12 +412,12 @@ namespace PlayFab
         PlayFabErrorMatchmakingTicketIdMissing = 2008,
         PlayFabErrorMatchmakingMatchIdMissing = 2009,
         PlayFabErrorMatchmakingMatchIdIdMissing = 2010,
-        PlayFabErrorMatchmakingHopperIdMissing = 2011,
+        PlayFabErrorMatchmakingQueueNameMissing = 2011,
         PlayFabErrorMatchmakingTitleIdMissing = 2012,
         PlayFabErrorMatchmakingTicketIdIdMissing = 2013,
         PlayFabErrorMatchmakingPlayerIdMissing = 2014,
         PlayFabErrorMatchmakingJoinRequestUserMissing = 2015,
-        PlayFabErrorMatchmakingHopperConfigNotFound = 2016,
+        PlayFabErrorMatchmakingQueueConfigNotFound = 2016,
         PlayFabErrorMatchmakingMatchNotFound = 2017,
         PlayFabErrorMatchmakingTicketNotFound = 2018,
         PlayFabErrorMatchmakingCreateTicketServerIdentityInvalid = 2019,
@@ -425,9 +431,12 @@ namespace PlayFab
         PlayFabErrorMatchmakingPlayerIdentityMismatch = 2027,
         PlayFabErrorMatchmakingAlreadyJoinedTicket = 2028,
         PlayFabErrorMatchmakingTicketAlreadyCompleted = 2029,
-        PlayFabErrorMatchmakingHopperIdInvalid = 2030,
-        PlayFabErrorMatchmakingHopperConfigInvalid = 2031,
-        PlayFabErrorMatchmakingMemberProfileInvalid = 2032
+        PlayFabErrorMatchmakingQueueNameInvalid = 2030,
+        PlayFabErrorMatchmakingQueueConfigInvalid = 2031,
+        PlayFabErrorMatchmakingMemberProfileInvalid = 2032,
+        PlayFabErrorWriteAttemptedDuringExport = 2033,
+        PlayFabErrorNintendoSwitchDeviceIdNotLinked = 2034,
+        PlayFabErrorMatchmakingNotEnabled = 2035
     };
 
     struct PlayFabError
