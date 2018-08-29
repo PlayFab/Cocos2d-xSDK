@@ -565,6 +565,52 @@ void PlayFabClientAPI::OnConsumeItemResult(int httpStatus, HttpRequest* request,
     delete request;
 }
 
+void PlayFabClientAPI::ConsumeXboxEntitlements(
+    ConsumeXboxEntitlementsRequest& request,
+    ProcessApiCallback<ConsumeXboxEntitlementsResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/ConsumeXboxEntitlements"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", PlayFabSettings::clientSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ConsumeXboxEntitlementsResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnConsumeXboxEntitlementsResult, userData);
+}
+
+void PlayFabClientAPI::OnConsumeXboxEntitlementsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ConsumeXboxEntitlementsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<ConsumeXboxEntitlementsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::CreateSharedGroup(
     CreateSharedGroupRequest& request,
     ProcessApiCallback<CreateSharedGroupResult> callback,
@@ -3596,6 +3642,52 @@ void PlayFabClientAPI::OnLinkWindowsHelloResult(int httpStatus, HttpRequest* req
     delete request;
 }
 
+void PlayFabClientAPI::LinkXboxAccount(
+    LinkXboxAccountRequest& request,
+    ProcessApiCallback<LinkXboxAccountResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LinkXboxAccount"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", PlayFabSettings::clientSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkXboxAccountResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkXboxAccountResult, userData);
+}
+
+void PlayFabClientAPI::OnLinkXboxAccountResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    LinkXboxAccountResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<LinkXboxAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::LoginWithAndroidDeviceID(
     LoginWithAndroidDeviceIDRequest& request,
     ProcessApiCallback<LoginResult> callback,
@@ -4310,6 +4402,57 @@ void PlayFabClientAPI::OnLoginWithWindowsHelloResult(int httpStatus, HttpRequest
     delete request;
 }
 
+void PlayFabClientAPI::LoginWithXbox(
+    LoginWithXboxRequest& request,
+    ProcessApiCallback<LoginResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    if (PlayFabSettings::titleId.length() > 0)
+        request.TitleId = PlayFabSettings::titleId;
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithXbox"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithXboxResult, userData);
+}
+
+void PlayFabClientAPI::OnLoginWithXboxResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    LoginResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::Matchmake(
     MatchmakeRequest& request,
     ProcessApiCallback<MatchmakeResult> callback,
@@ -4872,7 +5015,7 @@ void PlayFabClientAPI::OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequ
 
 void PlayFabClientAPI::ReportDeviceInfo(
     DeviceInfoRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -4883,7 +5026,7 @@ void PlayFabClientAPI::ReportDeviceInfo(
     httpRequest->SetHeader("X-Authorization", PlayFabSettings::clientSessionTicket);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4895,14 +5038,14 @@ void PlayFabClientAPI::ReportDeviceInfo(
 
 void PlayFabClientAPI::OnReportDeviceInfoResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -5829,6 +5972,52 @@ void PlayFabClientAPI::OnUnlinkWindowsHelloResult(int httpStatus, HttpRequest* r
     delete request;
 }
 
+void PlayFabClientAPI::UnlinkXboxAccount(
+    UnlinkXboxAccountRequest& request,
+    ProcessApiCallback<UnlinkXboxAccountResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/UnlinkXboxAccount"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", PlayFabSettings::clientSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkXboxAccountResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkXboxAccountResult, userData);
+}
+
+void PlayFabClientAPI::OnUnlinkXboxAccountResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    UnlinkXboxAccountResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<UnlinkXboxAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::UnlockContainerInstance(
     UnlockContainerInstanceRequest& request,
     ProcessApiCallback<UnlockContainerItemResult> callback,
@@ -5923,7 +6112,7 @@ void PlayFabClientAPI::OnUnlockContainerItemResult(int httpStatus, HttpRequest* 
 
 void PlayFabClientAPI::UpdateAvatarUrl(
     UpdateAvatarUrlRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -5934,7 +6123,7 @@ void PlayFabClientAPI::UpdateAvatarUrl(
     httpRequest->SetHeader("X-Authorization", PlayFabSettings::clientSessionTicket);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -5946,14 +6135,14 @@ void PlayFabClientAPI::UpdateAvatarUrl(
 
 void PlayFabClientAPI::OnUpdateAvatarUrlResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

@@ -58,7 +58,7 @@ void PlayFabServerAPI::OnAddCharacterVirtualCurrencyResult(int httpStatus, HttpR
 
 void PlayFabServerAPI::AddFriend(
     AddFriendRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -69,7 +69,7 @@ void PlayFabServerAPI::AddFriend(
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -81,14 +81,14 @@ void PlayFabServerAPI::AddFriend(
 
 void PlayFabServerAPI::OnAddFriendResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -518,7 +518,7 @@ void PlayFabServerAPI::OnDeleteCharacterFromUserResult(int httpStatus, HttpReque
 
 void PlayFabServerAPI::DeleteSharedGroup(
     DeleteSharedGroupRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -529,7 +529,7 @@ void PlayFabServerAPI::DeleteSharedGroup(
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -541,14 +541,14 @@ void PlayFabServerAPI::DeleteSharedGroup(
 
 void PlayFabServerAPI::OnDeleteSharedGroupResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3322,7 +3322,7 @@ void PlayFabServerAPI::OnRegisterGameResult(int httpStatus, HttpRequest* request
 
 void PlayFabServerAPI::RemoveFriend(
     RemoveFriendRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -3333,7 +3333,7 @@ void PlayFabServerAPI::RemoveFriend(
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3345,14 +3345,14 @@ void PlayFabServerAPI::RemoveFriend(
 
 void PlayFabServerAPI::OnRemoveFriendResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -3828,7 +3828,7 @@ void PlayFabServerAPI::OnSendPushNotificationResult(int httpStatus, HttpRequest*
 
 void PlayFabServerAPI::SetFriendTags(
     SetFriendTagsRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -3839,7 +3839,7 @@ void PlayFabServerAPI::SetFriendTags(
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -3851,14 +3851,14 @@ void PlayFabServerAPI::SetFriendTags(
 
 void PlayFabServerAPI::OnSetFriendTagsResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4380,7 +4380,7 @@ void PlayFabServerAPI::OnUnlockContainerItemResult(int httpStatus, HttpRequest* 
 
 void PlayFabServerAPI::UpdateAvatarUrl(
     UpdateAvatarUrlRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -4391,7 +4391,7 @@ void PlayFabServerAPI::UpdateAvatarUrl(
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4403,14 +4403,14 @@ void PlayFabServerAPI::UpdateAvatarUrl(
 
 void PlayFabServerAPI::OnUpdateAvatarUrlResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4840,7 +4840,7 @@ void PlayFabServerAPI::OnUpdateUserInternalDataResult(int httpStatus, HttpReques
 
 void PlayFabServerAPI::UpdateUserInventoryItemCustomData(
     UpdateUserInventoryItemDataRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -4851,7 +4851,7 @@ void PlayFabServerAPI::UpdateUserInventoryItemCustomData(
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4863,14 +4863,14 @@ void PlayFabServerAPI::UpdateUserInventoryItemCustomData(
 
 void PlayFabServerAPI::OnUpdateUserInventoryItemCustomDataResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

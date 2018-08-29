@@ -12,7 +12,7 @@ PlayFabAdminAPI::PlayFabAdminAPI() {}
 
 void PlayFabAdminAPI::AbortTaskInstance(
     AbortTaskInstanceRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -23,7 +23,7 @@ void PlayFabAdminAPI::AbortTaskInstance(
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -35,14 +35,14 @@ void PlayFabAdminAPI::AbortTaskInstance(
 
 void PlayFabAdminAPI::OnAbortTaskInstanceResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -794,7 +794,7 @@ void PlayFabAdminAPI::OnDeleteStoreResult(int httpStatus, HttpRequest* request, 
 
 void PlayFabAdminAPI::DeleteTask(
     DeleteTaskRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -805,7 +805,7 @@ void PlayFabAdminAPI::DeleteTask(
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -817,14 +817,14 @@ void PlayFabAdminAPI::DeleteTask(
 
 void PlayFabAdminAPI::OnDeleteTaskResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -4467,7 +4467,7 @@ void PlayFabAdminAPI::OnUpdateStoreItemsResult(int httpStatus, HttpRequest* requ
 
 void PlayFabAdminAPI::UpdateTask(
     UpdateTaskRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -4478,7 +4478,7 @@ void PlayFabAdminAPI::UpdateTask(
     httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -4490,14 +4490,14 @@ void PlayFabAdminAPI::UpdateTask(
 
 void PlayFabAdminAPI::OnUpdateTaskResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

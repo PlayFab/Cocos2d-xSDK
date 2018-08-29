@@ -7,37 +7,21 @@ namespace PlayFab
 {
     namespace GroupsModels
     {
-        enum EntityTypes
-        {
-            EntityTypestitle,
-            EntityTypesmaster_player_account,
-            EntityTypestitle_player_account,
-            EntityTypescharacter,
-            EntityTypesgroup,
-            EntityTypesservice
-        };
-
-        void writeEntityTypesEnumJSON(EntityTypes enumVal, PFStringJsonWriter& writer);
-        EntityTypes readEntityTypesFromValue(const rapidjson::Value& obj);
-
         struct EntityKey : public PlayFabBaseModel
         {
             std::string Id;
-            Boxed<EntityTypes> Type;
-            std::string TypeString;
+            std::string Type;
 
             EntityKey() :
                 PlayFabBaseModel(),
                 Id(),
-                Type(),
-                TypeString()
+                Type()
             {}
 
             EntityKey(const EntityKey& src) :
                 PlayFabBaseModel(),
                 Id(src.Id),
-                Type(src.Type),
-                TypeString(src.TypeString)
+                Type(src.Type)
             {}
 
             EntityKey(const rapidjson::Value& obj) : EntityKey()
@@ -476,23 +460,23 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct EmptyResult : public PlayFabBaseModel
+        struct EmptyResponse : public PlayFabBaseModel
         {
 
-            EmptyResult() :
+            EmptyResponse() :
                 PlayFabBaseModel()
             {}
 
-            EmptyResult(const EmptyResult& src) :
+            EmptyResponse(const EmptyResponse& src) :
                 PlayFabBaseModel()
             {}
 
-            EmptyResult(const rapidjson::Value& obj) : EmptyResult()
+            EmptyResponse(const rapidjson::Value& obj) : EmptyResponse()
             {
                 readFromValue(obj);
             }
 
-            ~EmptyResult();
+            ~EmptyResponse();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
