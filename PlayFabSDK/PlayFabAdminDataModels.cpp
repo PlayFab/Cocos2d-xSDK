@@ -2876,56 +2876,21 @@ EffectType PlayFab::AdminModels::readEffectTypeFromValue(const rapidjson::Value&
     return EffectTypeAllow; // Basically critical fail
 }
 
-EmptyResult::~EmptyResult()
+EmptyResponse::~EmptyResponse()
 {
 
 }
 
-void EmptyResult::writeJSON(PFStringJsonWriter& writer)
+void EmptyResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.EndObject();
 }
 
-bool EmptyResult::readFromValue(const rapidjson::Value& obj)
+bool EmptyResponse::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
-}
-void PlayFab::AdminModels::writeEntityTypesEnumJSON(EntityTypes enumVal, PFStringJsonWriter& writer)
-{
-    switch (enumVal)
-    {
-    case EntityTypestitle: writer.String("title"); break;
-    case EntityTypesmaster_player_account: writer.String("master_player_account"); break;
-    case EntityTypestitle_player_account: writer.String("title_player_account"); break;
-    case EntityTypescharacter: writer.String("character"); break;
-    case EntityTypesgroup: writer.String("group"); break;
-    case EntityTypesservice: writer.String("service"); break;
-
-    }
-}
-
-EntityTypes PlayFab::AdminModels::readEntityTypesFromValue(const rapidjson::Value& obj)
-{
-    static std::map<std::string, EntityTypes> _EntityTypesMap;
-    if (_EntityTypesMap.size() == 0)
-    {
-        // Auto-generate the map on the first use
-        _EntityTypesMap["title"] = EntityTypestitle;
-        _EntityTypesMap["master_player_account"] = EntityTypesmaster_player_account;
-        _EntityTypesMap["title_player_account"] = EntityTypestitle_player_account;
-        _EntityTypesMap["character"] = EntityTypescharacter;
-        _EntityTypesMap["group"] = EntityTypesgroup;
-        _EntityTypesMap["service"] = EntityTypesservice;
-
-    }
-
-    auto output = _EntityTypesMap.find(obj.GetString());
-    if (output != _EntityTypesMap.end())
-        return output->second;
-
-    return EntityTypestitle; // Basically critical fail
 }
 
 EntityKey::~EntityKey()
@@ -2937,8 +2902,7 @@ void EntityKey::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("Id"); writer.String(Id.c_str());
-    if (Type.notNull()) { writer.String("Type"); writeEntityTypesEnumJSON(Type, writer); }
-    if (TypeString.length() > 0) { writer.String("TypeString"); writer.String(TypeString.c_str()); }
+    if (Type.length() > 0) { writer.String("Type"); writer.String(Type.c_str()); }
     writer.EndObject();
 }
 
@@ -2947,9 +2911,7 @@ bool EntityKey::readFromValue(const rapidjson::Value& obj)
     const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
     if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
     const Value::ConstMemberIterator Type_member = obj.FindMember("Type");
-    if (Type_member != obj.MemberEnd() && !Type_member->value.IsNull()) Type = readEntityTypesFromValue(Type_member->value);
-    const Value::ConstMemberIterator TypeString_member = obj.FindMember("TypeString");
-    if (TypeString_member != obj.MemberEnd() && !TypeString_member->value.IsNull()) TypeString = TypeString_member->value.GetString();
+    if (Type_member != obj.MemberEnd() && !Type_member->value.IsNull()) Type = Type_member->value.GetString();
 
     return true;
 }
@@ -3395,16 +3357,16 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesNoValidCertificateForAad: writer.String("NoValidCertificateForAad"); break;
     case GenericErrorCodesInvalidCertificateForAad: writer.String("InvalidCertificateForAad"); break;
     case GenericErrorCodesDuplicateDropTableId: writer.String("DuplicateDropTableId"); break;
-    case GenericErrorCodesGameServerOk: writer.String("GameServerOk"); break;
-    case GenericErrorCodesGameServerAccepted: writer.String("GameServerAccepted"); break;
-    case GenericErrorCodesGameServerNoContent: writer.String("GameServerNoContent"); break;
-    case GenericErrorCodesGameServerBadRequest: writer.String("GameServerBadRequest"); break;
-    case GenericErrorCodesGameServerUnauthorized: writer.String("GameServerUnauthorized"); break;
-    case GenericErrorCodesGameServerForbidden: writer.String("GameServerForbidden"); break;
-    case GenericErrorCodesGameServerNotFound: writer.String("GameServerNotFound"); break;
-    case GenericErrorCodesGameServerConflict: writer.String("GameServerConflict"); break;
-    case GenericErrorCodesGameServerInternalServerError: writer.String("GameServerInternalServerError"); break;
-    case GenericErrorCodesGameServerServiceUnavailable: writer.String("GameServerServiceUnavailable"); break;
+    case GenericErrorCodesMultiplayerServerError: writer.String("MultiplayerServerError"); break;
+    case GenericErrorCodesMultiplayerServerTooManyRequests: writer.String("MultiplayerServerTooManyRequests"); break;
+    case GenericErrorCodesMultiplayerServerNoContent: writer.String("MultiplayerServerNoContent"); break;
+    case GenericErrorCodesMultiplayerServerBadRequest: writer.String("MultiplayerServerBadRequest"); break;
+    case GenericErrorCodesMultiplayerServerUnauthorized: writer.String("MultiplayerServerUnauthorized"); break;
+    case GenericErrorCodesMultiplayerServerForbidden: writer.String("MultiplayerServerForbidden"); break;
+    case GenericErrorCodesMultiplayerServerNotFound: writer.String("MultiplayerServerNotFound"); break;
+    case GenericErrorCodesMultiplayerServerConflict: writer.String("MultiplayerServerConflict"); break;
+    case GenericErrorCodesMultiplayerServerInternalServerError: writer.String("MultiplayerServerInternalServerError"); break;
+    case GenericErrorCodesMultiplayerServerUnavailable: writer.String("MultiplayerServerUnavailable"); break;
     case GenericErrorCodesExplicitContentDetected: writer.String("ExplicitContentDetected"); break;
     case GenericErrorCodesPIIContentDetected: writer.String("PIIContentDetected"); break;
     case GenericErrorCodesInvalidScheduledTaskParameter: writer.String("InvalidScheduledTaskParameter"); break;
@@ -3828,16 +3790,16 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["NoValidCertificateForAad"] = GenericErrorCodesNoValidCertificateForAad;
         _GenericErrorCodesMap["InvalidCertificateForAad"] = GenericErrorCodesInvalidCertificateForAad;
         _GenericErrorCodesMap["DuplicateDropTableId"] = GenericErrorCodesDuplicateDropTableId;
-        _GenericErrorCodesMap["GameServerOk"] = GenericErrorCodesGameServerOk;
-        _GenericErrorCodesMap["GameServerAccepted"] = GenericErrorCodesGameServerAccepted;
-        _GenericErrorCodesMap["GameServerNoContent"] = GenericErrorCodesGameServerNoContent;
-        _GenericErrorCodesMap["GameServerBadRequest"] = GenericErrorCodesGameServerBadRequest;
-        _GenericErrorCodesMap["GameServerUnauthorized"] = GenericErrorCodesGameServerUnauthorized;
-        _GenericErrorCodesMap["GameServerForbidden"] = GenericErrorCodesGameServerForbidden;
-        _GenericErrorCodesMap["GameServerNotFound"] = GenericErrorCodesGameServerNotFound;
-        _GenericErrorCodesMap["GameServerConflict"] = GenericErrorCodesGameServerConflict;
-        _GenericErrorCodesMap["GameServerInternalServerError"] = GenericErrorCodesGameServerInternalServerError;
-        _GenericErrorCodesMap["GameServerServiceUnavailable"] = GenericErrorCodesGameServerServiceUnavailable;
+        _GenericErrorCodesMap["MultiplayerServerError"] = GenericErrorCodesMultiplayerServerError;
+        _GenericErrorCodesMap["MultiplayerServerTooManyRequests"] = GenericErrorCodesMultiplayerServerTooManyRequests;
+        _GenericErrorCodesMap["MultiplayerServerNoContent"] = GenericErrorCodesMultiplayerServerNoContent;
+        _GenericErrorCodesMap["MultiplayerServerBadRequest"] = GenericErrorCodesMultiplayerServerBadRequest;
+        _GenericErrorCodesMap["MultiplayerServerUnauthorized"] = GenericErrorCodesMultiplayerServerUnauthorized;
+        _GenericErrorCodesMap["MultiplayerServerForbidden"] = GenericErrorCodesMultiplayerServerForbidden;
+        _GenericErrorCodesMap["MultiplayerServerNotFound"] = GenericErrorCodesMultiplayerServerNotFound;
+        _GenericErrorCodesMap["MultiplayerServerConflict"] = GenericErrorCodesMultiplayerServerConflict;
+        _GenericErrorCodesMap["MultiplayerServerInternalServerError"] = GenericErrorCodesMultiplayerServerInternalServerError;
+        _GenericErrorCodesMap["MultiplayerServerUnavailable"] = GenericErrorCodesMultiplayerServerUnavailable;
         _GenericErrorCodesMap["ExplicitContentDetected"] = GenericErrorCodesExplicitContentDetected;
         _GenericErrorCodesMap["PIIContentDetected"] = GenericErrorCodesPIIContentDetected;
         _GenericErrorCodesMap["InvalidScheduledTaskParameter"] = GenericErrorCodesInvalidScheduledTaskParameter;
@@ -4680,6 +4642,7 @@ void PlayFab::AdminModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProvi
     case LoginIdentityProviderCustomServer: writer.String("CustomServer"); break;
     case LoginIdentityProviderNintendoSwitch: writer.String("NintendoSwitch"); break;
     case LoginIdentityProviderFacebookInstantGames: writer.String("FacebookInstantGames"); break;
+    case LoginIdentityProviderOpenIdConnect: writer.String("OpenIdConnect"); break;
 
     }
 }
@@ -4708,6 +4671,7 @@ LoginIdentityProvider PlayFab::AdminModels::readLoginIdentityProviderFromValue(c
         _LoginIdentityProviderMap["CustomServer"] = LoginIdentityProviderCustomServer;
         _LoginIdentityProviderMap["NintendoSwitch"] = LoginIdentityProviderNintendoSwitch;
         _LoginIdentityProviderMap["FacebookInstantGames"] = LoginIdentityProviderFacebookInstantGames;
+        _LoginIdentityProviderMap["OpenIdConnect"] = LoginIdentityProviderOpenIdConnect;
 
     }
 
@@ -7728,6 +7692,26 @@ bool UserFacebookInfo::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UserFacebookInstantGamesIdInfo::~UserFacebookInstantGamesIdInfo()
+{
+
+}
+
+void UserFacebookInstantGamesIdInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (FacebookInstantGamesId.length() > 0) { writer.String("FacebookInstantGamesId"); writer.String(FacebookInstantGamesId.c_str()); }
+    writer.EndObject();
+}
+
+bool UserFacebookInstantGamesIdInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator FacebookInstantGamesId_member = obj.FindMember("FacebookInstantGamesId");
+    if (FacebookInstantGamesId_member != obj.MemberEnd() && !FacebookInstantGamesId_member->value.IsNull()) FacebookInstantGamesId = FacebookInstantGamesId_member->value.GetString();
+
+    return true;
+}
+
 UserGameCenterInfo::~UserGameCenterInfo()
 {
 
@@ -7816,6 +7800,52 @@ bool UserKongregateInfo::readFromValue(const rapidjson::Value& obj)
     if (KongregateId_member != obj.MemberEnd() && !KongregateId_member->value.IsNull()) KongregateId = KongregateId_member->value.GetString();
     const Value::ConstMemberIterator KongregateName_member = obj.FindMember("KongregateName");
     if (KongregateName_member != obj.MemberEnd() && !KongregateName_member->value.IsNull()) KongregateName = KongregateName_member->value.GetString();
+
+    return true;
+}
+
+UserNintendoSwitchDeviceIdInfo::~UserNintendoSwitchDeviceIdInfo()
+{
+
+}
+
+void UserNintendoSwitchDeviceIdInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (NintendoSwitchDeviceId.length() > 0) { writer.String("NintendoSwitchDeviceId"); writer.String(NintendoSwitchDeviceId.c_str()); }
+    writer.EndObject();
+}
+
+bool UserNintendoSwitchDeviceIdInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator NintendoSwitchDeviceId_member = obj.FindMember("NintendoSwitchDeviceId");
+    if (NintendoSwitchDeviceId_member != obj.MemberEnd() && !NintendoSwitchDeviceId_member->value.IsNull()) NintendoSwitchDeviceId = NintendoSwitchDeviceId_member->value.GetString();
+
+    return true;
+}
+
+UserOpenIdInfo::~UserOpenIdInfo()
+{
+
+}
+
+void UserOpenIdInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (ConnectionId.length() > 0) { writer.String("ConnectionId"); writer.String(ConnectionId.c_str()); }
+    if (Issuer.length() > 0) { writer.String("Issuer"); writer.String(Issuer.c_str()); }
+    if (Subject.length() > 0) { writer.String("Subject"); writer.String(Subject.c_str()); }
+    writer.EndObject();
+}
+
+bool UserOpenIdInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ConnectionId_member = obj.FindMember("ConnectionId");
+    if (ConnectionId_member != obj.MemberEnd() && !ConnectionId_member->value.IsNull()) ConnectionId = ConnectionId_member->value.GetString();
+    const Value::ConstMemberIterator Issuer_member = obj.FindMember("Issuer");
+    if (Issuer_member != obj.MemberEnd() && !Issuer_member->value.IsNull()) Issuer = Issuer_member->value.GetString();
+    const Value::ConstMemberIterator Subject_member = obj.FindMember("Subject");
+    if (Subject_member != obj.MemberEnd() && !Subject_member->value.IsNull()) Subject = Subject_member->value.GetString();
 
     return true;
 }
@@ -7949,6 +7979,7 @@ void PlayFab::AdminModels::writeUserOriginationEnumJSON(UserOrigination enumVal,
     case UserOriginationServerCustomId: writer.String("ServerCustomId"); break;
     case UserOriginationNintendoSwitchDeviceId: writer.String("NintendoSwitchDeviceId"); break;
     case UserOriginationFacebookInstantGamesId: writer.String("FacebookInstantGamesId"); break;
+    case UserOriginationOpenIdConnect: writer.String("OpenIdConnect"); break;
 
     }
 }
@@ -7980,6 +8011,7 @@ UserOrigination PlayFab::AdminModels::readUserOriginationFromValue(const rapidjs
         _UserOriginationMap["ServerCustomId"] = UserOriginationServerCustomId;
         _UserOriginationMap["NintendoSwitchDeviceId"] = UserOriginationNintendoSwitchDeviceId;
         _UserOriginationMap["FacebookInstantGamesId"] = UserOriginationFacebookInstantGamesId;
+        _UserOriginationMap["OpenIdConnect"] = UserOriginationOpenIdConnect;
 
     }
 
@@ -8055,6 +8087,29 @@ bool UserTwitchInfo::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UserWindowsHelloInfo::~UserWindowsHelloInfo()
+{
+
+}
+
+void UserWindowsHelloInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (WindowsHelloDeviceName.length() > 0) { writer.String("WindowsHelloDeviceName"); writer.String(WindowsHelloDeviceName.c_str()); }
+    if (WindowsHelloPublicKeyHash.length() > 0) { writer.String("WindowsHelloPublicKeyHash"); writer.String(WindowsHelloPublicKeyHash.c_str()); }
+    writer.EndObject();
+}
+
+bool UserWindowsHelloInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator WindowsHelloDeviceName_member = obj.FindMember("WindowsHelloDeviceName");
+    if (WindowsHelloDeviceName_member != obj.MemberEnd() && !WindowsHelloDeviceName_member->value.IsNull()) WindowsHelloDeviceName = WindowsHelloDeviceName_member->value.GetString();
+    const Value::ConstMemberIterator WindowsHelloPublicKeyHash_member = obj.FindMember("WindowsHelloPublicKeyHash");
+    if (WindowsHelloPublicKeyHash_member != obj.MemberEnd() && !WindowsHelloPublicKeyHash_member->value.IsNull()) WindowsHelloPublicKeyHash = WindowsHelloPublicKeyHash_member->value.GetString();
+
+    return true;
+}
+
 UserXboxInfo::~UserXboxInfo()
 {
 
@@ -8080,15 +8135,18 @@ UserAccountInfo::~UserAccountInfo()
     if (AndroidDeviceInfo != NULL) delete AndroidDeviceInfo;
     if (CustomIdInfo != NULL) delete CustomIdInfo;
     if (FacebookInfo != NULL) delete FacebookInfo;
+    if (FacebookInstantGamesIdInfo != NULL) delete FacebookInstantGamesIdInfo;
     if (GameCenterInfo != NULL) delete GameCenterInfo;
     if (GoogleInfo != NULL) delete GoogleInfo;
     if (IosDeviceInfo != NULL) delete IosDeviceInfo;
     if (KongregateInfo != NULL) delete KongregateInfo;
+    if (NintendoSwitchDeviceIdInfo != NULL) delete NintendoSwitchDeviceIdInfo;
     if (PrivateInfo != NULL) delete PrivateInfo;
     if (PsnInfo != NULL) delete PsnInfo;
     if (SteamInfo != NULL) delete SteamInfo;
     if (TitleInfo != NULL) delete TitleInfo;
     if (TwitchInfo != NULL) delete TwitchInfo;
+    if (WindowsHelloInfo != NULL) delete WindowsHelloInfo;
     if (XboxInfo != NULL) delete XboxInfo;
 
 }
@@ -8100,10 +8158,20 @@ void UserAccountInfo::writeJSON(PFStringJsonWriter& writer)
     writer.String("Created"); writeDatetime(Created, writer);
     if (CustomIdInfo != NULL) { writer.String("CustomIdInfo"); CustomIdInfo->writeJSON(writer); }
     if (FacebookInfo != NULL) { writer.String("FacebookInfo"); FacebookInfo->writeJSON(writer); }
+    if (FacebookInstantGamesIdInfo != NULL) { writer.String("FacebookInstantGamesIdInfo"); FacebookInstantGamesIdInfo->writeJSON(writer); }
     if (GameCenterInfo != NULL) { writer.String("GameCenterInfo"); GameCenterInfo->writeJSON(writer); }
     if (GoogleInfo != NULL) { writer.String("GoogleInfo"); GoogleInfo->writeJSON(writer); }
     if (IosDeviceInfo != NULL) { writer.String("IosDeviceInfo"); IosDeviceInfo->writeJSON(writer); }
     if (KongregateInfo != NULL) { writer.String("KongregateInfo"); KongregateInfo->writeJSON(writer); }
+    if (NintendoSwitchDeviceIdInfo != NULL) { writer.String("NintendoSwitchDeviceIdInfo"); NintendoSwitchDeviceIdInfo->writeJSON(writer); }
+    if (!OpenIdInfo.empty()) {
+        writer.String("OpenIdInfo");
+        writer.StartArray();
+        for (std::list<UserOpenIdInfo>::iterator iter = OpenIdInfo.begin(); iter != OpenIdInfo.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (PrivateInfo != NULL) { writer.String("PrivateInfo"); PrivateInfo->writeJSON(writer); }
     if (PsnInfo != NULL) { writer.String("PsnInfo"); PsnInfo->writeJSON(writer); }
@@ -8111,6 +8179,7 @@ void UserAccountInfo::writeJSON(PFStringJsonWriter& writer)
     if (TitleInfo != NULL) { writer.String("TitleInfo"); TitleInfo->writeJSON(writer); }
     if (TwitchInfo != NULL) { writer.String("TwitchInfo"); TwitchInfo->writeJSON(writer); }
     if (Username.length() > 0) { writer.String("Username"); writer.String(Username.c_str()); }
+    if (WindowsHelloInfo != NULL) { writer.String("WindowsHelloInfo"); WindowsHelloInfo->writeJSON(writer); }
     if (XboxInfo != NULL) { writer.String("XboxInfo"); XboxInfo->writeJSON(writer); }
     writer.EndObject();
 }
@@ -8125,6 +8194,8 @@ bool UserAccountInfo::readFromValue(const rapidjson::Value& obj)
     if (CustomIdInfo_member != obj.MemberEnd() && !CustomIdInfo_member->value.IsNull()) CustomIdInfo = new UserCustomIdInfo(CustomIdInfo_member->value);
     const Value::ConstMemberIterator FacebookInfo_member = obj.FindMember("FacebookInfo");
     if (FacebookInfo_member != obj.MemberEnd() && !FacebookInfo_member->value.IsNull()) FacebookInfo = new UserFacebookInfo(FacebookInfo_member->value);
+    const Value::ConstMemberIterator FacebookInstantGamesIdInfo_member = obj.FindMember("FacebookInstantGamesIdInfo");
+    if (FacebookInstantGamesIdInfo_member != obj.MemberEnd() && !FacebookInstantGamesIdInfo_member->value.IsNull()) FacebookInstantGamesIdInfo = new UserFacebookInstantGamesIdInfo(FacebookInstantGamesIdInfo_member->value);
     const Value::ConstMemberIterator GameCenterInfo_member = obj.FindMember("GameCenterInfo");
     if (GameCenterInfo_member != obj.MemberEnd() && !GameCenterInfo_member->value.IsNull()) GameCenterInfo = new UserGameCenterInfo(GameCenterInfo_member->value);
     const Value::ConstMemberIterator GoogleInfo_member = obj.FindMember("GoogleInfo");
@@ -8133,6 +8204,15 @@ bool UserAccountInfo::readFromValue(const rapidjson::Value& obj)
     if (IosDeviceInfo_member != obj.MemberEnd() && !IosDeviceInfo_member->value.IsNull()) IosDeviceInfo = new UserIosDeviceInfo(IosDeviceInfo_member->value);
     const Value::ConstMemberIterator KongregateInfo_member = obj.FindMember("KongregateInfo");
     if (KongregateInfo_member != obj.MemberEnd() && !KongregateInfo_member->value.IsNull()) KongregateInfo = new UserKongregateInfo(KongregateInfo_member->value);
+    const Value::ConstMemberIterator NintendoSwitchDeviceIdInfo_member = obj.FindMember("NintendoSwitchDeviceIdInfo");
+    if (NintendoSwitchDeviceIdInfo_member != obj.MemberEnd() && !NintendoSwitchDeviceIdInfo_member->value.IsNull()) NintendoSwitchDeviceIdInfo = new UserNintendoSwitchDeviceIdInfo(NintendoSwitchDeviceIdInfo_member->value);
+    const Value::ConstMemberIterator OpenIdInfo_member = obj.FindMember("OpenIdInfo");
+    if (OpenIdInfo_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = OpenIdInfo_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            OpenIdInfo.push_back(UserOpenIdInfo(memberList[i]));
+        }
+    }
     const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
     if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
     const Value::ConstMemberIterator PrivateInfo_member = obj.FindMember("PrivateInfo");
@@ -8147,6 +8227,8 @@ bool UserAccountInfo::readFromValue(const rapidjson::Value& obj)
     if (TwitchInfo_member != obj.MemberEnd() && !TwitchInfo_member->value.IsNull()) TwitchInfo = new UserTwitchInfo(TwitchInfo_member->value);
     const Value::ConstMemberIterator Username_member = obj.FindMember("Username");
     if (Username_member != obj.MemberEnd() && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
+    const Value::ConstMemberIterator WindowsHelloInfo_member = obj.FindMember("WindowsHelloInfo");
+    if (WindowsHelloInfo_member != obj.MemberEnd() && !WindowsHelloInfo_member->value.IsNull()) WindowsHelloInfo = new UserWindowsHelloInfo(WindowsHelloInfo_member->value);
     const Value::ConstMemberIterator XboxInfo_member = obj.FindMember("XboxInfo");
     if (XboxInfo_member != obj.MemberEnd() && !XboxInfo_member->value.IsNull()) XboxInfo = new UserXboxInfo(XboxInfo_member->value);
 

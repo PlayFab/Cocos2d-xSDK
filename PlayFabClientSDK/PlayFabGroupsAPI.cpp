@@ -12,7 +12,7 @@ PlayFabGroupsAPI::PlayFabGroupsAPI() {}
 
 void PlayFabGroupsAPI::AcceptGroupApplication(
     AcceptGroupApplicationRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -23,7 +23,7 @@ void PlayFabGroupsAPI::AcceptGroupApplication(
     httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -35,14 +35,14 @@ void PlayFabGroupsAPI::AcceptGroupApplication(
 
 void PlayFabGroupsAPI::OnAcceptGroupApplicationResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -58,7 +58,7 @@ void PlayFabGroupsAPI::OnAcceptGroupApplicationResult(int httpStatus, HttpReques
 
 void PlayFabGroupsAPI::AcceptGroupInvitation(
     AcceptGroupInvitationRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -69,7 +69,7 @@ void PlayFabGroupsAPI::AcceptGroupInvitation(
     httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -81,14 +81,14 @@ void PlayFabGroupsAPI::AcceptGroupInvitation(
 
 void PlayFabGroupsAPI::OnAcceptGroupInvitationResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -104,7 +104,7 @@ void PlayFabGroupsAPI::OnAcceptGroupInvitationResult(int httpStatus, HttpRequest
 
 void PlayFabGroupsAPI::AddMembers(
     AddMembersRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -115,7 +115,7 @@ void PlayFabGroupsAPI::AddMembers(
     httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -127,14 +127,14 @@ void PlayFabGroupsAPI::AddMembers(
 
 void PlayFabGroupsAPI::OnAddMembersResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -196,7 +196,7 @@ void PlayFabGroupsAPI::OnApplyToGroupResult(int httpStatus, HttpRequest* request
 
 void PlayFabGroupsAPI::BlockEntity(
     BlockEntityRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -207,7 +207,7 @@ void PlayFabGroupsAPI::BlockEntity(
     httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -219,14 +219,14 @@ void PlayFabGroupsAPI::BlockEntity(
 
 void PlayFabGroupsAPI::OnBlockEntityResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -242,7 +242,7 @@ void PlayFabGroupsAPI::OnBlockEntityResult(int httpStatus, HttpRequest* request,
 
 void PlayFabGroupsAPI::ChangeMemberRole(
     ChangeMemberRoleRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -253,7 +253,7 @@ void PlayFabGroupsAPI::ChangeMemberRole(
     httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -265,14 +265,14 @@ void PlayFabGroupsAPI::ChangeMemberRole(
 
 void PlayFabGroupsAPI::OnChangeMemberRoleResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -380,7 +380,7 @@ void PlayFabGroupsAPI::OnCreateRoleResult(int httpStatus, HttpRequest* request, 
 
 void PlayFabGroupsAPI::DeleteGroup(
     DeleteGroupRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -391,7 +391,7 @@ void PlayFabGroupsAPI::DeleteGroup(
     httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -403,14 +403,14 @@ void PlayFabGroupsAPI::DeleteGroup(
 
 void PlayFabGroupsAPI::OnDeleteGroupResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -426,7 +426,7 @@ void PlayFabGroupsAPI::OnDeleteGroupResult(int httpStatus, HttpRequest* request,
 
 void PlayFabGroupsAPI::DeleteRole(
     DeleteRoleRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -437,7 +437,7 @@ void PlayFabGroupsAPI::DeleteRole(
     httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -449,14 +449,14 @@ void PlayFabGroupsAPI::DeleteRole(
 
 void PlayFabGroupsAPI::OnDeleteRoleResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -886,7 +886,7 @@ void PlayFabGroupsAPI::OnListMembershipOpportunitiesResult(int httpStatus, HttpR
 
 void PlayFabGroupsAPI::RemoveGroupApplication(
     RemoveGroupApplicationRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -897,7 +897,7 @@ void PlayFabGroupsAPI::RemoveGroupApplication(
     httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -909,14 +909,14 @@ void PlayFabGroupsAPI::RemoveGroupApplication(
 
 void PlayFabGroupsAPI::OnRemoveGroupApplicationResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -932,7 +932,7 @@ void PlayFabGroupsAPI::OnRemoveGroupApplicationResult(int httpStatus, HttpReques
 
 void PlayFabGroupsAPI::RemoveGroupInvitation(
     RemoveGroupInvitationRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -943,7 +943,7 @@ void PlayFabGroupsAPI::RemoveGroupInvitation(
     httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -955,14 +955,14 @@ void PlayFabGroupsAPI::RemoveGroupInvitation(
 
 void PlayFabGroupsAPI::OnRemoveGroupInvitationResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -978,7 +978,7 @@ void PlayFabGroupsAPI::OnRemoveGroupInvitationResult(int httpStatus, HttpRequest
 
 void PlayFabGroupsAPI::RemoveMembers(
     RemoveMembersRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -989,7 +989,7 @@ void PlayFabGroupsAPI::RemoveMembers(
     httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1001,14 +1001,14 @@ void PlayFabGroupsAPI::RemoveMembers(
 
 void PlayFabGroupsAPI::OnRemoveMembersResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1024,7 +1024,7 @@ void PlayFabGroupsAPI::OnRemoveMembersResult(int httpStatus, HttpRequest* reques
 
 void PlayFabGroupsAPI::UnblockEntity(
     UnblockEntityRequest& request,
-    ProcessApiCallback<EmptyResult> callback,
+    ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
@@ -1035,7 +1035,7 @@ void PlayFabGroupsAPI::UnblockEntity(
     httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
@@ -1047,14 +1047,14 @@ void PlayFabGroupsAPI::UnblockEntity(
 
 void PlayFabGroupsAPI::OnUnblockEntityResult(int httpStatus, HttpRequest* request, void* userData)
 {
-    EmptyResult outResult;
+    EmptyResponse outResult;
     PlayFabError errorResult;
 
     if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
     {
         if (request->GetResultCallback() != nullptr)
         {
-            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
