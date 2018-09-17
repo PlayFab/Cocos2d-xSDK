@@ -2770,6 +2770,43 @@ bool DeleteCharacterFromUserResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeletePlayerRequest::~DeletePlayerRequest()
+{
+
+}
+
+void DeletePlayerRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.EndObject();
+}
+
+bool DeletePlayerRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
+DeletePlayerResult::~DeletePlayerResult()
+{
+
+}
+
+void DeletePlayerResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool DeletePlayerResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 DeleteSharedGroupRequest::~DeleteSharedGroupRequest()
 {
 
