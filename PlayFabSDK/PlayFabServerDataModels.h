@@ -2235,6 +2235,53 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct DeletePlayerRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+
+            DeletePlayerRequest() :
+                PlayFabBaseModel(),
+                PlayFabId()
+            {}
+
+            DeletePlayerRequest(const DeletePlayerRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            DeletePlayerRequest(const rapidjson::Value& obj) : DeletePlayerRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeletePlayerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeletePlayerResult : public PlayFabBaseModel
+        {
+
+            DeletePlayerResult() :
+                PlayFabBaseModel()
+            {}
+
+            DeletePlayerResult(const DeletePlayerResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            DeletePlayerResult(const rapidjson::Value& obj) : DeletePlayerResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeletePlayerResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct DeleteSharedGroupRequest : public PlayFabBaseModel
         {
             std::string SharedGroupId;
@@ -2260,6 +2307,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct DeleteUsersRequest : public PlayFabBaseModel
         {
             std::list<std::string> PlayFabIds;
@@ -2288,6 +2336,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct DeleteUsersResult : public PlayFabBaseModel
         {
 
