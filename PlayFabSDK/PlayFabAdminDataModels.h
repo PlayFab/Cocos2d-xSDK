@@ -2069,15 +2069,18 @@ namespace PlayFab
 
         struct DeleteMasterPlayerAccountRequest : public PlayFabBaseModel
         {
+            std::string MetaData;
             std::string PlayFabId;
 
             DeleteMasterPlayerAccountRequest() :
                 PlayFabBaseModel(),
+                MetaData(),
                 PlayFabId()
             {}
 
             DeleteMasterPlayerAccountRequest(const DeleteMasterPlayerAccountRequest& src) :
                 PlayFabBaseModel(),
+                MetaData(src.MetaData),
                 PlayFabId(src.PlayFabId)
             {}
 
