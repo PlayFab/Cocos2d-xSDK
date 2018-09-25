@@ -2687,12 +2687,15 @@ DeleteMasterPlayerAccountRequest::~DeleteMasterPlayerAccountRequest()
 void DeleteMasterPlayerAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (MetaData.length() > 0) { writer.String("MetaData"); writer.String(MetaData.c_str()); }
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     writer.EndObject();
 }
 
 bool DeleteMasterPlayerAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator MetaData_member = obj.FindMember("MetaData");
+    if (MetaData_member != obj.MemberEnd() && !MetaData_member->value.IsNull()) MetaData = MetaData_member->value.GetString();
     const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
     if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
 
