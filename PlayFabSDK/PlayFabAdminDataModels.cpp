@@ -56,7 +56,7 @@ void PlayFab::AdminModels::writeTaskInstanceStatusEnumJSON(TaskInstanceStatus en
     case TaskInstanceStatusInProgress: writer.String("InProgress"); break;
     case TaskInstanceStatusFailed: writer.String("Failed"); break;
     case TaskInstanceStatusAborted: writer.String("Aborted"); break;
-    case TaskInstanceStatusPending: writer.String("Pending"); break;
+    case TaskInstanceStatusStalled: writer.String("Stalled"); break;
 
     }
 }
@@ -72,7 +72,7 @@ TaskInstanceStatus PlayFab::AdminModels::readTaskInstanceStatusFromValue(const r
         _TaskInstanceStatusMap["InProgress"] = TaskInstanceStatusInProgress;
         _TaskInstanceStatusMap["Failed"] = TaskInstanceStatusFailed;
         _TaskInstanceStatusMap["Aborted"] = TaskInstanceStatusAborted;
-        _TaskInstanceStatusMap["Pending"] = TaskInstanceStatusPending;
+        _TaskInstanceStatusMap["Stalled"] = TaskInstanceStatusStalled;
 
     }
 
@@ -612,60 +612,6 @@ bool ApiCondition::readFromValue(const rapidjson::Value& obj)
     if (HasSignatureOrEncryption_member != obj.MemberEnd() && !HasSignatureOrEncryption_member->value.IsNull()) HasSignatureOrEncryption = readConditionalsFromValue(HasSignatureOrEncryption_member->value);
 
     return true;
-}
-void PlayFab::AdminModels::writeAttributeNotSpecifiedBehaviorEnumJSON(AttributeNotSpecifiedBehavior enumVal, PFStringJsonWriter& writer)
-{
-    switch (enumVal)
-    {
-    case AttributeNotSpecifiedBehaviorUseDefault: writer.String("UseDefault"); break;
-    case AttributeNotSpecifiedBehaviorMatchAny: writer.String("MatchAny"); break;
-
-    }
-}
-
-AttributeNotSpecifiedBehavior PlayFab::AdminModels::readAttributeNotSpecifiedBehaviorFromValue(const rapidjson::Value& obj)
-{
-    static std::map<std::string, AttributeNotSpecifiedBehavior> _AttributeNotSpecifiedBehaviorMap;
-    if (_AttributeNotSpecifiedBehaviorMap.size() == 0)
-    {
-        // Auto-generate the map on the first use
-        _AttributeNotSpecifiedBehaviorMap["UseDefault"] = AttributeNotSpecifiedBehaviorUseDefault;
-        _AttributeNotSpecifiedBehaviorMap["MatchAny"] = AttributeNotSpecifiedBehaviorMatchAny;
-
-    }
-
-    auto output = _AttributeNotSpecifiedBehaviorMap.find(obj.GetString());
-    if (output != _AttributeNotSpecifiedBehaviorMap.end())
-        return output->second;
-
-    return AttributeNotSpecifiedBehaviorUseDefault; // Basically critical fail
-}
-void PlayFab::AdminModels::writeAttributeSourceEnumJSON(AttributeSource enumVal, PFStringJsonWriter& writer)
-{
-    switch (enumVal)
-    {
-    case AttributeSourceUser: writer.String("User"); break;
-    case AttributeSourcePlayerEntity: writer.String("PlayerEntity"); break;
-
-    }
-}
-
-AttributeSource PlayFab::AdminModels::readAttributeSourceFromValue(const rapidjson::Value& obj)
-{
-    static std::map<std::string, AttributeSource> _AttributeSourceMap;
-    if (_AttributeSourceMap.size() == 0)
-    {
-        // Auto-generate the map on the first use
-        _AttributeSourceMap["User"] = AttributeSourceUser;
-        _AttributeSourceMap["PlayerEntity"] = AttributeSourcePlayerEntity;
-
-    }
-
-    auto output = _AttributeSourceMap.find(obj.GetString());
-    if (output != _AttributeSourceMap.end())
-        return output->second;
-
-    return AttributeSourceUser; // Basically critical fail
 }
 void PlayFab::AdminModels::writeAuthTokenTypeEnumJSON(AuthTokenType enumVal, PFStringJsonWriter& writer)
 {
@@ -4494,179 +4440,6 @@ bool GetMatchmakerGameModesResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-GetMatchmakingQueueRequest::~GetMatchmakingQueueRequest()
-{
-
-}
-
-void GetMatchmakingQueueRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (QueueName.length() > 0) { writer.String("QueueName"); writer.String(QueueName.c_str()); }
-    writer.EndObject();
-}
-
-bool GetMatchmakingQueueRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
-    if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
-
-    return true;
-}
-
-QueueRuleAttribute::~QueueRuleAttribute()
-{
-
-}
-
-void QueueRuleAttribute::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.String("Path"); writer.String(Path.c_str());
-    writer.String("Source"); writeAttributeSourceEnumJSON(Source, writer);
-    writer.EndObject();
-}
-
-bool QueueRuleAttribute::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Path_member = obj.FindMember("Path");
-    if (Path_member != obj.MemberEnd() && !Path_member->value.IsNull()) Path = Path_member->value.GetString();
-    const Value::ConstMemberIterator Source_member = obj.FindMember("Source");
-    if (Source_member != obj.MemberEnd() && !Source_member->value.IsNull()) Source = readAttributeSourceFromValue(Source_member->value);
-
-    return true;
-}
-void PlayFab::AdminModels::writeRuleTypeEnumJSON(RuleType enumVal, PFStringJsonWriter& writer)
-{
-    switch (enumVal)
-    {
-    case RuleTypeUnknown: writer.String("Unknown"); break;
-    case RuleTypeDifferenceRule: writer.String("DifferenceRule"); break;
-    case RuleTypeStringEqualityRule: writer.String("StringEqualityRule"); break;
-    case RuleTypeMatchTotalRule: writer.String("MatchTotalRule"); break;
-    case RuleTypeSetIntersectionRule: writer.String("SetIntersectionRule"); break;
-
-    }
-}
-
-RuleType PlayFab::AdminModels::readRuleTypeFromValue(const rapidjson::Value& obj)
-{
-    static std::map<std::string, RuleType> _RuleTypeMap;
-    if (_RuleTypeMap.size() == 0)
-    {
-        // Auto-generate the map on the first use
-        _RuleTypeMap["Unknown"] = RuleTypeUnknown;
-        _RuleTypeMap["DifferenceRule"] = RuleTypeDifferenceRule;
-        _RuleTypeMap["StringEqualityRule"] = RuleTypeStringEqualityRule;
-        _RuleTypeMap["MatchTotalRule"] = RuleTypeMatchTotalRule;
-        _RuleTypeMap["SetIntersectionRule"] = RuleTypeSetIntersectionRule;
-
-    }
-
-    auto output = _RuleTypeMap.find(obj.GetString());
-    if (output != _RuleTypeMap.end())
-        return output->second;
-
-    return RuleTypeUnknown; // Basically critical fail
-}
-
-MatchmakingQueueRule::~MatchmakingQueueRule()
-{
-
-}
-
-void MatchmakingQueueRule::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.String("Attribute"); Attribute.writeJSON(writer);
-    if (pfAttributeNotSpecifiedBehavior.notNull()) { writer.String("AttributeNotSpecifiedBehavior"); writeAttributeNotSpecifiedBehaviorEnumJSON(pfAttributeNotSpecifiedBehavior, writer); }
-    writer.String("Name"); writer.String(Name.c_str());
-    if (SecondsUntilOptional.notNull()) { writer.String("SecondsUntilOptional"); writer.Uint(SecondsUntilOptional); }
-    writer.String("Type"); writeRuleTypeEnumJSON(Type, writer);
-    writer.String("Weight"); writer.Double(Weight);
-    writer.EndObject();
-}
-
-bool MatchmakingQueueRule::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Attribute_member = obj.FindMember("Attribute");
-    if (Attribute_member != obj.MemberEnd() && !Attribute_member->value.IsNull()) Attribute = QueueRuleAttribute(Attribute_member->value);
-    const Value::ConstMemberIterator AttributeNotSpecifiedBehavior_member = obj.FindMember("AttributeNotSpecifiedBehavior");
-    if (AttributeNotSpecifiedBehavior_member != obj.MemberEnd() && !AttributeNotSpecifiedBehavior_member->value.IsNull()) pfAttributeNotSpecifiedBehavior = readAttributeNotSpecifiedBehaviorFromValue(AttributeNotSpecifiedBehavior_member->value);
-    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
-    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-    const Value::ConstMemberIterator SecondsUntilOptional_member = obj.FindMember("SecondsUntilOptional");
-    if (SecondsUntilOptional_member != obj.MemberEnd() && !SecondsUntilOptional_member->value.IsNull()) SecondsUntilOptional = SecondsUntilOptional_member->value.GetUint();
-    const Value::ConstMemberIterator Type_member = obj.FindMember("Type");
-    if (Type_member != obj.MemberEnd() && !Type_member->value.IsNull()) Type = readRuleTypeFromValue(Type_member->value);
-    const Value::ConstMemberIterator Weight_member = obj.FindMember("Weight");
-    if (Weight_member != obj.MemberEnd() && !Weight_member->value.IsNull()) Weight = Weight_member->value.GetDouble();
-
-    return true;
-}
-
-MatchmakingQueueConfig::~MatchmakingQueueConfig()
-{
-
-}
-
-void MatchmakingQueueConfig::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.String("MaxMatchSize"); writer.Uint(MaxMatchSize);
-    writer.String("MinMatchSize"); writer.Uint(MinMatchSize);
-    writer.String("Name"); writer.String(Name.c_str());
-    if (!Rules.empty()) {
-        writer.String("Rules");
-        writer.StartArray();
-        for (std::list<MatchmakingQueueRule>::iterator iter = Rules.begin(); iter != Rules.end(); iter++) {
-            iter->writeJSON(writer);
-        }
-        writer.EndArray();
-    }
-    writer.EndObject();
-}
-
-bool MatchmakingQueueConfig::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator MaxMatchSize_member = obj.FindMember("MaxMatchSize");
-    if (MaxMatchSize_member != obj.MemberEnd() && !MaxMatchSize_member->value.IsNull()) MaxMatchSize = MaxMatchSize_member->value.GetUint();
-    const Value::ConstMemberIterator MinMatchSize_member = obj.FindMember("MinMatchSize");
-    if (MinMatchSize_member != obj.MemberEnd() && !MinMatchSize_member->value.IsNull()) MinMatchSize = MinMatchSize_member->value.GetUint();
-    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
-    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-    const Value::ConstMemberIterator Rules_member = obj.FindMember("Rules");
-    if (Rules_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Rules_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Rules.push_back(MatchmakingQueueRule(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-GetMatchmakingQueueResult::~GetMatchmakingQueueResult()
-{
-    if (MatchmakingQueue != NULL) delete MatchmakingQueue;
-
-}
-
-void GetMatchmakingQueueResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (MatchmakingQueue != NULL) { writer.String("MatchmakingQueue"); MatchmakingQueue->writeJSON(writer); }
-    writer.EndObject();
-}
-
-bool GetMatchmakingQueueResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator MatchmakingQueue_member = obj.FindMember("MatchmakingQueue");
-    if (MatchmakingQueue_member != obj.MemberEnd() && !MatchmakingQueue_member->value.IsNull()) MatchmakingQueue = new MatchmakingQueueConfig(MatchmakingQueue_member->value);
-
-    return true;
-}
-
 GetPlayedTitleListRequest::~GetPlayedTitleListRequest()
 {
 
@@ -7781,55 +7554,6 @@ bool ListBuildsResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-ListMatchmakingQueuesRequest::~ListMatchmakingQueuesRequest()
-{
-
-}
-
-void ListMatchmakingQueuesRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.EndObject();
-}
-
-bool ListMatchmakingQueuesRequest::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-ListMatchmakingQueuesResult::~ListMatchmakingQueuesResult()
-{
-
-}
-
-void ListMatchmakingQueuesResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (!MatchMakingQueues.empty()) {
-        writer.String("MatchMakingQueues");
-        writer.StartArray();
-        for (std::list<MatchmakingQueueConfig>::iterator iter = MatchMakingQueues.begin(); iter != MatchMakingQueues.end(); iter++) {
-            iter->writeJSON(writer);
-        }
-        writer.EndArray();
-    }
-    writer.EndObject();
-}
-
-bool ListMatchmakingQueuesResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator MatchMakingQueues_member = obj.FindMember("MatchMakingQueues");
-    if (MatchMakingQueues_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = MatchMakingQueues_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            MatchMakingQueues.push_back(MatchmakingQueueConfig(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
 ListVirtualCurrencyTypesRequest::~ListVirtualCurrencyTypesRequest()
 {
 
@@ -8834,43 +8558,6 @@ bool RefundPurchaseResponse::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-RemoveMatchmakingQueueRequest::~RemoveMatchmakingQueueRequest()
-{
-
-}
-
-void RemoveMatchmakingQueueRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (QueueName.length() > 0) { writer.String("QueueName"); writer.String(QueueName.c_str()); }
-    writer.EndObject();
-}
-
-bool RemoveMatchmakingQueueRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
-    if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
-
-    return true;
-}
-
-RemoveMatchmakingQueueResult::~RemoveMatchmakingQueueResult()
-{
-
-}
-
-void RemoveMatchmakingQueueResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.EndObject();
-}
-
-bool RemoveMatchmakingQueueResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
 RemovePlayerTagRequest::~RemovePlayerTagRequest()
 {
 
@@ -9518,44 +9205,6 @@ void SendAccountRecoveryEmailResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool SendAccountRecoveryEmailResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-SetMatchmakingQueueRequest::~SetMatchmakingQueueRequest()
-{
-    if (MatchmakingQueue != NULL) delete MatchmakingQueue;
-
-}
-
-void SetMatchmakingQueueRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (MatchmakingQueue != NULL) { writer.String("MatchmakingQueue"); MatchmakingQueue->writeJSON(writer); }
-    writer.EndObject();
-}
-
-bool SetMatchmakingQueueRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator MatchmakingQueue_member = obj.FindMember("MatchmakingQueue");
-    if (MatchmakingQueue_member != obj.MemberEnd() && !MatchmakingQueue_member->value.IsNull()) MatchmakingQueue = new MatchmakingQueueConfig(MatchmakingQueue_member->value);
-
-    return true;
-}
-
-SetMatchmakingQueueResult::~SetMatchmakingQueueResult()
-{
-
-}
-
-void SetMatchmakingQueueResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.EndObject();
-}
-
-bool SetMatchmakingQueueResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
