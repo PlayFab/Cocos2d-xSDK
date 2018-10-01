@@ -45,7 +45,6 @@ namespace PlayFab
         static void GetDataReport(AdminModels::GetDataReportRequest& request, ProcessApiCallback<AdminModels::GetDataReportResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetMatchmakerGameInfo(AdminModels::GetMatchmakerGameInfoRequest& request, ProcessApiCallback<AdminModels::GetMatchmakerGameInfoResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetMatchmakerGameModes(AdminModels::GetMatchmakerGameModesRequest& request, ProcessApiCallback<AdminModels::GetMatchmakerGameModesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetMatchmakingQueue(AdminModels::GetMatchmakingQueueRequest& request, ProcessApiCallback<AdminModels::GetMatchmakingQueueResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayedTitleList(AdminModels::GetPlayedTitleListRequest& request, ProcessApiCallback<AdminModels::GetPlayedTitleListResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerIdFromAuthToken(AdminModels::GetPlayerIdFromAuthTokenRequest& request, ProcessApiCallback<AdminModels::GetPlayerIdFromAuthTokenResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayerProfile(AdminModels::GetPlayerProfileRequest& request, ProcessApiCallback<AdminModels::GetPlayerProfileResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -77,13 +76,11 @@ namespace PlayFab
         static void GrantItemsToUsers(AdminModels::GrantItemsToUsersRequest& request, ProcessApiCallback<AdminModels::GrantItemsToUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void IncrementLimitedEditionItemAvailability(AdminModels::IncrementLimitedEditionItemAvailabilityRequest& request, ProcessApiCallback<AdminModels::IncrementLimitedEditionItemAvailabilityResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void IncrementPlayerStatisticVersion(AdminModels::IncrementPlayerStatisticVersionRequest& request, ProcessApiCallback<AdminModels::IncrementPlayerStatisticVersionResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ListMatchmakingQueues(ProcessApiCallback<AdminModels::ListMatchmakingQueuesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListServerBuilds(ProcessApiCallback<AdminModels::ListBuildsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListVirtualCurrencyTypes(ProcessApiCallback<AdminModels::ListVirtualCurrencyTypesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ModifyMatchmakerGameModes(AdminModels::ModifyMatchmakerGameModesRequest& request, ProcessApiCallback<AdminModels::ModifyMatchmakerGameModesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ModifyServerBuild(AdminModels::ModifyServerBuildRequest& request, ProcessApiCallback<AdminModels::ModifyServerBuildResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RefundPurchase(AdminModels::RefundPurchaseRequest& request, ProcessApiCallback<AdminModels::RefundPurchaseResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void RemoveMatchmakingQueue(AdminModels::RemoveMatchmakingQueueRequest& request, ProcessApiCallback<AdminModels::RemoveMatchmakingQueueResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemovePlayerTag(AdminModels::RemovePlayerTagRequest& request, ProcessApiCallback<AdminModels::RemovePlayerTagResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveServerBuild(AdminModels::RemoveServerBuildRequest& request, ProcessApiCallback<AdminModels::RemoveServerBuildResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveVirtualCurrencyTypes(AdminModels::RemoveVirtualCurrencyTypesRequest& request, ProcessApiCallback<AdminModels::BlankResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -98,7 +95,6 @@ namespace PlayFab
         static void RunTask(AdminModels::RunTaskRequest& request, ProcessApiCallback<AdminModels::RunTaskResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendAccountRecoveryEmail(AdminModels::SendAccountRecoveryEmailRequest& request, ProcessApiCallback<AdminModels::SendAccountRecoveryEmailResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetCatalogItems(AdminModels::UpdateCatalogItemsRequest& request, ProcessApiCallback<AdminModels::UpdateCatalogItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void SetMatchmakingQueue(AdminModels::SetMatchmakingQueueRequest& request, ProcessApiCallback<AdminModels::SetMatchmakingQueueResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetPlayerSecret(AdminModels::SetPlayerSecretRequest& request, ProcessApiCallback<AdminModels::SetPlayerSecretResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetPublishedRevision(AdminModels::SetPublishedRevisionRequest& request, ProcessApiCallback<AdminModels::SetPublishedRevisionResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetPublisherData(AdminModels::SetPublisherDataRequest& request, ProcessApiCallback<AdminModels::SetPublisherDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -160,7 +156,6 @@ namespace PlayFab
         static void OnGetDataReportResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetMatchmakerGameInfoResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetMatchmakerGameModesResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnGetMatchmakingQueueResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayedTitleListResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerIdFromAuthTokenResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayerProfileResult(int httpStatus, HttpRequest* request, void* userData);
@@ -192,13 +187,11 @@ namespace PlayFab
         static void OnGrantItemsToUsersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnIncrementLimitedEditionItemAvailabilityResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnIncrementPlayerStatisticVersionResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnListMatchmakingQueuesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListServerBuildsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListVirtualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnModifyMatchmakerGameModesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnModifyServerBuildResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRefundPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnRemoveMatchmakingQueueResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemovePlayerTagResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveServerBuildResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveVirtualCurrencyTypesResult(int httpStatus, HttpRequest* request, void* userData);
@@ -213,7 +206,6 @@ namespace PlayFab
         static void OnRunTaskResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetCatalogItemsResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnSetMatchmakingQueueResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetPlayerSecretResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetPublishedRevisionResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
