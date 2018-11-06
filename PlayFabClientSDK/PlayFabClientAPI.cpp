@@ -2358,6 +2358,52 @@ void PlayFabClientAPI::OnGetPlayFabIDsFromTwitchIDsResult(int httpStatus, HttpRe
     delete request;
 }
 
+void PlayFabClientAPI::GetPlayFabIDsFromXboxLiveIDs(
+    GetPlayFabIDsFromXboxLiveIDsRequest& request,
+    ProcessApiCallback<GetPlayFabIDsFromXboxLiveIDsResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/GetPlayFabIDsFromXboxLiveIDs"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", PlayFabSettings::clientSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetPlayFabIDsFromXboxLiveIDsResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetPlayFabIDsFromXboxLiveIDsResult, userData);
+}
+
+void PlayFabClientAPI::OnGetPlayFabIDsFromXboxLiveIDsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetPlayFabIDsFromXboxLiveIDsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<GetPlayFabIDsFromXboxLiveIDsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::GetPublisherData(
     GetPublisherDataRequest& request,
     ProcessApiCallback<GetPublisherDataResult> callback,
@@ -3504,6 +3550,52 @@ void PlayFabClientAPI::OnLinkNintendoSwitchDeviceIdResult(int httpStatus, HttpRe
     delete request;
 }
 
+void PlayFabClientAPI::LinkOpenIdConnect(
+    LinkOpenIdConnectRequest& request,
+    ProcessApiCallback<EmptyResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LinkOpenIdConnect"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", PlayFabSettings::clientSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkOpenIdConnectResult, userData);
+}
+
+void PlayFabClientAPI::OnLinkOpenIdConnectResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    EmptyResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<EmptyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabClientAPI::LinkSteamAccount(
     LinkSteamAccountRequest& request,
     ProcessApiCallback<LinkSteamAccountResult> callback,
@@ -4172,6 +4264,57 @@ void PlayFabClientAPI::LoginWithNintendoSwitchDeviceId(
 }
 
 void PlayFabClientAPI::OnLoginWithNintendoSwitchDeviceIdResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    LoginResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.length() > 0) PlayFabSettings::clientSessionTicket = outResult.SessionTicket;
+        if (outResult.EntityToken != nullptr) PlayFabSettings::entityToken = outResult.EntityToken->EntityToken;
+        MultiStepClientLogin(outResult.SettingsForUser->NeedsAttribution);
+
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<LoginResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::LoginWithOpenIdConnect(
+    LoginWithOpenIdConnectRequest& request,
+    ProcessApiCallback<LoginResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    if (PlayFabSettings::titleId.length() > 0)
+        request.TitleId = PlayFabSettings::titleId;
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithOpenIdConnect"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LoginResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithOpenIdConnectResult, userData);
+}
+
+void PlayFabClientAPI::OnLoginWithOpenIdConnectResult(int httpStatus, HttpRequest* request, void* userData)
 {
     LoginResult outResult;
     PlayFabError errorResult;
@@ -5823,6 +5966,52 @@ void PlayFabClientAPI::OnUnlinkNintendoSwitchDeviceIdResult(int httpStatus, Http
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<UnlinkNintendoSwitchDeviceIdResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabClientAPI::UnlinkOpenIdConnect(
+    UninkOpenIdConnectRequest& request,
+    ProcessApiCallback<EmptyResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/UnlinkOpenIdConnect"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-Authorization", PlayFabSettings::clientSessionTicket);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkOpenIdConnectResult, userData);
+}
+
+void PlayFabClientAPI::OnUnlinkOpenIdConnectResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    EmptyResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

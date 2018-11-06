@@ -30,13 +30,14 @@ bool EntityKey::readFromValue(const rapidjson::Value& obj)
 
 EventContents::~EventContents()
 {
+    if (Entity != NULL) delete Entity;
 
 }
 
 void EventContents::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    writer.String("Entity"); Entity.writeJSON(writer);
+    if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.String("EventNamespace"); writer.String(EventNamespace.c_str());
     writer.String("Name"); writer.String(Name.c_str());
     if (OriginalId.length() > 0) { writer.String("OriginalId"); writer.String(OriginalId.c_str()); }
@@ -49,7 +50,7 @@ void EventContents::writeJSON(PFStringJsonWriter& writer)
 bool EventContents::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
-    if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
+    if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator EventNamespace_member = obj.FindMember("EventNamespace");
     if (EventNamespace_member != obj.MemberEnd() && !EventNamespace_member->value.IsNull()) EventNamespace = EventNamespace_member->value.GetString();
     const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
