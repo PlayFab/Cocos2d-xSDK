@@ -3379,6 +3379,11 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesFacebookInstantGamesIdNotLinked: writer.String("FacebookInstantGamesIdNotLinked"); break;
     case GenericErrorCodesInvalidFacebookInstantGamesSignature: writer.String("InvalidFacebookInstantGamesSignature"); break;
     case GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle: writer.String("FacebookInstantGamesAuthNotConfiguredForTitle"); break;
+    case GenericErrorCodesEntityProfileConstraintValidationFailed: writer.String("EntityProfileConstraintValidationFailed"); break;
+    case GenericErrorCodesPlayInsightsIngestionKeyPending: writer.String("PlayInsightsIngestionKeyPending"); break;
+    case GenericErrorCodesPlayInsightsIngestionKeyNotFound: writer.String("PlayInsightsIngestionKeyNotFound"); break;
+    case GenericErrorCodesStatisticTagRequired: writer.String("StatisticTagRequired"); break;
+    case GenericErrorCodesStatisticTagInvalid: writer.String("StatisticTagInvalid"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingCreateRequestMissing: writer.String("MatchmakingCreateRequestMissing"); break;
@@ -3414,6 +3419,8 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesWriteAttemptedDuringExport: writer.String("WriteAttemptedDuringExport"); break;
     case GenericErrorCodesNintendoSwitchDeviceIdNotLinked: writer.String("NintendoSwitchDeviceIdNotLinked"); break;
     case GenericErrorCodesMatchmakingNotEnabled: writer.String("MatchmakingNotEnabled"); break;
+    case GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid: writer.String("MatchmakingGetStatisticsIdentityInvalid"); break;
+    case GenericErrorCodesMatchmakingStatisticsIdMissing: writer.String("MatchmakingStatisticsIdMissing"); break;
 
     }
 }
@@ -3812,6 +3819,11 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["FacebookInstantGamesIdNotLinked"] = GenericErrorCodesFacebookInstantGamesIdNotLinked;
         _GenericErrorCodesMap["InvalidFacebookInstantGamesSignature"] = GenericErrorCodesInvalidFacebookInstantGamesSignature;
         _GenericErrorCodesMap["FacebookInstantGamesAuthNotConfiguredForTitle"] = GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle;
+        _GenericErrorCodesMap["EntityProfileConstraintValidationFailed"] = GenericErrorCodesEntityProfileConstraintValidationFailed;
+        _GenericErrorCodesMap["PlayInsightsIngestionKeyPending"] = GenericErrorCodesPlayInsightsIngestionKeyPending;
+        _GenericErrorCodesMap["PlayInsightsIngestionKeyNotFound"] = GenericErrorCodesPlayInsightsIngestionKeyNotFound;
+        _GenericErrorCodesMap["StatisticTagRequired"] = GenericErrorCodesStatisticTagRequired;
+        _GenericErrorCodesMap["StatisticTagInvalid"] = GenericErrorCodesStatisticTagInvalid;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingCreateRequestMissing"] = GenericErrorCodesMatchmakingCreateRequestMissing;
@@ -3847,6 +3859,8 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["WriteAttemptedDuringExport"] = GenericErrorCodesWriteAttemptedDuringExport;
         _GenericErrorCodesMap["NintendoSwitchDeviceIdNotLinked"] = GenericErrorCodesNintendoSwitchDeviceIdNotLinked;
         _GenericErrorCodesMap["MatchmakingNotEnabled"] = GenericErrorCodesMatchmakingNotEnabled;
+        _GenericErrorCodesMap["MatchmakingGetStatisticsIdentityInvalid"] = GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid;
+        _GenericErrorCodesMap["MatchmakingStatisticsIdMissing"] = GenericErrorCodesMatchmakingStatisticsIdMissing;
 
     }
 
@@ -4341,7 +4355,6 @@ void GetMatchmakerGameInfoResult::writeJSON(PFStringJsonWriter& writer)
         writer.EndArray();
     }
     if (pfRegion.notNull()) { writer.String("Region"); writeRegionEnumJSON(pfRegion, writer); }
-    if (ServerAddress.length() > 0) { writer.String("ServerAddress"); writer.String(ServerAddress.c_str()); }
     if (ServerIPV4Address.length() > 0) { writer.String("ServerIPV4Address"); writer.String(ServerIPV4Address.c_str()); }
     if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     writer.String("ServerPort"); writer.Uint(ServerPort);
@@ -4370,8 +4383,6 @@ bool GetMatchmakerGameInfoResult::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
-    const Value::ConstMemberIterator ServerAddress_member = obj.FindMember("ServerAddress");
-    if (ServerAddress_member != obj.MemberEnd() && !ServerAddress_member->value.IsNull()) ServerAddress = ServerAddress_member->value.GetString();
     const Value::ConstMemberIterator ServerIPV4Address_member = obj.FindMember("ServerIPV4Address");
     if (ServerIPV4Address_member != obj.MemberEnd() && !ServerIPV4Address_member->value.IsNull()) ServerIPV4Address = ServerIPV4Address_member->value.GetString();
     const Value::ConstMemberIterator ServerIPV6Address_member = obj.FindMember("ServerIPV6Address");

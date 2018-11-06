@@ -37,7 +37,7 @@ namespace PlayFab
 
         struct EventContents : public PlayFabBaseModel
         {
-            EntityKey Entity;
+            EntityKey* Entity;
             std::string EventNamespace;
             std::string Name;
             std::string OriginalId;
@@ -47,7 +47,7 @@ namespace PlayFab
 
             EventContents() :
                 PlayFabBaseModel(),
-                Entity(),
+                Entity(NULL),
                 EventNamespace(),
                 Name(),
                 OriginalId(),
@@ -58,7 +58,7 @@ namespace PlayFab
 
             EventContents(const EventContents& src) :
                 PlayFabBaseModel(),
-                Entity(src.Entity),
+                Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 EventNamespace(src.EventNamespace),
                 Name(src.Name),
                 OriginalId(src.OriginalId),

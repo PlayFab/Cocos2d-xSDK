@@ -75,6 +75,46 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct EntityLineage : public PlayFabBaseModel
+        {
+            std::string CharacterId;
+            std::string GroupId;
+            std::string MasterPlayerAccountId;
+            std::string NamespaceId;
+            std::string TitleId;
+            std::string TitlePlayerAccountId;
+
+            EntityLineage() :
+                PlayFabBaseModel(),
+                CharacterId(),
+                GroupId(),
+                MasterPlayerAccountId(),
+                NamespaceId(),
+                TitleId(),
+                TitlePlayerAccountId()
+            {}
+
+            EntityLineage(const EntityLineage& src) :
+                PlayFabBaseModel(),
+                CharacterId(src.CharacterId),
+                GroupId(src.GroupId),
+                MasterPlayerAccountId(src.MasterPlayerAccountId),
+                NamespaceId(src.NamespaceId),
+                TitleId(src.TitleId),
+                TitlePlayerAccountId(src.TitlePlayerAccountId)
+            {}
+
+            EntityLineage(const rapidjson::Value& obj) : EntityLineage()
+            {
+                readFromValue(obj);
+            }
+
+            ~EntityLineage();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct EntityPermissionStatement : public PlayFabBaseModel
         {
             std::string Action;
@@ -154,7 +194,9 @@ namespace PlayFab
             EntityKey* Entity;
             std::string EntityChain;
             std::map<std::string, EntityProfileFileMetadata> Files;
+            std::string FriendlyName;
             std::string Language;
+            EntityLineage* Lineage;
             std::map<std::string, EntityDataObject> Objects;
             std::list<EntityPermissionStatement> Permissions;
             Int32 VersionNumber;
@@ -164,7 +206,9 @@ namespace PlayFab
                 Entity(NULL),
                 EntityChain(),
                 Files(),
+                FriendlyName(),
                 Language(),
+                Lineage(NULL),
                 Objects(),
                 Permissions(),
                 VersionNumber(0)
@@ -175,7 +219,9 @@ namespace PlayFab
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 EntityChain(src.EntityChain),
                 Files(src.Files),
+                FriendlyName(src.FriendlyName),
                 Language(src.Language),
+                Lineage(src.Lineage ? new EntityLineage(*src.Lineage) : NULL),
                 Objects(src.Objects),
                 Permissions(src.Permissions),
                 VersionNumber(src.VersionNumber)
@@ -195,18 +241,18 @@ namespace PlayFab
         struct GetEntityProfileRequest : public PlayFabBaseModel
         {
             OptionalBool DataAsObject;
-            EntityKey Entity;
+            EntityKey* Entity;
 
             GetEntityProfileRequest() :
                 PlayFabBaseModel(),
                 DataAsObject(),
-                Entity()
+                Entity(NULL)
             {}
 
             GetEntityProfileRequest(const GetEntityProfileRequest& src) :
                 PlayFabBaseModel(),
                 DataAsObject(src.DataAsObject),
-                Entity(src.Entity)
+                Entity(src.Entity ? new EntityKey(*src.Entity) : NULL)
             {}
 
             GetEntityProfileRequest(const rapidjson::Value& obj) : GetEntityProfileRequest()

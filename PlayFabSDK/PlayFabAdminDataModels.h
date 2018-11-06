@@ -2851,6 +2851,11 @@ namespace PlayFab
             GenericErrorCodesFacebookInstantGamesIdNotLinked,
             GenericErrorCodesInvalidFacebookInstantGamesSignature,
             GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle,
+            GenericErrorCodesEntityProfileConstraintValidationFailed,
+            GenericErrorCodesPlayInsightsIngestionKeyPending,
+            GenericErrorCodesPlayInsightsIngestionKeyNotFound,
+            GenericErrorCodesStatisticTagRequired,
+            GenericErrorCodesStatisticTagInvalid,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingCreateRequestMissing,
@@ -2885,7 +2890,9 @@ namespace PlayFab
             GenericErrorCodesMatchmakingMemberProfileInvalid,
             GenericErrorCodesWriteAttemptedDuringExport,
             GenericErrorCodesNintendoSwitchDeviceIdNotLinked,
-            GenericErrorCodesMatchmakingNotEnabled
+            GenericErrorCodesMatchmakingNotEnabled,
+            GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid,
+            GenericErrorCodesMatchmakingStatisticsIdMissing
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
@@ -3388,8 +3395,6 @@ namespace PlayFab
             std::string Mode;
             std::list<std::string> Players;
             Boxed<Region> pfRegion;
-            // Deprecated - Use 'ServerIPV4Address' instead
-            std::string ServerAddress;
             std::string ServerIPV4Address;
             std::string ServerIPV6Address;
             Uint32 ServerPort;
@@ -3405,7 +3410,6 @@ namespace PlayFab
                 Mode(),
                 Players(),
                 pfRegion(),
-                ServerAddress(),
                 ServerIPV4Address(),
                 ServerIPV6Address(),
                 ServerPort(0),
@@ -3422,7 +3426,6 @@ namespace PlayFab
                 Mode(src.Mode),
                 Players(src.Players),
                 pfRegion(src.pfRegion),
-                ServerAddress(src.ServerAddress),
                 ServerIPV4Address(src.ServerIPV4Address),
                 ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort),

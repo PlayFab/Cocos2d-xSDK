@@ -1857,8 +1857,6 @@ namespace PlayFab
             std::list<std::string> PlayerUserIds;
             Boxed<Region> pfRegion;
             Uint32 RunTime;
-            // Deprecated - Use 'ServerIPV4Address' instead
-            std::string ServerHostname;
             std::string ServerIPV4Address;
             std::string ServerIPV6Address;
             OptionalInt32 ServerPort;
@@ -1878,7 +1876,6 @@ namespace PlayFab
                 PlayerUserIds(),
                 pfRegion(),
                 RunTime(0),
-                ServerHostname(),
                 ServerIPV4Address(),
                 ServerIPV6Address(),
                 ServerPort(),
@@ -1899,7 +1896,6 @@ namespace PlayFab
                 PlayerUserIds(src.PlayerUserIds),
                 pfRegion(src.pfRegion),
                 RunTime(src.RunTime),
-                ServerHostname(src.ServerHostname),
                 ServerIPV4Address(src.ServerIPV4Address),
                 ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort),
@@ -1992,6 +1988,28 @@ namespace PlayFab
             }
 
             ~EmptyResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct EmptyResult : public PlayFabBaseModel
+        {
+
+            EmptyResult() :
+                PlayFabBaseModel()
+            {}
+
+            EmptyResult(const EmptyResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            EmptyResult(const rapidjson::Value& obj) : EmptyResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~EmptyResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -5798,6 +5816,87 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayFabIDsFromXboxLiveIDsRequest : public PlayFabBaseModel
+        {
+            std::string Sandbox;
+            std::list<std::string> XboxLiveAccountIDs;
+
+            GetPlayFabIDsFromXboxLiveIDsRequest() :
+                PlayFabBaseModel(),
+                Sandbox(),
+                XboxLiveAccountIDs()
+            {}
+
+            GetPlayFabIDsFromXboxLiveIDsRequest(const GetPlayFabIDsFromXboxLiveIDsRequest& src) :
+                PlayFabBaseModel(),
+                Sandbox(src.Sandbox),
+                XboxLiveAccountIDs(src.XboxLiveAccountIDs)
+            {}
+
+            GetPlayFabIDsFromXboxLiveIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromXboxLiveIDsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromXboxLiveIDsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct XboxLiveAccountPlayFabIdPair : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string XboxLiveAccountId;
+
+            XboxLiveAccountPlayFabIdPair() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                XboxLiveAccountId()
+            {}
+
+            XboxLiveAccountPlayFabIdPair(const XboxLiveAccountPlayFabIdPair& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                XboxLiveAccountId(src.XboxLiveAccountId)
+            {}
+
+            XboxLiveAccountPlayFabIdPair(const rapidjson::Value& obj) : XboxLiveAccountPlayFabIdPair()
+            {
+                readFromValue(obj);
+            }
+
+            ~XboxLiveAccountPlayFabIdPair();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromXboxLiveIDsResult : public PlayFabBaseModel
+        {
+            std::list<XboxLiveAccountPlayFabIdPair> Data;
+
+            GetPlayFabIDsFromXboxLiveIDsResult() :
+                PlayFabBaseModel(),
+                Data()
+            {}
+
+            GetPlayFabIDsFromXboxLiveIDsResult(const GetPlayFabIDsFromXboxLiveIDsResult& src) :
+                PlayFabBaseModel(),
+                Data(src.Data)
+            {}
+
+            GetPlayFabIDsFromXboxLiveIDsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromXboxLiveIDsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromXboxLiveIDsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetPublisherDataRequest : public PlayFabBaseModel
         {
             std::list<std::string> Keys;
@@ -7163,6 +7262,37 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct LinkOpenIdConnectRequest : public PlayFabBaseModel
+        {
+            std::string ConnectionId;
+            OptionalBool ForceLink;
+            std::string IdToken;
+
+            LinkOpenIdConnectRequest() :
+                PlayFabBaseModel(),
+                ConnectionId(),
+                ForceLink(),
+                IdToken()
+            {}
+
+            LinkOpenIdConnectRequest(const LinkOpenIdConnectRequest& src) :
+                PlayFabBaseModel(),
+                ConnectionId(src.ConnectionId),
+                ForceLink(src.ForceLink),
+                IdToken(src.IdToken)
+            {}
+
+            LinkOpenIdConnectRequest(const rapidjson::Value& obj) : LinkOpenIdConnectRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkOpenIdConnectRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct LinkSteamAccountRequest : public PlayFabBaseModel
         {
             OptionalBool ForceLink;
@@ -7942,6 +8072,53 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct LoginWithOpenIdConnectRequest : public PlayFabBaseModel
+        {
+            std::string ConnectionId;
+            OptionalBool CreateAccount;
+            std::string EncryptedRequest;
+            std::string IdToken;
+            GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            // Deprecated - Do not use
+            OptionalBool LoginTitlePlayerAccountEntity;
+            std::string PlayerSecret;
+            std::string TitleId;
+
+            LoginWithOpenIdConnectRequest() :
+                PlayFabBaseModel(),
+                ConnectionId(),
+                CreateAccount(),
+                EncryptedRequest(),
+                IdToken(),
+                InfoRequestParameters(NULL),
+                LoginTitlePlayerAccountEntity(),
+                PlayerSecret(),
+                TitleId()
+            {}
+
+            LoginWithOpenIdConnectRequest(const LoginWithOpenIdConnectRequest& src) :
+                PlayFabBaseModel(),
+                ConnectionId(src.ConnectionId),
+                CreateAccount(src.CreateAccount),
+                EncryptedRequest(src.EncryptedRequest),
+                IdToken(src.IdToken),
+                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
+                PlayerSecret(src.PlayerSecret),
+                TitleId(src.TitleId)
+            {}
+
+            LoginWithOpenIdConnectRequest(const rapidjson::Value& obj) : LoginWithOpenIdConnectRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LoginWithOpenIdConnectRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct LoginWithPlayFabRequest : public PlayFabBaseModel
         {
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
@@ -8213,8 +8390,6 @@ namespace PlayFab
             std::string Expires;
             std::string LobbyID;
             OptionalInt32 PollWaitTimeMS;
-            // Deprecated - Use 'ServerIPV4Address' instead
-            std::string ServerHostname;
             std::string ServerIPV4Address;
             std::string ServerIPV6Address;
             OptionalInt32 ServerPort;
@@ -8227,7 +8402,6 @@ namespace PlayFab
                 Expires(),
                 LobbyID(),
                 PollWaitTimeMS(),
-                ServerHostname(),
                 ServerIPV4Address(),
                 ServerIPV6Address(),
                 ServerPort(),
@@ -8241,7 +8415,6 @@ namespace PlayFab
                 Expires(src.Expires),
                 LobbyID(src.LobbyID),
                 PollWaitTimeMS(src.PollWaitTimeMS),
-                ServerHostname(src.ServerHostname),
                 ServerIPV4Address(src.ServerIPV4Address),
                 ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort),
@@ -9295,8 +9468,6 @@ namespace PlayFab
             std::string Expires;
             std::string LobbyID;
             std::string Password;
-            // Deprecated - Use 'ServerIPV4Address' instead
-            std::string ServerHostname;
             std::string ServerIPV4Address;
             std::string ServerIPV6Address;
             OptionalInt32 ServerPort;
@@ -9308,7 +9479,6 @@ namespace PlayFab
                 Expires(),
                 LobbyID(),
                 Password(),
-                ServerHostname(),
                 ServerIPV4Address(),
                 ServerIPV6Address(),
                 ServerPort(),
@@ -9321,7 +9491,6 @@ namespace PlayFab
                 Expires(src.Expires),
                 LobbyID(src.LobbyID),
                 Password(src.Password),
-                ServerHostname(src.ServerHostname),
                 ServerIPV4Address(src.ServerIPV4Address),
                 ServerIPV6Address(src.ServerIPV6Address),
                 ServerPort(src.ServerPort),
@@ -9459,6 +9628,31 @@ namespace PlayFab
             }
 
             ~SubtractUserVirtualCurrencyRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UninkOpenIdConnectRequest : public PlayFabBaseModel
+        {
+            std::string ConnectionId;
+
+            UninkOpenIdConnectRequest() :
+                PlayFabBaseModel(),
+                ConnectionId()
+            {}
+
+            UninkOpenIdConnectRequest(const UninkOpenIdConnectRequest& src) :
+                PlayFabBaseModel(),
+                ConnectionId(src.ConnectionId)
+            {}
+
+            UninkOpenIdConnectRequest(const rapidjson::Value& obj) : UninkOpenIdConnectRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UninkOpenIdConnectRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

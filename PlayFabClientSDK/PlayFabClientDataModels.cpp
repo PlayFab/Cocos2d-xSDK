@@ -2540,7 +2540,6 @@ void GameInfo::writeJSON(PFStringJsonWriter& writer)
     }
     if (pfRegion.notNull()) { writer.String("Region"); writeRegionEnumJSON(pfRegion, writer); }
     writer.String("RunTime"); writer.Uint(RunTime);
-    if (ServerHostname.length() > 0) { writer.String("ServerHostname"); writer.String(ServerHostname.c_str()); }
     if (ServerIPV4Address.length() > 0) { writer.String("ServerIPV4Address"); writer.String(ServerIPV4Address.c_str()); }
     if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     if (ServerPort.notNull()) { writer.String("ServerPort"); writer.Int(ServerPort); }
@@ -2584,8 +2583,6 @@ bool GameInfo::readFromValue(const rapidjson::Value& obj)
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) pfRegion = readRegionFromValue(Region_member->value);
     const Value::ConstMemberIterator RunTime_member = obj.FindMember("RunTime");
     if (RunTime_member != obj.MemberEnd() && !RunTime_member->value.IsNull()) RunTime = RunTime_member->value.GetUint();
-    const Value::ConstMemberIterator ServerHostname_member = obj.FindMember("ServerHostname");
-    if (ServerHostname_member != obj.MemberEnd() && !ServerHostname_member->value.IsNull()) ServerHostname = ServerHostname_member->value.GetString();
     const Value::ConstMemberIterator ServerIPV4Address_member = obj.FindMember("ServerIPV4Address");
     if (ServerIPV4Address_member != obj.MemberEnd() && !ServerIPV4Address_member->value.IsNull()) ServerIPV4Address = ServerIPV4Address_member->value.GetString();
     const Value::ConstMemberIterator ServerIPV6Address_member = obj.FindMember("ServerIPV6Address");
@@ -2687,6 +2684,23 @@ void EmptyResponse::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool EmptyResponse::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+EmptyResult::~EmptyResult()
+{
+
+}
+
+void EmptyResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool EmptyResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
@@ -6868,6 +6882,94 @@ bool GetPlayFabIDsFromTwitchIDsResult::readFromValue(const rapidjson::Value& obj
     return true;
 }
 
+GetPlayFabIDsFromXboxLiveIDsRequest::~GetPlayFabIDsFromXboxLiveIDsRequest()
+{
+
+}
+
+void GetPlayFabIDsFromXboxLiveIDsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Sandbox.length() > 0) { writer.String("Sandbox"); writer.String(Sandbox.c_str()); }
+    writer.String("XboxLiveAccountIDs");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = XboxLiveAccountIDs.begin(); iter != XboxLiveAccountIDs.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromXboxLiveIDsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Sandbox_member = obj.FindMember("Sandbox");
+    if (Sandbox_member != obj.MemberEnd() && !Sandbox_member->value.IsNull()) Sandbox = Sandbox_member->value.GetString();
+    const Value::ConstMemberIterator XboxLiveAccountIDs_member = obj.FindMember("XboxLiveAccountIDs");
+    if (XboxLiveAccountIDs_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = XboxLiveAccountIDs_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            XboxLiveAccountIDs.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
+XboxLiveAccountPlayFabIdPair::~XboxLiveAccountPlayFabIdPair()
+{
+
+}
+
+void XboxLiveAccountPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    if (XboxLiveAccountId.length() > 0) { writer.String("XboxLiveAccountId"); writer.String(XboxLiveAccountId.c_str()); }
+    writer.EndObject();
+}
+
+bool XboxLiveAccountPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator XboxLiveAccountId_member = obj.FindMember("XboxLiveAccountId");
+    if (XboxLiveAccountId_member != obj.MemberEnd() && !XboxLiveAccountId_member->value.IsNull()) XboxLiveAccountId = XboxLiveAccountId_member->value.GetString();
+
+    return true;
+}
+
+GetPlayFabIDsFromXboxLiveIDsResult::~GetPlayFabIDsFromXboxLiveIDsResult()
+{
+
+}
+
+void GetPlayFabIDsFromXboxLiveIDsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!Data.empty()) {
+        writer.String("Data");
+        writer.StartArray();
+        for (std::list<XboxLiveAccountPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromXboxLiveIDsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Data_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Data.push_back(XboxLiveAccountPlayFabIdPair(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 GetPublisherDataRequest::~GetPublisherDataRequest()
 {
 
@@ -8207,6 +8309,32 @@ bool LinkNintendoSwitchDeviceIdResult::readFromValue(const rapidjson::Value& obj
     return true;
 }
 
+LinkOpenIdConnectRequest::~LinkOpenIdConnectRequest()
+{
+
+}
+
+void LinkOpenIdConnectRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("ConnectionId"); writer.String(ConnectionId.c_str());
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
+    writer.String("IdToken"); writer.String(IdToken.c_str());
+    writer.EndObject();
+}
+
+bool LinkOpenIdConnectRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ConnectionId_member = obj.FindMember("ConnectionId");
+    if (ConnectionId_member != obj.MemberEnd() && !ConnectionId_member->value.IsNull()) ConnectionId = ConnectionId_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
+    const Value::ConstMemberIterator IdToken_member = obj.FindMember("IdToken");
+    if (IdToken_member != obj.MemberEnd() && !IdToken_member->value.IsNull()) IdToken = IdToken_member->value.GetString();
+
+    return true;
+}
+
 LinkSteamAccountRequest::~LinkSteamAccountRequest()
 {
 
@@ -8891,6 +9019,48 @@ bool LoginWithNintendoSwitchDeviceIdRequest::readFromValue(const rapidjson::Valu
     return true;
 }
 
+LoginWithOpenIdConnectRequest::~LoginWithOpenIdConnectRequest()
+{
+    if (InfoRequestParameters != NULL) delete InfoRequestParameters;
+
+}
+
+void LoginWithOpenIdConnectRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("ConnectionId"); writer.String(ConnectionId.c_str());
+    if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
+    if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
+    writer.String("IdToken"); writer.String(IdToken.c_str());
+    if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
+    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
+    if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
+    writer.String("TitleId"); writer.String(TitleId.c_str());
+    writer.EndObject();
+}
+
+bool LoginWithOpenIdConnectRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ConnectionId_member = obj.FindMember("ConnectionId");
+    if (ConnectionId_member != obj.MemberEnd() && !ConnectionId_member->value.IsNull()) ConnectionId = ConnectionId_member->value.GetString();
+    const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
+    if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
+    const Value::ConstMemberIterator EncryptedRequest_member = obj.FindMember("EncryptedRequest");
+    if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
+    const Value::ConstMemberIterator IdToken_member = obj.FindMember("IdToken");
+    if (IdToken_member != obj.MemberEnd() && !IdToken_member->value.IsNull()) IdToken = IdToken_member->value.GetString();
+    const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
+    if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
+    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
+    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
+    const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
+    if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+
+    return true;
+}
+
 LoginWithPlayFabRequest::~LoginWithPlayFabRequest()
 {
     if (InfoRequestParameters != NULL) delete InfoRequestParameters;
@@ -9160,7 +9330,6 @@ void MatchmakeResult::writeJSON(PFStringJsonWriter& writer)
     if (Expires.length() > 0) { writer.String("Expires"); writer.String(Expires.c_str()); }
     if (LobbyID.length() > 0) { writer.String("LobbyID"); writer.String(LobbyID.c_str()); }
     if (PollWaitTimeMS.notNull()) { writer.String("PollWaitTimeMS"); writer.Int(PollWaitTimeMS); }
-    if (ServerHostname.length() > 0) { writer.String("ServerHostname"); writer.String(ServerHostname.c_str()); }
     if (ServerIPV4Address.length() > 0) { writer.String("ServerIPV4Address"); writer.String(ServerIPV4Address.c_str()); }
     if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     if (ServerPort.notNull()) { writer.String("ServerPort"); writer.Int(ServerPort); }
@@ -9178,8 +9347,6 @@ bool MatchmakeResult::readFromValue(const rapidjson::Value& obj)
     if (LobbyID_member != obj.MemberEnd() && !LobbyID_member->value.IsNull()) LobbyID = LobbyID_member->value.GetString();
     const Value::ConstMemberIterator PollWaitTimeMS_member = obj.FindMember("PollWaitTimeMS");
     if (PollWaitTimeMS_member != obj.MemberEnd() && !PollWaitTimeMS_member->value.IsNull()) PollWaitTimeMS = PollWaitTimeMS_member->value.GetInt();
-    const Value::ConstMemberIterator ServerHostname_member = obj.FindMember("ServerHostname");
-    if (ServerHostname_member != obj.MemberEnd() && !ServerHostname_member->value.IsNull()) ServerHostname = ServerHostname_member->value.GetString();
     const Value::ConstMemberIterator ServerIPV4Address_member = obj.FindMember("ServerIPV4Address");
     if (ServerIPV4Address_member != obj.MemberEnd() && !ServerIPV4Address_member->value.IsNull()) ServerIPV4Address = ServerIPV4Address_member->value.GetString();
     const Value::ConstMemberIterator ServerIPV6Address_member = obj.FindMember("ServerIPV6Address");
@@ -10207,7 +10374,6 @@ void StartGameResult::writeJSON(PFStringJsonWriter& writer)
     if (Expires.length() > 0) { writer.String("Expires"); writer.String(Expires.c_str()); }
     if (LobbyID.length() > 0) { writer.String("LobbyID"); writer.String(LobbyID.c_str()); }
     if (Password.length() > 0) { writer.String("Password"); writer.String(Password.c_str()); }
-    if (ServerHostname.length() > 0) { writer.String("ServerHostname"); writer.String(ServerHostname.c_str()); }
     if (ServerIPV4Address.length() > 0) { writer.String("ServerIPV4Address"); writer.String(ServerIPV4Address.c_str()); }
     if (ServerIPV6Address.length() > 0) { writer.String("ServerIPV6Address"); writer.String(ServerIPV6Address.c_str()); }
     if (ServerPort.notNull()) { writer.String("ServerPort"); writer.Int(ServerPort); }
@@ -10224,8 +10390,6 @@ bool StartGameResult::readFromValue(const rapidjson::Value& obj)
     if (LobbyID_member != obj.MemberEnd() && !LobbyID_member->value.IsNull()) LobbyID = LobbyID_member->value.GetString();
     const Value::ConstMemberIterator Password_member = obj.FindMember("Password");
     if (Password_member != obj.MemberEnd() && !Password_member->value.IsNull()) Password = Password_member->value.GetString();
-    const Value::ConstMemberIterator ServerHostname_member = obj.FindMember("ServerHostname");
-    if (ServerHostname_member != obj.MemberEnd() && !ServerHostname_member->value.IsNull()) ServerHostname = ServerHostname_member->value.GetString();
     const Value::ConstMemberIterator ServerIPV4Address_member = obj.FindMember("ServerIPV4Address");
     if (ServerIPV4Address_member != obj.MemberEnd() && !ServerIPV4Address_member->value.IsNull()) ServerIPV4Address = ServerIPV4Address_member->value.GetString();
     const Value::ConstMemberIterator ServerIPV6Address_member = obj.FindMember("ServerIPV6Address");
@@ -10385,6 +10549,26 @@ bool SubtractUserVirtualCurrencyRequest::readFromValue(const rapidjson::Value& o
     if (Amount_member != obj.MemberEnd() && !Amount_member->value.IsNull()) Amount = Amount_member->value.GetInt();
     const Value::ConstMemberIterator VirtualCurrency_member = obj.FindMember("VirtualCurrency");
     if (VirtualCurrency_member != obj.MemberEnd() && !VirtualCurrency_member->value.IsNull()) VirtualCurrency = VirtualCurrency_member->value.GetString();
+
+    return true;
+}
+
+UninkOpenIdConnectRequest::~UninkOpenIdConnectRequest()
+{
+
+}
+
+void UninkOpenIdConnectRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("ConnectionId"); writer.String(ConnectionId.c_str());
+    writer.EndObject();
+}
+
+bool UninkOpenIdConnectRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ConnectionId_member = obj.FindMember("ConnectionId");
+    if (ConnectionId_member != obj.MemberEnd() && !ConnectionId_member->value.IsNull()) ConnectionId = ConnectionId_member->value.GetString();
 
     return true;
 }
