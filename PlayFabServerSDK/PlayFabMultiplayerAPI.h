@@ -28,6 +28,7 @@ namespace PlayFab
         static void GetMultiplayerServerDetails(MultiplayerModels::GetMultiplayerServerDetailsRequest& request, ProcessApiCallback<MultiplayerModels::GetMultiplayerServerDetailsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetRemoteLoginEndpoint(MultiplayerModels::GetRemoteLoginEndpointRequest& request, ProcessApiCallback<MultiplayerModels::GetRemoteLoginEndpointResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleEnabledForMultiplayerServersStatus(ProcessApiCallback<MultiplayerModels::GetTitleEnabledForMultiplayerServersStatusResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ListArchivedMultiplayerServers(MultiplayerModels::ListMultiplayerServersRequest& request, ProcessApiCallback<MultiplayerModels::ListMultiplayerServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListAssetSummaries(MultiplayerModels::ListAssetSummariesRequest& request, ProcessApiCallback<MultiplayerModels::ListAssetSummariesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListBuildSummaries(MultiplayerModels::ListBuildSummariesRequest& request, ProcessApiCallback<MultiplayerModels::ListBuildSummariesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListCertificateSummaries(MultiplayerModels::ListCertificateSummariesRequest& request, ProcessApiCallback<MultiplayerModels::ListCertificateSummariesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -61,6 +62,7 @@ namespace PlayFab
         static void OnGetMultiplayerServerDetailsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetRemoteLoginEndpointResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleEnabledForMultiplayerServersStatusResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnListArchivedMultiplayerServersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListAssetSummariesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListBuildSummariesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListCertificateSummariesResult(int httpStatus, HttpRequest* request, void* userData);

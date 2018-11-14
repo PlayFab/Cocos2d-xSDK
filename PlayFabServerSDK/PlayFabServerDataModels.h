@@ -3517,10 +3517,11 @@ namespace PlayFab
             GenericErrorCodesInvalidFacebookInstantGamesSignature,
             GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle,
             GenericErrorCodesEntityProfileConstraintValidationFailed,
-            GenericErrorCodesPlayInsightsIngestionKeyPending,
-            GenericErrorCodesPlayInsightsIngestionKeyNotFound,
+            GenericErrorCodesTelemetryIngestionKeyPending,
+            GenericErrorCodesTelemetryIngestionKeyNotFound,
             GenericErrorCodesStatisticTagRequired,
             GenericErrorCodesStatisticTagInvalid,
+            GenericErrorCodesDataIntegrityError,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingCreateRequestMissing,
@@ -3557,7 +3558,8 @@ namespace PlayFab
             GenericErrorCodesNintendoSwitchDeviceIdNotLinked,
             GenericErrorCodesMatchmakingNotEnabled,
             GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid,
-            GenericErrorCodesMatchmakingStatisticsIdMissing
+            GenericErrorCodesMatchmakingStatisticsIdMissing,
+            GenericErrorCodesCannotEnableMultiplayerServersForTitle
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
