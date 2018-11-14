@@ -4157,10 +4157,11 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesInvalidFacebookInstantGamesSignature: writer.String("InvalidFacebookInstantGamesSignature"); break;
     case GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle: writer.String("FacebookInstantGamesAuthNotConfiguredForTitle"); break;
     case GenericErrorCodesEntityProfileConstraintValidationFailed: writer.String("EntityProfileConstraintValidationFailed"); break;
-    case GenericErrorCodesPlayInsightsIngestionKeyPending: writer.String("PlayInsightsIngestionKeyPending"); break;
-    case GenericErrorCodesPlayInsightsIngestionKeyNotFound: writer.String("PlayInsightsIngestionKeyNotFound"); break;
+    case GenericErrorCodesTelemetryIngestionKeyPending: writer.String("TelemetryIngestionKeyPending"); break;
+    case GenericErrorCodesTelemetryIngestionKeyNotFound: writer.String("TelemetryIngestionKeyNotFound"); break;
     case GenericErrorCodesStatisticTagRequired: writer.String("StatisticTagRequired"); break;
     case GenericErrorCodesStatisticTagInvalid: writer.String("StatisticTagInvalid"); break;
+    case GenericErrorCodesDataIntegrityError: writer.String("DataIntegrityError"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingCreateRequestMissing: writer.String("MatchmakingCreateRequestMissing"); break;
@@ -4198,6 +4199,7 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesMatchmakingNotEnabled: writer.String("MatchmakingNotEnabled"); break;
     case GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid: writer.String("MatchmakingGetStatisticsIdentityInvalid"); break;
     case GenericErrorCodesMatchmakingStatisticsIdMissing: writer.String("MatchmakingStatisticsIdMissing"); break;
+    case GenericErrorCodesCannotEnableMultiplayerServersForTitle: writer.String("CannotEnableMultiplayerServersForTitle"); break;
 
     }
 }
@@ -4597,10 +4599,11 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["InvalidFacebookInstantGamesSignature"] = GenericErrorCodesInvalidFacebookInstantGamesSignature;
         _GenericErrorCodesMap["FacebookInstantGamesAuthNotConfiguredForTitle"] = GenericErrorCodesFacebookInstantGamesAuthNotConfiguredForTitle;
         _GenericErrorCodesMap["EntityProfileConstraintValidationFailed"] = GenericErrorCodesEntityProfileConstraintValidationFailed;
-        _GenericErrorCodesMap["PlayInsightsIngestionKeyPending"] = GenericErrorCodesPlayInsightsIngestionKeyPending;
-        _GenericErrorCodesMap["PlayInsightsIngestionKeyNotFound"] = GenericErrorCodesPlayInsightsIngestionKeyNotFound;
+        _GenericErrorCodesMap["TelemetryIngestionKeyPending"] = GenericErrorCodesTelemetryIngestionKeyPending;
+        _GenericErrorCodesMap["TelemetryIngestionKeyNotFound"] = GenericErrorCodesTelemetryIngestionKeyNotFound;
         _GenericErrorCodesMap["StatisticTagRequired"] = GenericErrorCodesStatisticTagRequired;
         _GenericErrorCodesMap["StatisticTagInvalid"] = GenericErrorCodesStatisticTagInvalid;
+        _GenericErrorCodesMap["DataIntegrityError"] = GenericErrorCodesDataIntegrityError;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingCreateRequestMissing"] = GenericErrorCodesMatchmakingCreateRequestMissing;
@@ -4638,6 +4641,7 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["MatchmakingNotEnabled"] = GenericErrorCodesMatchmakingNotEnabled;
         _GenericErrorCodesMap["MatchmakingGetStatisticsIdentityInvalid"] = GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid;
         _GenericErrorCodesMap["MatchmakingStatisticsIdMissing"] = GenericErrorCodesMatchmakingStatisticsIdMissing;
+        _GenericErrorCodesMap["CannotEnableMultiplayerServersForTitle"] = GenericErrorCodesCannotEnableMultiplayerServersForTitle;
 
     }
 
