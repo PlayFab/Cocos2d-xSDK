@@ -1242,6 +1242,7 @@ void GetBuildResponse::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
     if (BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
     if (BuildName.length() > 0) { writer.String("BuildName"); writer.String(BuildName.c_str()); }
+    if (BuildStatus.length() > 0) { writer.String("BuildStatus"); writer.String(BuildStatus.c_str()); }
     if (pfContainerFlavor.notNull()) { writer.String("ContainerFlavor"); writeContainerFlavorEnumJSON(pfContainerFlavor, writer); }
     if (ContainerRunCommand.length() > 0) { writer.String("ContainerRunCommand"); writer.String(ContainerRunCommand.c_str()); }
     if (CreationTime.notNull()) { writer.String("CreationTime"); writeDatetime(CreationTime, writer); }
@@ -1298,6 +1299,8 @@ bool GetBuildResponse::readFromValue(const rapidjson::Value& obj)
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
     const Value::ConstMemberIterator BuildName_member = obj.FindMember("BuildName");
     if (BuildName_member != obj.MemberEnd() && !BuildName_member->value.IsNull()) BuildName = BuildName_member->value.GetString();
+    const Value::ConstMemberIterator BuildStatus_member = obj.FindMember("BuildStatus");
+    if (BuildStatus_member != obj.MemberEnd() && !BuildStatus_member->value.IsNull()) BuildStatus = BuildStatus_member->value.GetString();
     const Value::ConstMemberIterator ContainerFlavor_member = obj.FindMember("ContainerFlavor");
     if (ContainerFlavor_member != obj.MemberEnd() && !ContainerFlavor_member->value.IsNull()) pfContainerFlavor = readContainerFlavorFromValue(ContainerFlavor_member->value);
     const Value::ConstMemberIterator ContainerRunCommand_member = obj.FindMember("ContainerRunCommand");
@@ -1435,6 +1438,7 @@ void GetMultiplayerServerDetailsResponse::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndArray();
     }
+    if (FQDN.length() > 0) { writer.String("FQDN"); writer.String(FQDN.c_str()); }
     if (IPV4Address.length() > 0) { writer.String("IPV4Address"); writer.String(IPV4Address.c_str()); }
     if (LastStateTransitionTime.notNull()) { writer.String("LastStateTransitionTime"); writeDatetime(LastStateTransitionTime, writer); }
     if (!Ports.empty()) {
@@ -1462,6 +1466,8 @@ bool GetMultiplayerServerDetailsResponse::readFromValue(const rapidjson::Value& 
             ConnectedPlayers.push_back(ConnectedPlayer(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator FQDN_member = obj.FindMember("FQDN");
+    if (FQDN_member != obj.MemberEnd() && !FQDN_member->value.IsNull()) FQDN = FQDN_member->value.GetString();
     const Value::ConstMemberIterator IPV4Address_member = obj.FindMember("IPV4Address");
     if (IPV4Address_member != obj.MemberEnd() && !IPV4Address_member->value.IsNull()) IPV4Address = IPV4Address_member->value.GetString();
     const Value::ConstMemberIterator LastStateTransitionTime_member = obj.FindMember("LastStateTransitionTime");
@@ -1917,6 +1923,7 @@ void MultiplayerServerSummary::writeJSON(PFStringJsonWriter& writer)
     if (LastStateTransitionTime.notNull()) { writer.String("LastStateTransitionTime"); writeDatetime(LastStateTransitionTime, writer); }
     if (Region.notNull()) { writer.String("Region"); writeAzureRegionEnumJSON(Region, writer); }
     if (ServerId.length() > 0) { writer.String("ServerId"); writer.String(ServerId.c_str()); }
+    if (SessionId.length() > 0) { writer.String("SessionId"); writer.String(SessionId.c_str()); }
     if (State.length() > 0) { writer.String("State"); writer.String(State.c_str()); }
     if (VmId.length() > 0) { writer.String("VmId"); writer.String(VmId.c_str()); }
     writer.EndObject();
@@ -1937,6 +1944,8 @@ bool MultiplayerServerSummary::readFromValue(const rapidjson::Value& obj)
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = readAzureRegionFromValue(Region_member->value);
     const Value::ConstMemberIterator ServerId_member = obj.FindMember("ServerId");
     if (ServerId_member != obj.MemberEnd() && !ServerId_member->value.IsNull()) ServerId = ServerId_member->value.GetString();
+    const Value::ConstMemberIterator SessionId_member = obj.FindMember("SessionId");
+    if (SessionId_member != obj.MemberEnd() && !SessionId_member->value.IsNull()) SessionId = SessionId_member->value.GetString();
     const Value::ConstMemberIterator State_member = obj.FindMember("State");
     if (State_member != obj.MemberEnd() && !State_member->value.IsNull()) State = State_member->value.GetString();
     const Value::ConstMemberIterator VmId_member = obj.FindMember("VmId");
@@ -2163,6 +2172,14 @@ void RequestMultiplayerServerRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (!InitialPlayers.empty()) {
+        writer.String("InitialPlayers");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = InitialPlayers.begin(); iter != InitialPlayers.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
+    }
     writer.String("PreferredRegions");
     writer.StartArray();
     for (std::list<AzureRegion>::iterator iter = PreferredRegions.begin(); iter != PreferredRegions.end(); iter++) {
@@ -2178,6 +2195,13 @@ bool RequestMultiplayerServerRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator InitialPlayers_member = obj.FindMember("InitialPlayers");
+    if (InitialPlayers_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = InitialPlayers_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            InitialPlayers.push_back(memberList[i].GetString());
+        }
+    }
     const Value::ConstMemberIterator PreferredRegions_member = obj.FindMember("PreferredRegions");
     if (PreferredRegions_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = PreferredRegions_member->value;
@@ -2209,6 +2233,7 @@ void RequestMultiplayerServerResponse::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndArray();
     }
+    if (FQDN.length() > 0) { writer.String("FQDN"); writer.String(FQDN.c_str()); }
     if (IPV4Address.length() > 0) { writer.String("IPV4Address"); writer.String(IPV4Address.c_str()); }
     if (LastStateTransitionTime.notNull()) { writer.String("LastStateTransitionTime"); writeDatetime(LastStateTransitionTime, writer); }
     if (!Ports.empty()) {
@@ -2236,6 +2261,8 @@ bool RequestMultiplayerServerResponse::readFromValue(const rapidjson::Value& obj
             ConnectedPlayers.push_back(ConnectedPlayer(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator FQDN_member = obj.FindMember("FQDN");
+    if (FQDN_member != obj.MemberEnd() && !FQDN_member->value.IsNull()) FQDN = FQDN_member->value.GetString();
     const Value::ConstMemberIterator IPV4Address_member = obj.FindMember("IPV4Address");
     if (IPV4Address_member != obj.MemberEnd() && !IPV4Address_member->value.IsNull()) IPV4Address = IPV4Address_member->value.GetString();
     const Value::ConstMemberIterator LastStateTransitionTime_member = obj.FindMember("LastStateTransitionTime");
