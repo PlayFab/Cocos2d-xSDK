@@ -1017,6 +1017,7 @@ namespace PlayFab
         {
             std::string BuildId;
             std::string BuildName;
+            std::string BuildStatus;
             Boxed<ContainerFlavor> pfContainerFlavor;
             std::string ContainerRunCommand;
             OptionalTime CreationTime;
@@ -1034,6 +1035,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 BuildId(),
                 BuildName(),
+                BuildStatus(),
                 pfContainerFlavor(),
                 ContainerRunCommand(),
                 CreationTime(),
@@ -1052,6 +1054,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
                 BuildName(src.BuildName),
+                BuildStatus(src.BuildStatus),
                 pfContainerFlavor(src.pfContainerFlavor),
                 ContainerRunCommand(src.ContainerRunCommand),
                 CreationTime(src.CreationTime),
@@ -1164,6 +1167,7 @@ namespace PlayFab
         struct GetMultiplayerServerDetailsResponse : public PlayFabBaseModel
         {
             std::list<ConnectedPlayer> ConnectedPlayers;
+            std::string FQDN;
             std::string IPV4Address;
             OptionalTime LastStateTransitionTime;
             std::list<Port> Ports;
@@ -1176,6 +1180,7 @@ namespace PlayFab
             GetMultiplayerServerDetailsResponse() :
                 PlayFabBaseModel(),
                 ConnectedPlayers(),
+                FQDN(),
                 IPV4Address(),
                 LastStateTransitionTime(),
                 Ports(),
@@ -1189,6 +1194,7 @@ namespace PlayFab
             GetMultiplayerServerDetailsResponse(const GetMultiplayerServerDetailsResponse& src) :
                 PlayFabBaseModel(),
                 ConnectedPlayers(src.ConnectedPlayers),
+                FQDN(src.FQDN),
                 IPV4Address(src.IPV4Address),
                 LastStateTransitionTime(src.LastStateTransitionTime),
                 Ports(src.Ports),
@@ -1642,6 +1648,7 @@ namespace PlayFab
             OptionalTime LastStateTransitionTime;
             Boxed<AzureRegion> Region;
             std::string ServerId;
+            std::string SessionId;
             std::string State;
             std::string VmId;
 
@@ -1651,6 +1658,7 @@ namespace PlayFab
                 LastStateTransitionTime(),
                 Region(),
                 ServerId(),
+                SessionId(),
                 State(),
                 VmId()
             {}
@@ -1661,6 +1669,7 @@ namespace PlayFab
                 LastStateTransitionTime(src.LastStateTransitionTime),
                 Region(src.Region),
                 ServerId(src.ServerId),
+                SessionId(src.SessionId),
                 State(src.State),
                 VmId(src.VmId)
             {}
@@ -1887,6 +1896,7 @@ namespace PlayFab
         struct RequestMultiplayerServerRequest : public PlayFabBaseModel
         {
             std::string BuildId;
+            std::list<std::string> InitialPlayers;
             std::list<AzureRegion> PreferredRegions;
             std::string SessionCookie;
             std::string SessionId;
@@ -1894,6 +1904,7 @@ namespace PlayFab
             RequestMultiplayerServerRequest() :
                 PlayFabBaseModel(),
                 BuildId(),
+                InitialPlayers(),
                 PreferredRegions(),
                 SessionCookie(),
                 SessionId()
@@ -1902,6 +1913,7 @@ namespace PlayFab
             RequestMultiplayerServerRequest(const RequestMultiplayerServerRequest& src) :
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
+                InitialPlayers(src.InitialPlayers),
                 PreferredRegions(src.PreferredRegions),
                 SessionCookie(src.SessionCookie),
                 SessionId(src.SessionId)
@@ -1921,6 +1933,7 @@ namespace PlayFab
         struct RequestMultiplayerServerResponse : public PlayFabBaseModel
         {
             std::list<ConnectedPlayer> ConnectedPlayers;
+            std::string FQDN;
             std::string IPV4Address;
             OptionalTime LastStateTransitionTime;
             std::list<Port> Ports;
@@ -1933,6 +1946,7 @@ namespace PlayFab
             RequestMultiplayerServerResponse() :
                 PlayFabBaseModel(),
                 ConnectedPlayers(),
+                FQDN(),
                 IPV4Address(),
                 LastStateTransitionTime(),
                 Ports(),
@@ -1946,6 +1960,7 @@ namespace PlayFab
             RequestMultiplayerServerResponse(const RequestMultiplayerServerResponse& src) :
                 PlayFabBaseModel(),
                 ConnectedPlayers(src.ConnectedPlayers),
+                FQDN(src.FQDN),
                 IPV4Address(src.IPV4Address),
                 LastStateTransitionTime(src.LastStateTransitionTime),
                 Ports(src.Ports),
