@@ -30,6 +30,7 @@ namespace PlayFab
         static void CancelTrade(ClientModels::CancelTradeRequest& request, ProcessApiCallback<ClientModels::CancelTradeResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ConfirmPurchase(ClientModels::ConfirmPurchaseRequest& request, ProcessApiCallback<ClientModels::ConfirmPurchaseResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ConsumeItem(ClientModels::ConsumeItemRequest& request, ProcessApiCallback<ClientModels::ConsumeItemResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ConsumePSNEntitlements(ClientModels::ConsumePSNEntitlementsRequest& request, ProcessApiCallback<ClientModels::ConsumePSNEntitlementsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ConsumeXboxEntitlements(ClientModels::ConsumeXboxEntitlementsRequest& request, ProcessApiCallback<ClientModels::ConsumeXboxEntitlementsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateSharedGroup(ClientModels::CreateSharedGroupRequest& request, ProcessApiCallback<ClientModels::CreateSharedGroupResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ExecuteCloudScript(ClientModels::ExecuteCloudScriptRequest& request, ProcessApiCallback<ClientModels::ExecuteCloudScriptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -67,6 +68,7 @@ namespace PlayFab
         static void GetPlayFabIDsFromGoogleIDs(ClientModels::GetPlayFabIDsFromGoogleIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromGoogleIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromKongregateIDs(ClientModels::GetPlayFabIDsFromKongregateIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromKongregateIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromNintendoSwitchDeviceIds(ClientModels::GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromNintendoSwitchDeviceIdsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayFabIDsFromPSNAccountIDs(ClientModels::GetPlayFabIDsFromPSNAccountIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromPSNAccountIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromSteamIDs(ClientModels::GetPlayFabIDsFromSteamIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromSteamIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromTwitchIDs(ClientModels::GetPlayFabIDsFromTwitchIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromTwitchIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromXboxLiveIDs(ClientModels::GetPlayFabIDsFromXboxLiveIDsRequest& request, ProcessApiCallback<ClientModels::GetPlayFabIDsFromXboxLiveIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -96,6 +98,7 @@ namespace PlayFab
         static void LinkKongregate(ClientModels::LinkKongregateAccountRequest& request, ProcessApiCallback<ClientModels::LinkKongregateAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkNintendoSwitchDeviceId(ClientModels::LinkNintendoSwitchDeviceIdRequest& request, ProcessApiCallback<ClientModels::LinkNintendoSwitchDeviceIdResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkOpenIdConnect(ClientModels::LinkOpenIdConnectRequest& request, ProcessApiCallback<ClientModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void LinkPSNAccount(ClientModels::LinkPSNAccountRequest& request, ProcessApiCallback<ClientModels::LinkPSNAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkSteamAccount(ClientModels::LinkSteamAccountRequest& request, ProcessApiCallback<ClientModels::LinkSteamAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkTwitch(ClientModels::LinkTwitchAccountRequest& request, ProcessApiCallback<ClientModels::LinkTwitchAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkWindowsHello(ClientModels::LinkWindowsHelloAccountRequest& request, ProcessApiCallback<ClientModels::LinkWindowsHelloAccountResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -112,6 +115,7 @@ namespace PlayFab
         static void LoginWithNintendoSwitchDeviceId(ClientModels::LoginWithNintendoSwitchDeviceIdRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithOpenIdConnect(ClientModels::LoginWithOpenIdConnectRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithPlayFab(ClientModels::LoginWithPlayFabRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void LoginWithPSN(ClientModels::LoginWithPSNRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithSteam(ClientModels::LoginWithSteamRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithTwitch(ClientModels::LoginWithTwitchRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithWindowsHello(ClientModels::LoginWithWindowsHelloRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -121,6 +125,7 @@ namespace PlayFab
         static void PayForPurchase(ClientModels::PayForPurchaseRequest& request, ProcessApiCallback<ClientModels::PayForPurchaseResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void PurchaseItem(ClientModels::PurchaseItemRequest& request, ProcessApiCallback<ClientModels::PurchaseItemResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RedeemCoupon(ClientModels::RedeemCouponRequest& request, ProcessApiCallback<ClientModels::RedeemCouponResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RefreshPSNAuthToken(ClientModels::RefreshPSNAuthTokenRequest& request, ProcessApiCallback<ClientModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RegisterForIOSPushNotification(ClientModels::RegisterForIOSPushNotificationRequest& request, ProcessApiCallback<ClientModels::RegisterForIOSPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RegisterPlayFabUser(ClientModels::RegisterPlayFabUserRequest& request, ProcessApiCallback<ClientModels::RegisterPlayFabUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RegisterWithWindowsHello(ClientModels::RegisterWithWindowsHelloRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -147,6 +152,7 @@ namespace PlayFab
         static void UnlinkKongregate(ProcessApiCallback<ClientModels::UnlinkKongregateAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkNintendoSwitchDeviceId(ClientModels::UnlinkNintendoSwitchDeviceIdRequest& request, ProcessApiCallback<ClientModels::UnlinkNintendoSwitchDeviceIdResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkOpenIdConnect(ClientModels::UninkOpenIdConnectRequest& request, ProcessApiCallback<ClientModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UnlinkPSNAccount(ProcessApiCallback<ClientModels::UnlinkPSNAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkSteamAccount(ProcessApiCallback<ClientModels::UnlinkSteamAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkTwitch(ProcessApiCallback<ClientModels::UnlinkTwitchAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkWindowsHello(ClientModels::UnlinkWindowsHelloAccountRequest& request, ProcessApiCallback<ClientModels::UnlinkWindowsHelloAccountResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -186,6 +192,7 @@ namespace PlayFab
         static void OnCancelTradeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnConfirmPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnConsumeItemResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnConsumePSNEntitlementsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnConsumeXboxEntitlementsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateSharedGroupResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnExecuteCloudScriptResult(int httpStatus, HttpRequest* request, void* userData);
@@ -223,6 +230,7 @@ namespace PlayFab
         static void OnGetPlayFabIDsFromGoogleIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromKongregateIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromNintendoSwitchDeviceIdsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayFabIDsFromPSNAccountIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromTwitchIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromXboxLiveIDsResult(int httpStatus, HttpRequest* request, void* userData);
@@ -252,6 +260,7 @@ namespace PlayFab
         static void OnLinkKongregateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkNintendoSwitchDeviceIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkOpenIdConnectResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnLinkPSNAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkTwitchResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData);
@@ -268,6 +277,7 @@ namespace PlayFab
         static void OnLoginWithNintendoSwitchDeviceIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithOpenIdConnectResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithPlayFabResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnLoginWithPSNResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithSteamResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithTwitchResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData);
@@ -277,6 +287,7 @@ namespace PlayFab
         static void OnPayForPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnPurchaseItemResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRedeemCouponResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRefreshPSNAuthTokenResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRegisterForIOSPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRegisterPlayFabUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRegisterWithWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData);
@@ -303,6 +314,7 @@ namespace PlayFab
         static void OnUnlinkKongregateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkNintendoSwitchDeviceIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkOpenIdConnectResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUnlinkPSNAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkSteamAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkTwitchResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData);
