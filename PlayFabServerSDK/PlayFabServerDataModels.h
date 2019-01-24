@@ -3539,6 +3539,7 @@ namespace PlayFab
             GenericErrorCodesPushNotificationTemplateMissingDefaultVersion,
             GenericErrorCodesPushNotificationTemplateInvalidSyntax,
             GenericErrorCodesPushNotificationTemplateNoCustomPayloadForV1,
+            GenericErrorCodesNoLeaderboardForStatistic,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingCreateRequestMissing,
@@ -6931,8 +6932,6 @@ namespace PlayFab
         {
             OptionalBool CreateAccount;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
-            // Deprecated - Do not use
-            OptionalBool LoginTitlePlayerAccountEntity;
             std::string PlayerSecret;
             std::string ServerCustomId;
 
@@ -6940,7 +6939,6 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CreateAccount(),
                 InfoRequestParameters(NULL),
-                LoginTitlePlayerAccountEntity(),
                 PlayerSecret(),
                 ServerCustomId()
             {}
@@ -6949,7 +6947,6 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CreateAccount(src.CreateAccount),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
-                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 PlayerSecret(src.PlayerSecret),
                 ServerCustomId(src.ServerCustomId)
             {}
@@ -6969,15 +6966,12 @@ namespace PlayFab
         {
             OptionalBool CreateAccount;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
-            // Deprecated - Do not use
-            OptionalBool LoginTitlePlayerAccountEntity;
             std::string XboxToken;
 
             LoginWithXboxRequest() :
                 PlayFabBaseModel(),
                 CreateAccount(),
                 InfoRequestParameters(NULL),
-                LoginTitlePlayerAccountEntity(),
                 XboxToken()
             {}
 
@@ -6985,7 +6979,6 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CreateAccount(src.CreateAccount),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
-                LoginTitlePlayerAccountEntity(src.LoginTitlePlayerAccountEntity),
                 XboxToken(src.XboxToken)
             {}
 

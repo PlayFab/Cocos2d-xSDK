@@ -107,7 +107,9 @@ namespace PlayFab
             AzureRegionSouthCentralUs,
             AzureRegionSoutheastAsia,
             AzureRegionWestEurope,
-            AzureRegionWestUs
+            AzureRegionWestUs,
+            AzureRegionChinaEast2,
+            AzureRegionChinaNorth2
         };
 
         void writeAzureRegionEnumJSON(AzureRegion enumVal, PFStringJsonWriter& writer);
@@ -142,8 +144,43 @@ namespace PlayFab
         void writeAzureVmSizeEnumJSON(AzureVmSize enumVal, PFStringJsonWriter& writer);
         AzureVmSize readAzureVmSizeFromValue(const rapidjson::Value& obj);
 
+        struct CurrentServerStats : public PlayFabBaseModel
+        {
+            Int32 Active;
+            Int32 Propping;
+            Int32 StandingBy;
+            Int32 Total;
+
+            CurrentServerStats() :
+                PlayFabBaseModel(),
+                Active(0),
+                Propping(0),
+                StandingBy(0),
+                Total(0)
+            {}
+
+            CurrentServerStats(const CurrentServerStats& src) :
+                PlayFabBaseModel(),
+                Active(src.Active),
+                Propping(src.Propping),
+                StandingBy(src.StandingBy),
+                Total(src.Total)
+            {}
+
+            CurrentServerStats(const rapidjson::Value& obj) : CurrentServerStats()
+            {
+                readFromValue(obj);
+            }
+
+            ~CurrentServerStats();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct BuildRegion : public PlayFabBaseModel
         {
+            CurrentServerStats* pfCurrentServerStats;
             Int32 MaxServers;
             Boxed<AzureRegion> Region;
             Int32 StandbyServers;
@@ -151,6 +188,7 @@ namespace PlayFab
 
             BuildRegion() :
                 PlayFabBaseModel(),
+                pfCurrentServerStats(NULL),
                 MaxServers(0),
                 Region(),
                 StandbyServers(0),
@@ -159,6 +197,7 @@ namespace PlayFab
 
             BuildRegion(const BuildRegion& src) :
                 PlayFabBaseModel(),
+                pfCurrentServerStats(src.pfCurrentServerStats ? new CurrentServerStats(*src.pfCurrentServerStats) : NULL),
                 MaxServers(src.MaxServers),
                 Region(src.Region),
                 StandbyServers(src.StandbyServers),

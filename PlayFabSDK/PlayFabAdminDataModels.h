@@ -2874,6 +2874,7 @@ namespace PlayFab
             GenericErrorCodesPushNotificationTemplateMissingDefaultVersion,
             GenericErrorCodesPushNotificationTemplateInvalidSyntax,
             GenericErrorCodesPushNotificationTemplateNoCustomPayloadForV1,
+            GenericErrorCodesNoLeaderboardForStatistic,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingCreateRequestMissing,
