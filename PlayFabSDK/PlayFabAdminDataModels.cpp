@@ -3402,6 +3402,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesPushNotificationTemplateMissingDefaultVersion: writer.String("PushNotificationTemplateMissingDefaultVersion"); break;
     case GenericErrorCodesPushNotificationTemplateInvalidSyntax: writer.String("PushNotificationTemplateInvalidSyntax"); break;
     case GenericErrorCodesPushNotificationTemplateNoCustomPayloadForV1: writer.String("PushNotificationTemplateNoCustomPayloadForV1"); break;
+    case GenericErrorCodesNoLeaderboardForStatistic: writer.String("NoLeaderboardForStatistic"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingCreateRequestMissing: writer.String("MatchmakingCreateRequestMissing"); break;
@@ -3861,6 +3862,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["PushNotificationTemplateMissingDefaultVersion"] = GenericErrorCodesPushNotificationTemplateMissingDefaultVersion;
         _GenericErrorCodesMap["PushNotificationTemplateInvalidSyntax"] = GenericErrorCodesPushNotificationTemplateInvalidSyntax;
         _GenericErrorCodesMap["PushNotificationTemplateNoCustomPayloadForV1"] = GenericErrorCodesPushNotificationTemplateNoCustomPayloadForV1;
+        _GenericErrorCodesMap["NoLeaderboardForStatistic"] = GenericErrorCodesNoLeaderboardForStatistic;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingCreateRequestMissing"] = GenericErrorCodesMatchmakingCreateRequestMissing;

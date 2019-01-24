@@ -103,6 +103,8 @@ void PlayFab::MultiplayerModels::writeAzureRegionEnumJSON(AzureRegion enumVal, P
     case AzureRegionSoutheastAsia: writer.String("SoutheastAsia"); break;
     case AzureRegionWestEurope: writer.String("WestEurope"); break;
     case AzureRegionWestUs: writer.String("WestUs"); break;
+    case AzureRegionChinaEast2: writer.String("ChinaEast2"); break;
+    case AzureRegionChinaNorth2: writer.String("ChinaNorth2"); break;
 
     }
 }
@@ -128,6 +130,8 @@ AzureRegion PlayFab::MultiplayerModels::readAzureRegionFromValue(const rapidjson
         _AzureRegionMap["SoutheastAsia"] = AzureRegionSoutheastAsia;
         _AzureRegionMap["WestEurope"] = AzureRegionWestEurope;
         _AzureRegionMap["WestUs"] = AzureRegionWestUs;
+        _AzureRegionMap["ChinaEast2"] = AzureRegionChinaEast2;
+        _AzureRegionMap["ChinaNorth2"] = AzureRegionChinaNorth2;
 
     }
 
@@ -205,14 +209,45 @@ AzureVmSize PlayFab::MultiplayerModels::readAzureVmSizeFromValue(const rapidjson
     return AzureVmSizeStandard_D1_v2; // Basically critical fail
 }
 
+CurrentServerStats::~CurrentServerStats()
+{
+
+}
+
+void CurrentServerStats::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Active"); writer.Int(Active);
+    writer.String("Propping"); writer.Int(Propping);
+    writer.String("StandingBy"); writer.Int(StandingBy);
+    writer.String("Total"); writer.Int(Total);
+    writer.EndObject();
+}
+
+bool CurrentServerStats::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Active_member = obj.FindMember("Active");
+    if (Active_member != obj.MemberEnd() && !Active_member->value.IsNull()) Active = Active_member->value.GetInt();
+    const Value::ConstMemberIterator Propping_member = obj.FindMember("Propping");
+    if (Propping_member != obj.MemberEnd() && !Propping_member->value.IsNull()) Propping = Propping_member->value.GetInt();
+    const Value::ConstMemberIterator StandingBy_member = obj.FindMember("StandingBy");
+    if (StandingBy_member != obj.MemberEnd() && !StandingBy_member->value.IsNull()) StandingBy = StandingBy_member->value.GetInt();
+    const Value::ConstMemberIterator Total_member = obj.FindMember("Total");
+    if (Total_member != obj.MemberEnd() && !Total_member->value.IsNull()) Total = Total_member->value.GetInt();
+
+    return true;
+}
+
 BuildRegion::~BuildRegion()
 {
+    if (pfCurrentServerStats != NULL) delete pfCurrentServerStats;
 
 }
 
 void BuildRegion::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (pfCurrentServerStats != NULL) { writer.String("CurrentServerStats"); pfCurrentServerStats->writeJSON(writer); }
     writer.String("MaxServers"); writer.Int(MaxServers);
     if (Region.notNull()) { writer.String("Region"); writeAzureRegionEnumJSON(Region, writer); }
     writer.String("StandbyServers"); writer.Int(StandbyServers);
@@ -222,6 +257,8 @@ void BuildRegion::writeJSON(PFStringJsonWriter& writer)
 
 bool BuildRegion::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CurrentServerStats_member = obj.FindMember("CurrentServerStats");
+    if (CurrentServerStats_member != obj.MemberEnd() && !CurrentServerStats_member->value.IsNull()) pfCurrentServerStats = new CurrentServerStats(CurrentServerStats_member->value);
     const Value::ConstMemberIterator MaxServers_member = obj.FindMember("MaxServers");
     if (MaxServers_member != obj.MemberEnd() && !MaxServers_member->value.IsNull()) MaxServers = MaxServers_member->value.GetInt();
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");

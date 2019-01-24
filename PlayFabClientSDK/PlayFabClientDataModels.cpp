@@ -8823,7 +8823,6 @@ void LoginWithAndroidDeviceIDRequest::writeJSON(PFStringJsonWriter& writer)
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (OS.length() > 0) { writer.String("OS"); writer.String(OS.c_str()); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
@@ -8842,8 +8841,6 @@ bool LoginWithAndroidDeviceIDRequest::readFromValue(const rapidjson::Value& obj)
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator OS_member = obj.FindMember("OS");
     if (OS_member != obj.MemberEnd() && !OS_member->value.IsNull()) OS = OS_member->value.GetString();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
@@ -8867,7 +8864,6 @@ void LoginWithCustomIDRequest::writeJSON(PFStringJsonWriter& writer)
     if (CustomId.length() > 0) { writer.String("CustomId"); writer.String(CustomId.c_str()); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
     writer.EndObject();
@@ -8883,8 +8879,6 @@ bool LoginWithCustomIDRequest::readFromValue(const rapidjson::Value& obj)
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -8904,7 +8898,6 @@ void LoginWithEmailAddressRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
     writer.String("Email"); writer.String(Email.c_str());
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     writer.String("Password"); writer.String(Password.c_str());
     writer.String("TitleId"); writer.String(TitleId.c_str());
     writer.EndObject();
@@ -8916,8 +8909,6 @@ bool LoginWithEmailAddressRequest::readFromValue(const rapidjson::Value& obj)
     if (Email_member != obj.MemberEnd() && !Email_member->value.IsNull()) Email = Email_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator Password_member = obj.FindMember("Password");
     if (Password_member != obj.MemberEnd() && !Password_member->value.IsNull()) Password = Password_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -8939,7 +8930,6 @@ void LoginWithFacebookInstantGamesIdRequest::writeJSON(PFStringJsonWriter& write
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     writer.String("FacebookInstantGamesSignature"); writer.String(FacebookInstantGamesSignature.c_str());
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
     writer.EndObject();
@@ -8955,8 +8945,6 @@ bool LoginWithFacebookInstantGamesIdRequest::readFromValue(const rapidjson::Valu
     if (FacebookInstantGamesSignature_member != obj.MemberEnd() && !FacebookInstantGamesSignature_member->value.IsNull()) FacebookInstantGamesSignature = FacebookInstantGamesSignature_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -8978,7 +8966,6 @@ void LoginWithFacebookRequest::writeJSON(PFStringJsonWriter& writer)
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
     writer.EndObject();
@@ -8994,8 +8981,6 @@ bool LoginWithFacebookRequest::readFromValue(const rapidjson::Value& obj)
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -9016,7 +9001,6 @@ void LoginWithGameCenterRequest::writeJSON(PFStringJsonWriter& writer)
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerId.length() > 0) { writer.String("PlayerId"); writer.String(PlayerId.c_str()); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
@@ -9031,8 +9015,6 @@ bool LoginWithGameCenterRequest::readFromValue(const rapidjson::Value& obj)
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerId_member = obj.FindMember("PlayerId");
     if (PlayerId_member != obj.MemberEnd() && !PlayerId_member->value.IsNull()) PlayerId = PlayerId_member->value.GetString();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
@@ -9055,7 +9037,6 @@ void LoginWithGoogleAccountRequest::writeJSON(PFStringJsonWriter& writer)
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     if (ServerAuthCode.length() > 0) { writer.String("ServerAuthCode"); writer.String(ServerAuthCode.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
@@ -9070,8 +9051,6 @@ bool LoginWithGoogleAccountRequest::readFromValue(const rapidjson::Value& obj)
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator ServerAuthCode_member = obj.FindMember("ServerAuthCode");
@@ -9096,7 +9075,6 @@ void LoginWithIOSDeviceIDRequest::writeJSON(PFStringJsonWriter& writer)
     if (DeviceModel.length() > 0) { writer.String("DeviceModel"); writer.String(DeviceModel.c_str()); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (OS.length() > 0) { writer.String("OS"); writer.String(OS.c_str()); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
@@ -9115,8 +9093,6 @@ bool LoginWithIOSDeviceIDRequest::readFromValue(const rapidjson::Value& obj)
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator OS_member = obj.FindMember("OS");
     if (OS_member != obj.MemberEnd() && !OS_member->value.IsNull()) OS = OS_member->value.GetString();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
@@ -9141,7 +9117,6 @@ void LoginWithKongregateRequest::writeJSON(PFStringJsonWriter& writer)
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
     if (KongregateId.length() > 0) { writer.String("KongregateId"); writer.String(KongregateId.c_str()); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
     writer.EndObject();
@@ -9159,8 +9134,6 @@ bool LoginWithKongregateRequest::readFromValue(const rapidjson::Value& obj)
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
     const Value::ConstMemberIterator KongregateId_member = obj.FindMember("KongregateId");
     if (KongregateId_member != obj.MemberEnd() && !KongregateId_member->value.IsNull()) KongregateId = KongregateId_member->value.GetString();
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -9181,7 +9154,6 @@ void LoginWithNintendoSwitchDeviceIdRequest::writeJSON(PFStringJsonWriter& write
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (NintendoSwitchDeviceId.length() > 0) { writer.String("NintendoSwitchDeviceId"); writer.String(NintendoSwitchDeviceId.c_str()); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
@@ -9196,8 +9168,6 @@ bool LoginWithNintendoSwitchDeviceIdRequest::readFromValue(const rapidjson::Valu
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator NintendoSwitchDeviceId_member = obj.FindMember("NintendoSwitchDeviceId");
     if (NintendoSwitchDeviceId_member != obj.MemberEnd() && !NintendoSwitchDeviceId_member->value.IsNull()) NintendoSwitchDeviceId = NintendoSwitchDeviceId_member->value.GetString();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
@@ -9222,7 +9192,6 @@ void LoginWithOpenIdConnectRequest::writeJSON(PFStringJsonWriter& writer)
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     writer.String("IdToken"); writer.String(IdToken.c_str());
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
     writer.EndObject();
@@ -9240,8 +9209,6 @@ bool LoginWithOpenIdConnectRequest::readFromValue(const rapidjson::Value& obj)
     if (IdToken_member != obj.MemberEnd() && !IdToken_member->value.IsNull()) IdToken = IdToken_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -9260,7 +9227,6 @@ void LoginWithPlayFabRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     writer.String("Password"); writer.String(Password.c_str());
     writer.String("TitleId"); writer.String(TitleId.c_str());
     writer.String("Username"); writer.String(Username.c_str());
@@ -9271,8 +9237,6 @@ bool LoginWithPlayFabRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator Password_member = obj.FindMember("Password");
     if (Password_member != obj.MemberEnd() && !Password_member->value.IsNull()) Password = Password_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -9297,7 +9261,6 @@ void LoginWithPSNRequest::writeJSON(PFStringJsonWriter& writer)
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
     if (IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     if (RedirectUri.length() > 0) { writer.String("RedirectUri"); writer.String(RedirectUri.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
@@ -9316,8 +9279,6 @@ bool LoginWithPSNRequest::readFromValue(const rapidjson::Value& obj)
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
     const Value::ConstMemberIterator IssuerId_member = obj.FindMember("IssuerId");
     if (IssuerId_member != obj.MemberEnd() && !IssuerId_member->value.IsNull()) IssuerId = IssuerId_member->value.GetInt();
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator RedirectUri_member = obj.FindMember("RedirectUri");
@@ -9340,7 +9301,6 @@ void LoginWithSteamRequest::writeJSON(PFStringJsonWriter& writer)
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     if (SteamTicket.length() > 0) { writer.String("SteamTicket"); writer.String(SteamTicket.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
@@ -9355,8 +9315,6 @@ bool LoginWithSteamRequest::readFromValue(const rapidjson::Value& obj)
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator SteamTicket_member = obj.FindMember("SteamTicket");
@@ -9380,7 +9338,6 @@ void LoginWithTwitchRequest::writeJSON(PFStringJsonWriter& writer)
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
     writer.EndObject();
@@ -9396,8 +9353,6 @@ bool LoginWithTwitchRequest::readFromValue(const rapidjson::Value& obj)
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -9417,7 +9372,6 @@ void LoginWithWindowsHelloRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
     writer.String("ChallengeSignature"); writer.String(ChallengeSignature.c_str());
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     writer.String("PublicKeyHint"); writer.String(PublicKeyHint.c_str());
     writer.String("TitleId"); writer.String(TitleId.c_str());
     writer.EndObject();
@@ -9429,8 +9383,6 @@ bool LoginWithWindowsHelloRequest::readFromValue(const rapidjson::Value& obj)
     if (ChallengeSignature_member != obj.MemberEnd() && !ChallengeSignature_member->value.IsNull()) ChallengeSignature = ChallengeSignature_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PublicKeyHint_member = obj.FindMember("PublicKeyHint");
     if (PublicKeyHint_member != obj.MemberEnd() && !PublicKeyHint_member->value.IsNull()) PublicKeyHint = PublicKeyHint_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -9451,7 +9403,6 @@ void LoginWithXboxRequest::writeJSON(PFStringJsonWriter& writer)
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
     if (XboxToken.length() > 0) { writer.String("XboxToken"); writer.String(XboxToken.c_str()); }
@@ -9466,8 +9417,6 @@ bool LoginWithXboxRequest::readFromValue(const rapidjson::Value& obj)
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -10106,7 +10055,6 @@ void RegisterPlayFabUserRequest::writeJSON(PFStringJsonWriter& writer)
     if (Email.length() > 0) { writer.String("Email"); writer.String(Email.c_str()); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (Password.length() > 0) { writer.String("Password"); writer.String(Password.c_str()); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     if (RequireBothUsernameAndEmail.notNull()) { writer.String("RequireBothUsernameAndEmail"); writer.Bool(RequireBothUsernameAndEmail); }
@@ -10125,8 +10073,6 @@ bool RegisterPlayFabUserRequest::readFromValue(const rapidjson::Value& obj)
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator Password_member = obj.FindMember("Password");
     if (Password_member != obj.MemberEnd() && !Password_member->value.IsNull()) Password = Password_member->value.GetString();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
@@ -10187,7 +10133,6 @@ void RegisterWithWindowsHelloRequest::writeJSON(PFStringJsonWriter& writer)
     if (DeviceName.length() > 0) { writer.String("DeviceName"); writer.String(DeviceName.c_str()); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
-    if (LoginTitlePlayerAccountEntity.notNull()) { writer.String("LoginTitlePlayerAccountEntity"); writer.Bool(LoginTitlePlayerAccountEntity); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     if (PublicKey.length() > 0) { writer.String("PublicKey"); writer.String(PublicKey.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
@@ -10203,8 +10148,6 @@ bool RegisterWithWindowsHelloRequest::readFromValue(const rapidjson::Value& obj)
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
-    const Value::ConstMemberIterator LoginTitlePlayerAccountEntity_member = obj.FindMember("LoginTitlePlayerAccountEntity");
-    if (LoginTitlePlayerAccountEntity_member != obj.MemberEnd() && !LoginTitlePlayerAccountEntity_member->value.IsNull()) LoginTitlePlayerAccountEntity = LoginTitlePlayerAccountEntity_member->value.GetBool();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator PublicKey_member = obj.FindMember("PublicKey");
