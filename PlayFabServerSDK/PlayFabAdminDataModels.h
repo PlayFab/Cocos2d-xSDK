@@ -221,6 +221,62 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct AddLocalizedNewsRequest : public PlayFabBaseModel
+        {
+            std::string Body;
+            std::string Language;
+            std::string NewsId;
+            std::string Title;
+
+            AddLocalizedNewsRequest() :
+                PlayFabBaseModel(),
+                Body(),
+                Language(),
+                NewsId(),
+                Title()
+            {}
+
+            AddLocalizedNewsRequest(const AddLocalizedNewsRequest& src) :
+                PlayFabBaseModel(),
+                Body(src.Body),
+                Language(src.Language),
+                NewsId(src.NewsId),
+                Title(src.Title)
+            {}
+
+            AddLocalizedNewsRequest(const rapidjson::Value& obj) : AddLocalizedNewsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~AddLocalizedNewsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct AddLocalizedNewsResult : public PlayFabBaseModel
+        {
+
+            AddLocalizedNewsResult() :
+                PlayFabBaseModel()
+            {}
+
+            AddLocalizedNewsResult(const AddLocalizedNewsResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            AddLocalizedNewsResult(const rapidjson::Value& obj) : AddLocalizedNewsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~AddLocalizedNewsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct AddNewsRequest : public PlayFabBaseModel
         {
             std::string Body;
@@ -2875,6 +2931,12 @@ namespace PlayFab
             GenericErrorCodesPushNotificationTemplateInvalidSyntax,
             GenericErrorCodesPushNotificationTemplateNoCustomPayloadForV1,
             GenericErrorCodesNoLeaderboardForStatistic,
+            GenericErrorCodesTitleNewsMissingDefaultLanguage,
+            GenericErrorCodesTitleNewsNotFound,
+            GenericErrorCodesTitleNewsDuplicateLanguage,
+            GenericErrorCodesTitleNewsMissingTitleOrBody,
+            GenericErrorCodesTitleNewsInvalidLanguage,
+            GenericErrorCodesEmailRecipientBlacklisted,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingCreateRequestMissing,
@@ -2912,7 +2974,10 @@ namespace PlayFab
             GenericErrorCodesMatchmakingNotEnabled,
             GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid,
             GenericErrorCodesMatchmakingStatisticsIdMissing,
-            GenericErrorCodesCannotEnableMultiplayerServersForTitle
+            GenericErrorCodesCannotEnableMultiplayerServersForTitle,
+            GenericErrorCodesTitleConfigNotFound,
+            GenericErrorCodesTitleConfigUpdateConflict,
+            GenericErrorCodesTitleConfigSerializationError
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);

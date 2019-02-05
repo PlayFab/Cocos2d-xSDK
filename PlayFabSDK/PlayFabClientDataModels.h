@@ -2889,6 +2889,7 @@ namespace PlayFab
 
         struct FriendInfo : public PlayFabBaseModel
         {
+            // Deprecated - Do not use
             std::string CurrentMatchmakerLobbyId;
             UserFacebookInfo* FacebookInfo;
             std::string FriendPlayFabId;

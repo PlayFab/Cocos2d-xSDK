@@ -190,6 +190,7 @@ EntityProfileBody::~EntityProfileBody()
 void EntityProfileBody::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     if (EntityChain.length() > 0) { writer.String("EntityChain"); writer.String(EntityChain.c_str()); }
     if (!Files.empty()) {
@@ -200,7 +201,6 @@ void EntityProfileBody::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndObject();
     }
-    if (FriendlyName.length() > 0) { writer.String("FriendlyName"); writer.String(FriendlyName.c_str()); }
     if (Language.length() > 0) { writer.String("Language"); writer.String(Language.c_str()); }
     if (Lineage != NULL) { writer.String("Lineage"); Lineage->writeJSON(writer); }
     if (!Objects.empty()) {
@@ -225,6 +225,8 @@ void EntityProfileBody::writeJSON(PFStringJsonWriter& writer)
 
 bool EntityProfileBody::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator EntityChain_member = obj.FindMember("EntityChain");
@@ -235,8 +237,6 @@ bool EntityProfileBody::readFromValue(const rapidjson::Value& obj)
             Files[iter->name.GetString()] = EntityProfileFileMetadata(iter->value);
         }
     }
-    const Value::ConstMemberIterator FriendlyName_member = obj.FindMember("FriendlyName");
-    if (FriendlyName_member != obj.MemberEnd() && !FriendlyName_member->value.IsNull()) FriendlyName = FriendlyName_member->value.GetString();
     const Value::ConstMemberIterator Language_member = obj.FindMember("Language");
     if (Language_member != obj.MemberEnd() && !Language_member->value.IsNull()) Language = Language_member->value.GetString();
     const Value::ConstMemberIterator Lineage_member = obj.FindMember("Lineage");

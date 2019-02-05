@@ -15,6 +15,7 @@ namespace PlayFab
 
         // ------------ Generated API calls
         static void AbortTaskInstance(AdminModels::AbortTaskInstanceRequest& request, ProcessApiCallback<AdminModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void AddLocalizedNews(AdminModels::AddLocalizedNewsRequest& request, ProcessApiCallback<AdminModels::AddLocalizedNewsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddNews(AdminModels::AddNewsRequest& request, ProcessApiCallback<AdminModels::AddNewsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddPlayerTag(AdminModels::AddPlayerTagRequest& request, ProcessApiCallback<AdminModels::AddPlayerTagResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddServerBuild(AdminModels::AddServerBuildRequest& request, ProcessApiCallback<AdminModels::AddServerBuildResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -126,6 +127,7 @@ namespace PlayFab
 
         // ------------ Generated result handlers
         static void OnAbortTaskInstanceResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnAddLocalizedNewsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddNewsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddPlayerTagResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddServerBuildResult(int httpStatus, HttpRequest* request, void* userData);
