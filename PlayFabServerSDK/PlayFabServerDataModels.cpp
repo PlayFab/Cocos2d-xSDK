@@ -4180,6 +4180,12 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesPushNotificationTemplateInvalidSyntax: writer.String("PushNotificationTemplateInvalidSyntax"); break;
     case GenericErrorCodesPushNotificationTemplateNoCustomPayloadForV1: writer.String("PushNotificationTemplateNoCustomPayloadForV1"); break;
     case GenericErrorCodesNoLeaderboardForStatistic: writer.String("NoLeaderboardForStatistic"); break;
+    case GenericErrorCodesTitleNewsMissingDefaultLanguage: writer.String("TitleNewsMissingDefaultLanguage"); break;
+    case GenericErrorCodesTitleNewsNotFound: writer.String("TitleNewsNotFound"); break;
+    case GenericErrorCodesTitleNewsDuplicateLanguage: writer.String("TitleNewsDuplicateLanguage"); break;
+    case GenericErrorCodesTitleNewsMissingTitleOrBody: writer.String("TitleNewsMissingTitleOrBody"); break;
+    case GenericErrorCodesTitleNewsInvalidLanguage: writer.String("TitleNewsInvalidLanguage"); break;
+    case GenericErrorCodesEmailRecipientBlacklisted: writer.String("EmailRecipientBlacklisted"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingCreateRequestMissing: writer.String("MatchmakingCreateRequestMissing"); break;
@@ -4218,6 +4224,9 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid: writer.String("MatchmakingGetStatisticsIdentityInvalid"); break;
     case GenericErrorCodesMatchmakingStatisticsIdMissing: writer.String("MatchmakingStatisticsIdMissing"); break;
     case GenericErrorCodesCannotEnableMultiplayerServersForTitle: writer.String("CannotEnableMultiplayerServersForTitle"); break;
+    case GenericErrorCodesTitleConfigNotFound: writer.String("TitleConfigNotFound"); break;
+    case GenericErrorCodesTitleConfigUpdateConflict: writer.String("TitleConfigUpdateConflict"); break;
+    case GenericErrorCodesTitleConfigSerializationError: writer.String("TitleConfigSerializationError"); break;
 
     }
 }
@@ -4640,6 +4649,12 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["PushNotificationTemplateInvalidSyntax"] = GenericErrorCodesPushNotificationTemplateInvalidSyntax;
         _GenericErrorCodesMap["PushNotificationTemplateNoCustomPayloadForV1"] = GenericErrorCodesPushNotificationTemplateNoCustomPayloadForV1;
         _GenericErrorCodesMap["NoLeaderboardForStatistic"] = GenericErrorCodesNoLeaderboardForStatistic;
+        _GenericErrorCodesMap["TitleNewsMissingDefaultLanguage"] = GenericErrorCodesTitleNewsMissingDefaultLanguage;
+        _GenericErrorCodesMap["TitleNewsNotFound"] = GenericErrorCodesTitleNewsNotFound;
+        _GenericErrorCodesMap["TitleNewsDuplicateLanguage"] = GenericErrorCodesTitleNewsDuplicateLanguage;
+        _GenericErrorCodesMap["TitleNewsMissingTitleOrBody"] = GenericErrorCodesTitleNewsMissingTitleOrBody;
+        _GenericErrorCodesMap["TitleNewsInvalidLanguage"] = GenericErrorCodesTitleNewsInvalidLanguage;
+        _GenericErrorCodesMap["EmailRecipientBlacklisted"] = GenericErrorCodesEmailRecipientBlacklisted;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingCreateRequestMissing"] = GenericErrorCodesMatchmakingCreateRequestMissing;
@@ -4678,6 +4693,9 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["MatchmakingGetStatisticsIdentityInvalid"] = GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid;
         _GenericErrorCodesMap["MatchmakingStatisticsIdMissing"] = GenericErrorCodesMatchmakingStatisticsIdMissing;
         _GenericErrorCodesMap["CannotEnableMultiplayerServersForTitle"] = GenericErrorCodesCannotEnableMultiplayerServersForTitle;
+        _GenericErrorCodesMap["TitleConfigNotFound"] = GenericErrorCodesTitleConfigNotFound;
+        _GenericErrorCodesMap["TitleConfigUpdateConflict"] = GenericErrorCodesTitleConfigUpdateConflict;
+        _GenericErrorCodesMap["TitleConfigSerializationError"] = GenericErrorCodesTitleConfigSerializationError;
 
     }
 
@@ -6975,6 +6993,94 @@ bool GetPlayFabIDsFromNintendoSwitchDeviceIdsResult::readFromValue(const rapidjs
         const rapidjson::Value& memberList = Data_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Data.push_back(NintendoSwitchPlayFabIdPair(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetPlayFabIDsFromPSNAccountIDsRequest::~GetPlayFabIDsFromPSNAccountIDsRequest()
+{
+
+}
+
+void GetPlayFabIDsFromPSNAccountIDsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (IssuerId.notNull()) { writer.String("IssuerId"); writer.Int(IssuerId); }
+    writer.String("PSNAccountIDs");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = PSNAccountIDs.begin(); iter != PSNAccountIDs.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromPSNAccountIDsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator IssuerId_member = obj.FindMember("IssuerId");
+    if (IssuerId_member != obj.MemberEnd() && !IssuerId_member->value.IsNull()) IssuerId = IssuerId_member->value.GetInt();
+    const Value::ConstMemberIterator PSNAccountIDs_member = obj.FindMember("PSNAccountIDs");
+    if (PSNAccountIDs_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = PSNAccountIDs_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            PSNAccountIDs.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
+PSNAccountPlayFabIdPair::~PSNAccountPlayFabIdPair()
+{
+
+}
+
+void PSNAccountPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    if (PSNAccountId.length() > 0) { writer.String("PSNAccountId"); writer.String(PSNAccountId.c_str()); }
+    writer.EndObject();
+}
+
+bool PSNAccountPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator PSNAccountId_member = obj.FindMember("PSNAccountId");
+    if (PSNAccountId_member != obj.MemberEnd() && !PSNAccountId_member->value.IsNull()) PSNAccountId = PSNAccountId_member->value.GetString();
+
+    return true;
+}
+
+GetPlayFabIDsFromPSNAccountIDsResult::~GetPlayFabIDsFromPSNAccountIDsResult()
+{
+
+}
+
+void GetPlayFabIDsFromPSNAccountIDsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!Data.empty()) {
+        writer.String("Data");
+        writer.StartArray();
+        for (std::list<PSNAccountPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromPSNAccountIDsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Data_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Data.push_back(PSNAccountPlayFabIdPair(memberList[i]));
         }
     }
 

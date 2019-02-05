@@ -212,6 +212,52 @@ bool AdCampaignAttributionModel::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+AddLocalizedNewsRequest::~AddLocalizedNewsRequest()
+{
+
+}
+
+void AddLocalizedNewsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Body"); writer.String(Body.c_str());
+    writer.String("Language"); writer.String(Language.c_str());
+    writer.String("NewsId"); writer.String(NewsId.c_str());
+    writer.String("Title"); writer.String(Title.c_str());
+    writer.EndObject();
+}
+
+bool AddLocalizedNewsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Body_member = obj.FindMember("Body");
+    if (Body_member != obj.MemberEnd() && !Body_member->value.IsNull()) Body = Body_member->value.GetString();
+    const Value::ConstMemberIterator Language_member = obj.FindMember("Language");
+    if (Language_member != obj.MemberEnd() && !Language_member->value.IsNull()) Language = Language_member->value.GetString();
+    const Value::ConstMemberIterator NewsId_member = obj.FindMember("NewsId");
+    if (NewsId_member != obj.MemberEnd() && !NewsId_member->value.IsNull()) NewsId = NewsId_member->value.GetString();
+    const Value::ConstMemberIterator Title_member = obj.FindMember("Title");
+    if (Title_member != obj.MemberEnd() && !Title_member->value.IsNull()) Title = Title_member->value.GetString();
+
+    return true;
+}
+
+AddLocalizedNewsResult::~AddLocalizedNewsResult()
+{
+
+}
+
+void AddLocalizedNewsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool AddLocalizedNewsResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 AddNewsRequest::~AddNewsRequest()
 {
 
@@ -3403,6 +3449,12 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesPushNotificationTemplateInvalidSyntax: writer.String("PushNotificationTemplateInvalidSyntax"); break;
     case GenericErrorCodesPushNotificationTemplateNoCustomPayloadForV1: writer.String("PushNotificationTemplateNoCustomPayloadForV1"); break;
     case GenericErrorCodesNoLeaderboardForStatistic: writer.String("NoLeaderboardForStatistic"); break;
+    case GenericErrorCodesTitleNewsMissingDefaultLanguage: writer.String("TitleNewsMissingDefaultLanguage"); break;
+    case GenericErrorCodesTitleNewsNotFound: writer.String("TitleNewsNotFound"); break;
+    case GenericErrorCodesTitleNewsDuplicateLanguage: writer.String("TitleNewsDuplicateLanguage"); break;
+    case GenericErrorCodesTitleNewsMissingTitleOrBody: writer.String("TitleNewsMissingTitleOrBody"); break;
+    case GenericErrorCodesTitleNewsInvalidLanguage: writer.String("TitleNewsInvalidLanguage"); break;
+    case GenericErrorCodesEmailRecipientBlacklisted: writer.String("EmailRecipientBlacklisted"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingCreateRequestMissing: writer.String("MatchmakingCreateRequestMissing"); break;
@@ -3441,6 +3493,9 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid: writer.String("MatchmakingGetStatisticsIdentityInvalid"); break;
     case GenericErrorCodesMatchmakingStatisticsIdMissing: writer.String("MatchmakingStatisticsIdMissing"); break;
     case GenericErrorCodesCannotEnableMultiplayerServersForTitle: writer.String("CannotEnableMultiplayerServersForTitle"); break;
+    case GenericErrorCodesTitleConfigNotFound: writer.String("TitleConfigNotFound"); break;
+    case GenericErrorCodesTitleConfigUpdateConflict: writer.String("TitleConfigUpdateConflict"); break;
+    case GenericErrorCodesTitleConfigSerializationError: writer.String("TitleConfigSerializationError"); break;
 
     }
 }
@@ -3863,6 +3918,12 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["PushNotificationTemplateInvalidSyntax"] = GenericErrorCodesPushNotificationTemplateInvalidSyntax;
         _GenericErrorCodesMap["PushNotificationTemplateNoCustomPayloadForV1"] = GenericErrorCodesPushNotificationTemplateNoCustomPayloadForV1;
         _GenericErrorCodesMap["NoLeaderboardForStatistic"] = GenericErrorCodesNoLeaderboardForStatistic;
+        _GenericErrorCodesMap["TitleNewsMissingDefaultLanguage"] = GenericErrorCodesTitleNewsMissingDefaultLanguage;
+        _GenericErrorCodesMap["TitleNewsNotFound"] = GenericErrorCodesTitleNewsNotFound;
+        _GenericErrorCodesMap["TitleNewsDuplicateLanguage"] = GenericErrorCodesTitleNewsDuplicateLanguage;
+        _GenericErrorCodesMap["TitleNewsMissingTitleOrBody"] = GenericErrorCodesTitleNewsMissingTitleOrBody;
+        _GenericErrorCodesMap["TitleNewsInvalidLanguage"] = GenericErrorCodesTitleNewsInvalidLanguage;
+        _GenericErrorCodesMap["EmailRecipientBlacklisted"] = GenericErrorCodesEmailRecipientBlacklisted;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingCreateRequestMissing"] = GenericErrorCodesMatchmakingCreateRequestMissing;
@@ -3901,6 +3962,9 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["MatchmakingGetStatisticsIdentityInvalid"] = GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid;
         _GenericErrorCodesMap["MatchmakingStatisticsIdMissing"] = GenericErrorCodesMatchmakingStatisticsIdMissing;
         _GenericErrorCodesMap["CannotEnableMultiplayerServersForTitle"] = GenericErrorCodesCannotEnableMultiplayerServersForTitle;
+        _GenericErrorCodesMap["TitleConfigNotFound"] = GenericErrorCodesTitleConfigNotFound;
+        _GenericErrorCodesMap["TitleConfigUpdateConflict"] = GenericErrorCodesTitleConfigUpdateConflict;
+        _GenericErrorCodesMap["TitleConfigSerializationError"] = GenericErrorCodesTitleConfigSerializationError;
 
     }
 

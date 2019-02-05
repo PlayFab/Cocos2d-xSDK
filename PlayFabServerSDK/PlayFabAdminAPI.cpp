@@ -56,6 +56,52 @@ void PlayFabAdminAPI::OnAbortTaskInstanceResult(int httpStatus, HttpRequest* req
     delete request;
 }
 
+void PlayFabAdminAPI::AddLocalizedNews(
+    AddLocalizedNewsRequest& request,
+    ProcessApiCallback<AddLocalizedNewsResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/AddLocalizedNews"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<AddLocalizedNewsResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnAddLocalizedNewsResult, userData);
+}
+
+void PlayFabAdminAPI::OnAddLocalizedNewsResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    AddLocalizedNewsResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<AddLocalizedNewsResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabAdminAPI::AddNews(
     AddNewsRequest& request,
     ProcessApiCallback<AddNewsResult> callback,

@@ -3064,6 +3064,7 @@ namespace PlayFab
 
         struct FriendInfo : public PlayFabBaseModel
         {
+            // Deprecated - Do not use
             std::string CurrentMatchmakerLobbyId;
             UserFacebookInfo* FacebookInfo;
             std::string FriendPlayFabId;
@@ -3540,6 +3541,12 @@ namespace PlayFab
             GenericErrorCodesPushNotificationTemplateInvalidSyntax,
             GenericErrorCodesPushNotificationTemplateNoCustomPayloadForV1,
             GenericErrorCodesNoLeaderboardForStatistic,
+            GenericErrorCodesTitleNewsMissingDefaultLanguage,
+            GenericErrorCodesTitleNewsNotFound,
+            GenericErrorCodesTitleNewsDuplicateLanguage,
+            GenericErrorCodesTitleNewsMissingTitleOrBody,
+            GenericErrorCodesTitleNewsInvalidLanguage,
+            GenericErrorCodesEmailRecipientBlacklisted,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingCreateRequestMissing,
@@ -3577,7 +3584,10 @@ namespace PlayFab
             GenericErrorCodesMatchmakingNotEnabled,
             GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid,
             GenericErrorCodesMatchmakingStatisticsIdMissing,
-            GenericErrorCodesCannotEnableMultiplayerServersForTitle
+            GenericErrorCodesCannotEnableMultiplayerServersForTitle,
+            GenericErrorCodesTitleConfigNotFound,
+            GenericErrorCodesTitleConfigUpdateConflict,
+            GenericErrorCodesTitleConfigSerializationError
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
@@ -5568,6 +5578,87 @@ namespace PlayFab
             }
 
             ~GetPlayFabIDsFromNintendoSwitchDeviceIdsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromPSNAccountIDsRequest : public PlayFabBaseModel
+        {
+            OptionalInt32 IssuerId;
+            std::list<std::string> PSNAccountIDs;
+
+            GetPlayFabIDsFromPSNAccountIDsRequest() :
+                PlayFabBaseModel(),
+                IssuerId(),
+                PSNAccountIDs()
+            {}
+
+            GetPlayFabIDsFromPSNAccountIDsRequest(const GetPlayFabIDsFromPSNAccountIDsRequest& src) :
+                PlayFabBaseModel(),
+                IssuerId(src.IssuerId),
+                PSNAccountIDs(src.PSNAccountIDs)
+            {}
+
+            GetPlayFabIDsFromPSNAccountIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromPSNAccountIDsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromPSNAccountIDsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct PSNAccountPlayFabIdPair : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string PSNAccountId;
+
+            PSNAccountPlayFabIdPair() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                PSNAccountId()
+            {}
+
+            PSNAccountPlayFabIdPair(const PSNAccountPlayFabIdPair& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                PSNAccountId(src.PSNAccountId)
+            {}
+
+            PSNAccountPlayFabIdPair(const rapidjson::Value& obj) : PSNAccountPlayFabIdPair()
+            {
+                readFromValue(obj);
+            }
+
+            ~PSNAccountPlayFabIdPair();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromPSNAccountIDsResult : public PlayFabBaseModel
+        {
+            std::list<PSNAccountPlayFabIdPair> Data;
+
+            GetPlayFabIDsFromPSNAccountIDsResult() :
+                PlayFabBaseModel(),
+                Data()
+            {}
+
+            GetPlayFabIDsFromPSNAccountIDsResult(const GetPlayFabIDsFromPSNAccountIDsResult& src) :
+                PlayFabBaseModel(),
+                Data(src.Data)
+            {}
+
+            GetPlayFabIDsFromPSNAccountIDsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromPSNAccountIDsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromPSNAccountIDsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

@@ -191,10 +191,10 @@ namespace PlayFab
 
         struct EntityProfileBody : public PlayFabBaseModel
         {
+            std::string DisplayName;
             EntityKey* Entity;
             std::string EntityChain;
             std::map<std::string, EntityProfileFileMetadata> Files;
-            std::string FriendlyName;
             std::string Language;
             EntityLineage* Lineage;
             std::map<std::string, EntityDataObject> Objects;
@@ -203,10 +203,10 @@ namespace PlayFab
 
             EntityProfileBody() :
                 PlayFabBaseModel(),
+                DisplayName(),
                 Entity(NULL),
                 EntityChain(),
                 Files(),
-                FriendlyName(),
                 Language(),
                 Lineage(NULL),
                 Objects(),
@@ -216,10 +216,10 @@ namespace PlayFab
 
             EntityProfileBody(const EntityProfileBody& src) :
                 PlayFabBaseModel(),
+                DisplayName(src.DisplayName),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 EntityChain(src.EntityChain),
                 Files(src.Files),
-                FriendlyName(src.FriendlyName),
                 Language(src.Language),
                 Lineage(src.Lineage ? new EntityLineage(*src.Lineage) : NULL),
                 Objects(src.Objects),
