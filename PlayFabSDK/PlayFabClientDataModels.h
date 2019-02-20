@@ -7142,17 +7142,29 @@ namespace PlayFab
         {
             OptionalBool ForceLink;
             std::string GameCenterId;
+            std::string PublicKeyUrl;
+            std::string Salt;
+            std::string Signature;
+            std::string Timestamp;
 
             LinkGameCenterAccountRequest() :
                 PlayFabBaseModel(),
                 ForceLink(),
-                GameCenterId()
+                GameCenterId(),
+                PublicKeyUrl(),
+                Salt(),
+                Signature(),
+                Timestamp()
             {}
 
             LinkGameCenterAccountRequest(const LinkGameCenterAccountRequest& src) :
                 PlayFabBaseModel(),
                 ForceLink(src.ForceLink),
-                GameCenterId(src.GameCenterId)
+                GameCenterId(src.GameCenterId),
+                PublicKeyUrl(src.PublicKeyUrl),
+                Salt(src.Salt),
+                Signature(src.Signature),
+                Timestamp(src.Timestamp)
             {}
 
             LinkGameCenterAccountRequest(const rapidjson::Value& obj) : LinkGameCenterAccountRequest()
@@ -8021,6 +8033,10 @@ namespace PlayFab
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
             std::string PlayerId;
             std::string PlayerSecret;
+            std::string PublicKeyUrl;
+            std::string Salt;
+            std::string Signature;
+            std::string Timestamp;
             std::string TitleId;
 
             LoginWithGameCenterRequest() :
@@ -8030,6 +8046,10 @@ namespace PlayFab
                 InfoRequestParameters(NULL),
                 PlayerId(),
                 PlayerSecret(),
+                PublicKeyUrl(),
+                Salt(),
+                Signature(),
+                Timestamp(),
                 TitleId()
             {}
 
@@ -8040,6 +8060,10 @@ namespace PlayFab
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
                 PlayerId(src.PlayerId),
                 PlayerSecret(src.PlayerSecret),
+                PublicKeyUrl(src.PublicKeyUrl),
+                Salt(src.Salt),
+                Signature(src.Signature),
+                Timestamp(src.Timestamp),
                 TitleId(src.TitleId)
             {}
 

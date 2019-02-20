@@ -8253,6 +8253,10 @@ void LinkGameCenterAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
     if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
     writer.String("GameCenterId"); writer.String(GameCenterId.c_str());
+    if (PublicKeyUrl.length() > 0) { writer.String("PublicKeyUrl"); writer.String(PublicKeyUrl.c_str()); }
+    if (Salt.length() > 0) { writer.String("Salt"); writer.String(Salt.c_str()); }
+    if (Signature.length() > 0) { writer.String("Signature"); writer.String(Signature.c_str()); }
+    if (Timestamp.length() > 0) { writer.String("Timestamp"); writer.String(Timestamp.c_str()); }
     writer.EndObject();
 }
 
@@ -8262,6 +8266,14 @@ bool LinkGameCenterAccountRequest::readFromValue(const rapidjson::Value& obj)
     if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
     const Value::ConstMemberIterator GameCenterId_member = obj.FindMember("GameCenterId");
     if (GameCenterId_member != obj.MemberEnd() && !GameCenterId_member->value.IsNull()) GameCenterId = GameCenterId_member->value.GetString();
+    const Value::ConstMemberIterator PublicKeyUrl_member = obj.FindMember("PublicKeyUrl");
+    if (PublicKeyUrl_member != obj.MemberEnd() && !PublicKeyUrl_member->value.IsNull()) PublicKeyUrl = PublicKeyUrl_member->value.GetString();
+    const Value::ConstMemberIterator Salt_member = obj.FindMember("Salt");
+    if (Salt_member != obj.MemberEnd() && !Salt_member->value.IsNull()) Salt = Salt_member->value.GetString();
+    const Value::ConstMemberIterator Signature_member = obj.FindMember("Signature");
+    if (Signature_member != obj.MemberEnd() && !Signature_member->value.IsNull()) Signature = Signature_member->value.GetString();
+    const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
+    if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = Timestamp_member->value.GetString();
 
     return true;
 }
@@ -9003,6 +9015,10 @@ void LoginWithGameCenterRequest::writeJSON(PFStringJsonWriter& writer)
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
     if (PlayerId.length() > 0) { writer.String("PlayerId"); writer.String(PlayerId.c_str()); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
+    if (PublicKeyUrl.length() > 0) { writer.String("PublicKeyUrl"); writer.String(PublicKeyUrl.c_str()); }
+    if (Salt.length() > 0) { writer.String("Salt"); writer.String(Salt.c_str()); }
+    if (Signature.length() > 0) { writer.String("Signature"); writer.String(Signature.c_str()); }
+    if (Timestamp.length() > 0) { writer.String("Timestamp"); writer.String(Timestamp.c_str()); }
     writer.String("TitleId"); writer.String(TitleId.c_str());
     writer.EndObject();
 }
@@ -9019,6 +9035,14 @@ bool LoginWithGameCenterRequest::readFromValue(const rapidjson::Value& obj)
     if (PlayerId_member != obj.MemberEnd() && !PlayerId_member->value.IsNull()) PlayerId = PlayerId_member->value.GetString();
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
+    const Value::ConstMemberIterator PublicKeyUrl_member = obj.FindMember("PublicKeyUrl");
+    if (PublicKeyUrl_member != obj.MemberEnd() && !PublicKeyUrl_member->value.IsNull()) PublicKeyUrl = PublicKeyUrl_member->value.GetString();
+    const Value::ConstMemberIterator Salt_member = obj.FindMember("Salt");
+    if (Salt_member != obj.MemberEnd() && !Salt_member->value.IsNull()) Salt = Salt_member->value.GetString();
+    const Value::ConstMemberIterator Signature_member = obj.FindMember("Signature");
+    if (Signature_member != obj.MemberEnd() && !Signature_member->value.IsNull()) Signature = Signature_member->value.GetString();
+    const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
+    if (Timestamp_member != obj.MemberEnd() && !Timestamp_member->value.IsNull()) Timestamp = Timestamp_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
     if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
 
