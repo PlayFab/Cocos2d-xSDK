@@ -1723,6 +1723,77 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct OpenIdIssuerInformation : public PlayFabBaseModel
+        {
+            std::string AuthorizationUrl;
+            std::string Issuer;
+            MultitypeVar JsonWebKeySet;
+            std::string TokenUrl;
+
+            OpenIdIssuerInformation() :
+                PlayFabBaseModel(),
+                AuthorizationUrl(),
+                Issuer(),
+                JsonWebKeySet(),
+                TokenUrl()
+            {}
+
+            OpenIdIssuerInformation(const OpenIdIssuerInformation& src) :
+                PlayFabBaseModel(),
+                AuthorizationUrl(src.AuthorizationUrl),
+                Issuer(src.Issuer),
+                JsonWebKeySet(src.JsonWebKeySet),
+                TokenUrl(src.TokenUrl)
+            {}
+
+            OpenIdIssuerInformation(const rapidjson::Value& obj) : OpenIdIssuerInformation()
+            {
+                readFromValue(obj);
+            }
+
+            ~OpenIdIssuerInformation();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateOpenIdConnectionRequest : public PlayFabBaseModel
+        {
+            std::string ClientId;
+            std::string ClientSecret;
+            std::string ConnectionId;
+            std::string IssuerDiscoveryUrl;
+            OpenIdIssuerInformation* IssuerInformation;
+
+            CreateOpenIdConnectionRequest() :
+                PlayFabBaseModel(),
+                ClientId(),
+                ClientSecret(),
+                ConnectionId(),
+                IssuerDiscoveryUrl(),
+                IssuerInformation(NULL)
+            {}
+
+            CreateOpenIdConnectionRequest(const CreateOpenIdConnectionRequest& src) :
+                PlayFabBaseModel(),
+                ClientId(src.ClientId),
+                ClientSecret(src.ClientSecret),
+                ConnectionId(src.ConnectionId),
+                IssuerDiscoveryUrl(src.IssuerDiscoveryUrl),
+                IssuerInformation(src.IssuerInformation ? new OpenIdIssuerInformation(*src.IssuerInformation) : NULL)
+            {}
+
+            CreateOpenIdConnectionRequest(const rapidjson::Value& obj) : CreateOpenIdConnectionRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateOpenIdConnectionRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CreatePlayerSharedSecretRequest : public PlayFabBaseModel
         {
             std::string FriendlyName;
@@ -2156,6 +2227,31 @@ namespace PlayFab
             }
 
             ~DeleteMasterPlayerAccountResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeleteOpenIdConnectionRequest : public PlayFabBaseModel
+        {
+            std::string ConnectionId;
+
+            DeleteOpenIdConnectionRequest() :
+                PlayFabBaseModel(),
+                ConnectionId()
+            {}
+
+            DeleteOpenIdConnectionRequest(const DeleteOpenIdConnectionRequest& src) :
+                PlayFabBaseModel(),
+                ConnectionId(src.ConnectionId)
+            {}
+
+            DeleteOpenIdConnectionRequest(const rapidjson::Value& obj) : DeleteOpenIdConnectionRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteOpenIdConnectionRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -2939,6 +3035,21 @@ namespace PlayFab
             GenericErrorCodesEmailRecipientBlacklisted,
             GenericErrorCodesInvalidGameCenterAuthRequest,
             GenericErrorCodesGameCenterAuthenticationFailed,
+            GenericErrorCodesCannotEnablePartiesForTitle,
+            GenericErrorCodesPartyError,
+            GenericErrorCodesPartyRequests,
+            GenericErrorCodesPartyNoContent,
+            GenericErrorCodesPartyBadRequest,
+            GenericErrorCodesPartyUnauthorized,
+            GenericErrorCodesPartyForbidden,
+            GenericErrorCodesPartyNotFound,
+            GenericErrorCodesPartyConflict,
+            GenericErrorCodesPartyInternalServerError,
+            GenericErrorCodesPartyUnavailable,
+            GenericErrorCodesPartyTooManyRequests,
+            GenericErrorCodesPushNotificationTemplateMissingName,
+            GenericErrorCodesCannotEnableMultiplayerServersForTitle,
+            GenericErrorCodesWriteAttemptedDuringExport,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingCreateTicketRequestMissing,
@@ -2971,12 +3082,10 @@ namespace PlayFab
             GenericErrorCodesMatchmakingClientTimeout,
             GenericErrorCodesMatchmakingQueueConfigInvalid,
             GenericErrorCodesMatchmakingMemberProfileInvalid,
-            GenericErrorCodesWriteAttemptedDuringExport,
             GenericErrorCodesNintendoSwitchDeviceIdNotLinked,
             GenericErrorCodesMatchmakingNotEnabled,
             GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid,
             GenericErrorCodesMatchmakingBucketOwnerNotFound,
-            GenericErrorCodesCannotEnableMultiplayerServersForTitle,
             GenericErrorCodesMatchmakingCancelAllTicketsUnauthorized,
             GenericErrorCodesMatchmakingListTicketsUnauthorized,
             GenericErrorCodesMatchmakingPlayerAttributesTooLarge,
@@ -2990,18 +3099,8 @@ namespace PlayFab
             GenericErrorCodesMatchmakingLatencyMeasurementMissing,
             GenericErrorCodesMatchmakingStatisticsNotFound,
             GenericErrorCodesMatchmakingPlayerHasNotJoinedTicket,
-            GenericErrorCodesCannotEnablePartiesForTitle,
-            GenericErrorCodesPartyError,
-            GenericErrorCodesPartyRequests,
-            GenericErrorCodesPartyNoContent,
-            GenericErrorCodesPartyBadRequest,
-            GenericErrorCodesPartyUnauthorized,
-            GenericErrorCodesPartyForbidden,
-            GenericErrorCodesPartyNotFound,
-            GenericErrorCodesPartyConflict,
-            GenericErrorCodesPartyInternalServerError,
-            GenericErrorCodesPartyUnavailable,
-            GenericErrorCodesPartyTooManyRequests,
+            GenericErrorCodesMatchmakingRateLimitExceeded,
+            GenericErrorCodesMatchmakingTicketMembershipLimitExceeded,
             GenericErrorCodesTitleConfigNotFound,
             GenericErrorCodesTitleConfigUpdateConflict,
             GenericErrorCodesTitleConfigSerializationError,
@@ -6315,6 +6414,90 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct ListOpenIdConnectionRequest : public PlayFabBaseModel
+        {
+
+            ListOpenIdConnectionRequest() :
+                PlayFabBaseModel()
+            {}
+
+            ListOpenIdConnectionRequest(const ListOpenIdConnectionRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            ListOpenIdConnectionRequest(const rapidjson::Value& obj) : ListOpenIdConnectionRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListOpenIdConnectionRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct OpenIdConnection : public PlayFabBaseModel
+        {
+            std::string ClientId;
+            std::string ClientSecret;
+            std::string ConnectionId;
+            bool DiscoverConfiguration;
+            OpenIdIssuerInformation* IssuerInformation;
+
+            OpenIdConnection() :
+                PlayFabBaseModel(),
+                ClientId(),
+                ClientSecret(),
+                ConnectionId(),
+                DiscoverConfiguration(false),
+                IssuerInformation(NULL)
+            {}
+
+            OpenIdConnection(const OpenIdConnection& src) :
+                PlayFabBaseModel(),
+                ClientId(src.ClientId),
+                ClientSecret(src.ClientSecret),
+                ConnectionId(src.ConnectionId),
+                DiscoverConfiguration(src.DiscoverConfiguration),
+                IssuerInformation(src.IssuerInformation ? new OpenIdIssuerInformation(*src.IssuerInformation) : NULL)
+            {}
+
+            OpenIdConnection(const rapidjson::Value& obj) : OpenIdConnection()
+            {
+                readFromValue(obj);
+            }
+
+            ~OpenIdConnection();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ListOpenIdConnectionResponse : public PlayFabBaseModel
+        {
+            std::list<OpenIdConnection> Connections;
+
+            ListOpenIdConnectionResponse() :
+                PlayFabBaseModel(),
+                Connections()
+            {}
+
+            ListOpenIdConnectionResponse(const ListOpenIdConnectionResponse& src) :
+                PlayFabBaseModel(),
+                Connections(src.Connections)
+            {}
+
+            ListOpenIdConnectionResponse(const rapidjson::Value& obj) : ListOpenIdConnectionResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListOpenIdConnectionResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ListVirtualCurrencyTypesRequest : public PlayFabBaseModel
         {
 
@@ -8510,6 +8693,43 @@ namespace PlayFab
             }
 
             ~UpdateCloudScriptResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdateOpenIdConnectionRequest : public PlayFabBaseModel
+        {
+            std::string ClientId;
+            std::string ClientSecret;
+            std::string ConnectionId;
+            std::string IssuerDiscoveryUrl;
+            OpenIdIssuerInformation* IssuerInformation;
+
+            UpdateOpenIdConnectionRequest() :
+                PlayFabBaseModel(),
+                ClientId(),
+                ClientSecret(),
+                ConnectionId(),
+                IssuerDiscoveryUrl(),
+                IssuerInformation(NULL)
+            {}
+
+            UpdateOpenIdConnectionRequest(const UpdateOpenIdConnectionRequest& src) :
+                PlayFabBaseModel(),
+                ClientId(src.ClientId),
+                ClientSecret(src.ClientSecret),
+                ConnectionId(src.ConnectionId),
+                IssuerDiscoveryUrl(src.IssuerDiscoveryUrl),
+                IssuerInformation(src.IssuerInformation ? new OpenIdIssuerInformation(*src.IssuerInformation) : NULL)
+            {}
+
+            UpdateOpenIdConnectionRequest(const rapidjson::Value& obj) : UpdateOpenIdConnectionRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdateOpenIdConnectionRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
