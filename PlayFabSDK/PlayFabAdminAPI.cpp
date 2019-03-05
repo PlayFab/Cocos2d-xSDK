@@ -516,6 +516,52 @@ void PlayFabAdminAPI::OnCreateCloudScriptTaskResult(int httpStatus, HttpRequest*
     delete request;
 }
 
+void PlayFabAdminAPI::CreateOpenIdConnection(
+    CreateOpenIdConnectionRequest& request,
+    ProcessApiCallback<EmptyResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/CreateOpenIdConnection"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnCreateOpenIdConnectionResult, userData);
+}
+
+void PlayFabAdminAPI::OnCreateOpenIdConnectionResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    EmptyResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabAdminAPI::CreatePlayerSharedSecret(
     CreatePlayerSharedSecretRequest& request,
     ProcessApiCallback<CreatePlayerSharedSecretResult> callback,
@@ -687,6 +733,52 @@ void PlayFabAdminAPI::OnDeleteMasterPlayerAccountResult(int httpStatus, HttpRequ
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<DeleteMasterPlayerAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabAdminAPI::DeleteOpenIdConnection(
+    DeleteOpenIdConnectionRequest& request,
+    ProcessApiCallback<EmptyResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/DeleteOpenIdConnection"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnDeleteOpenIdConnectionResult, userData);
+}
+
+void PlayFabAdminAPI::OnDeleteOpenIdConnectionResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    EmptyResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -2903,6 +2995,51 @@ void PlayFabAdminAPI::OnIncrementPlayerStatisticVersionResult(int httpStatus, Ht
     delete request;
 }
 
+void PlayFabAdminAPI::ListOpenIdConnection(
+    ProcessApiCallback<ListOpenIdConnectionResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/ListOpenIdConnection"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ListOpenIdConnectionResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody("{}");
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnListOpenIdConnectionResult, userData);
+}
+
+void PlayFabAdminAPI::OnListOpenIdConnectionResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ListOpenIdConnectionResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<ListOpenIdConnectionResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabAdminAPI::ListServerBuilds(
     ProcessApiCallback<ListBuildsResult> callback,
     ErrorCallback errorCallback,
@@ -4268,6 +4405,52 @@ void PlayFabAdminAPI::OnUpdateCloudScriptResult(int httpStatus, HttpRequest* req
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<UpdateCloudScriptResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabAdminAPI::UpdateOpenIdConnection(
+    UpdateOpenIdConnectionRequest& request,
+    ProcessApiCallback<EmptyResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/UpdateOpenIdConnection"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<EmptyResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUpdateOpenIdConnectionResult, userData);
+}
+
+void PlayFabAdminAPI::OnUpdateOpenIdConnectionResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    EmptyResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<EmptyResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

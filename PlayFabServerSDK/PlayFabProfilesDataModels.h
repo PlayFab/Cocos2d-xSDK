@@ -191,6 +191,7 @@ namespace PlayFab
 
         struct EntityProfileBody : public PlayFabBaseModel
         {
+            time_t Created;
             std::string DisplayName;
             EntityKey* Entity;
             std::string EntityChain;
@@ -203,6 +204,7 @@ namespace PlayFab
 
             EntityProfileBody() :
                 PlayFabBaseModel(),
+                Created(0),
                 DisplayName(),
                 Entity(NULL),
                 EntityChain(),
@@ -216,6 +218,7 @@ namespace PlayFab
 
             EntityProfileBody(const EntityProfileBody& src) :
                 PlayFabBaseModel(),
+                Created(src.Created),
                 DisplayName(src.DisplayName),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 EntityChain(src.EntityChain),

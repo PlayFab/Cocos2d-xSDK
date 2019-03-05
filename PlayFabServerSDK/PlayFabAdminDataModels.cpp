@@ -2104,6 +2104,68 @@ bool CreateCloudScriptTaskRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+OpenIdIssuerInformation::~OpenIdIssuerInformation()
+{
+
+}
+
+void OpenIdIssuerInformation::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("AuthorizationUrl"); writer.String(AuthorizationUrl.c_str());
+    writer.String("Issuer"); writer.String(Issuer.c_str());
+    writer.String("JsonWebKeySet"); JsonWebKeySet.writeJSON(writer);
+    writer.String("TokenUrl"); writer.String(TokenUrl.c_str());
+    writer.EndObject();
+}
+
+bool OpenIdIssuerInformation::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AuthorizationUrl_member = obj.FindMember("AuthorizationUrl");
+    if (AuthorizationUrl_member != obj.MemberEnd() && !AuthorizationUrl_member->value.IsNull()) AuthorizationUrl = AuthorizationUrl_member->value.GetString();
+    const Value::ConstMemberIterator Issuer_member = obj.FindMember("Issuer");
+    if (Issuer_member != obj.MemberEnd() && !Issuer_member->value.IsNull()) Issuer = Issuer_member->value.GetString();
+    const Value::ConstMemberIterator JsonWebKeySet_member = obj.FindMember("JsonWebKeySet");
+    if (JsonWebKeySet_member != obj.MemberEnd() && !JsonWebKeySet_member->value.IsNull()) JsonWebKeySet = MultitypeVar(JsonWebKeySet_member->value);
+    const Value::ConstMemberIterator TokenUrl_member = obj.FindMember("TokenUrl");
+    if (TokenUrl_member != obj.MemberEnd() && !TokenUrl_member->value.IsNull()) TokenUrl = TokenUrl_member->value.GetString();
+
+    return true;
+}
+
+CreateOpenIdConnectionRequest::~CreateOpenIdConnectionRequest()
+{
+    if (IssuerInformation != NULL) delete IssuerInformation;
+
+}
+
+void CreateOpenIdConnectionRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("ClientId"); writer.String(ClientId.c_str());
+    writer.String("ClientSecret"); writer.String(ClientSecret.c_str());
+    writer.String("ConnectionId"); writer.String(ConnectionId.c_str());
+    if (IssuerDiscoveryUrl.length() > 0) { writer.String("IssuerDiscoveryUrl"); writer.String(IssuerDiscoveryUrl.c_str()); }
+    if (IssuerInformation != NULL) { writer.String("IssuerInformation"); IssuerInformation->writeJSON(writer); }
+    writer.EndObject();
+}
+
+bool CreateOpenIdConnectionRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ClientId_member = obj.FindMember("ClientId");
+    if (ClientId_member != obj.MemberEnd() && !ClientId_member->value.IsNull()) ClientId = ClientId_member->value.GetString();
+    const Value::ConstMemberIterator ClientSecret_member = obj.FindMember("ClientSecret");
+    if (ClientSecret_member != obj.MemberEnd() && !ClientSecret_member->value.IsNull()) ClientSecret = ClientSecret_member->value.GetString();
+    const Value::ConstMemberIterator ConnectionId_member = obj.FindMember("ConnectionId");
+    if (ConnectionId_member != obj.MemberEnd() && !ConnectionId_member->value.IsNull()) ConnectionId = ConnectionId_member->value.GetString();
+    const Value::ConstMemberIterator IssuerDiscoveryUrl_member = obj.FindMember("IssuerDiscoveryUrl");
+    if (IssuerDiscoveryUrl_member != obj.MemberEnd() && !IssuerDiscoveryUrl_member->value.IsNull()) IssuerDiscoveryUrl = IssuerDiscoveryUrl_member->value.GetString();
+    const Value::ConstMemberIterator IssuerInformation_member = obj.FindMember("IssuerInformation");
+    if (IssuerInformation_member != obj.MemberEnd() && !IssuerInformation_member->value.IsNull()) IssuerInformation = new OpenIdIssuerInformation(IssuerInformation_member->value);
+
+    return true;
+}
+
 CreatePlayerSharedSecretRequest::~CreatePlayerSharedSecretRequest()
 {
 
@@ -2725,6 +2787,26 @@ bool DeleteMasterPlayerAccountResult::readFromValue(const rapidjson::Value& obj)
             TitleIds.push_back(memberList[i].GetString());
         }
     }
+
+    return true;
+}
+
+DeleteOpenIdConnectionRequest::~DeleteOpenIdConnectionRequest()
+{
+
+}
+
+void DeleteOpenIdConnectionRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("ConnectionId"); writer.String(ConnectionId.c_str());
+    writer.EndObject();
+}
+
+bool DeleteOpenIdConnectionRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ConnectionId_member = obj.FindMember("ConnectionId");
+    if (ConnectionId_member != obj.MemberEnd() && !ConnectionId_member->value.IsNull()) ConnectionId = ConnectionId_member->value.GetString();
 
     return true;
 }
@@ -3457,6 +3539,21 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesEmailRecipientBlacklisted: writer.String("EmailRecipientBlacklisted"); break;
     case GenericErrorCodesInvalidGameCenterAuthRequest: writer.String("InvalidGameCenterAuthRequest"); break;
     case GenericErrorCodesGameCenterAuthenticationFailed: writer.String("GameCenterAuthenticationFailed"); break;
+    case GenericErrorCodesCannotEnablePartiesForTitle: writer.String("CannotEnablePartiesForTitle"); break;
+    case GenericErrorCodesPartyError: writer.String("PartyError"); break;
+    case GenericErrorCodesPartyRequests: writer.String("PartyRequests"); break;
+    case GenericErrorCodesPartyNoContent: writer.String("PartyNoContent"); break;
+    case GenericErrorCodesPartyBadRequest: writer.String("PartyBadRequest"); break;
+    case GenericErrorCodesPartyUnauthorized: writer.String("PartyUnauthorized"); break;
+    case GenericErrorCodesPartyForbidden: writer.String("PartyForbidden"); break;
+    case GenericErrorCodesPartyNotFound: writer.String("PartyNotFound"); break;
+    case GenericErrorCodesPartyConflict: writer.String("PartyConflict"); break;
+    case GenericErrorCodesPartyInternalServerError: writer.String("PartyInternalServerError"); break;
+    case GenericErrorCodesPartyUnavailable: writer.String("PartyUnavailable"); break;
+    case GenericErrorCodesPartyTooManyRequests: writer.String("PartyTooManyRequests"); break;
+    case GenericErrorCodesPushNotificationTemplateMissingName: writer.String("PushNotificationTemplateMissingName"); break;
+    case GenericErrorCodesCannotEnableMultiplayerServersForTitle: writer.String("CannotEnableMultiplayerServersForTitle"); break;
+    case GenericErrorCodesWriteAttemptedDuringExport: writer.String("WriteAttemptedDuringExport"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingCreateTicketRequestMissing: writer.String("MatchmakingCreateTicketRequestMissing"); break;
@@ -3489,12 +3586,10 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesMatchmakingClientTimeout: writer.String("MatchmakingClientTimeout"); break;
     case GenericErrorCodesMatchmakingQueueConfigInvalid: writer.String("MatchmakingQueueConfigInvalid"); break;
     case GenericErrorCodesMatchmakingMemberProfileInvalid: writer.String("MatchmakingMemberProfileInvalid"); break;
-    case GenericErrorCodesWriteAttemptedDuringExport: writer.String("WriteAttemptedDuringExport"); break;
     case GenericErrorCodesNintendoSwitchDeviceIdNotLinked: writer.String("NintendoSwitchDeviceIdNotLinked"); break;
     case GenericErrorCodesMatchmakingNotEnabled: writer.String("MatchmakingNotEnabled"); break;
     case GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid: writer.String("MatchmakingGetStatisticsIdentityInvalid"); break;
     case GenericErrorCodesMatchmakingBucketOwnerNotFound: writer.String("MatchmakingBucketOwnerNotFound"); break;
-    case GenericErrorCodesCannotEnableMultiplayerServersForTitle: writer.String("CannotEnableMultiplayerServersForTitle"); break;
     case GenericErrorCodesMatchmakingCancelAllTicketsUnauthorized: writer.String("MatchmakingCancelAllTicketsUnauthorized"); break;
     case GenericErrorCodesMatchmakingListTicketsUnauthorized: writer.String("MatchmakingListTicketsUnauthorized"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesTooLarge: writer.String("MatchmakingPlayerAttributesTooLarge"); break;
@@ -3508,18 +3603,8 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesMatchmakingLatencyMeasurementMissing: writer.String("MatchmakingLatencyMeasurementMissing"); break;
     case GenericErrorCodesMatchmakingStatisticsNotFound: writer.String("MatchmakingStatisticsNotFound"); break;
     case GenericErrorCodesMatchmakingPlayerHasNotJoinedTicket: writer.String("MatchmakingPlayerHasNotJoinedTicket"); break;
-    case GenericErrorCodesCannotEnablePartiesForTitle: writer.String("CannotEnablePartiesForTitle"); break;
-    case GenericErrorCodesPartyError: writer.String("PartyError"); break;
-    case GenericErrorCodesPartyRequests: writer.String("PartyRequests"); break;
-    case GenericErrorCodesPartyNoContent: writer.String("PartyNoContent"); break;
-    case GenericErrorCodesPartyBadRequest: writer.String("PartyBadRequest"); break;
-    case GenericErrorCodesPartyUnauthorized: writer.String("PartyUnauthorized"); break;
-    case GenericErrorCodesPartyForbidden: writer.String("PartyForbidden"); break;
-    case GenericErrorCodesPartyNotFound: writer.String("PartyNotFound"); break;
-    case GenericErrorCodesPartyConflict: writer.String("PartyConflict"); break;
-    case GenericErrorCodesPartyInternalServerError: writer.String("PartyInternalServerError"); break;
-    case GenericErrorCodesPartyUnavailable: writer.String("PartyUnavailable"); break;
-    case GenericErrorCodesPartyTooManyRequests: writer.String("PartyTooManyRequests"); break;
+    case GenericErrorCodesMatchmakingRateLimitExceeded: writer.String("MatchmakingRateLimitExceeded"); break;
+    case GenericErrorCodesMatchmakingTicketMembershipLimitExceeded: writer.String("MatchmakingTicketMembershipLimitExceeded"); break;
     case GenericErrorCodesTitleConfigNotFound: writer.String("TitleConfigNotFound"); break;
     case GenericErrorCodesTitleConfigUpdateConflict: writer.String("TitleConfigUpdateConflict"); break;
     case GenericErrorCodesTitleConfigSerializationError: writer.String("TitleConfigSerializationError"); break;
@@ -3967,6 +4052,21 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["EmailRecipientBlacklisted"] = GenericErrorCodesEmailRecipientBlacklisted;
         _GenericErrorCodesMap["InvalidGameCenterAuthRequest"] = GenericErrorCodesInvalidGameCenterAuthRequest;
         _GenericErrorCodesMap["GameCenterAuthenticationFailed"] = GenericErrorCodesGameCenterAuthenticationFailed;
+        _GenericErrorCodesMap["CannotEnablePartiesForTitle"] = GenericErrorCodesCannotEnablePartiesForTitle;
+        _GenericErrorCodesMap["PartyError"] = GenericErrorCodesPartyError;
+        _GenericErrorCodesMap["PartyRequests"] = GenericErrorCodesPartyRequests;
+        _GenericErrorCodesMap["PartyNoContent"] = GenericErrorCodesPartyNoContent;
+        _GenericErrorCodesMap["PartyBadRequest"] = GenericErrorCodesPartyBadRequest;
+        _GenericErrorCodesMap["PartyUnauthorized"] = GenericErrorCodesPartyUnauthorized;
+        _GenericErrorCodesMap["PartyForbidden"] = GenericErrorCodesPartyForbidden;
+        _GenericErrorCodesMap["PartyNotFound"] = GenericErrorCodesPartyNotFound;
+        _GenericErrorCodesMap["PartyConflict"] = GenericErrorCodesPartyConflict;
+        _GenericErrorCodesMap["PartyInternalServerError"] = GenericErrorCodesPartyInternalServerError;
+        _GenericErrorCodesMap["PartyUnavailable"] = GenericErrorCodesPartyUnavailable;
+        _GenericErrorCodesMap["PartyTooManyRequests"] = GenericErrorCodesPartyTooManyRequests;
+        _GenericErrorCodesMap["PushNotificationTemplateMissingName"] = GenericErrorCodesPushNotificationTemplateMissingName;
+        _GenericErrorCodesMap["CannotEnableMultiplayerServersForTitle"] = GenericErrorCodesCannotEnableMultiplayerServersForTitle;
+        _GenericErrorCodesMap["WriteAttemptedDuringExport"] = GenericErrorCodesWriteAttemptedDuringExport;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingCreateTicketRequestMissing"] = GenericErrorCodesMatchmakingCreateTicketRequestMissing;
@@ -3999,12 +4099,10 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["MatchmakingClientTimeout"] = GenericErrorCodesMatchmakingClientTimeout;
         _GenericErrorCodesMap["MatchmakingQueueConfigInvalid"] = GenericErrorCodesMatchmakingQueueConfigInvalid;
         _GenericErrorCodesMap["MatchmakingMemberProfileInvalid"] = GenericErrorCodesMatchmakingMemberProfileInvalid;
-        _GenericErrorCodesMap["WriteAttemptedDuringExport"] = GenericErrorCodesWriteAttemptedDuringExport;
         _GenericErrorCodesMap["NintendoSwitchDeviceIdNotLinked"] = GenericErrorCodesNintendoSwitchDeviceIdNotLinked;
         _GenericErrorCodesMap["MatchmakingNotEnabled"] = GenericErrorCodesMatchmakingNotEnabled;
         _GenericErrorCodesMap["MatchmakingGetStatisticsIdentityInvalid"] = GenericErrorCodesMatchmakingGetStatisticsIdentityInvalid;
         _GenericErrorCodesMap["MatchmakingBucketOwnerNotFound"] = GenericErrorCodesMatchmakingBucketOwnerNotFound;
-        _GenericErrorCodesMap["CannotEnableMultiplayerServersForTitle"] = GenericErrorCodesCannotEnableMultiplayerServersForTitle;
         _GenericErrorCodesMap["MatchmakingCancelAllTicketsUnauthorized"] = GenericErrorCodesMatchmakingCancelAllTicketsUnauthorized;
         _GenericErrorCodesMap["MatchmakingListTicketsUnauthorized"] = GenericErrorCodesMatchmakingListTicketsUnauthorized;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesTooLarge"] = GenericErrorCodesMatchmakingPlayerAttributesTooLarge;
@@ -4018,18 +4116,8 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["MatchmakingLatencyMeasurementMissing"] = GenericErrorCodesMatchmakingLatencyMeasurementMissing;
         _GenericErrorCodesMap["MatchmakingStatisticsNotFound"] = GenericErrorCodesMatchmakingStatisticsNotFound;
         _GenericErrorCodesMap["MatchmakingPlayerHasNotJoinedTicket"] = GenericErrorCodesMatchmakingPlayerHasNotJoinedTicket;
-        _GenericErrorCodesMap["CannotEnablePartiesForTitle"] = GenericErrorCodesCannotEnablePartiesForTitle;
-        _GenericErrorCodesMap["PartyError"] = GenericErrorCodesPartyError;
-        _GenericErrorCodesMap["PartyRequests"] = GenericErrorCodesPartyRequests;
-        _GenericErrorCodesMap["PartyNoContent"] = GenericErrorCodesPartyNoContent;
-        _GenericErrorCodesMap["PartyBadRequest"] = GenericErrorCodesPartyBadRequest;
-        _GenericErrorCodesMap["PartyUnauthorized"] = GenericErrorCodesPartyUnauthorized;
-        _GenericErrorCodesMap["PartyForbidden"] = GenericErrorCodesPartyForbidden;
-        _GenericErrorCodesMap["PartyNotFound"] = GenericErrorCodesPartyNotFound;
-        _GenericErrorCodesMap["PartyConflict"] = GenericErrorCodesPartyConflict;
-        _GenericErrorCodesMap["PartyInternalServerError"] = GenericErrorCodesPartyInternalServerError;
-        _GenericErrorCodesMap["PartyUnavailable"] = GenericErrorCodesPartyUnavailable;
-        _GenericErrorCodesMap["PartyTooManyRequests"] = GenericErrorCodesPartyTooManyRequests;
+        _GenericErrorCodesMap["MatchmakingRateLimitExceeded"] = GenericErrorCodesMatchmakingRateLimitExceeded;
+        _GenericErrorCodesMap["MatchmakingTicketMembershipLimitExceeded"] = GenericErrorCodesMatchmakingTicketMembershipLimitExceeded;
         _GenericErrorCodesMap["TitleConfigNotFound"] = GenericErrorCodesTitleConfigNotFound;
         _GenericErrorCodesMap["TitleConfigUpdateConflict"] = GenericErrorCodesTitleConfigUpdateConflict;
         _GenericErrorCodesMap["TitleConfigSerializationError"] = GenericErrorCodesTitleConfigSerializationError;
@@ -7751,6 +7839,88 @@ bool ListBuildsResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+ListOpenIdConnectionRequest::~ListOpenIdConnectionRequest()
+{
+
+}
+
+void ListOpenIdConnectionRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool ListOpenIdConnectionRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+OpenIdConnection::~OpenIdConnection()
+{
+    if (IssuerInformation != NULL) delete IssuerInformation;
+
+}
+
+void OpenIdConnection::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (ClientId.length() > 0) { writer.String("ClientId"); writer.String(ClientId.c_str()); }
+    if (ClientSecret.length() > 0) { writer.String("ClientSecret"); writer.String(ClientSecret.c_str()); }
+    if (ConnectionId.length() > 0) { writer.String("ConnectionId"); writer.String(ConnectionId.c_str()); }
+    writer.String("DiscoverConfiguration"); writer.Bool(DiscoverConfiguration);
+    if (IssuerInformation != NULL) { writer.String("IssuerInformation"); IssuerInformation->writeJSON(writer); }
+    writer.EndObject();
+}
+
+bool OpenIdConnection::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ClientId_member = obj.FindMember("ClientId");
+    if (ClientId_member != obj.MemberEnd() && !ClientId_member->value.IsNull()) ClientId = ClientId_member->value.GetString();
+    const Value::ConstMemberIterator ClientSecret_member = obj.FindMember("ClientSecret");
+    if (ClientSecret_member != obj.MemberEnd() && !ClientSecret_member->value.IsNull()) ClientSecret = ClientSecret_member->value.GetString();
+    const Value::ConstMemberIterator ConnectionId_member = obj.FindMember("ConnectionId");
+    if (ConnectionId_member != obj.MemberEnd() && !ConnectionId_member->value.IsNull()) ConnectionId = ConnectionId_member->value.GetString();
+    const Value::ConstMemberIterator DiscoverConfiguration_member = obj.FindMember("DiscoverConfiguration");
+    if (DiscoverConfiguration_member != obj.MemberEnd() && !DiscoverConfiguration_member->value.IsNull()) DiscoverConfiguration = DiscoverConfiguration_member->value.GetBool();
+    const Value::ConstMemberIterator IssuerInformation_member = obj.FindMember("IssuerInformation");
+    if (IssuerInformation_member != obj.MemberEnd() && !IssuerInformation_member->value.IsNull()) IssuerInformation = new OpenIdIssuerInformation(IssuerInformation_member->value);
+
+    return true;
+}
+
+ListOpenIdConnectionResponse::~ListOpenIdConnectionResponse()
+{
+
+}
+
+void ListOpenIdConnectionResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!Connections.empty()) {
+        writer.String("Connections");
+        writer.StartArray();
+        for (std::list<OpenIdConnection>::iterator iter = Connections.begin(); iter != Connections.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool ListOpenIdConnectionResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Connections_member = obj.FindMember("Connections");
+    if (Connections_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Connections_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Connections.push_back(OpenIdConnection(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 ListVirtualCurrencyTypesRequest::~ListVirtualCurrencyTypesRequest()
 {
 
@@ -9888,6 +10058,39 @@ bool UpdateCloudScriptResult::readFromValue(const rapidjson::Value& obj)
     if (Revision_member != obj.MemberEnd() && !Revision_member->value.IsNull()) Revision = Revision_member->value.GetInt();
     const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
     if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+
+    return true;
+}
+
+UpdateOpenIdConnectionRequest::~UpdateOpenIdConnectionRequest()
+{
+    if (IssuerInformation != NULL) delete IssuerInformation;
+
+}
+
+void UpdateOpenIdConnectionRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (ClientId.length() > 0) { writer.String("ClientId"); writer.String(ClientId.c_str()); }
+    if (ClientSecret.length() > 0) { writer.String("ClientSecret"); writer.String(ClientSecret.c_str()); }
+    writer.String("ConnectionId"); writer.String(ConnectionId.c_str());
+    if (IssuerDiscoveryUrl.length() > 0) { writer.String("IssuerDiscoveryUrl"); writer.String(IssuerDiscoveryUrl.c_str()); }
+    if (IssuerInformation != NULL) { writer.String("IssuerInformation"); IssuerInformation->writeJSON(writer); }
+    writer.EndObject();
+}
+
+bool UpdateOpenIdConnectionRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ClientId_member = obj.FindMember("ClientId");
+    if (ClientId_member != obj.MemberEnd() && !ClientId_member->value.IsNull()) ClientId = ClientId_member->value.GetString();
+    const Value::ConstMemberIterator ClientSecret_member = obj.FindMember("ClientSecret");
+    if (ClientSecret_member != obj.MemberEnd() && !ClientSecret_member->value.IsNull()) ClientSecret = ClientSecret_member->value.GetString();
+    const Value::ConstMemberIterator ConnectionId_member = obj.FindMember("ConnectionId");
+    if (ConnectionId_member != obj.MemberEnd() && !ConnectionId_member->value.IsNull()) ConnectionId = ConnectionId_member->value.GetString();
+    const Value::ConstMemberIterator IssuerDiscoveryUrl_member = obj.FindMember("IssuerDiscoveryUrl");
+    if (IssuerDiscoveryUrl_member != obj.MemberEnd() && !IssuerDiscoveryUrl_member->value.IsNull()) IssuerDiscoveryUrl = IssuerDiscoveryUrl_member->value.GetString();
+    const Value::ConstMemberIterator IssuerInformation_member = obj.FindMember("IssuerInformation");
+    if (IssuerInformation_member != obj.MemberEnd() && !IssuerInformation_member->value.IsNull()) IssuerInformation = new OpenIdIssuerInformation(IssuerInformation_member->value);
 
     return true;
 }
