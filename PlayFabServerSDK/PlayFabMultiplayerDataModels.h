@@ -280,6 +280,144 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct EntityKey : public PlayFabBaseModel
+        {
+            std::string Id;
+            std::string Type;
+
+            EntityKey() :
+                PlayFabBaseModel(),
+                Id(),
+                Type()
+            {}
+
+            EntityKey(const EntityKey& src) :
+                PlayFabBaseModel(),
+                Id(src.Id),
+                Type(src.Type)
+            {}
+
+            EntityKey(const rapidjson::Value& obj) : EntityKey()
+            {
+                readFromValue(obj);
+            }
+
+            ~EntityKey();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CancelAllMatchmakingTicketsForPlayerRequest : public PlayFabBaseModel
+        {
+            EntityKey* Entity;
+            std::string QueueName;
+
+            CancelAllMatchmakingTicketsForPlayerRequest() :
+                PlayFabBaseModel(),
+                Entity(NULL),
+                QueueName()
+            {}
+
+            CancelAllMatchmakingTicketsForPlayerRequest(const CancelAllMatchmakingTicketsForPlayerRequest& src) :
+                PlayFabBaseModel(),
+                Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
+                QueueName(src.QueueName)
+            {}
+
+            CancelAllMatchmakingTicketsForPlayerRequest(const rapidjson::Value& obj) : CancelAllMatchmakingTicketsForPlayerRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CancelAllMatchmakingTicketsForPlayerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CancelAllMatchmakingTicketsForPlayerResult : public PlayFabBaseModel
+        {
+
+            CancelAllMatchmakingTicketsForPlayerResult() :
+                PlayFabBaseModel()
+            {}
+
+            CancelAllMatchmakingTicketsForPlayerResult(const CancelAllMatchmakingTicketsForPlayerResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            CancelAllMatchmakingTicketsForPlayerResult(const rapidjson::Value& obj) : CancelAllMatchmakingTicketsForPlayerResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~CancelAllMatchmakingTicketsForPlayerResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum CancellationReason
+        {
+            CancellationReasonRequested,
+            CancellationReasonInternal,
+            CancellationReasonTimeout
+        };
+
+        void writeCancellationReasonEnumJSON(CancellationReason enumVal, PFStringJsonWriter& writer);
+        CancellationReason readCancellationReasonFromValue(const rapidjson::Value& obj);
+
+        struct CancelMatchmakingTicketRequest : public PlayFabBaseModel
+        {
+            std::string QueueName;
+            std::string TicketId;
+
+            CancelMatchmakingTicketRequest() :
+                PlayFabBaseModel(),
+                QueueName(),
+                TicketId()
+            {}
+
+            CancelMatchmakingTicketRequest(const CancelMatchmakingTicketRequest& src) :
+                PlayFabBaseModel(),
+                QueueName(src.QueueName),
+                TicketId(src.TicketId)
+            {}
+
+            CancelMatchmakingTicketRequest(const rapidjson::Value& obj) : CancelMatchmakingTicketRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CancelMatchmakingTicketRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CancelMatchmakingTicketResult : public PlayFabBaseModel
+        {
+
+            CancelMatchmakingTicketResult() :
+                PlayFabBaseModel()
+            {}
+
+            CancelMatchmakingTicketResult(const CancelMatchmakingTicketResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            CancelMatchmakingTicketResult(const rapidjson::Value& obj) : CancelMatchmakingTicketResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~CancelMatchmakingTicketResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct Certificate : public PlayFabBaseModel
         {
             std::string Base64EncodedValue;
@@ -727,6 +865,121 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct MatchmakingPlayerAttributes : public PlayFabBaseModel
+        {
+            MultitypeVar DataObject;
+            std::string EscapedDataObject;
+
+            MatchmakingPlayerAttributes() :
+                PlayFabBaseModel(),
+                DataObject(),
+                EscapedDataObject()
+            {}
+
+            MatchmakingPlayerAttributes(const MatchmakingPlayerAttributes& src) :
+                PlayFabBaseModel(),
+                DataObject(src.DataObject),
+                EscapedDataObject(src.EscapedDataObject)
+            {}
+
+            MatchmakingPlayerAttributes(const rapidjson::Value& obj) : MatchmakingPlayerAttributes()
+            {
+                readFromValue(obj);
+            }
+
+            ~MatchmakingPlayerAttributes();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct MatchmakingPlayer : public PlayFabBaseModel
+        {
+            MatchmakingPlayerAttributes* Attributes;
+            EntityKey Entity;
+
+            MatchmakingPlayer() :
+                PlayFabBaseModel(),
+                Attributes(NULL),
+                Entity()
+            {}
+
+            MatchmakingPlayer(const MatchmakingPlayer& src) :
+                PlayFabBaseModel(),
+                Attributes(src.Attributes ? new MatchmakingPlayerAttributes(*src.Attributes) : NULL),
+                Entity(src.Entity)
+            {}
+
+            MatchmakingPlayer(const rapidjson::Value& obj) : MatchmakingPlayer()
+            {
+                readFromValue(obj);
+            }
+
+            ~MatchmakingPlayer();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateMatchmakingTicketRequest : public PlayFabBaseModel
+        {
+            MatchmakingPlayer Creator;
+            Int32 GiveUpAfterSeconds;
+            std::list<EntityKey> MembersToMatchWith;
+            std::string QueueName;
+
+            CreateMatchmakingTicketRequest() :
+                PlayFabBaseModel(),
+                Creator(),
+                GiveUpAfterSeconds(0),
+                MembersToMatchWith(),
+                QueueName()
+            {}
+
+            CreateMatchmakingTicketRequest(const CreateMatchmakingTicketRequest& src) :
+                PlayFabBaseModel(),
+                Creator(src.Creator),
+                GiveUpAfterSeconds(src.GiveUpAfterSeconds),
+                MembersToMatchWith(src.MembersToMatchWith),
+                QueueName(src.QueueName)
+            {}
+
+            CreateMatchmakingTicketRequest(const rapidjson::Value& obj) : CreateMatchmakingTicketRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateMatchmakingTicketRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateMatchmakingTicketResult : public PlayFabBaseModel
+        {
+            std::string TicketId;
+
+            CreateMatchmakingTicketResult() :
+                PlayFabBaseModel(),
+                TicketId()
+            {}
+
+            CreateMatchmakingTicketResult(const CreateMatchmakingTicketResult& src) :
+                PlayFabBaseModel(),
+                TicketId(src.TicketId)
+            {}
+
+            CreateMatchmakingTicketResult(const rapidjson::Value& obj) : CreateMatchmakingTicketResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateMatchmakingTicketResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CreateRemoteUserRequest : public PlayFabBaseModel
         {
             std::string BuildId;
@@ -790,6 +1043,37 @@ namespace PlayFab
             }
 
             ~CreateRemoteUserResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateServerMatchmakingTicketRequest : public PlayFabBaseModel
+        {
+            Int32 GiveUpAfterSeconds;
+            std::list<MatchmakingPlayer> Members;
+            std::string QueueName;
+
+            CreateServerMatchmakingTicketRequest() :
+                PlayFabBaseModel(),
+                GiveUpAfterSeconds(0),
+                Members(),
+                QueueName()
+            {}
+
+            CreateServerMatchmakingTicketRequest(const CreateServerMatchmakingTicketRequest& src) :
+                PlayFabBaseModel(),
+                GiveUpAfterSeconds(src.GiveUpAfterSeconds),
+                Members(src.Members),
+                QueueName(src.QueueName)
+            {}
+
+            CreateServerMatchmakingTicketRequest(const rapidjson::Value& obj) : CreateServerMatchmakingTicketRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateServerMatchmakingTicketRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1181,6 +1465,418 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetMatchmakingQueueRequest : public PlayFabBaseModel
+        {
+            std::string QueueName;
+
+            GetMatchmakingQueueRequest() :
+                PlayFabBaseModel(),
+                QueueName()
+            {}
+
+            GetMatchmakingQueueRequest(const GetMatchmakingQueueRequest& src) :
+                PlayFabBaseModel(),
+                QueueName(src.QueueName)
+            {}
+
+            GetMatchmakingQueueRequest(const rapidjson::Value& obj) : GetMatchmakingQueueRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetMatchmakingQueueRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum RuleType
+        {
+            RuleTypeUnknown,
+            RuleTypeDifferenceRule,
+            RuleTypeStringEqualityRule,
+            RuleTypeMatchTotalRule,
+            RuleTypeSetIntersectionRule,
+            RuleTypeTeamSizeBalanceRule,
+            RuleTypeRegionSelectionRule,
+            RuleTypeTeamDifferenceRule,
+            RuleTypeTeamTicketSizeSimilarityRule
+        };
+
+        void writeRuleTypeEnumJSON(RuleType enumVal, PFStringJsonWriter& writer);
+        RuleType readRuleTypeFromValue(const rapidjson::Value& obj);
+
+        struct MatchmakingQueueRule : public PlayFabBaseModel
+        {
+            std::string Name;
+            OptionalUint32 SecondsUntilOptional;
+            RuleType Type;
+
+            MatchmakingQueueRule() :
+                PlayFabBaseModel(),
+                Name(),
+                SecondsUntilOptional(),
+                Type()
+            {}
+
+            MatchmakingQueueRule(const MatchmakingQueueRule& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                SecondsUntilOptional(src.SecondsUntilOptional),
+                Type(src.Type)
+            {}
+
+            MatchmakingQueueRule(const rapidjson::Value& obj) : MatchmakingQueueRule()
+            {
+                readFromValue(obj);
+            }
+
+            ~MatchmakingQueueRule();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct StatisticsVisibilityToPlayers : public PlayFabBaseModel
+        {
+            bool ShowNumberOfPlayersMatching;
+            bool ShowTimeToMatch;
+
+            StatisticsVisibilityToPlayers() :
+                PlayFabBaseModel(),
+                ShowNumberOfPlayersMatching(false),
+                ShowTimeToMatch(false)
+            {}
+
+            StatisticsVisibilityToPlayers(const StatisticsVisibilityToPlayers& src) :
+                PlayFabBaseModel(),
+                ShowNumberOfPlayersMatching(src.ShowNumberOfPlayersMatching),
+                ShowTimeToMatch(src.ShowTimeToMatch)
+            {}
+
+            StatisticsVisibilityToPlayers(const rapidjson::Value& obj) : StatisticsVisibilityToPlayers()
+            {
+                readFromValue(obj);
+            }
+
+            ~StatisticsVisibilityToPlayers();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct MatchmakingQueueTeam : public PlayFabBaseModel
+        {
+            Uint32 MaxTeamSize;
+            Uint32 MinTeamSize;
+            std::string Name;
+
+            MatchmakingQueueTeam() :
+                PlayFabBaseModel(),
+                MaxTeamSize(0),
+                MinTeamSize(0),
+                Name()
+            {}
+
+            MatchmakingQueueTeam(const MatchmakingQueueTeam& src) :
+                PlayFabBaseModel(),
+                MaxTeamSize(src.MaxTeamSize),
+                MinTeamSize(src.MinTeamSize),
+                Name(src.Name)
+            {}
+
+            MatchmakingQueueTeam(const rapidjson::Value& obj) : MatchmakingQueueTeam()
+            {
+                readFromValue(obj);
+            }
+
+            ~MatchmakingQueueTeam();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct MatchmakingQueueConfig : public PlayFabBaseModel
+        {
+            std::string BuildId;
+            Uint32 MaxMatchSize;
+            Uint32 MinMatchSize;
+            std::string Name;
+            std::list<MatchmakingQueueRule> Rules;
+            bool ServerAllocationEnabled;
+            StatisticsVisibilityToPlayers* pfStatisticsVisibilityToPlayers;
+            std::list<MatchmakingQueueTeam> Teams;
+
+            MatchmakingQueueConfig() :
+                PlayFabBaseModel(),
+                BuildId(),
+                MaxMatchSize(0),
+                MinMatchSize(0),
+                Name(),
+                Rules(),
+                ServerAllocationEnabled(false),
+                pfStatisticsVisibilityToPlayers(NULL),
+                Teams()
+            {}
+
+            MatchmakingQueueConfig(const MatchmakingQueueConfig& src) :
+                PlayFabBaseModel(),
+                BuildId(src.BuildId),
+                MaxMatchSize(src.MaxMatchSize),
+                MinMatchSize(src.MinMatchSize),
+                Name(src.Name),
+                Rules(src.Rules),
+                ServerAllocationEnabled(src.ServerAllocationEnabled),
+                pfStatisticsVisibilityToPlayers(src.pfStatisticsVisibilityToPlayers ? new StatisticsVisibilityToPlayers(*src.pfStatisticsVisibilityToPlayers) : NULL),
+                Teams(src.Teams)
+            {}
+
+            MatchmakingQueueConfig(const rapidjson::Value& obj) : MatchmakingQueueConfig()
+            {
+                readFromValue(obj);
+            }
+
+            ~MatchmakingQueueConfig();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetMatchmakingQueueResult : public PlayFabBaseModel
+        {
+            MatchmakingQueueConfig* MatchmakingQueue;
+
+            GetMatchmakingQueueResult() :
+                PlayFabBaseModel(),
+                MatchmakingQueue(NULL)
+            {}
+
+            GetMatchmakingQueueResult(const GetMatchmakingQueueResult& src) :
+                PlayFabBaseModel(),
+                MatchmakingQueue(src.MatchmakingQueue ? new MatchmakingQueueConfig(*src.MatchmakingQueue) : NULL)
+            {}
+
+            GetMatchmakingQueueResult(const rapidjson::Value& obj) : GetMatchmakingQueueResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetMatchmakingQueueResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetMatchmakingTicketRequest : public PlayFabBaseModel
+        {
+            bool EscapeObject;
+            std::string QueueName;
+            std::string TicketId;
+
+            GetMatchmakingTicketRequest() :
+                PlayFabBaseModel(),
+                EscapeObject(false),
+                QueueName(),
+                TicketId()
+            {}
+
+            GetMatchmakingTicketRequest(const GetMatchmakingTicketRequest& src) :
+                PlayFabBaseModel(),
+                EscapeObject(src.EscapeObject),
+                QueueName(src.QueueName),
+                TicketId(src.TicketId)
+            {}
+
+            GetMatchmakingTicketRequest(const rapidjson::Value& obj) : GetMatchmakingTicketRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetMatchmakingTicketRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetMatchmakingTicketResult : public PlayFabBaseModel
+        {
+            Boxed<CancellationReason> pfCancellationReason;
+            time_t Created;
+            EntityKey Creator;
+            Int32 GiveUpAfterSeconds;
+            std::string MatchId;
+            std::list<MatchmakingPlayer> Members;
+            std::list<EntityKey> MembersToMatchWith;
+            std::string QueueName;
+            std::string Status;
+            std::string TicketId;
+
+            GetMatchmakingTicketResult() :
+                PlayFabBaseModel(),
+                pfCancellationReason(),
+                Created(0),
+                Creator(),
+                GiveUpAfterSeconds(0),
+                MatchId(),
+                Members(),
+                MembersToMatchWith(),
+                QueueName(),
+                Status(),
+                TicketId()
+            {}
+
+            GetMatchmakingTicketResult(const GetMatchmakingTicketResult& src) :
+                PlayFabBaseModel(),
+                pfCancellationReason(src.pfCancellationReason),
+                Created(src.Created),
+                Creator(src.Creator),
+                GiveUpAfterSeconds(src.GiveUpAfterSeconds),
+                MatchId(src.MatchId),
+                Members(src.Members),
+                MembersToMatchWith(src.MembersToMatchWith),
+                QueueName(src.QueueName),
+                Status(src.Status),
+                TicketId(src.TicketId)
+            {}
+
+            GetMatchmakingTicketResult(const rapidjson::Value& obj) : GetMatchmakingTicketResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetMatchmakingTicketResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetMatchRequest : public PlayFabBaseModel
+        {
+            bool EscapeObject;
+            std::string MatchId;
+            std::string QueueName;
+            bool ReturnMemberAttributes;
+
+            GetMatchRequest() :
+                PlayFabBaseModel(),
+                EscapeObject(false),
+                MatchId(),
+                QueueName(),
+                ReturnMemberAttributes(false)
+            {}
+
+            GetMatchRequest(const GetMatchRequest& src) :
+                PlayFabBaseModel(),
+                EscapeObject(src.EscapeObject),
+                MatchId(src.MatchId),
+                QueueName(src.QueueName),
+                ReturnMemberAttributes(src.ReturnMemberAttributes)
+            {}
+
+            GetMatchRequest(const rapidjson::Value& obj) : GetMatchRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetMatchRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct MatchmakingPlayerWithTeamAssignment : public PlayFabBaseModel
+        {
+            MatchmakingPlayerAttributes* Attributes;
+            EntityKey Entity;
+            std::string TeamId;
+
+            MatchmakingPlayerWithTeamAssignment() :
+                PlayFabBaseModel(),
+                Attributes(NULL),
+                Entity(),
+                TeamId()
+            {}
+
+            MatchmakingPlayerWithTeamAssignment(const MatchmakingPlayerWithTeamAssignment& src) :
+                PlayFabBaseModel(),
+                Attributes(src.Attributes ? new MatchmakingPlayerAttributes(*src.Attributes) : NULL),
+                Entity(src.Entity),
+                TeamId(src.TeamId)
+            {}
+
+            MatchmakingPlayerWithTeamAssignment(const rapidjson::Value& obj) : MatchmakingPlayerWithTeamAssignment()
+            {
+                readFromValue(obj);
+            }
+
+            ~MatchmakingPlayerWithTeamAssignment();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ServerDetails : public PlayFabBaseModel
+        {
+            std::string IPV4Address;
+            std::list<Port> Ports;
+
+            ServerDetails() :
+                PlayFabBaseModel(),
+                IPV4Address(),
+                Ports()
+            {}
+
+            ServerDetails(const ServerDetails& src) :
+                PlayFabBaseModel(),
+                IPV4Address(src.IPV4Address),
+                Ports(src.Ports)
+            {}
+
+            ServerDetails(const rapidjson::Value& obj) : ServerDetails()
+            {
+                readFromValue(obj);
+            }
+
+            ~ServerDetails();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetMatchResult : public PlayFabBaseModel
+        {
+            std::string MatchId;
+            std::list<MatchmakingPlayerWithTeamAssignment> Members;
+            std::list<std::string> RegionPreferences;
+            ServerDetails* pfServerDetails;
+
+            GetMatchResult() :
+                PlayFabBaseModel(),
+                MatchId(),
+                Members(),
+                RegionPreferences(),
+                pfServerDetails(NULL)
+            {}
+
+            GetMatchResult(const GetMatchResult& src) :
+                PlayFabBaseModel(),
+                MatchId(src.MatchId),
+                Members(src.Members),
+                RegionPreferences(src.RegionPreferences),
+                pfServerDetails(src.pfServerDetails ? new ServerDetails(*src.pfServerDetails) : NULL)
+            {}
+
+            GetMatchResult(const rapidjson::Value& obj) : GetMatchResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetMatchResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetMultiplayerServerDetailsRequest : public PlayFabBaseModel
         {
             std::string BuildId;
@@ -1259,6 +1955,93 @@ namespace PlayFab
             }
 
             ~GetMultiplayerServerDetailsResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetQueueStatisticsRequest : public PlayFabBaseModel
+        {
+            std::string QueueName;
+
+            GetQueueStatisticsRequest() :
+                PlayFabBaseModel(),
+                QueueName()
+            {}
+
+            GetQueueStatisticsRequest(const GetQueueStatisticsRequest& src) :
+                PlayFabBaseModel(),
+                QueueName(src.QueueName)
+            {}
+
+            GetQueueStatisticsRequest(const rapidjson::Value& obj) : GetQueueStatisticsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetQueueStatisticsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct Statistics : public PlayFabBaseModel
+        {
+            double Average;
+            double Percentile50;
+            double Percentile90;
+            double Percentile99;
+
+            Statistics() :
+                PlayFabBaseModel(),
+                Average(0),
+                Percentile50(0),
+                Percentile90(0),
+                Percentile99(0)
+            {}
+
+            Statistics(const Statistics& src) :
+                PlayFabBaseModel(),
+                Average(src.Average),
+                Percentile50(src.Percentile50),
+                Percentile90(src.Percentile90),
+                Percentile99(src.Percentile99)
+            {}
+
+            Statistics(const rapidjson::Value& obj) : Statistics()
+            {
+                readFromValue(obj);
+            }
+
+            ~Statistics();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetQueueStatisticsResult : public PlayFabBaseModel
+        {
+            OptionalUint32 NumberOfPlayersMatching;
+            Statistics* TimeToMatchStatisticsInSeconds;
+
+            GetQueueStatisticsResult() :
+                PlayFabBaseModel(),
+                NumberOfPlayersMatching(),
+                TimeToMatchStatisticsInSeconds(NULL)
+            {}
+
+            GetQueueStatisticsResult(const GetQueueStatisticsResult& src) :
+                PlayFabBaseModel(),
+                NumberOfPlayersMatching(src.NumberOfPlayersMatching),
+                TimeToMatchStatisticsInSeconds(src.TimeToMatchStatisticsInSeconds ? new Statistics(*src.TimeToMatchStatisticsInSeconds) : NULL)
+            {}
+
+            GetQueueStatisticsResult(const rapidjson::Value& obj) : GetQueueStatisticsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetQueueStatisticsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1365,6 +2148,59 @@ namespace PlayFab
             }
 
             ~GetTitleEnabledForMultiplayerServersStatusResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct JoinMatchmakingTicketRequest : public PlayFabBaseModel
+        {
+            MatchmakingPlayer Member;
+            std::string QueueName;
+            std::string TicketId;
+
+            JoinMatchmakingTicketRequest() :
+                PlayFabBaseModel(),
+                Member(),
+                QueueName(),
+                TicketId()
+            {}
+
+            JoinMatchmakingTicketRequest(const JoinMatchmakingTicketRequest& src) :
+                PlayFabBaseModel(),
+                Member(src.Member),
+                QueueName(src.QueueName),
+                TicketId(src.TicketId)
+            {}
+
+            JoinMatchmakingTicketRequest(const rapidjson::Value& obj) : JoinMatchmakingTicketRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~JoinMatchmakingTicketRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct JoinMatchmakingTicketResult : public PlayFabBaseModel
+        {
+
+            JoinMatchmakingTicketResult() :
+                PlayFabBaseModel()
+            {}
+
+            JoinMatchmakingTicketResult(const JoinMatchmakingTicketResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            JoinMatchmakingTicketResult(const rapidjson::Value& obj) : JoinMatchmakingTicketResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~JoinMatchmakingTicketResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1656,6 +2492,106 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct ListMatchmakingQueuesRequest : public PlayFabBaseModel
+        {
+
+            ListMatchmakingQueuesRequest() :
+                PlayFabBaseModel()
+            {}
+
+            ListMatchmakingQueuesRequest(const ListMatchmakingQueuesRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            ListMatchmakingQueuesRequest(const rapidjson::Value& obj) : ListMatchmakingQueuesRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListMatchmakingQueuesRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ListMatchmakingQueuesResult : public PlayFabBaseModel
+        {
+            std::list<MatchmakingQueueConfig> MatchMakingQueues;
+
+            ListMatchmakingQueuesResult() :
+                PlayFabBaseModel(),
+                MatchMakingQueues()
+            {}
+
+            ListMatchmakingQueuesResult(const ListMatchmakingQueuesResult& src) :
+                PlayFabBaseModel(),
+                MatchMakingQueues(src.MatchMakingQueues)
+            {}
+
+            ListMatchmakingQueuesResult(const rapidjson::Value& obj) : ListMatchmakingQueuesResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListMatchmakingQueuesResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ListMatchmakingTicketsForPlayerRequest : public PlayFabBaseModel
+        {
+            EntityKey* Entity;
+            std::string QueueName;
+
+            ListMatchmakingTicketsForPlayerRequest() :
+                PlayFabBaseModel(),
+                Entity(NULL),
+                QueueName()
+            {}
+
+            ListMatchmakingTicketsForPlayerRequest(const ListMatchmakingTicketsForPlayerRequest& src) :
+                PlayFabBaseModel(),
+                Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
+                QueueName(src.QueueName)
+            {}
+
+            ListMatchmakingTicketsForPlayerRequest(const rapidjson::Value& obj) : ListMatchmakingTicketsForPlayerRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListMatchmakingTicketsForPlayerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ListMatchmakingTicketsForPlayerResult : public PlayFabBaseModel
+        {
+            std::list<std::string> TicketIds;
+
+            ListMatchmakingTicketsForPlayerResult() :
+                PlayFabBaseModel(),
+                TicketIds()
+            {}
+
+            ListMatchmakingTicketsForPlayerResult(const ListMatchmakingTicketsForPlayerResult& src) :
+                PlayFabBaseModel(),
+                TicketIds(src.TicketIds)
+            {}
+
+            ListMatchmakingTicketsForPlayerResult(const rapidjson::Value& obj) : ListMatchmakingTicketsForPlayerResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListMatchmakingTicketsForPlayerResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ListMultiplayerServersRequest : public PlayFabBaseModel
         {
             std::string BuildId;
@@ -1941,6 +2877,53 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct RemoveMatchmakingQueueRequest : public PlayFabBaseModel
+        {
+            std::string QueueName;
+
+            RemoveMatchmakingQueueRequest() :
+                PlayFabBaseModel(),
+                QueueName()
+            {}
+
+            RemoveMatchmakingQueueRequest(const RemoveMatchmakingQueueRequest& src) :
+                PlayFabBaseModel(),
+                QueueName(src.QueueName)
+            {}
+
+            RemoveMatchmakingQueueRequest(const rapidjson::Value& obj) : RemoveMatchmakingQueueRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RemoveMatchmakingQueueRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RemoveMatchmakingQueueResult : public PlayFabBaseModel
+        {
+
+            RemoveMatchmakingQueueResult() :
+                PlayFabBaseModel()
+            {}
+
+            RemoveMatchmakingQueueResult(const RemoveMatchmakingQueueResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            RemoveMatchmakingQueueResult(const rapidjson::Value& obj) : RemoveMatchmakingQueueResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RemoveMatchmakingQueueResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct RequestMultiplayerServerRequest : public PlayFabBaseModel
         {
             std::string BuildId;
@@ -2078,6 +3061,53 @@ namespace PlayFab
             }
 
             ~RolloverContainerRegistryCredentialsResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetMatchmakingQueueRequest : public PlayFabBaseModel
+        {
+            MatchmakingQueueConfig* MatchmakingQueue;
+
+            SetMatchmakingQueueRequest() :
+                PlayFabBaseModel(),
+                MatchmakingQueue(NULL)
+            {}
+
+            SetMatchmakingQueueRequest(const SetMatchmakingQueueRequest& src) :
+                PlayFabBaseModel(),
+                MatchmakingQueue(src.MatchmakingQueue ? new MatchmakingQueueConfig(*src.MatchmakingQueue) : NULL)
+            {}
+
+            SetMatchmakingQueueRequest(const rapidjson::Value& obj) : SetMatchmakingQueueRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetMatchmakingQueueRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetMatchmakingQueueResult : public PlayFabBaseModel
+        {
+
+            SetMatchmakingQueueResult() :
+                PlayFabBaseModel()
+            {}
+
+            SetMatchmakingQueueResult(const SetMatchmakingQueueResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            SetMatchmakingQueueResult(const rapidjson::Value& obj) : SetMatchmakingQueueResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetMatchmakingQueueResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
