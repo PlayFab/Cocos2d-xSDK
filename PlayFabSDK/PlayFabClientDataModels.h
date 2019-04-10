@@ -2834,13 +2834,15 @@ namespace PlayFab
             std::string SteamCountry;
             Boxed<Currency> SteamCurrency;
             std::string SteamId;
+            std::string SteamName;
 
             UserSteamInfo() :
                 PlayFabBaseModel(),
                 SteamActivationStatus(),
                 SteamCountry(),
                 SteamCurrency(),
-                SteamId()
+                SteamId(),
+                SteamName()
             {}
 
             UserSteamInfo(const UserSteamInfo& src) :
@@ -2848,7 +2850,8 @@ namespace PlayFab
                 SteamActivationStatus(src.SteamActivationStatus),
                 SteamCountry(src.SteamCountry),
                 SteamCurrency(src.SteamCurrency),
-                SteamId(src.SteamId)
+                SteamId(src.SteamId),
+                SteamName(src.SteamName)
             {}
 
             UserSteamInfo(const rapidjson::Value& obj) : UserSteamInfo()
@@ -2889,8 +2892,6 @@ namespace PlayFab
 
         struct FriendInfo : public PlayFabBaseModel
         {
-            // Deprecated - Do not use
-            std::string CurrentMatchmakerLobbyId;
             UserFacebookInfo* FacebookInfo;
             std::string FriendPlayFabId;
             UserGameCenterInfo* GameCenterInfo;
@@ -2904,7 +2905,6 @@ namespace PlayFab
 
             FriendInfo() :
                 PlayFabBaseModel(),
-                CurrentMatchmakerLobbyId(),
                 FacebookInfo(NULL),
                 FriendPlayFabId(),
                 GameCenterInfo(NULL),
@@ -2919,7 +2919,6 @@ namespace PlayFab
 
             FriendInfo(const FriendInfo& src) :
                 PlayFabBaseModel(),
-                CurrentMatchmakerLobbyId(src.CurrentMatchmakerLobbyId),
                 FacebookInfo(src.FacebookInfo ? new UserFacebookInfo(*src.FacebookInfo) : NULL),
                 FriendPlayFabId(src.FriendPlayFabId),
                 GameCenterInfo(src.GameCenterInfo ? new UserGameCenterInfo(*src.GameCenterInfo) : NULL),
@@ -3201,13 +3200,15 @@ namespace PlayFab
             std::string GoogleGender;
             std::string GoogleId;
             std::string GoogleLocale;
+            std::string GoogleName;
 
             UserGoogleInfo() :
                 PlayFabBaseModel(),
                 GoogleEmail(),
                 GoogleGender(),
                 GoogleId(),
-                GoogleLocale()
+                GoogleLocale(),
+                GoogleName()
             {}
 
             UserGoogleInfo(const UserGoogleInfo& src) :
@@ -3215,7 +3216,8 @@ namespace PlayFab
                 GoogleEmail(src.GoogleEmail),
                 GoogleGender(src.GoogleGender),
                 GoogleId(src.GoogleId),
-                GoogleLocale(src.GoogleLocale)
+                GoogleLocale(src.GoogleLocale),
+                GoogleName(src.GoogleName)
             {}
 
             UserGoogleInfo(const rapidjson::Value& obj) : UserGoogleInfo()

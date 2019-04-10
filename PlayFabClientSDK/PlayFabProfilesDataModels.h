@@ -189,6 +189,74 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct EntityStatisticChildValue : public PlayFabBaseModel
+        {
+            std::string ChildName;
+            std::string Metadata;
+            Int32 Value;
+
+            EntityStatisticChildValue() :
+                PlayFabBaseModel(),
+                ChildName(),
+                Metadata(),
+                Value(0)
+            {}
+
+            EntityStatisticChildValue(const EntityStatisticChildValue& src) :
+                PlayFabBaseModel(),
+                ChildName(src.ChildName),
+                Metadata(src.Metadata),
+                Value(src.Value)
+            {}
+
+            EntityStatisticChildValue(const rapidjson::Value& obj) : EntityStatisticChildValue()
+            {
+                readFromValue(obj);
+            }
+
+            ~EntityStatisticChildValue();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct EntityStatisticValue : public PlayFabBaseModel
+        {
+            std::map<std::string, EntityStatisticChildValue> ChildStatistics;
+            std::string Metadata;
+            std::string Name;
+            OptionalInt32 Value;
+            Int32 Version;
+
+            EntityStatisticValue() :
+                PlayFabBaseModel(),
+                ChildStatistics(),
+                Metadata(),
+                Name(),
+                Value(),
+                Version(0)
+            {}
+
+            EntityStatisticValue(const EntityStatisticValue& src) :
+                PlayFabBaseModel(),
+                ChildStatistics(src.ChildStatistics),
+                Metadata(src.Metadata),
+                Name(src.Name),
+                Value(src.Value),
+                Version(src.Version)
+            {}
+
+            EntityStatisticValue(const rapidjson::Value& obj) : EntityStatisticValue()
+            {
+                readFromValue(obj);
+            }
+
+            ~EntityStatisticValue();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct EntityProfileBody : public PlayFabBaseModel
         {
             time_t Created;
@@ -200,6 +268,7 @@ namespace PlayFab
             EntityLineage* Lineage;
             std::map<std::string, EntityDataObject> Objects;
             std::list<EntityPermissionStatement> Permissions;
+            std::map<std::string, EntityStatisticValue> Statistics;
             Int32 VersionNumber;
 
             EntityProfileBody() :
@@ -213,6 +282,7 @@ namespace PlayFab
                 Lineage(NULL),
                 Objects(),
                 Permissions(),
+                Statistics(),
                 VersionNumber(0)
             {}
 
@@ -227,6 +297,7 @@ namespace PlayFab
                 Lineage(src.Lineage ? new EntityLineage(*src.Lineage) : NULL),
                 Objects(src.Objects),
                 Permissions(src.Permissions),
+                Statistics(src.Statistics),
                 VersionNumber(src.VersionNumber)
             {}
 
