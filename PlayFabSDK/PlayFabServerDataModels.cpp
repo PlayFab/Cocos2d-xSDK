@@ -419,6 +419,7 @@ void UserGoogleInfo::writeJSON(PFStringJsonWriter& writer)
     if (GoogleGender.length() > 0) { writer.String("GoogleGender"); writer.String(GoogleGender.c_str()); }
     if (GoogleId.length() > 0) { writer.String("GoogleId"); writer.String(GoogleId.c_str()); }
     if (GoogleLocale.length() > 0) { writer.String("GoogleLocale"); writer.String(GoogleLocale.c_str()); }
+    if (GoogleName.length() > 0) { writer.String("GoogleName"); writer.String(GoogleName.c_str()); }
     writer.EndObject();
 }
 
@@ -432,6 +433,8 @@ bool UserGoogleInfo::readFromValue(const rapidjson::Value& obj)
     if (GoogleId_member != obj.MemberEnd() && !GoogleId_member->value.IsNull()) GoogleId = GoogleId_member->value.GetString();
     const Value::ConstMemberIterator GoogleLocale_member = obj.FindMember("GoogleLocale");
     if (GoogleLocale_member != obj.MemberEnd() && !GoogleLocale_member->value.IsNull()) GoogleLocale = GoogleLocale_member->value.GetString();
+    const Value::ConstMemberIterator GoogleName_member = obj.FindMember("GoogleName");
+    if (GoogleName_member != obj.MemberEnd() && !GoogleName_member->value.IsNull()) GoogleName = GoogleName_member->value.GetString();
 
     return true;
 }
@@ -960,6 +963,7 @@ void UserSteamInfo::writeJSON(PFStringJsonWriter& writer)
     if (SteamCountry.length() > 0) { writer.String("SteamCountry"); writer.String(SteamCountry.c_str()); }
     if (SteamCurrency.notNull()) { writer.String("SteamCurrency"); writeCurrencyEnumJSON(SteamCurrency, writer); }
     if (SteamId.length() > 0) { writer.String("SteamId"); writer.String(SteamId.c_str()); }
+    if (SteamName.length() > 0) { writer.String("SteamName"); writer.String(SteamName.c_str()); }
     writer.EndObject();
 }
 
@@ -973,6 +977,8 @@ bool UserSteamInfo::readFromValue(const rapidjson::Value& obj)
     if (SteamCurrency_member != obj.MemberEnd() && !SteamCurrency_member->value.IsNull()) SteamCurrency = readCurrencyFromValue(SteamCurrency_member->value);
     const Value::ConstMemberIterator SteamId_member = obj.FindMember("SteamId");
     if (SteamId_member != obj.MemberEnd() && !SteamId_member->value.IsNull()) SteamId = SteamId_member->value.GetString();
+    const Value::ConstMemberIterator SteamName_member = obj.FindMember("SteamName");
+    if (SteamName_member != obj.MemberEnd() && !SteamName_member->value.IsNull()) SteamName = SteamName_member->value.GetString();
 
     return true;
 }
@@ -3684,7 +3690,6 @@ FriendInfo::~FriendInfo()
 void FriendInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    if (CurrentMatchmakerLobbyId.length() > 0) { writer.String("CurrentMatchmakerLobbyId"); writer.String(CurrentMatchmakerLobbyId.c_str()); }
     if (FacebookInfo != NULL) { writer.String("FacebookInfo"); FacebookInfo->writeJSON(writer); }
     if (FriendPlayFabId.length() > 0) { writer.String("FriendPlayFabId"); writer.String(FriendPlayFabId.c_str()); }
     if (GameCenterInfo != NULL) { writer.String("GameCenterInfo"); GameCenterInfo->writeJSON(writer); }
@@ -3707,8 +3712,6 @@ void FriendInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool FriendInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator CurrentMatchmakerLobbyId_member = obj.FindMember("CurrentMatchmakerLobbyId");
-    if (CurrentMatchmakerLobbyId_member != obj.MemberEnd() && !CurrentMatchmakerLobbyId_member->value.IsNull()) CurrentMatchmakerLobbyId = CurrentMatchmakerLobbyId_member->value.GetString();
     const Value::ConstMemberIterator FacebookInfo_member = obj.FindMember("FacebookInfo");
     if (FacebookInfo_member != obj.MemberEnd() && !FacebookInfo_member->value.IsNull()) FacebookInfo = new UserFacebookInfo(FacebookInfo_member->value);
     const Value::ConstMemberIterator FriendPlayFabId_member = obj.FindMember("FriendPlayFabId");
@@ -4203,6 +4206,7 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesCannotEnableMultiplayerServersForTitle: writer.String("CannotEnableMultiplayerServersForTitle"); break;
     case GenericErrorCodesWriteAttemptedDuringExport: writer.String("WriteAttemptedDuringExport"); break;
     case GenericErrorCodesMultiplayerServerTitleQuotaCoresExceeded: writer.String("MultiplayerServerTitleQuotaCoresExceeded"); break;
+    case GenericErrorCodesAutomationRuleNotFound: writer.String("AutomationRuleNotFound"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -4221,6 +4225,7 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesMatchmakingRateLimitExceeded: writer.String("MatchmakingRateLimitExceeded"); break;
     case GenericErrorCodesMatchmakingTicketMembershipLimitExceeded: writer.String("MatchmakingTicketMembershipLimitExceeded"); break;
     case GenericErrorCodesMatchmakingUnauthorized: writer.String("MatchmakingUnauthorized"); break;
+    case GenericErrorCodesMatchmakingQueueLimitExceeded: writer.String("MatchmakingQueueLimitExceeded"); break;
     case GenericErrorCodesTitleConfigNotFound: writer.String("TitleConfigNotFound"); break;
     case GenericErrorCodesTitleConfigUpdateConflict: writer.String("TitleConfigUpdateConflict"); break;
     case GenericErrorCodesTitleConfigSerializationError: writer.String("TitleConfigSerializationError"); break;
@@ -4238,6 +4243,13 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesCatalogConfigContentTypeTooLong: writer.String("CatalogConfigContentTypeTooLong"); break;
     case GenericErrorCodesCatalogConfigTooManyTags: writer.String("CatalogConfigTooManyTags"); break;
     case GenericErrorCodesCatalogConfigTagTooLong: writer.String("CatalogConfigTagTooLong"); break;
+    case GenericErrorCodesCatalogConfigInvalidDeepLinkObject: writer.String("CatalogConfigInvalidDeepLinkObject"); break;
+    case GenericErrorCodesCatalogConfigInvalidDeepLinkPlatform: writer.String("CatalogConfigInvalidDeepLinkPlatform"); break;
+    case GenericErrorCodesCatalogConfigInvalidDeepLinkFormat: writer.String("CatalogConfigInvalidDeepLinkFormat"); break;
+    case GenericErrorCodesCatalogConfigInvalidDisplayPropertyObject: writer.String("CatalogConfigInvalidDisplayPropertyObject"); break;
+    case GenericErrorCodesCatalogConfigInvalidDisplayPropertyName: writer.String("CatalogConfigInvalidDisplayPropertyName"); break;
+    case GenericErrorCodesCatalogConfigInvalidDisplayPropertyType: writer.String("CatalogConfigInvalidDisplayPropertyType"); break;
+    case GenericErrorCodesCatalogConfigDisplayPropertyMappingLimit: writer.String("CatalogConfigDisplayPropertyMappingLimit"); break;
     case GenericErrorCodesExportInvalidStatusUpdate: writer.String("ExportInvalidStatusUpdate"); break;
     case GenericErrorCodesExportInvalidPrefix: writer.String("ExportInvalidPrefix"); break;
     case GenericErrorCodesExportBlobContainerDoesNotExist: writer.String("ExportBlobContainerDoesNotExist"); break;
@@ -4245,6 +4257,13 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesExportExportTitleIdNotFound: writer.String("ExportExportTitleIdNotFound"); break;
     case GenericErrorCodesExportCouldNotUpdate: writer.String("ExportCouldNotUpdate"); break;
     case GenericErrorCodesExportInvalidStorageType: writer.String("ExportInvalidStorageType"); break;
+    case GenericErrorCodesExportAmazonBucketDoesNotExist: writer.String("ExportAmazonBucketDoesNotExist"); break;
+    case GenericErrorCodesExportInvalidBlobStorage: writer.String("ExportInvalidBlobStorage"); break;
+    case GenericErrorCodesExportKustoException: writer.String("ExportKustoException"); break;
+    case GenericErrorCodesExportKustoExceptionNew_SomeResources: writer.String("ExportKustoExceptionNew_SomeResources"); break;
+    case GenericErrorCodesExportKustoExceptionEdit: writer.String("ExportKustoExceptionEdit"); break;
+    case GenericErrorCodesExportKustoConnectionFailed: writer.String("ExportKustoConnectionFailed"); break;
+    case GenericErrorCodesExportUnknownError: writer.String("ExportUnknownError"); break;
 
     }
 }
@@ -4690,6 +4709,7 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["CannotEnableMultiplayerServersForTitle"] = GenericErrorCodesCannotEnableMultiplayerServersForTitle;
         _GenericErrorCodesMap["WriteAttemptedDuringExport"] = GenericErrorCodesWriteAttemptedDuringExport;
         _GenericErrorCodesMap["MultiplayerServerTitleQuotaCoresExceeded"] = GenericErrorCodesMultiplayerServerTitleQuotaCoresExceeded;
+        _GenericErrorCodesMap["AutomationRuleNotFound"] = GenericErrorCodesAutomationRuleNotFound;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -4708,6 +4728,7 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["MatchmakingRateLimitExceeded"] = GenericErrorCodesMatchmakingRateLimitExceeded;
         _GenericErrorCodesMap["MatchmakingTicketMembershipLimitExceeded"] = GenericErrorCodesMatchmakingTicketMembershipLimitExceeded;
         _GenericErrorCodesMap["MatchmakingUnauthorized"] = GenericErrorCodesMatchmakingUnauthorized;
+        _GenericErrorCodesMap["MatchmakingQueueLimitExceeded"] = GenericErrorCodesMatchmakingQueueLimitExceeded;
         _GenericErrorCodesMap["TitleConfigNotFound"] = GenericErrorCodesTitleConfigNotFound;
         _GenericErrorCodesMap["TitleConfigUpdateConflict"] = GenericErrorCodesTitleConfigUpdateConflict;
         _GenericErrorCodesMap["TitleConfigSerializationError"] = GenericErrorCodesTitleConfigSerializationError;
@@ -4725,6 +4746,13 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["CatalogConfigContentTypeTooLong"] = GenericErrorCodesCatalogConfigContentTypeTooLong;
         _GenericErrorCodesMap["CatalogConfigTooManyTags"] = GenericErrorCodesCatalogConfigTooManyTags;
         _GenericErrorCodesMap["CatalogConfigTagTooLong"] = GenericErrorCodesCatalogConfigTagTooLong;
+        _GenericErrorCodesMap["CatalogConfigInvalidDeepLinkObject"] = GenericErrorCodesCatalogConfigInvalidDeepLinkObject;
+        _GenericErrorCodesMap["CatalogConfigInvalidDeepLinkPlatform"] = GenericErrorCodesCatalogConfigInvalidDeepLinkPlatform;
+        _GenericErrorCodesMap["CatalogConfigInvalidDeepLinkFormat"] = GenericErrorCodesCatalogConfigInvalidDeepLinkFormat;
+        _GenericErrorCodesMap["CatalogConfigInvalidDisplayPropertyObject"] = GenericErrorCodesCatalogConfigInvalidDisplayPropertyObject;
+        _GenericErrorCodesMap["CatalogConfigInvalidDisplayPropertyName"] = GenericErrorCodesCatalogConfigInvalidDisplayPropertyName;
+        _GenericErrorCodesMap["CatalogConfigInvalidDisplayPropertyType"] = GenericErrorCodesCatalogConfigInvalidDisplayPropertyType;
+        _GenericErrorCodesMap["CatalogConfigDisplayPropertyMappingLimit"] = GenericErrorCodesCatalogConfigDisplayPropertyMappingLimit;
         _GenericErrorCodesMap["ExportInvalidStatusUpdate"] = GenericErrorCodesExportInvalidStatusUpdate;
         _GenericErrorCodesMap["ExportInvalidPrefix"] = GenericErrorCodesExportInvalidPrefix;
         _GenericErrorCodesMap["ExportBlobContainerDoesNotExist"] = GenericErrorCodesExportBlobContainerDoesNotExist;
@@ -4732,6 +4760,13 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["ExportExportTitleIdNotFound"] = GenericErrorCodesExportExportTitleIdNotFound;
         _GenericErrorCodesMap["ExportCouldNotUpdate"] = GenericErrorCodesExportCouldNotUpdate;
         _GenericErrorCodesMap["ExportInvalidStorageType"] = GenericErrorCodesExportInvalidStorageType;
+        _GenericErrorCodesMap["ExportAmazonBucketDoesNotExist"] = GenericErrorCodesExportAmazonBucketDoesNotExist;
+        _GenericErrorCodesMap["ExportInvalidBlobStorage"] = GenericErrorCodesExportInvalidBlobStorage;
+        _GenericErrorCodesMap["ExportKustoException"] = GenericErrorCodesExportKustoException;
+        _GenericErrorCodesMap["ExportKustoExceptionNew_SomeResources"] = GenericErrorCodesExportKustoExceptionNew_SomeResources;
+        _GenericErrorCodesMap["ExportKustoExceptionEdit"] = GenericErrorCodesExportKustoExceptionEdit;
+        _GenericErrorCodesMap["ExportKustoConnectionFailed"] = GenericErrorCodesExportKustoConnectionFailed;
+        _GenericErrorCodesMap["ExportUnknownError"] = GenericErrorCodesExportUnknownError;
 
     }
 

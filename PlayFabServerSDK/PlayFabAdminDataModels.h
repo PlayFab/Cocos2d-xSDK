@@ -3050,6 +3050,7 @@ namespace PlayFab
             GenericErrorCodesCannotEnableMultiplayerServersForTitle,
             GenericErrorCodesWriteAttemptedDuringExport,
             GenericErrorCodesMultiplayerServerTitleQuotaCoresExceeded,
+            GenericErrorCodesAutomationRuleNotFound,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -3068,6 +3069,7 @@ namespace PlayFab
             GenericErrorCodesMatchmakingRateLimitExceeded,
             GenericErrorCodesMatchmakingTicketMembershipLimitExceeded,
             GenericErrorCodesMatchmakingUnauthorized,
+            GenericErrorCodesMatchmakingQueueLimitExceeded,
             GenericErrorCodesTitleConfigNotFound,
             GenericErrorCodesTitleConfigUpdateConflict,
             GenericErrorCodesTitleConfigSerializationError,
@@ -3085,13 +3087,27 @@ namespace PlayFab
             GenericErrorCodesCatalogConfigContentTypeTooLong,
             GenericErrorCodesCatalogConfigTooManyTags,
             GenericErrorCodesCatalogConfigTagTooLong,
+            GenericErrorCodesCatalogConfigInvalidDeepLinkObject,
+            GenericErrorCodesCatalogConfigInvalidDeepLinkPlatform,
+            GenericErrorCodesCatalogConfigInvalidDeepLinkFormat,
+            GenericErrorCodesCatalogConfigInvalidDisplayPropertyObject,
+            GenericErrorCodesCatalogConfigInvalidDisplayPropertyName,
+            GenericErrorCodesCatalogConfigInvalidDisplayPropertyType,
+            GenericErrorCodesCatalogConfigDisplayPropertyMappingLimit,
             GenericErrorCodesExportInvalidStatusUpdate,
             GenericErrorCodesExportInvalidPrefix,
             GenericErrorCodesExportBlobContainerDoesNotExist,
             GenericErrorCodesExportEventNameNotFound,
             GenericErrorCodesExportExportTitleIdNotFound,
             GenericErrorCodesExportCouldNotUpdate,
-            GenericErrorCodesExportInvalidStorageType
+            GenericErrorCodesExportInvalidStorageType,
+            GenericErrorCodesExportAmazonBucketDoesNotExist,
+            GenericErrorCodesExportInvalidBlobStorage,
+            GenericErrorCodesExportKustoException,
+            GenericErrorCodesExportKustoExceptionNew_SomeResources,
+            GenericErrorCodesExportKustoExceptionEdit,
+            GenericErrorCodesExportKustoConnectionFailed,
+            GenericErrorCodesExportUnknownError
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
@@ -6687,13 +6703,15 @@ namespace PlayFab
             std::string GoogleGender;
             std::string GoogleId;
             std::string GoogleLocale;
+            std::string GoogleName;
 
             UserGoogleInfo() :
                 PlayFabBaseModel(),
                 GoogleEmail(),
                 GoogleGender(),
                 GoogleId(),
-                GoogleLocale()
+                GoogleLocale(),
+                GoogleName()
             {}
 
             UserGoogleInfo(const UserGoogleInfo& src) :
@@ -6701,7 +6719,8 @@ namespace PlayFab
                 GoogleEmail(src.GoogleEmail),
                 GoogleGender(src.GoogleGender),
                 GoogleId(src.GoogleId),
-                GoogleLocale(src.GoogleLocale)
+                GoogleLocale(src.GoogleLocale),
+                GoogleName(src.GoogleName)
             {}
 
             UserGoogleInfo(const rapidjson::Value& obj) : UserGoogleInfo()
@@ -6895,13 +6914,15 @@ namespace PlayFab
             std::string SteamCountry;
             Boxed<Currency> SteamCurrency;
             std::string SteamId;
+            std::string SteamName;
 
             UserSteamInfo() :
                 PlayFabBaseModel(),
                 SteamActivationStatus(),
                 SteamCountry(),
                 SteamCurrency(),
-                SteamId()
+                SteamId(),
+                SteamName()
             {}
 
             UserSteamInfo(const UserSteamInfo& src) :
@@ -6909,7 +6930,8 @@ namespace PlayFab
                 SteamActivationStatus(src.SteamActivationStatus),
                 SteamCountry(src.SteamCountry),
                 SteamCurrency(src.SteamCurrency),
-                SteamId(src.SteamId)
+                SteamId(src.SteamId),
+                SteamName(src.SteamName)
             {}
 
             UserSteamInfo(const rapidjson::Value& obj) : UserSteamInfo()

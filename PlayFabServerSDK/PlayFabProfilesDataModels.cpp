@@ -180,6 +180,75 @@ bool EntityProfileFileMetadata::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+EntityStatisticChildValue::~EntityStatisticChildValue()
+{
+
+}
+
+void EntityStatisticChildValue::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (ChildName.length() > 0) { writer.String("ChildName"); writer.String(ChildName.c_str()); }
+    if (Metadata.length() > 0) { writer.String("Metadata"); writer.String(Metadata.c_str()); }
+    writer.String("Value"); writer.Int(Value);
+    writer.EndObject();
+}
+
+bool EntityStatisticChildValue::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ChildName_member = obj.FindMember("ChildName");
+    if (ChildName_member != obj.MemberEnd() && !ChildName_member->value.IsNull()) ChildName = ChildName_member->value.GetString();
+    const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
+    if (Metadata_member != obj.MemberEnd() && !Metadata_member->value.IsNull()) Metadata = Metadata_member->value.GetString();
+    const Value::ConstMemberIterator Value_member = obj.FindMember("Value");
+    if (Value_member != obj.MemberEnd() && !Value_member->value.IsNull()) Value = Value_member->value.GetInt();
+
+    return true;
+}
+
+EntityStatisticValue::~EntityStatisticValue()
+{
+
+}
+
+void EntityStatisticValue::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!ChildStatistics.empty()) {
+        writer.String("ChildStatistics");
+        writer.StartObject();
+        for (std::map<std::string, EntityStatisticChildValue>::iterator iter = ChildStatistics.begin(); iter != ChildStatistics.end(); ++iter) {
+            writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        }
+        writer.EndObject();
+    }
+    if (Metadata.length() > 0) { writer.String("Metadata"); writer.String(Metadata.c_str()); }
+    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    if (Value.notNull()) { writer.String("Value"); writer.Int(Value); }
+    writer.String("Version"); writer.Int(Version);
+    writer.EndObject();
+}
+
+bool EntityStatisticValue::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ChildStatistics_member = obj.FindMember("ChildStatistics");
+    if (ChildStatistics_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = ChildStatistics_member->value.MemberBegin(); iter != ChildStatistics_member->value.MemberEnd(); ++iter) {
+            ChildStatistics[iter->name.GetString()] = EntityStatisticChildValue(iter->value);
+        }
+    }
+    const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
+    if (Metadata_member != obj.MemberEnd() && !Metadata_member->value.IsNull()) Metadata = Metadata_member->value.GetString();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Value_member = obj.FindMember("Value");
+    if (Value_member != obj.MemberEnd() && !Value_member->value.IsNull()) Value = Value_member->value.GetInt();
+    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
+    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetInt();
+
+    return true;
+}
+
 EntityProfileBody::~EntityProfileBody()
 {
     if (Entity != NULL) delete Entity;
@@ -220,6 +289,14 @@ void EntityProfileBody::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndArray();
     }
+    if (!Statistics.empty()) {
+        writer.String("Statistics");
+        writer.StartObject();
+        for (std::map<std::string, EntityStatisticValue>::iterator iter = Statistics.begin(); iter != Statistics.end(); ++iter) {
+            writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        }
+        writer.EndObject();
+    }
     writer.String("VersionNumber"); writer.Int(VersionNumber);
     writer.EndObject();
 }
@@ -255,6 +332,12 @@ bool EntityProfileBody::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = Permissions_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Permissions.push_back(EntityPermissionStatement(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator Statistics_member = obj.FindMember("Statistics");
+    if (Statistics_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Statistics_member->value.MemberBegin(); iter != Statistics_member->value.MemberEnd(); ++iter) {
+            Statistics[iter->name.GetString()] = EntityStatisticValue(iter->value);
         }
     }
     const Value::ConstMemberIterator VersionNumber_member = obj.FindMember("VersionNumber");

@@ -3665,6 +3665,7 @@ void UserSteamInfo::writeJSON(PFStringJsonWriter& writer)
     if (SteamCountry.length() > 0) { writer.String("SteamCountry"); writer.String(SteamCountry.c_str()); }
     if (SteamCurrency.notNull()) { writer.String("SteamCurrency"); writeCurrencyEnumJSON(SteamCurrency, writer); }
     if (SteamId.length() > 0) { writer.String("SteamId"); writer.String(SteamId.c_str()); }
+    if (SteamName.length() > 0) { writer.String("SteamName"); writer.String(SteamName.c_str()); }
     writer.EndObject();
 }
 
@@ -3678,6 +3679,8 @@ bool UserSteamInfo::readFromValue(const rapidjson::Value& obj)
     if (SteamCurrency_member != obj.MemberEnd() && !SteamCurrency_member->value.IsNull()) SteamCurrency = readCurrencyFromValue(SteamCurrency_member->value);
     const Value::ConstMemberIterator SteamId_member = obj.FindMember("SteamId");
     if (SteamId_member != obj.MemberEnd() && !SteamId_member->value.IsNull()) SteamId = SteamId_member->value.GetString();
+    const Value::ConstMemberIterator SteamName_member = obj.FindMember("SteamName");
+    if (SteamName_member != obj.MemberEnd() && !SteamName_member->value.IsNull()) SteamName = SteamName_member->value.GetString();
 
     return true;
 }
@@ -3716,7 +3719,6 @@ FriendInfo::~FriendInfo()
 void FriendInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    if (CurrentMatchmakerLobbyId.length() > 0) { writer.String("CurrentMatchmakerLobbyId"); writer.String(CurrentMatchmakerLobbyId.c_str()); }
     if (FacebookInfo != NULL) { writer.String("FacebookInfo"); FacebookInfo->writeJSON(writer); }
     if (FriendPlayFabId.length() > 0) { writer.String("FriendPlayFabId"); writer.String(FriendPlayFabId.c_str()); }
     if (GameCenterInfo != NULL) { writer.String("GameCenterInfo"); GameCenterInfo->writeJSON(writer); }
@@ -3739,8 +3741,6 @@ void FriendInfo::writeJSON(PFStringJsonWriter& writer)
 
 bool FriendInfo::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator CurrentMatchmakerLobbyId_member = obj.FindMember("CurrentMatchmakerLobbyId");
-    if (CurrentMatchmakerLobbyId_member != obj.MemberEnd() && !CurrentMatchmakerLobbyId_member->value.IsNull()) CurrentMatchmakerLobbyId = CurrentMatchmakerLobbyId_member->value.GetString();
     const Value::ConstMemberIterator FacebookInfo_member = obj.FindMember("FacebookInfo");
     if (FacebookInfo_member != obj.MemberEnd() && !FacebookInfo_member->value.IsNull()) FacebookInfo = new UserFacebookInfo(FacebookInfo_member->value);
     const Value::ConstMemberIterator FriendPlayFabId_member = obj.FindMember("FriendPlayFabId");
@@ -4002,6 +4002,7 @@ void UserGoogleInfo::writeJSON(PFStringJsonWriter& writer)
     if (GoogleGender.length() > 0) { writer.String("GoogleGender"); writer.String(GoogleGender.c_str()); }
     if (GoogleId.length() > 0) { writer.String("GoogleId"); writer.String(GoogleId.c_str()); }
     if (GoogleLocale.length() > 0) { writer.String("GoogleLocale"); writer.String(GoogleLocale.c_str()); }
+    if (GoogleName.length() > 0) { writer.String("GoogleName"); writer.String(GoogleName.c_str()); }
     writer.EndObject();
 }
 
@@ -4015,6 +4016,8 @@ bool UserGoogleInfo::readFromValue(const rapidjson::Value& obj)
     if (GoogleId_member != obj.MemberEnd() && !GoogleId_member->value.IsNull()) GoogleId = GoogleId_member->value.GetString();
     const Value::ConstMemberIterator GoogleLocale_member = obj.FindMember("GoogleLocale");
     if (GoogleLocale_member != obj.MemberEnd() && !GoogleLocale_member->value.IsNull()) GoogleLocale = GoogleLocale_member->value.GetString();
+    const Value::ConstMemberIterator GoogleName_member = obj.FindMember("GoogleName");
+    if (GoogleName_member != obj.MemberEnd() && !GoogleName_member->value.IsNull()) GoogleName = GoogleName_member->value.GetString();
 
     return true;
 }
