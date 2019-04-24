@@ -316,6 +316,14 @@ void BuildSummary::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndObject();
     }
+    if (!RegionConfigurations.empty()) {
+        writer.String("RegionConfigurations");
+        writer.StartArray();
+        for (std::list<BuildRegion>::iterator iter = RegionConfigurations.begin(); iter != RegionConfigurations.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
     writer.EndObject();
 }
 
@@ -331,6 +339,13 @@ bool BuildSummary::readFromValue(const rapidjson::Value& obj)
     if (Metadata_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {
             Metadata[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+    const Value::ConstMemberIterator RegionConfigurations_member = obj.FindMember("RegionConfigurations");
+    if (RegionConfigurations_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = RegionConfigurations_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            RegionConfigurations.push_back(BuildRegion(memberList[i]));
         }
     }
 

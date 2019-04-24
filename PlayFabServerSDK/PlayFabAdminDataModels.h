@@ -3051,6 +3051,9 @@ namespace PlayFab
             GenericErrorCodesWriteAttemptedDuringExport,
             GenericErrorCodesMultiplayerServerTitleQuotaCoresExceeded,
             GenericErrorCodesAutomationRuleNotFound,
+            GenericErrorCodesEntityAPIKeyLimitExceeded,
+            GenericErrorCodesEntityAPIKeyNotFound,
+            GenericErrorCodesEntityAPIKeyOrSecretInvalid,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -3082,18 +3085,7 @@ namespace PlayFab
             GenericErrorCodesCatalogItemIdInvalid,
             GenericErrorCodesCatalogSearchParameterInvalid,
             GenericErrorCodesCatalogFeatureDisabled,
-            GenericErrorCodesCatalogConfigMissing,
-            GenericErrorCodesCatalogConfigTooManyContentTypes,
-            GenericErrorCodesCatalogConfigContentTypeTooLong,
-            GenericErrorCodesCatalogConfigTooManyTags,
-            GenericErrorCodesCatalogConfigTagTooLong,
-            GenericErrorCodesCatalogConfigInvalidDeepLinkObject,
-            GenericErrorCodesCatalogConfigInvalidDeepLinkPlatform,
-            GenericErrorCodesCatalogConfigInvalidDeepLinkFormat,
-            GenericErrorCodesCatalogConfigInvalidDisplayPropertyObject,
-            GenericErrorCodesCatalogConfigInvalidDisplayPropertyName,
-            GenericErrorCodesCatalogConfigInvalidDisplayPropertyType,
-            GenericErrorCodesCatalogConfigDisplayPropertyMappingLimit,
+            GenericErrorCodesCatalogConfigInvalid,
             GenericErrorCodesExportInvalidStatusUpdate,
             GenericErrorCodesExportInvalidPrefix,
             GenericErrorCodesExportBlobContainerDoesNotExist,
@@ -3107,7 +3099,10 @@ namespace PlayFab
             GenericErrorCodesExportKustoExceptionNew_SomeResources,
             GenericErrorCodesExportKustoExceptionEdit,
             GenericErrorCodesExportKustoConnectionFailed,
-            GenericErrorCodesExportUnknownError
+            GenericErrorCodesExportUnknownError,
+            GenericErrorCodesExportCantEditPendingExport,
+            GenericErrorCodesExportLimitExports,
+            GenericErrorCodesExportLimitEvents
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
