@@ -3555,6 +3555,9 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesWriteAttemptedDuringExport: writer.String("WriteAttemptedDuringExport"); break;
     case GenericErrorCodesMultiplayerServerTitleQuotaCoresExceeded: writer.String("MultiplayerServerTitleQuotaCoresExceeded"); break;
     case GenericErrorCodesAutomationRuleNotFound: writer.String("AutomationRuleNotFound"); break;
+    case GenericErrorCodesEntityAPIKeyLimitExceeded: writer.String("EntityAPIKeyLimitExceeded"); break;
+    case GenericErrorCodesEntityAPIKeyNotFound: writer.String("EntityAPIKeyNotFound"); break;
+    case GenericErrorCodesEntityAPIKeyOrSecretInvalid: writer.String("EntityAPIKeyOrSecretInvalid"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -3586,18 +3589,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesCatalogItemIdInvalid: writer.String("CatalogItemIdInvalid"); break;
     case GenericErrorCodesCatalogSearchParameterInvalid: writer.String("CatalogSearchParameterInvalid"); break;
     case GenericErrorCodesCatalogFeatureDisabled: writer.String("CatalogFeatureDisabled"); break;
-    case GenericErrorCodesCatalogConfigMissing: writer.String("CatalogConfigMissing"); break;
-    case GenericErrorCodesCatalogConfigTooManyContentTypes: writer.String("CatalogConfigTooManyContentTypes"); break;
-    case GenericErrorCodesCatalogConfigContentTypeTooLong: writer.String("CatalogConfigContentTypeTooLong"); break;
-    case GenericErrorCodesCatalogConfigTooManyTags: writer.String("CatalogConfigTooManyTags"); break;
-    case GenericErrorCodesCatalogConfigTagTooLong: writer.String("CatalogConfigTagTooLong"); break;
-    case GenericErrorCodesCatalogConfigInvalidDeepLinkObject: writer.String("CatalogConfigInvalidDeepLinkObject"); break;
-    case GenericErrorCodesCatalogConfigInvalidDeepLinkPlatform: writer.String("CatalogConfigInvalidDeepLinkPlatform"); break;
-    case GenericErrorCodesCatalogConfigInvalidDeepLinkFormat: writer.String("CatalogConfigInvalidDeepLinkFormat"); break;
-    case GenericErrorCodesCatalogConfigInvalidDisplayPropertyObject: writer.String("CatalogConfigInvalidDisplayPropertyObject"); break;
-    case GenericErrorCodesCatalogConfigInvalidDisplayPropertyName: writer.String("CatalogConfigInvalidDisplayPropertyName"); break;
-    case GenericErrorCodesCatalogConfigInvalidDisplayPropertyType: writer.String("CatalogConfigInvalidDisplayPropertyType"); break;
-    case GenericErrorCodesCatalogConfigDisplayPropertyMappingLimit: writer.String("CatalogConfigDisplayPropertyMappingLimit"); break;
+    case GenericErrorCodesCatalogConfigInvalid: writer.String("CatalogConfigInvalid"); break;
     case GenericErrorCodesExportInvalidStatusUpdate: writer.String("ExportInvalidStatusUpdate"); break;
     case GenericErrorCodesExportInvalidPrefix: writer.String("ExportInvalidPrefix"); break;
     case GenericErrorCodesExportBlobContainerDoesNotExist: writer.String("ExportBlobContainerDoesNotExist"); break;
@@ -3612,6 +3604,9 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExportKustoExceptionEdit: writer.String("ExportKustoExceptionEdit"); break;
     case GenericErrorCodesExportKustoConnectionFailed: writer.String("ExportKustoConnectionFailed"); break;
     case GenericErrorCodesExportUnknownError: writer.String("ExportUnknownError"); break;
+    case GenericErrorCodesExportCantEditPendingExport: writer.String("ExportCantEditPendingExport"); break;
+    case GenericErrorCodesExportLimitExports: writer.String("ExportLimitExports"); break;
+    case GenericErrorCodesExportLimitEvents: writer.String("ExportLimitEvents"); break;
 
     }
 }
@@ -4058,6 +4053,9 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["WriteAttemptedDuringExport"] = GenericErrorCodesWriteAttemptedDuringExport;
         _GenericErrorCodesMap["MultiplayerServerTitleQuotaCoresExceeded"] = GenericErrorCodesMultiplayerServerTitleQuotaCoresExceeded;
         _GenericErrorCodesMap["AutomationRuleNotFound"] = GenericErrorCodesAutomationRuleNotFound;
+        _GenericErrorCodesMap["EntityAPIKeyLimitExceeded"] = GenericErrorCodesEntityAPIKeyLimitExceeded;
+        _GenericErrorCodesMap["EntityAPIKeyNotFound"] = GenericErrorCodesEntityAPIKeyNotFound;
+        _GenericErrorCodesMap["EntityAPIKeyOrSecretInvalid"] = GenericErrorCodesEntityAPIKeyOrSecretInvalid;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -4089,18 +4087,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["CatalogItemIdInvalid"] = GenericErrorCodesCatalogItemIdInvalid;
         _GenericErrorCodesMap["CatalogSearchParameterInvalid"] = GenericErrorCodesCatalogSearchParameterInvalid;
         _GenericErrorCodesMap["CatalogFeatureDisabled"] = GenericErrorCodesCatalogFeatureDisabled;
-        _GenericErrorCodesMap["CatalogConfigMissing"] = GenericErrorCodesCatalogConfigMissing;
-        _GenericErrorCodesMap["CatalogConfigTooManyContentTypes"] = GenericErrorCodesCatalogConfigTooManyContentTypes;
-        _GenericErrorCodesMap["CatalogConfigContentTypeTooLong"] = GenericErrorCodesCatalogConfigContentTypeTooLong;
-        _GenericErrorCodesMap["CatalogConfigTooManyTags"] = GenericErrorCodesCatalogConfigTooManyTags;
-        _GenericErrorCodesMap["CatalogConfigTagTooLong"] = GenericErrorCodesCatalogConfigTagTooLong;
-        _GenericErrorCodesMap["CatalogConfigInvalidDeepLinkObject"] = GenericErrorCodesCatalogConfigInvalidDeepLinkObject;
-        _GenericErrorCodesMap["CatalogConfigInvalidDeepLinkPlatform"] = GenericErrorCodesCatalogConfigInvalidDeepLinkPlatform;
-        _GenericErrorCodesMap["CatalogConfigInvalidDeepLinkFormat"] = GenericErrorCodesCatalogConfigInvalidDeepLinkFormat;
-        _GenericErrorCodesMap["CatalogConfigInvalidDisplayPropertyObject"] = GenericErrorCodesCatalogConfigInvalidDisplayPropertyObject;
-        _GenericErrorCodesMap["CatalogConfigInvalidDisplayPropertyName"] = GenericErrorCodesCatalogConfigInvalidDisplayPropertyName;
-        _GenericErrorCodesMap["CatalogConfigInvalidDisplayPropertyType"] = GenericErrorCodesCatalogConfigInvalidDisplayPropertyType;
-        _GenericErrorCodesMap["CatalogConfigDisplayPropertyMappingLimit"] = GenericErrorCodesCatalogConfigDisplayPropertyMappingLimit;
+        _GenericErrorCodesMap["CatalogConfigInvalid"] = GenericErrorCodesCatalogConfigInvalid;
         _GenericErrorCodesMap["ExportInvalidStatusUpdate"] = GenericErrorCodesExportInvalidStatusUpdate;
         _GenericErrorCodesMap["ExportInvalidPrefix"] = GenericErrorCodesExportInvalidPrefix;
         _GenericErrorCodesMap["ExportBlobContainerDoesNotExist"] = GenericErrorCodesExportBlobContainerDoesNotExist;
@@ -4115,6 +4102,9 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExportKustoExceptionEdit"] = GenericErrorCodesExportKustoExceptionEdit;
         _GenericErrorCodesMap["ExportKustoConnectionFailed"] = GenericErrorCodesExportKustoConnectionFailed;
         _GenericErrorCodesMap["ExportUnknownError"] = GenericErrorCodesExportUnknownError;
+        _GenericErrorCodesMap["ExportCantEditPendingExport"] = GenericErrorCodesExportCantEditPendingExport;
+        _GenericErrorCodesMap["ExportLimitExports"] = GenericErrorCodesExportLimitExports;
+        _GenericErrorCodesMap["ExportLimitEvents"] = GenericErrorCodesExportLimitEvents;
 
     }
 

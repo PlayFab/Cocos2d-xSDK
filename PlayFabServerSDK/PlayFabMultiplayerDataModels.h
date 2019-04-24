@@ -252,13 +252,15 @@ namespace PlayFab
             std::string BuildName;
             OptionalTime CreationTime;
             std::map<std::string, std::string> Metadata;
+            std::list<BuildRegion> RegionConfigurations;
 
             BuildSummary() :
                 PlayFabBaseModel(),
                 BuildId(),
                 BuildName(),
                 CreationTime(),
-                Metadata()
+                Metadata(),
+                RegionConfigurations()
             {}
 
             BuildSummary(const BuildSummary& src) :
@@ -266,7 +268,8 @@ namespace PlayFab
                 BuildId(src.BuildId),
                 BuildName(src.BuildName),
                 CreationTime(src.CreationTime),
-                Metadata(src.Metadata)
+                Metadata(src.Metadata),
+                RegionConfigurations(src.RegionConfigurations)
             {}
 
             BuildSummary(const rapidjson::Value& obj) : BuildSummary()
