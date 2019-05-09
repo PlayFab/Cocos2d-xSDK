@@ -16,6 +16,7 @@ namespace PlayFab
         // ------------ Generated API calls
         static void AddCharacterVirtualCurrency(ServerModels::AddCharacterVirtualCurrencyRequest& request, ProcessApiCallback<ServerModels::ModifyCharacterVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddFriend(ServerModels::AddFriendRequest& request, ProcessApiCallback<ServerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void AddGenericID(ServerModels::AddGenericIDRequest& request, ProcessApiCallback<ServerModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddPlayerTag(ServerModels::AddPlayerTagRequest& request, ProcessApiCallback<ServerModels::AddPlayerTagResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddSharedGroupMembers(ServerModels::AddSharedGroupMembersRequest& request, ProcessApiCallback<ServerModels::AddSharedGroupMembersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void AddUserVirtualCurrency(ServerModels::AddUserVirtualCurrencyRequest& request, ProcessApiCallback<ServerModels::ModifyUserVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -26,6 +27,7 @@ namespace PlayFab
         static void CreateSharedGroup(ServerModels::CreateSharedGroupRequest& request, ProcessApiCallback<ServerModels::CreateSharedGroupResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteCharacterFromUser(ServerModels::DeleteCharacterFromUserRequest& request, ProcessApiCallback<ServerModels::DeleteCharacterFromUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeletePlayer(ServerModels::DeletePlayerRequest& request, ProcessApiCallback<ServerModels::DeletePlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void DeletePushNotificationTemplate(ServerModels::DeletePushNotificationTemplateRequest& request, ProcessApiCallback<ServerModels::DeletePushNotificationTemplateResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteSharedGroup(ServerModels::DeleteSharedGroupRequest& request, ProcessApiCallback<ServerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeregisterGame(ServerModels::DeregisterGameRequest& request, ProcessApiCallback<ServerModels::DeregisterGameResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void EvaluateRandomResultTable(ServerModels::EvaluateRandomResultTableRequest& request, ProcessApiCallback<ServerModels::EvaluateRandomResultTableResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -55,6 +57,7 @@ namespace PlayFab
         static void GetPlayerTags(ServerModels::GetPlayerTagsRequest& request, ProcessApiCallback<ServerModels::GetPlayerTagsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromFacebookIDs(ServerModels::GetPlayFabIDsFromFacebookIDsRequest& request, ProcessApiCallback<ServerModels::GetPlayFabIDsFromFacebookIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromFacebookInstantGamesIds(ServerModels::GetPlayFabIDsFromFacebookInstantGamesIdsRequest& request, ProcessApiCallback<ServerModels::GetPlayFabIDsFromFacebookInstantGamesIdsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetPlayFabIDsFromGenericIDs(ServerModels::GetPlayFabIDsFromGenericIDsRequest& request, ProcessApiCallback<ServerModels::GetPlayFabIDsFromGenericIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromNintendoSwitchDeviceIds(ServerModels::GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest& request, ProcessApiCallback<ServerModels::GetPlayFabIDsFromNintendoSwitchDeviceIdsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromPSNAccountIDs(ServerModels::GetPlayFabIDsFromPSNAccountIDsRequest& request, ProcessApiCallback<ServerModels::GetPlayFabIDsFromPSNAccountIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPlayFabIDsFromSteamIDs(ServerModels::GetPlayFabIDsFromSteamIDsRequest& request, ProcessApiCallback<ServerModels::GetPlayFabIDsFromSteamIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -80,6 +83,7 @@ namespace PlayFab
         static void GrantItemsToCharacter(ServerModels::GrantItemsToCharacterRequest& request, ProcessApiCallback<ServerModels::GrantItemsToCharacterResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GrantItemsToUser(ServerModels::GrantItemsToUserRequest& request, ProcessApiCallback<ServerModels::GrantItemsToUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GrantItemsToUsers(ServerModels::GrantItemsToUsersRequest& request, ProcessApiCallback<ServerModels::GrantItemsToUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void LinkServerCustomId(ServerModels::LinkServerCustomIdRequest& request, ProcessApiCallback<ServerModels::LinkServerCustomIdResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkXboxAccount(ServerModels::LinkXboxAccountRequest& request, ProcessApiCallback<ServerModels::LinkXboxAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithServerCustomId(ServerModels::LoginWithServerCustomIdRequest& request, ProcessApiCallback<ServerModels::ServerLoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithXbox(ServerModels::LoginWithXboxRequest& request, ProcessApiCallback<ServerModels::ServerLoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -93,6 +97,7 @@ namespace PlayFab
         static void RefreshGameServerInstanceHeartbeat(ServerModels::RefreshGameServerInstanceHeartbeatRequest& request, ProcessApiCallback<ServerModels::RefreshGameServerInstanceHeartbeatResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RegisterGame(ServerModels::RegisterGameRequest& request, ProcessApiCallback<ServerModels::RegisterGameResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveFriend(ServerModels::RemoveFriendRequest& request, ProcessApiCallback<ServerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void RemoveGenericID(ServerModels::RemoveGenericIDRequest& request, ProcessApiCallback<ServerModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemovePlayerTag(ServerModels::RemovePlayerTagRequest& request, ProcessApiCallback<ServerModels::RemovePlayerTagResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RemoveSharedGroupMembers(ServerModels::RemoveSharedGroupMembersRequest& request, ProcessApiCallback<ServerModels::RemoveSharedGroupMembersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ReportPlayer(ServerModels::ReportPlayerServerRequest& request, ProcessApiCallback<ServerModels::ReportPlayerServerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -100,9 +105,11 @@ namespace PlayFab
         static void RevokeBans(ServerModels::RevokeBansRequest& request, ProcessApiCallback<ServerModels::RevokeBansResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RevokeInventoryItem(ServerModels::RevokeInventoryItemRequest& request, ProcessApiCallback<ServerModels::RevokeInventoryResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RevokeInventoryItems(ServerModels::RevokeInventoryItemsRequest& request, ProcessApiCallback<ServerModels::RevokeInventoryItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void SavePushNotificationTemplate(ServerModels::SavePushNotificationTemplateRequest& request, ProcessApiCallback<ServerModels::SavePushNotificationTemplateResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendCustomAccountRecoveryEmail(ServerModels::SendCustomAccountRecoveryEmailRequest& request, ProcessApiCallback<ServerModels::SendCustomAccountRecoveryEmailResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendEmailFromTemplate(ServerModels::SendEmailFromTemplateRequest& request, ProcessApiCallback<ServerModels::SendEmailFromTemplateResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SendPushNotification(ServerModels::SendPushNotificationRequest& request, ProcessApiCallback<ServerModels::SendPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void SendPushNotificationFromTemplate(ServerModels::SendPushNotificationFromTemplateRequest& request, ProcessApiCallback<ServerModels::SendPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetFriendTags(ServerModels::SetFriendTagsRequest& request, ProcessApiCallback<ServerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetGameServerInstanceData(ServerModels::SetGameServerInstanceDataRequest& request, ProcessApiCallback<ServerModels::SetGameServerInstanceDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetGameServerInstanceState(ServerModels::SetGameServerInstanceStateRequest& request, ProcessApiCallback<ServerModels::SetGameServerInstanceStateResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -113,6 +120,7 @@ namespace PlayFab
         static void SetTitleInternalData(ServerModels::SetTitleDataRequest& request, ProcessApiCallback<ServerModels::SetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractCharacterVirtualCurrency(ServerModels::SubtractCharacterVirtualCurrencyRequest& request, ProcessApiCallback<ServerModels::ModifyCharacterVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractUserVirtualCurrency(ServerModels::SubtractUserVirtualCurrencyRequest& request, ProcessApiCallback<ServerModels::ModifyUserVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UnlinkServerCustomId(ServerModels::UnlinkServerCustomIdRequest& request, ProcessApiCallback<ServerModels::UnlinkServerCustomIdResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkXboxAccount(ServerModels::UnlinkXboxAccountRequest& request, ProcessApiCallback<ServerModels::UnlinkXboxAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlockContainerInstance(ServerModels::UnlockContainerInstanceRequest& request, ProcessApiCallback<ServerModels::UnlockContainerItemResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlockContainerItem(ServerModels::UnlockContainerItemRequest& request, ProcessApiCallback<ServerModels::UnlockContainerItemResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -142,6 +150,7 @@ namespace PlayFab
         // ------------ Generated result handlers
         static void OnAddCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddFriendResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnAddGenericIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddPlayerTagResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnAddUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
@@ -152,6 +161,7 @@ namespace PlayFab
         static void OnCreateSharedGroupResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteCharacterFromUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeletePlayerResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnDeletePushNotificationTemplateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteSharedGroupResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeregisterGameResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnEvaluateRandomResultTableResult(int httpStatus, HttpRequest* request, void* userData);
@@ -181,6 +191,7 @@ namespace PlayFab
         static void OnGetPlayerTagsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromFacebookIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromFacebookInstantGamesIdsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetPlayFabIDsFromGenericIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromNintendoSwitchDeviceIdsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromPSNAccountIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetPlayFabIDsFromSteamIDsResult(int httpStatus, HttpRequest* request, void* userData);
@@ -206,6 +217,7 @@ namespace PlayFab
         static void OnGrantItemsToCharacterResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGrantItemsToUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGrantItemsToUsersResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnLinkServerCustomIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkXboxAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithServerCustomIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithXboxResult(int httpStatus, HttpRequest* request, void* userData);
@@ -219,6 +231,7 @@ namespace PlayFab
         static void OnRefreshGameServerInstanceHeartbeatResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRegisterGameResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveFriendResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnRemoveGenericIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemovePlayerTagResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRemoveSharedGroupMembersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnReportPlayerResult(int httpStatus, HttpRequest* request, void* userData);
@@ -226,9 +239,11 @@ namespace PlayFab
         static void OnRevokeBansResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRevokeInventoryItemResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRevokeInventoryItemsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnSavePushNotificationTemplateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendCustomAccountRecoveryEmailResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendEmailFromTemplateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSendPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnSendPushNotificationFromTemplateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetFriendTagsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetGameServerInstanceDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetGameServerInstanceStateResult(int httpStatus, HttpRequest* request, void* userData);
@@ -239,6 +254,7 @@ namespace PlayFab
         static void OnSetTitleInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUnlinkServerCustomIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkXboxAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlockContainerInstanceResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlockContainerItemResult(int httpStatus, HttpRequest* request, void* userData);

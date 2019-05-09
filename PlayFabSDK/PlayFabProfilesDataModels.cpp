@@ -259,6 +259,7 @@ EntityProfileBody::~EntityProfileBody()
 void EntityProfileBody::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (AvatarUrl.length() > 0) { writer.String("AvatarUrl"); writer.String(AvatarUrl.c_str()); }
     writer.String("Created"); writeDatetime(Created, writer);
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
@@ -303,6 +304,8 @@ void EntityProfileBody::writeJSON(PFStringJsonWriter& writer)
 
 bool EntityProfileBody::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator AvatarUrl_member = obj.FindMember("AvatarUrl");
+    if (AvatarUrl_member != obj.MemberEnd() && !AvatarUrl_member->value.IsNull()) AvatarUrl = AvatarUrl_member->value.GetString();
     const Value::ConstMemberIterator Created_member = obj.FindMember("Created");
     if (Created_member != obj.MemberEnd() && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
     const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");

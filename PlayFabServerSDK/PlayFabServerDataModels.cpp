@@ -118,6 +118,52 @@ bool AddFriendRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+GenericServiceId::~GenericServiceId()
+{
+
+}
+
+void GenericServiceId::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("ServiceName"); writer.String(ServiceName.c_str());
+    writer.String("UserId"); writer.String(UserId.c_str());
+    writer.EndObject();
+}
+
+bool GenericServiceId::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ServiceName_member = obj.FindMember("ServiceName");
+    if (ServiceName_member != obj.MemberEnd() && !ServiceName_member->value.IsNull()) ServiceName = ServiceName_member->value.GetString();
+    const Value::ConstMemberIterator UserId_member = obj.FindMember("UserId");
+    if (UserId_member != obj.MemberEnd() && !UserId_member->value.IsNull()) UserId = UserId_member->value.GetString();
+
+    return true;
+}
+
+AddGenericIDRequest::~AddGenericIDRequest()
+{
+
+}
+
+void AddGenericIDRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("GenericId"); GenericId.writeJSON(writer);
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.EndObject();
+}
+
+bool AddGenericIDRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator GenericId_member = obj.FindMember("GenericId");
+    if (GenericId_member != obj.MemberEnd() && !GenericId_member->value.IsNull()) GenericId = GenericServiceId(GenericId_member->value);
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
 AddPlayerTagRequest::~AddPlayerTagRequest()
 {
 
@@ -2813,6 +2859,43 @@ bool DeletePlayerResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeletePushNotificationTemplateRequest::~DeletePushNotificationTemplateRequest()
+{
+
+}
+
+void DeletePushNotificationTemplateRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("PushNotificationTemplateId"); writer.String(PushNotificationTemplateId.c_str());
+    writer.EndObject();
+}
+
+bool DeletePushNotificationTemplateRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PushNotificationTemplateId_member = obj.FindMember("PushNotificationTemplateId");
+    if (PushNotificationTemplateId_member != obj.MemberEnd() && !PushNotificationTemplateId_member->value.IsNull()) PushNotificationTemplateId = PushNotificationTemplateId_member->value.GetString();
+
+    return true;
+}
+
+DeletePushNotificationTemplateResult::~DeletePushNotificationTemplateResult()
+{
+
+}
+
+void DeletePushNotificationTemplateResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool DeletePushNotificationTemplateResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 DeleteSharedGroupRequest::~DeleteSharedGroupRequest()
 {
 
@@ -2882,6 +2965,23 @@ void EmptyResponse::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool EmptyResponse::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+EmptyResult::~EmptyResult()
+{
+
+}
+
+void EmptyResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool EmptyResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
@@ -4207,6 +4307,30 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesWriteAttemptedDuringExport: writer.String("WriteAttemptedDuringExport"); break;
     case GenericErrorCodesMultiplayerServerTitleQuotaCoresExceeded: writer.String("MultiplayerServerTitleQuotaCoresExceeded"); break;
     case GenericErrorCodesAutomationRuleNotFound: writer.String("AutomationRuleNotFound"); break;
+    case GenericErrorCodesEntityAPIKeyLimitExceeded: writer.String("EntityAPIKeyLimitExceeded"); break;
+    case GenericErrorCodesEntityAPIKeyNotFound: writer.String("EntityAPIKeyNotFound"); break;
+    case GenericErrorCodesEntityAPIKeyOrSecretInvalid: writer.String("EntityAPIKeyOrSecretInvalid"); break;
+    case GenericErrorCodesEconomyServiceUnavailable: writer.String("EconomyServiceUnavailable"); break;
+    case GenericErrorCodesEconomyServiceInternalError: writer.String("EconomyServiceInternalError"); break;
+    case GenericErrorCodesKustoProxyQueryRateLimitExceeded: writer.String("KustoProxyQueryRateLimitExceeded"); break;
+    case GenericErrorCodesEntityAPIKeyCreationDisabledForEntity: writer.String("EntityAPIKeyCreationDisabledForEntity"); break;
+    case GenericErrorCodesStudioCreationRateLimited: writer.String("StudioCreationRateLimited"); break;
+    case GenericErrorCodesStudioCreationInProgress: writer.String("StudioCreationInProgress"); break;
+    case GenericErrorCodesDuplicateStudioName: writer.String("DuplicateStudioName"); break;
+    case GenericErrorCodesStudioNotFound: writer.String("StudioNotFound"); break;
+    case GenericErrorCodesStudioDeletionInProgress: writer.String("StudioDeletionInProgress"); break;
+    case GenericErrorCodesStudioDeactivated: writer.String("StudioDeactivated"); break;
+    case GenericErrorCodesTitleCreationRateLimited: writer.String("TitleCreationRateLimited"); break;
+    case GenericErrorCodesTitleCreationInProgress: writer.String("TitleCreationInProgress"); break;
+    case GenericErrorCodesDuplicateTitleName: writer.String("DuplicateTitleName"); break;
+    case GenericErrorCodesTitleNotFound: writer.String("TitleNotFound"); break;
+    case GenericErrorCodesTitleDeletionInProgress: writer.String("TitleDeletionInProgress"); break;
+    case GenericErrorCodesTitleDeactivated: writer.String("TitleDeactivated"); break;
+    case GenericErrorCodesTitleAlreadyActivated: writer.String("TitleAlreadyActivated"); break;
+    case GenericErrorCodesCloudScriptAzureFunctionsExecutionTimeLimitExceeded: writer.String("CloudScriptAzureFunctionsExecutionTimeLimitExceeded"); break;
+    case GenericErrorCodesCloudScriptAzureFunctionsArgumentSizeExceeded: writer.String("CloudScriptAzureFunctionsArgumentSizeExceeded"); break;
+    case GenericErrorCodesCloudScriptAzureFunctionsReturnSizeExceeded: writer.String("CloudScriptAzureFunctionsReturnSizeExceeded"); break;
+    case GenericErrorCodesCloudScriptAzureFunctionsHTTPRequestError: writer.String("CloudScriptAzureFunctionsHTTPRequestError"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -4226,6 +4350,8 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesMatchmakingTicketMembershipLimitExceeded: writer.String("MatchmakingTicketMembershipLimitExceeded"); break;
     case GenericErrorCodesMatchmakingUnauthorized: writer.String("MatchmakingUnauthorized"); break;
     case GenericErrorCodesMatchmakingQueueLimitExceeded: writer.String("MatchmakingQueueLimitExceeded"); break;
+    case GenericErrorCodesMatchmakingRequestTypeMismatch: writer.String("MatchmakingRequestTypeMismatch"); break;
+    case GenericErrorCodesMatchmakingBadRequest: writer.String("MatchmakingBadRequest"); break;
     case GenericErrorCodesTitleConfigNotFound: writer.String("TitleConfigNotFound"); break;
     case GenericErrorCodesTitleConfigUpdateConflict: writer.String("TitleConfigUpdateConflict"); break;
     case GenericErrorCodesTitleConfigSerializationError: writer.String("TitleConfigSerializationError"); break;
@@ -4238,18 +4364,8 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesCatalogItemIdInvalid: writer.String("CatalogItemIdInvalid"); break;
     case GenericErrorCodesCatalogSearchParameterInvalid: writer.String("CatalogSearchParameterInvalid"); break;
     case GenericErrorCodesCatalogFeatureDisabled: writer.String("CatalogFeatureDisabled"); break;
-    case GenericErrorCodesCatalogConfigMissing: writer.String("CatalogConfigMissing"); break;
-    case GenericErrorCodesCatalogConfigTooManyContentTypes: writer.String("CatalogConfigTooManyContentTypes"); break;
-    case GenericErrorCodesCatalogConfigContentTypeTooLong: writer.String("CatalogConfigContentTypeTooLong"); break;
-    case GenericErrorCodesCatalogConfigTooManyTags: writer.String("CatalogConfigTooManyTags"); break;
-    case GenericErrorCodesCatalogConfigTagTooLong: writer.String("CatalogConfigTagTooLong"); break;
-    case GenericErrorCodesCatalogConfigInvalidDeepLinkObject: writer.String("CatalogConfigInvalidDeepLinkObject"); break;
-    case GenericErrorCodesCatalogConfigInvalidDeepLinkPlatform: writer.String("CatalogConfigInvalidDeepLinkPlatform"); break;
-    case GenericErrorCodesCatalogConfigInvalidDeepLinkFormat: writer.String("CatalogConfigInvalidDeepLinkFormat"); break;
-    case GenericErrorCodesCatalogConfigInvalidDisplayPropertyObject: writer.String("CatalogConfigInvalidDisplayPropertyObject"); break;
-    case GenericErrorCodesCatalogConfigInvalidDisplayPropertyName: writer.String("CatalogConfigInvalidDisplayPropertyName"); break;
-    case GenericErrorCodesCatalogConfigInvalidDisplayPropertyType: writer.String("CatalogConfigInvalidDisplayPropertyType"); break;
-    case GenericErrorCodesCatalogConfigDisplayPropertyMappingLimit: writer.String("CatalogConfigDisplayPropertyMappingLimit"); break;
+    case GenericErrorCodesCatalogConfigInvalid: writer.String("CatalogConfigInvalid"); break;
+    case GenericErrorCodesCatalogUnauthorized: writer.String("CatalogUnauthorized"); break;
     case GenericErrorCodesExportInvalidStatusUpdate: writer.String("ExportInvalidStatusUpdate"); break;
     case GenericErrorCodesExportInvalidPrefix: writer.String("ExportInvalidPrefix"); break;
     case GenericErrorCodesExportBlobContainerDoesNotExist: writer.String("ExportBlobContainerDoesNotExist"); break;
@@ -4260,10 +4376,13 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesExportAmazonBucketDoesNotExist: writer.String("ExportAmazonBucketDoesNotExist"); break;
     case GenericErrorCodesExportInvalidBlobStorage: writer.String("ExportInvalidBlobStorage"); break;
     case GenericErrorCodesExportKustoException: writer.String("ExportKustoException"); break;
-    case GenericErrorCodesExportKustoExceptionNew_SomeResources: writer.String("ExportKustoExceptionNew_SomeResources"); break;
+    case GenericErrorCodesExportKustoExceptionPartialErrorOnNewExport: writer.String("ExportKustoExceptionPartialErrorOnNewExport"); break;
     case GenericErrorCodesExportKustoExceptionEdit: writer.String("ExportKustoExceptionEdit"); break;
     case GenericErrorCodesExportKustoConnectionFailed: writer.String("ExportKustoConnectionFailed"); break;
     case GenericErrorCodesExportUnknownError: writer.String("ExportUnknownError"); break;
+    case GenericErrorCodesExportCantEditPendingExport: writer.String("ExportCantEditPendingExport"); break;
+    case GenericErrorCodesExportLimitExports: writer.String("ExportLimitExports"); break;
+    case GenericErrorCodesExportLimitEvents: writer.String("ExportLimitEvents"); break;
 
     }
 }
@@ -4710,6 +4829,30 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["WriteAttemptedDuringExport"] = GenericErrorCodesWriteAttemptedDuringExport;
         _GenericErrorCodesMap["MultiplayerServerTitleQuotaCoresExceeded"] = GenericErrorCodesMultiplayerServerTitleQuotaCoresExceeded;
         _GenericErrorCodesMap["AutomationRuleNotFound"] = GenericErrorCodesAutomationRuleNotFound;
+        _GenericErrorCodesMap["EntityAPIKeyLimitExceeded"] = GenericErrorCodesEntityAPIKeyLimitExceeded;
+        _GenericErrorCodesMap["EntityAPIKeyNotFound"] = GenericErrorCodesEntityAPIKeyNotFound;
+        _GenericErrorCodesMap["EntityAPIKeyOrSecretInvalid"] = GenericErrorCodesEntityAPIKeyOrSecretInvalid;
+        _GenericErrorCodesMap["EconomyServiceUnavailable"] = GenericErrorCodesEconomyServiceUnavailable;
+        _GenericErrorCodesMap["EconomyServiceInternalError"] = GenericErrorCodesEconomyServiceInternalError;
+        _GenericErrorCodesMap["KustoProxyQueryRateLimitExceeded"] = GenericErrorCodesKustoProxyQueryRateLimitExceeded;
+        _GenericErrorCodesMap["EntityAPIKeyCreationDisabledForEntity"] = GenericErrorCodesEntityAPIKeyCreationDisabledForEntity;
+        _GenericErrorCodesMap["StudioCreationRateLimited"] = GenericErrorCodesStudioCreationRateLimited;
+        _GenericErrorCodesMap["StudioCreationInProgress"] = GenericErrorCodesStudioCreationInProgress;
+        _GenericErrorCodesMap["DuplicateStudioName"] = GenericErrorCodesDuplicateStudioName;
+        _GenericErrorCodesMap["StudioNotFound"] = GenericErrorCodesStudioNotFound;
+        _GenericErrorCodesMap["StudioDeletionInProgress"] = GenericErrorCodesStudioDeletionInProgress;
+        _GenericErrorCodesMap["StudioDeactivated"] = GenericErrorCodesStudioDeactivated;
+        _GenericErrorCodesMap["TitleCreationRateLimited"] = GenericErrorCodesTitleCreationRateLimited;
+        _GenericErrorCodesMap["TitleCreationInProgress"] = GenericErrorCodesTitleCreationInProgress;
+        _GenericErrorCodesMap["DuplicateTitleName"] = GenericErrorCodesDuplicateTitleName;
+        _GenericErrorCodesMap["TitleNotFound"] = GenericErrorCodesTitleNotFound;
+        _GenericErrorCodesMap["TitleDeletionInProgress"] = GenericErrorCodesTitleDeletionInProgress;
+        _GenericErrorCodesMap["TitleDeactivated"] = GenericErrorCodesTitleDeactivated;
+        _GenericErrorCodesMap["TitleAlreadyActivated"] = GenericErrorCodesTitleAlreadyActivated;
+        _GenericErrorCodesMap["CloudScriptAzureFunctionsExecutionTimeLimitExceeded"] = GenericErrorCodesCloudScriptAzureFunctionsExecutionTimeLimitExceeded;
+        _GenericErrorCodesMap["CloudScriptAzureFunctionsArgumentSizeExceeded"] = GenericErrorCodesCloudScriptAzureFunctionsArgumentSizeExceeded;
+        _GenericErrorCodesMap["CloudScriptAzureFunctionsReturnSizeExceeded"] = GenericErrorCodesCloudScriptAzureFunctionsReturnSizeExceeded;
+        _GenericErrorCodesMap["CloudScriptAzureFunctionsHTTPRequestError"] = GenericErrorCodesCloudScriptAzureFunctionsHTTPRequestError;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -4729,6 +4872,8 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["MatchmakingTicketMembershipLimitExceeded"] = GenericErrorCodesMatchmakingTicketMembershipLimitExceeded;
         _GenericErrorCodesMap["MatchmakingUnauthorized"] = GenericErrorCodesMatchmakingUnauthorized;
         _GenericErrorCodesMap["MatchmakingQueueLimitExceeded"] = GenericErrorCodesMatchmakingQueueLimitExceeded;
+        _GenericErrorCodesMap["MatchmakingRequestTypeMismatch"] = GenericErrorCodesMatchmakingRequestTypeMismatch;
+        _GenericErrorCodesMap["MatchmakingBadRequest"] = GenericErrorCodesMatchmakingBadRequest;
         _GenericErrorCodesMap["TitleConfigNotFound"] = GenericErrorCodesTitleConfigNotFound;
         _GenericErrorCodesMap["TitleConfigUpdateConflict"] = GenericErrorCodesTitleConfigUpdateConflict;
         _GenericErrorCodesMap["TitleConfigSerializationError"] = GenericErrorCodesTitleConfigSerializationError;
@@ -4741,18 +4886,8 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["CatalogItemIdInvalid"] = GenericErrorCodesCatalogItemIdInvalid;
         _GenericErrorCodesMap["CatalogSearchParameterInvalid"] = GenericErrorCodesCatalogSearchParameterInvalid;
         _GenericErrorCodesMap["CatalogFeatureDisabled"] = GenericErrorCodesCatalogFeatureDisabled;
-        _GenericErrorCodesMap["CatalogConfigMissing"] = GenericErrorCodesCatalogConfigMissing;
-        _GenericErrorCodesMap["CatalogConfigTooManyContentTypes"] = GenericErrorCodesCatalogConfigTooManyContentTypes;
-        _GenericErrorCodesMap["CatalogConfigContentTypeTooLong"] = GenericErrorCodesCatalogConfigContentTypeTooLong;
-        _GenericErrorCodesMap["CatalogConfigTooManyTags"] = GenericErrorCodesCatalogConfigTooManyTags;
-        _GenericErrorCodesMap["CatalogConfigTagTooLong"] = GenericErrorCodesCatalogConfigTagTooLong;
-        _GenericErrorCodesMap["CatalogConfigInvalidDeepLinkObject"] = GenericErrorCodesCatalogConfigInvalidDeepLinkObject;
-        _GenericErrorCodesMap["CatalogConfigInvalidDeepLinkPlatform"] = GenericErrorCodesCatalogConfigInvalidDeepLinkPlatform;
-        _GenericErrorCodesMap["CatalogConfigInvalidDeepLinkFormat"] = GenericErrorCodesCatalogConfigInvalidDeepLinkFormat;
-        _GenericErrorCodesMap["CatalogConfigInvalidDisplayPropertyObject"] = GenericErrorCodesCatalogConfigInvalidDisplayPropertyObject;
-        _GenericErrorCodesMap["CatalogConfigInvalidDisplayPropertyName"] = GenericErrorCodesCatalogConfigInvalidDisplayPropertyName;
-        _GenericErrorCodesMap["CatalogConfigInvalidDisplayPropertyType"] = GenericErrorCodesCatalogConfigInvalidDisplayPropertyType;
-        _GenericErrorCodesMap["CatalogConfigDisplayPropertyMappingLimit"] = GenericErrorCodesCatalogConfigDisplayPropertyMappingLimit;
+        _GenericErrorCodesMap["CatalogConfigInvalid"] = GenericErrorCodesCatalogConfigInvalid;
+        _GenericErrorCodesMap["CatalogUnauthorized"] = GenericErrorCodesCatalogUnauthorized;
         _GenericErrorCodesMap["ExportInvalidStatusUpdate"] = GenericErrorCodesExportInvalidStatusUpdate;
         _GenericErrorCodesMap["ExportInvalidPrefix"] = GenericErrorCodesExportInvalidPrefix;
         _GenericErrorCodesMap["ExportBlobContainerDoesNotExist"] = GenericErrorCodesExportBlobContainerDoesNotExist;
@@ -4763,10 +4898,13 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["ExportAmazonBucketDoesNotExist"] = GenericErrorCodesExportAmazonBucketDoesNotExist;
         _GenericErrorCodesMap["ExportInvalidBlobStorage"] = GenericErrorCodesExportInvalidBlobStorage;
         _GenericErrorCodesMap["ExportKustoException"] = GenericErrorCodesExportKustoException;
-        _GenericErrorCodesMap["ExportKustoExceptionNew_SomeResources"] = GenericErrorCodesExportKustoExceptionNew_SomeResources;
+        _GenericErrorCodesMap["ExportKustoExceptionPartialErrorOnNewExport"] = GenericErrorCodesExportKustoExceptionPartialErrorOnNewExport;
         _GenericErrorCodesMap["ExportKustoExceptionEdit"] = GenericErrorCodesExportKustoExceptionEdit;
         _GenericErrorCodesMap["ExportKustoConnectionFailed"] = GenericErrorCodesExportKustoConnectionFailed;
         _GenericErrorCodesMap["ExportUnknownError"] = GenericErrorCodesExportUnknownError;
+        _GenericErrorCodesMap["ExportCantEditPendingExport"] = GenericErrorCodesExportCantEditPendingExport;
+        _GenericErrorCodesMap["ExportLimitExports"] = GenericErrorCodesExportLimitExports;
+        _GenericErrorCodesMap["ExportLimitEvents"] = GenericErrorCodesExportLimitEvents;
 
     }
 
@@ -4775,6 +4913,30 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         return output->second;
 
     return GenericErrorCodesSuccess; // Basically critical fail
+}
+
+GenericPlayFabIdPair::~GenericPlayFabIdPair()
+{
+    if (GenericId != NULL) delete GenericId;
+
+}
+
+void GenericPlayFabIdPair::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (GenericId != NULL) { writer.String("GenericId"); GenericId->writeJSON(writer); }
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    writer.EndObject();
+}
+
+bool GenericPlayFabIdPair::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator GenericId_member = obj.FindMember("GenericId");
+    if (GenericId_member != obj.MemberEnd() && !GenericId_member->value.IsNull()) GenericId = new GenericServiceId(GenericId_member->value);
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
 }
 
 GetAllSegmentsRequest::~GetAllSegmentsRequest()
@@ -6985,6 +7147,68 @@ bool GetPlayFabIDsFromFacebookInstantGamesIdsResult::readFromValue(const rapidjs
     return true;
 }
 
+GetPlayFabIDsFromGenericIDsRequest::~GetPlayFabIDsFromGenericIDsRequest()
+{
+
+}
+
+void GetPlayFabIDsFromGenericIDsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("GenericIDs");
+    writer.StartArray();
+    for (std::list<GenericServiceId>::iterator iter = GenericIDs.begin(); iter != GenericIDs.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromGenericIDsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator GenericIDs_member = obj.FindMember("GenericIDs");
+    if (GenericIDs_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = GenericIDs_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            GenericIDs.push_back(GenericServiceId(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetPlayFabIDsFromGenericIDsResult::~GetPlayFabIDsFromGenericIDsResult()
+{
+
+}
+
+void GetPlayFabIDsFromGenericIDsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!Data.empty()) {
+        writer.String("Data");
+        writer.StartArray();
+        for (std::list<GenericPlayFabIdPair>::iterator iter = Data.begin(); iter != Data.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool GetPlayFabIDsFromGenericIDsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Data_member = obj.FindMember("Data");
+    if (Data_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Data_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Data.push_back(GenericPlayFabIdPair(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest::~GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest()
 {
 
@@ -8587,6 +8811,49 @@ bool GrantItemsToUsersResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+LinkServerCustomIdRequest::~LinkServerCustomIdRequest()
+{
+
+}
+
+void LinkServerCustomIdRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.String("ServerCustomId"); writer.String(ServerCustomId.c_str());
+    writer.EndObject();
+}
+
+bool LinkServerCustomIdRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator ServerCustomId_member = obj.FindMember("ServerCustomId");
+    if (ServerCustomId_member != obj.MemberEnd() && !ServerCustomId_member->value.IsNull()) ServerCustomId = ServerCustomId_member->value.GetString();
+
+    return true;
+}
+
+LinkServerCustomIdResult::~LinkServerCustomIdResult()
+{
+
+}
+
+void LinkServerCustomIdResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool LinkServerCustomIdResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 LinkXboxAccountRequest::~LinkXboxAccountRequest()
 {
 
@@ -8678,6 +8945,29 @@ bool ListUsersCharactersResult::readFromValue(const rapidjson::Value& obj)
             Characters.push_back(CharacterResult(memberList[i]));
         }
     }
+
+    return true;
+}
+
+LocalizedPushNotificationProperties::~LocalizedPushNotificationProperties()
+{
+
+}
+
+void LocalizedPushNotificationProperties::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Message.length() > 0) { writer.String("Message"); writer.String(Message.c_str()); }
+    if (Subject.length() > 0) { writer.String("Subject"); writer.String(Subject.c_str()); }
+    writer.EndObject();
+}
+
+bool LocalizedPushNotificationProperties::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Message_member = obj.FindMember("Message");
+    if (Message_member != obj.MemberEnd() && !Message_member->value.IsNull()) Message = Message_member->value.GetString();
+    const Value::ConstMemberIterator Subject_member = obj.FindMember("Subject");
+    if (Subject_member != obj.MemberEnd() && !Subject_member->value.IsNull()) Subject = Subject_member->value.GetString();
 
     return true;
 }
@@ -9364,6 +9654,29 @@ bool RemoveFriendRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+RemoveGenericIDRequest::~RemoveGenericIDRequest()
+{
+
+}
+
+void RemoveGenericIDRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("GenericId"); GenericId.writeJSON(writer);
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.EndObject();
+}
+
+bool RemoveGenericIDRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator GenericId_member = obj.FindMember("GenericId");
+    if (GenericId_member != obj.MemberEnd() && !GenericId_member->value.IsNull()) GenericId = GenericServiceId(GenericId_member->value);
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+
+    return true;
+}
+
 RemovePlayerTagRequest::~RemovePlayerTagRequest()
 {
 
@@ -9769,6 +10082,69 @@ bool RevokeInventoryResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+SavePushNotificationTemplateRequest::~SavePushNotificationTemplateRequest()
+{
+
+}
+
+void SavePushNotificationTemplateRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (AndroidPayload.length() > 0) { writer.String("AndroidPayload"); writer.String(AndroidPayload.c_str()); }
+    if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
+    if (IOSPayload.length() > 0) { writer.String("IOSPayload"); writer.String(IOSPayload.c_str()); }
+    if (!LocalizedPushNotificationTemplates.empty()) {
+        writer.String("LocalizedPushNotificationTemplates");
+        writer.StartObject();
+        for (std::map<std::string, LocalizedPushNotificationProperties>::iterator iter = LocalizedPushNotificationTemplates.begin(); iter != LocalizedPushNotificationTemplates.end(); ++iter) {
+            writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        }
+        writer.EndObject();
+    }
+    writer.String("Name"); writer.String(Name.c_str());
+    writer.EndObject();
+}
+
+bool SavePushNotificationTemplateRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AndroidPayload_member = obj.FindMember("AndroidPayload");
+    if (AndroidPayload_member != obj.MemberEnd() && !AndroidPayload_member->value.IsNull()) AndroidPayload = AndroidPayload_member->value.GetString();
+    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
+    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
+    const Value::ConstMemberIterator IOSPayload_member = obj.FindMember("IOSPayload");
+    if (IOSPayload_member != obj.MemberEnd() && !IOSPayload_member->value.IsNull()) IOSPayload = IOSPayload_member->value.GetString();
+    const Value::ConstMemberIterator LocalizedPushNotificationTemplates_member = obj.FindMember("LocalizedPushNotificationTemplates");
+    if (LocalizedPushNotificationTemplates_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = LocalizedPushNotificationTemplates_member->value.MemberBegin(); iter != LocalizedPushNotificationTemplates_member->value.MemberEnd(); ++iter) {
+            LocalizedPushNotificationTemplates[iter->name.GetString()] = LocalizedPushNotificationProperties(iter->value);
+        }
+    }
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+
+    return true;
+}
+
+SavePushNotificationTemplateResult::~SavePushNotificationTemplateResult()
+{
+
+}
+
+void SavePushNotificationTemplateResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (PushNotificationTemplateId.length() > 0) { writer.String("PushNotificationTemplateId"); writer.String(PushNotificationTemplateId.c_str()); }
+    writer.EndObject();
+}
+
+bool SavePushNotificationTemplateResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PushNotificationTemplateId_member = obj.FindMember("PushNotificationTemplateId");
+    if (PushNotificationTemplateId_member != obj.MemberEnd() && !PushNotificationTemplateId_member->value.IsNull()) PushNotificationTemplateId = PushNotificationTemplateId_member->value.GetString();
+
+    return true;
+}
+
 SendCustomAccountRecoveryEmailRequest::~SendCustomAccountRecoveryEmailRequest()
 {
 
@@ -9848,6 +10224,29 @@ void SendEmailFromTemplateResult::writeJSON(PFStringJsonWriter& writer)
 
 bool SendEmailFromTemplateResult::readFromValue(const rapidjson::Value& obj)
 {
+
+    return true;
+}
+
+SendPushNotificationFromTemplateRequest::~SendPushNotificationFromTemplateRequest()
+{
+
+}
+
+void SendPushNotificationFromTemplateRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("PushNotificationTemplateId"); writer.String(PushNotificationTemplateId.c_str());
+    writer.String("Recipient"); writer.String(Recipient.c_str());
+    writer.EndObject();
+}
+
+bool SendPushNotificationFromTemplateRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PushNotificationTemplateId_member = obj.FindMember("PushNotificationTemplateId");
+    if (PushNotificationTemplateId_member != obj.MemberEnd() && !PushNotificationTemplateId_member->value.IsNull()) PushNotificationTemplateId = PushNotificationTemplateId_member->value.GetString();
+    const Value::ConstMemberIterator Recipient_member = obj.FindMember("Recipient");
+    if (Recipient_member != obj.MemberEnd() && !Recipient_member->value.IsNull()) Recipient = Recipient_member->value.GetString();
 
     return true;
 }
@@ -10358,6 +10757,46 @@ bool SubtractUserVirtualCurrencyRequest::readFromValue(const rapidjson::Value& o
     if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
     const Value::ConstMemberIterator VirtualCurrency_member = obj.FindMember("VirtualCurrency");
     if (VirtualCurrency_member != obj.MemberEnd() && !VirtualCurrency_member->value.IsNull()) VirtualCurrency = VirtualCurrency_member->value.GetString();
+
+    return true;
+}
+
+UnlinkServerCustomIdRequest::~UnlinkServerCustomIdRequest()
+{
+
+}
+
+void UnlinkServerCustomIdRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
+    writer.String("ServerCustomId"); writer.String(ServerCustomId.c_str());
+    writer.EndObject();
+}
+
+bool UnlinkServerCustomIdRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator ServerCustomId_member = obj.FindMember("ServerCustomId");
+    if (ServerCustomId_member != obj.MemberEnd() && !ServerCustomId_member->value.IsNull()) ServerCustomId = ServerCustomId_member->value.GetString();
+
+    return true;
+}
+
+UnlinkServerCustomIdResult::~UnlinkServerCustomIdResult()
+{
+
+}
+
+void UnlinkServerCustomIdResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool UnlinkServerCustomIdResult::readFromValue(const rapidjson::Value& obj)
+{
 
     return true;
 }

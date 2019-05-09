@@ -140,6 +140,62 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GenericServiceId : public PlayFabBaseModel
+        {
+            std::string ServiceName;
+            std::string UserId;
+
+            GenericServiceId() :
+                PlayFabBaseModel(),
+                ServiceName(),
+                UserId()
+            {}
+
+            GenericServiceId(const GenericServiceId& src) :
+                PlayFabBaseModel(),
+                ServiceName(src.ServiceName),
+                UserId(src.UserId)
+            {}
+
+            GenericServiceId(const rapidjson::Value& obj) : GenericServiceId()
+            {
+                readFromValue(obj);
+            }
+
+            ~GenericServiceId();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct AddGenericIDRequest : public PlayFabBaseModel
+        {
+            GenericServiceId GenericId;
+            std::string PlayFabId;
+
+            AddGenericIDRequest() :
+                PlayFabBaseModel(),
+                GenericId(),
+                PlayFabId()
+            {}
+
+            AddGenericIDRequest(const AddGenericIDRequest& src) :
+                PlayFabBaseModel(),
+                GenericId(src.GenericId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            AddGenericIDRequest(const rapidjson::Value& obj) : AddGenericIDRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~AddGenericIDRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct AddPlayerTagRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -2288,6 +2344,53 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct DeletePushNotificationTemplateRequest : public PlayFabBaseModel
+        {
+            std::string PushNotificationTemplateId;
+
+            DeletePushNotificationTemplateRequest() :
+                PlayFabBaseModel(),
+                PushNotificationTemplateId()
+            {}
+
+            DeletePushNotificationTemplateRequest(const DeletePushNotificationTemplateRequest& src) :
+                PlayFabBaseModel(),
+                PushNotificationTemplateId(src.PushNotificationTemplateId)
+            {}
+
+            DeletePushNotificationTemplateRequest(const rapidjson::Value& obj) : DeletePushNotificationTemplateRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeletePushNotificationTemplateRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeletePushNotificationTemplateResult : public PlayFabBaseModel
+        {
+
+            DeletePushNotificationTemplateResult() :
+                PlayFabBaseModel()
+            {}
+
+            DeletePushNotificationTemplateResult(const DeletePushNotificationTemplateResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            DeletePushNotificationTemplateResult(const rapidjson::Value& obj) : DeletePushNotificationTemplateResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeletePushNotificationTemplateResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct DeleteSharedGroupRequest : public PlayFabBaseModel
         {
             std::string SharedGroupId;
@@ -2377,6 +2480,28 @@ namespace PlayFab
             }
 
             ~EmptyResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct EmptyResult : public PlayFabBaseModel
+        {
+
+            EmptyResult() :
+                PlayFabBaseModel()
+            {}
+
+            EmptyResult(const EmptyResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            EmptyResult(const rapidjson::Value& obj) : EmptyResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~EmptyResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -3567,6 +3692,30 @@ namespace PlayFab
             GenericErrorCodesWriteAttemptedDuringExport,
             GenericErrorCodesMultiplayerServerTitleQuotaCoresExceeded,
             GenericErrorCodesAutomationRuleNotFound,
+            GenericErrorCodesEntityAPIKeyLimitExceeded,
+            GenericErrorCodesEntityAPIKeyNotFound,
+            GenericErrorCodesEntityAPIKeyOrSecretInvalid,
+            GenericErrorCodesEconomyServiceUnavailable,
+            GenericErrorCodesEconomyServiceInternalError,
+            GenericErrorCodesKustoProxyQueryRateLimitExceeded,
+            GenericErrorCodesEntityAPIKeyCreationDisabledForEntity,
+            GenericErrorCodesStudioCreationRateLimited,
+            GenericErrorCodesStudioCreationInProgress,
+            GenericErrorCodesDuplicateStudioName,
+            GenericErrorCodesStudioNotFound,
+            GenericErrorCodesStudioDeletionInProgress,
+            GenericErrorCodesStudioDeactivated,
+            GenericErrorCodesTitleCreationRateLimited,
+            GenericErrorCodesTitleCreationInProgress,
+            GenericErrorCodesDuplicateTitleName,
+            GenericErrorCodesTitleNotFound,
+            GenericErrorCodesTitleDeletionInProgress,
+            GenericErrorCodesTitleDeactivated,
+            GenericErrorCodesTitleAlreadyActivated,
+            GenericErrorCodesCloudScriptAzureFunctionsExecutionTimeLimitExceeded,
+            GenericErrorCodesCloudScriptAzureFunctionsArgumentSizeExceeded,
+            GenericErrorCodesCloudScriptAzureFunctionsReturnSizeExceeded,
+            GenericErrorCodesCloudScriptAzureFunctionsHTTPRequestError,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -3586,6 +3735,8 @@ namespace PlayFab
             GenericErrorCodesMatchmakingTicketMembershipLimitExceeded,
             GenericErrorCodesMatchmakingUnauthorized,
             GenericErrorCodesMatchmakingQueueLimitExceeded,
+            GenericErrorCodesMatchmakingRequestTypeMismatch,
+            GenericErrorCodesMatchmakingBadRequest,
             GenericErrorCodesTitleConfigNotFound,
             GenericErrorCodesTitleConfigUpdateConflict,
             GenericErrorCodesTitleConfigSerializationError,
@@ -3598,18 +3749,8 @@ namespace PlayFab
             GenericErrorCodesCatalogItemIdInvalid,
             GenericErrorCodesCatalogSearchParameterInvalid,
             GenericErrorCodesCatalogFeatureDisabled,
-            GenericErrorCodesCatalogConfigMissing,
-            GenericErrorCodesCatalogConfigTooManyContentTypes,
-            GenericErrorCodesCatalogConfigContentTypeTooLong,
-            GenericErrorCodesCatalogConfigTooManyTags,
-            GenericErrorCodesCatalogConfigTagTooLong,
-            GenericErrorCodesCatalogConfigInvalidDeepLinkObject,
-            GenericErrorCodesCatalogConfigInvalidDeepLinkPlatform,
-            GenericErrorCodesCatalogConfigInvalidDeepLinkFormat,
-            GenericErrorCodesCatalogConfigInvalidDisplayPropertyObject,
-            GenericErrorCodesCatalogConfigInvalidDisplayPropertyName,
-            GenericErrorCodesCatalogConfigInvalidDisplayPropertyType,
-            GenericErrorCodesCatalogConfigDisplayPropertyMappingLimit,
+            GenericErrorCodesCatalogConfigInvalid,
+            GenericErrorCodesCatalogUnauthorized,
             GenericErrorCodesExportInvalidStatusUpdate,
             GenericErrorCodesExportInvalidPrefix,
             GenericErrorCodesExportBlobContainerDoesNotExist,
@@ -3620,14 +3761,45 @@ namespace PlayFab
             GenericErrorCodesExportAmazonBucketDoesNotExist,
             GenericErrorCodesExportInvalidBlobStorage,
             GenericErrorCodesExportKustoException,
-            GenericErrorCodesExportKustoExceptionNew_SomeResources,
+            GenericErrorCodesExportKustoExceptionPartialErrorOnNewExport,
             GenericErrorCodesExportKustoExceptionEdit,
             GenericErrorCodesExportKustoConnectionFailed,
-            GenericErrorCodesExportUnknownError
+            GenericErrorCodesExportUnknownError,
+            GenericErrorCodesExportCantEditPendingExport,
+            GenericErrorCodesExportLimitExports,
+            GenericErrorCodesExportLimitEvents
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
         GenericErrorCodes readGenericErrorCodesFromValue(const rapidjson::Value& obj);
+
+        struct GenericPlayFabIdPair : public PlayFabBaseModel
+        {
+            GenericServiceId* GenericId;
+            std::string PlayFabId;
+
+            GenericPlayFabIdPair() :
+                PlayFabBaseModel(),
+                GenericId(NULL),
+                PlayFabId()
+            {}
+
+            GenericPlayFabIdPair(const GenericPlayFabIdPair& src) :
+                PlayFabBaseModel(),
+                GenericId(src.GenericId ? new GenericServiceId(*src.GenericId) : NULL),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            GenericPlayFabIdPair(const rapidjson::Value& obj) : GenericPlayFabIdPair()
+            {
+                readFromValue(obj);
+            }
+
+            ~GenericPlayFabIdPair();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
 
         struct GetAllSegmentsRequest : public PlayFabBaseModel
         {
@@ -5541,6 +5713,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetPlayFabIDsFromGenericIDsRequest : public PlayFabBaseModel
+        {
+            std::list<GenericServiceId> GenericIDs;
+
+            GetPlayFabIDsFromGenericIDsRequest() :
+                PlayFabBaseModel(),
+                GenericIDs()
+            {}
+
+            GetPlayFabIDsFromGenericIDsRequest(const GetPlayFabIDsFromGenericIDsRequest& src) :
+                PlayFabBaseModel(),
+                GenericIDs(src.GenericIDs)
+            {}
+
+            GetPlayFabIDsFromGenericIDsRequest(const rapidjson::Value& obj) : GetPlayFabIDsFromGenericIDsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromGenericIDsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetPlayFabIDsFromGenericIDsResult : public PlayFabBaseModel
+        {
+            std::list<GenericPlayFabIdPair> Data;
+
+            GetPlayFabIDsFromGenericIDsResult() :
+                PlayFabBaseModel(),
+                Data()
+            {}
+
+            GetPlayFabIDsFromGenericIDsResult(const GetPlayFabIDsFromGenericIDsResult& src) :
+                PlayFabBaseModel(),
+                Data(src.Data)
+            {}
+
+            GetPlayFabIDsFromGenericIDsResult(const rapidjson::Value& obj) : GetPlayFabIDsFromGenericIDsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetPlayFabIDsFromGenericIDsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetPlayFabIDsFromNintendoSwitchDeviceIdsRequest : public PlayFabBaseModel
         {
             std::list<std::string> NintendoSwitchDeviceIds;
@@ -6952,6 +7174,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct LinkServerCustomIdRequest : public PlayFabBaseModel
+        {
+            OptionalBool ForceLink;
+            std::string PlayFabId;
+            std::string ServerCustomId;
+
+            LinkServerCustomIdRequest() :
+                PlayFabBaseModel(),
+                ForceLink(),
+                PlayFabId(),
+                ServerCustomId()
+            {}
+
+            LinkServerCustomIdRequest(const LinkServerCustomIdRequest& src) :
+                PlayFabBaseModel(),
+                ForceLink(src.ForceLink),
+                PlayFabId(src.PlayFabId),
+                ServerCustomId(src.ServerCustomId)
+            {}
+
+            LinkServerCustomIdRequest(const rapidjson::Value& obj) : LinkServerCustomIdRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkServerCustomIdRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LinkServerCustomIdResult : public PlayFabBaseModel
+        {
+
+            LinkServerCustomIdResult() :
+                PlayFabBaseModel()
+            {}
+
+            LinkServerCustomIdResult(const LinkServerCustomIdResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            LinkServerCustomIdResult(const rapidjson::Value& obj) : LinkServerCustomIdResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkServerCustomIdResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct LinkXboxAccountRequest : public PlayFabBaseModel
         {
             OptionalBool ForceLink;
@@ -7050,6 +7325,34 @@ namespace PlayFab
             }
 
             ~ListUsersCharactersResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LocalizedPushNotificationProperties : public PlayFabBaseModel
+        {
+            std::string Message;
+            std::string Subject;
+
+            LocalizedPushNotificationProperties() :
+                PlayFabBaseModel(),
+                Message(),
+                Subject()
+            {}
+
+            LocalizedPushNotificationProperties(const LocalizedPushNotificationProperties& src) :
+                PlayFabBaseModel(),
+                Message(src.Message),
+                Subject(src.Subject)
+            {}
+
+            LocalizedPushNotificationProperties(const rapidjson::Value& obj) : LocalizedPushNotificationProperties()
+            {
+                readFromValue(obj);
+            }
+
+            ~LocalizedPushNotificationProperties();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -7788,6 +8091,34 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct RemoveGenericIDRequest : public PlayFabBaseModel
+        {
+            GenericServiceId GenericId;
+            std::string PlayFabId;
+
+            RemoveGenericIDRequest() :
+                PlayFabBaseModel(),
+                GenericId(),
+                PlayFabId()
+            {}
+
+            RemoveGenericIDRequest(const RemoveGenericIDRequest& src) :
+                PlayFabBaseModel(),
+                GenericId(src.GenericId),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            RemoveGenericIDRequest(const rapidjson::Value& obj) : RemoveGenericIDRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RemoveGenericIDRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct RemovePlayerTagRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -8206,6 +8537,68 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct SavePushNotificationTemplateRequest : public PlayFabBaseModel
+        {
+            std::string AndroidPayload;
+            std::string Id;
+            std::string IOSPayload;
+            std::map<std::string, LocalizedPushNotificationProperties> LocalizedPushNotificationTemplates;
+            std::string Name;
+
+            SavePushNotificationTemplateRequest() :
+                PlayFabBaseModel(),
+                AndroidPayload(),
+                Id(),
+                IOSPayload(),
+                LocalizedPushNotificationTemplates(),
+                Name()
+            {}
+
+            SavePushNotificationTemplateRequest(const SavePushNotificationTemplateRequest& src) :
+                PlayFabBaseModel(),
+                AndroidPayload(src.AndroidPayload),
+                Id(src.Id),
+                IOSPayload(src.IOSPayload),
+                LocalizedPushNotificationTemplates(src.LocalizedPushNotificationTemplates),
+                Name(src.Name)
+            {}
+
+            SavePushNotificationTemplateRequest(const rapidjson::Value& obj) : SavePushNotificationTemplateRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SavePushNotificationTemplateRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SavePushNotificationTemplateResult : public PlayFabBaseModel
+        {
+            std::string PushNotificationTemplateId;
+
+            SavePushNotificationTemplateResult() :
+                PlayFabBaseModel(),
+                PushNotificationTemplateId()
+            {}
+
+            SavePushNotificationTemplateResult(const SavePushNotificationTemplateResult& src) :
+                PlayFabBaseModel(),
+                PushNotificationTemplateId(src.PushNotificationTemplateId)
+            {}
+
+            SavePushNotificationTemplateResult(const rapidjson::Value& obj) : SavePushNotificationTemplateResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~SavePushNotificationTemplateResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct SendCustomAccountRecoveryEmailRequest : public PlayFabBaseModel
         {
             std::string Email;
@@ -8304,6 +8697,34 @@ namespace PlayFab
             }
 
             ~SendEmailFromTemplateResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SendPushNotificationFromTemplateRequest : public PlayFabBaseModel
+        {
+            std::string PushNotificationTemplateId;
+            std::string Recipient;
+
+            SendPushNotificationFromTemplateRequest() :
+                PlayFabBaseModel(),
+                PushNotificationTemplateId(),
+                Recipient()
+            {}
+
+            SendPushNotificationFromTemplateRequest(const SendPushNotificationFromTemplateRequest& src) :
+                PlayFabBaseModel(),
+                PushNotificationTemplateId(src.PushNotificationTemplateId),
+                Recipient(src.Recipient)
+            {}
+
+            SendPushNotificationFromTemplateRequest(const rapidjson::Value& obj) : SendPushNotificationFromTemplateRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SendPushNotificationFromTemplateRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -8867,6 +9288,56 @@ namespace PlayFab
             }
 
             ~SubtractUserVirtualCurrencyRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UnlinkServerCustomIdRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+            std::string ServerCustomId;
+
+            UnlinkServerCustomIdRequest() :
+                PlayFabBaseModel(),
+                PlayFabId(),
+                ServerCustomId()
+            {}
+
+            UnlinkServerCustomIdRequest(const UnlinkServerCustomIdRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId),
+                ServerCustomId(src.ServerCustomId)
+            {}
+
+            UnlinkServerCustomIdRequest(const rapidjson::Value& obj) : UnlinkServerCustomIdRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlinkServerCustomIdRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UnlinkServerCustomIdResult : public PlayFabBaseModel
+        {
+
+            UnlinkServerCustomIdResult() :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkServerCustomIdResult(const UnlinkServerCustomIdResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkServerCustomIdResult(const rapidjson::Value& obj) : UnlinkServerCustomIdResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlinkServerCustomIdResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

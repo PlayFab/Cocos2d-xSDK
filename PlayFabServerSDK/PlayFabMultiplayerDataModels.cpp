@@ -141,6 +141,39 @@ AzureRegion PlayFab::MultiplayerModels::readAzureRegionFromValue(const rapidjson
 
     return AzureRegionAustraliaEast; // Basically critical fail
 }
+void PlayFab::MultiplayerModels::writeAzureVmFamilyEnumJSON(AzureVmFamily enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case AzureVmFamilyA: writer.String("A"); break;
+    case AzureVmFamilyAv2: writer.String("Av2"); break;
+    case AzureVmFamilyDv2: writer.String("Dv2"); break;
+    case AzureVmFamilyF: writer.String("F"); break;
+    case AzureVmFamilyFsv2: writer.String("Fsv2"); break;
+
+    }
+}
+
+AzureVmFamily PlayFab::MultiplayerModels::readAzureVmFamilyFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, AzureVmFamily> _AzureVmFamilyMap;
+    if (_AzureVmFamilyMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _AzureVmFamilyMap["A"] = AzureVmFamilyA;
+        _AzureVmFamilyMap["Av2"] = AzureVmFamilyAv2;
+        _AzureVmFamilyMap["Dv2"] = AzureVmFamilyDv2;
+        _AzureVmFamilyMap["F"] = AzureVmFamilyF;
+        _AzureVmFamilyMap["Fsv2"] = AzureVmFamilyFsv2;
+
+    }
+
+    auto output = _AzureVmFamilyMap.find(obj.GetString());
+    if (output != _AzureVmFamilyMap.end())
+        return output->second;
+
+    return AzureVmFamilyA; // Basically critical fail
+}
 void PlayFab::MultiplayerModels::writeAzureVmSizeEnumJSON(AzureVmSize enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -606,6 +639,35 @@ bool ContainerImageReference::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+CoreCapacity::~CoreCapacity()
+{
+
+}
+
+void CoreCapacity::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Available"); writer.Int(Available);
+    if (Region.notNull()) { writer.String("Region"); writeAzureRegionEnumJSON(Region, writer); }
+    writer.String("Total"); writer.Int(Total);
+    if (VmFamily.notNull()) { writer.String("VmFamily"); writeAzureVmFamilyEnumJSON(VmFamily, writer); }
+    writer.EndObject();
+}
+
+bool CoreCapacity::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Available_member = obj.FindMember("Available");
+    if (Available_member != obj.MemberEnd() && !Available_member->value.IsNull()) Available = Available_member->value.GetInt();
+    const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
+    if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = readAzureRegionFromValue(Region_member->value);
+    const Value::ConstMemberIterator Total_member = obj.FindMember("Total");
+    if (Total_member != obj.MemberEnd() && !Total_member->value.IsNull()) Total = Total_member->value.GetInt();
+    const Value::ConstMemberIterator VmFamily_member = obj.FindMember("VmFamily");
+    if (VmFamily_member != obj.MemberEnd() && !VmFamily_member->value.IsNull()) VmFamily = readAzureVmFamilyFromValue(VmFamily_member->value);
+
+    return true;
+}
+
 GameCertificateReferenceParams::~GameCertificateReferenceParams()
 {
 
@@ -684,6 +746,7 @@ bool Port::readFromValue(const rapidjson::Value& obj)
 
 CreateBuildWithCustomContainerRequest::~CreateBuildWithCustomContainerRequest()
 {
+    if (pfContainerImageReference != NULL) delete pfContainerImageReference;
 
 }
 
@@ -692,7 +755,8 @@ void CreateBuildWithCustomContainerRequest::writeJSON(PFStringJsonWriter& writer
     writer.StartObject();
     writer.String("BuildName"); writer.String(BuildName.c_str());
     if (pfContainerFlavor.notNull()) { writer.String("ContainerFlavor"); writeContainerFlavorEnumJSON(pfContainerFlavor, writer); }
-    writer.String("ContainerRepositoryName"); writer.String(ContainerRepositoryName.c_str());
+    if (pfContainerImageReference != NULL) { writer.String("ContainerImageReference"); pfContainerImageReference->writeJSON(writer); }
+    if (ContainerRepositoryName.length() > 0) { writer.String("ContainerRepositoryName"); writer.String(ContainerRepositoryName.c_str()); }
     if (ContainerRunCommand.length() > 0) { writer.String("ContainerRunCommand"); writer.String(ContainerRunCommand.c_str()); }
     if (ContainerTag.length() > 0) { writer.String("ContainerTag"); writer.String(ContainerTag.c_str()); }
     if (!GameAssetReferences.empty()) {
@@ -742,6 +806,8 @@ bool CreateBuildWithCustomContainerRequest::readFromValue(const rapidjson::Value
     if (BuildName_member != obj.MemberEnd() && !BuildName_member->value.IsNull()) BuildName = BuildName_member->value.GetString();
     const Value::ConstMemberIterator ContainerFlavor_member = obj.FindMember("ContainerFlavor");
     if (ContainerFlavor_member != obj.MemberEnd() && !ContainerFlavor_member->value.IsNull()) pfContainerFlavor = readContainerFlavorFromValue(ContainerFlavor_member->value);
+    const Value::ConstMemberIterator ContainerImageReference_member = obj.FindMember("ContainerImageReference");
+    if (ContainerImageReference_member != obj.MemberEnd() && !ContainerImageReference_member->value.IsNull()) pfContainerImageReference = new ContainerImageReference(ContainerImageReference_member->value);
     const Value::ConstMemberIterator ContainerRepositoryName_member = obj.FindMember("ContainerRepositoryName");
     if (ContainerRepositoryName_member != obj.MemberEnd() && !ContainerRepositoryName_member->value.IsNull()) ContainerRepositoryName = ContainerRepositoryName_member->value.GetString();
     const Value::ConstMemberIterator ContainerRunCommand_member = obj.FindMember("ContainerRunCommand");
@@ -1743,229 +1809,6 @@ bool GetContainerRegistryCredentialsResponse::readFromValue(const rapidjson::Val
     return true;
 }
 
-GetMatchmakingQueueRequest::~GetMatchmakingQueueRequest()
-{
-
-}
-
-void GetMatchmakingQueueRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (QueueName.length() > 0) { writer.String("QueueName"); writer.String(QueueName.c_str()); }
-    writer.EndObject();
-}
-
-bool GetMatchmakingQueueRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
-    if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
-
-    return true;
-}
-void PlayFab::MultiplayerModels::writeRuleTypeEnumJSON(RuleType enumVal, PFStringJsonWriter& writer)
-{
-    switch (enumVal)
-    {
-    case RuleTypeUnknown: writer.String("Unknown"); break;
-    case RuleTypeDifferenceRule: writer.String("DifferenceRule"); break;
-    case RuleTypeStringEqualityRule: writer.String("StringEqualityRule"); break;
-    case RuleTypeMatchTotalRule: writer.String("MatchTotalRule"); break;
-    case RuleTypeSetIntersectionRule: writer.String("SetIntersectionRule"); break;
-    case RuleTypeTeamSizeBalanceRule: writer.String("TeamSizeBalanceRule"); break;
-    case RuleTypeRegionSelectionRule: writer.String("RegionSelectionRule"); break;
-    case RuleTypeTeamDifferenceRule: writer.String("TeamDifferenceRule"); break;
-    case RuleTypeTeamTicketSizeSimilarityRule: writer.String("TeamTicketSizeSimilarityRule"); break;
-
-    }
-}
-
-RuleType PlayFab::MultiplayerModels::readRuleTypeFromValue(const rapidjson::Value& obj)
-{
-    static std::map<std::string, RuleType> _RuleTypeMap;
-    if (_RuleTypeMap.size() == 0)
-    {
-        // Auto-generate the map on the first use
-        _RuleTypeMap["Unknown"] = RuleTypeUnknown;
-        _RuleTypeMap["DifferenceRule"] = RuleTypeDifferenceRule;
-        _RuleTypeMap["StringEqualityRule"] = RuleTypeStringEqualityRule;
-        _RuleTypeMap["MatchTotalRule"] = RuleTypeMatchTotalRule;
-        _RuleTypeMap["SetIntersectionRule"] = RuleTypeSetIntersectionRule;
-        _RuleTypeMap["TeamSizeBalanceRule"] = RuleTypeTeamSizeBalanceRule;
-        _RuleTypeMap["RegionSelectionRule"] = RuleTypeRegionSelectionRule;
-        _RuleTypeMap["TeamDifferenceRule"] = RuleTypeTeamDifferenceRule;
-        _RuleTypeMap["TeamTicketSizeSimilarityRule"] = RuleTypeTeamTicketSizeSimilarityRule;
-
-    }
-
-    auto output = _RuleTypeMap.find(obj.GetString());
-    if (output != _RuleTypeMap.end())
-        return output->second;
-
-    return RuleTypeUnknown; // Basically critical fail
-}
-
-MatchmakingQueueRule::~MatchmakingQueueRule()
-{
-
-}
-
-void MatchmakingQueueRule::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.String("Name"); writer.String(Name.c_str());
-    if (SecondsUntilOptional.notNull()) { writer.String("SecondsUntilOptional"); writer.Uint(SecondsUntilOptional); }
-    writer.String("Type"); writeRuleTypeEnumJSON(Type, writer);
-    writer.EndObject();
-}
-
-bool MatchmakingQueueRule::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
-    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-    const Value::ConstMemberIterator SecondsUntilOptional_member = obj.FindMember("SecondsUntilOptional");
-    if (SecondsUntilOptional_member != obj.MemberEnd() && !SecondsUntilOptional_member->value.IsNull()) SecondsUntilOptional = SecondsUntilOptional_member->value.GetUint();
-    const Value::ConstMemberIterator Type_member = obj.FindMember("Type");
-    if (Type_member != obj.MemberEnd() && !Type_member->value.IsNull()) Type = readRuleTypeFromValue(Type_member->value);
-
-    return true;
-}
-
-StatisticsVisibilityToPlayers::~StatisticsVisibilityToPlayers()
-{
-
-}
-
-void StatisticsVisibilityToPlayers::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.String("ShowNumberOfPlayersMatching"); writer.Bool(ShowNumberOfPlayersMatching);
-    writer.String("ShowTimeToMatch"); writer.Bool(ShowTimeToMatch);
-    writer.EndObject();
-}
-
-bool StatisticsVisibilityToPlayers::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator ShowNumberOfPlayersMatching_member = obj.FindMember("ShowNumberOfPlayersMatching");
-    if (ShowNumberOfPlayersMatching_member != obj.MemberEnd() && !ShowNumberOfPlayersMatching_member->value.IsNull()) ShowNumberOfPlayersMatching = ShowNumberOfPlayersMatching_member->value.GetBool();
-    const Value::ConstMemberIterator ShowTimeToMatch_member = obj.FindMember("ShowTimeToMatch");
-    if (ShowTimeToMatch_member != obj.MemberEnd() && !ShowTimeToMatch_member->value.IsNull()) ShowTimeToMatch = ShowTimeToMatch_member->value.GetBool();
-
-    return true;
-}
-
-MatchmakingQueueTeam::~MatchmakingQueueTeam()
-{
-
-}
-
-void MatchmakingQueueTeam::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.String("MaxTeamSize"); writer.Uint(MaxTeamSize);
-    writer.String("MinTeamSize"); writer.Uint(MinTeamSize);
-    writer.String("Name"); writer.String(Name.c_str());
-    writer.EndObject();
-}
-
-bool MatchmakingQueueTeam::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator MaxTeamSize_member = obj.FindMember("MaxTeamSize");
-    if (MaxTeamSize_member != obj.MemberEnd() && !MaxTeamSize_member->value.IsNull()) MaxTeamSize = MaxTeamSize_member->value.GetUint();
-    const Value::ConstMemberIterator MinTeamSize_member = obj.FindMember("MinTeamSize");
-    if (MinTeamSize_member != obj.MemberEnd() && !MinTeamSize_member->value.IsNull()) MinTeamSize = MinTeamSize_member->value.GetUint();
-    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
-    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-
-    return true;
-}
-
-MatchmakingQueueConfig::~MatchmakingQueueConfig()
-{
-    if (pfStatisticsVisibilityToPlayers != NULL) delete pfStatisticsVisibilityToPlayers;
-
-}
-
-void MatchmakingQueueConfig::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
-    writer.String("MaxMatchSize"); writer.Uint(MaxMatchSize);
-    writer.String("MinMatchSize"); writer.Uint(MinMatchSize);
-    writer.String("Name"); writer.String(Name.c_str());
-    if (!Rules.empty()) {
-        writer.String("Rules");
-        writer.StartArray();
-        for (std::list<MatchmakingQueueRule>::iterator iter = Rules.begin(); iter != Rules.end(); iter++) {
-            iter->writeJSON(writer);
-        }
-        writer.EndArray();
-    }
-    writer.String("ServerAllocationEnabled"); writer.Bool(ServerAllocationEnabled);
-    if (pfStatisticsVisibilityToPlayers != NULL) { writer.String("StatisticsVisibilityToPlayers"); pfStatisticsVisibilityToPlayers->writeJSON(writer); }
-    if (!Teams.empty()) {
-        writer.String("Teams");
-        writer.StartArray();
-        for (std::list<MatchmakingQueueTeam>::iterator iter = Teams.begin(); iter != Teams.end(); iter++) {
-            iter->writeJSON(writer);
-        }
-        writer.EndArray();
-    }
-    writer.EndObject();
-}
-
-bool MatchmakingQueueConfig::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
-    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
-    const Value::ConstMemberIterator MaxMatchSize_member = obj.FindMember("MaxMatchSize");
-    if (MaxMatchSize_member != obj.MemberEnd() && !MaxMatchSize_member->value.IsNull()) MaxMatchSize = MaxMatchSize_member->value.GetUint();
-    const Value::ConstMemberIterator MinMatchSize_member = obj.FindMember("MinMatchSize");
-    if (MinMatchSize_member != obj.MemberEnd() && !MinMatchSize_member->value.IsNull()) MinMatchSize = MinMatchSize_member->value.GetUint();
-    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
-    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-    const Value::ConstMemberIterator Rules_member = obj.FindMember("Rules");
-    if (Rules_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Rules_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Rules.push_back(MatchmakingQueueRule(memberList[i]));
-        }
-    }
-    const Value::ConstMemberIterator ServerAllocationEnabled_member = obj.FindMember("ServerAllocationEnabled");
-    if (ServerAllocationEnabled_member != obj.MemberEnd() && !ServerAllocationEnabled_member->value.IsNull()) ServerAllocationEnabled = ServerAllocationEnabled_member->value.GetBool();
-    const Value::ConstMemberIterator StatisticsVisibilityToPlayers_member = obj.FindMember("StatisticsVisibilityToPlayers");
-    if (StatisticsVisibilityToPlayers_member != obj.MemberEnd() && !StatisticsVisibilityToPlayers_member->value.IsNull()) pfStatisticsVisibilityToPlayers = new StatisticsVisibilityToPlayers(StatisticsVisibilityToPlayers_member->value);
-    const Value::ConstMemberIterator Teams_member = obj.FindMember("Teams");
-    if (Teams_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Teams_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Teams.push_back(MatchmakingQueueTeam(memberList[i]));
-        }
-    }
-
-    return true;
-}
-
-GetMatchmakingQueueResult::~GetMatchmakingQueueResult()
-{
-    if (MatchmakingQueue != NULL) delete MatchmakingQueue;
-
-}
-
-void GetMatchmakingQueueResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (MatchmakingQueue != NULL) { writer.String("MatchmakingQueue"); MatchmakingQueue->writeJSON(writer); }
-    writer.EndObject();
-}
-
-bool GetMatchmakingQueueResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator MatchmakingQueue_member = obj.FindMember("MatchmakingQueue");
-    if (MatchmakingQueue_member != obj.MemberEnd() && !MatchmakingQueue_member->value.IsNull()) MatchmakingQueue = new MatchmakingQueueConfig(MatchmakingQueue_member->value);
-
-    return true;
-}
-
 GetMatchmakingTicketRequest::~GetMatchmakingTicketRequest()
 {
 
@@ -2125,13 +1968,16 @@ ServerDetails::~ServerDetails()
 void ServerDetails::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    writer.String("IPV4Address"); writer.String(IPV4Address.c_str());
-    writer.String("Ports");
-    writer.StartArray();
-    for (std::list<Port>::iterator iter = Ports.begin(); iter != Ports.end(); iter++) {
-        iter->writeJSON(writer);
+    if (IPV4Address.length() > 0) { writer.String("IPV4Address"); writer.String(IPV4Address.c_str()); }
+    if (!Ports.empty()) {
+        writer.String("Ports");
+        writer.StartArray();
+        for (std::list<Port>::iterator iter = Ports.begin(); iter != Ports.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
     }
-    writer.EndArray();
+    if (Region.length() > 0) { writer.String("Region"); writer.String(Region.c_str()); }
     writer.EndObject();
 }
 
@@ -2146,6 +1992,8 @@ bool ServerDetails::readFromValue(const rapidjson::Value& obj)
             Ports.push_back(Port(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
+    if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
 
     return true;
 }
@@ -2454,6 +2302,76 @@ bool GetTitleEnabledForMultiplayerServersStatusResponse::readFromValue(const rap
 {
     const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
     if (Status_member != obj.MemberEnd() && !Status_member->value.IsNull()) Status = readTitleMultiplayerServerEnabledStatusFromValue(Status_member->value);
+
+    return true;
+}
+
+GetTitleMultiplayerServersQuotasRequest::~GetTitleMultiplayerServersQuotasRequest()
+{
+
+}
+
+void GetTitleMultiplayerServersQuotasRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool GetTitleMultiplayerServersQuotasRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+TitleMultiplayerServersQuotas::~TitleMultiplayerServersQuotas()
+{
+
+}
+
+void TitleMultiplayerServersQuotas::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!CoreCapacities.empty()) {
+        writer.String("CoreCapacities");
+        writer.StartArray();
+        for (std::list<CoreCapacity>::iterator iter = CoreCapacities.begin(); iter != CoreCapacities.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool TitleMultiplayerServersQuotas::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CoreCapacities_member = obj.FindMember("CoreCapacities");
+    if (CoreCapacities_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = CoreCapacities_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            CoreCapacities.push_back(CoreCapacity(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetTitleMultiplayerServersQuotasResponse::~GetTitleMultiplayerServersQuotasResponse()
+{
+    if (Quotas != NULL) delete Quotas;
+
+}
+
+void GetTitleMultiplayerServersQuotasResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Quotas != NULL) { writer.String("Quotas"); Quotas->writeJSON(writer); }
+    writer.EndObject();
+}
+
+bool GetTitleMultiplayerServersQuotasResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Quotas_member = obj.FindMember("Quotas");
+    if (Quotas_member != obj.MemberEnd() && !Quotas_member->value.IsNull()) Quotas = new TitleMultiplayerServersQuotas(Quotas_member->value);
 
     return true;
 }
@@ -2791,55 +2709,6 @@ bool ListContainerImageTagsResponse::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = Tags_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Tags.push_back(memberList[i].GetString());
-        }
-    }
-
-    return true;
-}
-
-ListMatchmakingQueuesRequest::~ListMatchmakingQueuesRequest()
-{
-
-}
-
-void ListMatchmakingQueuesRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.EndObject();
-}
-
-bool ListMatchmakingQueuesRequest::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
-ListMatchmakingQueuesResult::~ListMatchmakingQueuesResult()
-{
-
-}
-
-void ListMatchmakingQueuesResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (!MatchMakingQueues.empty()) {
-        writer.String("MatchMakingQueues");
-        writer.StartArray();
-        for (std::list<MatchmakingQueueConfig>::iterator iter = MatchMakingQueues.begin(); iter != MatchMakingQueues.end(); iter++) {
-            iter->writeJSON(writer);
-        }
-        writer.EndArray();
-    }
-    writer.EndObject();
-}
-
-bool ListMatchmakingQueuesResult::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator MatchMakingQueues_member = obj.FindMember("MatchMakingQueues");
-    if (MatchMakingQueues_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = MatchMakingQueues_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            MatchMakingQueues.push_back(MatchmakingQueueConfig(memberList[i]));
         }
     }
 
@@ -3188,43 +3057,6 @@ bool ListVirtualMachineSummariesResponse::readFromValue(const rapidjson::Value& 
     return true;
 }
 
-RemoveMatchmakingQueueRequest::~RemoveMatchmakingQueueRequest()
-{
-
-}
-
-void RemoveMatchmakingQueueRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (QueueName.length() > 0) { writer.String("QueueName"); writer.String(QueueName.c_str()); }
-    writer.EndObject();
-}
-
-bool RemoveMatchmakingQueueRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
-    if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
-
-    return true;
-}
-
-RemoveMatchmakingQueueResult::~RemoveMatchmakingQueueResult()
-{
-
-}
-
-void RemoveMatchmakingQueueResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.EndObject();
-}
-
-bool RemoveMatchmakingQueueResult::readFromValue(const rapidjson::Value& obj)
-{
-
-    return true;
-}
-
 RequestMultiplayerServerRequest::~RequestMultiplayerServerRequest()
 {
 
@@ -3389,44 +3221,6 @@ bool RolloverContainerRegistryCredentialsResponse::readFromValue(const rapidjson
     if (Password_member != obj.MemberEnd() && !Password_member->value.IsNull()) Password = Password_member->value.GetString();
     const Value::ConstMemberIterator Username_member = obj.FindMember("Username");
     if (Username_member != obj.MemberEnd() && !Username_member->value.IsNull()) Username = Username_member->value.GetString();
-
-    return true;
-}
-
-SetMatchmakingQueueRequest::~SetMatchmakingQueueRequest()
-{
-    if (MatchmakingQueue != NULL) delete MatchmakingQueue;
-
-}
-
-void SetMatchmakingQueueRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (MatchmakingQueue != NULL) { writer.String("MatchmakingQueue"); MatchmakingQueue->writeJSON(writer); }
-    writer.EndObject();
-}
-
-bool SetMatchmakingQueueRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator MatchmakingQueue_member = obj.FindMember("MatchmakingQueue");
-    if (MatchmakingQueue_member != obj.MemberEnd() && !MatchmakingQueue_member->value.IsNull()) MatchmakingQueue = new MatchmakingQueueConfig(MatchmakingQueue_member->value);
-
-    return true;
-}
-
-SetMatchmakingQueueResult::~SetMatchmakingQueueResult()
-{
-
-}
-
-void SetMatchmakingQueueResult::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.EndObject();
-}
-
-bool SetMatchmakingQueueResult::readFromValue(const rapidjson::Value& obj)
-{
 
     return true;
 }
