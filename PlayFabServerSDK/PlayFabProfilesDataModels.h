@@ -259,6 +259,7 @@ namespace PlayFab
 
         struct EntityProfileBody : public PlayFabBaseModel
         {
+            std::string AvatarUrl;
             time_t Created;
             std::string DisplayName;
             EntityKey* Entity;
@@ -273,6 +274,7 @@ namespace PlayFab
 
             EntityProfileBody() :
                 PlayFabBaseModel(),
+                AvatarUrl(),
                 Created(0),
                 DisplayName(),
                 Entity(NULL),
@@ -288,6 +290,7 @@ namespace PlayFab
 
             EntityProfileBody(const EntityProfileBody& src) :
                 PlayFabBaseModel(),
+                AvatarUrl(src.AvatarUrl),
                 Created(src.Created),
                 DisplayName(src.DisplayName),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),

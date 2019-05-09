@@ -744,52 +744,6 @@ void PlayFabMultiplayerAPI::OnGetMatchResult(int httpStatus, HttpRequest* reques
     delete request;
 }
 
-void PlayFabMultiplayerAPI::GetMatchmakingQueue(
-    GetMatchmakingQueueRequest& request,
-    ProcessApiCallback<GetMatchmakingQueueResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-)
-{
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Match/GetMatchmakingQueue"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetMatchmakingQueueResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetMatchmakingQueueResult, userData);
-}
-
-void PlayFabMultiplayerAPI::OnGetMatchmakingQueueResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    GetMatchmakingQueueResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<GetMatchmakingQueueResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
 void PlayFabMultiplayerAPI::GetMatchmakingTicket(
     GetMatchmakingTicketRequest& request,
     ProcessApiCallback<GetMatchmakingTicketResult> callback,
@@ -1006,6 +960,51 @@ void PlayFabMultiplayerAPI::OnGetTitleEnabledForMultiplayerServersStatusResult(i
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<GetTitleEnabledForMultiplayerServersStatusResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabMultiplayerAPI::GetTitleMultiplayerServersQuotas(
+    ProcessApiCallback<GetTitleMultiplayerServersQuotasResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/MultiplayerServer/GetTitleMultiplayerServersQuotas"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<GetTitleMultiplayerServersQuotasResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody("{}");
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetTitleMultiplayerServersQuotasResult, userData);
+}
+
+void PlayFabMultiplayerAPI::OnGetTitleMultiplayerServersQuotasResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    GetTitleMultiplayerServersQuotasResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<GetTitleMultiplayerServersQuotasResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
@@ -1341,51 +1340,6 @@ void PlayFabMultiplayerAPI::OnListContainerImageTagsResult(int httpStatus, HttpR
     delete request;
 }
 
-void PlayFabMultiplayerAPI::ListMatchmakingQueues(
-    ProcessApiCallback<ListMatchmakingQueuesResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-)
-{
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Match/ListMatchmakingQueues"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ListMatchmakingQueuesResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody("{}");
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnListMatchmakingQueuesResult, userData);
-}
-
-void PlayFabMultiplayerAPI::OnListMatchmakingQueuesResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    ListMatchmakingQueuesResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<ListMatchmakingQueuesResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
 void PlayFabMultiplayerAPI::ListMatchmakingTicketsForPlayer(
     ListMatchmakingTicketsForPlayerRequest& request,
     ProcessApiCallback<ListMatchmakingTicketsForPlayerResult> callback,
@@ -1568,52 +1522,6 @@ void PlayFabMultiplayerAPI::OnListVirtualMachineSummariesResult(int httpStatus, 
     delete request;
 }
 
-void PlayFabMultiplayerAPI::RemoveMatchmakingQueue(
-    RemoveMatchmakingQueueRequest& request,
-    ProcessApiCallback<RemoveMatchmakingQueueResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-)
-{
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Match/RemoveMatchmakingQueue"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<RemoveMatchmakingQueueResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRemoveMatchmakingQueueResult, userData);
-}
-
-void PlayFabMultiplayerAPI::OnRemoveMatchmakingQueueResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    RemoveMatchmakingQueueResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<RemoveMatchmakingQueueResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
 void PlayFabMultiplayerAPI::RequestMultiplayerServer(
     RequestMultiplayerServerRequest& request,
     ProcessApiCallback<RequestMultiplayerServerResponse> callback,
@@ -1692,52 +1600,6 @@ void PlayFabMultiplayerAPI::OnRolloverContainerRegistryCredentialsResult(int htt
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<RolloverContainerRegistryCredentialsResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
-void PlayFabMultiplayerAPI::SetMatchmakingQueue(
-    SetMatchmakingQueueRequest& request,
-    ProcessApiCallback<SetMatchmakingQueueResult> callback,
-    ErrorCallback errorCallback,
-    void* userData
-)
-{
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Match/SetMatchmakingQueue"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<SetMatchmakingQueueResult>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnSetMatchmakingQueueResult, userData);
-}
-
-void PlayFabMultiplayerAPI::OnSetMatchmakingQueueResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    SetMatchmakingQueueResult outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<SetMatchmakingQueueResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else
