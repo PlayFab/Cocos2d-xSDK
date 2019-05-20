@@ -5566,7 +5566,8 @@ namespace PlayFab
         enum ScheduledTaskType
         {
             ScheduledTaskTypeCloudScript,
-            ScheduledTaskTypeActionsOnPlayerSegment
+            ScheduledTaskTypeActionsOnPlayerSegment,
+            ScheduledTaskTypeCloudScriptAzureFunctions
         };
 
         void writeScheduledTaskTypeEnumJSON(ScheduledTaskType enumVal, PFStringJsonWriter& writer);
