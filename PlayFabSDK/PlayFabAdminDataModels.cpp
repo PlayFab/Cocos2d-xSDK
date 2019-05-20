@@ -6874,6 +6874,7 @@ void PlayFab::AdminModels::writeScheduledTaskTypeEnumJSON(ScheduledTaskType enum
     {
     case ScheduledTaskTypeCloudScript: writer.String("CloudScript"); break;
     case ScheduledTaskTypeActionsOnPlayerSegment: writer.String("ActionsOnPlayerSegment"); break;
+    case ScheduledTaskTypeCloudScriptAzureFunctions: writer.String("CloudScriptAzureFunctions"); break;
 
     }
 }
@@ -6886,6 +6887,7 @@ ScheduledTaskType PlayFab::AdminModels::readScheduledTaskTypeFromValue(const rap
         // Auto-generate the map on the first use
         _ScheduledTaskTypeMap["CloudScript"] = ScheduledTaskTypeCloudScript;
         _ScheduledTaskTypeMap["ActionsOnPlayerSegment"] = ScheduledTaskTypeActionsOnPlayerSegment;
+        _ScheduledTaskTypeMap["CloudScriptAzureFunctions"] = ScheduledTaskTypeCloudScriptAzureFunctions;
 
     }
 
