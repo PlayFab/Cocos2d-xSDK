@@ -35,6 +35,46 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct EntityLineage : public PlayFabBaseModel
+        {
+            std::string CharacterId;
+            std::string GroupId;
+            std::string MasterPlayerAccountId;
+            std::string NamespaceId;
+            std::string TitleId;
+            std::string TitlePlayerAccountId;
+
+            EntityLineage() :
+                PlayFabBaseModel(),
+                CharacterId(),
+                GroupId(),
+                MasterPlayerAccountId(),
+                NamespaceId(),
+                TitleId(),
+                TitlePlayerAccountId()
+            {}
+
+            EntityLineage(const EntityLineage& src) :
+                PlayFabBaseModel(),
+                CharacterId(src.CharacterId),
+                GroupId(src.GroupId),
+                MasterPlayerAccountId(src.MasterPlayerAccountId),
+                NamespaceId(src.NamespaceId),
+                TitleId(src.TitleId),
+                TitlePlayerAccountId(src.TitlePlayerAccountId)
+            {}
+
+            EntityLineage(const rapidjson::Value& obj) : EntityLineage()
+            {
+                readFromValue(obj);
+            }
+
+            ~EntityLineage();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetEntityTokenRequest : public PlayFabBaseModel
         {
             EntityKey* Entity;
@@ -86,6 +126,59 @@ namespace PlayFab
             }
 
             ~GetEntityTokenResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ValidateEntityTokenRequest : public PlayFabBaseModel
+        {
+            std::string EntityToken;
+
+            ValidateEntityTokenRequest() :
+                PlayFabBaseModel(),
+                EntityToken()
+            {}
+
+            ValidateEntityTokenRequest(const ValidateEntityTokenRequest& src) :
+                PlayFabBaseModel(),
+                EntityToken(src.EntityToken)
+            {}
+
+            ValidateEntityTokenRequest(const rapidjson::Value& obj) : ValidateEntityTokenRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ValidateEntityTokenRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ValidateEntityTokenResponse : public PlayFabBaseModel
+        {
+            EntityKey* Entity;
+            EntityLineage* Lineage;
+
+            ValidateEntityTokenResponse() :
+                PlayFabBaseModel(),
+                Entity(NULL),
+                Lineage(NULL)
+            {}
+
+            ValidateEntityTokenResponse(const ValidateEntityTokenResponse& src) :
+                PlayFabBaseModel(),
+                Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
+                Lineage(src.Lineage ? new EntityLineage(*src.Lineage) : NULL)
+            {}
+
+            ValidateEntityTokenResponse(const rapidjson::Value& obj) : ValidateEntityTokenResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~ValidateEntityTokenResponse();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

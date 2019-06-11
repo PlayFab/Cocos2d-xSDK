@@ -109,7 +109,8 @@ namespace PlayFab
             AzureRegionWestEurope,
             AzureRegionWestUs,
             AzureRegionChinaEast2,
-            AzureRegionChinaNorth2
+            AzureRegionChinaNorth2,
+            AzureRegionSouthAfricaNorth
         };
 
         void writeAzureRegionEnumJSON(AzureRegion enumVal, PFStringJsonWriter& writer);
@@ -377,7 +378,8 @@ namespace PlayFab
         {
             CancellationReasonRequested,
             CancellationReasonInternal,
-            CancellationReasonTimeout
+            CancellationReasonTimeout,
+            CancellationReasonServerAllocationFailed
         };
 
         void writeCancellationReasonEnumJSON(CancellationReason enumVal, PFStringJsonWriter& writer);
