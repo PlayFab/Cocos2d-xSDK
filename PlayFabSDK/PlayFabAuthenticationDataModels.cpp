@@ -28,6 +28,41 @@ bool EntityKey::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+EntityLineage::~EntityLineage()
+{
+
+}
+
+void EntityLineage::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (CharacterId.length() > 0) { writer.String("CharacterId"); writer.String(CharacterId.c_str()); }
+    if (GroupId.length() > 0) { writer.String("GroupId"); writer.String(GroupId.c_str()); }
+    if (MasterPlayerAccountId.length() > 0) { writer.String("MasterPlayerAccountId"); writer.String(MasterPlayerAccountId.c_str()); }
+    if (NamespaceId.length() > 0) { writer.String("NamespaceId"); writer.String(NamespaceId.c_str()); }
+    if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
+    if (TitlePlayerAccountId.length() > 0) { writer.String("TitlePlayerAccountId"); writer.String(TitlePlayerAccountId.c_str()); }
+    writer.EndObject();
+}
+
+bool EntityLineage::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
+    if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator GroupId_member = obj.FindMember("GroupId");
+    if (GroupId_member != obj.MemberEnd() && !GroupId_member->value.IsNull()) GroupId = GroupId_member->value.GetString();
+    const Value::ConstMemberIterator MasterPlayerAccountId_member = obj.FindMember("MasterPlayerAccountId");
+    if (MasterPlayerAccountId_member != obj.MemberEnd() && !MasterPlayerAccountId_member->value.IsNull()) MasterPlayerAccountId = MasterPlayerAccountId_member->value.GetString();
+    const Value::ConstMemberIterator NamespaceId_member = obj.FindMember("NamespaceId");
+    if (NamespaceId_member != obj.MemberEnd() && !NamespaceId_member->value.IsNull()) NamespaceId = NamespaceId_member->value.GetString();
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+    const Value::ConstMemberIterator TitlePlayerAccountId_member = obj.FindMember("TitlePlayerAccountId");
+    if (TitlePlayerAccountId_member != obj.MemberEnd() && !TitlePlayerAccountId_member->value.IsNull()) TitlePlayerAccountId = TitlePlayerAccountId_member->value.GetString();
+
+    return true;
+}
+
 GetEntityTokenRequest::~GetEntityTokenRequest()
 {
     if (Entity != NULL) delete Entity;
@@ -72,6 +107,51 @@ bool GetEntityTokenResponse::readFromValue(const rapidjson::Value& obj)
     if (EntityToken_member != obj.MemberEnd() && !EntityToken_member->value.IsNull()) EntityToken = EntityToken_member->value.GetString();
     const Value::ConstMemberIterator TokenExpiration_member = obj.FindMember("TokenExpiration");
     if (TokenExpiration_member != obj.MemberEnd() && !TokenExpiration_member->value.IsNull()) TokenExpiration = readDatetime(TokenExpiration_member->value);
+
+    return true;
+}
+
+ValidateEntityTokenRequest::~ValidateEntityTokenRequest()
+{
+
+}
+
+void ValidateEntityTokenRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("EntityToken"); writer.String(EntityToken.c_str());
+    writer.EndObject();
+}
+
+bool ValidateEntityTokenRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator EntityToken_member = obj.FindMember("EntityToken");
+    if (EntityToken_member != obj.MemberEnd() && !EntityToken_member->value.IsNull()) EntityToken = EntityToken_member->value.GetString();
+
+    return true;
+}
+
+ValidateEntityTokenResponse::~ValidateEntityTokenResponse()
+{
+    if (Entity != NULL) delete Entity;
+    if (Lineage != NULL) delete Lineage;
+
+}
+
+void ValidateEntityTokenResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
+    if (Lineage != NULL) { writer.String("Lineage"); Lineage->writeJSON(writer); }
+    writer.EndObject();
+}
+
+bool ValidateEntityTokenResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
+    if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
+    const Value::ConstMemberIterator Lineage_member = obj.FindMember("Lineage");
+    if (Lineage_member != obj.MemberEnd() && !Lineage_member->value.IsNull()) Lineage = new EntityLineage(Lineage_member->value);
 
     return true;
 }

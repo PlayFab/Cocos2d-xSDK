@@ -105,6 +105,7 @@ void PlayFab::MultiplayerModels::writeAzureRegionEnumJSON(AzureRegion enumVal, P
     case AzureRegionWestUs: writer.String("WestUs"); break;
     case AzureRegionChinaEast2: writer.String("ChinaEast2"); break;
     case AzureRegionChinaNorth2: writer.String("ChinaNorth2"); break;
+    case AzureRegionSouthAfricaNorth: writer.String("SouthAfricaNorth"); break;
 
     }
 }
@@ -132,6 +133,7 @@ AzureRegion PlayFab::MultiplayerModels::readAzureRegionFromValue(const rapidjson
         _AzureRegionMap["WestUs"] = AzureRegionWestUs;
         _AzureRegionMap["ChinaEast2"] = AzureRegionChinaEast2;
         _AzureRegionMap["ChinaNorth2"] = AzureRegionChinaNorth2;
+        _AzureRegionMap["SouthAfricaNorth"] = AzureRegionSouthAfricaNorth;
 
     }
 
@@ -455,6 +457,7 @@ void PlayFab::MultiplayerModels::writeCancellationReasonEnumJSON(CancellationRea
     case CancellationReasonRequested: writer.String("Requested"); break;
     case CancellationReasonInternal: writer.String("Internal"); break;
     case CancellationReasonTimeout: writer.String("Timeout"); break;
+    case CancellationReasonServerAllocationFailed: writer.String("ServerAllocationFailed"); break;
 
     }
 }
@@ -468,6 +471,7 @@ CancellationReason PlayFab::MultiplayerModels::readCancellationReasonFromValue(c
         _CancellationReasonMap["Requested"] = CancellationReasonRequested;
         _CancellationReasonMap["Internal"] = CancellationReasonInternal;
         _CancellationReasonMap["Timeout"] = CancellationReasonTimeout;
+        _CancellationReasonMap["ServerAllocationFailed"] = CancellationReasonServerAllocationFailed;
 
     }
 
