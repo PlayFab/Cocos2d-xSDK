@@ -3128,7 +3128,9 @@ namespace PlayFab
             GenericErrorCodesExportUnknownError,
             GenericErrorCodesExportCantEditPendingExport,
             GenericErrorCodesExportLimitExports,
-            GenericErrorCodesExportLimitEvents
+            GenericErrorCodesExportLimitEvents,
+            GenericErrorCodesTitleNotEnabledForParty,
+            GenericErrorCodesPartyVersionNotFound
         };
 
         void writeGenericErrorCodesEnumJSON(GenericErrorCodes enumVal, PFStringJsonWriter& writer);
