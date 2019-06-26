@@ -3633,6 +3633,8 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExportCantEditPendingExport: writer.String("ExportCantEditPendingExport"); break;
     case GenericErrorCodesExportLimitExports: writer.String("ExportLimitExports"); break;
     case GenericErrorCodesExportLimitEvents: writer.String("ExportLimitEvents"); break;
+    case GenericErrorCodesTitleNotEnabledForParty: writer.String("TitleNotEnabledForParty"); break;
+    case GenericErrorCodesPartyVersionNotFound: writer.String("PartyVersionNotFound"); break;
 
     }
 }
@@ -4157,6 +4159,8 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExportCantEditPendingExport"] = GenericErrorCodesExportCantEditPendingExport;
         _GenericErrorCodesMap["ExportLimitExports"] = GenericErrorCodesExportLimitExports;
         _GenericErrorCodesMap["ExportLimitEvents"] = GenericErrorCodesExportLimitEvents;
+        _GenericErrorCodesMap["TitleNotEnabledForParty"] = GenericErrorCodesTitleNotEnabledForParty;
+        _GenericErrorCodesMap["PartyVersionNotFound"] = GenericErrorCodesPartyVersionNotFound;
 
     }
 
