@@ -266,6 +266,7 @@ namespace PlayFab
             std::string EntityChain;
             std::map<std::string, EntityProfileFileMetadata> Files;
             std::string Language;
+            std::string LeaderboardMetadata;
             EntityLineage* Lineage;
             std::map<std::string, EntityDataObject> Objects;
             std::list<EntityPermissionStatement> Permissions;
@@ -281,6 +282,7 @@ namespace PlayFab
                 EntityChain(),
                 Files(),
                 Language(),
+                LeaderboardMetadata(),
                 Lineage(NULL),
                 Objects(),
                 Permissions(),
@@ -297,6 +299,7 @@ namespace PlayFab
                 EntityChain(src.EntityChain),
                 Files(src.Files),
                 Language(src.Language),
+                LeaderboardMetadata(src.LeaderboardMetadata),
                 Lineage(src.Lineage ? new EntityLineage(*src.Lineage) : NULL),
                 Objects(src.Objects),
                 Permissions(src.Permissions),
@@ -468,6 +471,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetTitlePlayersFromMasterPlayerAccountIdsRequest : public PlayFabBaseModel
+        {
+            std::list<std::string> MasterPlayerAccountIds;
+            std::string TitleId;
+
+            GetTitlePlayersFromMasterPlayerAccountIdsRequest() :
+                PlayFabBaseModel(),
+                MasterPlayerAccountIds(),
+                TitleId()
+            {}
+
+            GetTitlePlayersFromMasterPlayerAccountIdsRequest(const GetTitlePlayersFromMasterPlayerAccountIdsRequest& src) :
+                PlayFabBaseModel(),
+                MasterPlayerAccountIds(src.MasterPlayerAccountIds),
+                TitleId(src.TitleId)
+            {}
+
+            GetTitlePlayersFromMasterPlayerAccountIdsRequest(const rapidjson::Value& obj) : GetTitlePlayersFromMasterPlayerAccountIdsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetTitlePlayersFromMasterPlayerAccountIdsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetTitlePlayersFromMasterPlayerAccountIdsResponse : public PlayFabBaseModel
+        {
+            std::map<std::string, EntityKey> TitlePlayerAccounts;
+
+            GetTitlePlayersFromMasterPlayerAccountIdsResponse() :
+                PlayFabBaseModel(),
+                TitlePlayerAccounts()
+            {}
+
+            GetTitlePlayersFromMasterPlayerAccountIdsResponse(const GetTitlePlayersFromMasterPlayerAccountIdsResponse& src) :
+                PlayFabBaseModel(),
+                TitlePlayerAccounts(src.TitlePlayerAccounts)
+            {}
+
+            GetTitlePlayersFromMasterPlayerAccountIdsResponse(const rapidjson::Value& obj) : GetTitlePlayersFromMasterPlayerAccountIdsResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetTitlePlayersFromMasterPlayerAccountIdsResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum OperationTypes
         {
             OperationTypesCreated,
@@ -582,13 +638,13 @@ namespace PlayFab
         struct SetProfileLanguageRequest : public PlayFabBaseModel
         {
             EntityKey* Entity;
-            Int32 ExpectedVersion;
+            OptionalInt32 ExpectedVersion;
             std::string Language;
 
             SetProfileLanguageRequest() :
                 PlayFabBaseModel(),
                 Entity(NULL),
-                ExpectedVersion(0),
+                ExpectedVersion(),
                 Language()
             {}
 
