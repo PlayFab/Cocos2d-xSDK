@@ -378,8 +378,7 @@ namespace PlayFab
         {
             CancellationReasonRequested,
             CancellationReasonInternal,
-            CancellationReasonTimeout,
-            CancellationReasonServerAllocationFailed
+            CancellationReasonTimeout
         };
 
         void writeCancellationReasonEnumJSON(CancellationReason enumVal, PFStringJsonWriter& writer);
@@ -664,11 +663,7 @@ namespace PlayFab
             std::string BuildName;
             Boxed<ContainerFlavor> pfContainerFlavor;
             ContainerImageReference* pfContainerImageReference;
-            // Deprecated - Use 'ContainerImageReference' instead
-            std::string ContainerRepositoryName;
             std::string ContainerRunCommand;
-            // Deprecated - Use 'ContainerImageReference' instead
-            std::string ContainerTag;
             std::list<AssetReferenceParams> GameAssetReferences;
             std::list<GameCertificateReferenceParams> GameCertificateReferences;
             std::map<std::string, std::string> Metadata;
@@ -682,9 +677,7 @@ namespace PlayFab
                 BuildName(),
                 pfContainerFlavor(),
                 pfContainerImageReference(NULL),
-                ContainerRepositoryName(),
                 ContainerRunCommand(),
-                ContainerTag(),
                 GameAssetReferences(),
                 GameCertificateReferences(),
                 Metadata(),
@@ -699,9 +692,7 @@ namespace PlayFab
                 BuildName(src.BuildName),
                 pfContainerFlavor(src.pfContainerFlavor),
                 pfContainerImageReference(src.pfContainerImageReference ? new ContainerImageReference(*src.pfContainerImageReference) : NULL),
-                ContainerRepositoryName(src.ContainerRepositoryName),
                 ContainerRunCommand(src.ContainerRunCommand),
-                ContainerTag(src.ContainerTag),
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
                 Metadata(src.Metadata),
@@ -1554,7 +1545,9 @@ namespace PlayFab
 
         struct GetMatchmakingTicketResult : public PlayFabBaseModel
         {
+            // Deprecated - Use 'CancellationReasonString' instead
             Boxed<CancellationReason> pfCancellationReason;
+            std::string CancellationReasonString;
             time_t Created;
             EntityKey Creator;
             Int32 GiveUpAfterSeconds;
@@ -1568,6 +1561,7 @@ namespace PlayFab
             GetMatchmakingTicketResult() :
                 PlayFabBaseModel(),
                 pfCancellationReason(),
+                CancellationReasonString(),
                 Created(0),
                 Creator(),
                 GiveUpAfterSeconds(0),
@@ -1582,6 +1576,7 @@ namespace PlayFab
             GetMatchmakingTicketResult(const GetMatchmakingTicketResult& src) :
                 PlayFabBaseModel(),
                 pfCancellationReason(src.pfCancellationReason),
+                CancellationReasonString(src.CancellationReasonString),
                 Created(src.Created),
                 Creator(src.Creator),
                 GiveUpAfterSeconds(src.GiveUpAfterSeconds),

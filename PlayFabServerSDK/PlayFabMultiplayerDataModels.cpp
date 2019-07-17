@@ -457,7 +457,6 @@ void PlayFab::MultiplayerModels::writeCancellationReasonEnumJSON(CancellationRea
     case CancellationReasonRequested: writer.String("Requested"); break;
     case CancellationReasonInternal: writer.String("Internal"); break;
     case CancellationReasonTimeout: writer.String("Timeout"); break;
-    case CancellationReasonServerAllocationFailed: writer.String("ServerAllocationFailed"); break;
 
     }
 }
@@ -471,7 +470,6 @@ CancellationReason PlayFab::MultiplayerModels::readCancellationReasonFromValue(c
         _CancellationReasonMap["Requested"] = CancellationReasonRequested;
         _CancellationReasonMap["Internal"] = CancellationReasonInternal;
         _CancellationReasonMap["Timeout"] = CancellationReasonTimeout;
-        _CancellationReasonMap["ServerAllocationFailed"] = CancellationReasonServerAllocationFailed;
 
     }
 
@@ -760,9 +758,7 @@ void CreateBuildWithCustomContainerRequest::writeJSON(PFStringJsonWriter& writer
     writer.String("BuildName"); writer.String(BuildName.c_str());
     if (pfContainerFlavor.notNull()) { writer.String("ContainerFlavor"); writeContainerFlavorEnumJSON(pfContainerFlavor, writer); }
     if (pfContainerImageReference != NULL) { writer.String("ContainerImageReference"); pfContainerImageReference->writeJSON(writer); }
-    if (ContainerRepositoryName.length() > 0) { writer.String("ContainerRepositoryName"); writer.String(ContainerRepositoryName.c_str()); }
     if (ContainerRunCommand.length() > 0) { writer.String("ContainerRunCommand"); writer.String(ContainerRunCommand.c_str()); }
-    if (ContainerTag.length() > 0) { writer.String("ContainerTag"); writer.String(ContainerTag.c_str()); }
     if (!GameAssetReferences.empty()) {
         writer.String("GameAssetReferences");
         writer.StartArray();
@@ -812,12 +808,8 @@ bool CreateBuildWithCustomContainerRequest::readFromValue(const rapidjson::Value
     if (ContainerFlavor_member != obj.MemberEnd() && !ContainerFlavor_member->value.IsNull()) pfContainerFlavor = readContainerFlavorFromValue(ContainerFlavor_member->value);
     const Value::ConstMemberIterator ContainerImageReference_member = obj.FindMember("ContainerImageReference");
     if (ContainerImageReference_member != obj.MemberEnd() && !ContainerImageReference_member->value.IsNull()) pfContainerImageReference = new ContainerImageReference(ContainerImageReference_member->value);
-    const Value::ConstMemberIterator ContainerRepositoryName_member = obj.FindMember("ContainerRepositoryName");
-    if (ContainerRepositoryName_member != obj.MemberEnd() && !ContainerRepositoryName_member->value.IsNull()) ContainerRepositoryName = ContainerRepositoryName_member->value.GetString();
     const Value::ConstMemberIterator ContainerRunCommand_member = obj.FindMember("ContainerRunCommand");
     if (ContainerRunCommand_member != obj.MemberEnd() && !ContainerRunCommand_member->value.IsNull()) ContainerRunCommand = ContainerRunCommand_member->value.GetString();
-    const Value::ConstMemberIterator ContainerTag_member = obj.FindMember("ContainerTag");
-    if (ContainerTag_member != obj.MemberEnd() && !ContainerTag_member->value.IsNull()) ContainerTag = ContainerTag_member->value.GetString();
     const Value::ConstMemberIterator GameAssetReferences_member = obj.FindMember("GameAssetReferences");
     if (GameAssetReferences_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = GameAssetReferences_member->value;
@@ -1848,6 +1840,7 @@ void GetMatchmakingTicketResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (pfCancellationReason.notNull()) { writer.String("CancellationReason"); writeCancellationReasonEnumJSON(pfCancellationReason, writer); }
+    if (CancellationReasonString.length() > 0) { writer.String("CancellationReasonString"); writer.String(CancellationReasonString.c_str()); }
     writer.String("Created"); writeDatetime(Created, writer);
     writer.String("Creator"); Creator.writeJSON(writer);
     writer.String("GiveUpAfterSeconds"); writer.Int(GiveUpAfterSeconds);
@@ -1876,6 +1869,8 @@ bool GetMatchmakingTicketResult::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator CancellationReason_member = obj.FindMember("CancellationReason");
     if (CancellationReason_member != obj.MemberEnd() && !CancellationReason_member->value.IsNull()) pfCancellationReason = readCancellationReasonFromValue(CancellationReason_member->value);
+    const Value::ConstMemberIterator CancellationReasonString_member = obj.FindMember("CancellationReasonString");
+    if (CancellationReasonString_member != obj.MemberEnd() && !CancellationReasonString_member->value.IsNull()) CancellationReasonString = CancellationReasonString_member->value.GetString();
     const Value::ConstMemberIterator Created_member = obj.FindMember("Created");
     if (Created_member != obj.MemberEnd() && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
     const Value::ConstMemberIterator Creator_member = obj.FindMember("Creator");

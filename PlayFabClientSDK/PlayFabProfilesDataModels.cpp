@@ -273,6 +273,7 @@ void EntityProfileBody::writeJSON(PFStringJsonWriter& writer)
         writer.EndObject();
     }
     if (Language.length() > 0) { writer.String("Language"); writer.String(Language.c_str()); }
+    if (LeaderboardMetadata.length() > 0) { writer.String("LeaderboardMetadata"); writer.String(LeaderboardMetadata.c_str()); }
     if (Lineage != NULL) { writer.String("Lineage"); Lineage->writeJSON(writer); }
     if (!Objects.empty()) {
         writer.String("Objects");
@@ -322,6 +323,8 @@ bool EntityProfileBody::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator Language_member = obj.FindMember("Language");
     if (Language_member != obj.MemberEnd() && !Language_member->value.IsNull()) Language = Language_member->value.GetString();
+    const Value::ConstMemberIterator LeaderboardMetadata_member = obj.FindMember("LeaderboardMetadata");
+    if (LeaderboardMetadata_member != obj.MemberEnd() && !LeaderboardMetadata_member->value.IsNull()) LeaderboardMetadata = LeaderboardMetadata_member->value.GetString();
     const Value::ConstMemberIterator Lineage_member = obj.FindMember("Lineage");
     if (Lineage_member != obj.MemberEnd() && !Lineage_member->value.IsNull()) Lineage = new EntityLineage(Lineage_member->value);
     const Value::ConstMemberIterator Objects_member = obj.FindMember("Objects");
@@ -507,6 +510,70 @@ bool GetGlobalPolicyResponse::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+
+GetTitlePlayersFromMasterPlayerAccountIdsRequest::~GetTitlePlayersFromMasterPlayerAccountIdsRequest()
+{
+
+}
+
+void GetTitlePlayersFromMasterPlayerAccountIdsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("MasterPlayerAccountIds");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = MasterPlayerAccountIds.begin(); iter != MasterPlayerAccountIds.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
+    writer.EndObject();
+}
+
+bool GetTitlePlayersFromMasterPlayerAccountIdsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator MasterPlayerAccountIds_member = obj.FindMember("MasterPlayerAccountIds");
+    if (MasterPlayerAccountIds_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = MasterPlayerAccountIds_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            MasterPlayerAccountIds.push_back(memberList[i].GetString());
+        }
+    }
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+
+    return true;
+}
+
+GetTitlePlayersFromMasterPlayerAccountIdsResponse::~GetTitlePlayersFromMasterPlayerAccountIdsResponse()
+{
+
+}
+
+void GetTitlePlayersFromMasterPlayerAccountIdsResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!TitlePlayerAccounts.empty()) {
+        writer.String("TitlePlayerAccounts");
+        writer.StartObject();
+        for (std::map<std::string, EntityKey>::iterator iter = TitlePlayerAccounts.begin(); iter != TitlePlayerAccounts.end(); ++iter) {
+            writer.String(iter->first.c_str()); iter->second.writeJSON(writer);
+        }
+        writer.EndObject();
+    }
+    writer.EndObject();
+}
+
+bool GetTitlePlayersFromMasterPlayerAccountIdsResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TitlePlayerAccounts_member = obj.FindMember("TitlePlayerAccounts");
+    if (TitlePlayerAccounts_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = TitlePlayerAccounts_member->value.MemberBegin(); iter != TitlePlayerAccounts_member->value.MemberEnd(); ++iter) {
+            TitlePlayerAccounts[iter->name.GetString()] = EntityKey(iter->value);
+        }
+    }
+
+    return true;
+}
 void PlayFab::ProfilesModels::writeOperationTypesEnumJSON(OperationTypes enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -665,7 +732,7 @@ void SetProfileLanguageRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
-    writer.String("ExpectedVersion"); writer.Int(ExpectedVersion);
+    if (ExpectedVersion.notNull()) { writer.String("ExpectedVersion"); writer.Int(ExpectedVersion); }
     if (Language.length() > 0) { writer.String("Language"); writer.String(Language.c_str()); }
     writer.EndObject();
 }

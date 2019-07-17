@@ -15,6 +15,7 @@ namespace PlayFab
 
         // ------------ Generated API calls
         static void WriteEvents(EventsModels::WriteEventsRequest& request, ProcessApiCallback<EventsModels::WriteEventsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void WriteTelemetryEvents(EventsModels::WriteEventsRequest& request, ProcessApiCallback<EventsModels::WriteEventsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class
@@ -22,6 +23,7 @@ namespace PlayFab
 
         // ------------ Generated result handlers
         static void OnWriteEventsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnWriteTelemetryEventsResult(int httpStatus, HttpRequest* request, void* userData);
     };
 };
 #endif

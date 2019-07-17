@@ -3562,6 +3562,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesEconomyServiceInternalError: writer.String("EconomyServiceInternalError"); break;
     case GenericErrorCodesQueryRateLimitExceeded: writer.String("QueryRateLimitExceeded"); break;
     case GenericErrorCodesEntityAPIKeyCreationDisabledForEntity: writer.String("EntityAPIKeyCreationDisabledForEntity"); break;
+    case GenericErrorCodesForbiddenByEntityPolicy: writer.String("ForbiddenByEntityPolicy"); break;
     case GenericErrorCodesStudioCreationRateLimited: writer.String("StudioCreationRateLimited"); break;
     case GenericErrorCodesStudioCreationInProgress: writer.String("StudioCreationInProgress"); break;
     case GenericErrorCodesDuplicateStudioName: writer.String("DuplicateStudioName"); break;
@@ -3580,6 +3581,14 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesCloudScriptAzureFunctionsArgumentSizeExceeded: writer.String("CloudScriptAzureFunctionsArgumentSizeExceeded"); break;
     case GenericErrorCodesCloudScriptAzureFunctionsReturnSizeExceeded: writer.String("CloudScriptAzureFunctionsReturnSizeExceeded"); break;
     case GenericErrorCodesCloudScriptAzureFunctionsHTTPRequestError: writer.String("CloudScriptAzureFunctionsHTTPRequestError"); break;
+    case GenericErrorCodesVirtualCurrencyBetaGetError: writer.String("VirtualCurrencyBetaGetError"); break;
+    case GenericErrorCodesVirtualCurrencyBetaCreateError: writer.String("VirtualCurrencyBetaCreateError"); break;
+    case GenericErrorCodesVirtualCurrencyBetaInitialDepositSaveError: writer.String("VirtualCurrencyBetaInitialDepositSaveError"); break;
+    case GenericErrorCodesVirtualCurrencyBetaSaveError: writer.String("VirtualCurrencyBetaSaveError"); break;
+    case GenericErrorCodesVirtualCurrencyBetaDeleteError: writer.String("VirtualCurrencyBetaDeleteError"); break;
+    case GenericErrorCodesVirtualCurrencyBetaRestoreError: writer.String("VirtualCurrencyBetaRestoreError"); break;
+    case GenericErrorCodesVirtualCurrencyBetaSaveConflict: writer.String("VirtualCurrencyBetaSaveConflict"); break;
+    case GenericErrorCodesVirtualCurrencyBetaUpdateError: writer.String("VirtualCurrencyBetaUpdateError"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -3619,15 +3628,12 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExportInvalidStatusUpdate: writer.String("ExportInvalidStatusUpdate"); break;
     case GenericErrorCodesExportInvalidPrefix: writer.String("ExportInvalidPrefix"); break;
     case GenericErrorCodesExportBlobContainerDoesNotExist: writer.String("ExportBlobContainerDoesNotExist"); break;
-    case GenericErrorCodesExportEventNameNotFound: writer.String("ExportEventNameNotFound"); break;
-    case GenericErrorCodesExportExportTitleIdNotFound: writer.String("ExportExportTitleIdNotFound"); break;
+    case GenericErrorCodesExportNotFound: writer.String("ExportNotFound"); break;
     case GenericErrorCodesExportCouldNotUpdate: writer.String("ExportCouldNotUpdate"); break;
     case GenericErrorCodesExportInvalidStorageType: writer.String("ExportInvalidStorageType"); break;
     case GenericErrorCodesExportAmazonBucketDoesNotExist: writer.String("ExportAmazonBucketDoesNotExist"); break;
     case GenericErrorCodesExportInvalidBlobStorage: writer.String("ExportInvalidBlobStorage"); break;
     case GenericErrorCodesExportKustoException: writer.String("ExportKustoException"); break;
-    case GenericErrorCodesExportKustoExceptionPartialErrorOnNewExport: writer.String("ExportKustoExceptionPartialErrorOnNewExport"); break;
-    case GenericErrorCodesExportKustoExceptionEdit: writer.String("ExportKustoExceptionEdit"); break;
     case GenericErrorCodesExportKustoConnectionFailed: writer.String("ExportKustoConnectionFailed"); break;
     case GenericErrorCodesExportUnknownError: writer.String("ExportUnknownError"); break;
     case GenericErrorCodesExportCantEditPendingExport: writer.String("ExportCantEditPendingExport"); break;
@@ -3635,6 +3641,17 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExportLimitEvents: writer.String("ExportLimitEvents"); break;
     case GenericErrorCodesTitleNotEnabledForParty: writer.String("TitleNotEnabledForParty"); break;
     case GenericErrorCodesPartyVersionNotFound: writer.String("PartyVersionNotFound"); break;
+    case GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue: writer.String("MultiplayerServerBuildReferencedByMatchmakingQueue"); break;
+    case GenericErrorCodesExperimentationExperimentStopped: writer.String("ExperimentationExperimentStopped"); break;
+    case GenericErrorCodesExperimentationExperimentRunning: writer.String("ExperimentationExperimentRunning"); break;
+    case GenericErrorCodesExperimentationExperimentNotFound: writer.String("ExperimentationExperimentNotFound"); break;
+    case GenericErrorCodesExperimentationExperimentNeverStarted: writer.String("ExperimentationExperimentNeverStarted"); break;
+    case GenericErrorCodesExperimentationExperimentDeleted: writer.String("ExperimentationExperimentDeleted"); break;
+    case GenericErrorCodesExperimentationClientTimeout: writer.String("ExperimentationClientTimeout"); break;
+    case GenericErrorCodesExperimentationExceededVariantNameLength: writer.String("ExperimentationExceededVariantNameLength"); break;
+    case GenericErrorCodesExperimentationExceededMaxVariantLength: writer.String("ExperimentationExceededMaxVariantLength"); break;
+    case GenericErrorCodesExperimentInvalidId: writer.String("ExperimentInvalidId"); break;
+    case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
     }
 }
@@ -4088,6 +4105,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["EconomyServiceInternalError"] = GenericErrorCodesEconomyServiceInternalError;
         _GenericErrorCodesMap["QueryRateLimitExceeded"] = GenericErrorCodesQueryRateLimitExceeded;
         _GenericErrorCodesMap["EntityAPIKeyCreationDisabledForEntity"] = GenericErrorCodesEntityAPIKeyCreationDisabledForEntity;
+        _GenericErrorCodesMap["ForbiddenByEntityPolicy"] = GenericErrorCodesForbiddenByEntityPolicy;
         _GenericErrorCodesMap["StudioCreationRateLimited"] = GenericErrorCodesStudioCreationRateLimited;
         _GenericErrorCodesMap["StudioCreationInProgress"] = GenericErrorCodesStudioCreationInProgress;
         _GenericErrorCodesMap["DuplicateStudioName"] = GenericErrorCodesDuplicateStudioName;
@@ -4106,6 +4124,14 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["CloudScriptAzureFunctionsArgumentSizeExceeded"] = GenericErrorCodesCloudScriptAzureFunctionsArgumentSizeExceeded;
         _GenericErrorCodesMap["CloudScriptAzureFunctionsReturnSizeExceeded"] = GenericErrorCodesCloudScriptAzureFunctionsReturnSizeExceeded;
         _GenericErrorCodesMap["CloudScriptAzureFunctionsHTTPRequestError"] = GenericErrorCodesCloudScriptAzureFunctionsHTTPRequestError;
+        _GenericErrorCodesMap["VirtualCurrencyBetaGetError"] = GenericErrorCodesVirtualCurrencyBetaGetError;
+        _GenericErrorCodesMap["VirtualCurrencyBetaCreateError"] = GenericErrorCodesVirtualCurrencyBetaCreateError;
+        _GenericErrorCodesMap["VirtualCurrencyBetaInitialDepositSaveError"] = GenericErrorCodesVirtualCurrencyBetaInitialDepositSaveError;
+        _GenericErrorCodesMap["VirtualCurrencyBetaSaveError"] = GenericErrorCodesVirtualCurrencyBetaSaveError;
+        _GenericErrorCodesMap["VirtualCurrencyBetaDeleteError"] = GenericErrorCodesVirtualCurrencyBetaDeleteError;
+        _GenericErrorCodesMap["VirtualCurrencyBetaRestoreError"] = GenericErrorCodesVirtualCurrencyBetaRestoreError;
+        _GenericErrorCodesMap["VirtualCurrencyBetaSaveConflict"] = GenericErrorCodesVirtualCurrencyBetaSaveConflict;
+        _GenericErrorCodesMap["VirtualCurrencyBetaUpdateError"] = GenericErrorCodesVirtualCurrencyBetaUpdateError;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -4145,15 +4171,12 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExportInvalidStatusUpdate"] = GenericErrorCodesExportInvalidStatusUpdate;
         _GenericErrorCodesMap["ExportInvalidPrefix"] = GenericErrorCodesExportInvalidPrefix;
         _GenericErrorCodesMap["ExportBlobContainerDoesNotExist"] = GenericErrorCodesExportBlobContainerDoesNotExist;
-        _GenericErrorCodesMap["ExportEventNameNotFound"] = GenericErrorCodesExportEventNameNotFound;
-        _GenericErrorCodesMap["ExportExportTitleIdNotFound"] = GenericErrorCodesExportExportTitleIdNotFound;
+        _GenericErrorCodesMap["ExportNotFound"] = GenericErrorCodesExportNotFound;
         _GenericErrorCodesMap["ExportCouldNotUpdate"] = GenericErrorCodesExportCouldNotUpdate;
         _GenericErrorCodesMap["ExportInvalidStorageType"] = GenericErrorCodesExportInvalidStorageType;
         _GenericErrorCodesMap["ExportAmazonBucketDoesNotExist"] = GenericErrorCodesExportAmazonBucketDoesNotExist;
         _GenericErrorCodesMap["ExportInvalidBlobStorage"] = GenericErrorCodesExportInvalidBlobStorage;
         _GenericErrorCodesMap["ExportKustoException"] = GenericErrorCodesExportKustoException;
-        _GenericErrorCodesMap["ExportKustoExceptionPartialErrorOnNewExport"] = GenericErrorCodesExportKustoExceptionPartialErrorOnNewExport;
-        _GenericErrorCodesMap["ExportKustoExceptionEdit"] = GenericErrorCodesExportKustoExceptionEdit;
         _GenericErrorCodesMap["ExportKustoConnectionFailed"] = GenericErrorCodesExportKustoConnectionFailed;
         _GenericErrorCodesMap["ExportUnknownError"] = GenericErrorCodesExportUnknownError;
         _GenericErrorCodesMap["ExportCantEditPendingExport"] = GenericErrorCodesExportCantEditPendingExport;
@@ -4161,6 +4184,17 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExportLimitEvents"] = GenericErrorCodesExportLimitEvents;
         _GenericErrorCodesMap["TitleNotEnabledForParty"] = GenericErrorCodesTitleNotEnabledForParty;
         _GenericErrorCodesMap["PartyVersionNotFound"] = GenericErrorCodesPartyVersionNotFound;
+        _GenericErrorCodesMap["MultiplayerServerBuildReferencedByMatchmakingQueue"] = GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue;
+        _GenericErrorCodesMap["ExperimentationExperimentStopped"] = GenericErrorCodesExperimentationExperimentStopped;
+        _GenericErrorCodesMap["ExperimentationExperimentRunning"] = GenericErrorCodesExperimentationExperimentRunning;
+        _GenericErrorCodesMap["ExperimentationExperimentNotFound"] = GenericErrorCodesExperimentationExperimentNotFound;
+        _GenericErrorCodesMap["ExperimentationExperimentNeverStarted"] = GenericErrorCodesExperimentationExperimentNeverStarted;
+        _GenericErrorCodesMap["ExperimentationExperimentDeleted"] = GenericErrorCodesExperimentationExperimentDeleted;
+        _GenericErrorCodesMap["ExperimentationClientTimeout"] = GenericErrorCodesExperimentationClientTimeout;
+        _GenericErrorCodesMap["ExperimentationExceededVariantNameLength"] = GenericErrorCodesExperimentationExceededVariantNameLength;
+        _GenericErrorCodesMap["ExperimentationExceededMaxVariantLength"] = GenericErrorCodesExperimentationExceededMaxVariantLength;
+        _GenericErrorCodesMap["ExperimentInvalidId"] = GenericErrorCodesExperimentInvalidId;
+        _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 
     }
 
@@ -9619,7 +9653,7 @@ SetPlayerSecretRequest::~SetPlayerSecretRequest()
 void SetPlayerSecretRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str());
+    if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     writer.EndObject();
 }
