@@ -131,6 +131,32 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum LoginIdentityProvider
+        {
+            LoginIdentityProviderUnknown,
+            LoginIdentityProviderPlayFab,
+            LoginIdentityProviderCustom,
+            LoginIdentityProviderGameCenter,
+            LoginIdentityProviderGooglePlay,
+            LoginIdentityProviderSteam,
+            LoginIdentityProviderXBoxLive,
+            LoginIdentityProviderPSN,
+            LoginIdentityProviderKongregate,
+            LoginIdentityProviderFacebook,
+            LoginIdentityProviderIOSDevice,
+            LoginIdentityProviderAndroidDevice,
+            LoginIdentityProviderTwitch,
+            LoginIdentityProviderWindowsHello,
+            LoginIdentityProviderGameServer,
+            LoginIdentityProviderCustomServer,
+            LoginIdentityProviderNintendoSwitch,
+            LoginIdentityProviderFacebookInstantGames,
+            LoginIdentityProviderOpenIdConnect
+        };
+
+        void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);
+        LoginIdentityProvider readLoginIdentityProviderFromValue(const rapidjson::Value& obj);
+
         struct ValidateEntityTokenRequest : public PlayFabBaseModel
         {
             std::string EntityToken;
@@ -159,17 +185,20 @@ namespace PlayFab
         struct ValidateEntityTokenResponse : public PlayFabBaseModel
         {
             EntityKey* Entity;
+            Boxed<LoginIdentityProvider> IdentityProvider;
             EntityLineage* Lineage;
 
             ValidateEntityTokenResponse() :
                 PlayFabBaseModel(),
                 Entity(NULL),
+                IdentityProvider(),
                 Lineage(NULL)
             {}
 
             ValidateEntityTokenResponse(const ValidateEntityTokenResponse& src) :
                 PlayFabBaseModel(),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
+                IdentityProvider(src.IdentityProvider),
                 Lineage(src.Lineage ? new EntityLineage(*src.Lineage) : NULL)
             {}
 

@@ -8935,6 +8935,40 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct PurchaseReceiptFulfillment : public PlayFabBaseModel
+        {
+            std::list<ItemInstance> FulfilledItems;
+            std::string RecordedPriceSource;
+            std::string RecordedTransactionCurrency;
+            OptionalUint32 RecordedTransactionTotal;
+
+            PurchaseReceiptFulfillment() :
+                PlayFabBaseModel(),
+                FulfilledItems(),
+                RecordedPriceSource(),
+                RecordedTransactionCurrency(),
+                RecordedTransactionTotal()
+            {}
+
+            PurchaseReceiptFulfillment(const PurchaseReceiptFulfillment& src) :
+                PlayFabBaseModel(),
+                FulfilledItems(src.FulfilledItems),
+                RecordedPriceSource(src.RecordedPriceSource),
+                RecordedTransactionCurrency(src.RecordedTransactionCurrency),
+                RecordedTransactionTotal(src.RecordedTransactionTotal)
+            {}
+
+            PurchaseReceiptFulfillment(const rapidjson::Value& obj) : PurchaseReceiptFulfillment()
+            {
+                readFromValue(obj);
+            }
+
+            ~PurchaseReceiptFulfillment();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct RedeemCouponRequest : public PlayFabBaseModel
         {
             std::string CatalogVersion;
@@ -9447,15 +9481,18 @@ namespace PlayFab
 
         struct RestoreIOSPurchasesRequest : public PlayFabBaseModel
         {
+            std::string CatalogVersion;
             std::string ReceiptData;
 
             RestoreIOSPurchasesRequest() :
                 PlayFabBaseModel(),
+                CatalogVersion(),
                 ReceiptData()
             {}
 
             RestoreIOSPurchasesRequest(const RestoreIOSPurchasesRequest& src) :
                 PlayFabBaseModel(),
+                CatalogVersion(src.CatalogVersion),
                 ReceiptData(src.ReceiptData)
             {}
 
@@ -9472,13 +9509,16 @@ namespace PlayFab
 
         struct RestoreIOSPurchasesResult : public PlayFabBaseModel
         {
+            std::list<PurchaseReceiptFulfillment> Fulfillments;
 
             RestoreIOSPurchasesResult() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                Fulfillments()
             {}
 
             RestoreIOSPurchasesResult(const RestoreIOSPurchasesResult& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                Fulfillments(src.Fulfillments)
             {}
 
             RestoreIOSPurchasesResult(const rapidjson::Value& obj) : RestoreIOSPurchasesResult()
@@ -10998,13 +11038,16 @@ namespace PlayFab
 
         struct ValidateAmazonReceiptResult : public PlayFabBaseModel
         {
+            std::list<PurchaseReceiptFulfillment> Fulfillments;
 
             ValidateAmazonReceiptResult() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                Fulfillments()
             {}
 
             ValidateAmazonReceiptResult(const ValidateAmazonReceiptResult& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                Fulfillments(src.Fulfillments)
             {}
 
             ValidateAmazonReceiptResult(const rapidjson::Value& obj) : ValidateAmazonReceiptResult()
@@ -11020,6 +11063,7 @@ namespace PlayFab
 
         struct ValidateGooglePlayPurchaseRequest : public PlayFabBaseModel
         {
+            std::string CatalogVersion;
             std::string CurrencyCode;
             OptionalUint32 PurchasePrice;
             std::string ReceiptJson;
@@ -11027,6 +11071,7 @@ namespace PlayFab
 
             ValidateGooglePlayPurchaseRequest() :
                 PlayFabBaseModel(),
+                CatalogVersion(),
                 CurrencyCode(),
                 PurchasePrice(),
                 ReceiptJson(),
@@ -11035,6 +11080,7 @@ namespace PlayFab
 
             ValidateGooglePlayPurchaseRequest(const ValidateGooglePlayPurchaseRequest& src) :
                 PlayFabBaseModel(),
+                CatalogVersion(src.CatalogVersion),
                 CurrencyCode(src.CurrencyCode),
                 PurchasePrice(src.PurchasePrice),
                 ReceiptJson(src.ReceiptJson),
@@ -11054,13 +11100,16 @@ namespace PlayFab
 
         struct ValidateGooglePlayPurchaseResult : public PlayFabBaseModel
         {
+            std::list<PurchaseReceiptFulfillment> Fulfillments;
 
             ValidateGooglePlayPurchaseResult() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                Fulfillments()
             {}
 
             ValidateGooglePlayPurchaseResult(const ValidateGooglePlayPurchaseResult& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                Fulfillments(src.Fulfillments)
             {}
 
             ValidateGooglePlayPurchaseResult(const rapidjson::Value& obj) : ValidateGooglePlayPurchaseResult()
@@ -11076,12 +11125,14 @@ namespace PlayFab
 
         struct ValidateIOSReceiptRequest : public PlayFabBaseModel
         {
+            std::string CatalogVersion;
             std::string CurrencyCode;
             Int32 PurchasePrice;
             std::string ReceiptData;
 
             ValidateIOSReceiptRequest() :
                 PlayFabBaseModel(),
+                CatalogVersion(),
                 CurrencyCode(),
                 PurchasePrice(0),
                 ReceiptData()
@@ -11089,6 +11140,7 @@ namespace PlayFab
 
             ValidateIOSReceiptRequest(const ValidateIOSReceiptRequest& src) :
                 PlayFabBaseModel(),
+                CatalogVersion(src.CatalogVersion),
                 CurrencyCode(src.CurrencyCode),
                 PurchasePrice(src.PurchasePrice),
                 ReceiptData(src.ReceiptData)
@@ -11107,13 +11159,16 @@ namespace PlayFab
 
         struct ValidateIOSReceiptResult : public PlayFabBaseModel
         {
+            std::list<PurchaseReceiptFulfillment> Fulfillments;
 
             ValidateIOSReceiptResult() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                Fulfillments()
             {}
 
             ValidateIOSReceiptResult(const ValidateIOSReceiptResult& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                Fulfillments(src.Fulfillments)
             {}
 
             ValidateIOSReceiptResult(const rapidjson::Value& obj) : ValidateIOSReceiptResult()
@@ -11163,13 +11218,16 @@ namespace PlayFab
 
         struct ValidateWindowsReceiptResult : public PlayFabBaseModel
         {
+            std::list<PurchaseReceiptFulfillment> Fulfillments;
 
             ValidateWindowsReceiptResult() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                Fulfillments()
             {}
 
             ValidateWindowsReceiptResult(const ValidateWindowsReceiptResult& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                Fulfillments(src.Fulfillments)
             {}
 
             ValidateWindowsReceiptResult(const rapidjson::Value& obj) : ValidateWindowsReceiptResult()
