@@ -110,6 +110,67 @@ bool GetEntityTokenResponse::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::AuthenticationModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case LoginIdentityProviderUnknown: writer.String("Unknown"); break;
+    case LoginIdentityProviderPlayFab: writer.String("PlayFab"); break;
+    case LoginIdentityProviderCustom: writer.String("Custom"); break;
+    case LoginIdentityProviderGameCenter: writer.String("GameCenter"); break;
+    case LoginIdentityProviderGooglePlay: writer.String("GooglePlay"); break;
+    case LoginIdentityProviderSteam: writer.String("Steam"); break;
+    case LoginIdentityProviderXBoxLive: writer.String("XBoxLive"); break;
+    case LoginIdentityProviderPSN: writer.String("PSN"); break;
+    case LoginIdentityProviderKongregate: writer.String("Kongregate"); break;
+    case LoginIdentityProviderFacebook: writer.String("Facebook"); break;
+    case LoginIdentityProviderIOSDevice: writer.String("IOSDevice"); break;
+    case LoginIdentityProviderAndroidDevice: writer.String("AndroidDevice"); break;
+    case LoginIdentityProviderTwitch: writer.String("Twitch"); break;
+    case LoginIdentityProviderWindowsHello: writer.String("WindowsHello"); break;
+    case LoginIdentityProviderGameServer: writer.String("GameServer"); break;
+    case LoginIdentityProviderCustomServer: writer.String("CustomServer"); break;
+    case LoginIdentityProviderNintendoSwitch: writer.String("NintendoSwitch"); break;
+    case LoginIdentityProviderFacebookInstantGames: writer.String("FacebookInstantGames"); break;
+    case LoginIdentityProviderOpenIdConnect: writer.String("OpenIdConnect"); break;
+
+    }
+}
+
+LoginIdentityProvider PlayFab::AuthenticationModels::readLoginIdentityProviderFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, LoginIdentityProvider> _LoginIdentityProviderMap;
+    if (_LoginIdentityProviderMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _LoginIdentityProviderMap["Unknown"] = LoginIdentityProviderUnknown;
+        _LoginIdentityProviderMap["PlayFab"] = LoginIdentityProviderPlayFab;
+        _LoginIdentityProviderMap["Custom"] = LoginIdentityProviderCustom;
+        _LoginIdentityProviderMap["GameCenter"] = LoginIdentityProviderGameCenter;
+        _LoginIdentityProviderMap["GooglePlay"] = LoginIdentityProviderGooglePlay;
+        _LoginIdentityProviderMap["Steam"] = LoginIdentityProviderSteam;
+        _LoginIdentityProviderMap["XBoxLive"] = LoginIdentityProviderXBoxLive;
+        _LoginIdentityProviderMap["PSN"] = LoginIdentityProviderPSN;
+        _LoginIdentityProviderMap["Kongregate"] = LoginIdentityProviderKongregate;
+        _LoginIdentityProviderMap["Facebook"] = LoginIdentityProviderFacebook;
+        _LoginIdentityProviderMap["IOSDevice"] = LoginIdentityProviderIOSDevice;
+        _LoginIdentityProviderMap["AndroidDevice"] = LoginIdentityProviderAndroidDevice;
+        _LoginIdentityProviderMap["Twitch"] = LoginIdentityProviderTwitch;
+        _LoginIdentityProviderMap["WindowsHello"] = LoginIdentityProviderWindowsHello;
+        _LoginIdentityProviderMap["GameServer"] = LoginIdentityProviderGameServer;
+        _LoginIdentityProviderMap["CustomServer"] = LoginIdentityProviderCustomServer;
+        _LoginIdentityProviderMap["NintendoSwitch"] = LoginIdentityProviderNintendoSwitch;
+        _LoginIdentityProviderMap["FacebookInstantGames"] = LoginIdentityProviderFacebookInstantGames;
+        _LoginIdentityProviderMap["OpenIdConnect"] = LoginIdentityProviderOpenIdConnect;
+
+    }
+
+    auto output = _LoginIdentityProviderMap.find(obj.GetString());
+    if (output != _LoginIdentityProviderMap.end())
+        return output->second;
+
+    return LoginIdentityProviderUnknown; // Basically critical fail
+}
 
 ValidateEntityTokenRequest::~ValidateEntityTokenRequest()
 {
@@ -142,6 +203,7 @@ void ValidateEntityTokenResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
+    if (IdentityProvider.notNull()) { writer.String("IdentityProvider"); writeLoginIdentityProviderEnumJSON(IdentityProvider, writer); }
     if (Lineage != NULL) { writer.String("Lineage"); Lineage->writeJSON(writer); }
     writer.EndObject();
 }
@@ -150,6 +212,8 @@ bool ValidateEntityTokenResponse::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
+    const Value::ConstMemberIterator IdentityProvider_member = obj.FindMember("IdentityProvider");
+    if (IdentityProvider_member != obj.MemberEnd() && !IdentityProvider_member->value.IsNull()) IdentityProvider = readLoginIdentityProviderFromValue(IdentityProvider_member->value);
     const Value::ConstMemberIterator Lineage_member = obj.FindMember("Lineage");
     if (Lineage_member != obj.MemberEnd() && !Lineage_member->value.IsNull()) Lineage = new EntityLineage(Lineage_member->value);
 

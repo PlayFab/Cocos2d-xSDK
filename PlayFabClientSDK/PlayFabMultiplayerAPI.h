@@ -45,6 +45,7 @@ namespace PlayFab
         static void ListContainerImageTags(MultiplayerModels::ListContainerImageTagsRequest& request, ProcessApiCallback<MultiplayerModels::ListContainerImageTagsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListMatchmakingTicketsForPlayer(MultiplayerModels::ListMatchmakingTicketsForPlayerRequest& request, ProcessApiCallback<MultiplayerModels::ListMatchmakingTicketsForPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListMultiplayerServers(MultiplayerModels::ListMultiplayerServersRequest& request, ProcessApiCallback<MultiplayerModels::ListMultiplayerServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ListPartyQosServers(MultiplayerModels::ListPartyQosServersRequest& request, ProcessApiCallback<MultiplayerModels::ListPartyQosServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListQosServers(ProcessApiCallback<MultiplayerModels::ListQosServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListVirtualMachineSummaries(MultiplayerModels::ListVirtualMachineSummariesRequest& request, ProcessApiCallback<MultiplayerModels::ListVirtualMachineSummariesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RequestMultiplayerServer(MultiplayerModels::RequestMultiplayerServerRequest& request, ProcessApiCallback<MultiplayerModels::RequestMultiplayerServerResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -89,6 +90,7 @@ namespace PlayFab
         static void OnListContainerImageTagsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListMatchmakingTicketsForPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListMultiplayerServersResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnListPartyQosServersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListQosServersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListVirtualMachineSummariesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRequestMultiplayerServerResult(int httpStatus, HttpRequest* request, void* userData);

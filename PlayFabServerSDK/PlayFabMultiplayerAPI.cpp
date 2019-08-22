@@ -1432,6 +1432,52 @@ void PlayFabMultiplayerAPI::OnListMultiplayerServersResult(int httpStatus, HttpR
     delete request;
 }
 
+void PlayFabMultiplayerAPI::ListPartyQosServers(
+    ListPartyQosServersRequest& request,
+    ProcessApiCallback<ListPartyQosServersResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/MultiplayerServer/ListPartyQosServers"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ListPartyQosServersResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnListPartyQosServersResult, userData);
+}
+
+void PlayFabMultiplayerAPI::OnListPartyQosServersResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ListPartyQosServersResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<ListPartyQosServersResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabMultiplayerAPI::ListQosServers(
     ProcessApiCallback<ListQosServersResponse> callback,
     ErrorCallback errorCallback,

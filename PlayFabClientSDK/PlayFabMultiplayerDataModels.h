@@ -195,7 +195,7 @@ namespace PlayFab
         {
             CurrentServerStats* pfCurrentServerStats;
             Int32 MaxServers;
-            Boxed<AzureRegion> Region;
+            std::string Region;
             Int32 StandbyServers;
             std::string Status;
 
@@ -231,7 +231,7 @@ namespace PlayFab
         struct BuildRegionParams : public PlayFabBaseModel
         {
             Int32 MaxServers;
-            AzureRegion Region;
+            std::string Region;
             Int32 StandbyServers;
 
             BuildRegionParams() :
@@ -559,7 +559,7 @@ namespace PlayFab
         struct CoreCapacity : public PlayFabBaseModel
         {
             Int32 Available;
-            Boxed<AzureRegion> Region;
+            std::string Region;
             Int32 Total;
             Boxed<AzureVmFamily> VmFamily;
 
@@ -1031,7 +1031,7 @@ namespace PlayFab
         {
             std::string BuildId;
             OptionalTime ExpirationTime;
-            AzureRegion Region;
+            std::string Region;
             std::string Username;
             std::string VmId;
 
@@ -1204,7 +1204,7 @@ namespace PlayFab
         struct DeleteRemoteUserRequest : public PlayFabBaseModel
         {
             std::string BuildId;
-            AzureRegion Region;
+            std::string Region;
             std::string Username;
             std::string VmId;
 
@@ -1732,7 +1732,7 @@ namespace PlayFab
         struct GetMultiplayerServerDetailsRequest : public PlayFabBaseModel
         {
             std::string BuildId;
-            AzureRegion Region;
+            std::string Region;
             std::string SessionId;
 
             GetMultiplayerServerDetailsRequest() :
@@ -1767,7 +1767,7 @@ namespace PlayFab
             std::string IPV4Address;
             OptionalTime LastStateTransitionTime;
             std::list<Port> Ports;
-            Boxed<AzureRegion> Region;
+            std::string Region;
             std::string ServerId;
             std::string SessionId;
             std::string State;
@@ -1902,7 +1902,7 @@ namespace PlayFab
         struct GetRemoteLoginEndpointRequest : public PlayFabBaseModel
         {
             std::string BuildId;
-            AzureRegion Region;
+            std::string Region;
             std::string VmId;
 
             GetRemoteLoginEndpointRequest() :
@@ -2473,7 +2473,7 @@ namespace PlayFab
         {
             std::string BuildId;
             OptionalInt32 PageSize;
-            AzureRegion Region;
+            std::string Region;
             std::string SkipToken;
 
             ListMultiplayerServersRequest() :
@@ -2507,7 +2507,7 @@ namespace PlayFab
         {
             std::list<ConnectedPlayer> ConnectedPlayers;
             OptionalTime LastStateTransitionTime;
-            Boxed<AzureRegion> Region;
+            std::string Region;
             std::string ServerId;
             std::string SessionId;
             std::string State;
@@ -2577,23 +2577,26 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct ListQosServersRequest : public PlayFabBaseModel
+        struct ListPartyQosServersRequest : public PlayFabBaseModel
         {
+            std::string Version;
 
-            ListQosServersRequest() :
-                PlayFabBaseModel()
+            ListPartyQosServersRequest() :
+                PlayFabBaseModel(),
+                Version()
             {}
 
-            ListQosServersRequest(const ListQosServersRequest& src) :
-                PlayFabBaseModel()
+            ListPartyQosServersRequest(const ListPartyQosServersRequest& src) :
+                PlayFabBaseModel(),
+                Version(src.Version)
             {}
 
-            ListQosServersRequest(const rapidjson::Value& obj) : ListQosServersRequest()
+            ListPartyQosServersRequest(const rapidjson::Value& obj) : ListPartyQosServersRequest()
             {
                 readFromValue(obj);
             }
 
-            ~ListQosServersRequest();
+            ~ListPartyQosServersRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -2601,7 +2604,7 @@ namespace PlayFab
 
         struct QosServer : public PlayFabBaseModel
         {
-            Boxed<AzureRegion> Region;
+            std::string Region;
             std::string ServerUrl;
 
             QosServer() :
@@ -2622,6 +2625,59 @@ namespace PlayFab
             }
 
             ~QosServer();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ListPartyQosServersResponse : public PlayFabBaseModel
+        {
+            Int32 PageSize;
+            std::list<QosServer> QosServers;
+            std::string SkipToken;
+
+            ListPartyQosServersResponse() :
+                PlayFabBaseModel(),
+                PageSize(0),
+                QosServers(),
+                SkipToken()
+            {}
+
+            ListPartyQosServersResponse(const ListPartyQosServersResponse& src) :
+                PlayFabBaseModel(),
+                PageSize(src.PageSize),
+                QosServers(src.QosServers),
+                SkipToken(src.SkipToken)
+            {}
+
+            ListPartyQosServersResponse(const rapidjson::Value& obj) : ListPartyQosServersResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListPartyQosServersResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ListQosServersRequest : public PlayFabBaseModel
+        {
+
+            ListQosServersRequest() :
+                PlayFabBaseModel()
+            {}
+
+            ListQosServersRequest(const ListQosServersRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            ListQosServersRequest(const rapidjson::Value& obj) : ListQosServersRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListQosServersRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -2662,7 +2718,7 @@ namespace PlayFab
         {
             std::string BuildId;
             OptionalInt32 PageSize;
-            AzureRegion Region;
+            std::string Region;
             std::string SkipToken;
 
             ListVirtualMachineSummariesRequest() :
@@ -2758,7 +2814,7 @@ namespace PlayFab
         {
             std::string BuildId;
             std::list<std::string> InitialPlayers;
-            std::list<AzureRegion> PreferredRegions;
+            std::list<std::string> PreferredRegions;
             std::string SessionCookie;
             std::string SessionId;
 
@@ -2798,7 +2854,7 @@ namespace PlayFab
             std::string IPV4Address;
             OptionalTime LastStateTransitionTime;
             std::list<Port> Ports;
-            Boxed<AzureRegion> Region;
+            std::string Region;
             std::string ServerId;
             std::string SessionId;
             std::string State;
@@ -2899,7 +2955,7 @@ namespace PlayFab
         struct ShutdownMultiplayerServerRequest : public PlayFabBaseModel
         {
             std::string BuildId;
-            AzureRegion Region;
+            std::string Region;
             std::string SessionId;
 
             ShutdownMultiplayerServerRequest() :

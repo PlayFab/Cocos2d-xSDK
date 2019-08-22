@@ -9942,6 +9942,47 @@ bool PurchaseItemResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+PurchaseReceiptFulfillment::~PurchaseReceiptFulfillment()
+{
+
+}
+
+void PurchaseReceiptFulfillment::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!FulfilledItems.empty()) {
+        writer.String("FulfilledItems");
+        writer.StartArray();
+        for (std::list<ItemInstance>::iterator iter = FulfilledItems.begin(); iter != FulfilledItems.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (RecordedPriceSource.length() > 0) { writer.String("RecordedPriceSource"); writer.String(RecordedPriceSource.c_str()); }
+    if (RecordedTransactionCurrency.length() > 0) { writer.String("RecordedTransactionCurrency"); writer.String(RecordedTransactionCurrency.c_str()); }
+    if (RecordedTransactionTotal.notNull()) { writer.String("RecordedTransactionTotal"); writer.Uint(RecordedTransactionTotal); }
+    writer.EndObject();
+}
+
+bool PurchaseReceiptFulfillment::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator FulfilledItems_member = obj.FindMember("FulfilledItems");
+    if (FulfilledItems_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = FulfilledItems_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            FulfilledItems.push_back(ItemInstance(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator RecordedPriceSource_member = obj.FindMember("RecordedPriceSource");
+    if (RecordedPriceSource_member != obj.MemberEnd() && !RecordedPriceSource_member->value.IsNull()) RecordedPriceSource = RecordedPriceSource_member->value.GetString();
+    const Value::ConstMemberIterator RecordedTransactionCurrency_member = obj.FindMember("RecordedTransactionCurrency");
+    if (RecordedTransactionCurrency_member != obj.MemberEnd() && !RecordedTransactionCurrency_member->value.IsNull()) RecordedTransactionCurrency = RecordedTransactionCurrency_member->value.GetString();
+    const Value::ConstMemberIterator RecordedTransactionTotal_member = obj.FindMember("RecordedTransactionTotal");
+    if (RecordedTransactionTotal_member != obj.MemberEnd() && !RecordedTransactionTotal_member->value.IsNull()) RecordedTransactionTotal = RecordedTransactionTotal_member->value.GetUint();
+
+    return true;
+}
+
 RedeemCouponRequest::~RedeemCouponRequest()
 {
 
@@ -10396,12 +10437,15 @@ RestoreIOSPurchasesRequest::~RestoreIOSPurchasesRequest()
 void RestoreIOSPurchasesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     writer.String("ReceiptData"); writer.String(ReceiptData.c_str());
     writer.EndObject();
 }
 
 bool RestoreIOSPurchasesRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
     const Value::ConstMemberIterator ReceiptData_member = obj.FindMember("ReceiptData");
     if (ReceiptData_member != obj.MemberEnd() && !ReceiptData_member->value.IsNull()) ReceiptData = ReceiptData_member->value.GetString();
 
@@ -10416,11 +10460,26 @@ RestoreIOSPurchasesResult::~RestoreIOSPurchasesResult()
 void RestoreIOSPurchasesResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!Fulfillments.empty()) {
+        writer.String("Fulfillments");
+        writer.StartArray();
+        for (std::list<PurchaseReceiptFulfillment>::iterator iter = Fulfillments.begin(); iter != Fulfillments.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
     writer.EndObject();
 }
 
 bool RestoreIOSPurchasesResult::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator Fulfillments_member = obj.FindMember("Fulfillments");
+    if (Fulfillments_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Fulfillments_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Fulfillments.push_back(PurchaseReceiptFulfillment(memberList[i]));
+        }
+    }
 
     return true;
 }
@@ -11815,11 +11874,26 @@ ValidateAmazonReceiptResult::~ValidateAmazonReceiptResult()
 void ValidateAmazonReceiptResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!Fulfillments.empty()) {
+        writer.String("Fulfillments");
+        writer.StartArray();
+        for (std::list<PurchaseReceiptFulfillment>::iterator iter = Fulfillments.begin(); iter != Fulfillments.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
     writer.EndObject();
 }
 
 bool ValidateAmazonReceiptResult::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator Fulfillments_member = obj.FindMember("Fulfillments");
+    if (Fulfillments_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Fulfillments_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Fulfillments.push_back(PurchaseReceiptFulfillment(memberList[i]));
+        }
+    }
 
     return true;
 }
@@ -11832,6 +11906,7 @@ ValidateGooglePlayPurchaseRequest::~ValidateGooglePlayPurchaseRequest()
 void ValidateGooglePlayPurchaseRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     if (CurrencyCode.length() > 0) { writer.String("CurrencyCode"); writer.String(CurrencyCode.c_str()); }
     if (PurchasePrice.notNull()) { writer.String("PurchasePrice"); writer.Uint(PurchasePrice); }
     writer.String("ReceiptJson"); writer.String(ReceiptJson.c_str());
@@ -11841,6 +11916,8 @@ void ValidateGooglePlayPurchaseRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ValidateGooglePlayPurchaseRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
     const Value::ConstMemberIterator CurrencyCode_member = obj.FindMember("CurrencyCode");
     if (CurrencyCode_member != obj.MemberEnd() && !CurrencyCode_member->value.IsNull()) CurrencyCode = CurrencyCode_member->value.GetString();
     const Value::ConstMemberIterator PurchasePrice_member = obj.FindMember("PurchasePrice");
@@ -11861,11 +11938,26 @@ ValidateGooglePlayPurchaseResult::~ValidateGooglePlayPurchaseResult()
 void ValidateGooglePlayPurchaseResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!Fulfillments.empty()) {
+        writer.String("Fulfillments");
+        writer.StartArray();
+        for (std::list<PurchaseReceiptFulfillment>::iterator iter = Fulfillments.begin(); iter != Fulfillments.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
     writer.EndObject();
 }
 
 bool ValidateGooglePlayPurchaseResult::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator Fulfillments_member = obj.FindMember("Fulfillments");
+    if (Fulfillments_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Fulfillments_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Fulfillments.push_back(PurchaseReceiptFulfillment(memberList[i]));
+        }
+    }
 
     return true;
 }
@@ -11878,6 +11970,7 @@ ValidateIOSReceiptRequest::~ValidateIOSReceiptRequest()
 void ValidateIOSReceiptRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
     writer.String("CurrencyCode"); writer.String(CurrencyCode.c_str());
     writer.String("PurchasePrice"); writer.Int(PurchasePrice);
     writer.String("ReceiptData"); writer.String(ReceiptData.c_str());
@@ -11886,6 +11979,8 @@ void ValidateIOSReceiptRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ValidateIOSReceiptRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
     const Value::ConstMemberIterator CurrencyCode_member = obj.FindMember("CurrencyCode");
     if (CurrencyCode_member != obj.MemberEnd() && !CurrencyCode_member->value.IsNull()) CurrencyCode = CurrencyCode_member->value.GetString();
     const Value::ConstMemberIterator PurchasePrice_member = obj.FindMember("PurchasePrice");
@@ -11904,11 +11999,26 @@ ValidateIOSReceiptResult::~ValidateIOSReceiptResult()
 void ValidateIOSReceiptResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!Fulfillments.empty()) {
+        writer.String("Fulfillments");
+        writer.StartArray();
+        for (std::list<PurchaseReceiptFulfillment>::iterator iter = Fulfillments.begin(); iter != Fulfillments.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
     writer.EndObject();
 }
 
 bool ValidateIOSReceiptResult::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator Fulfillments_member = obj.FindMember("Fulfillments");
+    if (Fulfillments_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Fulfillments_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Fulfillments.push_back(PurchaseReceiptFulfillment(memberList[i]));
+        }
+    }
 
     return true;
 }
@@ -11950,11 +12060,26 @@ ValidateWindowsReceiptResult::~ValidateWindowsReceiptResult()
 void ValidateWindowsReceiptResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!Fulfillments.empty()) {
+        writer.String("Fulfillments");
+        writer.StartArray();
+        for (std::list<PurchaseReceiptFulfillment>::iterator iter = Fulfillments.begin(); iter != Fulfillments.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
     writer.EndObject();
 }
 
 bool ValidateWindowsReceiptResult::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator Fulfillments_member = obj.FindMember("Fulfillments");
+    if (Fulfillments_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Fulfillments_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Fulfillments.push_back(PurchaseReceiptFulfillment(memberList[i]));
+        }
+    }
 
     return true;
 }
