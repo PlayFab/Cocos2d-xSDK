@@ -47,6 +47,7 @@ namespace PlayFab
         static void ListMultiplayerServers(MultiplayerModels::ListMultiplayerServersRequest& request, ProcessApiCallback<MultiplayerModels::ListMultiplayerServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListPartyQosServers(MultiplayerModels::ListPartyQosServersRequest& request, ProcessApiCallback<MultiplayerModels::ListPartyQosServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListQosServers(ProcessApiCallback<MultiplayerModels::ListQosServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ListQosServersForTitle(ProcessApiCallback<MultiplayerModels::ListQosServersForTitleResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListVirtualMachineSummaries(MultiplayerModels::ListVirtualMachineSummariesRequest& request, ProcessApiCallback<MultiplayerModels::ListVirtualMachineSummariesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RequestMultiplayerServer(MultiplayerModels::RequestMultiplayerServerRequest& request, ProcessApiCallback<MultiplayerModels::RequestMultiplayerServerResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RolloverContainerRegistryCredentials(ProcessApiCallback<MultiplayerModels::RolloverContainerRegistryCredentialsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -92,6 +93,7 @@ namespace PlayFab
         static void OnListMultiplayerServersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListPartyQosServersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListQosServersResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnListQosServersForTitleResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListVirtualMachineSummariesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRequestMultiplayerServerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRolloverContainerRegistryCredentialsResult(int httpStatus, HttpRequest* request, void* userData);

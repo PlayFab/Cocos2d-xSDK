@@ -1522,6 +1522,51 @@ void PlayFabMultiplayerAPI::OnListQosServersResult(int httpStatus, HttpRequest* 
     delete request;
 }
 
+void PlayFabMultiplayerAPI::ListQosServersForTitle(
+    ProcessApiCallback<ListQosServersForTitleResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/MultiplayerServer/ListQosServersForTitle"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ListQosServersForTitleResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody("{}");
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnListQosServersForTitleResult, userData);
+}
+
+void PlayFabMultiplayerAPI::OnListQosServersForTitleResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    ListQosServersForTitleResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<ListQosServersForTitleResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabMultiplayerAPI::ListVirtualMachineSummaries(
     ListVirtualMachineSummariesRequest& request,
     ProcessApiCallback<ListVirtualMachineSummariesResponse> callback,

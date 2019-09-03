@@ -3563,6 +3563,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesQueryRateLimitExceeded: writer.String("QueryRateLimitExceeded"); break;
     case GenericErrorCodesEntityAPIKeyCreationDisabledForEntity: writer.String("EntityAPIKeyCreationDisabledForEntity"); break;
     case GenericErrorCodesForbiddenByEntityPolicy: writer.String("ForbiddenByEntityPolicy"); break;
+    case GenericErrorCodesUpdateInventoryRateLimitExceeded: writer.String("UpdateInventoryRateLimitExceeded"); break;
     case GenericErrorCodesStudioCreationRateLimited: writer.String("StudioCreationRateLimited"); break;
     case GenericErrorCodesStudioCreationInProgress: writer.String("StudioCreationInProgress"); break;
     case GenericErrorCodesDuplicateStudioName: writer.String("DuplicateStudioName"); break;
@@ -4106,6 +4107,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["QueryRateLimitExceeded"] = GenericErrorCodesQueryRateLimitExceeded;
         _GenericErrorCodesMap["EntityAPIKeyCreationDisabledForEntity"] = GenericErrorCodesEntityAPIKeyCreationDisabledForEntity;
         _GenericErrorCodesMap["ForbiddenByEntityPolicy"] = GenericErrorCodesForbiddenByEntityPolicy;
+        _GenericErrorCodesMap["UpdateInventoryRateLimitExceeded"] = GenericErrorCodesUpdateInventoryRateLimitExceeded;
         _GenericErrorCodesMap["StudioCreationRateLimited"] = GenericErrorCodesStudioCreationRateLimited;
         _GenericErrorCodesMap["StudioCreationInProgress"] = GenericErrorCodesStudioCreationInProgress;
         _GenericErrorCodesMap["DuplicateStudioName"] = GenericErrorCodesDuplicateStudioName;

@@ -802,12 +802,38 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct InstrumentationConfiguration : public PlayFabBaseModel
+        {
+            std::list<std::string> ProcessesToMonitor;
+
+            InstrumentationConfiguration() :
+                PlayFabBaseModel(),
+                ProcessesToMonitor()
+            {}
+
+            InstrumentationConfiguration(const InstrumentationConfiguration& src) :
+                PlayFabBaseModel(),
+                ProcessesToMonitor(src.ProcessesToMonitor)
+            {}
+
+            InstrumentationConfiguration(const rapidjson::Value& obj) : InstrumentationConfiguration()
+            {
+                readFromValue(obj);
+            }
+
+            ~InstrumentationConfiguration();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CreateBuildWithManagedContainerRequest : public PlayFabBaseModel
         {
             std::string BuildName;
             Boxed<ContainerFlavor> pfContainerFlavor;
             std::list<AssetReferenceParams> GameAssetReferences;
             std::list<GameCertificateReferenceParams> GameCertificateReferences;
+            InstrumentationConfiguration* pfInstrumentationConfiguration;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
             std::list<Port> Ports;
@@ -821,6 +847,7 @@ namespace PlayFab
                 pfContainerFlavor(),
                 GameAssetReferences(),
                 GameCertificateReferences(),
+                pfInstrumentationConfiguration(NULL),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
                 Ports(),
@@ -835,6 +862,7 @@ namespace PlayFab
                 pfContainerFlavor(src.pfContainerFlavor),
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
+                pfInstrumentationConfiguration(src.pfInstrumentationConfiguration ? new InstrumentationConfiguration(*src.pfInstrumentationConfiguration) : NULL),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 Ports(src.Ports),
@@ -862,6 +890,7 @@ namespace PlayFab
             OptionalTime CreationTime;
             std::list<AssetReference> GameAssetReferences;
             std::list<GameCertificateReference> GameCertificateReferences;
+            InstrumentationConfiguration* pfInstrumentationConfiguration;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
             std::list<Port> Ports;
@@ -877,6 +906,7 @@ namespace PlayFab
                 CreationTime(),
                 GameAssetReferences(),
                 GameCertificateReferences(),
+                pfInstrumentationConfiguration(NULL),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
                 Ports(),
@@ -893,6 +923,7 @@ namespace PlayFab
                 CreationTime(src.CreationTime),
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
+                pfInstrumentationConfiguration(src.pfInstrumentationConfiguration ? new InstrumentationConfiguration(*src.pfInstrumentationConfiguration) : NULL),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 Ports(src.Ports),
@@ -1403,6 +1434,7 @@ namespace PlayFab
             ContainerImageReference* CustomGameContainerImage;
             std::list<AssetReference> GameAssetReferences;
             std::list<GameCertificateReference> GameCertificateReferences;
+            InstrumentationConfiguration* pfInstrumentationConfiguration;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
             std::list<Port> Ports;
@@ -1421,6 +1453,7 @@ namespace PlayFab
                 CustomGameContainerImage(NULL),
                 GameAssetReferences(),
                 GameCertificateReferences(),
+                pfInstrumentationConfiguration(NULL),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
                 Ports(),
@@ -1440,6 +1473,7 @@ namespace PlayFab
                 CustomGameContainerImage(src.CustomGameContainerImage ? new ContainerImageReference(*src.CustomGameContainerImage) : NULL),
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
+                pfInstrumentationConfiguration(src.pfInstrumentationConfiguration ? new InstrumentationConfiguration(*src.pfInstrumentationConfiguration) : NULL),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 Ports(src.Ports),
@@ -2656,6 +2690,59 @@ namespace PlayFab
             }
 
             ~ListPartyQosServersResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ListQosServersForTitleRequest : public PlayFabBaseModel
+        {
+
+            ListQosServersForTitleRequest() :
+                PlayFabBaseModel()
+            {}
+
+            ListQosServersForTitleRequest(const ListQosServersForTitleRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            ListQosServersForTitleRequest(const rapidjson::Value& obj) : ListQosServersForTitleRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListQosServersForTitleRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ListQosServersForTitleResponse : public PlayFabBaseModel
+        {
+            Int32 PageSize;
+            std::list<QosServer> QosServers;
+            std::string SkipToken;
+
+            ListQosServersForTitleResponse() :
+                PlayFabBaseModel(),
+                PageSize(0),
+                QosServers(),
+                SkipToken()
+            {}
+
+            ListQosServersForTitleResponse(const ListQosServersForTitleResponse& src) :
+                PlayFabBaseModel(),
+                PageSize(src.PageSize),
+                QosServers(src.QosServers),
+                SkipToken(src.SkipToken)
+            {}
+
+            ListQosServersForTitleResponse(const rapidjson::Value& obj) : ListQosServersForTitleResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListQosServersForTitleResponse();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

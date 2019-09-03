@@ -3059,6 +3059,7 @@ namespace PlayFab
             GenericErrorCodesQueryRateLimitExceeded,
             GenericErrorCodesEntityAPIKeyCreationDisabledForEntity,
             GenericErrorCodesForbiddenByEntityPolicy,
+            GenericErrorCodesUpdateInventoryRateLimitExceeded,
             GenericErrorCodesStudioCreationRateLimited,
             GenericErrorCodesStudioCreationInProgress,
             GenericErrorCodesDuplicateStudioName,

@@ -4315,6 +4315,7 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesQueryRateLimitExceeded: writer.String("QueryRateLimitExceeded"); break;
     case GenericErrorCodesEntityAPIKeyCreationDisabledForEntity: writer.String("EntityAPIKeyCreationDisabledForEntity"); break;
     case GenericErrorCodesForbiddenByEntityPolicy: writer.String("ForbiddenByEntityPolicy"); break;
+    case GenericErrorCodesUpdateInventoryRateLimitExceeded: writer.String("UpdateInventoryRateLimitExceeded"); break;
     case GenericErrorCodesStudioCreationRateLimited: writer.String("StudioCreationRateLimited"); break;
     case GenericErrorCodesStudioCreationInProgress: writer.String("StudioCreationInProgress"); break;
     case GenericErrorCodesDuplicateStudioName: writer.String("DuplicateStudioName"); break;
@@ -4858,6 +4859,7 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["QueryRateLimitExceeded"] = GenericErrorCodesQueryRateLimitExceeded;
         _GenericErrorCodesMap["EntityAPIKeyCreationDisabledForEntity"] = GenericErrorCodesEntityAPIKeyCreationDisabledForEntity;
         _GenericErrorCodesMap["ForbiddenByEntityPolicy"] = GenericErrorCodesForbiddenByEntityPolicy;
+        _GenericErrorCodesMap["UpdateInventoryRateLimitExceeded"] = GenericErrorCodesUpdateInventoryRateLimitExceeded;
         _GenericErrorCodesMap["StudioCreationRateLimited"] = GenericErrorCodesStudioCreationRateLimited;
         _GenericErrorCodesMap["StudioCreationInProgress"] = GenericErrorCodesStudioCreationInProgress;
         _GenericErrorCodesMap["DuplicateStudioName"] = GenericErrorCodesDuplicateStudioName;
@@ -8011,6 +8013,194 @@ bool GetSharedGroupDataResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+StoreMarketingModel::~StoreMarketingModel()
+{
+
+}
+
+void StoreMarketingModel::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
+    if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
+    if (Metadata.notNull()) { writer.String("Metadata"); Metadata.writeJSON(writer); }
+    writer.EndObject();
+}
+
+bool StoreMarketingModel::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
+    if (Metadata_member != obj.MemberEnd() && !Metadata_member->value.IsNull()) Metadata = MultitypeVar(Metadata_member->value);
+
+    return true;
+}
+void PlayFab::ServerModels::writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case SourceTypeAdmin: writer.String("Admin"); break;
+    case SourceTypeBackEnd: writer.String("BackEnd"); break;
+    case SourceTypeGameClient: writer.String("GameClient"); break;
+    case SourceTypeGameServer: writer.String("GameServer"); break;
+    case SourceTypePartner: writer.String("Partner"); break;
+    case SourceTypeCustom: writer.String("Custom"); break;
+    case SourceTypeAPI: writer.String("API"); break;
+
+    }
+}
+
+SourceType PlayFab::ServerModels::readSourceTypeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, SourceType> _SourceTypeMap;
+    if (_SourceTypeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _SourceTypeMap["Admin"] = SourceTypeAdmin;
+        _SourceTypeMap["BackEnd"] = SourceTypeBackEnd;
+        _SourceTypeMap["GameClient"] = SourceTypeGameClient;
+        _SourceTypeMap["GameServer"] = SourceTypeGameServer;
+        _SourceTypeMap["Partner"] = SourceTypePartner;
+        _SourceTypeMap["Custom"] = SourceTypeCustom;
+        _SourceTypeMap["API"] = SourceTypeAPI;
+
+    }
+
+    auto output = _SourceTypeMap.find(obj.GetString());
+    if (output != _SourceTypeMap.end())
+        return output->second;
+
+    return SourceTypeAdmin; // Basically critical fail
+}
+
+StoreItem::~StoreItem()
+{
+
+}
+
+void StoreItem::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (CustomData.notNull()) { writer.String("CustomData"); CustomData.writeJSON(writer); }
+    if (DisplayPosition.notNull()) { writer.String("DisplayPosition"); writer.Uint(DisplayPosition); }
+    writer.String("ItemId"); writer.String(ItemId.c_str());
+    if (!RealCurrencyPrices.empty()) {
+        writer.String("RealCurrencyPrices");
+        writer.StartObject();
+        for (std::map<std::string, Uint32>::iterator iter = RealCurrencyPrices.begin(); iter != RealCurrencyPrices.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        }
+        writer.EndObject();
+    }
+    if (!VirtualCurrencyPrices.empty()) {
+        writer.String("VirtualCurrencyPrices");
+        writer.StartObject();
+        for (std::map<std::string, Uint32>::iterator iter = VirtualCurrencyPrices.begin(); iter != VirtualCurrencyPrices.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        }
+        writer.EndObject();
+    }
+    writer.EndObject();
+}
+
+bool StoreItem::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CustomData_member = obj.FindMember("CustomData");
+    if (CustomData_member != obj.MemberEnd() && !CustomData_member->value.IsNull()) CustomData = MultitypeVar(CustomData_member->value);
+    const Value::ConstMemberIterator DisplayPosition_member = obj.FindMember("DisplayPosition");
+    if (DisplayPosition_member != obj.MemberEnd() && !DisplayPosition_member->value.IsNull()) DisplayPosition = DisplayPosition_member->value.GetUint();
+    const Value::ConstMemberIterator ItemId_member = obj.FindMember("ItemId");
+    if (ItemId_member != obj.MemberEnd() && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
+    const Value::ConstMemberIterator RealCurrencyPrices_member = obj.FindMember("RealCurrencyPrices");
+    if (RealCurrencyPrices_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = RealCurrencyPrices_member->value.MemberBegin(); iter != RealCurrencyPrices_member->value.MemberEnd(); ++iter) {
+            RealCurrencyPrices[iter->name.GetString()] = iter->value.GetUint();
+        }
+    }
+    const Value::ConstMemberIterator VirtualCurrencyPrices_member = obj.FindMember("VirtualCurrencyPrices");
+    if (VirtualCurrencyPrices_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = VirtualCurrencyPrices_member->value.MemberBegin(); iter != VirtualCurrencyPrices_member->value.MemberEnd(); ++iter) {
+            VirtualCurrencyPrices[iter->name.GetString()] = iter->value.GetUint();
+        }
+    }
+
+    return true;
+}
+
+GetStoreItemsResult::~GetStoreItemsResult()
+{
+    if (MarketingData != NULL) delete MarketingData;
+
+}
+
+void GetStoreItemsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+    if (MarketingData != NULL) { writer.String("MarketingData"); MarketingData->writeJSON(writer); }
+    if (Source.notNull()) { writer.String("Source"); writeSourceTypeEnumJSON(Source, writer); }
+    if (!Store.empty()) {
+        writer.String("Store");
+        writer.StartArray();
+        for (std::list<StoreItem>::iterator iter = Store.begin(); iter != Store.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (StoreId.length() > 0) { writer.String("StoreId"); writer.String(StoreId.c_str()); }
+    writer.EndObject();
+}
+
+bool GetStoreItemsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator MarketingData_member = obj.FindMember("MarketingData");
+    if (MarketingData_member != obj.MemberEnd() && !MarketingData_member->value.IsNull()) MarketingData = new StoreMarketingModel(MarketingData_member->value);
+    const Value::ConstMemberIterator Source_member = obj.FindMember("Source");
+    if (Source_member != obj.MemberEnd() && !Source_member->value.IsNull()) Source = readSourceTypeFromValue(Source_member->value);
+    const Value::ConstMemberIterator Store_member = obj.FindMember("Store");
+    if (Store_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Store_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Store.push_back(StoreItem(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator StoreId_member = obj.FindMember("StoreId");
+    if (StoreId_member != obj.MemberEnd() && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
+
+    return true;
+}
+
+GetStoreItemsServerRequest::~GetStoreItemsServerRequest()
+{
+
+}
+
+void GetStoreItemsServerRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (CatalogVersion.length() > 0) { writer.String("CatalogVersion"); writer.String(CatalogVersion.c_str()); }
+    if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
+    writer.String("StoreId"); writer.String(StoreId.c_str());
+    writer.EndObject();
+}
+
+bool GetStoreItemsServerRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CatalogVersion_member = obj.FindMember("CatalogVersion");
+    if (CatalogVersion_member != obj.MemberEnd() && !CatalogVersion_member->value.IsNull()) CatalogVersion = CatalogVersion_member->value.GetString();
+    const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
+    if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
+    const Value::ConstMemberIterator StoreId_member = obj.FindMember("StoreId");
+    if (StoreId_member != obj.MemberEnd() && !StoreId_member->value.IsNull()) StoreId = StoreId_member->value.GetString();
+
+    return true;
+}
+
 GetTimeRequest::~GetTimeRequest()
 {
 
@@ -9040,6 +9230,36 @@ bool LoginWithServerCustomIdRequest::readFromValue(const rapidjson::Value& obj)
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator ServerCustomId_member = obj.FindMember("ServerCustomId");
     if (ServerCustomId_member != obj.MemberEnd() && !ServerCustomId_member->value.IsNull()) ServerCustomId = ServerCustomId_member->value.GetString();
+
+    return true;
+}
+
+LoginWithXboxIdRequest::~LoginWithXboxIdRequest()
+{
+    if (InfoRequestParameters != NULL) delete InfoRequestParameters;
+
+}
+
+void LoginWithXboxIdRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
+    if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
+    writer.String("Sandbox"); writer.String(Sandbox.c_str());
+    writer.String("XboxId"); writer.String(XboxId.c_str());
+    writer.EndObject();
+}
+
+bool LoginWithXboxIdRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
+    if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
+    const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
+    if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
+    const Value::ConstMemberIterator Sandbox_member = obj.FindMember("Sandbox");
+    if (Sandbox_member != obj.MemberEnd() && !Sandbox_member->value.IsNull()) Sandbox = Sandbox_member->value.GetString();
+    const Value::ConstMemberIterator XboxId_member = obj.FindMember("XboxId");
+    if (XboxId_member != obj.MemberEnd() && !XboxId_member->value.IsNull()) XboxId = XboxId_member->value.GetString();
 
     return true;
 }

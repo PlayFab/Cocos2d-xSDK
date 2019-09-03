@@ -3700,6 +3700,7 @@ namespace PlayFab
             GenericErrorCodesQueryRateLimitExceeded,
             GenericErrorCodesEntityAPIKeyCreationDisabledForEntity,
             GenericErrorCodesForbiddenByEntityPolicy,
+            GenericErrorCodesUpdateInventoryRateLimitExceeded,
             GenericErrorCodesStudioCreationRateLimited,
             GenericErrorCodesStudioCreationInProgress,
             GenericErrorCodesDuplicateStudioName,
@@ -6447,6 +6448,156 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct StoreMarketingModel : public PlayFabBaseModel
+        {
+            std::string Description;
+            std::string DisplayName;
+            MultitypeVar Metadata;
+
+            StoreMarketingModel() :
+                PlayFabBaseModel(),
+                Description(),
+                DisplayName(),
+                Metadata()
+            {}
+
+            StoreMarketingModel(const StoreMarketingModel& src) :
+                PlayFabBaseModel(),
+                Description(src.Description),
+                DisplayName(src.DisplayName),
+                Metadata(src.Metadata)
+            {}
+
+            StoreMarketingModel(const rapidjson::Value& obj) : StoreMarketingModel()
+            {
+                readFromValue(obj);
+            }
+
+            ~StoreMarketingModel();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        enum SourceType
+        {
+            SourceTypeAdmin,
+            SourceTypeBackEnd,
+            SourceTypeGameClient,
+            SourceTypeGameServer,
+            SourceTypePartner,
+            SourceTypeCustom,
+            SourceTypeAPI
+        };
+
+        void writeSourceTypeEnumJSON(SourceType enumVal, PFStringJsonWriter& writer);
+        SourceType readSourceTypeFromValue(const rapidjson::Value& obj);
+
+        struct StoreItem : public PlayFabBaseModel
+        {
+            MultitypeVar CustomData;
+            OptionalUint32 DisplayPosition;
+            std::string ItemId;
+            std::map<std::string, Uint32> RealCurrencyPrices;
+            std::map<std::string, Uint32> VirtualCurrencyPrices;
+
+            StoreItem() :
+                PlayFabBaseModel(),
+                CustomData(),
+                DisplayPosition(),
+                ItemId(),
+                RealCurrencyPrices(),
+                VirtualCurrencyPrices()
+            {}
+
+            StoreItem(const StoreItem& src) :
+                PlayFabBaseModel(),
+                CustomData(src.CustomData),
+                DisplayPosition(src.DisplayPosition),
+                ItemId(src.ItemId),
+                RealCurrencyPrices(src.RealCurrencyPrices),
+                VirtualCurrencyPrices(src.VirtualCurrencyPrices)
+            {}
+
+            StoreItem(const rapidjson::Value& obj) : StoreItem()
+            {
+                readFromValue(obj);
+            }
+
+            ~StoreItem();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetStoreItemsResult : public PlayFabBaseModel
+        {
+            std::string CatalogVersion;
+            StoreMarketingModel* MarketingData;
+            Boxed<SourceType> Source;
+            std::list<StoreItem> Store;
+            std::string StoreId;
+
+            GetStoreItemsResult() :
+                PlayFabBaseModel(),
+                CatalogVersion(),
+                MarketingData(NULL),
+                Source(),
+                Store(),
+                StoreId()
+            {}
+
+            GetStoreItemsResult(const GetStoreItemsResult& src) :
+                PlayFabBaseModel(),
+                CatalogVersion(src.CatalogVersion),
+                MarketingData(src.MarketingData ? new StoreMarketingModel(*src.MarketingData) : NULL),
+                Source(src.Source),
+                Store(src.Store),
+                StoreId(src.StoreId)
+            {}
+
+            GetStoreItemsResult(const rapidjson::Value& obj) : GetStoreItemsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetStoreItemsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetStoreItemsServerRequest : public PlayFabBaseModel
+        {
+            std::string CatalogVersion;
+            std::string PlayFabId;
+            std::string StoreId;
+
+            GetStoreItemsServerRequest() :
+                PlayFabBaseModel(),
+                CatalogVersion(),
+                PlayFabId(),
+                StoreId()
+            {}
+
+            GetStoreItemsServerRequest(const GetStoreItemsServerRequest& src) :
+                PlayFabBaseModel(),
+                CatalogVersion(src.CatalogVersion),
+                PlayFabId(src.PlayFabId),
+                StoreId(src.StoreId)
+            {}
+
+            GetStoreItemsServerRequest(const rapidjson::Value& obj) : GetStoreItemsServerRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetStoreItemsServerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetTimeRequest : public PlayFabBaseModel
         {
 
@@ -7408,6 +7559,40 @@ namespace PlayFab
             }
 
             ~LoginWithServerCustomIdRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LoginWithXboxIdRequest : public PlayFabBaseModel
+        {
+            OptionalBool CreateAccount;
+            GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            std::string Sandbox;
+            std::string XboxId;
+
+            LoginWithXboxIdRequest() :
+                PlayFabBaseModel(),
+                CreateAccount(),
+                InfoRequestParameters(NULL),
+                Sandbox(),
+                XboxId()
+            {}
+
+            LoginWithXboxIdRequest(const LoginWithXboxIdRequest& src) :
+                PlayFabBaseModel(),
+                CreateAccount(src.CreateAccount),
+                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                Sandbox(src.Sandbox),
+                XboxId(src.XboxId)
+            {}
+
+            LoginWithXboxIdRequest(const rapidjson::Value& obj) : LoginWithXboxIdRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LoginWithXboxIdRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
