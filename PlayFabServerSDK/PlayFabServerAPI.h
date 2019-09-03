@@ -66,6 +66,7 @@ namespace PlayFab
         static void GetRandomResultTables(ServerModels::GetRandomResultTablesRequest& request, ProcessApiCallback<ServerModels::GetRandomResultTablesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetServerCustomIDsFromPlayFabIDs(ServerModels::GetServerCustomIDsFromPlayFabIDsRequest& request, ProcessApiCallback<ServerModels::GetServerCustomIDsFromPlayFabIDsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetSharedGroupData(ServerModels::GetSharedGroupDataRequest& request, ProcessApiCallback<ServerModels::GetSharedGroupDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetStoreItems(ServerModels::GetStoreItemsServerRequest& request, ProcessApiCallback<ServerModels::GetStoreItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTime(ProcessApiCallback<ServerModels::GetTimeResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleData(ServerModels::GetTitleDataRequest& request, ProcessApiCallback<ServerModels::GetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleInternalData(ServerModels::GetTitleDataRequest& request, ProcessApiCallback<ServerModels::GetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -87,6 +88,7 @@ namespace PlayFab
         static void LinkXboxAccount(ServerModels::LinkXboxAccountRequest& request, ProcessApiCallback<ServerModels::LinkXboxAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithServerCustomId(ServerModels::LoginWithServerCustomIdRequest& request, ProcessApiCallback<ServerModels::ServerLoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithXbox(ServerModels::LoginWithXboxRequest& request, ProcessApiCallback<ServerModels::ServerLoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void LoginWithXboxId(ServerModels::LoginWithXboxIdRequest& request, ProcessApiCallback<ServerModels::ServerLoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ModifyItemUses(ServerModels::ModifyItemUsesRequest& request, ProcessApiCallback<ServerModels::ModifyItemUsesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void MoveItemToCharacterFromCharacter(ServerModels::MoveItemToCharacterFromCharacterRequest& request, ProcessApiCallback<ServerModels::MoveItemToCharacterFromCharacterResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void MoveItemToCharacterFromUser(ServerModels::MoveItemToCharacterFromUserRequest& request, ProcessApiCallback<ServerModels::MoveItemToCharacterFromUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -200,6 +202,7 @@ namespace PlayFab
         static void OnGetRandomResultTablesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetServerCustomIDsFromPlayFabIDsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetSharedGroupDataResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetStoreItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTimeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
@@ -221,6 +224,7 @@ namespace PlayFab
         static void OnLinkXboxAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithServerCustomIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithXboxResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnLoginWithXboxIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnModifyItemUsesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnMoveItemToCharacterFromCharacterResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnMoveItemToCharacterFromUserResult(int httpStatus, HttpRequest* request, void* userData);

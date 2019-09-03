@@ -991,8 +991,41 @@ bool CreateBuildWithCustomContainerResponse::readFromValue(const rapidjson::Valu
     return true;
 }
 
+InstrumentationConfiguration::~InstrumentationConfiguration()
+{
+
+}
+
+void InstrumentationConfiguration::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!ProcessesToMonitor.empty()) {
+        writer.String("ProcessesToMonitor");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = ProcessesToMonitor.begin(); iter != ProcessesToMonitor.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool InstrumentationConfiguration::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ProcessesToMonitor_member = obj.FindMember("ProcessesToMonitor");
+    if (ProcessesToMonitor_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = ProcessesToMonitor_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            ProcessesToMonitor.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
 CreateBuildWithManagedContainerRequest::~CreateBuildWithManagedContainerRequest()
 {
+    if (pfInstrumentationConfiguration != NULL) delete pfInstrumentationConfiguration;
 
 }
 
@@ -1015,6 +1048,7 @@ void CreateBuildWithManagedContainerRequest::writeJSON(PFStringJsonWriter& write
         }
         writer.EndArray();
     }
+    if (pfInstrumentationConfiguration != NULL) { writer.String("InstrumentationConfiguration"); pfInstrumentationConfiguration->writeJSON(writer); }
     if (!Metadata.empty()) {
         writer.String("Metadata");
         writer.StartObject();
@@ -1061,6 +1095,8 @@ bool CreateBuildWithManagedContainerRequest::readFromValue(const rapidjson::Valu
             GameCertificateReferences.push_back(GameCertificateReferenceParams(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator InstrumentationConfiguration_member = obj.FindMember("InstrumentationConfiguration");
+    if (InstrumentationConfiguration_member != obj.MemberEnd() && !InstrumentationConfiguration_member->value.IsNull()) pfInstrumentationConfiguration = new InstrumentationConfiguration(InstrumentationConfiguration_member->value);
     const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
     if (Metadata_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {
@@ -1093,6 +1129,7 @@ bool CreateBuildWithManagedContainerRequest::readFromValue(const rapidjson::Valu
 
 CreateBuildWithManagedContainerResponse::~CreateBuildWithManagedContainerResponse()
 {
+    if (pfInstrumentationConfiguration != NULL) delete pfInstrumentationConfiguration;
 
 }
 
@@ -1119,6 +1156,7 @@ void CreateBuildWithManagedContainerResponse::writeJSON(PFStringJsonWriter& writ
         }
         writer.EndArray();
     }
+    if (pfInstrumentationConfiguration != NULL) { writer.String("InstrumentationConfiguration"); pfInstrumentationConfiguration->writeJSON(writer); }
     if (!Metadata.empty()) {
         writer.String("Metadata");
         writer.StartObject();
@@ -1173,6 +1211,8 @@ bool CreateBuildWithManagedContainerResponse::readFromValue(const rapidjson::Val
             GameCertificateReferences.push_back(GameCertificateReference(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator InstrumentationConfiguration_member = obj.FindMember("InstrumentationConfiguration");
+    if (InstrumentationConfiguration_member != obj.MemberEnd() && !InstrumentationConfiguration_member->value.IsNull()) pfInstrumentationConfiguration = new InstrumentationConfiguration(InstrumentationConfiguration_member->value);
     const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
     if (Metadata_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {
@@ -1643,6 +1683,7 @@ bool GetBuildRequest::readFromValue(const rapidjson::Value& obj)
 GetBuildResponse::~GetBuildResponse()
 {
     if (CustomGameContainerImage != NULL) delete CustomGameContainerImage;
+    if (pfInstrumentationConfiguration != NULL) delete pfInstrumentationConfiguration;
 
 }
 
@@ -1672,6 +1713,7 @@ void GetBuildResponse::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndArray();
     }
+    if (pfInstrumentationConfiguration != NULL) { writer.String("InstrumentationConfiguration"); pfInstrumentationConfiguration->writeJSON(writer); }
     if (!Metadata.empty()) {
         writer.String("Metadata");
         writer.StartObject();
@@ -1732,6 +1774,8 @@ bool GetBuildResponse::readFromValue(const rapidjson::Value& obj)
             GameCertificateReferences.push_back(GameCertificateReference(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator InstrumentationConfiguration_member = obj.FindMember("InstrumentationConfiguration");
+    if (InstrumentationConfiguration_member != obj.MemberEnd() && !InstrumentationConfiguration_member->value.IsNull()) pfInstrumentationConfiguration = new InstrumentationConfiguration(InstrumentationConfiguration_member->value);
     const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
     if (Metadata_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {
@@ -2950,6 +2994,61 @@ void ListPartyQosServersResponse::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool ListPartyQosServersResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PageSize_member = obj.FindMember("PageSize");
+    if (PageSize_member != obj.MemberEnd() && !PageSize_member->value.IsNull()) PageSize = PageSize_member->value.GetInt();
+    const Value::ConstMemberIterator QosServers_member = obj.FindMember("QosServers");
+    if (QosServers_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = QosServers_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            QosServers.push_back(QosServer(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator SkipToken_member = obj.FindMember("SkipToken");
+    if (SkipToken_member != obj.MemberEnd() && !SkipToken_member->value.IsNull()) SkipToken = SkipToken_member->value.GetString();
+
+    return true;
+}
+
+ListQosServersForTitleRequest::~ListQosServersForTitleRequest()
+{
+
+}
+
+void ListQosServersForTitleRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool ListQosServersForTitleRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+ListQosServersForTitleResponse::~ListQosServersForTitleResponse()
+{
+
+}
+
+void ListQosServersForTitleResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("PageSize"); writer.Int(PageSize);
+    if (!QosServers.empty()) {
+        writer.String("QosServers");
+        writer.StartArray();
+        for (std::list<QosServer>::iterator iter = QosServers.begin(); iter != QosServers.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (SkipToken.length() > 0) { writer.String("SkipToken"); writer.String(SkipToken.c_str()); }
+    writer.EndObject();
+}
+
+bool ListQosServersForTitleResponse::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator PageSize_member = obj.FindMember("PageSize");
     if (PageSize_member != obj.MemberEnd() && !PageSize_member->value.IsNull()) PageSize = PageSize_member->value.GetInt();
