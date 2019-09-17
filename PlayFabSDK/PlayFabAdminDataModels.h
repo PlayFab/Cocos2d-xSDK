@@ -3086,6 +3086,13 @@ namespace PlayFab
             GenericErrorCodesVirtualCurrencyBetaRestoreError,
             GenericErrorCodesVirtualCurrencyBetaSaveConflict,
             GenericErrorCodesVirtualCurrencyBetaUpdateError,
+            GenericErrorCodesInsightsManagementDatabaseNotFound,
+            GenericErrorCodesInsightsManagementOperationNotFound,
+            GenericErrorCodesInsightsManagementErrorPendingOperationExists,
+            GenericErrorCodesInsightsManagementSetPerformanceLevelInvalidParameter,
+            GenericErrorCodesInsightsManagementSetStorageRetentionInvalidParameter,
+            GenericErrorCodesInsightsManagementGetStorageUsageInvalidParameter,
+            GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -3148,6 +3155,7 @@ namespace PlayFab
             GenericErrorCodesExperimentationExceededVariantNameLength,
             GenericErrorCodesExperimentationExceededMaxVariantLength,
             GenericErrorCodesExperimentInvalidId,
+            GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesSnapshotNotFound
         };
 
