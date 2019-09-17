@@ -3590,6 +3590,13 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesVirtualCurrencyBetaRestoreError: writer.String("VirtualCurrencyBetaRestoreError"); break;
     case GenericErrorCodesVirtualCurrencyBetaSaveConflict: writer.String("VirtualCurrencyBetaSaveConflict"); break;
     case GenericErrorCodesVirtualCurrencyBetaUpdateError: writer.String("VirtualCurrencyBetaUpdateError"); break;
+    case GenericErrorCodesInsightsManagementDatabaseNotFound: writer.String("InsightsManagementDatabaseNotFound"); break;
+    case GenericErrorCodesInsightsManagementOperationNotFound: writer.String("InsightsManagementOperationNotFound"); break;
+    case GenericErrorCodesInsightsManagementErrorPendingOperationExists: writer.String("InsightsManagementErrorPendingOperationExists"); break;
+    case GenericErrorCodesInsightsManagementSetPerformanceLevelInvalidParameter: writer.String("InsightsManagementSetPerformanceLevelInvalidParameter"); break;
+    case GenericErrorCodesInsightsManagementSetStorageRetentionInvalidParameter: writer.String("InsightsManagementSetStorageRetentionInvalidParameter"); break;
+    case GenericErrorCodesInsightsManagementGetStorageUsageInvalidParameter: writer.String("InsightsManagementGetStorageUsageInvalidParameter"); break;
+    case GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter: writer.String("InsightsManagementGetOperationStatusInvalidParameter"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -3652,6 +3659,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExperimentationExceededVariantNameLength: writer.String("ExperimentationExceededVariantNameLength"); break;
     case GenericErrorCodesExperimentationExceededMaxVariantLength: writer.String("ExperimentationExceededMaxVariantLength"); break;
     case GenericErrorCodesExperimentInvalidId: writer.String("ExperimentInvalidId"); break;
+    case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
     }
@@ -4134,6 +4142,13 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["VirtualCurrencyBetaRestoreError"] = GenericErrorCodesVirtualCurrencyBetaRestoreError;
         _GenericErrorCodesMap["VirtualCurrencyBetaSaveConflict"] = GenericErrorCodesVirtualCurrencyBetaSaveConflict;
         _GenericErrorCodesMap["VirtualCurrencyBetaUpdateError"] = GenericErrorCodesVirtualCurrencyBetaUpdateError;
+        _GenericErrorCodesMap["InsightsManagementDatabaseNotFound"] = GenericErrorCodesInsightsManagementDatabaseNotFound;
+        _GenericErrorCodesMap["InsightsManagementOperationNotFound"] = GenericErrorCodesInsightsManagementOperationNotFound;
+        _GenericErrorCodesMap["InsightsManagementErrorPendingOperationExists"] = GenericErrorCodesInsightsManagementErrorPendingOperationExists;
+        _GenericErrorCodesMap["InsightsManagementSetPerformanceLevelInvalidParameter"] = GenericErrorCodesInsightsManagementSetPerformanceLevelInvalidParameter;
+        _GenericErrorCodesMap["InsightsManagementSetStorageRetentionInvalidParameter"] = GenericErrorCodesInsightsManagementSetStorageRetentionInvalidParameter;
+        _GenericErrorCodesMap["InsightsManagementGetStorageUsageInvalidParameter"] = GenericErrorCodesInsightsManagementGetStorageUsageInvalidParameter;
+        _GenericErrorCodesMap["InsightsManagementGetOperationStatusInvalidParameter"] = GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -4196,6 +4211,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExperimentationExceededVariantNameLength"] = GenericErrorCodesExperimentationExceededVariantNameLength;
         _GenericErrorCodesMap["ExperimentationExceededMaxVariantLength"] = GenericErrorCodesExperimentationExceededMaxVariantLength;
         _GenericErrorCodesMap["ExperimentInvalidId"] = GenericErrorCodesExperimentInvalidId;
+        _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 
     }
