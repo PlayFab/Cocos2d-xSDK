@@ -244,6 +244,101 @@ AzureVmSize PlayFab::MultiplayerModels::readAzureVmSizeFromValue(const rapidjson
     return AzureVmSizeStandard_D1_v2; // Basically critical fail
 }
 
+BuildSelectionCriterion::~BuildSelectionCriterion()
+{
+
+}
+
+void BuildSelectionCriterion::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!BuildWeightDistribution.empty()) {
+        writer.String("BuildWeightDistribution");
+        writer.StartObject();
+        for (std::map<std::string, Uint32>::iterator iter = BuildWeightDistribution.begin(); iter != BuildWeightDistribution.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Uint(iter->second);
+        }
+        writer.EndObject();
+    }
+    writer.EndObject();
+}
+
+bool BuildSelectionCriterion::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator BuildWeightDistribution_member = obj.FindMember("BuildWeightDistribution");
+    if (BuildWeightDistribution_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = BuildWeightDistribution_member->value.MemberBegin(); iter != BuildWeightDistribution_member->value.MemberEnd(); ++iter) {
+            BuildWeightDistribution[iter->name.GetString()] = iter->value.GetUint();
+        }
+    }
+
+    return true;
+}
+
+BuildAliasDetailsResponse::~BuildAliasDetailsResponse()
+{
+
+}
+
+void BuildAliasDetailsResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (AliasId.length() > 0) { writer.String("AliasId"); writer.String(AliasId.c_str()); }
+    if (AliasName.length() > 0) { writer.String("AliasName"); writer.String(AliasName.c_str()); }
+    if (!BuildSelectionCriteria.empty()) {
+        writer.String("BuildSelectionCriteria");
+        writer.StartArray();
+        for (std::list<BuildSelectionCriterion>::iterator iter = BuildSelectionCriteria.begin(); iter != BuildSelectionCriteria.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.String("PageSize"); writer.Int(PageSize);
+    if (SkipToken.length() > 0) { writer.String("SkipToken"); writer.String(SkipToken.c_str()); }
+    writer.EndObject();
+}
+
+bool BuildAliasDetailsResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AliasId_member = obj.FindMember("AliasId");
+    if (AliasId_member != obj.MemberEnd() && !AliasId_member->value.IsNull()) AliasId = AliasId_member->value.GetString();
+    const Value::ConstMemberIterator AliasName_member = obj.FindMember("AliasName");
+    if (AliasName_member != obj.MemberEnd() && !AliasName_member->value.IsNull()) AliasName = AliasName_member->value.GetString();
+    const Value::ConstMemberIterator BuildSelectionCriteria_member = obj.FindMember("BuildSelectionCriteria");
+    if (BuildSelectionCriteria_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = BuildSelectionCriteria_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            BuildSelectionCriteria.push_back(BuildSelectionCriterion(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator PageSize_member = obj.FindMember("PageSize");
+    if (PageSize_member != obj.MemberEnd() && !PageSize_member->value.IsNull()) PageSize = PageSize_member->value.GetInt();
+    const Value::ConstMemberIterator SkipToken_member = obj.FindMember("SkipToken");
+    if (SkipToken_member != obj.MemberEnd() && !SkipToken_member->value.IsNull()) SkipToken = SkipToken_member->value.GetString();
+
+    return true;
+}
+
+BuildAliasParams::~BuildAliasParams()
+{
+
+}
+
+void BuildAliasParams::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("AliasId"); writer.String(AliasId.c_str());
+    writer.EndObject();
+}
+
+bool BuildAliasParams::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AliasId_member = obj.FindMember("AliasId");
+    if (AliasId_member != obj.MemberEnd() && !AliasId_member->value.IsNull()) AliasId = AliasId_member->value.GetString();
+
+    return true;
+}
+
 CurrentServerStats::~CurrentServerStats()
 {
 
@@ -666,6 +761,41 @@ bool CoreCapacity::readFromValue(const rapidjson::Value& obj)
     if (Total_member != obj.MemberEnd() && !Total_member->value.IsNull()) Total = Total_member->value.GetInt();
     const Value::ConstMemberIterator VmFamily_member = obj.FindMember("VmFamily");
     if (VmFamily_member != obj.MemberEnd() && !VmFamily_member->value.IsNull()) VmFamily = readAzureVmFamilyFromValue(VmFamily_member->value);
+
+    return true;
+}
+
+CreateBuildAliasRequest::~CreateBuildAliasRequest()
+{
+
+}
+
+void CreateBuildAliasRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("AliasName"); writer.String(AliasName.c_str());
+    if (!BuildSelectionCriteria.empty()) {
+        writer.String("BuildSelectionCriteria");
+        writer.StartArray();
+        for (std::list<BuildSelectionCriterion>::iterator iter = BuildSelectionCriteria.begin(); iter != BuildSelectionCriteria.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool CreateBuildAliasRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AliasName_member = obj.FindMember("AliasName");
+    if (AliasName_member != obj.MemberEnd() && !AliasName_member->value.IsNull()) AliasName = AliasName_member->value.GetString();
+    const Value::ConstMemberIterator BuildSelectionCriteria_member = obj.FindMember("BuildSelectionCriteria");
+    if (BuildSelectionCriteria_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = BuildSelectionCriteria_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            BuildSelectionCriteria.push_back(BuildSelectionCriterion(memberList[i]));
+        }
+    }
 
     return true;
 }
@@ -1465,6 +1595,26 @@ bool DeleteAssetRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeleteBuildAliasRequest::~DeleteBuildAliasRequest()
+{
+
+}
+
+void DeleteBuildAliasRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("AliasId"); writer.String(AliasId.c_str());
+    writer.EndObject();
+}
+
+bool DeleteBuildAliasRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AliasId_member = obj.FindMember("AliasId");
+    if (AliasId_member != obj.MemberEnd() && !AliasId_member->value.IsNull()) AliasId = AliasId_member->value.GetString();
+
+    return true;
+}
+
 DeleteBuildRequest::~DeleteBuildRequest()
 {
 
@@ -1656,6 +1806,26 @@ bool GetAssetUploadUrlResponse::readFromValue(const rapidjson::Value& obj)
     if (AssetUploadUrl_member != obj.MemberEnd() && !AssetUploadUrl_member->value.IsNull()) AssetUploadUrl = AssetUploadUrl_member->value.GetString();
     const Value::ConstMemberIterator FileName_member = obj.FindMember("FileName");
     if (FileName_member != obj.MemberEnd() && !FileName_member->value.IsNull()) FileName = FileName_member->value.GetString();
+
+    return true;
+}
+
+GetBuildAliasRequest::~GetBuildAliasRequest()
+{
+
+}
+
+void GetBuildAliasRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("AliasId"); writer.String(AliasId.c_str());
+    writer.EndObject();
+}
+
+bool GetBuildAliasRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AliasId_member = obj.FindMember("AliasId");
+    if (AliasId_member != obj.MemberEnd() && !AliasId_member->value.IsNull()) AliasId = AliasId_member->value.GetString();
 
     return true;
 }
@@ -2523,6 +2693,38 @@ bool ListAssetSummariesResponse::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+ListBuildAliasesForTitleResponse::~ListBuildAliasesForTitleResponse()
+{
+
+}
+
+void ListBuildAliasesForTitleResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!BuildAliases.empty()) {
+        writer.String("BuildAliases");
+        writer.StartArray();
+        for (std::list<BuildAliasDetailsResponse>::iterator iter = BuildAliases.begin(); iter != BuildAliases.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool ListBuildAliasesForTitleResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator BuildAliases_member = obj.FindMember("BuildAliases");
+    if (BuildAliases_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = BuildAliases_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            BuildAliases.push_back(BuildAliasDetailsResponse(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 ListBuildSummariesRequest::~ListBuildSummariesRequest()
 {
 
@@ -3213,15 +3415,34 @@ bool ListVirtualMachineSummariesResponse::readFromValue(const rapidjson::Value& 
     return true;
 }
 
+MultiplayerEmptyRequest::~MultiplayerEmptyRequest()
+{
+
+}
+
+void MultiplayerEmptyRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool MultiplayerEmptyRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 RequestMultiplayerServerRequest::~RequestMultiplayerServerRequest()
 {
+    if (pfBuildAliasParams != NULL) delete pfBuildAliasParams;
 
 }
 
 void RequestMultiplayerServerRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (pfBuildAliasParams != NULL) { writer.String("BuildAliasParams"); pfBuildAliasParams->writeJSON(writer); }
+    if (BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
     if (!InitialPlayers.empty()) {
         writer.String("InitialPlayers");
         writer.StartArray();
@@ -3243,6 +3464,8 @@ void RequestMultiplayerServerRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool RequestMultiplayerServerRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator BuildAliasParams_member = obj.FindMember("BuildAliasParams");
+    if (BuildAliasParams_member != obj.MemberEnd() && !BuildAliasParams_member->value.IsNull()) pfBuildAliasParams = new BuildAliasParams(BuildAliasParams_member->value);
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
     const Value::ConstMemberIterator InitialPlayers_member = obj.FindMember("InitialPlayers");
@@ -3403,6 +3626,44 @@ bool ShutdownMultiplayerServerRequest::readFromValue(const rapidjson::Value& obj
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
     const Value::ConstMemberIterator SessionId_member = obj.FindMember("SessionId");
     if (SessionId_member != obj.MemberEnd() && !SessionId_member->value.IsNull()) SessionId = SessionId_member->value.GetString();
+
+    return true;
+}
+
+UpdateBuildAliasRequest::~UpdateBuildAliasRequest()
+{
+
+}
+
+void UpdateBuildAliasRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("AliasId"); writer.String(AliasId.c_str());
+    if (AliasName.length() > 0) { writer.String("AliasName"); writer.String(AliasName.c_str()); }
+    if (!BuildSelectionCriteria.empty()) {
+        writer.String("BuildSelectionCriteria");
+        writer.StartArray();
+        for (std::list<BuildSelectionCriterion>::iterator iter = BuildSelectionCriteria.begin(); iter != BuildSelectionCriteria.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool UpdateBuildAliasRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AliasId_member = obj.FindMember("AliasId");
+    if (AliasId_member != obj.MemberEnd() && !AliasId_member->value.IsNull()) AliasId = AliasId_member->value.GetString();
+    const Value::ConstMemberIterator AliasName_member = obj.FindMember("AliasName");
+    if (AliasName_member != obj.MemberEnd() && !AliasName_member->value.IsNull()) AliasName = AliasName_member->value.GetString();
+    const Value::ConstMemberIterator BuildSelectionCriteria_member = obj.FindMember("BuildSelectionCriteria");
+    if (BuildSelectionCriteria_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = BuildSelectionCriteria_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            BuildSelectionCriteria.push_back(BuildSelectionCriterion(memberList[i]));
+        }
+    }
 
     return true;
 }

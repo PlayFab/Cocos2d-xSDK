@@ -264,6 +264,7 @@ namespace PlayFab
             std::string DisplayName;
             EntityKey* Entity;
             std::string EntityChain;
+            std::list<std::string> ExperimentVariants;
             std::map<std::string, EntityProfileFileMetadata> Files;
             std::string Language;
             std::string LeaderboardMetadata;
@@ -280,6 +281,7 @@ namespace PlayFab
                 DisplayName(),
                 Entity(NULL),
                 EntityChain(),
+                ExperimentVariants(),
                 Files(),
                 Language(),
                 LeaderboardMetadata(),
@@ -297,6 +299,7 @@ namespace PlayFab
                 DisplayName(src.DisplayName),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 EntityChain(src.EntityChain),
+                ExperimentVariants(src.ExperimentVariants),
                 Files(src.Files),
                 Language(src.Language),
                 LeaderboardMetadata(src.LeaderboardMetadata),

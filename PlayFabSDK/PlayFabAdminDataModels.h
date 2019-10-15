@@ -4662,6 +4662,7 @@ namespace PlayFab
             std::list<PlayerLinkedAccount> LinkedAccounts;
             std::map<std::string, PlayerLocation> Locations;
             Boxed<LoginIdentityProvider> Origination;
+            std::list<std::string> PlayerExperimentVariants;
             std::string PlayerId;
             std::list<PlayerStatistic> PlayerStatistics;
             std::string PublisherId;
@@ -4685,6 +4686,7 @@ namespace PlayFab
                 LinkedAccounts(),
                 Locations(),
                 Origination(),
+                PlayerExperimentVariants(),
                 PlayerId(),
                 PlayerStatistics(),
                 PublisherId(),
@@ -4709,6 +4711,7 @@ namespace PlayFab
                 LinkedAccounts(src.LinkedAccounts),
                 Locations(src.Locations),
                 Origination(src.Origination),
+                PlayerExperimentVariants(src.PlayerExperimentVariants),
                 PlayerId(src.PlayerId),
                 PlayerStatistics(src.PlayerStatistics),
                 PublisherId(src.PublisherId),

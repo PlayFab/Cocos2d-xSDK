@@ -157,6 +157,93 @@ namespace PlayFab
         void writeAzureVmSizeEnumJSON(AzureVmSize enumVal, PFStringJsonWriter& writer);
         AzureVmSize readAzureVmSizeFromValue(const rapidjson::Value& obj);
 
+        struct BuildSelectionCriterion : public PlayFabBaseModel
+        {
+            std::map<std::string, Uint32> BuildWeightDistribution;
+
+            BuildSelectionCriterion() :
+                PlayFabBaseModel(),
+                BuildWeightDistribution()
+            {}
+
+            BuildSelectionCriterion(const BuildSelectionCriterion& src) :
+                PlayFabBaseModel(),
+                BuildWeightDistribution(src.BuildWeightDistribution)
+            {}
+
+            BuildSelectionCriterion(const rapidjson::Value& obj) : BuildSelectionCriterion()
+            {
+                readFromValue(obj);
+            }
+
+            ~BuildSelectionCriterion();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct BuildAliasDetailsResponse : public PlayFabBaseModel
+        {
+            std::string AliasId;
+            std::string AliasName;
+            std::list<BuildSelectionCriterion> BuildSelectionCriteria;
+            Int32 PageSize;
+            std::string SkipToken;
+
+            BuildAliasDetailsResponse() :
+                PlayFabBaseModel(),
+                AliasId(),
+                AliasName(),
+                BuildSelectionCriteria(),
+                PageSize(0),
+                SkipToken()
+            {}
+
+            BuildAliasDetailsResponse(const BuildAliasDetailsResponse& src) :
+                PlayFabBaseModel(),
+                AliasId(src.AliasId),
+                AliasName(src.AliasName),
+                BuildSelectionCriteria(src.BuildSelectionCriteria),
+                PageSize(src.PageSize),
+                SkipToken(src.SkipToken)
+            {}
+
+            BuildAliasDetailsResponse(const rapidjson::Value& obj) : BuildAliasDetailsResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~BuildAliasDetailsResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct BuildAliasParams : public PlayFabBaseModel
+        {
+            std::string AliasId;
+
+            BuildAliasParams() :
+                PlayFabBaseModel(),
+                AliasId()
+            {}
+
+            BuildAliasParams(const BuildAliasParams& src) :
+                PlayFabBaseModel(),
+                AliasId(src.AliasId)
+            {}
+
+            BuildAliasParams(const rapidjson::Value& obj) : BuildAliasParams()
+            {
+                readFromValue(obj);
+            }
+
+            ~BuildAliasParams();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CurrentServerStats : public PlayFabBaseModel
         {
             Int32 Active;
@@ -585,6 +672,34 @@ namespace PlayFab
             }
 
             ~CoreCapacity();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateBuildAliasRequest : public PlayFabBaseModel
+        {
+            std::string AliasName;
+            std::list<BuildSelectionCriterion> BuildSelectionCriteria;
+
+            CreateBuildAliasRequest() :
+                PlayFabBaseModel(),
+                AliasName(),
+                BuildSelectionCriteria()
+            {}
+
+            CreateBuildAliasRequest(const CreateBuildAliasRequest& src) :
+                PlayFabBaseModel(),
+                AliasName(src.AliasName),
+                BuildSelectionCriteria(src.BuildSelectionCriteria)
+            {}
+
+            CreateBuildAliasRequest(const rapidjson::Value& obj) : CreateBuildAliasRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateBuildAliasRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1182,6 +1297,31 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct DeleteBuildAliasRequest : public PlayFabBaseModel
+        {
+            std::string AliasId;
+
+            DeleteBuildAliasRequest() :
+                PlayFabBaseModel(),
+                AliasId()
+            {}
+
+            DeleteBuildAliasRequest(const DeleteBuildAliasRequest& src) :
+                PlayFabBaseModel(),
+                AliasId(src.AliasId)
+            {}
+
+            DeleteBuildAliasRequest(const rapidjson::Value& obj) : DeleteBuildAliasRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteBuildAliasRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct DeleteBuildRequest : public PlayFabBaseModel
         {
             std::string BuildId;
@@ -1393,6 +1533,31 @@ namespace PlayFab
             }
 
             ~GetAssetUploadUrlResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetBuildAliasRequest : public PlayFabBaseModel
+        {
+            std::string AliasId;
+
+            GetBuildAliasRequest() :
+                PlayFabBaseModel(),
+                AliasId()
+            {}
+
+            GetBuildAliasRequest(const GetBuildAliasRequest& src) :
+                PlayFabBaseModel(),
+                AliasId(src.AliasId)
+            {}
+
+            GetBuildAliasRequest(const rapidjson::Value& obj) : GetBuildAliasRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetBuildAliasRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -2223,6 +2388,31 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct ListBuildAliasesForTitleResponse : public PlayFabBaseModel
+        {
+            std::list<BuildAliasDetailsResponse> BuildAliases;
+
+            ListBuildAliasesForTitleResponse() :
+                PlayFabBaseModel(),
+                BuildAliases()
+            {}
+
+            ListBuildAliasesForTitleResponse(const ListBuildAliasesForTitleResponse& src) :
+                PlayFabBaseModel(),
+                BuildAliases(src.BuildAliases)
+            {}
+
+            ListBuildAliasesForTitleResponse(const rapidjson::Value& obj) : ListBuildAliasesForTitleResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListBuildAliasesForTitleResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ListBuildSummariesRequest : public PlayFabBaseModel
         {
             OptionalInt32 PageSize;
@@ -2897,8 +3087,31 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct MultiplayerEmptyRequest : public PlayFabBaseModel
+        {
+
+            MultiplayerEmptyRequest() :
+                PlayFabBaseModel()
+            {}
+
+            MultiplayerEmptyRequest(const MultiplayerEmptyRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            MultiplayerEmptyRequest(const rapidjson::Value& obj) : MultiplayerEmptyRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~MultiplayerEmptyRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct RequestMultiplayerServerRequest : public PlayFabBaseModel
         {
+            BuildAliasParams* pfBuildAliasParams;
             std::string BuildId;
             std::list<std::string> InitialPlayers;
             std::list<std::string> PreferredRegions;
@@ -2907,6 +3120,7 @@ namespace PlayFab
 
             RequestMultiplayerServerRequest() :
                 PlayFabBaseModel(),
+                pfBuildAliasParams(NULL),
                 BuildId(),
                 InitialPlayers(),
                 PreferredRegions(),
@@ -2916,6 +3130,7 @@ namespace PlayFab
 
             RequestMultiplayerServerRequest(const RequestMultiplayerServerRequest& src) :
                 PlayFabBaseModel(),
+                pfBuildAliasParams(src.pfBuildAliasParams ? new BuildAliasParams(*src.pfBuildAliasParams) : NULL),
                 BuildId(src.BuildId),
                 InitialPlayers(src.InitialPlayers),
                 PreferredRegions(src.PreferredRegions),
@@ -3065,6 +3280,37 @@ namespace PlayFab
             }
 
             ~ShutdownMultiplayerServerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdateBuildAliasRequest : public PlayFabBaseModel
+        {
+            std::string AliasId;
+            std::string AliasName;
+            std::list<BuildSelectionCriterion> BuildSelectionCriteria;
+
+            UpdateBuildAliasRequest() :
+                PlayFabBaseModel(),
+                AliasId(),
+                AliasName(),
+                BuildSelectionCriteria()
+            {}
+
+            UpdateBuildAliasRequest(const UpdateBuildAliasRequest& src) :
+                PlayFabBaseModel(),
+                AliasId(src.AliasId),
+                AliasName(src.AliasName),
+                BuildSelectionCriteria(src.BuildSelectionCriteria)
+            {}
+
+            UpdateBuildAliasRequest(const rapidjson::Value& obj) : UpdateBuildAliasRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdateBuildAliasRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
