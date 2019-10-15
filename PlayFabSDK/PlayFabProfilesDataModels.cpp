@@ -264,6 +264,14 @@ void EntityProfileBody::writeJSON(PFStringJsonWriter& writer)
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     if (EntityChain.length() > 0) { writer.String("EntityChain"); writer.String(EntityChain.c_str()); }
+    if (!ExperimentVariants.empty()) {
+        writer.String("ExperimentVariants");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = ExperimentVariants.begin(); iter != ExperimentVariants.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
+    }
     if (!Files.empty()) {
         writer.String("Files");
         writer.StartObject();
@@ -315,6 +323,13 @@ bool EntityProfileBody::readFromValue(const rapidjson::Value& obj)
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator EntityChain_member = obj.FindMember("EntityChain");
     if (EntityChain_member != obj.MemberEnd() && !EntityChain_member->value.IsNull()) EntityChain = EntityChain_member->value.GetString();
+    const Value::ConstMemberIterator ExperimentVariants_member = obj.FindMember("ExperimentVariants");
+    if (ExperimentVariants_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = ExperimentVariants_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            ExperimentVariants.push_back(memberList[i].GetString());
+        }
+    }
     const Value::ConstMemberIterator Files_member = obj.FindMember("Files");
     if (Files_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Files_member->value.MemberBegin(); iter != Files_member->value.MemberEnd(); ++iter) {

@@ -5850,6 +5850,14 @@ void PlayerProfile::writeJSON(PFStringJsonWriter& writer)
         writer.EndObject();
     }
     if (Origination.notNull()) { writer.String("Origination"); writeLoginIdentityProviderEnumJSON(Origination, writer); }
+    if (!PlayerExperimentVariants.empty()) {
+        writer.String("PlayerExperimentVariants");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = PlayerExperimentVariants.begin(); iter != PlayerExperimentVariants.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
+    }
     if (PlayerId.length() > 0) { writer.String("PlayerId"); writer.String(PlayerId.c_str()); }
     if (!PlayerStatistics.empty()) {
         writer.String("PlayerStatistics");
@@ -5946,6 +5954,13 @@ bool PlayerProfile::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator Origination_member = obj.FindMember("Origination");
     if (Origination_member != obj.MemberEnd() && !Origination_member->value.IsNull()) Origination = readLoginIdentityProviderFromValue(Origination_member->value);
+    const Value::ConstMemberIterator PlayerExperimentVariants_member = obj.FindMember("PlayerExperimentVariants");
+    if (PlayerExperimentVariants_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = PlayerExperimentVariants_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            PlayerExperimentVariants.push_back(memberList[i].GetString());
+        }
+    }
     const Value::ConstMemberIterator PlayerId_member = obj.FindMember("PlayerId");
     if (PlayerId_member != obj.MemberEnd() && !PlayerId_member->value.IsNull()) PlayerId = PlayerId_member->value.GetString();
     const Value::ConstMemberIterator PlayerStatistics_member = obj.FindMember("PlayerStatistics");
