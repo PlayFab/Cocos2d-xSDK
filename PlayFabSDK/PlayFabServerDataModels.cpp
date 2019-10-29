@@ -3622,6 +3622,14 @@ void PlayerProfileModel::writeJSON(PFStringJsonWriter& writer)
     }
     if (Created.notNull()) { writer.String("Created"); writeDatetime(Created, writer); }
     if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
+    if (!ExperimentVariants.empty()) {
+        writer.String("ExperimentVariants");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = ExperimentVariants.begin(); iter != ExperimentVariants.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
+    }
     if (LastLogin.notNull()) { writer.String("LastLogin"); writeDatetime(LastLogin, writer); }
     if (!LinkedAccounts.empty()) {
         writer.String("LinkedAccounts");
@@ -3711,6 +3719,13 @@ bool PlayerProfileModel::readFromValue(const rapidjson::Value& obj)
     if (Created_member != obj.MemberEnd() && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
     const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
     if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator ExperimentVariants_member = obj.FindMember("ExperimentVariants");
+    if (ExperimentVariants_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = ExperimentVariants_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            ExperimentVariants.push_back(memberList[i].GetString());
+        }
+    }
     const Value::ConstMemberIterator LastLogin_member = obj.FindMember("LastLogin");
     if (LastLogin_member != obj.MemberEnd() && !LastLogin_member->value.IsNull()) LastLogin = readDatetime(LastLogin_member->value);
     const Value::ConstMemberIterator LinkedAccounts_member = obj.FindMember("LinkedAccounts");
@@ -4349,6 +4364,8 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesInsightsManagementSetStorageRetentionInvalidParameter: writer.String("InsightsManagementSetStorageRetentionInvalidParameter"); break;
     case GenericErrorCodesInsightsManagementGetStorageUsageInvalidParameter: writer.String("InsightsManagementGetStorageUsageInvalidParameter"); break;
     case GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter: writer.String("InsightsManagementGetOperationStatusInvalidParameter"); break;
+    case GenericErrorCodesDuplicatePurchaseTransactionId: writer.String("DuplicatePurchaseTransactionId"); break;
+    case GenericErrorCodesEvaluationModePlayerCountExceeded: writer.String("EvaluationModePlayerCountExceeded"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -4385,6 +4402,8 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesCatalogConfigInvalid: writer.String("CatalogConfigInvalid"); break;
     case GenericErrorCodesCatalogUnauthorized: writer.String("CatalogUnauthorized"); break;
     case GenericErrorCodesCatalogItemTypeInvalid: writer.String("CatalogItemTypeInvalid"); break;
+    case GenericErrorCodesCatalogBadRequest: writer.String("CatalogBadRequest"); break;
+    case GenericErrorCodesCatalogTooManyRequests: writer.String("CatalogTooManyRequests"); break;
     case GenericErrorCodesExportInvalidStatusUpdate: writer.String("ExportInvalidStatusUpdate"); break;
     case GenericErrorCodesExportInvalidPrefix: writer.String("ExportInvalidPrefix"); break;
     case GenericErrorCodesExportBlobContainerDoesNotExist: writer.String("ExportBlobContainerDoesNotExist"); break;
@@ -4411,6 +4430,7 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesExperimentationExceededVariantNameLength: writer.String("ExperimentationExceededVariantNameLength"); break;
     case GenericErrorCodesExperimentationExceededMaxVariantLength: writer.String("ExperimentationExceededMaxVariantLength"); break;
     case GenericErrorCodesExperimentInvalidId: writer.String("ExperimentInvalidId"); break;
+    case GenericErrorCodesExperimentationNoScorecard: writer.String("ExperimentationNoScorecard"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
@@ -4901,6 +4921,8 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["InsightsManagementSetStorageRetentionInvalidParameter"] = GenericErrorCodesInsightsManagementSetStorageRetentionInvalidParameter;
         _GenericErrorCodesMap["InsightsManagementGetStorageUsageInvalidParameter"] = GenericErrorCodesInsightsManagementGetStorageUsageInvalidParameter;
         _GenericErrorCodesMap["InsightsManagementGetOperationStatusInvalidParameter"] = GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter;
+        _GenericErrorCodesMap["DuplicatePurchaseTransactionId"] = GenericErrorCodesDuplicatePurchaseTransactionId;
+        _GenericErrorCodesMap["EvaluationModePlayerCountExceeded"] = GenericErrorCodesEvaluationModePlayerCountExceeded;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -4937,6 +4959,8 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["CatalogConfigInvalid"] = GenericErrorCodesCatalogConfigInvalid;
         _GenericErrorCodesMap["CatalogUnauthorized"] = GenericErrorCodesCatalogUnauthorized;
         _GenericErrorCodesMap["CatalogItemTypeInvalid"] = GenericErrorCodesCatalogItemTypeInvalid;
+        _GenericErrorCodesMap["CatalogBadRequest"] = GenericErrorCodesCatalogBadRequest;
+        _GenericErrorCodesMap["CatalogTooManyRequests"] = GenericErrorCodesCatalogTooManyRequests;
         _GenericErrorCodesMap["ExportInvalidStatusUpdate"] = GenericErrorCodesExportInvalidStatusUpdate;
         _GenericErrorCodesMap["ExportInvalidPrefix"] = GenericErrorCodesExportInvalidPrefix;
         _GenericErrorCodesMap["ExportBlobContainerDoesNotExist"] = GenericErrorCodesExportBlobContainerDoesNotExist;
@@ -4963,6 +4987,7 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["ExperimentationExceededVariantNameLength"] = GenericErrorCodesExperimentationExceededVariantNameLength;
         _GenericErrorCodesMap["ExperimentationExceededMaxVariantLength"] = GenericErrorCodesExperimentationExceededMaxVariantLength;
         _GenericErrorCodesMap["ExperimentInvalidId"] = GenericErrorCodesExperimentInvalidId;
+        _GenericErrorCodesMap["ExperimentationNoScorecard"] = GenericErrorCodesExperimentationNoScorecard;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 
@@ -5559,6 +5584,7 @@ void PlayerProfileViewConstraints::writeJSON(PFStringJsonWriter& writer)
     writer.String("ShowContactEmailAddresses"); writer.Bool(ShowContactEmailAddresses);
     writer.String("ShowCreated"); writer.Bool(ShowCreated);
     writer.String("ShowDisplayName"); writer.Bool(ShowDisplayName);
+    writer.String("ShowExperimentVariants"); writer.Bool(ShowExperimentVariants);
     writer.String("ShowLastLogin"); writer.Bool(ShowLastLogin);
     writer.String("ShowLinkedAccounts"); writer.Bool(ShowLinkedAccounts);
     writer.String("ShowLocations"); writer.Bool(ShowLocations);
@@ -5586,6 +5612,8 @@ bool PlayerProfileViewConstraints::readFromValue(const rapidjson::Value& obj)
     if (ShowCreated_member != obj.MemberEnd() && !ShowCreated_member->value.IsNull()) ShowCreated = ShowCreated_member->value.GetBool();
     const Value::ConstMemberIterator ShowDisplayName_member = obj.FindMember("ShowDisplayName");
     if (ShowDisplayName_member != obj.MemberEnd() && !ShowDisplayName_member->value.IsNull()) ShowDisplayName = ShowDisplayName_member->value.GetBool();
+    const Value::ConstMemberIterator ShowExperimentVariants_member = obj.FindMember("ShowExperimentVariants");
+    if (ShowExperimentVariants_member != obj.MemberEnd() && !ShowExperimentVariants_member->value.IsNull()) ShowExperimentVariants = ShowExperimentVariants_member->value.GetBool();
     const Value::ConstMemberIterator ShowLastLogin_member = obj.FindMember("ShowLastLogin");
     if (ShowLastLogin_member != obj.MemberEnd() && !ShowLastLogin_member->value.IsNull()) ShowLastLogin = ShowLastLogin_member->value.GetBool();
     const Value::ConstMemberIterator ShowLinkedAccounts_member = obj.FindMember("ShowLinkedAccounts");
@@ -10647,11 +10675,82 @@ bool UserSettings::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+Variable::~Variable()
+{
+
+}
+
+void Variable::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Name"); writer.String(Name.c_str());
+    writer.String("Value"); writer.String(Value.c_str());
+    writer.EndObject();
+}
+
+bool Variable::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Value_member = obj.FindMember("Value");
+    if (Value_member != obj.MemberEnd() && !Value_member->value.IsNull()) Value = Value_member->value.GetString();
+
+    return true;
+}
+
+TreatmentAssignment::~TreatmentAssignment()
+{
+
+}
+
+void TreatmentAssignment::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!Variables.empty()) {
+        writer.String("Variables");
+        writer.StartArray();
+        for (std::list<Variable>::iterator iter = Variables.begin(); iter != Variables.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (!Variants.empty()) {
+        writer.String("Variants");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = Variants.begin(); iter != Variants.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool TreatmentAssignment::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Variables_member = obj.FindMember("Variables");
+    if (Variables_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Variables_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Variables.push_back(Variable(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator Variants_member = obj.FindMember("Variants");
+    if (Variants_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Variants_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Variants.push_back(memberList[i].GetString());
+        }
+    }
+
+    return true;
+}
+
 ServerLoginResult::~ServerLoginResult()
 {
     if (EntityToken != NULL) delete EntityToken;
     if (InfoResultPayload != NULL) delete InfoResultPayload;
     if (SettingsForUser != NULL) delete SettingsForUser;
+    if (pfTreatmentAssignment != NULL) delete pfTreatmentAssignment;
 
 }
 
@@ -10665,6 +10764,7 @@ void ServerLoginResult::writeJSON(PFStringJsonWriter& writer)
     if (PlayFabId.length() > 0) { writer.String("PlayFabId"); writer.String(PlayFabId.c_str()); }
     if (SessionTicket.length() > 0) { writer.String("SessionTicket"); writer.String(SessionTicket.c_str()); }
     if (SettingsForUser != NULL) { writer.String("SettingsForUser"); SettingsForUser->writeJSON(writer); }
+    if (pfTreatmentAssignment != NULL) { writer.String("TreatmentAssignment"); pfTreatmentAssignment->writeJSON(writer); }
     writer.EndObject();
 }
 
@@ -10684,6 +10784,8 @@ bool ServerLoginResult::readFromValue(const rapidjson::Value& obj)
     if (SessionTicket_member != obj.MemberEnd() && !SessionTicket_member->value.IsNull()) SessionTicket = SessionTicket_member->value.GetString();
     const Value::ConstMemberIterator SettingsForUser_member = obj.FindMember("SettingsForUser");
     if (SettingsForUser_member != obj.MemberEnd() && !SettingsForUser_member->value.IsNull()) SettingsForUser = new UserSettings(SettingsForUser_member->value);
+    const Value::ConstMemberIterator TreatmentAssignment_member = obj.FindMember("TreatmentAssignment");
+    if (TreatmentAssignment_member != obj.MemberEnd() && !TreatmentAssignment_member->value.IsNull()) pfTreatmentAssignment = new TreatmentAssignment(TreatmentAssignment_member->value);
 
     return true;
 }

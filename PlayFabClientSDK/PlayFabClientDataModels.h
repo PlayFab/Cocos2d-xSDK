@@ -2717,6 +2717,7 @@ namespace PlayFab
             std::list<ContactEmailInfoModel> ContactEmailAddresses;
             OptionalTime Created;
             std::string DisplayName;
+            std::list<std::string> ExperimentVariants;
             OptionalTime LastLogin;
             std::list<LinkedPlatformAccountModel> LinkedAccounts;
             std::list<LocationModel> Locations;
@@ -2739,6 +2740,7 @@ namespace PlayFab
                 ContactEmailAddresses(),
                 Created(),
                 DisplayName(),
+                ExperimentVariants(),
                 LastLogin(),
                 LinkedAccounts(),
                 Locations(),
@@ -2762,6 +2764,7 @@ namespace PlayFab
                 ContactEmailAddresses(src.ContactEmailAddresses),
                 Created(src.Created),
                 DisplayName(src.DisplayName),
+                ExperimentVariants(src.ExperimentVariants),
                 LastLogin(src.LastLogin),
                 LinkedAccounts(src.LinkedAccounts),
                 Locations(src.Locations),
@@ -4024,6 +4027,7 @@ namespace PlayFab
             bool ShowContactEmailAddresses;
             bool ShowCreated;
             bool ShowDisplayName;
+            bool ShowExperimentVariants;
             bool ShowLastLogin;
             bool ShowLinkedAccounts;
             bool ShowLocations;
@@ -4043,6 +4047,7 @@ namespace PlayFab
                 ShowContactEmailAddresses(false),
                 ShowCreated(false),
                 ShowDisplayName(false),
+                ShowExperimentVariants(false),
                 ShowLastLogin(false),
                 ShowLinkedAccounts(false),
                 ShowLocations(false),
@@ -4063,6 +4068,7 @@ namespace PlayFab
                 ShowContactEmailAddresses(src.ShowContactEmailAddresses),
                 ShowCreated(src.ShowCreated),
                 ShowDisplayName(src.ShowDisplayName),
+                ShowExperimentVariants(src.ShowExperimentVariants),
                 ShowLastLogin(src.ShowLastLogin),
                 ShowLinkedAccounts(src.ShowLinkedAccounts),
                 ShowLocations(src.ShowLocations),
@@ -7785,6 +7791,62 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct Variable : public PlayFabBaseModel
+        {
+            std::string Name;
+            std::string Value;
+
+            Variable() :
+                PlayFabBaseModel(),
+                Name(),
+                Value()
+            {}
+
+            Variable(const Variable& src) :
+                PlayFabBaseModel(),
+                Name(src.Name),
+                Value(src.Value)
+            {}
+
+            Variable(const rapidjson::Value& obj) : Variable()
+            {
+                readFromValue(obj);
+            }
+
+            ~Variable();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct TreatmentAssignment : public PlayFabBaseModel
+        {
+            std::list<Variable> Variables;
+            std::list<std::string> Variants;
+
+            TreatmentAssignment() :
+                PlayFabBaseModel(),
+                Variables(),
+                Variants()
+            {}
+
+            TreatmentAssignment(const TreatmentAssignment& src) :
+                PlayFabBaseModel(),
+                Variables(src.Variables),
+                Variants(src.Variants)
+            {}
+
+            TreatmentAssignment(const rapidjson::Value& obj) : TreatmentAssignment()
+            {
+                readFromValue(obj);
+            }
+
+            ~TreatmentAssignment();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct LoginResult : public PlayFabBaseModel
         {
             EntityTokenResponse* EntityToken;
@@ -7794,6 +7856,7 @@ namespace PlayFab
             std::string PlayFabId;
             std::string SessionTicket;
             UserSettings* SettingsForUser;
+            TreatmentAssignment* pfTreatmentAssignment;
 
             LoginResult() :
                 PlayFabBaseModel(),
@@ -7803,7 +7866,8 @@ namespace PlayFab
                 NewlyCreated(false),
                 PlayFabId(),
                 SessionTicket(),
-                SettingsForUser(NULL)
+                SettingsForUser(NULL),
+                pfTreatmentAssignment(NULL)
             {}
 
             LoginResult(const LoginResult& src) :
@@ -7814,7 +7878,8 @@ namespace PlayFab
                 NewlyCreated(src.NewlyCreated),
                 PlayFabId(src.PlayFabId),
                 SessionTicket(src.SessionTicket),
-                SettingsForUser(src.SettingsForUser ? new UserSettings(*src.SettingsForUser) : NULL)
+                SettingsForUser(src.SettingsForUser ? new UserSettings(*src.SettingsForUser) : NULL),
+                pfTreatmentAssignment(src.pfTreatmentAssignment ? new TreatmentAssignment(*src.pfTreatmentAssignment) : NULL)
             {}
 
             LoginResult(const rapidjson::Value& obj) : LoginResult()

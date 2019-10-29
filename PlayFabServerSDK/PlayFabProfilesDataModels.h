@@ -504,15 +504,18 @@ namespace PlayFab
 
         struct GetTitlePlayersFromMasterPlayerAccountIdsResponse : public PlayFabBaseModel
         {
+            std::string TitleId;
             std::map<std::string, EntityKey> TitlePlayerAccounts;
 
             GetTitlePlayersFromMasterPlayerAccountIdsResponse() :
                 PlayFabBaseModel(),
+                TitleId(),
                 TitlePlayerAccounts()
             {}
 
             GetTitlePlayersFromMasterPlayerAccountIdsResponse(const GetTitlePlayersFromMasterPlayerAccountIdsResponse& src) :
                 PlayFabBaseModel(),
+                TitleId(src.TitleId),
                 TitlePlayerAccounts(src.TitlePlayerAccounts)
             {}
 

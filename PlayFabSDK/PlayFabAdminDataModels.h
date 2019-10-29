@@ -3093,6 +3093,8 @@ namespace PlayFab
             GenericErrorCodesInsightsManagementSetStorageRetentionInvalidParameter,
             GenericErrorCodesInsightsManagementGetStorageUsageInvalidParameter,
             GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter,
+            GenericErrorCodesDuplicatePurchaseTransactionId,
+            GenericErrorCodesEvaluationModePlayerCountExceeded,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -3129,6 +3131,8 @@ namespace PlayFab
             GenericErrorCodesCatalogConfigInvalid,
             GenericErrorCodesCatalogUnauthorized,
             GenericErrorCodesCatalogItemTypeInvalid,
+            GenericErrorCodesCatalogBadRequest,
+            GenericErrorCodesCatalogTooManyRequests,
             GenericErrorCodesExportInvalidStatusUpdate,
             GenericErrorCodesExportInvalidPrefix,
             GenericErrorCodesExportBlobContainerDoesNotExist,
@@ -3155,6 +3159,7 @@ namespace PlayFab
             GenericErrorCodesExperimentationExceededVariantNameLength,
             GenericErrorCodesExperimentationExceededMaxVariantLength,
             GenericErrorCodesExperimentInvalidId,
+            GenericErrorCodesExperimentationNoScorecard,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesSnapshotNotFound
         };
@@ -3870,6 +3875,7 @@ namespace PlayFab
             bool ShowContactEmailAddresses;
             bool ShowCreated;
             bool ShowDisplayName;
+            bool ShowExperimentVariants;
             bool ShowLastLogin;
             bool ShowLinkedAccounts;
             bool ShowLocations;
@@ -3889,6 +3895,7 @@ namespace PlayFab
                 ShowContactEmailAddresses(false),
                 ShowCreated(false),
                 ShowDisplayName(false),
+                ShowExperimentVariants(false),
                 ShowLastLogin(false),
                 ShowLinkedAccounts(false),
                 ShowLocations(false),
@@ -3909,6 +3916,7 @@ namespace PlayFab
                 ShowContactEmailAddresses(src.ShowContactEmailAddresses),
                 ShowCreated(src.ShowCreated),
                 ShowDisplayName(src.ShowDisplayName),
+                ShowExperimentVariants(src.ShowExperimentVariants),
                 ShowLastLogin(src.ShowLastLogin),
                 ShowLinkedAccounts(src.ShowLinkedAccounts),
                 ShowLocations(src.ShowLocations),
@@ -4284,6 +4292,7 @@ namespace PlayFab
             std::list<ContactEmailInfoModel> ContactEmailAddresses;
             OptionalTime Created;
             std::string DisplayName;
+            std::list<std::string> ExperimentVariants;
             OptionalTime LastLogin;
             std::list<LinkedPlatformAccountModel> LinkedAccounts;
             std::list<LocationModel> Locations;
@@ -4306,6 +4315,7 @@ namespace PlayFab
                 ContactEmailAddresses(),
                 Created(),
                 DisplayName(),
+                ExperimentVariants(),
                 LastLogin(),
                 LinkedAccounts(),
                 Locations(),
@@ -4329,6 +4339,7 @@ namespace PlayFab
                 ContactEmailAddresses(src.ContactEmailAddresses),
                 Created(src.Created),
                 DisplayName(src.DisplayName),
+                ExperimentVariants(src.ExperimentVariants),
                 LastLogin(src.LastLogin),
                 LinkedAccounts(src.LinkedAccounts),
                 Locations(src.Locations),

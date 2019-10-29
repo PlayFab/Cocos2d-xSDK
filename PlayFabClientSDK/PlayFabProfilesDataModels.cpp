@@ -567,6 +567,7 @@ GetTitlePlayersFromMasterPlayerAccountIdsResponse::~GetTitlePlayersFromMasterPla
 void GetTitlePlayersFromMasterPlayerAccountIdsResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (TitleId.length() > 0) { writer.String("TitleId"); writer.String(TitleId.c_str()); }
     if (!TitlePlayerAccounts.empty()) {
         writer.String("TitlePlayerAccounts");
         writer.StartObject();
@@ -580,6 +581,8 @@ void GetTitlePlayersFromMasterPlayerAccountIdsResponse::writeJSON(PFStringJsonWr
 
 bool GetTitlePlayersFromMasterPlayerAccountIdsResponse::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
     const Value::ConstMemberIterator TitlePlayerAccounts_member = obj.FindMember("TitlePlayerAccounts");
     if (TitlePlayerAccounts_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = TitlePlayerAccounts_member->value.MemberBegin(); iter != TitlePlayerAccounts_member->value.MemberEnd(); ++iter) {
