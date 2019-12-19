@@ -3739,6 +3739,11 @@ namespace PlayFab
             GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter,
             GenericErrorCodesDuplicatePurchaseTransactionId,
             GenericErrorCodesEvaluationModePlayerCountExceeded,
+            GenericErrorCodesGetPlayersInSegmentRateLimitExceeded,
+            GenericErrorCodesCloudScriptFunctionNameSizeExceeded,
+            GenericErrorCodesInsightsManagementTitleInEvaluationMode,
+            GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError,
+            GenericErrorCodesEvaluationModeTitleCountExceeded,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -3791,6 +3796,10 @@ namespace PlayFab
             GenericErrorCodesExportCantEditPendingExport,
             GenericErrorCodesExportLimitExports,
             GenericErrorCodesExportLimitEvents,
+            GenericErrorCodesExportInvalidPartitionStatusModification,
+            GenericErrorCodesExportCouldNotCreate,
+            GenericErrorCodesExportNoBackingDatabaseFound,
+            GenericErrorCodesExportCouldNotDelete,
             GenericErrorCodesTitleNotEnabledForParty,
             GenericErrorCodesPartyVersionNotFound,
             GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue,
@@ -3800,10 +3809,12 @@ namespace PlayFab
             GenericErrorCodesExperimentationExperimentNeverStarted,
             GenericErrorCodesExperimentationExperimentDeleted,
             GenericErrorCodesExperimentationClientTimeout,
-            GenericErrorCodesExperimentationExceededVariantNameLength,
-            GenericErrorCodesExperimentationExceededMaxVariantLength,
+            GenericErrorCodesExperimentationInvalidVariantConfiguration,
+            GenericErrorCodesExperimentationInvalidVariableConfiguration,
             GenericErrorCodesExperimentInvalidId,
             GenericErrorCodesExperimentationNoScorecard,
+            GenericErrorCodesExperimentationTreatmentAssignmentFailed,
+            GenericErrorCodesExperimentationTreatmentAssignmentDisabled,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesSnapshotNotFound
         };
@@ -10286,6 +10297,7 @@ namespace PlayFab
         {
             std::map<std::string, MultitypeVar> Body;
             std::string CharacterId;
+            std::map<std::string, std::string> EventCustomTags;
             std::string EventName;
             std::string PlayFabId;
             OptionalTime Timestamp;
@@ -10294,6 +10306,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Body(),
                 CharacterId(),
+                EventCustomTags(),
                 EventName(),
                 PlayFabId(),
                 Timestamp()
@@ -10303,6 +10316,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Body(src.Body),
                 CharacterId(src.CharacterId),
+                EventCustomTags(src.EventCustomTags),
                 EventName(src.EventName),
                 PlayFabId(src.PlayFabId),
                 Timestamp(src.Timestamp)
@@ -10322,6 +10336,7 @@ namespace PlayFab
         struct WriteServerPlayerEventRequest : public PlayFabBaseModel
         {
             std::map<std::string, MultitypeVar> Body;
+            std::map<std::string, std::string> EventCustomTags;
             std::string EventName;
             std::string PlayFabId;
             OptionalTime Timestamp;
@@ -10329,6 +10344,7 @@ namespace PlayFab
             WriteServerPlayerEventRequest() :
                 PlayFabBaseModel(),
                 Body(),
+                EventCustomTags(),
                 EventName(),
                 PlayFabId(),
                 Timestamp()
@@ -10337,6 +10353,7 @@ namespace PlayFab
             WriteServerPlayerEventRequest(const WriteServerPlayerEventRequest& src) :
                 PlayFabBaseModel(),
                 Body(src.Body),
+                EventCustomTags(src.EventCustomTags),
                 EventName(src.EventName),
                 PlayFabId(src.PlayFabId),
                 Timestamp(src.Timestamp)
@@ -10356,12 +10373,14 @@ namespace PlayFab
         struct WriteTitleEventRequest : public PlayFabBaseModel
         {
             std::map<std::string, MultitypeVar> Body;
+            std::map<std::string, std::string> EventCustomTags;
             std::string EventName;
             OptionalTime Timestamp;
 
             WriteTitleEventRequest() :
                 PlayFabBaseModel(),
                 Body(),
+                EventCustomTags(),
                 EventName(),
                 Timestamp()
             {}
@@ -10369,6 +10388,7 @@ namespace PlayFab
             WriteTitleEventRequest(const WriteTitleEventRequest& src) :
                 PlayFabBaseModel(),
                 Body(src.Body),
+                EventCustomTags(src.EventCustomTags),
                 EventName(src.EventName),
                 Timestamp(src.Timestamp)
             {}

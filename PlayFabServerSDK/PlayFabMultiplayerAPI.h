@@ -35,6 +35,7 @@ namespace PlayFab
         static void GetMatch(MultiplayerModels::GetMatchRequest& request, ProcessApiCallback<MultiplayerModels::GetMatchResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetMatchmakingTicket(MultiplayerModels::GetMatchmakingTicketRequest& request, ProcessApiCallback<MultiplayerModels::GetMatchmakingTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetMultiplayerServerDetails(MultiplayerModels::GetMultiplayerServerDetailsRequest& request, ProcessApiCallback<MultiplayerModels::GetMultiplayerServerDetailsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetMultiplayerServerLogs(MultiplayerModels::GetMultiplayerServerLogsRequest& request, ProcessApiCallback<MultiplayerModels::GetMultiplayerServerLogsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetQueueStatistics(MultiplayerModels::GetQueueStatisticsRequest& request, ProcessApiCallback<MultiplayerModels::GetQueueStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetRemoteLoginEndpoint(MultiplayerModels::GetRemoteLoginEndpointRequest& request, ProcessApiCallback<MultiplayerModels::GetRemoteLoginEndpointResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleEnabledForMultiplayerServersStatus(ProcessApiCallback<MultiplayerModels::GetTitleEnabledForMultiplayerServersStatusResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -56,6 +57,7 @@ namespace PlayFab
         static void RequestMultiplayerServer(MultiplayerModels::RequestMultiplayerServerRequest& request, ProcessApiCallback<MultiplayerModels::RequestMultiplayerServerResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RolloverContainerRegistryCredentials(ProcessApiCallback<MultiplayerModels::RolloverContainerRegistryCredentialsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ShutdownMultiplayerServer(MultiplayerModels::ShutdownMultiplayerServerRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UntagContainerImage(MultiplayerModels::UntagContainerImageRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateBuildAlias(MultiplayerModels::UpdateBuildAliasRequest& request, ProcessApiCallback<MultiplayerModels::BuildAliasDetailsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateBuildRegions(MultiplayerModels::UpdateBuildRegionsRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UploadCertificate(MultiplayerModels::UploadCertificateRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -86,6 +88,7 @@ namespace PlayFab
         static void OnGetMatchResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetMatchmakingTicketResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetMultiplayerServerDetailsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetMultiplayerServerLogsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetQueueStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetRemoteLoginEndpointResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleEnabledForMultiplayerServersStatusResult(int httpStatus, HttpRequest* request, void* userData);
@@ -107,6 +110,7 @@ namespace PlayFab
         static void OnRequestMultiplayerServerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRolloverContainerRegistryCredentialsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnShutdownMultiplayerServerResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUntagContainerImageResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateBuildAliasResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateBuildRegionsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUploadCertificateResult(int httpStatus, HttpRequest* request, void* userData);

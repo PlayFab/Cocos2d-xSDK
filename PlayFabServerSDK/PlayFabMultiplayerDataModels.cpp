@@ -368,9 +368,71 @@ bool CurrentServerStats::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DynamicStandbyThreshold::~DynamicStandbyThreshold()
+{
+
+}
+
+void DynamicStandbyThreshold::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Multiplier"); writer.Double(Multiplier);
+    writer.String("TriggerThresholdPercentage"); writer.Double(TriggerThresholdPercentage);
+    writer.EndObject();
+}
+
+bool DynamicStandbyThreshold::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Multiplier_member = obj.FindMember("Multiplier");
+    if (Multiplier_member != obj.MemberEnd() && !Multiplier_member->value.IsNull()) Multiplier = Multiplier_member->value.GetDouble();
+    const Value::ConstMemberIterator TriggerThresholdPercentage_member = obj.FindMember("TriggerThresholdPercentage");
+    if (TriggerThresholdPercentage_member != obj.MemberEnd() && !TriggerThresholdPercentage_member->value.IsNull()) TriggerThresholdPercentage = TriggerThresholdPercentage_member->value.GetDouble();
+
+    return true;
+}
+
+DynamicStandbySettings::~DynamicStandbySettings()
+{
+
+}
+
+void DynamicStandbySettings::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!DynamicFloorMultiplierThresholds.empty()) {
+        writer.String("DynamicFloorMultiplierThresholds");
+        writer.StartArray();
+        for (std::list<DynamicStandbyThreshold>::iterator iter = DynamicFloorMultiplierThresholds.begin(); iter != DynamicFloorMultiplierThresholds.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.String("IsEnabled"); writer.Bool(IsEnabled);
+    if (RampDownSeconds.notNull()) { writer.String("RampDownSeconds"); writer.Int(RampDownSeconds); }
+    writer.EndObject();
+}
+
+bool DynamicStandbySettings::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator DynamicFloorMultiplierThresholds_member = obj.FindMember("DynamicFloorMultiplierThresholds");
+    if (DynamicFloorMultiplierThresholds_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = DynamicFloorMultiplierThresholds_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            DynamicFloorMultiplierThresholds.push_back(DynamicStandbyThreshold(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator IsEnabled_member = obj.FindMember("IsEnabled");
+    if (IsEnabled_member != obj.MemberEnd() && !IsEnabled_member->value.IsNull()) IsEnabled = IsEnabled_member->value.GetBool();
+    const Value::ConstMemberIterator RampDownSeconds_member = obj.FindMember("RampDownSeconds");
+    if (RampDownSeconds_member != obj.MemberEnd() && !RampDownSeconds_member->value.IsNull()) RampDownSeconds = RampDownSeconds_member->value.GetInt();
+
+    return true;
+}
+
 BuildRegion::~BuildRegion()
 {
     if (pfCurrentServerStats != NULL) delete pfCurrentServerStats;
+    if (pfDynamicStandbySettings != NULL) delete pfDynamicStandbySettings;
 
 }
 
@@ -378,6 +440,7 @@ void BuildRegion::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (pfCurrentServerStats != NULL) { writer.String("CurrentServerStats"); pfCurrentServerStats->writeJSON(writer); }
+    if (pfDynamicStandbySettings != NULL) { writer.String("DynamicStandbySettings"); pfDynamicStandbySettings->writeJSON(writer); }
     writer.String("MaxServers"); writer.Int(MaxServers);
     if (Region.length() > 0) { writer.String("Region"); writer.String(Region.c_str()); }
     writer.String("StandbyServers"); writer.Int(StandbyServers);
@@ -389,6 +452,8 @@ bool BuildRegion::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator CurrentServerStats_member = obj.FindMember("CurrentServerStats");
     if (CurrentServerStats_member != obj.MemberEnd() && !CurrentServerStats_member->value.IsNull()) pfCurrentServerStats = new CurrentServerStats(CurrentServerStats_member->value);
+    const Value::ConstMemberIterator DynamicStandbySettings_member = obj.FindMember("DynamicStandbySettings");
+    if (DynamicStandbySettings_member != obj.MemberEnd() && !DynamicStandbySettings_member->value.IsNull()) pfDynamicStandbySettings = new DynamicStandbySettings(DynamicStandbySettings_member->value);
     const Value::ConstMemberIterator MaxServers_member = obj.FindMember("MaxServers");
     if (MaxServers_member != obj.MemberEnd() && !MaxServers_member->value.IsNull()) MaxServers = MaxServers_member->value.GetInt();
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
@@ -403,12 +468,14 @@ bool BuildRegion::readFromValue(const rapidjson::Value& obj)
 
 BuildRegionParams::~BuildRegionParams()
 {
+    if (pfDynamicStandbySettings != NULL) delete pfDynamicStandbySettings;
 
 }
 
 void BuildRegionParams::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (pfDynamicStandbySettings != NULL) { writer.String("DynamicStandbySettings"); pfDynamicStandbySettings->writeJSON(writer); }
     writer.String("MaxServers"); writer.Int(MaxServers);
     writer.String("Region"); writer.String(Region.c_str());
     writer.String("StandbyServers"); writer.Int(StandbyServers);
@@ -417,6 +484,8 @@ void BuildRegionParams::writeJSON(PFStringJsonWriter& writer)
 
 bool BuildRegionParams::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator DynamicStandbySettings_member = obj.FindMember("DynamicStandbySettings");
+    if (DynamicStandbySettings_member != obj.MemberEnd() && !DynamicStandbySettings_member->value.IsNull()) pfDynamicStandbySettings = new DynamicStandbySettings(DynamicStandbySettings_member->value);
     const Value::ConstMemberIterator MaxServers_member = obj.FindMember("MaxServers");
     if (MaxServers_member != obj.MemberEnd() && !MaxServers_member->value.IsNull()) MaxServers = MaxServers_member->value.GetInt();
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
@@ -2360,6 +2429,49 @@ bool GetMultiplayerServerDetailsResponse::readFromValue(const rapidjson::Value& 
     return true;
 }
 
+GetMultiplayerServerLogsRequest::~GetMultiplayerServerLogsRequest()
+{
+
+}
+
+void GetMultiplayerServerLogsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Region"); writer.String(Region.c_str());
+    writer.String("ServerId"); writer.String(ServerId.c_str());
+    writer.EndObject();
+}
+
+bool GetMultiplayerServerLogsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
+    if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
+    const Value::ConstMemberIterator ServerId_member = obj.FindMember("ServerId");
+    if (ServerId_member != obj.MemberEnd() && !ServerId_member->value.IsNull()) ServerId = ServerId_member->value.GetString();
+
+    return true;
+}
+
+GetMultiplayerServerLogsResponse::~GetMultiplayerServerLogsResponse()
+{
+
+}
+
+void GetMultiplayerServerLogsResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (LogDownloadUrl.length() > 0) { writer.String("LogDownloadUrl"); writer.String(LogDownloadUrl.c_str()); }
+    writer.EndObject();
+}
+
+bool GetMultiplayerServerLogsResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator LogDownloadUrl_member = obj.FindMember("LogDownloadUrl");
+    if (LogDownloadUrl_member != obj.MemberEnd() && !LogDownloadUrl_member->value.IsNull()) LogDownloadUrl = LogDownloadUrl_member->value.GetString();
+
+    return true;
+}
+
 GetQueueStatisticsRequest::~GetQueueStatisticsRequest()
 {
 
@@ -3626,6 +3738,29 @@ bool ShutdownMultiplayerServerRequest::readFromValue(const rapidjson::Value& obj
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
     const Value::ConstMemberIterator SessionId_member = obj.FindMember("SessionId");
     if (SessionId_member != obj.MemberEnd() && !SessionId_member->value.IsNull()) SessionId = SessionId_member->value.GetString();
+
+    return true;
+}
+
+UntagContainerImageRequest::~UntagContainerImageRequest()
+{
+
+}
+
+void UntagContainerImageRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (ImageName.length() > 0) { writer.String("ImageName"); writer.String(ImageName.c_str()); }
+    if (Tag.length() > 0) { writer.String("Tag"); writer.String(Tag.c_str()); }
+    writer.EndObject();
+}
+
+bool UntagContainerImageRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ImageName_member = obj.FindMember("ImageName");
+    if (ImageName_member != obj.MemberEnd() && !ImageName_member->value.IsNull()) ImageName = ImageName_member->value.GetString();
+    const Value::ConstMemberIterator Tag_member = obj.FindMember("Tag");
+    if (Tag_member != obj.MemberEnd() && !Tag_member->value.IsNull()) Tag = Tag_member->value.GetString();
 
     return true;
 }

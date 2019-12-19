@@ -278,9 +278,69 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct DynamicStandbyThreshold : public PlayFabBaseModel
+        {
+            double Multiplier;
+            double TriggerThresholdPercentage;
+
+            DynamicStandbyThreshold() :
+                PlayFabBaseModel(),
+                Multiplier(0),
+                TriggerThresholdPercentage(0)
+            {}
+
+            DynamicStandbyThreshold(const DynamicStandbyThreshold& src) :
+                PlayFabBaseModel(),
+                Multiplier(src.Multiplier),
+                TriggerThresholdPercentage(src.TriggerThresholdPercentage)
+            {}
+
+            DynamicStandbyThreshold(const rapidjson::Value& obj) : DynamicStandbyThreshold()
+            {
+                readFromValue(obj);
+            }
+
+            ~DynamicStandbyThreshold();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DynamicStandbySettings : public PlayFabBaseModel
+        {
+            std::list<DynamicStandbyThreshold> DynamicFloorMultiplierThresholds;
+            bool IsEnabled;
+            OptionalInt32 RampDownSeconds;
+
+            DynamicStandbySettings() :
+                PlayFabBaseModel(),
+                DynamicFloorMultiplierThresholds(),
+                IsEnabled(false),
+                RampDownSeconds()
+            {}
+
+            DynamicStandbySettings(const DynamicStandbySettings& src) :
+                PlayFabBaseModel(),
+                DynamicFloorMultiplierThresholds(src.DynamicFloorMultiplierThresholds),
+                IsEnabled(src.IsEnabled),
+                RampDownSeconds(src.RampDownSeconds)
+            {}
+
+            DynamicStandbySettings(const rapidjson::Value& obj) : DynamicStandbySettings()
+            {
+                readFromValue(obj);
+            }
+
+            ~DynamicStandbySettings();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct BuildRegion : public PlayFabBaseModel
         {
             CurrentServerStats* pfCurrentServerStats;
+            DynamicStandbySettings* pfDynamicStandbySettings;
             Int32 MaxServers;
             std::string Region;
             Int32 StandbyServers;
@@ -289,6 +349,7 @@ namespace PlayFab
             BuildRegion() :
                 PlayFabBaseModel(),
                 pfCurrentServerStats(NULL),
+                pfDynamicStandbySettings(NULL),
                 MaxServers(0),
                 Region(),
                 StandbyServers(0),
@@ -298,6 +359,7 @@ namespace PlayFab
             BuildRegion(const BuildRegion& src) :
                 PlayFabBaseModel(),
                 pfCurrentServerStats(src.pfCurrentServerStats ? new CurrentServerStats(*src.pfCurrentServerStats) : NULL),
+                pfDynamicStandbySettings(src.pfDynamicStandbySettings ? new DynamicStandbySettings(*src.pfDynamicStandbySettings) : NULL),
                 MaxServers(src.MaxServers),
                 Region(src.Region),
                 StandbyServers(src.StandbyServers),
@@ -317,12 +379,14 @@ namespace PlayFab
 
         struct BuildRegionParams : public PlayFabBaseModel
         {
+            DynamicStandbySettings* pfDynamicStandbySettings;
             Int32 MaxServers;
             std::string Region;
             Int32 StandbyServers;
 
             BuildRegionParams() :
                 PlayFabBaseModel(),
+                pfDynamicStandbySettings(NULL),
                 MaxServers(0),
                 Region(),
                 StandbyServers(0)
@@ -330,6 +394,7 @@ namespace PlayFab
 
             BuildRegionParams(const BuildRegionParams& src) :
                 PlayFabBaseModel(),
+                pfDynamicStandbySettings(src.pfDynamicStandbySettings ? new DynamicStandbySettings(*src.pfDynamicStandbySettings) : NULL),
                 MaxServers(src.MaxServers),
                 Region(src.Region),
                 StandbyServers(src.StandbyServers)
@@ -2011,6 +2076,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct GetMultiplayerServerLogsRequest : public PlayFabBaseModel
+        {
+            std::string Region;
+            std::string ServerId;
+
+            GetMultiplayerServerLogsRequest() :
+                PlayFabBaseModel(),
+                Region(),
+                ServerId()
+            {}
+
+            GetMultiplayerServerLogsRequest(const GetMultiplayerServerLogsRequest& src) :
+                PlayFabBaseModel(),
+                Region(src.Region),
+                ServerId(src.ServerId)
+            {}
+
+            GetMultiplayerServerLogsRequest(const rapidjson::Value& obj) : GetMultiplayerServerLogsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetMultiplayerServerLogsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetMultiplayerServerLogsResponse : public PlayFabBaseModel
+        {
+            std::string LogDownloadUrl;
+
+            GetMultiplayerServerLogsResponse() :
+                PlayFabBaseModel(),
+                LogDownloadUrl()
+            {}
+
+            GetMultiplayerServerLogsResponse(const GetMultiplayerServerLogsResponse& src) :
+                PlayFabBaseModel(),
+                LogDownloadUrl(src.LogDownloadUrl)
+            {}
+
+            GetMultiplayerServerLogsResponse(const rapidjson::Value& obj) : GetMultiplayerServerLogsResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetMultiplayerServerLogsResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct GetQueueStatisticsRequest : public PlayFabBaseModel
         {
             std::string QueueName;
@@ -3280,6 +3398,34 @@ namespace PlayFab
             }
 
             ~ShutdownMultiplayerServerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UntagContainerImageRequest : public PlayFabBaseModel
+        {
+            std::string ImageName;
+            std::string Tag;
+
+            UntagContainerImageRequest() :
+                PlayFabBaseModel(),
+                ImageName(),
+                Tag()
+            {}
+
+            UntagContainerImageRequest(const UntagContainerImageRequest& src) :
+                PlayFabBaseModel(),
+                ImageName(src.ImageName),
+                Tag(src.Tag)
+            {}
+
+            UntagContainerImageRequest(const rapidjson::Value& obj) : UntagContainerImageRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UntagContainerImageRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

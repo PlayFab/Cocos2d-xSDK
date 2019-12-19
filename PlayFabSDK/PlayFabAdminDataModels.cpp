@@ -3599,6 +3599,11 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter: writer.String("InsightsManagementGetOperationStatusInvalidParameter"); break;
     case GenericErrorCodesDuplicatePurchaseTransactionId: writer.String("DuplicatePurchaseTransactionId"); break;
     case GenericErrorCodesEvaluationModePlayerCountExceeded: writer.String("EvaluationModePlayerCountExceeded"); break;
+    case GenericErrorCodesGetPlayersInSegmentRateLimitExceeded: writer.String("GetPlayersInSegmentRateLimitExceeded"); break;
+    case GenericErrorCodesCloudScriptFunctionNameSizeExceeded: writer.String("CloudScriptFunctionNameSizeExceeded"); break;
+    case GenericErrorCodesInsightsManagementTitleInEvaluationMode: writer.String("InsightsManagementTitleInEvaluationMode"); break;
+    case GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError: writer.String("CloudScriptAzureFunctionsQueueRequestError"); break;
+    case GenericErrorCodesEvaluationModeTitleCountExceeded: writer.String("EvaluationModeTitleCountExceeded"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -3651,6 +3656,10 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExportCantEditPendingExport: writer.String("ExportCantEditPendingExport"); break;
     case GenericErrorCodesExportLimitExports: writer.String("ExportLimitExports"); break;
     case GenericErrorCodesExportLimitEvents: writer.String("ExportLimitEvents"); break;
+    case GenericErrorCodesExportInvalidPartitionStatusModification: writer.String("ExportInvalidPartitionStatusModification"); break;
+    case GenericErrorCodesExportCouldNotCreate: writer.String("ExportCouldNotCreate"); break;
+    case GenericErrorCodesExportNoBackingDatabaseFound: writer.String("ExportNoBackingDatabaseFound"); break;
+    case GenericErrorCodesExportCouldNotDelete: writer.String("ExportCouldNotDelete"); break;
     case GenericErrorCodesTitleNotEnabledForParty: writer.String("TitleNotEnabledForParty"); break;
     case GenericErrorCodesPartyVersionNotFound: writer.String("PartyVersionNotFound"); break;
     case GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue: writer.String("MultiplayerServerBuildReferencedByMatchmakingQueue"); break;
@@ -3660,10 +3669,12 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExperimentationExperimentNeverStarted: writer.String("ExperimentationExperimentNeverStarted"); break;
     case GenericErrorCodesExperimentationExperimentDeleted: writer.String("ExperimentationExperimentDeleted"); break;
     case GenericErrorCodesExperimentationClientTimeout: writer.String("ExperimentationClientTimeout"); break;
-    case GenericErrorCodesExperimentationExceededVariantNameLength: writer.String("ExperimentationExceededVariantNameLength"); break;
-    case GenericErrorCodesExperimentationExceededMaxVariantLength: writer.String("ExperimentationExceededMaxVariantLength"); break;
+    case GenericErrorCodesExperimentationInvalidVariantConfiguration: writer.String("ExperimentationInvalidVariantConfiguration"); break;
+    case GenericErrorCodesExperimentationInvalidVariableConfiguration: writer.String("ExperimentationInvalidVariableConfiguration"); break;
     case GenericErrorCodesExperimentInvalidId: writer.String("ExperimentInvalidId"); break;
     case GenericErrorCodesExperimentationNoScorecard: writer.String("ExperimentationNoScorecard"); break;
+    case GenericErrorCodesExperimentationTreatmentAssignmentFailed: writer.String("ExperimentationTreatmentAssignmentFailed"); break;
+    case GenericErrorCodesExperimentationTreatmentAssignmentDisabled: writer.String("ExperimentationTreatmentAssignmentDisabled"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
@@ -4156,6 +4167,11 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["InsightsManagementGetOperationStatusInvalidParameter"] = GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter;
         _GenericErrorCodesMap["DuplicatePurchaseTransactionId"] = GenericErrorCodesDuplicatePurchaseTransactionId;
         _GenericErrorCodesMap["EvaluationModePlayerCountExceeded"] = GenericErrorCodesEvaluationModePlayerCountExceeded;
+        _GenericErrorCodesMap["GetPlayersInSegmentRateLimitExceeded"] = GenericErrorCodesGetPlayersInSegmentRateLimitExceeded;
+        _GenericErrorCodesMap["CloudScriptFunctionNameSizeExceeded"] = GenericErrorCodesCloudScriptFunctionNameSizeExceeded;
+        _GenericErrorCodesMap["InsightsManagementTitleInEvaluationMode"] = GenericErrorCodesInsightsManagementTitleInEvaluationMode;
+        _GenericErrorCodesMap["CloudScriptAzureFunctionsQueueRequestError"] = GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError;
+        _GenericErrorCodesMap["EvaluationModeTitleCountExceeded"] = GenericErrorCodesEvaluationModeTitleCountExceeded;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -4208,6 +4224,10 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExportCantEditPendingExport"] = GenericErrorCodesExportCantEditPendingExport;
         _GenericErrorCodesMap["ExportLimitExports"] = GenericErrorCodesExportLimitExports;
         _GenericErrorCodesMap["ExportLimitEvents"] = GenericErrorCodesExportLimitEvents;
+        _GenericErrorCodesMap["ExportInvalidPartitionStatusModification"] = GenericErrorCodesExportInvalidPartitionStatusModification;
+        _GenericErrorCodesMap["ExportCouldNotCreate"] = GenericErrorCodesExportCouldNotCreate;
+        _GenericErrorCodesMap["ExportNoBackingDatabaseFound"] = GenericErrorCodesExportNoBackingDatabaseFound;
+        _GenericErrorCodesMap["ExportCouldNotDelete"] = GenericErrorCodesExportCouldNotDelete;
         _GenericErrorCodesMap["TitleNotEnabledForParty"] = GenericErrorCodesTitleNotEnabledForParty;
         _GenericErrorCodesMap["PartyVersionNotFound"] = GenericErrorCodesPartyVersionNotFound;
         _GenericErrorCodesMap["MultiplayerServerBuildReferencedByMatchmakingQueue"] = GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue;
@@ -4217,10 +4237,12 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExperimentationExperimentNeverStarted"] = GenericErrorCodesExperimentationExperimentNeverStarted;
         _GenericErrorCodesMap["ExperimentationExperimentDeleted"] = GenericErrorCodesExperimentationExperimentDeleted;
         _GenericErrorCodesMap["ExperimentationClientTimeout"] = GenericErrorCodesExperimentationClientTimeout;
-        _GenericErrorCodesMap["ExperimentationExceededVariantNameLength"] = GenericErrorCodesExperimentationExceededVariantNameLength;
-        _GenericErrorCodesMap["ExperimentationExceededMaxVariantLength"] = GenericErrorCodesExperimentationExceededMaxVariantLength;
+        _GenericErrorCodesMap["ExperimentationInvalidVariantConfiguration"] = GenericErrorCodesExperimentationInvalidVariantConfiguration;
+        _GenericErrorCodesMap["ExperimentationInvalidVariableConfiguration"] = GenericErrorCodesExperimentationInvalidVariableConfiguration;
         _GenericErrorCodesMap["ExperimentInvalidId"] = GenericErrorCodesExperimentInvalidId;
         _GenericErrorCodesMap["ExperimentationNoScorecard"] = GenericErrorCodesExperimentationNoScorecard;
+        _GenericErrorCodesMap["ExperimentationTreatmentAssignmentFailed"] = GenericErrorCodesExperimentationTreatmentAssignmentFailed;
+        _GenericErrorCodesMap["ExperimentationTreatmentAssignmentDisabled"] = GenericErrorCodesExperimentationTreatmentAssignmentDisabled;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 
