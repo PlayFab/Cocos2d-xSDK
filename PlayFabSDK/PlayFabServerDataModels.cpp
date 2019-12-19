@@ -4366,6 +4366,11 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter: writer.String("InsightsManagementGetOperationStatusInvalidParameter"); break;
     case GenericErrorCodesDuplicatePurchaseTransactionId: writer.String("DuplicatePurchaseTransactionId"); break;
     case GenericErrorCodesEvaluationModePlayerCountExceeded: writer.String("EvaluationModePlayerCountExceeded"); break;
+    case GenericErrorCodesGetPlayersInSegmentRateLimitExceeded: writer.String("GetPlayersInSegmentRateLimitExceeded"); break;
+    case GenericErrorCodesCloudScriptFunctionNameSizeExceeded: writer.String("CloudScriptFunctionNameSizeExceeded"); break;
+    case GenericErrorCodesInsightsManagementTitleInEvaluationMode: writer.String("InsightsManagementTitleInEvaluationMode"); break;
+    case GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError: writer.String("CloudScriptAzureFunctionsQueueRequestError"); break;
+    case GenericErrorCodesEvaluationModeTitleCountExceeded: writer.String("EvaluationModeTitleCountExceeded"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -4418,6 +4423,10 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesExportCantEditPendingExport: writer.String("ExportCantEditPendingExport"); break;
     case GenericErrorCodesExportLimitExports: writer.String("ExportLimitExports"); break;
     case GenericErrorCodesExportLimitEvents: writer.String("ExportLimitEvents"); break;
+    case GenericErrorCodesExportInvalidPartitionStatusModification: writer.String("ExportInvalidPartitionStatusModification"); break;
+    case GenericErrorCodesExportCouldNotCreate: writer.String("ExportCouldNotCreate"); break;
+    case GenericErrorCodesExportNoBackingDatabaseFound: writer.String("ExportNoBackingDatabaseFound"); break;
+    case GenericErrorCodesExportCouldNotDelete: writer.String("ExportCouldNotDelete"); break;
     case GenericErrorCodesTitleNotEnabledForParty: writer.String("TitleNotEnabledForParty"); break;
     case GenericErrorCodesPartyVersionNotFound: writer.String("PartyVersionNotFound"); break;
     case GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue: writer.String("MultiplayerServerBuildReferencedByMatchmakingQueue"); break;
@@ -4427,10 +4436,12 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesExperimentationExperimentNeverStarted: writer.String("ExperimentationExperimentNeverStarted"); break;
     case GenericErrorCodesExperimentationExperimentDeleted: writer.String("ExperimentationExperimentDeleted"); break;
     case GenericErrorCodesExperimentationClientTimeout: writer.String("ExperimentationClientTimeout"); break;
-    case GenericErrorCodesExperimentationExceededVariantNameLength: writer.String("ExperimentationExceededVariantNameLength"); break;
-    case GenericErrorCodesExperimentationExceededMaxVariantLength: writer.String("ExperimentationExceededMaxVariantLength"); break;
+    case GenericErrorCodesExperimentationInvalidVariantConfiguration: writer.String("ExperimentationInvalidVariantConfiguration"); break;
+    case GenericErrorCodesExperimentationInvalidVariableConfiguration: writer.String("ExperimentationInvalidVariableConfiguration"); break;
     case GenericErrorCodesExperimentInvalidId: writer.String("ExperimentInvalidId"); break;
     case GenericErrorCodesExperimentationNoScorecard: writer.String("ExperimentationNoScorecard"); break;
+    case GenericErrorCodesExperimentationTreatmentAssignmentFailed: writer.String("ExperimentationTreatmentAssignmentFailed"); break;
+    case GenericErrorCodesExperimentationTreatmentAssignmentDisabled: writer.String("ExperimentationTreatmentAssignmentDisabled"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
@@ -4923,6 +4934,11 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["InsightsManagementGetOperationStatusInvalidParameter"] = GenericErrorCodesInsightsManagementGetOperationStatusInvalidParameter;
         _GenericErrorCodesMap["DuplicatePurchaseTransactionId"] = GenericErrorCodesDuplicatePurchaseTransactionId;
         _GenericErrorCodesMap["EvaluationModePlayerCountExceeded"] = GenericErrorCodesEvaluationModePlayerCountExceeded;
+        _GenericErrorCodesMap["GetPlayersInSegmentRateLimitExceeded"] = GenericErrorCodesGetPlayersInSegmentRateLimitExceeded;
+        _GenericErrorCodesMap["CloudScriptFunctionNameSizeExceeded"] = GenericErrorCodesCloudScriptFunctionNameSizeExceeded;
+        _GenericErrorCodesMap["InsightsManagementTitleInEvaluationMode"] = GenericErrorCodesInsightsManagementTitleInEvaluationMode;
+        _GenericErrorCodesMap["CloudScriptAzureFunctionsQueueRequestError"] = GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError;
+        _GenericErrorCodesMap["EvaluationModeTitleCountExceeded"] = GenericErrorCodesEvaluationModeTitleCountExceeded;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -4975,6 +4991,10 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["ExportCantEditPendingExport"] = GenericErrorCodesExportCantEditPendingExport;
         _GenericErrorCodesMap["ExportLimitExports"] = GenericErrorCodesExportLimitExports;
         _GenericErrorCodesMap["ExportLimitEvents"] = GenericErrorCodesExportLimitEvents;
+        _GenericErrorCodesMap["ExportInvalidPartitionStatusModification"] = GenericErrorCodesExportInvalidPartitionStatusModification;
+        _GenericErrorCodesMap["ExportCouldNotCreate"] = GenericErrorCodesExportCouldNotCreate;
+        _GenericErrorCodesMap["ExportNoBackingDatabaseFound"] = GenericErrorCodesExportNoBackingDatabaseFound;
+        _GenericErrorCodesMap["ExportCouldNotDelete"] = GenericErrorCodesExportCouldNotDelete;
         _GenericErrorCodesMap["TitleNotEnabledForParty"] = GenericErrorCodesTitleNotEnabledForParty;
         _GenericErrorCodesMap["PartyVersionNotFound"] = GenericErrorCodesPartyVersionNotFound;
         _GenericErrorCodesMap["MultiplayerServerBuildReferencedByMatchmakingQueue"] = GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue;
@@ -4984,10 +5004,12 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["ExperimentationExperimentNeverStarted"] = GenericErrorCodesExperimentationExperimentNeverStarted;
         _GenericErrorCodesMap["ExperimentationExperimentDeleted"] = GenericErrorCodesExperimentationExperimentDeleted;
         _GenericErrorCodesMap["ExperimentationClientTimeout"] = GenericErrorCodesExperimentationClientTimeout;
-        _GenericErrorCodesMap["ExperimentationExceededVariantNameLength"] = GenericErrorCodesExperimentationExceededVariantNameLength;
-        _GenericErrorCodesMap["ExperimentationExceededMaxVariantLength"] = GenericErrorCodesExperimentationExceededMaxVariantLength;
+        _GenericErrorCodesMap["ExperimentationInvalidVariantConfiguration"] = GenericErrorCodesExperimentationInvalidVariantConfiguration;
+        _GenericErrorCodesMap["ExperimentationInvalidVariableConfiguration"] = GenericErrorCodesExperimentationInvalidVariableConfiguration;
         _GenericErrorCodesMap["ExperimentInvalidId"] = GenericErrorCodesExperimentInvalidId;
         _GenericErrorCodesMap["ExperimentationNoScorecard"] = GenericErrorCodesExperimentationNoScorecard;
+        _GenericErrorCodesMap["ExperimentationTreatmentAssignmentFailed"] = GenericErrorCodesExperimentationTreatmentAssignmentFailed;
+        _GenericErrorCodesMap["ExperimentationTreatmentAssignmentDisabled"] = GenericErrorCodesExperimentationTreatmentAssignmentDisabled;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 
@@ -10684,7 +10706,7 @@ void Variable::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("Name"); writer.String(Name.c_str());
-    writer.String("Value"); writer.String(Value.c_str());
+    if (Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
     writer.EndObject();
 }
 
@@ -11936,6 +11958,14 @@ void WriteServerCharacterEventRequest::writeJSON(PFStringJsonWriter& writer)
         writer.EndObject();
     }
     writer.String("CharacterId"); writer.String(CharacterId.c_str());
+    if (!EventCustomTags.empty()) {
+        writer.String("EventCustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = EventCustomTags.begin(); iter != EventCustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("EventName"); writer.String(EventName.c_str());
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
@@ -11952,6 +11982,12 @@ bool WriteServerCharacterEventRequest::readFromValue(const rapidjson::Value& obj
     }
     const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
     if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator EventCustomTags_member = obj.FindMember("EventCustomTags");
+    if (EventCustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = EventCustomTags_member->value.MemberBegin(); iter != EventCustomTags_member->value.MemberEnd(); ++iter) {
+            EventCustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator EventName_member = obj.FindMember("EventName");
     if (EventName_member != obj.MemberEnd() && !EventName_member->value.IsNull()) EventName = EventName_member->value.GetString();
     const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
@@ -11978,6 +12014,14 @@ void WriteServerPlayerEventRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndObject();
     }
+    if (!EventCustomTags.empty()) {
+        writer.String("EventCustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = EventCustomTags.begin(); iter != EventCustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("EventName"); writer.String(EventName.c_str());
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
     if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
@@ -11990,6 +12034,12 @@ bool WriteServerPlayerEventRequest::readFromValue(const rapidjson::Value& obj)
     if (Body_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Body_member->value.MemberBegin(); iter != Body_member->value.MemberEnd(); ++iter) {
             Body[iter->name.GetString()] = MultitypeVar(iter->value);
+        }
+    }
+    const Value::ConstMemberIterator EventCustomTags_member = obj.FindMember("EventCustomTags");
+    if (EventCustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = EventCustomTags_member->value.MemberBegin(); iter != EventCustomTags_member->value.MemberEnd(); ++iter) {
+            EventCustomTags[iter->name.GetString()] = iter->value.GetString();
         }
     }
     const Value::ConstMemberIterator EventName_member = obj.FindMember("EventName");
@@ -12018,6 +12068,14 @@ void WriteTitleEventRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndObject();
     }
+    if (!EventCustomTags.empty()) {
+        writer.String("EventCustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = EventCustomTags.begin(); iter != EventCustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("EventName"); writer.String(EventName.c_str());
     if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
     writer.EndObject();
@@ -12029,6 +12087,12 @@ bool WriteTitleEventRequest::readFromValue(const rapidjson::Value& obj)
     if (Body_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Body_member->value.MemberBegin(); iter != Body_member->value.MemberEnd(); ++iter) {
             Body[iter->name.GetString()] = MultitypeVar(iter->value);
+        }
+    }
+    const Value::ConstMemberIterator EventCustomTags_member = obj.FindMember("EventCustomTags");
+    if (EventCustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = EventCustomTags_member->value.MemberBegin(); iter != EventCustomTags_member->value.MemberEnd(); ++iter) {
+            EventCustomTags[iter->name.GetString()] = iter->value.GetString();
         }
     }
     const Value::ConstMemberIterator EventName_member = obj.FindMember("EventName");

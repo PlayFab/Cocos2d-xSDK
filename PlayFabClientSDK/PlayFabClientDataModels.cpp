@@ -8810,7 +8810,7 @@ void Variable::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("Name"); writer.String(Name.c_str());
-    writer.String("Value"); writer.String(Value.c_str());
+    if (Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
     writer.EndObject();
 }
 
@@ -12193,6 +12193,14 @@ void WriteClientCharacterEventRequest::writeJSON(PFStringJsonWriter& writer)
         writer.EndObject();
     }
     writer.String("CharacterId"); writer.String(CharacterId.c_str());
+    if (!EventCustomTags.empty()) {
+        writer.String("EventCustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = EventCustomTags.begin(); iter != EventCustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("EventName"); writer.String(EventName.c_str());
     if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
     writer.EndObject();
@@ -12208,6 +12216,12 @@ bool WriteClientCharacterEventRequest::readFromValue(const rapidjson::Value& obj
     }
     const Value::ConstMemberIterator CharacterId_member = obj.FindMember("CharacterId");
     if (CharacterId_member != obj.MemberEnd() && !CharacterId_member->value.IsNull()) CharacterId = CharacterId_member->value.GetString();
+    const Value::ConstMemberIterator EventCustomTags_member = obj.FindMember("EventCustomTags");
+    if (EventCustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = EventCustomTags_member->value.MemberBegin(); iter != EventCustomTags_member->value.MemberEnd(); ++iter) {
+            EventCustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator EventName_member = obj.FindMember("EventName");
     if (EventName_member != obj.MemberEnd() && !EventName_member->value.IsNull()) EventName = EventName_member->value.GetString();
     const Value::ConstMemberIterator Timestamp_member = obj.FindMember("Timestamp");
@@ -12232,6 +12246,14 @@ void WriteClientPlayerEventRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndObject();
     }
+    if (!EventCustomTags.empty()) {
+        writer.String("EventCustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = EventCustomTags.begin(); iter != EventCustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("EventName"); writer.String(EventName.c_str());
     if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
     writer.EndObject();
@@ -12243,6 +12265,12 @@ bool WriteClientPlayerEventRequest::readFromValue(const rapidjson::Value& obj)
     if (Body_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Body_member->value.MemberBegin(); iter != Body_member->value.MemberEnd(); ++iter) {
             Body[iter->name.GetString()] = MultitypeVar(iter->value);
+        }
+    }
+    const Value::ConstMemberIterator EventCustomTags_member = obj.FindMember("EventCustomTags");
+    if (EventCustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = EventCustomTags_member->value.MemberBegin(); iter != EventCustomTags_member->value.MemberEnd(); ++iter) {
+            EventCustomTags[iter->name.GetString()] = iter->value.GetString();
         }
     }
     const Value::ConstMemberIterator EventName_member = obj.FindMember("EventName");
@@ -12289,6 +12317,14 @@ void WriteTitleEventRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndObject();
     }
+    if (!EventCustomTags.empty()) {
+        writer.String("EventCustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = EventCustomTags.begin(); iter != EventCustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("EventName"); writer.String(EventName.c_str());
     if (Timestamp.notNull()) { writer.String("Timestamp"); writeDatetime(Timestamp, writer); }
     writer.EndObject();
@@ -12300,6 +12336,12 @@ bool WriteTitleEventRequest::readFromValue(const rapidjson::Value& obj)
     if (Body_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Body_member->value.MemberBegin(); iter != Body_member->value.MemberEnd(); ++iter) {
             Body[iter->name.GetString()] = MultitypeVar(iter->value);
+        }
+    }
+    const Value::ConstMemberIterator EventCustomTags_member = obj.FindMember("EventCustomTags");
+    if (EventCustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = EventCustomTags_member->value.MemberBegin(); iter != EventCustomTags_member->value.MemberEnd(); ++iter) {
+            EventCustomTags[iter->name.GetString()] = iter->value.GetString();
         }
     }
     const Value::ConstMemberIterator EventName_member = obj.FindMember("EventName");

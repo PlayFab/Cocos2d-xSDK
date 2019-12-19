@@ -11310,6 +11310,7 @@ namespace PlayFab
         {
             std::map<std::string, MultitypeVar> Body;
             std::string CharacterId;
+            std::map<std::string, std::string> EventCustomTags;
             std::string EventName;
             OptionalTime Timestamp;
 
@@ -11317,6 +11318,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Body(),
                 CharacterId(),
+                EventCustomTags(),
                 EventName(),
                 Timestamp()
             {}
@@ -11325,6 +11327,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Body(src.Body),
                 CharacterId(src.CharacterId),
+                EventCustomTags(src.EventCustomTags),
                 EventName(src.EventName),
                 Timestamp(src.Timestamp)
             {}
@@ -11343,12 +11346,14 @@ namespace PlayFab
         struct WriteClientPlayerEventRequest : public PlayFabBaseModel
         {
             std::map<std::string, MultitypeVar> Body;
+            std::map<std::string, std::string> EventCustomTags;
             std::string EventName;
             OptionalTime Timestamp;
 
             WriteClientPlayerEventRequest() :
                 PlayFabBaseModel(),
                 Body(),
+                EventCustomTags(),
                 EventName(),
                 Timestamp()
             {}
@@ -11356,6 +11361,7 @@ namespace PlayFab
             WriteClientPlayerEventRequest(const WriteClientPlayerEventRequest& src) :
                 PlayFabBaseModel(),
                 Body(src.Body),
+                EventCustomTags(src.EventCustomTags),
                 EventName(src.EventName),
                 Timestamp(src.Timestamp)
             {}
@@ -11399,12 +11405,14 @@ namespace PlayFab
         struct WriteTitleEventRequest : public PlayFabBaseModel
         {
             std::map<std::string, MultitypeVar> Body;
+            std::map<std::string, std::string> EventCustomTags;
             std::string EventName;
             OptionalTime Timestamp;
 
             WriteTitleEventRequest() :
                 PlayFabBaseModel(),
                 Body(),
+                EventCustomTags(),
                 EventName(),
                 Timestamp()
             {}
@@ -11412,6 +11420,7 @@ namespace PlayFab
             WriteTitleEventRequest(const WriteTitleEventRequest& src) :
                 PlayFabBaseModel(),
                 Body(src.Body),
+                EventCustomTags(src.EventCustomTags),
                 EventName(src.EventName),
                 Timestamp(src.Timestamp)
             {}
