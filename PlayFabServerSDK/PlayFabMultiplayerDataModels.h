@@ -526,6 +526,56 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct CancelAllServerBackfillTicketsForPlayerRequest : public PlayFabBaseModel
+        {
+            EntityKey Entity;
+            std::string QueueName;
+
+            CancelAllServerBackfillTicketsForPlayerRequest() :
+                PlayFabBaseModel(),
+                Entity(),
+                QueueName()
+            {}
+
+            CancelAllServerBackfillTicketsForPlayerRequest(const CancelAllServerBackfillTicketsForPlayerRequest& src) :
+                PlayFabBaseModel(),
+                Entity(src.Entity),
+                QueueName(src.QueueName)
+            {}
+
+            CancelAllServerBackfillTicketsForPlayerRequest(const rapidjson::Value& obj) : CancelAllServerBackfillTicketsForPlayerRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CancelAllServerBackfillTicketsForPlayerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CancelAllServerBackfillTicketsForPlayerResult : public PlayFabBaseModel
+        {
+
+            CancelAllServerBackfillTicketsForPlayerResult() :
+                PlayFabBaseModel()
+            {}
+
+            CancelAllServerBackfillTicketsForPlayerResult(const CancelAllServerBackfillTicketsForPlayerResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            CancelAllServerBackfillTicketsForPlayerResult(const rapidjson::Value& obj) : CancelAllServerBackfillTicketsForPlayerResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~CancelAllServerBackfillTicketsForPlayerResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum CancellationReason
         {
             CancellationReasonRequested,
@@ -581,6 +631,56 @@ namespace PlayFab
             }
 
             ~CancelMatchmakingTicketResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CancelServerBackfillTicketRequest : public PlayFabBaseModel
+        {
+            std::string QueueName;
+            std::string TicketId;
+
+            CancelServerBackfillTicketRequest() :
+                PlayFabBaseModel(),
+                QueueName(),
+                TicketId()
+            {}
+
+            CancelServerBackfillTicketRequest(const CancelServerBackfillTicketRequest& src) :
+                PlayFabBaseModel(),
+                QueueName(src.QueueName),
+                TicketId(src.TicketId)
+            {}
+
+            CancelServerBackfillTicketRequest(const rapidjson::Value& obj) : CancelServerBackfillTicketRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CancelServerBackfillTicketRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CancelServerBackfillTicketResult : public PlayFabBaseModel
+        {
+
+            CancelServerBackfillTicketResult() :
+                PlayFabBaseModel()
+            {}
+
+            CancelServerBackfillTicketResult(const CancelServerBackfillTicketResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            CancelServerBackfillTicketResult(const rapidjson::Value& obj) : CancelServerBackfillTicketResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~CancelServerBackfillTicketResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -1306,6 +1406,127 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct MatchmakingPlayerWithTeamAssignment : public PlayFabBaseModel
+        {
+            MatchmakingPlayerAttributes* Attributes;
+            EntityKey Entity;
+            std::string TeamId;
+
+            MatchmakingPlayerWithTeamAssignment() :
+                PlayFabBaseModel(),
+                Attributes(NULL),
+                Entity(),
+                TeamId()
+            {}
+
+            MatchmakingPlayerWithTeamAssignment(const MatchmakingPlayerWithTeamAssignment& src) :
+                PlayFabBaseModel(),
+                Attributes(src.Attributes ? new MatchmakingPlayerAttributes(*src.Attributes) : NULL),
+                Entity(src.Entity),
+                TeamId(src.TeamId)
+            {}
+
+            MatchmakingPlayerWithTeamAssignment(const rapidjson::Value& obj) : MatchmakingPlayerWithTeamAssignment()
+            {
+                readFromValue(obj);
+            }
+
+            ~MatchmakingPlayerWithTeamAssignment();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ServerDetails : public PlayFabBaseModel
+        {
+            std::string IPV4Address;
+            std::list<Port> Ports;
+            std::string Region;
+
+            ServerDetails() :
+                PlayFabBaseModel(),
+                IPV4Address(),
+                Ports(),
+                Region()
+            {}
+
+            ServerDetails(const ServerDetails& src) :
+                PlayFabBaseModel(),
+                IPV4Address(src.IPV4Address),
+                Ports(src.Ports),
+                Region(src.Region)
+            {}
+
+            ServerDetails(const rapidjson::Value& obj) : ServerDetails()
+            {
+                readFromValue(obj);
+            }
+
+            ~ServerDetails();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateServerBackfillTicketRequest : public PlayFabBaseModel
+        {
+            Int32 GiveUpAfterSeconds;
+            std::list<MatchmakingPlayerWithTeamAssignment> Members;
+            std::string QueueName;
+            ServerDetails* pfServerDetails;
+
+            CreateServerBackfillTicketRequest() :
+                PlayFabBaseModel(),
+                GiveUpAfterSeconds(0),
+                Members(),
+                QueueName(),
+                pfServerDetails(NULL)
+            {}
+
+            CreateServerBackfillTicketRequest(const CreateServerBackfillTicketRequest& src) :
+                PlayFabBaseModel(),
+                GiveUpAfterSeconds(src.GiveUpAfterSeconds),
+                Members(src.Members),
+                QueueName(src.QueueName),
+                pfServerDetails(src.pfServerDetails ? new ServerDetails(*src.pfServerDetails) : NULL)
+            {}
+
+            CreateServerBackfillTicketRequest(const rapidjson::Value& obj) : CreateServerBackfillTicketRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateServerBackfillTicketRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateServerBackfillTicketResult : public PlayFabBaseModel
+        {
+            std::string TicketId;
+
+            CreateServerBackfillTicketResult() :
+                PlayFabBaseModel(),
+                TicketId()
+            {}
+
+            CreateServerBackfillTicketResult(const CreateServerBackfillTicketResult& src) :
+                PlayFabBaseModel(),
+                TicketId(src.TicketId)
+            {}
+
+            CreateServerBackfillTicketResult(const rapidjson::Value& obj) : CreateServerBackfillTicketResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateServerBackfillTicketResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct CreateServerMatchmakingTicketRequest : public PlayFabBaseModel
         {
             Int32 GiveUpAfterSeconds;
@@ -1809,8 +2030,6 @@ namespace PlayFab
 
         struct GetMatchmakingTicketResult : public PlayFabBaseModel
         {
-            // Deprecated - Use 'CancellationReasonString' instead
-            Boxed<CancellationReason> pfCancellationReason;
             std::string CancellationReasonString;
             time_t Created;
             EntityKey Creator;
@@ -1824,7 +2043,6 @@ namespace PlayFab
 
             GetMatchmakingTicketResult() :
                 PlayFabBaseModel(),
-                pfCancellationReason(),
                 CancellationReasonString(),
                 Created(0),
                 Creator(),
@@ -1839,7 +2057,6 @@ namespace PlayFab
 
             GetMatchmakingTicketResult(const GetMatchmakingTicketResult& src) :
                 PlayFabBaseModel(),
-                pfCancellationReason(src.pfCancellationReason),
                 CancellationReasonString(src.CancellationReasonString),
                 Created(src.Created),
                 Creator(src.Creator),
@@ -1892,68 +2109,6 @@ namespace PlayFab
             }
 
             ~GetMatchRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct MatchmakingPlayerWithTeamAssignment : public PlayFabBaseModel
-        {
-            MatchmakingPlayerAttributes* Attributes;
-            EntityKey Entity;
-            std::string TeamId;
-
-            MatchmakingPlayerWithTeamAssignment() :
-                PlayFabBaseModel(),
-                Attributes(NULL),
-                Entity(),
-                TeamId()
-            {}
-
-            MatchmakingPlayerWithTeamAssignment(const MatchmakingPlayerWithTeamAssignment& src) :
-                PlayFabBaseModel(),
-                Attributes(src.Attributes ? new MatchmakingPlayerAttributes(*src.Attributes) : NULL),
-                Entity(src.Entity),
-                TeamId(src.TeamId)
-            {}
-
-            MatchmakingPlayerWithTeamAssignment(const rapidjson::Value& obj) : MatchmakingPlayerWithTeamAssignment()
-            {
-                readFromValue(obj);
-            }
-
-            ~MatchmakingPlayerWithTeamAssignment();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct ServerDetails : public PlayFabBaseModel
-        {
-            std::string IPV4Address;
-            std::list<Port> Ports;
-            std::string Region;
-
-            ServerDetails() :
-                PlayFabBaseModel(),
-                IPV4Address(),
-                Ports(),
-                Region()
-            {}
-
-            ServerDetails(const ServerDetails& src) :
-                PlayFabBaseModel(),
-                IPV4Address(src.IPV4Address),
-                Ports(src.Ports),
-                Region(src.Region)
-            {}
-
-            ServerDetails(const rapidjson::Value& obj) : ServerDetails()
-            {
-                readFromValue(obj);
-            }
-
-            ~ServerDetails();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -2270,6 +2425,86 @@ namespace PlayFab
             }
 
             ~GetRemoteLoginEndpointResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetServerBackfillTicketRequest : public PlayFabBaseModel
+        {
+            bool EscapeObject;
+            std::string QueueName;
+            std::string TicketId;
+
+            GetServerBackfillTicketRequest() :
+                PlayFabBaseModel(),
+                EscapeObject(false),
+                QueueName(),
+                TicketId()
+            {}
+
+            GetServerBackfillTicketRequest(const GetServerBackfillTicketRequest& src) :
+                PlayFabBaseModel(),
+                EscapeObject(src.EscapeObject),
+                QueueName(src.QueueName),
+                TicketId(src.TicketId)
+            {}
+
+            GetServerBackfillTicketRequest(const rapidjson::Value& obj) : GetServerBackfillTicketRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetServerBackfillTicketRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetServerBackfillTicketResult : public PlayFabBaseModel
+        {
+            std::string CancellationReasonString;
+            time_t Created;
+            Int32 GiveUpAfterSeconds;
+            std::string MatchId;
+            std::list<MatchmakingPlayerWithTeamAssignment> Members;
+            std::string QueueName;
+            ServerDetails pfServerDetails;
+            std::string Status;
+            std::string TicketId;
+
+            GetServerBackfillTicketResult() :
+                PlayFabBaseModel(),
+                CancellationReasonString(),
+                Created(0),
+                GiveUpAfterSeconds(0),
+                MatchId(),
+                Members(),
+                QueueName(),
+                pfServerDetails(),
+                Status(),
+                TicketId()
+            {}
+
+            GetServerBackfillTicketResult(const GetServerBackfillTicketResult& src) :
+                PlayFabBaseModel(),
+                CancellationReasonString(src.CancellationReasonString),
+                Created(src.Created),
+                GiveUpAfterSeconds(src.GiveUpAfterSeconds),
+                MatchId(src.MatchId),
+                Members(src.Members),
+                QueueName(src.QueueName),
+                pfServerDetails(src.pfServerDetails),
+                Status(src.Status),
+                TicketId(src.TicketId)
+            {}
+
+            GetServerBackfillTicketResult(const rapidjson::Value& obj) : GetServerBackfillTicketResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetServerBackfillTicketResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -3104,6 +3339,59 @@ namespace PlayFab
             }
 
             ~ListQosServersResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ListServerBackfillTicketsForPlayerRequest : public PlayFabBaseModel
+        {
+            EntityKey Entity;
+            std::string QueueName;
+
+            ListServerBackfillTicketsForPlayerRequest() :
+                PlayFabBaseModel(),
+                Entity(),
+                QueueName()
+            {}
+
+            ListServerBackfillTicketsForPlayerRequest(const ListServerBackfillTicketsForPlayerRequest& src) :
+                PlayFabBaseModel(),
+                Entity(src.Entity),
+                QueueName(src.QueueName)
+            {}
+
+            ListServerBackfillTicketsForPlayerRequest(const rapidjson::Value& obj) : ListServerBackfillTicketsForPlayerRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListServerBackfillTicketsForPlayerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ListServerBackfillTicketsForPlayerResult : public PlayFabBaseModel
+        {
+            std::list<std::string> TicketIds;
+
+            ListServerBackfillTicketsForPlayerResult() :
+                PlayFabBaseModel(),
+                TicketIds()
+            {}
+
+            ListServerBackfillTicketsForPlayerResult(const ListServerBackfillTicketsForPlayerResult& src) :
+                PlayFabBaseModel(),
+                TicketIds(src.TicketIds)
+            {}
+
+            ListServerBackfillTicketsForPlayerResult(const rapidjson::Value& obj) : ListServerBackfillTicketsForPlayerResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~ListServerBackfillTicketsForPlayerResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

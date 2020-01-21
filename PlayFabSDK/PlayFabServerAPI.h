@@ -84,6 +84,7 @@ namespace PlayFab
         static void GrantItemsToCharacter(ServerModels::GrantItemsToCharacterRequest& request, ProcessApiCallback<ServerModels::GrantItemsToCharacterResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GrantItemsToUser(ServerModels::GrantItemsToUserRequest& request, ProcessApiCallback<ServerModels::GrantItemsToUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GrantItemsToUsers(ServerModels::GrantItemsToUsersRequest& request, ProcessApiCallback<ServerModels::GrantItemsToUsersResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void LinkPSNAccount(ServerModels::LinkPSNAccountRequest& request, ProcessApiCallback<ServerModels::LinkPSNAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkServerCustomId(ServerModels::LinkServerCustomIdRequest& request, ProcessApiCallback<ServerModels::LinkServerCustomIdResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkXboxAccount(ServerModels::LinkXboxAccountRequest& request, ProcessApiCallback<ServerModels::LinkXboxAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithServerCustomId(ServerModels::LoginWithServerCustomIdRequest& request, ProcessApiCallback<ServerModels::ServerLoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -122,6 +123,7 @@ namespace PlayFab
         static void SetTitleInternalData(ServerModels::SetTitleDataRequest& request, ProcessApiCallback<ServerModels::SetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractCharacterVirtualCurrency(ServerModels::SubtractCharacterVirtualCurrencyRequest& request, ProcessApiCallback<ServerModels::ModifyCharacterVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractUserVirtualCurrency(ServerModels::SubtractUserVirtualCurrencyRequest& request, ProcessApiCallback<ServerModels::ModifyUserVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UnlinkPSNAccount(ServerModels::UnlinkPSNAccountRequest& request, ProcessApiCallback<ServerModels::UnlinkPSNAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkServerCustomId(ServerModels::UnlinkServerCustomIdRequest& request, ProcessApiCallback<ServerModels::UnlinkServerCustomIdResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkXboxAccount(ServerModels::UnlinkXboxAccountRequest& request, ProcessApiCallback<ServerModels::UnlinkXboxAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlockContainerInstance(ServerModels::UnlockContainerInstanceRequest& request, ProcessApiCallback<ServerModels::UnlockContainerItemResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -220,6 +222,7 @@ namespace PlayFab
         static void OnGrantItemsToCharacterResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGrantItemsToUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGrantItemsToUsersResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnLinkPSNAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkServerCustomIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkXboxAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithServerCustomIdResult(int httpStatus, HttpRequest* request, void* userData);
@@ -258,6 +261,7 @@ namespace PlayFab
         static void OnSetTitleInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractCharacterVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUnlinkPSNAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkServerCustomIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkXboxAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlockContainerInstanceResult(int httpStatus, HttpRequest* request, void* userData);

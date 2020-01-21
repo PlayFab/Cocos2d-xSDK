@@ -15,12 +15,15 @@ namespace PlayFab
 
         // ------------ Generated API calls
         static void CancelAllMatchmakingTicketsForPlayer(MultiplayerModels::CancelAllMatchmakingTicketsForPlayerRequest& request, ProcessApiCallback<MultiplayerModels::CancelAllMatchmakingTicketsForPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void CancelAllServerBackfillTicketsForPlayer(MultiplayerModels::CancelAllServerBackfillTicketsForPlayerRequest& request, ProcessApiCallback<MultiplayerModels::CancelAllServerBackfillTicketsForPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CancelMatchmakingTicket(MultiplayerModels::CancelMatchmakingTicketRequest& request, ProcessApiCallback<MultiplayerModels::CancelMatchmakingTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void CancelServerBackfillTicket(MultiplayerModels::CancelServerBackfillTicketRequest& request, ProcessApiCallback<MultiplayerModels::CancelServerBackfillTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateBuildAlias(MultiplayerModels::CreateBuildAliasRequest& request, ProcessApiCallback<MultiplayerModels::BuildAliasDetailsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateBuildWithCustomContainer(MultiplayerModels::CreateBuildWithCustomContainerRequest& request, ProcessApiCallback<MultiplayerModels::CreateBuildWithCustomContainerResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateBuildWithManagedContainer(MultiplayerModels::CreateBuildWithManagedContainerRequest& request, ProcessApiCallback<MultiplayerModels::CreateBuildWithManagedContainerResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateMatchmakingTicket(MultiplayerModels::CreateMatchmakingTicketRequest& request, ProcessApiCallback<MultiplayerModels::CreateMatchmakingTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateRemoteUser(MultiplayerModels::CreateRemoteUserRequest& request, ProcessApiCallback<MultiplayerModels::CreateRemoteUserResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void CreateServerBackfillTicket(MultiplayerModels::CreateServerBackfillTicketRequest& request, ProcessApiCallback<MultiplayerModels::CreateServerBackfillTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateServerMatchmakingTicket(MultiplayerModels::CreateServerMatchmakingTicketRequest& request, ProcessApiCallback<MultiplayerModels::CreateMatchmakingTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteAsset(MultiplayerModels::DeleteAssetRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteBuild(MultiplayerModels::DeleteBuildRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -38,6 +41,7 @@ namespace PlayFab
         static void GetMultiplayerServerLogs(MultiplayerModels::GetMultiplayerServerLogsRequest& request, ProcessApiCallback<MultiplayerModels::GetMultiplayerServerLogsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetQueueStatistics(MultiplayerModels::GetQueueStatisticsRequest& request, ProcessApiCallback<MultiplayerModels::GetQueueStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetRemoteLoginEndpoint(MultiplayerModels::GetRemoteLoginEndpointRequest& request, ProcessApiCallback<MultiplayerModels::GetRemoteLoginEndpointResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetServerBackfillTicket(MultiplayerModels::GetServerBackfillTicketRequest& request, ProcessApiCallback<MultiplayerModels::GetServerBackfillTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleEnabledForMultiplayerServersStatus(ProcessApiCallback<MultiplayerModels::GetTitleEnabledForMultiplayerServersStatusResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitleMultiplayerServersQuotas(ProcessApiCallback<MultiplayerModels::GetTitleMultiplayerServersQuotasResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void JoinMatchmakingTicket(MultiplayerModels::JoinMatchmakingTicketRequest& request, ProcessApiCallback<MultiplayerModels::JoinMatchmakingTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -53,6 +57,7 @@ namespace PlayFab
         static void ListPartyQosServers(MultiplayerModels::ListPartyQosServersRequest& request, ProcessApiCallback<MultiplayerModels::ListPartyQosServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListQosServers(ProcessApiCallback<MultiplayerModels::ListQosServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListQosServersForTitle(ProcessApiCallback<MultiplayerModels::ListQosServersForTitleResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ListServerBackfillTicketsForPlayer(MultiplayerModels::ListServerBackfillTicketsForPlayerRequest& request, ProcessApiCallback<MultiplayerModels::ListServerBackfillTicketsForPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListVirtualMachineSummaries(MultiplayerModels::ListVirtualMachineSummariesRequest& request, ProcessApiCallback<MultiplayerModels::ListVirtualMachineSummariesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RequestMultiplayerServer(MultiplayerModels::RequestMultiplayerServerRequest& request, ProcessApiCallback<MultiplayerModels::RequestMultiplayerServerResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void RolloverContainerRegistryCredentials(ProcessApiCallback<MultiplayerModels::RolloverContainerRegistryCredentialsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -68,12 +73,15 @@ namespace PlayFab
 
         // ------------ Generated result handlers
         static void OnCancelAllMatchmakingTicketsForPlayerResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnCancelAllServerBackfillTicketsForPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCancelMatchmakingTicketResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnCancelServerBackfillTicketResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateBuildAliasResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateBuildWithCustomContainerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateBuildWithManagedContainerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateMatchmakingTicketResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateRemoteUserResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnCreateServerBackfillTicketResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateServerMatchmakingTicketResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteAssetResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteBuildResult(int httpStatus, HttpRequest* request, void* userData);
@@ -91,6 +99,7 @@ namespace PlayFab
         static void OnGetMultiplayerServerLogsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetQueueStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetRemoteLoginEndpointResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetServerBackfillTicketResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleEnabledForMultiplayerServersStatusResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetTitleMultiplayerServersQuotasResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnJoinMatchmakingTicketResult(int httpStatus, HttpRequest* request, void* userData);
@@ -106,6 +115,7 @@ namespace PlayFab
         static void OnListPartyQosServersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListQosServersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListQosServersForTitleResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnListServerBackfillTicketsForPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListVirtualMachineSummariesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRequestMultiplayerServerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnRolloverContainerRegistryCredentialsResult(int httpStatus, HttpRequest* request, void* userData);
