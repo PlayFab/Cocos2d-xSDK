@@ -3604,6 +3604,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesInsightsManagementTitleInEvaluationMode: writer.String("InsightsManagementTitleInEvaluationMode"); break;
     case GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError: writer.String("CloudScriptAzureFunctionsQueueRequestError"); break;
     case GenericErrorCodesEvaluationModeTitleCountExceeded: writer.String("EvaluationModeTitleCountExceeded"); break;
+    case GenericErrorCodesInsightsManagementTitleNotInFlight: writer.String("InsightsManagementTitleNotInFlight"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -4172,6 +4173,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["InsightsManagementTitleInEvaluationMode"] = GenericErrorCodesInsightsManagementTitleInEvaluationMode;
         _GenericErrorCodesMap["CloudScriptAzureFunctionsQueueRequestError"] = GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError;
         _GenericErrorCodesMap["EvaluationModeTitleCountExceeded"] = GenericErrorCodesEvaluationModeTitleCountExceeded;
+        _GenericErrorCodesMap["InsightsManagementTitleNotInFlight"] = GenericErrorCodesInsightsManagementTitleNotInFlight;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;

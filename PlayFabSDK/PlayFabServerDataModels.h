@@ -3744,6 +3744,7 @@ namespace PlayFab
             GenericErrorCodesInsightsManagementTitleInEvaluationMode,
             GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError,
             GenericErrorCodesEvaluationModeTitleCountExceeded,
+            GenericErrorCodesInsightsManagementTitleNotInFlight,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -7379,6 +7380,65 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct LinkPSNAccountRequest : public PlayFabBaseModel
+        {
+            std::string AuthCode;
+            OptionalBool ForceLink;
+            OptionalInt32 IssuerId;
+            std::string PlayFabId;
+            std::string RedirectUri;
+
+            LinkPSNAccountRequest() :
+                PlayFabBaseModel(),
+                AuthCode(),
+                ForceLink(),
+                IssuerId(),
+                PlayFabId(),
+                RedirectUri()
+            {}
+
+            LinkPSNAccountRequest(const LinkPSNAccountRequest& src) :
+                PlayFabBaseModel(),
+                AuthCode(src.AuthCode),
+                ForceLink(src.ForceLink),
+                IssuerId(src.IssuerId),
+                PlayFabId(src.PlayFabId),
+                RedirectUri(src.RedirectUri)
+            {}
+
+            LinkPSNAccountRequest(const rapidjson::Value& obj) : LinkPSNAccountRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkPSNAccountRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LinkPSNAccountResult : public PlayFabBaseModel
+        {
+
+            LinkPSNAccountResult() :
+                PlayFabBaseModel()
+            {}
+
+            LinkPSNAccountResult(const LinkPSNAccountResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            LinkPSNAccountResult(const rapidjson::Value& obj) : LinkPSNAccountResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkPSNAccountResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct LinkServerCustomIdRequest : public PlayFabBaseModel
         {
             OptionalBool ForceLink;
@@ -9591,6 +9651,53 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UnlinkPSNAccountRequest : public PlayFabBaseModel
+        {
+            std::string PlayFabId;
+
+            UnlinkPSNAccountRequest() :
+                PlayFabBaseModel(),
+                PlayFabId()
+            {}
+
+            UnlinkPSNAccountRequest(const UnlinkPSNAccountRequest& src) :
+                PlayFabBaseModel(),
+                PlayFabId(src.PlayFabId)
+            {}
+
+            UnlinkPSNAccountRequest(const rapidjson::Value& obj) : UnlinkPSNAccountRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlinkPSNAccountRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UnlinkPSNAccountResult : public PlayFabBaseModel
+        {
+
+            UnlinkPSNAccountResult() :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkPSNAccountResult(const UnlinkPSNAccountResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkPSNAccountResult(const rapidjson::Value& obj) : UnlinkPSNAccountResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlinkPSNAccountResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UnlinkServerCustomIdRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
@@ -10297,7 +10404,6 @@ namespace PlayFab
         {
             std::map<std::string, MultitypeVar> Body;
             std::string CharacterId;
-            std::map<std::string, std::string> EventCustomTags;
             std::string EventName;
             std::string PlayFabId;
             OptionalTime Timestamp;
@@ -10306,7 +10412,6 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Body(),
                 CharacterId(),
-                EventCustomTags(),
                 EventName(),
                 PlayFabId(),
                 Timestamp()
@@ -10316,7 +10421,6 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Body(src.Body),
                 CharacterId(src.CharacterId),
-                EventCustomTags(src.EventCustomTags),
                 EventName(src.EventName),
                 PlayFabId(src.PlayFabId),
                 Timestamp(src.Timestamp)
@@ -10336,7 +10440,6 @@ namespace PlayFab
         struct WriteServerPlayerEventRequest : public PlayFabBaseModel
         {
             std::map<std::string, MultitypeVar> Body;
-            std::map<std::string, std::string> EventCustomTags;
             std::string EventName;
             std::string PlayFabId;
             OptionalTime Timestamp;
@@ -10344,7 +10447,6 @@ namespace PlayFab
             WriteServerPlayerEventRequest() :
                 PlayFabBaseModel(),
                 Body(),
-                EventCustomTags(),
                 EventName(),
                 PlayFabId(),
                 Timestamp()
@@ -10353,7 +10455,6 @@ namespace PlayFab
             WriteServerPlayerEventRequest(const WriteServerPlayerEventRequest& src) :
                 PlayFabBaseModel(),
                 Body(src.Body),
-                EventCustomTags(src.EventCustomTags),
                 EventName(src.EventName),
                 PlayFabId(src.PlayFabId),
                 Timestamp(src.Timestamp)
@@ -10373,14 +10474,12 @@ namespace PlayFab
         struct WriteTitleEventRequest : public PlayFabBaseModel
         {
             std::map<std::string, MultitypeVar> Body;
-            std::map<std::string, std::string> EventCustomTags;
             std::string EventName;
             OptionalTime Timestamp;
 
             WriteTitleEventRequest() :
                 PlayFabBaseModel(),
                 Body(),
-                EventCustomTags(),
                 EventName(),
                 Timestamp()
             {}
@@ -10388,7 +10487,6 @@ namespace PlayFab
             WriteTitleEventRequest(const WriteTitleEventRequest& src) :
                 PlayFabBaseModel(),
                 Body(src.Body),
-                EventCustomTags(src.EventCustomTags),
                 EventName(src.EventName),
                 Timestamp(src.Timestamp)
             {}

@@ -3228,6 +3228,52 @@ void PlayFabServerAPI::OnGrantItemsToUsersResult(int httpStatus, HttpRequest* re
     delete request;
 }
 
+void PlayFabServerAPI::LinkPSNAccount(
+    LinkPSNAccountRequest& request,
+    ProcessApiCallback<LinkPSNAccountResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/LinkPSNAccount"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<LinkPSNAccountResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkPSNAccountResult, userData);
+}
+
+void PlayFabServerAPI::OnLinkPSNAccountResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    LinkPSNAccountResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<LinkPSNAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabServerAPI::LinkServerCustomId(
     LinkServerCustomIdRequest& request,
     ProcessApiCallback<LinkServerCustomIdResult> callback,
@@ -4963,6 +5009,52 @@ void PlayFabServerAPI::OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpR
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<ModifyUserVirtualCurrencyResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabServerAPI::UnlinkPSNAccount(
+    UnlinkPSNAccountRequest& request,
+    ProcessApiCallback<UnlinkPSNAccountResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Server/UnlinkPSNAccount"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<UnlinkPSNAccountResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkPSNAccountResult, userData);
+}
+
+void PlayFabServerAPI::OnUnlinkPSNAccountResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    UnlinkPSNAccountResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<UnlinkPSNAccountResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

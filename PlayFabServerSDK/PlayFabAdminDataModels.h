@@ -3100,6 +3100,7 @@ namespace PlayFab
             GenericErrorCodesInsightsManagementTitleInEvaluationMode,
             GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError,
             GenericErrorCodesEvaluationModeTitleCountExceeded,
+            GenericErrorCodesInsightsManagementTitleNotInFlight,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,

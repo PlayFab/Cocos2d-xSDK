@@ -614,6 +614,46 @@ bool CancelAllMatchmakingTicketsForPlayerResult::readFromValue(const rapidjson::
 
     return true;
 }
+
+CancelAllServerBackfillTicketsForPlayerRequest::~CancelAllServerBackfillTicketsForPlayerRequest()
+{
+
+}
+
+void CancelAllServerBackfillTicketsForPlayerRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Entity"); Entity.writeJSON(writer);
+    writer.String("QueueName"); writer.String(QueueName.c_str());
+    writer.EndObject();
+}
+
+bool CancelAllServerBackfillTicketsForPlayerRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
+    if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
+    const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
+    if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
+
+    return true;
+}
+
+CancelAllServerBackfillTicketsForPlayerResult::~CancelAllServerBackfillTicketsForPlayerResult()
+{
+
+}
+
+void CancelAllServerBackfillTicketsForPlayerResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool CancelAllServerBackfillTicketsForPlayerResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
 void PlayFab::MultiplayerModels::writeCancellationReasonEnumJSON(CancellationReason enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -679,6 +719,46 @@ void CancelMatchmakingTicketResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool CancelMatchmakingTicketResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+CancelServerBackfillTicketRequest::~CancelServerBackfillTicketRequest()
+{
+
+}
+
+void CancelServerBackfillTicketRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("QueueName"); writer.String(QueueName.c_str());
+    writer.String("TicketId"); writer.String(TicketId.c_str());
+    writer.EndObject();
+}
+
+bool CancelServerBackfillTicketRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
+    if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
+    const Value::ConstMemberIterator TicketId_member = obj.FindMember("TicketId");
+    if (TicketId_member != obj.MemberEnd() && !TicketId_member->value.IsNull()) TicketId = TicketId_member->value.GetString();
+
+    return true;
+}
+
+CancelServerBackfillTicketResult::~CancelServerBackfillTicketResult()
+{
+
+}
+
+void CancelServerBackfillTicketResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool CancelServerBackfillTicketResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
@@ -1608,6 +1688,131 @@ bool CreateRemoteUserResponse::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+MatchmakingPlayerWithTeamAssignment::~MatchmakingPlayerWithTeamAssignment()
+{
+    if (Attributes != NULL) delete Attributes;
+
+}
+
+void MatchmakingPlayerWithTeamAssignment::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Attributes != NULL) { writer.String("Attributes"); Attributes->writeJSON(writer); }
+    writer.String("Entity"); Entity.writeJSON(writer);
+    if (TeamId.length() > 0) { writer.String("TeamId"); writer.String(TeamId.c_str()); }
+    writer.EndObject();
+}
+
+bool MatchmakingPlayerWithTeamAssignment::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Attributes_member = obj.FindMember("Attributes");
+    if (Attributes_member != obj.MemberEnd() && !Attributes_member->value.IsNull()) Attributes = new MatchmakingPlayerAttributes(Attributes_member->value);
+    const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
+    if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
+    const Value::ConstMemberIterator TeamId_member = obj.FindMember("TeamId");
+    if (TeamId_member != obj.MemberEnd() && !TeamId_member->value.IsNull()) TeamId = TeamId_member->value.GetString();
+
+    return true;
+}
+
+ServerDetails::~ServerDetails()
+{
+
+}
+
+void ServerDetails::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (IPV4Address.length() > 0) { writer.String("IPV4Address"); writer.String(IPV4Address.c_str()); }
+    if (!Ports.empty()) {
+        writer.String("Ports");
+        writer.StartArray();
+        for (std::list<Port>::iterator iter = Ports.begin(); iter != Ports.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (Region.length() > 0) { writer.String("Region"); writer.String(Region.c_str()); }
+    writer.EndObject();
+}
+
+bool ServerDetails::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator IPV4Address_member = obj.FindMember("IPV4Address");
+    if (IPV4Address_member != obj.MemberEnd() && !IPV4Address_member->value.IsNull()) IPV4Address = IPV4Address_member->value.GetString();
+    const Value::ConstMemberIterator Ports_member = obj.FindMember("Ports");
+    if (Ports_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Ports_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Ports.push_back(Port(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
+    if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
+
+    return true;
+}
+
+CreateServerBackfillTicketRequest::~CreateServerBackfillTicketRequest()
+{
+    if (pfServerDetails != NULL) delete pfServerDetails;
+
+}
+
+void CreateServerBackfillTicketRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("GiveUpAfterSeconds"); writer.Int(GiveUpAfterSeconds);
+    writer.String("Members");
+    writer.StartArray();
+    for (std::list<MatchmakingPlayerWithTeamAssignment>::iterator iter = Members.begin(); iter != Members.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    writer.String("QueueName"); writer.String(QueueName.c_str());
+    if (pfServerDetails != NULL) { writer.String("ServerDetails"); pfServerDetails->writeJSON(writer); }
+    writer.EndObject();
+}
+
+bool CreateServerBackfillTicketRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator GiveUpAfterSeconds_member = obj.FindMember("GiveUpAfterSeconds");
+    if (GiveUpAfterSeconds_member != obj.MemberEnd() && !GiveUpAfterSeconds_member->value.IsNull()) GiveUpAfterSeconds = GiveUpAfterSeconds_member->value.GetInt();
+    const Value::ConstMemberIterator Members_member = obj.FindMember("Members");
+    if (Members_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Members_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Members.push_back(MatchmakingPlayerWithTeamAssignment(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
+    if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
+    const Value::ConstMemberIterator ServerDetails_member = obj.FindMember("ServerDetails");
+    if (ServerDetails_member != obj.MemberEnd() && !ServerDetails_member->value.IsNull()) pfServerDetails = new ServerDetails(ServerDetails_member->value);
+
+    return true;
+}
+
+CreateServerBackfillTicketResult::~CreateServerBackfillTicketResult()
+{
+
+}
+
+void CreateServerBackfillTicketResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("TicketId"); writer.String(TicketId.c_str());
+    writer.EndObject();
+}
+
+bool CreateServerBackfillTicketResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TicketId_member = obj.FindMember("TicketId");
+    if (TicketId_member != obj.MemberEnd() && !TicketId_member->value.IsNull()) TicketId = TicketId_member->value.GetString();
+
+    return true;
+}
+
 CreateServerMatchmakingTicketRequest::~CreateServerMatchmakingTicketRequest()
 {
 
@@ -2122,7 +2327,6 @@ GetMatchmakingTicketResult::~GetMatchmakingTicketResult()
 void GetMatchmakingTicketResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    if (pfCancellationReason.notNull()) { writer.String("CancellationReason"); writeCancellationReasonEnumJSON(pfCancellationReason, writer); }
     if (CancellationReasonString.length() > 0) { writer.String("CancellationReasonString"); writer.String(CancellationReasonString.c_str()); }
     writer.String("Created"); writeDatetime(Created, writer);
     writer.String("Creator"); Creator.writeJSON(writer);
@@ -2150,8 +2354,6 @@ void GetMatchmakingTicketResult::writeJSON(PFStringJsonWriter& writer)
 
 bool GetMatchmakingTicketResult::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator CancellationReason_member = obj.FindMember("CancellationReason");
-    if (CancellationReason_member != obj.MemberEnd() && !CancellationReason_member->value.IsNull()) pfCancellationReason = readCancellationReasonFromValue(CancellationReason_member->value);
     const Value::ConstMemberIterator CancellationReasonString_member = obj.FindMember("CancellationReasonString");
     if (CancellationReasonString_member != obj.MemberEnd() && !CancellationReasonString_member->value.IsNull()) CancellationReasonString = CancellationReasonString_member->value.GetString();
     const Value::ConstMemberIterator Created_member = obj.FindMember("Created");
@@ -2211,71 +2413,6 @@ bool GetMatchRequest::readFromValue(const rapidjson::Value& obj)
     if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
     const Value::ConstMemberIterator ReturnMemberAttributes_member = obj.FindMember("ReturnMemberAttributes");
     if (ReturnMemberAttributes_member != obj.MemberEnd() && !ReturnMemberAttributes_member->value.IsNull()) ReturnMemberAttributes = ReturnMemberAttributes_member->value.GetBool();
-
-    return true;
-}
-
-MatchmakingPlayerWithTeamAssignment::~MatchmakingPlayerWithTeamAssignment()
-{
-    if (Attributes != NULL) delete Attributes;
-
-}
-
-void MatchmakingPlayerWithTeamAssignment::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (Attributes != NULL) { writer.String("Attributes"); Attributes->writeJSON(writer); }
-    writer.String("Entity"); Entity.writeJSON(writer);
-    if (TeamId.length() > 0) { writer.String("TeamId"); writer.String(TeamId.c_str()); }
-    writer.EndObject();
-}
-
-bool MatchmakingPlayerWithTeamAssignment::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator Attributes_member = obj.FindMember("Attributes");
-    if (Attributes_member != obj.MemberEnd() && !Attributes_member->value.IsNull()) Attributes = new MatchmakingPlayerAttributes(Attributes_member->value);
-    const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
-    if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
-    const Value::ConstMemberIterator TeamId_member = obj.FindMember("TeamId");
-    if (TeamId_member != obj.MemberEnd() && !TeamId_member->value.IsNull()) TeamId = TeamId_member->value.GetString();
-
-    return true;
-}
-
-ServerDetails::~ServerDetails()
-{
-
-}
-
-void ServerDetails::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (IPV4Address.length() > 0) { writer.String("IPV4Address"); writer.String(IPV4Address.c_str()); }
-    if (!Ports.empty()) {
-        writer.String("Ports");
-        writer.StartArray();
-        for (std::list<Port>::iterator iter = Ports.begin(); iter != Ports.end(); iter++) {
-            iter->writeJSON(writer);
-        }
-        writer.EndArray();
-    }
-    if (Region.length() > 0) { writer.String("Region"); writer.String(Region.c_str()); }
-    writer.EndObject();
-}
-
-bool ServerDetails::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator IPV4Address_member = obj.FindMember("IPV4Address");
-    if (IPV4Address_member != obj.MemberEnd() && !IPV4Address_member->value.IsNull()) IPV4Address = IPV4Address_member->value.GetString();
-    const Value::ConstMemberIterator Ports_member = obj.FindMember("Ports");
-    if (Ports_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = Ports_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            Ports.push_back(Port(memberList[i]));
-        }
-    }
-    const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
-    if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
 
     return true;
 }
@@ -2590,6 +2727,86 @@ bool GetRemoteLoginEndpointResponse::readFromValue(const rapidjson::Value& obj)
     if (IPV4Address_member != obj.MemberEnd() && !IPV4Address_member->value.IsNull()) IPV4Address = IPV4Address_member->value.GetString();
     const Value::ConstMemberIterator Port_member = obj.FindMember("Port");
     if (Port_member != obj.MemberEnd() && !Port_member->value.IsNull()) Port = Port_member->value.GetInt();
+
+    return true;
+}
+
+GetServerBackfillTicketRequest::~GetServerBackfillTicketRequest()
+{
+
+}
+
+void GetServerBackfillTicketRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("EscapeObject"); writer.Bool(EscapeObject);
+    writer.String("QueueName"); writer.String(QueueName.c_str());
+    writer.String("TicketId"); writer.String(TicketId.c_str());
+    writer.EndObject();
+}
+
+bool GetServerBackfillTicketRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator EscapeObject_member = obj.FindMember("EscapeObject");
+    if (EscapeObject_member != obj.MemberEnd() && !EscapeObject_member->value.IsNull()) EscapeObject = EscapeObject_member->value.GetBool();
+    const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
+    if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
+    const Value::ConstMemberIterator TicketId_member = obj.FindMember("TicketId");
+    if (TicketId_member != obj.MemberEnd() && !TicketId_member->value.IsNull()) TicketId = TicketId_member->value.GetString();
+
+    return true;
+}
+
+GetServerBackfillTicketResult::~GetServerBackfillTicketResult()
+{
+
+}
+
+void GetServerBackfillTicketResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (CancellationReasonString.length() > 0) { writer.String("CancellationReasonString"); writer.String(CancellationReasonString.c_str()); }
+    writer.String("Created"); writeDatetime(Created, writer);
+    writer.String("GiveUpAfterSeconds"); writer.Int(GiveUpAfterSeconds);
+    if (MatchId.length() > 0) { writer.String("MatchId"); writer.String(MatchId.c_str()); }
+    writer.String("Members");
+    writer.StartArray();
+    for (std::list<MatchmakingPlayerWithTeamAssignment>::iterator iter = Members.begin(); iter != Members.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    writer.String("QueueName"); writer.String(QueueName.c_str());
+    writer.String("ServerDetails"); pfServerDetails.writeJSON(writer);
+    writer.String("Status"); writer.String(Status.c_str());
+    writer.String("TicketId"); writer.String(TicketId.c_str());
+    writer.EndObject();
+}
+
+bool GetServerBackfillTicketResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CancellationReasonString_member = obj.FindMember("CancellationReasonString");
+    if (CancellationReasonString_member != obj.MemberEnd() && !CancellationReasonString_member->value.IsNull()) CancellationReasonString = CancellationReasonString_member->value.GetString();
+    const Value::ConstMemberIterator Created_member = obj.FindMember("Created");
+    if (Created_member != obj.MemberEnd() && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
+    const Value::ConstMemberIterator GiveUpAfterSeconds_member = obj.FindMember("GiveUpAfterSeconds");
+    if (GiveUpAfterSeconds_member != obj.MemberEnd() && !GiveUpAfterSeconds_member->value.IsNull()) GiveUpAfterSeconds = GiveUpAfterSeconds_member->value.GetInt();
+    const Value::ConstMemberIterator MatchId_member = obj.FindMember("MatchId");
+    if (MatchId_member != obj.MemberEnd() && !MatchId_member->value.IsNull()) MatchId = MatchId_member->value.GetString();
+    const Value::ConstMemberIterator Members_member = obj.FindMember("Members");
+    if (Members_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Members_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Members.push_back(MatchmakingPlayerWithTeamAssignment(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
+    if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
+    const Value::ConstMemberIterator ServerDetails_member = obj.FindMember("ServerDetails");
+    if (ServerDetails_member != obj.MemberEnd() && !ServerDetails_member->value.IsNull()) pfServerDetails = ServerDetails(ServerDetails_member->value);
+    const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
+    if (Status_member != obj.MemberEnd() && !Status_member->value.IsNull()) Status = Status_member->value.GetString();
+    const Value::ConstMemberIterator TicketId_member = obj.FindMember("TicketId");
+    if (TicketId_member != obj.MemberEnd() && !TicketId_member->value.IsNull()) TicketId = TicketId_member->value.GetString();
 
     return true;
 }
@@ -3430,6 +3647,59 @@ bool ListQosServersResponse::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator SkipToken_member = obj.FindMember("SkipToken");
     if (SkipToken_member != obj.MemberEnd() && !SkipToken_member->value.IsNull()) SkipToken = SkipToken_member->value.GetString();
+
+    return true;
+}
+
+ListServerBackfillTicketsForPlayerRequest::~ListServerBackfillTicketsForPlayerRequest()
+{
+
+}
+
+void ListServerBackfillTicketsForPlayerRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Entity"); Entity.writeJSON(writer);
+    writer.String("QueueName"); writer.String(QueueName.c_str());
+    writer.EndObject();
+}
+
+bool ListServerBackfillTicketsForPlayerRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
+    if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
+    const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
+    if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
+
+    return true;
+}
+
+ListServerBackfillTicketsForPlayerResult::~ListServerBackfillTicketsForPlayerResult()
+{
+
+}
+
+void ListServerBackfillTicketsForPlayerResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("TicketIds");
+    writer.StartArray();
+    for (std::list<std::string>::iterator iter = TicketIds.begin(); iter != TicketIds.end(); iter++) {
+        writer.String(iter->c_str());
+    }
+    writer.EndArray();
+    writer.EndObject();
+}
+
+bool ListServerBackfillTicketsForPlayerResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TicketIds_member = obj.FindMember("TicketIds");
+    if (TicketIds_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = TicketIds_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            TicketIds.push_back(memberList[i].GetString());
+        }
+    }
 
     return true;
 }
