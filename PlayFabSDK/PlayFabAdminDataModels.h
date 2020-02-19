@@ -1723,6 +1723,68 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct InsightsScalingTaskParameter : public PlayFabBaseModel
+        {
+            Int32 Level;
+
+            InsightsScalingTaskParameter() :
+                PlayFabBaseModel(),
+                Level(0)
+            {}
+
+            InsightsScalingTaskParameter(const InsightsScalingTaskParameter& src) :
+                PlayFabBaseModel(),
+                Level(src.Level)
+            {}
+
+            InsightsScalingTaskParameter(const rapidjson::Value& obj) : InsightsScalingTaskParameter()
+            {
+                readFromValue(obj);
+            }
+
+            ~InsightsScalingTaskParameter();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateInsightsScheduledScalingTaskRequest : public PlayFabBaseModel
+        {
+            std::string Description;
+            bool IsActive;
+            std::string Name;
+            InsightsScalingTaskParameter Parameter;
+            std::string Schedule;
+
+            CreateInsightsScheduledScalingTaskRequest() :
+                PlayFabBaseModel(),
+                Description(),
+                IsActive(false),
+                Name(),
+                Parameter(),
+                Schedule()
+            {}
+
+            CreateInsightsScheduledScalingTaskRequest(const CreateInsightsScheduledScalingTaskRequest& src) :
+                PlayFabBaseModel(),
+                Description(src.Description),
+                IsActive(src.IsActive),
+                Name(src.Name),
+                Parameter(src.Parameter),
+                Schedule(src.Schedule)
+            {}
+
+            CreateInsightsScheduledScalingTaskRequest(const rapidjson::Value& obj) : CreateInsightsScheduledScalingTaskRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateInsightsScheduledScalingTaskRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct OpenIdIssuerInformation : public PlayFabBaseModel
         {
             std::string AuthorizationUrl;
@@ -3172,6 +3234,8 @@ namespace PlayFab
             GenericErrorCodesExperimentationNoScorecard,
             GenericErrorCodesExperimentationTreatmentAssignmentFailed,
             GenericErrorCodesExperimentationTreatmentAssignmentDisabled,
+            GenericErrorCodesExperimentationInvalidDuration,
+            GenericErrorCodesExperimentationMaxExperimentsReached,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesSnapshotNotFound
         };
@@ -5623,7 +5687,8 @@ namespace PlayFab
         {
             ScheduledTaskTypeCloudScript,
             ScheduledTaskTypeActionsOnPlayerSegment,
-            ScheduledTaskTypeCloudScriptAzureFunctions
+            ScheduledTaskTypeCloudScriptAzureFunctions,
+            ScheduledTaskTypeInsightsScheduledScaling
         };
 
         void writeScheduledTaskTypeEnumJSON(ScheduledTaskType enumVal, PFStringJsonWriter& writer);

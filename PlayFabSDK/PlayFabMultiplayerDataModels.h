@@ -2233,6 +2233,7 @@ namespace PlayFab
 
         struct GetMultiplayerServerLogsRequest : public PlayFabBaseModel
         {
+            // Deprecated - Do not use
             std::string Region;
             std::string ServerId;
 
@@ -2279,6 +2280,31 @@ namespace PlayFab
             }
 
             ~GetMultiplayerServerLogsResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetMultiplayerSessionLogsBySessionIdRequest : public PlayFabBaseModel
+        {
+            std::string SessionId;
+
+            GetMultiplayerSessionLogsBySessionIdRequest() :
+                PlayFabBaseModel(),
+                SessionId()
+            {}
+
+            GetMultiplayerSessionLogsBySessionIdRequest(const GetMultiplayerSessionLogsBySessionIdRequest& src) :
+                PlayFabBaseModel(),
+                SessionId(src.SessionId)
+            {}
+
+            GetMultiplayerSessionLogsBySessionIdRequest(const rapidjson::Value& obj) : GetMultiplayerSessionLogsBySessionIdRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetMultiplayerSessionLogsBySessionIdRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

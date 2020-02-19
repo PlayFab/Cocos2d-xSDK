@@ -2104,6 +2104,58 @@ bool CreateCloudScriptTaskRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+InsightsScalingTaskParameter::~InsightsScalingTaskParameter()
+{
+
+}
+
+void InsightsScalingTaskParameter::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Level"); writer.Int(Level);
+    writer.EndObject();
+}
+
+bool InsightsScalingTaskParameter::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Level_member = obj.FindMember("Level");
+    if (Level_member != obj.MemberEnd() && !Level_member->value.IsNull()) Level = Level_member->value.GetInt();
+
+    return true;
+}
+
+CreateInsightsScheduledScalingTaskRequest::~CreateInsightsScheduledScalingTaskRequest()
+{
+
+}
+
+void CreateInsightsScheduledScalingTaskRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
+    writer.String("IsActive"); writer.Bool(IsActive);
+    writer.String("Name"); writer.String(Name.c_str());
+    writer.String("Parameter"); Parameter.writeJSON(writer);
+    if (Schedule.length() > 0) { writer.String("Schedule"); writer.String(Schedule.c_str()); }
+    writer.EndObject();
+}
+
+bool CreateInsightsScheduledScalingTaskRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator IsActive_member = obj.FindMember("IsActive");
+    if (IsActive_member != obj.MemberEnd() && !IsActive_member->value.IsNull()) IsActive = IsActive_member->value.GetBool();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator Parameter_member = obj.FindMember("Parameter");
+    if (Parameter_member != obj.MemberEnd() && !Parameter_member->value.IsNull()) Parameter = InsightsScalingTaskParameter(Parameter_member->value);
+    const Value::ConstMemberIterator Schedule_member = obj.FindMember("Schedule");
+    if (Schedule_member != obj.MemberEnd() && !Schedule_member->value.IsNull()) Schedule = Schedule_member->value.GetString();
+
+    return true;
+}
+
 OpenIdIssuerInformation::~OpenIdIssuerInformation()
 {
 
@@ -3676,6 +3728,8 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExperimentationNoScorecard: writer.String("ExperimentationNoScorecard"); break;
     case GenericErrorCodesExperimentationTreatmentAssignmentFailed: writer.String("ExperimentationTreatmentAssignmentFailed"); break;
     case GenericErrorCodesExperimentationTreatmentAssignmentDisabled: writer.String("ExperimentationTreatmentAssignmentDisabled"); break;
+    case GenericErrorCodesExperimentationInvalidDuration: writer.String("ExperimentationInvalidDuration"); break;
+    case GenericErrorCodesExperimentationMaxExperimentsReached: writer.String("ExperimentationMaxExperimentsReached"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
@@ -4245,6 +4299,8 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExperimentationNoScorecard"] = GenericErrorCodesExperimentationNoScorecard;
         _GenericErrorCodesMap["ExperimentationTreatmentAssignmentFailed"] = GenericErrorCodesExperimentationTreatmentAssignmentFailed;
         _GenericErrorCodesMap["ExperimentationTreatmentAssignmentDisabled"] = GenericErrorCodesExperimentationTreatmentAssignmentDisabled;
+        _GenericErrorCodesMap["ExperimentationInvalidDuration"] = GenericErrorCodesExperimentationInvalidDuration;
+        _GenericErrorCodesMap["ExperimentationMaxExperimentsReached"] = GenericErrorCodesExperimentationMaxExperimentsReached;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 
@@ -7002,6 +7058,7 @@ void PlayFab::AdminModels::writeScheduledTaskTypeEnumJSON(ScheduledTaskType enum
     case ScheduledTaskTypeCloudScript: writer.String("CloudScript"); break;
     case ScheduledTaskTypeActionsOnPlayerSegment: writer.String("ActionsOnPlayerSegment"); break;
     case ScheduledTaskTypeCloudScriptAzureFunctions: writer.String("CloudScriptAzureFunctions"); break;
+    case ScheduledTaskTypeInsightsScheduledScaling: writer.String("InsightsScheduledScaling"); break;
 
     }
 }
@@ -7015,6 +7072,7 @@ ScheduledTaskType PlayFab::AdminModels::readScheduledTaskTypeFromValue(const rap
         _ScheduledTaskTypeMap["CloudScript"] = ScheduledTaskTypeCloudScript;
         _ScheduledTaskTypeMap["ActionsOnPlayerSegment"] = ScheduledTaskTypeActionsOnPlayerSegment;
         _ScheduledTaskTypeMap["CloudScriptAzureFunctions"] = ScheduledTaskTypeCloudScriptAzureFunctions;
+        _ScheduledTaskTypeMap["InsightsScheduledScaling"] = ScheduledTaskTypeInsightsScheduledScaling;
 
     }
 

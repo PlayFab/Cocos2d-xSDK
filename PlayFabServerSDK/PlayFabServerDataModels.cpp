@@ -4443,6 +4443,8 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesExperimentationNoScorecard: writer.String("ExperimentationNoScorecard"); break;
     case GenericErrorCodesExperimentationTreatmentAssignmentFailed: writer.String("ExperimentationTreatmentAssignmentFailed"); break;
     case GenericErrorCodesExperimentationTreatmentAssignmentDisabled: writer.String("ExperimentationTreatmentAssignmentDisabled"); break;
+    case GenericErrorCodesExperimentationInvalidDuration: writer.String("ExperimentationInvalidDuration"); break;
+    case GenericErrorCodesExperimentationMaxExperimentsReached: writer.String("ExperimentationMaxExperimentsReached"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
@@ -5012,6 +5014,8 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["ExperimentationNoScorecard"] = GenericErrorCodesExperimentationNoScorecard;
         _GenericErrorCodesMap["ExperimentationTreatmentAssignmentFailed"] = GenericErrorCodesExperimentationTreatmentAssignmentFailed;
         _GenericErrorCodesMap["ExperimentationTreatmentAssignmentDisabled"] = GenericErrorCodesExperimentationTreatmentAssignmentDisabled;
+        _GenericErrorCodesMap["ExperimentationInvalidDuration"] = GenericErrorCodesExperimentationInvalidDuration;
+        _GenericErrorCodesMap["ExperimentationMaxExperimentsReached"] = GenericErrorCodesExperimentationMaxExperimentsReached;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 

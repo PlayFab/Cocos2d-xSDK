@@ -2574,7 +2574,7 @@ GetMultiplayerServerLogsRequest::~GetMultiplayerServerLogsRequest()
 void GetMultiplayerServerLogsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    writer.String("Region"); writer.String(Region.c_str());
+    if (Region.length() > 0) { writer.String("Region"); writer.String(Region.c_str()); }
     writer.String("ServerId"); writer.String(ServerId.c_str());
     writer.EndObject();
 }
@@ -2605,6 +2605,26 @@ bool GetMultiplayerServerLogsResponse::readFromValue(const rapidjson::Value& obj
 {
     const Value::ConstMemberIterator LogDownloadUrl_member = obj.FindMember("LogDownloadUrl");
     if (LogDownloadUrl_member != obj.MemberEnd() && !LogDownloadUrl_member->value.IsNull()) LogDownloadUrl = LogDownloadUrl_member->value.GetString();
+
+    return true;
+}
+
+GetMultiplayerSessionLogsBySessionIdRequest::~GetMultiplayerSessionLogsBySessionIdRequest()
+{
+
+}
+
+void GetMultiplayerSessionLogsBySessionIdRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("SessionId"); writer.String(SessionId.c_str());
+    writer.EndObject();
+}
+
+bool GetMultiplayerSessionLogsBySessionIdRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator SessionId_member = obj.FindMember("SessionId");
+    if (SessionId_member != obj.MemberEnd() && !SessionId_member->value.IsNull()) SessionId = SessionId_member->value.GetString();
 
     return true;
 }
