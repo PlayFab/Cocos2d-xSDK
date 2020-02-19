@@ -25,6 +25,7 @@ namespace PlayFab
         static void CheckLimitedEditionItemAvailability(AdminModels::CheckLimitedEditionItemAvailabilityRequest& request, ProcessApiCallback<AdminModels::CheckLimitedEditionItemAvailabilityResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateActionsOnPlayersInSegmentTask(AdminModels::CreateActionsOnPlayerSegmentTaskRequest& request, ProcessApiCallback<AdminModels::CreateTaskResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateCloudScriptTask(AdminModels::CreateCloudScriptTaskRequest& request, ProcessApiCallback<AdminModels::CreateTaskResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void CreateInsightsScheduledScalingTask(AdminModels::CreateInsightsScheduledScalingTaskRequest& request, ProcessApiCallback<AdminModels::CreateTaskResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreateOpenIdConnection(AdminModels::CreateOpenIdConnectionRequest& request, ProcessApiCallback<AdminModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreatePlayerSharedSecret(AdminModels::CreatePlayerSharedSecretRequest& request, ProcessApiCallback<AdminModels::CreatePlayerSharedSecretResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void CreatePlayerStatisticDefinition(AdminModels::CreatePlayerStatisticDefinitionRequest& request, ProcessApiCallback<AdminModels::CreatePlayerStatisticDefinitionResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -141,6 +142,7 @@ namespace PlayFab
         static void OnCheckLimitedEditionItemAvailabilityResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateActionsOnPlayersInSegmentTaskResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateCloudScriptTaskResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnCreateInsightsScheduledScalingTaskResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreateOpenIdConnectionResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreatePlayerSharedSecretResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnCreatePlayerStatisticDefinitionResult(int httpStatus, HttpRequest* request, void* userData);

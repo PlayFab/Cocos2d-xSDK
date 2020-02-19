@@ -39,6 +39,7 @@ namespace PlayFab
         static void GetMatchmakingTicket(MultiplayerModels::GetMatchmakingTicketRequest& request, ProcessApiCallback<MultiplayerModels::GetMatchmakingTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetMultiplayerServerDetails(MultiplayerModels::GetMultiplayerServerDetailsRequest& request, ProcessApiCallback<MultiplayerModels::GetMultiplayerServerDetailsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetMultiplayerServerLogs(MultiplayerModels::GetMultiplayerServerLogsRequest& request, ProcessApiCallback<MultiplayerModels::GetMultiplayerServerLogsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetMultiplayerSessionLogsBySessionId(MultiplayerModels::GetMultiplayerSessionLogsBySessionIdRequest& request, ProcessApiCallback<MultiplayerModels::GetMultiplayerServerLogsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetQueueStatistics(MultiplayerModels::GetQueueStatisticsRequest& request, ProcessApiCallback<MultiplayerModels::GetQueueStatisticsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetRemoteLoginEndpoint(MultiplayerModels::GetRemoteLoginEndpointRequest& request, ProcessApiCallback<MultiplayerModels::GetRemoteLoginEndpointResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetServerBackfillTicket(MultiplayerModels::GetServerBackfillTicketRequest& request, ProcessApiCallback<MultiplayerModels::GetServerBackfillTicketResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -97,6 +98,7 @@ namespace PlayFab
         static void OnGetMatchmakingTicketResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetMultiplayerServerDetailsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetMultiplayerServerLogsResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnGetMultiplayerSessionLogsBySessionIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetQueueStatisticsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetRemoteLoginEndpointResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetServerBackfillTicketResult(int httpStatus, HttpRequest* request, void* userData);

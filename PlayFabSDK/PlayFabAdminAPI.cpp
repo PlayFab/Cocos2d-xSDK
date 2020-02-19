@@ -516,6 +516,52 @@ void PlayFabAdminAPI::OnCreateCloudScriptTaskResult(int httpStatus, HttpRequest*
     delete request;
 }
 
+void PlayFabAdminAPI::CreateInsightsScheduledScalingTask(
+    CreateInsightsScheduledScalingTaskRequest& request,
+    ProcessApiCallback<CreateTaskResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/CreateInsightsScheduledScalingTask"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<CreateTaskResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnCreateInsightsScheduledScalingTaskResult, userData);
+}
+
+void PlayFabAdminAPI::OnCreateInsightsScheduledScalingTaskResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    CreateTaskResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<CreateTaskResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabAdminAPI::CreateOpenIdConnection(
     CreateOpenIdConnectionRequest& request,
     ProcessApiCallback<EmptyResponse> callback,

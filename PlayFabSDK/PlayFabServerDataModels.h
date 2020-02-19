@@ -3816,6 +3816,8 @@ namespace PlayFab
             GenericErrorCodesExperimentationNoScorecard,
             GenericErrorCodesExperimentationTreatmentAssignmentFailed,
             GenericErrorCodesExperimentationTreatmentAssignmentDisabled,
+            GenericErrorCodesExperimentationInvalidDuration,
+            GenericErrorCodesExperimentationMaxExperimentsReached,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesSnapshotNotFound
         };
