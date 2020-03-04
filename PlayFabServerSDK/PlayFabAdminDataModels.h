@@ -3163,6 +3163,12 @@ namespace PlayFab
             GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError,
             GenericErrorCodesEvaluationModeTitleCountExceeded,
             GenericErrorCodesInsightsManagementTitleNotInFlight,
+            GenericErrorCodesLimitNotFound,
+            GenericErrorCodesLimitNotAvailableViaAPI,
+            GenericErrorCodesInsightsManagementSetStorageRetentionBelowMinimum,
+            GenericErrorCodesInsightsManagementSetStorageRetentionAboveMaximum,
+            GenericErrorCodesAppleNotEnabledForTitle,
+            GenericErrorCodesInsightsManagementNewActiveEventArchiveLimitInvalid,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -4064,7 +4070,8 @@ namespace PlayFab
             LoginIdentityProviderCustomServer,
             LoginIdentityProviderNintendoSwitch,
             LoginIdentityProviderFacebookInstantGames,
-            LoginIdentityProviderOpenIdConnect
+            LoginIdentityProviderOpenIdConnect,
+            LoginIdentityProviderApple
         };
 
         void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);

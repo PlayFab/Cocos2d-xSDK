@@ -2413,7 +2413,8 @@ namespace PlayFab
             LoginIdentityProviderCustomServer,
             LoginIdentityProviderNintendoSwitch,
             LoginIdentityProviderFacebookInstantGames,
-            LoginIdentityProviderOpenIdConnect
+            LoginIdentityProviderOpenIdConnect,
+            LoginIdentityProviderApple
         };
 
         void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);
@@ -6996,6 +6997,34 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct LinkAppleRequest : public PlayFabBaseModel
+        {
+            OptionalBool ForceLink;
+            std::string IdentityToken;
+
+            LinkAppleRequest() :
+                PlayFabBaseModel(),
+                ForceLink(),
+                IdentityToken()
+            {}
+
+            LinkAppleRequest(const LinkAppleRequest& src) :
+                PlayFabBaseModel(),
+                ForceLink(src.ForceLink),
+                IdentityToken(src.IdentityToken)
+            {}
+
+            LinkAppleRequest(const rapidjson::Value& obj) : LinkAppleRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkAppleRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct LinkCustomIDRequest : public PlayFabBaseModel
         {
             std::string CustomId;
@@ -7934,6 +7963,46 @@ namespace PlayFab
             }
 
             ~LoginWithAndroidDeviceIDRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LoginWithAppleRequest : public PlayFabBaseModel
+        {
+            OptionalBool CreateAccount;
+            std::string EncryptedRequest;
+            std::string IdentityToken;
+            GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            std::string PlayerSecret;
+            std::string TitleId;
+
+            LoginWithAppleRequest() :
+                PlayFabBaseModel(),
+                CreateAccount(),
+                EncryptedRequest(),
+                IdentityToken(),
+                InfoRequestParameters(NULL),
+                PlayerSecret(),
+                TitleId()
+            {}
+
+            LoginWithAppleRequest(const LoginWithAppleRequest& src) :
+                PlayFabBaseModel(),
+                CreateAccount(src.CreateAccount),
+                EncryptedRequest(src.EncryptedRequest),
+                IdentityToken(src.IdentityToken),
+                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                PlayerSecret(src.PlayerSecret),
+                TitleId(src.TitleId)
+            {}
+
+            LoginWithAppleRequest(const rapidjson::Value& obj) : LoginWithAppleRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LoginWithAppleRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -10032,6 +10101,28 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UnlinkAppleRequest : public PlayFabBaseModel
+        {
+
+            UnlinkAppleRequest() :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkAppleRequest(const UnlinkAppleRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkAppleRequest(const rapidjson::Value& obj) : UnlinkAppleRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlinkAppleRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UnlinkCustomIDRequest : public PlayFabBaseModel
         {
             std::string CustomId;
@@ -10577,6 +10668,7 @@ namespace PlayFab
 
         struct UnlinkXboxAccountRequest : public PlayFabBaseModel
         {
+            // Deprecated - Do not use
             std::string XboxToken;
 
             UnlinkXboxAccountRequest() :
