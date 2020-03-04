@@ -89,6 +89,7 @@ namespace PlayFab
         static void GetWindowsHelloChallenge(ClientModels::GetWindowsHelloChallengeRequest& request, ProcessApiCallback<ClientModels::GetWindowsHelloChallengeResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GrantCharacterToUser(ClientModels::GrantCharacterToUserRequest& request, ProcessApiCallback<ClientModels::GrantCharacterToUserResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkAndroidDeviceID(ClientModels::LinkAndroidDeviceIDRequest& request, ProcessApiCallback<ClientModels::LinkAndroidDeviceIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void LinkApple(ClientModels::LinkAppleRequest& request, ProcessApiCallback<ClientModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkCustomID(ClientModels::LinkCustomIDRequest& request, ProcessApiCallback<ClientModels::LinkCustomIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkFacebookAccount(ClientModels::LinkFacebookAccountRequest& request, ProcessApiCallback<ClientModels::LinkFacebookAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkFacebookInstantGamesId(ClientModels::LinkFacebookInstantGamesIdRequest& request, ProcessApiCallback<ClientModels::LinkFacebookInstantGamesIdResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -104,6 +105,7 @@ namespace PlayFab
         static void LinkWindowsHello(ClientModels::LinkWindowsHelloAccountRequest& request, ProcessApiCallback<ClientModels::LinkWindowsHelloAccountResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkXboxAccount(ClientModels::LinkXboxAccountRequest& request, ProcessApiCallback<ClientModels::LinkXboxAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithAndroidDeviceID(ClientModels::LoginWithAndroidDeviceIDRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void LoginWithApple(ClientModels::LoginWithAppleRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithCustomID(ClientModels::LoginWithCustomIDRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithEmailAddress(ClientModels::LoginWithEmailAddressRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithFacebook(ClientModels::LoginWithFacebookRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -143,6 +145,7 @@ namespace PlayFab
         static void StartPurchase(ClientModels::StartPurchaseRequest& request, ProcessApiCallback<ClientModels::StartPurchaseResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractUserVirtualCurrency(ClientModels::SubtractUserVirtualCurrencyRequest& request, ProcessApiCallback<ClientModels::ModifyUserVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkAndroidDeviceID(ClientModels::UnlinkAndroidDeviceIDRequest& request, ProcessApiCallback<ClientModels::UnlinkAndroidDeviceIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UnlinkApple(ProcessApiCallback<ClientModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkCustomID(ClientModels::UnlinkCustomIDRequest& request, ProcessApiCallback<ClientModels::UnlinkCustomIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkFacebookAccount(ProcessApiCallback<ClientModels::UnlinkFacebookAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkFacebookInstantGamesId(ClientModels::UnlinkFacebookInstantGamesIdRequest& request, ProcessApiCallback<ClientModels::UnlinkFacebookInstantGamesIdResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -251,6 +254,7 @@ namespace PlayFab
         static void OnGetWindowsHelloChallengeResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGrantCharacterToUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnLinkAppleResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkCustomIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkFacebookAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkFacebookInstantGamesIdResult(int httpStatus, HttpRequest* request, void* userData);
@@ -266,6 +270,7 @@ namespace PlayFab
         static void OnLinkWindowsHelloResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkXboxAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnLoginWithAppleResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithCustomIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithEmailAddressResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithFacebookResult(int httpStatus, HttpRequest* request, void* userData);
@@ -305,6 +310,7 @@ namespace PlayFab
         static void OnStartPurchaseResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkAndroidDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUnlinkAppleResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkCustomIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkFacebookAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkFacebookInstantGamesIdResult(int httpStatus, HttpRequest* request, void* userData);

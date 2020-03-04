@@ -2827,7 +2827,8 @@ namespace PlayFab
             LoginIdentityProviderCustomServer,
             LoginIdentityProviderNintendoSwitch,
             LoginIdentityProviderFacebookInstantGames,
-            LoginIdentityProviderOpenIdConnect
+            LoginIdentityProviderOpenIdConnect,
+            LoginIdentityProviderApple
         };
 
         void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);
@@ -3745,6 +3746,12 @@ namespace PlayFab
             GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError,
             GenericErrorCodesEvaluationModeTitleCountExceeded,
             GenericErrorCodesInsightsManagementTitleNotInFlight,
+            GenericErrorCodesLimitNotFound,
+            GenericErrorCodesLimitNotAvailableViaAPI,
+            GenericErrorCodesInsightsManagementSetStorageRetentionBelowMinimum,
+            GenericErrorCodesInsightsManagementSetStorageRetentionAboveMaximum,
+            GenericErrorCodesAppleNotEnabledForTitle,
+            GenericErrorCodesInsightsManagementNewActiveEventArchiveLimitInvalid,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -9753,6 +9760,7 @@ namespace PlayFab
         struct UnlinkXboxAccountRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
+            // Deprecated - Do not use
             std::string XboxToken;
 
             UnlinkXboxAccountRequest() :

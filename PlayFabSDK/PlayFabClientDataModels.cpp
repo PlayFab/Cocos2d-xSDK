@@ -3072,6 +3072,7 @@ void PlayFab::ClientModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProv
     case LoginIdentityProviderNintendoSwitch: writer.String("NintendoSwitch"); break;
     case LoginIdentityProviderFacebookInstantGames: writer.String("FacebookInstantGames"); break;
     case LoginIdentityProviderOpenIdConnect: writer.String("OpenIdConnect"); break;
+    case LoginIdentityProviderApple: writer.String("Apple"); break;
 
     }
 }
@@ -3101,6 +3102,7 @@ LoginIdentityProvider PlayFab::ClientModels::readLoginIdentityProviderFromValue(
         _LoginIdentityProviderMap["NintendoSwitch"] = LoginIdentityProviderNintendoSwitch;
         _LoginIdentityProviderMap["FacebookInstantGames"] = LoginIdentityProviderFacebookInstantGames;
         _LoginIdentityProviderMap["OpenIdConnect"] = LoginIdentityProviderOpenIdConnect;
+        _LoginIdentityProviderMap["Apple"] = LoginIdentityProviderApple;
 
     }
 
@@ -8144,6 +8146,29 @@ bool LinkAndroidDeviceIDResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+LinkAppleRequest::~LinkAppleRequest()
+{
+
+}
+
+void LinkAppleRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
+    writer.String("IdentityToken"); writer.String(IdentityToken.c_str());
+    writer.EndObject();
+}
+
+bool LinkAppleRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
+    const Value::ConstMemberIterator IdentityToken_member = obj.FindMember("IdentityToken");
+    if (IdentityToken_member != obj.MemberEnd() && !IdentityToken_member->value.IsNull()) IdentityToken = IdentityToken_member->value.GetString();
+
+    return true;
+}
+
 LinkCustomIDRequest::~LinkCustomIDRequest()
 {
 
@@ -8950,6 +8975,42 @@ bool LoginWithAndroidDeviceIDRequest::readFromValue(const rapidjson::Value& obj)
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
     const Value::ConstMemberIterator OS_member = obj.FindMember("OS");
     if (OS_member != obj.MemberEnd() && !OS_member->value.IsNull()) OS = OS_member->value.GetString();
+    const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
+    if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+
+    return true;
+}
+
+LoginWithAppleRequest::~LoginWithAppleRequest()
+{
+    if (InfoRequestParameters != NULL) delete InfoRequestParameters;
+
+}
+
+void LoginWithAppleRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
+    if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
+    writer.String("IdentityToken"); writer.String(IdentityToken.c_str());
+    if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
+    if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
+    writer.String("TitleId"); writer.String(TitleId.c_str());
+    writer.EndObject();
+}
+
+bool LoginWithAppleRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
+    if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
+    const Value::ConstMemberIterator EncryptedRequest_member = obj.FindMember("EncryptedRequest");
+    if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
+    const Value::ConstMemberIterator IdentityToken_member = obj.FindMember("IdentityToken");
+    if (IdentityToken_member != obj.MemberEnd() && !IdentityToken_member->value.IsNull()) IdentityToken = IdentityToken_member->value.GetString();
+    const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
+    if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -10991,6 +11052,23 @@ bool UnlinkAndroidDeviceIDResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UnlinkAppleRequest::~UnlinkAppleRequest()
+{
+
+}
+
+void UnlinkAppleRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool UnlinkAppleRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 UnlinkCustomIDRequest::~UnlinkCustomIDRequest()
 {
 
@@ -11422,7 +11500,7 @@ UnlinkXboxAccountRequest::~UnlinkXboxAccountRequest()
 void UnlinkXboxAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    writer.String("XboxToken"); writer.String(XboxToken.c_str());
+    if (XboxToken.length() > 0) { writer.String("XboxToken"); writer.String(XboxToken.c_str()); }
     writer.EndObject();
 }
 

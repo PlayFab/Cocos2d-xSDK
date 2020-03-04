@@ -3278,6 +3278,7 @@ void PlayFab::ServerModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProv
     case LoginIdentityProviderNintendoSwitch: writer.String("NintendoSwitch"); break;
     case LoginIdentityProviderFacebookInstantGames: writer.String("FacebookInstantGames"); break;
     case LoginIdentityProviderOpenIdConnect: writer.String("OpenIdConnect"); break;
+    case LoginIdentityProviderApple: writer.String("Apple"); break;
 
     }
 }
@@ -3307,6 +3308,7 @@ LoginIdentityProvider PlayFab::ServerModels::readLoginIdentityProviderFromValue(
         _LoginIdentityProviderMap["NintendoSwitch"] = LoginIdentityProviderNintendoSwitch;
         _LoginIdentityProviderMap["FacebookInstantGames"] = LoginIdentityProviderFacebookInstantGames;
         _LoginIdentityProviderMap["OpenIdConnect"] = LoginIdentityProviderOpenIdConnect;
+        _LoginIdentityProviderMap["Apple"] = LoginIdentityProviderApple;
 
     }
 
@@ -4372,6 +4374,12 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError: writer.String("CloudScriptAzureFunctionsQueueRequestError"); break;
     case GenericErrorCodesEvaluationModeTitleCountExceeded: writer.String("EvaluationModeTitleCountExceeded"); break;
     case GenericErrorCodesInsightsManagementTitleNotInFlight: writer.String("InsightsManagementTitleNotInFlight"); break;
+    case GenericErrorCodesLimitNotFound: writer.String("LimitNotFound"); break;
+    case GenericErrorCodesLimitNotAvailableViaAPI: writer.String("LimitNotAvailableViaAPI"); break;
+    case GenericErrorCodesInsightsManagementSetStorageRetentionBelowMinimum: writer.String("InsightsManagementSetStorageRetentionBelowMinimum"); break;
+    case GenericErrorCodesInsightsManagementSetStorageRetentionAboveMaximum: writer.String("InsightsManagementSetStorageRetentionAboveMaximum"); break;
+    case GenericErrorCodesAppleNotEnabledForTitle: writer.String("AppleNotEnabledForTitle"); break;
+    case GenericErrorCodesInsightsManagementNewActiveEventArchiveLimitInvalid: writer.String("InsightsManagementNewActiveEventArchiveLimitInvalid"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -4943,6 +4951,12 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["CloudScriptAzureFunctionsQueueRequestError"] = GenericErrorCodesCloudScriptAzureFunctionsQueueRequestError;
         _GenericErrorCodesMap["EvaluationModeTitleCountExceeded"] = GenericErrorCodesEvaluationModeTitleCountExceeded;
         _GenericErrorCodesMap["InsightsManagementTitleNotInFlight"] = GenericErrorCodesInsightsManagementTitleNotInFlight;
+        _GenericErrorCodesMap["LimitNotFound"] = GenericErrorCodesLimitNotFound;
+        _GenericErrorCodesMap["LimitNotAvailableViaAPI"] = GenericErrorCodesLimitNotAvailableViaAPI;
+        _GenericErrorCodesMap["InsightsManagementSetStorageRetentionBelowMinimum"] = GenericErrorCodesInsightsManagementSetStorageRetentionBelowMinimum;
+        _GenericErrorCodesMap["InsightsManagementSetStorageRetentionAboveMaximum"] = GenericErrorCodesInsightsManagementSetStorageRetentionAboveMaximum;
+        _GenericErrorCodesMap["AppleNotEnabledForTitle"] = GenericErrorCodesAppleNotEnabledForTitle;
+        _GenericErrorCodesMap["InsightsManagementNewActiveEventArchiveLimitInvalid"] = GenericErrorCodesInsightsManagementNewActiveEventArchiveLimitInvalid;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -11319,7 +11333,7 @@ void UnlinkXboxAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-    writer.String("XboxToken"); writer.String(XboxToken.c_str());
+    if (XboxToken.length() > 0) { writer.String("XboxToken"); writer.String(XboxToken.c_str()); }
     writer.EndObject();
 }
 
