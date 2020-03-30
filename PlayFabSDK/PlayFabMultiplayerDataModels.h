@@ -774,7 +774,8 @@ namespace PlayFab
         {
             ContainerFlavorManagedWindowsServerCore,
             ContainerFlavorCustomLinux,
-            ContainerFlavorManagedWindowsServerCorePreview
+            ContainerFlavorManagedWindowsServerCorePreview,
+            ContainerFlavorInvalid
         };
 
         void writeContainerFlavorEnumJSON(ContainerFlavor enumVal, PFStringJsonWriter& writer);
@@ -1033,8 +1034,10 @@ namespace PlayFab
             std::list<GameCertificateReference> GameCertificateReferences;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
+            std::string OsPlatform;
             std::list<Port> Ports;
             std::list<BuildRegion> RegionConfigurations;
+            std::string ServerType;
             Boxed<AzureVmSize> VmSize;
 
             CreateBuildWithCustomContainerResponse() :
@@ -1049,8 +1052,10 @@ namespace PlayFab
                 GameCertificateReferences(),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
+                OsPlatform(),
                 Ports(),
                 RegionConfigurations(),
+                ServerType(),
                 VmSize()
             {}
 
@@ -1066,8 +1071,10 @@ namespace PlayFab
                 GameCertificateReferences(src.GameCertificateReferences),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
+                OsPlatform(src.OsPlatform),
                 Ports(src.Ports),
                 RegionConfigurations(src.RegionConfigurations),
+                ServerType(src.ServerType),
                 VmSize(src.VmSize)
             {}
 
@@ -1113,6 +1120,7 @@ namespace PlayFab
             Boxed<ContainerFlavor> pfContainerFlavor;
             std::list<AssetReferenceParams> GameAssetReferences;
             std::list<GameCertificateReferenceParams> GameCertificateReferences;
+            std::string GameWorkingDirectory;
             InstrumentationConfiguration* pfInstrumentationConfiguration;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
@@ -1127,6 +1135,7 @@ namespace PlayFab
                 pfContainerFlavor(),
                 GameAssetReferences(),
                 GameCertificateReferences(),
+                GameWorkingDirectory(),
                 pfInstrumentationConfiguration(NULL),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
@@ -1142,6 +1151,7 @@ namespace PlayFab
                 pfContainerFlavor(src.pfContainerFlavor),
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
+                GameWorkingDirectory(src.GameWorkingDirectory),
                 pfInstrumentationConfiguration(src.pfInstrumentationConfiguration ? new InstrumentationConfiguration(*src.pfInstrumentationConfiguration) : NULL),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
@@ -1170,11 +1180,14 @@ namespace PlayFab
             OptionalTime CreationTime;
             std::list<AssetReference> GameAssetReferences;
             std::list<GameCertificateReference> GameCertificateReferences;
+            std::string GameWorkingDirectory;
             InstrumentationConfiguration* pfInstrumentationConfiguration;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
+            std::string OsPlatform;
             std::list<Port> Ports;
             std::list<BuildRegion> RegionConfigurations;
+            std::string ServerType;
             std::string StartMultiplayerServerCommand;
             Boxed<AzureVmSize> VmSize;
 
@@ -1186,11 +1199,14 @@ namespace PlayFab
                 CreationTime(),
                 GameAssetReferences(),
                 GameCertificateReferences(),
+                GameWorkingDirectory(),
                 pfInstrumentationConfiguration(NULL),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
+                OsPlatform(),
                 Ports(),
                 RegionConfigurations(),
+                ServerType(),
                 StartMultiplayerServerCommand(),
                 VmSize()
             {}
@@ -1203,11 +1219,14 @@ namespace PlayFab
                 CreationTime(src.CreationTime),
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
+                GameWorkingDirectory(src.GameWorkingDirectory),
                 pfInstrumentationConfiguration(src.pfInstrumentationConfiguration ? new InstrumentationConfiguration(*src.pfInstrumentationConfiguration) : NULL),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
+                OsPlatform(src.OsPlatform),
                 Ports(src.Ports),
                 RegionConfigurations(src.RegionConfigurations),
+                ServerType(src.ServerType),
                 StartMultiplayerServerCommand(src.StartMultiplayerServerCommand),
                 VmSize(src.VmSize)
             {}
@@ -1608,6 +1627,34 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct DeleteBuildRegionRequest : public PlayFabBaseModel
+        {
+            std::string BuildId;
+            std::string Region;
+
+            DeleteBuildRegionRequest() :
+                PlayFabBaseModel(),
+                BuildId(),
+                Region()
+            {}
+
+            DeleteBuildRegionRequest(const DeleteBuildRegionRequest& src) :
+                PlayFabBaseModel(),
+                BuildId(src.BuildId),
+                Region(src.Region)
+            {}
+
+            DeleteBuildRegionRequest(const rapidjson::Value& obj) : DeleteBuildRegionRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteBuildRegionRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct DeleteBuildRequest : public PlayFabBaseModel
         {
             std::string BuildId;
@@ -1888,8 +1935,10 @@ namespace PlayFab
             InstrumentationConfiguration* pfInstrumentationConfiguration;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
+            std::string OsPlatform;
             std::list<Port> Ports;
             std::list<BuildRegion> RegionConfigurations;
+            std::string ServerType;
             std::string StartMultiplayerServerCommand;
             Boxed<AzureVmSize> VmSize;
 
@@ -1907,8 +1956,10 @@ namespace PlayFab
                 pfInstrumentationConfiguration(NULL),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
+                OsPlatform(),
                 Ports(),
                 RegionConfigurations(),
+                ServerType(),
                 StartMultiplayerServerCommand(),
                 VmSize()
             {}
@@ -1927,8 +1978,10 @@ namespace PlayFab
                 pfInstrumentationConfiguration(src.pfInstrumentationConfiguration ? new InstrumentationConfiguration(*src.pfInstrumentationConfiguration) : NULL),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
+                OsPlatform(src.OsPlatform),
                 Ports(src.Ports),
                 RegionConfigurations(src.RegionConfigurations),
+                ServerType(src.ServerType),
                 StartMultiplayerServerCommand(src.StartMultiplayerServerCommand),
                 VmSize(src.VmSize)
             {}
@@ -2233,19 +2286,15 @@ namespace PlayFab
 
         struct GetMultiplayerServerLogsRequest : public PlayFabBaseModel
         {
-            // Deprecated - Do not use
-            std::string Region;
             std::string ServerId;
 
             GetMultiplayerServerLogsRequest() :
                 PlayFabBaseModel(),
-                Region(),
                 ServerId()
             {}
 
             GetMultiplayerServerLogsRequest(const GetMultiplayerServerLogsRequest& src) :
                 PlayFabBaseModel(),
-                Region(src.Region),
                 ServerId(src.ServerId)
             {}
 
@@ -3541,6 +3590,15 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum OsPlatform
+        {
+            OsPlatformWindows,
+            OsPlatformLinux
+        };
+
+        void writeOsPlatformEnumJSON(OsPlatform enumVal, PFStringJsonWriter& writer);
+        OsPlatform readOsPlatformFromValue(const rapidjson::Value& obj);
+
         struct RequestMultiplayerServerRequest : public PlayFabBaseModel
         {
             BuildAliasParams* pfBuildAliasParams;
@@ -3686,6 +3744,15 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum ServerType
+        {
+            ServerTypeContainer,
+            ServerTypeProcess
+        };
+
+        void writeServerTypeEnumJSON(ServerType enumVal, PFStringJsonWriter& writer);
+        ServerType readServerTypeFromValue(const rapidjson::Value& obj);
+
         struct ShutdownMultiplayerServerRequest : public PlayFabBaseModel
         {
             std::string BuildId;
@@ -3771,6 +3838,34 @@ namespace PlayFab
             }
 
             ~UpdateBuildAliasRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UpdateBuildRegionRequest : public PlayFabBaseModel
+        {
+            std::string BuildId;
+            BuildRegionParams BuildRegion;
+
+            UpdateBuildRegionRequest() :
+                PlayFabBaseModel(),
+                BuildId(),
+                BuildRegion()
+            {}
+
+            UpdateBuildRegionRequest(const UpdateBuildRegionRequest& src) :
+                PlayFabBaseModel(),
+                BuildId(src.BuildId),
+                BuildRegion(src.BuildRegion)
+            {}
+
+            UpdateBuildRegionRequest(const rapidjson::Value& obj) : UpdateBuildRegionRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdateBuildRegionRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

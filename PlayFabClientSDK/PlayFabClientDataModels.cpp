@@ -3073,6 +3073,7 @@ void PlayFab::ClientModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProv
     case LoginIdentityProviderFacebookInstantGames: writer.String("FacebookInstantGames"); break;
     case LoginIdentityProviderOpenIdConnect: writer.String("OpenIdConnect"); break;
     case LoginIdentityProviderApple: writer.String("Apple"); break;
+    case LoginIdentityProviderNintendoSwitchAccount: writer.String("NintendoSwitchAccount"); break;
 
     }
 }
@@ -3103,6 +3104,7 @@ LoginIdentityProvider PlayFab::ClientModels::readLoginIdentityProviderFromValue(
         _LoginIdentityProviderMap["FacebookInstantGames"] = LoginIdentityProviderFacebookInstantGames;
         _LoginIdentityProviderMap["OpenIdConnect"] = LoginIdentityProviderOpenIdConnect;
         _LoginIdentityProviderMap["Apple"] = LoginIdentityProviderApple;
+        _LoginIdentityProviderMap["NintendoSwitchAccount"] = LoginIdentityProviderNintendoSwitchAccount;
 
     }
 
@@ -3967,6 +3969,26 @@ bool UserAndroidDeviceInfo::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UserAppleIdInfo::~UserAppleIdInfo()
+{
+
+}
+
+void UserAppleIdInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (AppleSubjectId.length() > 0) { writer.String("AppleSubjectId"); writer.String(AppleSubjectId.c_str()); }
+    writer.EndObject();
+}
+
+bool UserAppleIdInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AppleSubjectId_member = obj.FindMember("AppleSubjectId");
+    if (AppleSubjectId_member != obj.MemberEnd() && !AppleSubjectId_member->value.IsNull()) AppleSubjectId = AppleSubjectId_member->value.GetString();
+
+    return true;
+}
+
 UserCustomIdInfo::~UserCustomIdInfo()
 {
 
@@ -4082,6 +4104,26 @@ bool UserKongregateInfo::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UserNintendoSwitchAccountIdInfo::~UserNintendoSwitchAccountIdInfo()
+{
+
+}
+
+void UserNintendoSwitchAccountIdInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (NintendoSwitchAccountSubjectId.length() > 0) { writer.String("NintendoSwitchAccountSubjectId"); writer.String(NintendoSwitchAccountSubjectId.c_str()); }
+    writer.EndObject();
+}
+
+bool UserNintendoSwitchAccountIdInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator NintendoSwitchAccountSubjectId_member = obj.FindMember("NintendoSwitchAccountSubjectId");
+    if (NintendoSwitchAccountSubjectId_member != obj.MemberEnd() && !NintendoSwitchAccountSubjectId_member->value.IsNull()) NintendoSwitchAccountSubjectId = NintendoSwitchAccountSubjectId_member->value.GetString();
+
+    return true;
+}
+
 UserNintendoSwitchDeviceIdInfo::~UserNintendoSwitchDeviceIdInfo()
 {
 
@@ -4173,6 +4215,8 @@ void PlayFab::ClientModels::writeUserOriginationEnumJSON(UserOrigination enumVal
     case UserOriginationNintendoSwitchDeviceId: writer.String("NintendoSwitchDeviceId"); break;
     case UserOriginationFacebookInstantGamesId: writer.String("FacebookInstantGamesId"); break;
     case UserOriginationOpenIdConnect: writer.String("OpenIdConnect"); break;
+    case UserOriginationApple: writer.String("Apple"); break;
+    case UserOriginationNintendoSwitchAccount: writer.String("NintendoSwitchAccount"); break;
 
     }
 }
@@ -4205,6 +4249,8 @@ UserOrigination PlayFab::ClientModels::readUserOriginationFromValue(const rapidj
         _UserOriginationMap["NintendoSwitchDeviceId"] = UserOriginationNintendoSwitchDeviceId;
         _UserOriginationMap["FacebookInstantGamesId"] = UserOriginationFacebookInstantGamesId;
         _UserOriginationMap["OpenIdConnect"] = UserOriginationOpenIdConnect;
+        _UserOriginationMap["Apple"] = UserOriginationApple;
+        _UserOriginationMap["NintendoSwitchAccount"] = UserOriginationNintendoSwitchAccount;
 
     }
 
@@ -4306,6 +4352,7 @@ bool UserWindowsHelloInfo::readFromValue(const rapidjson::Value& obj)
 UserAccountInfo::~UserAccountInfo()
 {
     if (AndroidDeviceInfo != NULL) delete AndroidDeviceInfo;
+    if (AppleAccountInfo != NULL) delete AppleAccountInfo;
     if (CustomIdInfo != NULL) delete CustomIdInfo;
     if (FacebookInfo != NULL) delete FacebookInfo;
     if (FacebookInstantGamesIdInfo != NULL) delete FacebookInstantGamesIdInfo;
@@ -4313,6 +4360,7 @@ UserAccountInfo::~UserAccountInfo()
     if (GoogleInfo != NULL) delete GoogleInfo;
     if (IosDeviceInfo != NULL) delete IosDeviceInfo;
     if (KongregateInfo != NULL) delete KongregateInfo;
+    if (NintendoSwitchAccountInfo != NULL) delete NintendoSwitchAccountInfo;
     if (NintendoSwitchDeviceIdInfo != NULL) delete NintendoSwitchDeviceIdInfo;
     if (PrivateInfo != NULL) delete PrivateInfo;
     if (PsnInfo != NULL) delete PsnInfo;
@@ -4328,6 +4376,7 @@ void UserAccountInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (AndroidDeviceInfo != NULL) { writer.String("AndroidDeviceInfo"); AndroidDeviceInfo->writeJSON(writer); }
+    if (AppleAccountInfo != NULL) { writer.String("AppleAccountInfo"); AppleAccountInfo->writeJSON(writer); }
     writer.String("Created"); writeDatetime(Created, writer);
     if (CustomIdInfo != NULL) { writer.String("CustomIdInfo"); CustomIdInfo->writeJSON(writer); }
     if (FacebookInfo != NULL) { writer.String("FacebookInfo"); FacebookInfo->writeJSON(writer); }
@@ -4336,6 +4385,7 @@ void UserAccountInfo::writeJSON(PFStringJsonWriter& writer)
     if (GoogleInfo != NULL) { writer.String("GoogleInfo"); GoogleInfo->writeJSON(writer); }
     if (IosDeviceInfo != NULL) { writer.String("IosDeviceInfo"); IosDeviceInfo->writeJSON(writer); }
     if (KongregateInfo != NULL) { writer.String("KongregateInfo"); KongregateInfo->writeJSON(writer); }
+    if (NintendoSwitchAccountInfo != NULL) { writer.String("NintendoSwitchAccountInfo"); NintendoSwitchAccountInfo->writeJSON(writer); }
     if (NintendoSwitchDeviceIdInfo != NULL) { writer.String("NintendoSwitchDeviceIdInfo"); NintendoSwitchDeviceIdInfo->writeJSON(writer); }
     if (!OpenIdInfo.empty()) {
         writer.String("OpenIdInfo");
@@ -4361,6 +4411,8 @@ bool UserAccountInfo::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AndroidDeviceInfo_member = obj.FindMember("AndroidDeviceInfo");
     if (AndroidDeviceInfo_member != obj.MemberEnd() && !AndroidDeviceInfo_member->value.IsNull()) AndroidDeviceInfo = new UserAndroidDeviceInfo(AndroidDeviceInfo_member->value);
+    const Value::ConstMemberIterator AppleAccountInfo_member = obj.FindMember("AppleAccountInfo");
+    if (AppleAccountInfo_member != obj.MemberEnd() && !AppleAccountInfo_member->value.IsNull()) AppleAccountInfo = new UserAppleIdInfo(AppleAccountInfo_member->value);
     const Value::ConstMemberIterator Created_member = obj.FindMember("Created");
     if (Created_member != obj.MemberEnd() && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
     const Value::ConstMemberIterator CustomIdInfo_member = obj.FindMember("CustomIdInfo");
@@ -4377,6 +4429,8 @@ bool UserAccountInfo::readFromValue(const rapidjson::Value& obj)
     if (IosDeviceInfo_member != obj.MemberEnd() && !IosDeviceInfo_member->value.IsNull()) IosDeviceInfo = new UserIosDeviceInfo(IosDeviceInfo_member->value);
     const Value::ConstMemberIterator KongregateInfo_member = obj.FindMember("KongregateInfo");
     if (KongregateInfo_member != obj.MemberEnd() && !KongregateInfo_member->value.IsNull()) KongregateInfo = new UserKongregateInfo(KongregateInfo_member->value);
+    const Value::ConstMemberIterator NintendoSwitchAccountInfo_member = obj.FindMember("NintendoSwitchAccountInfo");
+    if (NintendoSwitchAccountInfo_member != obj.MemberEnd() && !NintendoSwitchAccountInfo_member->value.IsNull()) NintendoSwitchAccountInfo = new UserNintendoSwitchAccountIdInfo(NintendoSwitchAccountInfo_member->value);
     const Value::ConstMemberIterator NintendoSwitchDeviceIdInfo_member = obj.FindMember("NintendoSwitchDeviceIdInfo");
     if (NintendoSwitchDeviceIdInfo_member != obj.MemberEnd() && !NintendoSwitchDeviceIdInfo_member->value.IsNull()) NintendoSwitchDeviceIdInfo = new UserNintendoSwitchDeviceIdInfo(NintendoSwitchDeviceIdInfo_member->value);
     const Value::ConstMemberIterator OpenIdInfo_member = obj.FindMember("OpenIdInfo");

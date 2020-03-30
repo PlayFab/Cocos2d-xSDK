@@ -37,7 +37,7 @@ void AssetReferenceParams::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("FileName"); writer.String(FileName.c_str());
-    writer.String("MountPath"); writer.String(MountPath.c_str());
+    if (MountPath.length() > 0) { writer.String("MountPath"); writer.String(MountPath.c_str()); }
     writer.EndObject();
 }
 
@@ -839,6 +839,7 @@ void PlayFab::MultiplayerModels::writeContainerFlavorEnumJSON(ContainerFlavor en
     case ContainerFlavorManagedWindowsServerCore: writer.String("ManagedWindowsServerCore"); break;
     case ContainerFlavorCustomLinux: writer.String("CustomLinux"); break;
     case ContainerFlavorManagedWindowsServerCorePreview: writer.String("ManagedWindowsServerCorePreview"); break;
+    case ContainerFlavorInvalid: writer.String("Invalid"); break;
 
     }
 }
@@ -852,6 +853,7 @@ ContainerFlavor PlayFab::MultiplayerModels::readContainerFlavorFromValue(const r
         _ContainerFlavorMap["ManagedWindowsServerCore"] = ContainerFlavorManagedWindowsServerCore;
         _ContainerFlavorMap["CustomLinux"] = ContainerFlavorCustomLinux;
         _ContainerFlavorMap["ManagedWindowsServerCorePreview"] = ContainerFlavorManagedWindowsServerCorePreview;
+        _ContainerFlavorMap["Invalid"] = ContainerFlavorInvalid;
 
     }
 
@@ -1194,6 +1196,7 @@ void CreateBuildWithCustomContainerResponse::writeJSON(PFStringJsonWriter& write
         writer.EndObject();
     }
     writer.String("MultiplayerServerCountPerVm"); writer.Int(MultiplayerServerCountPerVm);
+    if (OsPlatform.length() > 0) { writer.String("OsPlatform"); writer.String(OsPlatform.c_str()); }
     if (!Ports.empty()) {
         writer.String("Ports");
         writer.StartArray();
@@ -1210,6 +1213,7 @@ void CreateBuildWithCustomContainerResponse::writeJSON(PFStringJsonWriter& write
         }
         writer.EndArray();
     }
+    if (ServerType.length() > 0) { writer.String("ServerType"); writer.String(ServerType.c_str()); }
     if (VmSize.notNull()) { writer.String("VmSize"); writeAzureVmSizeEnumJSON(VmSize, writer); }
     writer.EndObject();
 }
@@ -1250,6 +1254,8 @@ bool CreateBuildWithCustomContainerResponse::readFromValue(const rapidjson::Valu
     }
     const Value::ConstMemberIterator MultiplayerServerCountPerVm_member = obj.FindMember("MultiplayerServerCountPerVm");
     if (MultiplayerServerCountPerVm_member != obj.MemberEnd() && !MultiplayerServerCountPerVm_member->value.IsNull()) MultiplayerServerCountPerVm = MultiplayerServerCountPerVm_member->value.GetInt();
+    const Value::ConstMemberIterator OsPlatform_member = obj.FindMember("OsPlatform");
+    if (OsPlatform_member != obj.MemberEnd() && !OsPlatform_member->value.IsNull()) OsPlatform = OsPlatform_member->value.GetString();
     const Value::ConstMemberIterator Ports_member = obj.FindMember("Ports");
     if (Ports_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Ports_member->value;
@@ -1264,6 +1270,8 @@ bool CreateBuildWithCustomContainerResponse::readFromValue(const rapidjson::Valu
             RegionConfigurations.push_back(BuildRegion(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator ServerType_member = obj.FindMember("ServerType");
+    if (ServerType_member != obj.MemberEnd() && !ServerType_member->value.IsNull()) ServerType = ServerType_member->value.GetString();
     const Value::ConstMemberIterator VmSize_member = obj.FindMember("VmSize");
     if (VmSize_member != obj.MemberEnd() && !VmSize_member->value.IsNull()) VmSize = readAzureVmSizeFromValue(VmSize_member->value);
 
@@ -1327,6 +1335,7 @@ void CreateBuildWithManagedContainerRequest::writeJSON(PFStringJsonWriter& write
         }
         writer.EndArray();
     }
+    if (GameWorkingDirectory.length() > 0) { writer.String("GameWorkingDirectory"); writer.String(GameWorkingDirectory.c_str()); }
     if (pfInstrumentationConfiguration != NULL) { writer.String("InstrumentationConfiguration"); pfInstrumentationConfiguration->writeJSON(writer); }
     if (!Metadata.empty()) {
         writer.String("Metadata");
@@ -1374,6 +1383,8 @@ bool CreateBuildWithManagedContainerRequest::readFromValue(const rapidjson::Valu
             GameCertificateReferences.push_back(GameCertificateReferenceParams(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator GameWorkingDirectory_member = obj.FindMember("GameWorkingDirectory");
+    if (GameWorkingDirectory_member != obj.MemberEnd() && !GameWorkingDirectory_member->value.IsNull()) GameWorkingDirectory = GameWorkingDirectory_member->value.GetString();
     const Value::ConstMemberIterator InstrumentationConfiguration_member = obj.FindMember("InstrumentationConfiguration");
     if (InstrumentationConfiguration_member != obj.MemberEnd() && !InstrumentationConfiguration_member->value.IsNull()) pfInstrumentationConfiguration = new InstrumentationConfiguration(InstrumentationConfiguration_member->value);
     const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
@@ -1435,6 +1446,7 @@ void CreateBuildWithManagedContainerResponse::writeJSON(PFStringJsonWriter& writ
         }
         writer.EndArray();
     }
+    if (GameWorkingDirectory.length() > 0) { writer.String("GameWorkingDirectory"); writer.String(GameWorkingDirectory.c_str()); }
     if (pfInstrumentationConfiguration != NULL) { writer.String("InstrumentationConfiguration"); pfInstrumentationConfiguration->writeJSON(writer); }
     if (!Metadata.empty()) {
         writer.String("Metadata");
@@ -1445,6 +1457,7 @@ void CreateBuildWithManagedContainerResponse::writeJSON(PFStringJsonWriter& writ
         writer.EndObject();
     }
     writer.String("MultiplayerServerCountPerVm"); writer.Int(MultiplayerServerCountPerVm);
+    if (OsPlatform.length() > 0) { writer.String("OsPlatform"); writer.String(OsPlatform.c_str()); }
     if (!Ports.empty()) {
         writer.String("Ports");
         writer.StartArray();
@@ -1461,6 +1474,7 @@ void CreateBuildWithManagedContainerResponse::writeJSON(PFStringJsonWriter& writ
         }
         writer.EndArray();
     }
+    if (ServerType.length() > 0) { writer.String("ServerType"); writer.String(ServerType.c_str()); }
     if (StartMultiplayerServerCommand.length() > 0) { writer.String("StartMultiplayerServerCommand"); writer.String(StartMultiplayerServerCommand.c_str()); }
     if (VmSize.notNull()) { writer.String("VmSize"); writeAzureVmSizeEnumJSON(VmSize, writer); }
     writer.EndObject();
@@ -1490,6 +1504,8 @@ bool CreateBuildWithManagedContainerResponse::readFromValue(const rapidjson::Val
             GameCertificateReferences.push_back(GameCertificateReference(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator GameWorkingDirectory_member = obj.FindMember("GameWorkingDirectory");
+    if (GameWorkingDirectory_member != obj.MemberEnd() && !GameWorkingDirectory_member->value.IsNull()) GameWorkingDirectory = GameWorkingDirectory_member->value.GetString();
     const Value::ConstMemberIterator InstrumentationConfiguration_member = obj.FindMember("InstrumentationConfiguration");
     if (InstrumentationConfiguration_member != obj.MemberEnd() && !InstrumentationConfiguration_member->value.IsNull()) pfInstrumentationConfiguration = new InstrumentationConfiguration(InstrumentationConfiguration_member->value);
     const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
@@ -1500,6 +1516,8 @@ bool CreateBuildWithManagedContainerResponse::readFromValue(const rapidjson::Val
     }
     const Value::ConstMemberIterator MultiplayerServerCountPerVm_member = obj.FindMember("MultiplayerServerCountPerVm");
     if (MultiplayerServerCountPerVm_member != obj.MemberEnd() && !MultiplayerServerCountPerVm_member->value.IsNull()) MultiplayerServerCountPerVm = MultiplayerServerCountPerVm_member->value.GetInt();
+    const Value::ConstMemberIterator OsPlatform_member = obj.FindMember("OsPlatform");
+    if (OsPlatform_member != obj.MemberEnd() && !OsPlatform_member->value.IsNull()) OsPlatform = OsPlatform_member->value.GetString();
     const Value::ConstMemberIterator Ports_member = obj.FindMember("Ports");
     if (Ports_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Ports_member->value;
@@ -1514,6 +1532,8 @@ bool CreateBuildWithManagedContainerResponse::readFromValue(const rapidjson::Val
             RegionConfigurations.push_back(BuildRegion(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator ServerType_member = obj.FindMember("ServerType");
+    if (ServerType_member != obj.MemberEnd() && !ServerType_member->value.IsNull()) ServerType = ServerType_member->value.GetString();
     const Value::ConstMemberIterator StartMultiplayerServerCommand_member = obj.FindMember("StartMultiplayerServerCommand");
     if (StartMultiplayerServerCommand_member != obj.MemberEnd() && !StartMultiplayerServerCommand_member->value.IsNull()) StartMultiplayerServerCommand = StartMultiplayerServerCommand_member->value.GetString();
     const Value::ConstMemberIterator VmSize_member = obj.FindMember("VmSize");
@@ -1889,6 +1909,29 @@ bool DeleteBuildAliasRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeleteBuildRegionRequest::~DeleteBuildRegionRequest()
+{
+
+}
+
+void DeleteBuildRegionRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("BuildId"); writer.String(BuildId.c_str());
+    writer.String("Region"); writer.String(Region.c_str());
+    writer.EndObject();
+}
+
+bool DeleteBuildRegionRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
+    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
+    if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
+
+    return true;
+}
+
 DeleteBuildRequest::~DeleteBuildRequest()
 {
 
@@ -2167,6 +2210,7 @@ void GetBuildResponse::writeJSON(PFStringJsonWriter& writer)
         writer.EndObject();
     }
     writer.String("MultiplayerServerCountPerVm"); writer.Int(MultiplayerServerCountPerVm);
+    if (OsPlatform.length() > 0) { writer.String("OsPlatform"); writer.String(OsPlatform.c_str()); }
     if (!Ports.empty()) {
         writer.String("Ports");
         writer.StartArray();
@@ -2183,6 +2227,7 @@ void GetBuildResponse::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndArray();
     }
+    if (ServerType.length() > 0) { writer.String("ServerType"); writer.String(ServerType.c_str()); }
     if (StartMultiplayerServerCommand.length() > 0) { writer.String("StartMultiplayerServerCommand"); writer.String(StartMultiplayerServerCommand.c_str()); }
     if (VmSize.notNull()) { writer.String("VmSize"); writeAzureVmSizeEnumJSON(VmSize, writer); }
     writer.EndObject();
@@ -2228,6 +2273,8 @@ bool GetBuildResponse::readFromValue(const rapidjson::Value& obj)
     }
     const Value::ConstMemberIterator MultiplayerServerCountPerVm_member = obj.FindMember("MultiplayerServerCountPerVm");
     if (MultiplayerServerCountPerVm_member != obj.MemberEnd() && !MultiplayerServerCountPerVm_member->value.IsNull()) MultiplayerServerCountPerVm = MultiplayerServerCountPerVm_member->value.GetInt();
+    const Value::ConstMemberIterator OsPlatform_member = obj.FindMember("OsPlatform");
+    if (OsPlatform_member != obj.MemberEnd() && !OsPlatform_member->value.IsNull()) OsPlatform = OsPlatform_member->value.GetString();
     const Value::ConstMemberIterator Ports_member = obj.FindMember("Ports");
     if (Ports_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Ports_member->value;
@@ -2242,6 +2289,8 @@ bool GetBuildResponse::readFromValue(const rapidjson::Value& obj)
             RegionConfigurations.push_back(BuildRegion(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator ServerType_member = obj.FindMember("ServerType");
+    if (ServerType_member != obj.MemberEnd() && !ServerType_member->value.IsNull()) ServerType = ServerType_member->value.GetString();
     const Value::ConstMemberIterator StartMultiplayerServerCommand_member = obj.FindMember("StartMultiplayerServerCommand");
     if (StartMultiplayerServerCommand_member != obj.MemberEnd() && !StartMultiplayerServerCommand_member->value.IsNull()) StartMultiplayerServerCommand = StartMultiplayerServerCommand_member->value.GetString();
     const Value::ConstMemberIterator VmSize_member = obj.FindMember("VmSize");
@@ -2574,15 +2623,12 @@ GetMultiplayerServerLogsRequest::~GetMultiplayerServerLogsRequest()
 void GetMultiplayerServerLogsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    if (Region.length() > 0) { writer.String("Region"); writer.String(Region.c_str()); }
     writer.String("ServerId"); writer.String(ServerId.c_str());
     writer.EndObject();
 }
 
 bool GetMultiplayerServerLogsRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
-    if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
     const Value::ConstMemberIterator ServerId_member = obj.FindMember("ServerId");
     if (ServerId_member != obj.MemberEnd() && !ServerId_member->value.IsNull()) ServerId = ServerId_member->value.GetString();
 
@@ -3833,6 +3879,33 @@ bool MultiplayerEmptyRequest::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::MultiplayerModels::writeOsPlatformEnumJSON(OsPlatform enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case OsPlatformWindows: writer.String("Windows"); break;
+    case OsPlatformLinux: writer.String("Linux"); break;
+
+    }
+}
+
+OsPlatform PlayFab::MultiplayerModels::readOsPlatformFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, OsPlatform> _OsPlatformMap;
+    if (_OsPlatformMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _OsPlatformMap["Windows"] = OsPlatformWindows;
+        _OsPlatformMap["Linux"] = OsPlatformLinux;
+
+    }
+
+    auto output = _OsPlatformMap.find(obj.GetString());
+    if (output != _OsPlatformMap.end())
+        return output->second;
+
+    return OsPlatformWindows; // Basically critical fail
+}
 
 RequestMultiplayerServerRequest::~RequestMultiplayerServerRequest()
 {
@@ -4005,6 +4078,33 @@ bool RolloverContainerRegistryCredentialsResponse::readFromValue(const rapidjson
 
     return true;
 }
+void PlayFab::MultiplayerModels::writeServerTypeEnumJSON(ServerType enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case ServerTypeContainer: writer.String("Container"); break;
+    case ServerTypeProcess: writer.String("Process"); break;
+
+    }
+}
+
+ServerType PlayFab::MultiplayerModels::readServerTypeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, ServerType> _ServerTypeMap;
+    if (_ServerTypeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _ServerTypeMap["Container"] = ServerTypeContainer;
+        _ServerTypeMap["Process"] = ServerTypeProcess;
+
+    }
+
+    auto output = _ServerTypeMap.find(obj.GetString());
+    if (output != _ServerTypeMap.end())
+        return output->second;
+
+    return ServerTypeContainer; // Basically critical fail
+}
 
 ShutdownMultiplayerServerRequest::~ShutdownMultiplayerServerRequest()
 {
@@ -4089,6 +4189,29 @@ bool UpdateBuildAliasRequest::readFromValue(const rapidjson::Value& obj)
             BuildSelectionCriteria.push_back(BuildSelectionCriterion(memberList[i]));
         }
     }
+
+    return true;
+}
+
+UpdateBuildRegionRequest::~UpdateBuildRegionRequest()
+{
+
+}
+
+void UpdateBuildRegionRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("BuildId"); writer.String(BuildId.c_str());
+    writer.String("BuildRegion"); BuildRegion.writeJSON(writer);
+    writer.EndObject();
+}
+
+bool UpdateBuildRegionRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
+    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator BuildRegion_member = obj.FindMember("BuildRegion");
+    if (BuildRegion_member != obj.MemberEnd() && !BuildRegion_member->value.IsNull()) BuildRegion = BuildRegionParams(BuildRegion_member->value);
 
     return true;
 }

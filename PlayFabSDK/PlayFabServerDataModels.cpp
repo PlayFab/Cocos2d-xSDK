@@ -370,6 +370,26 @@ bool UserAndroidDeviceInfo::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UserAppleIdInfo::~UserAppleIdInfo()
+{
+
+}
+
+void UserAppleIdInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (AppleSubjectId.length() > 0) { writer.String("AppleSubjectId"); writer.String(AppleSubjectId.c_str()); }
+    writer.EndObject();
+}
+
+bool UserAppleIdInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AppleSubjectId_member = obj.FindMember("AppleSubjectId");
+    if (AppleSubjectId_member != obj.MemberEnd() && !AppleSubjectId_member->value.IsNull()) AppleSubjectId = AppleSubjectId_member->value.GetString();
+
+    return true;
+}
+
 UserCustomIdInfo::~UserCustomIdInfo()
 {
 
@@ -524,6 +544,26 @@ bool UserKongregateInfo::readFromValue(const rapidjson::Value& obj)
     if (KongregateId_member != obj.MemberEnd() && !KongregateId_member->value.IsNull()) KongregateId = KongregateId_member->value.GetString();
     const Value::ConstMemberIterator KongregateName_member = obj.FindMember("KongregateName");
     if (KongregateName_member != obj.MemberEnd() && !KongregateName_member->value.IsNull()) KongregateName = KongregateName_member->value.GetString();
+
+    return true;
+}
+
+UserNintendoSwitchAccountIdInfo::~UserNintendoSwitchAccountIdInfo()
+{
+
+}
+
+void UserNintendoSwitchAccountIdInfo::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (NintendoSwitchAccountSubjectId.length() > 0) { writer.String("NintendoSwitchAccountSubjectId"); writer.String(NintendoSwitchAccountSubjectId.c_str()); }
+    writer.EndObject();
+}
+
+bool UserNintendoSwitchAccountIdInfo::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator NintendoSwitchAccountSubjectId_member = obj.FindMember("NintendoSwitchAccountSubjectId");
+    if (NintendoSwitchAccountSubjectId_member != obj.MemberEnd() && !NintendoSwitchAccountSubjectId_member->value.IsNull()) NintendoSwitchAccountSubjectId = NintendoSwitchAccountSubjectId_member->value.GetString();
 
     return true;
 }
@@ -1054,6 +1094,8 @@ void PlayFab::ServerModels::writeUserOriginationEnumJSON(UserOrigination enumVal
     case UserOriginationNintendoSwitchDeviceId: writer.String("NintendoSwitchDeviceId"); break;
     case UserOriginationFacebookInstantGamesId: writer.String("FacebookInstantGamesId"); break;
     case UserOriginationOpenIdConnect: writer.String("OpenIdConnect"); break;
+    case UserOriginationApple: writer.String("Apple"); break;
+    case UserOriginationNintendoSwitchAccount: writer.String("NintendoSwitchAccount"); break;
 
     }
 }
@@ -1086,6 +1128,8 @@ UserOrigination PlayFab::ServerModels::readUserOriginationFromValue(const rapidj
         _UserOriginationMap["NintendoSwitchDeviceId"] = UserOriginationNintendoSwitchDeviceId;
         _UserOriginationMap["FacebookInstantGamesId"] = UserOriginationFacebookInstantGamesId;
         _UserOriginationMap["OpenIdConnect"] = UserOriginationOpenIdConnect;
+        _UserOriginationMap["Apple"] = UserOriginationApple;
+        _UserOriginationMap["NintendoSwitchAccount"] = UserOriginationNintendoSwitchAccount;
 
     }
 
@@ -1230,6 +1274,7 @@ bool UserXboxInfo::readFromValue(const rapidjson::Value& obj)
 UserAccountInfo::~UserAccountInfo()
 {
     if (AndroidDeviceInfo != NULL) delete AndroidDeviceInfo;
+    if (AppleAccountInfo != NULL) delete AppleAccountInfo;
     if (CustomIdInfo != NULL) delete CustomIdInfo;
     if (FacebookInfo != NULL) delete FacebookInfo;
     if (FacebookInstantGamesIdInfo != NULL) delete FacebookInstantGamesIdInfo;
@@ -1237,6 +1282,7 @@ UserAccountInfo::~UserAccountInfo()
     if (GoogleInfo != NULL) delete GoogleInfo;
     if (IosDeviceInfo != NULL) delete IosDeviceInfo;
     if (KongregateInfo != NULL) delete KongregateInfo;
+    if (NintendoSwitchAccountInfo != NULL) delete NintendoSwitchAccountInfo;
     if (NintendoSwitchDeviceIdInfo != NULL) delete NintendoSwitchDeviceIdInfo;
     if (PrivateInfo != NULL) delete PrivateInfo;
     if (PsnInfo != NULL) delete PsnInfo;
@@ -1252,6 +1298,7 @@ void UserAccountInfo::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (AndroidDeviceInfo != NULL) { writer.String("AndroidDeviceInfo"); AndroidDeviceInfo->writeJSON(writer); }
+    if (AppleAccountInfo != NULL) { writer.String("AppleAccountInfo"); AppleAccountInfo->writeJSON(writer); }
     writer.String("Created"); writeDatetime(Created, writer);
     if (CustomIdInfo != NULL) { writer.String("CustomIdInfo"); CustomIdInfo->writeJSON(writer); }
     if (FacebookInfo != NULL) { writer.String("FacebookInfo"); FacebookInfo->writeJSON(writer); }
@@ -1260,6 +1307,7 @@ void UserAccountInfo::writeJSON(PFStringJsonWriter& writer)
     if (GoogleInfo != NULL) { writer.String("GoogleInfo"); GoogleInfo->writeJSON(writer); }
     if (IosDeviceInfo != NULL) { writer.String("IosDeviceInfo"); IosDeviceInfo->writeJSON(writer); }
     if (KongregateInfo != NULL) { writer.String("KongregateInfo"); KongregateInfo->writeJSON(writer); }
+    if (NintendoSwitchAccountInfo != NULL) { writer.String("NintendoSwitchAccountInfo"); NintendoSwitchAccountInfo->writeJSON(writer); }
     if (NintendoSwitchDeviceIdInfo != NULL) { writer.String("NintendoSwitchDeviceIdInfo"); NintendoSwitchDeviceIdInfo->writeJSON(writer); }
     if (!OpenIdInfo.empty()) {
         writer.String("OpenIdInfo");
@@ -1285,6 +1333,8 @@ bool UserAccountInfo::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AndroidDeviceInfo_member = obj.FindMember("AndroidDeviceInfo");
     if (AndroidDeviceInfo_member != obj.MemberEnd() && !AndroidDeviceInfo_member->value.IsNull()) AndroidDeviceInfo = new UserAndroidDeviceInfo(AndroidDeviceInfo_member->value);
+    const Value::ConstMemberIterator AppleAccountInfo_member = obj.FindMember("AppleAccountInfo");
+    if (AppleAccountInfo_member != obj.MemberEnd() && !AppleAccountInfo_member->value.IsNull()) AppleAccountInfo = new UserAppleIdInfo(AppleAccountInfo_member->value);
     const Value::ConstMemberIterator Created_member = obj.FindMember("Created");
     if (Created_member != obj.MemberEnd() && !Created_member->value.IsNull()) Created = readDatetime(Created_member->value);
     const Value::ConstMemberIterator CustomIdInfo_member = obj.FindMember("CustomIdInfo");
@@ -1301,6 +1351,8 @@ bool UserAccountInfo::readFromValue(const rapidjson::Value& obj)
     if (IosDeviceInfo_member != obj.MemberEnd() && !IosDeviceInfo_member->value.IsNull()) IosDeviceInfo = new UserIosDeviceInfo(IosDeviceInfo_member->value);
     const Value::ConstMemberIterator KongregateInfo_member = obj.FindMember("KongregateInfo");
     if (KongregateInfo_member != obj.MemberEnd() && !KongregateInfo_member->value.IsNull()) KongregateInfo = new UserKongregateInfo(KongregateInfo_member->value);
+    const Value::ConstMemberIterator NintendoSwitchAccountInfo_member = obj.FindMember("NintendoSwitchAccountInfo");
+    if (NintendoSwitchAccountInfo_member != obj.MemberEnd() && !NintendoSwitchAccountInfo_member->value.IsNull()) NintendoSwitchAccountInfo = new UserNintendoSwitchAccountIdInfo(NintendoSwitchAccountInfo_member->value);
     const Value::ConstMemberIterator NintendoSwitchDeviceIdInfo_member = obj.FindMember("NintendoSwitchDeviceIdInfo");
     if (NintendoSwitchDeviceIdInfo_member != obj.MemberEnd() && !NintendoSwitchDeviceIdInfo_member->value.IsNull()) NintendoSwitchDeviceIdInfo = new UserNintendoSwitchDeviceIdInfo(NintendoSwitchDeviceIdInfo_member->value);
     const Value::ConstMemberIterator OpenIdInfo_member = obj.FindMember("OpenIdInfo");
@@ -3279,6 +3331,7 @@ void PlayFab::ServerModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProv
     case LoginIdentityProviderFacebookInstantGames: writer.String("FacebookInstantGames"); break;
     case LoginIdentityProviderOpenIdConnect: writer.String("OpenIdConnect"); break;
     case LoginIdentityProviderApple: writer.String("Apple"); break;
+    case LoginIdentityProviderNintendoSwitchAccount: writer.String("NintendoSwitchAccount"); break;
 
     }
 }
@@ -3309,6 +3362,7 @@ LoginIdentityProvider PlayFab::ServerModels::readLoginIdentityProviderFromValue(
         _LoginIdentityProviderMap["FacebookInstantGames"] = LoginIdentityProviderFacebookInstantGames;
         _LoginIdentityProviderMap["OpenIdConnect"] = LoginIdentityProviderOpenIdConnect;
         _LoginIdentityProviderMap["Apple"] = LoginIdentityProviderApple;
+        _LoginIdentityProviderMap["NintendoSwitchAccount"] = LoginIdentityProviderNintendoSwitchAccount;
 
     }
 
@@ -4379,7 +4433,11 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesInsightsManagementSetStorageRetentionBelowMinimum: writer.String("InsightsManagementSetStorageRetentionBelowMinimum"); break;
     case GenericErrorCodesInsightsManagementSetStorageRetentionAboveMaximum: writer.String("InsightsManagementSetStorageRetentionAboveMaximum"); break;
     case GenericErrorCodesAppleNotEnabledForTitle: writer.String("AppleNotEnabledForTitle"); break;
-    case GenericErrorCodesInsightsManagementNewActiveEventArchiveLimitInvalid: writer.String("InsightsManagementNewActiveEventArchiveLimitInvalid"); break;
+    case GenericErrorCodesInsightsManagementNewActiveEventExportLimitInvalid: writer.String("InsightsManagementNewActiveEventExportLimitInvalid"); break;
+    case GenericErrorCodesInsightsManagementSetPerformanceRateLimited: writer.String("InsightsManagementSetPerformanceRateLimited"); break;
+    case GenericErrorCodesPartyRequestsThrottledFromRateLimiter: writer.String("PartyRequestsThrottledFromRateLimiter"); break;
+    case GenericErrorCodesXboxServiceTooManyRequests: writer.String("XboxServiceTooManyRequests"); break;
+    case GenericErrorCodesNintendoSwitchNotEnabledForTitle: writer.String("NintendoSwitchNotEnabledForTitle"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -4436,6 +4494,11 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesExportCouldNotCreate: writer.String("ExportCouldNotCreate"); break;
     case GenericErrorCodesExportNoBackingDatabaseFound: writer.String("ExportNoBackingDatabaseFound"); break;
     case GenericErrorCodesExportCouldNotDelete: writer.String("ExportCouldNotDelete"); break;
+    case GenericErrorCodesExportCannotDetermineEventQuery: writer.String("ExportCannotDetermineEventQuery"); break;
+    case GenericErrorCodesExportInvalidQuerySchemaModification: writer.String("ExportInvalidQuerySchemaModification"); break;
+    case GenericErrorCodesExportQuerySchemaMissingRequiredColumns: writer.String("ExportQuerySchemaMissingRequiredColumns"); break;
+    case GenericErrorCodesExportCannotParseQuery: writer.String("ExportCannotParseQuery"); break;
+    case GenericErrorCodesExportControlCommandsNotAllowed: writer.String("ExportControlCommandsNotAllowed"); break;
     case GenericErrorCodesTitleNotEnabledForParty: writer.String("TitleNotEnabledForParty"); break;
     case GenericErrorCodesPartyVersionNotFound: writer.String("PartyVersionNotFound"); break;
     case GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue: writer.String("MultiplayerServerBuildReferencedByMatchmakingQueue"); break;
@@ -4454,6 +4517,7 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesExperimentationInvalidDuration: writer.String("ExperimentationInvalidDuration"); break;
     case GenericErrorCodesExperimentationMaxExperimentsReached: writer.String("ExperimentationMaxExperimentsReached"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
+    case GenericErrorCodesTitleNotOnUpdatedPricingPlan: writer.String("TitleNotOnUpdatedPricingPlan"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
     }
@@ -4956,7 +5020,11 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["InsightsManagementSetStorageRetentionBelowMinimum"] = GenericErrorCodesInsightsManagementSetStorageRetentionBelowMinimum;
         _GenericErrorCodesMap["InsightsManagementSetStorageRetentionAboveMaximum"] = GenericErrorCodesInsightsManagementSetStorageRetentionAboveMaximum;
         _GenericErrorCodesMap["AppleNotEnabledForTitle"] = GenericErrorCodesAppleNotEnabledForTitle;
-        _GenericErrorCodesMap["InsightsManagementNewActiveEventArchiveLimitInvalid"] = GenericErrorCodesInsightsManagementNewActiveEventArchiveLimitInvalid;
+        _GenericErrorCodesMap["InsightsManagementNewActiveEventExportLimitInvalid"] = GenericErrorCodesInsightsManagementNewActiveEventExportLimitInvalid;
+        _GenericErrorCodesMap["InsightsManagementSetPerformanceRateLimited"] = GenericErrorCodesInsightsManagementSetPerformanceRateLimited;
+        _GenericErrorCodesMap["PartyRequestsThrottledFromRateLimiter"] = GenericErrorCodesPartyRequestsThrottledFromRateLimiter;
+        _GenericErrorCodesMap["XboxServiceTooManyRequests"] = GenericErrorCodesXboxServiceTooManyRequests;
+        _GenericErrorCodesMap["NintendoSwitchNotEnabledForTitle"] = GenericErrorCodesNintendoSwitchNotEnabledForTitle;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -5013,6 +5081,11 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["ExportCouldNotCreate"] = GenericErrorCodesExportCouldNotCreate;
         _GenericErrorCodesMap["ExportNoBackingDatabaseFound"] = GenericErrorCodesExportNoBackingDatabaseFound;
         _GenericErrorCodesMap["ExportCouldNotDelete"] = GenericErrorCodesExportCouldNotDelete;
+        _GenericErrorCodesMap["ExportCannotDetermineEventQuery"] = GenericErrorCodesExportCannotDetermineEventQuery;
+        _GenericErrorCodesMap["ExportInvalidQuerySchemaModification"] = GenericErrorCodesExportInvalidQuerySchemaModification;
+        _GenericErrorCodesMap["ExportQuerySchemaMissingRequiredColumns"] = GenericErrorCodesExportQuerySchemaMissingRequiredColumns;
+        _GenericErrorCodesMap["ExportCannotParseQuery"] = GenericErrorCodesExportCannotParseQuery;
+        _GenericErrorCodesMap["ExportControlCommandsNotAllowed"] = GenericErrorCodesExportControlCommandsNotAllowed;
         _GenericErrorCodesMap["TitleNotEnabledForParty"] = GenericErrorCodesTitleNotEnabledForParty;
         _GenericErrorCodesMap["PartyVersionNotFound"] = GenericErrorCodesPartyVersionNotFound;
         _GenericErrorCodesMap["MultiplayerServerBuildReferencedByMatchmakingQueue"] = GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue;
@@ -5031,6 +5104,7 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["ExperimentationInvalidDuration"] = GenericErrorCodesExperimentationInvalidDuration;
         _GenericErrorCodesMap["ExperimentationMaxExperimentsReached"] = GenericErrorCodesExperimentationMaxExperimentsReached;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
+        _GenericErrorCodesMap["TitleNotOnUpdatedPricingPlan"] = GenericErrorCodesTitleNotOnUpdatedPricingPlan;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 
     }

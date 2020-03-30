@@ -751,7 +751,8 @@ namespace PlayFab
             LoginIdentityProviderNintendoSwitch,
             LoginIdentityProviderFacebookInstantGames,
             LoginIdentityProviderOpenIdConnect,
-            LoginIdentityProviderApple
+            LoginIdentityProviderApple,
+            LoginIdentityProviderNintendoSwitchAccount
         };
 
         void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);

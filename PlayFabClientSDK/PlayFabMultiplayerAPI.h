@@ -28,6 +28,7 @@ namespace PlayFab
         static void DeleteAsset(MultiplayerModels::DeleteAssetRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteBuild(MultiplayerModels::DeleteBuildRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteBuildAlias(MultiplayerModels::DeleteBuildAliasRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void DeleteBuildRegion(MultiplayerModels::DeleteBuildRegionRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteCertificate(MultiplayerModels::DeleteCertificateRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteRemoteUser(MultiplayerModels::DeleteRemoteUserRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void EnableMultiplayerServersForTitle(ProcessApiCallback<MultiplayerModels::EnableMultiplayerServersForTitleResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -65,6 +66,7 @@ namespace PlayFab
         static void ShutdownMultiplayerServer(MultiplayerModels::ShutdownMultiplayerServerRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UntagContainerImage(MultiplayerModels::UntagContainerImageRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateBuildAlias(MultiplayerModels::UpdateBuildAliasRequest& request, ProcessApiCallback<MultiplayerModels::BuildAliasDetailsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UpdateBuildRegion(MultiplayerModels::UpdateBuildRegionRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateBuildRegions(MultiplayerModels::UpdateBuildRegionsRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UploadCertificate(MultiplayerModels::UploadCertificateRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
@@ -87,6 +89,7 @@ namespace PlayFab
         static void OnDeleteAssetResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteBuildResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteBuildAliasResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnDeleteBuildRegionResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteCertificateResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteRemoteUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnEnableMultiplayerServersForTitleResult(int httpStatus, HttpRequest* request, void* userData);
@@ -124,6 +127,7 @@ namespace PlayFab
         static void OnShutdownMultiplayerServerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUntagContainerImageResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateBuildAliasResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUpdateBuildRegionResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUpdateBuildRegionsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUploadCertificateResult(int httpStatus, HttpRequest* request, void* userData);
     };

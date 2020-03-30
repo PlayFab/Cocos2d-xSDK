@@ -134,6 +134,7 @@ void PlayFab::AuthenticationModels::writeLoginIdentityProviderEnumJSON(LoginIden
     case LoginIdentityProviderFacebookInstantGames: writer.String("FacebookInstantGames"); break;
     case LoginIdentityProviderOpenIdConnect: writer.String("OpenIdConnect"); break;
     case LoginIdentityProviderApple: writer.String("Apple"); break;
+    case LoginIdentityProviderNintendoSwitchAccount: writer.String("NintendoSwitchAccount"); break;
 
     }
 }
@@ -164,6 +165,7 @@ LoginIdentityProvider PlayFab::AuthenticationModels::readLoginIdentityProviderFr
         _LoginIdentityProviderMap["FacebookInstantGames"] = LoginIdentityProviderFacebookInstantGames;
         _LoginIdentityProviderMap["OpenIdConnect"] = LoginIdentityProviderOpenIdConnect;
         _LoginIdentityProviderMap["Apple"] = LoginIdentityProviderApple;
+        _LoginIdentityProviderMap["NintendoSwitchAccount"] = LoginIdentityProviderNintendoSwitchAccount;
 
     }
 
