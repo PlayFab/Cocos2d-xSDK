@@ -414,6 +414,31 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UserAppleIdInfo : public PlayFabBaseModel
+        {
+            std::string AppleSubjectId;
+
+            UserAppleIdInfo() :
+                PlayFabBaseModel(),
+                AppleSubjectId()
+            {}
+
+            UserAppleIdInfo(const UserAppleIdInfo& src) :
+                PlayFabBaseModel(),
+                AppleSubjectId(src.AppleSubjectId)
+            {}
+
+            UserAppleIdInfo(const rapidjson::Value& obj) : UserAppleIdInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~UserAppleIdInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UserCustomIdInfo : public PlayFabBaseModel
         {
             std::string CustomId;
@@ -602,6 +627,31 @@ namespace PlayFab
             }
 
             ~UserKongregateInfo();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UserNintendoSwitchAccountIdInfo : public PlayFabBaseModel
+        {
+            std::string NintendoSwitchAccountSubjectId;
+
+            UserNintendoSwitchAccountIdInfo() :
+                PlayFabBaseModel(),
+                NintendoSwitchAccountSubjectId()
+            {}
+
+            UserNintendoSwitchAccountIdInfo(const UserNintendoSwitchAccountIdInfo& src) :
+                PlayFabBaseModel(),
+                NintendoSwitchAccountSubjectId(src.NintendoSwitchAccountSubjectId)
+            {}
+
+            UserNintendoSwitchAccountIdInfo(const rapidjson::Value& obj) : UserNintendoSwitchAccountIdInfo()
+            {
+                readFromValue(obj);
+            }
+
+            ~UserNintendoSwitchAccountIdInfo();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -957,7 +1007,9 @@ namespace PlayFab
             UserOriginationServerCustomId,
             UserOriginationNintendoSwitchDeviceId,
             UserOriginationFacebookInstantGamesId,
-            UserOriginationOpenIdConnect
+            UserOriginationOpenIdConnect,
+            UserOriginationApple,
+            UserOriginationNintendoSwitchAccount
         };
 
         void writeUserOriginationEnumJSON(UserOrigination enumVal, PFStringJsonWriter& writer);
@@ -1121,6 +1173,7 @@ namespace PlayFab
         struct UserAccountInfo : public PlayFabBaseModel
         {
             UserAndroidDeviceInfo* AndroidDeviceInfo;
+            UserAppleIdInfo* AppleAccountInfo;
             time_t Created;
             UserCustomIdInfo* CustomIdInfo;
             UserFacebookInfo* FacebookInfo;
@@ -1129,6 +1182,7 @@ namespace PlayFab
             UserGoogleInfo* GoogleInfo;
             UserIosDeviceInfo* IosDeviceInfo;
             UserKongregateInfo* KongregateInfo;
+            UserNintendoSwitchAccountIdInfo* NintendoSwitchAccountInfo;
             UserNintendoSwitchDeviceIdInfo* NintendoSwitchDeviceIdInfo;
             std::list<UserOpenIdInfo> OpenIdInfo;
             std::string PlayFabId;
@@ -1144,6 +1198,7 @@ namespace PlayFab
             UserAccountInfo() :
                 PlayFabBaseModel(),
                 AndroidDeviceInfo(NULL),
+                AppleAccountInfo(NULL),
                 Created(0),
                 CustomIdInfo(NULL),
                 FacebookInfo(NULL),
@@ -1152,6 +1207,7 @@ namespace PlayFab
                 GoogleInfo(NULL),
                 IosDeviceInfo(NULL),
                 KongregateInfo(NULL),
+                NintendoSwitchAccountInfo(NULL),
                 NintendoSwitchDeviceIdInfo(NULL),
                 OpenIdInfo(),
                 PlayFabId(),
@@ -1168,6 +1224,7 @@ namespace PlayFab
             UserAccountInfo(const UserAccountInfo& src) :
                 PlayFabBaseModel(),
                 AndroidDeviceInfo(src.AndroidDeviceInfo ? new UserAndroidDeviceInfo(*src.AndroidDeviceInfo) : NULL),
+                AppleAccountInfo(src.AppleAccountInfo ? new UserAppleIdInfo(*src.AppleAccountInfo) : NULL),
                 Created(src.Created),
                 CustomIdInfo(src.CustomIdInfo ? new UserCustomIdInfo(*src.CustomIdInfo) : NULL),
                 FacebookInfo(src.FacebookInfo ? new UserFacebookInfo(*src.FacebookInfo) : NULL),
@@ -1176,6 +1233,7 @@ namespace PlayFab
                 GoogleInfo(src.GoogleInfo ? new UserGoogleInfo(*src.GoogleInfo) : NULL),
                 IosDeviceInfo(src.IosDeviceInfo ? new UserIosDeviceInfo(*src.IosDeviceInfo) : NULL),
                 KongregateInfo(src.KongregateInfo ? new UserKongregateInfo(*src.KongregateInfo) : NULL),
+                NintendoSwitchAccountInfo(src.NintendoSwitchAccountInfo ? new UserNintendoSwitchAccountIdInfo(*src.NintendoSwitchAccountInfo) : NULL),
                 NintendoSwitchDeviceIdInfo(src.NintendoSwitchDeviceIdInfo ? new UserNintendoSwitchDeviceIdInfo(*src.NintendoSwitchDeviceIdInfo) : NULL),
                 OpenIdInfo(src.OpenIdInfo),
                 PlayFabId(src.PlayFabId),
@@ -2828,7 +2886,8 @@ namespace PlayFab
             LoginIdentityProviderNintendoSwitch,
             LoginIdentityProviderFacebookInstantGames,
             LoginIdentityProviderOpenIdConnect,
-            LoginIdentityProviderApple
+            LoginIdentityProviderApple,
+            LoginIdentityProviderNintendoSwitchAccount
         };
 
         void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer);
@@ -3751,7 +3810,11 @@ namespace PlayFab
             GenericErrorCodesInsightsManagementSetStorageRetentionBelowMinimum,
             GenericErrorCodesInsightsManagementSetStorageRetentionAboveMaximum,
             GenericErrorCodesAppleNotEnabledForTitle,
-            GenericErrorCodesInsightsManagementNewActiveEventArchiveLimitInvalid,
+            GenericErrorCodesInsightsManagementNewActiveEventExportLimitInvalid,
+            GenericErrorCodesInsightsManagementSetPerformanceRateLimited,
+            GenericErrorCodesPartyRequestsThrottledFromRateLimiter,
+            GenericErrorCodesXboxServiceTooManyRequests,
+            GenericErrorCodesNintendoSwitchNotEnabledForTitle,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -3808,6 +3871,11 @@ namespace PlayFab
             GenericErrorCodesExportCouldNotCreate,
             GenericErrorCodesExportNoBackingDatabaseFound,
             GenericErrorCodesExportCouldNotDelete,
+            GenericErrorCodesExportCannotDetermineEventQuery,
+            GenericErrorCodesExportInvalidQuerySchemaModification,
+            GenericErrorCodesExportQuerySchemaMissingRequiredColumns,
+            GenericErrorCodesExportCannotParseQuery,
+            GenericErrorCodesExportControlCommandsNotAllowed,
             GenericErrorCodesTitleNotEnabledForParty,
             GenericErrorCodesPartyVersionNotFound,
             GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue,
@@ -3826,6 +3894,7 @@ namespace PlayFab
             GenericErrorCodesExperimentationInvalidDuration,
             GenericErrorCodesExperimentationMaxExperimentsReached,
             GenericErrorCodesMaxActionDepthExceeded,
+            GenericErrorCodesTitleNotOnUpdatedPricingPlan,
             GenericErrorCodesSnapshotNotFound
         };
 
