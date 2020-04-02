@@ -3876,6 +3876,7 @@ namespace PlayFab
             GenericErrorCodesExportQuerySchemaMissingRequiredColumns,
             GenericErrorCodesExportCannotParseQuery,
             GenericErrorCodesExportControlCommandsNotAllowed,
+            GenericErrorCodesExportQueryMissingTableReference,
             GenericErrorCodesTitleNotEnabledForParty,
             GenericErrorCodesPartyVersionNotFound,
             GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue,
@@ -3893,6 +3894,7 @@ namespace PlayFab
             GenericErrorCodesExperimentationTreatmentAssignmentDisabled,
             GenericErrorCodesExperimentationInvalidDuration,
             GenericErrorCodesExperimentationMaxExperimentsReached,
+            GenericErrorCodesExperimentationExperimentSchedulingInProgress,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesTitleNotOnUpdatedPricingPlan,
             GenericErrorCodesSnapshotNotFound

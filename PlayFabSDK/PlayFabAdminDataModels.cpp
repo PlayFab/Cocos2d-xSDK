@@ -3728,6 +3728,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExportQuerySchemaMissingRequiredColumns: writer.String("ExportQuerySchemaMissingRequiredColumns"); break;
     case GenericErrorCodesExportCannotParseQuery: writer.String("ExportCannotParseQuery"); break;
     case GenericErrorCodesExportControlCommandsNotAllowed: writer.String("ExportControlCommandsNotAllowed"); break;
+    case GenericErrorCodesExportQueryMissingTableReference: writer.String("ExportQueryMissingTableReference"); break;
     case GenericErrorCodesTitleNotEnabledForParty: writer.String("TitleNotEnabledForParty"); break;
     case GenericErrorCodesPartyVersionNotFound: writer.String("PartyVersionNotFound"); break;
     case GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue: writer.String("MultiplayerServerBuildReferencedByMatchmakingQueue"); break;
@@ -3745,6 +3746,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExperimentationTreatmentAssignmentDisabled: writer.String("ExperimentationTreatmentAssignmentDisabled"); break;
     case GenericErrorCodesExperimentationInvalidDuration: writer.String("ExperimentationInvalidDuration"); break;
     case GenericErrorCodesExperimentationMaxExperimentsReached: writer.String("ExperimentationMaxExperimentsReached"); break;
+    case GenericErrorCodesExperimentationExperimentSchedulingInProgress: writer.String("ExperimentationExperimentSchedulingInProgress"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesTitleNotOnUpdatedPricingPlan: writer.String("TitleNotOnUpdatedPricingPlan"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
@@ -4315,6 +4317,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExportQuerySchemaMissingRequiredColumns"] = GenericErrorCodesExportQuerySchemaMissingRequiredColumns;
         _GenericErrorCodesMap["ExportCannotParseQuery"] = GenericErrorCodesExportCannotParseQuery;
         _GenericErrorCodesMap["ExportControlCommandsNotAllowed"] = GenericErrorCodesExportControlCommandsNotAllowed;
+        _GenericErrorCodesMap["ExportQueryMissingTableReference"] = GenericErrorCodesExportQueryMissingTableReference;
         _GenericErrorCodesMap["TitleNotEnabledForParty"] = GenericErrorCodesTitleNotEnabledForParty;
         _GenericErrorCodesMap["PartyVersionNotFound"] = GenericErrorCodesPartyVersionNotFound;
         _GenericErrorCodesMap["MultiplayerServerBuildReferencedByMatchmakingQueue"] = GenericErrorCodesMultiplayerServerBuildReferencedByMatchmakingQueue;
@@ -4332,6 +4335,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExperimentationTreatmentAssignmentDisabled"] = GenericErrorCodesExperimentationTreatmentAssignmentDisabled;
         _GenericErrorCodesMap["ExperimentationInvalidDuration"] = GenericErrorCodesExperimentationInvalidDuration;
         _GenericErrorCodesMap["ExperimentationMaxExperimentsReached"] = GenericErrorCodesExperimentationMaxExperimentsReached;
+        _GenericErrorCodesMap["ExperimentationExperimentSchedulingInProgress"] = GenericErrorCodesExperimentationExperimentSchedulingInProgress;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["TitleNotOnUpdatedPricingPlan"] = GenericErrorCodesTitleNotOnUpdatedPricingPlan;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
