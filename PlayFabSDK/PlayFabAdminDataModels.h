@@ -3173,6 +3173,7 @@ namespace PlayFab
             GenericErrorCodesPartyRequestsThrottledFromRateLimiter,
             GenericErrorCodesXboxServiceTooManyRequests,
             GenericErrorCodesNintendoSwitchNotEnabledForTitle,
+            GenericErrorCodesRequestMultiplayerServersThrottledFromRateLimiter,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,

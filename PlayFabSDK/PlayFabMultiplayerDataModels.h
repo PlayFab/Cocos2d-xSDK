@@ -1705,6 +1705,31 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct DeleteContainerImageRequest : public PlayFabBaseModel
+        {
+            std::string ImageName;
+
+            DeleteContainerImageRequest() :
+                PlayFabBaseModel(),
+                ImageName()
+            {}
+
+            DeleteContainerImageRequest(const DeleteContainerImageRequest& src) :
+                PlayFabBaseModel(),
+                ImageName(src.ImageName)
+            {}
+
+            DeleteContainerImageRequest(const rapidjson::Value& obj) : DeleteContainerImageRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteContainerImageRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct DeleteRemoteUserRequest : public PlayFabBaseModel
         {
             std::string BuildId;
@@ -3366,6 +3391,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct ListQosServersRequest : public PlayFabBaseModel
         {
 
@@ -3388,6 +3414,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        // Deprecated - Do not use
         struct ListQosServersResponse : public PlayFabBaseModel
         {
             Int32 PageSize;

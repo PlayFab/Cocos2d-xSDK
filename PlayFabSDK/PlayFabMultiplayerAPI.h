@@ -30,6 +30,7 @@ namespace PlayFab
         static void DeleteBuildAlias(MultiplayerModels::DeleteBuildAliasRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteBuildRegion(MultiplayerModels::DeleteBuildRegionRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteCertificate(MultiplayerModels::DeleteCertificateRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void DeleteContainerImageRepository(MultiplayerModels::DeleteContainerImageRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteRemoteUser(MultiplayerModels::DeleteRemoteUserRequest& request, ProcessApiCallback<MultiplayerModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void EnableMultiplayerServersForTitle(ProcessApiCallback<MultiplayerModels::EnableMultiplayerServersForTitleResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAssetUploadUrl(MultiplayerModels::GetAssetUploadUrlRequest& request, ProcessApiCallback<MultiplayerModels::GetAssetUploadUrlResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -57,6 +58,7 @@ namespace PlayFab
         static void ListMatchmakingTicketsForPlayer(MultiplayerModels::ListMatchmakingTicketsForPlayerRequest& request, ProcessApiCallback<MultiplayerModels::ListMatchmakingTicketsForPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListMultiplayerServers(MultiplayerModels::ListMultiplayerServersRequest& request, ProcessApiCallback<MultiplayerModels::ListMultiplayerServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListPartyQosServers(MultiplayerModels::ListPartyQosServersRequest& request, ProcessApiCallback<MultiplayerModels::ListPartyQosServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        // Deprecated - Use 'ListQosServersForTitle' instead
         static void ListQosServers(ProcessApiCallback<MultiplayerModels::ListQosServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListQosServersForTitle(ProcessApiCallback<MultiplayerModels::ListQosServersForTitleResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListServerBackfillTicketsForPlayer(MultiplayerModels::ListServerBackfillTicketsForPlayerRequest& request, ProcessApiCallback<MultiplayerModels::ListServerBackfillTicketsForPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -91,6 +93,7 @@ namespace PlayFab
         static void OnDeleteBuildAliasResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteBuildRegionResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteCertificateResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnDeleteContainerImageRepositoryResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteRemoteUserResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnEnableMultiplayerServersForTitleResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAssetUploadUrlResult(int httpStatus, HttpRequest* request, void* userData);
