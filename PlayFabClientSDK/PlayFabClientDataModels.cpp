@@ -216,6 +216,37 @@ bool AcceptTradeResponse::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::ClientModels::writeAdActivityEnumJSON(AdActivity enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case AdActivityOpened: writer.String("Opened"); break;
+    case AdActivityClosed: writer.String("Closed"); break;
+    case AdActivityStart: writer.String("Start"); break;
+    case AdActivityEnd: writer.String("End"); break;
+
+    }
+}
+
+AdActivity PlayFab::ClientModels::readAdActivityFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, AdActivity> _AdActivityMap;
+    if (_AdActivityMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _AdActivityMap["Opened"] = AdActivityOpened;
+        _AdActivityMap["Closed"] = AdActivityClosed;
+        _AdActivityMap["Start"] = AdActivityStart;
+        _AdActivityMap["End"] = AdActivityEnd;
+
+    }
+
+    auto output = _AdActivityMap.find(obj.GetString());
+    if (output != _AdActivityMap.end())
+        return output->second;
+
+    return AdActivityOpened; // Basically critical fail
+}
 
 AdCampaignAttributionModel::~AdCampaignAttributionModel()
 {
@@ -504,6 +535,136 @@ bool AddUserVirtualCurrencyRequest::readFromValue(const rapidjson::Value& obj)
     if (Amount_member != obj.MemberEnd() && !Amount_member->value.IsNull()) Amount = Amount_member->value.GetInt();
     const Value::ConstMemberIterator VirtualCurrency_member = obj.FindMember("VirtualCurrency");
     if (VirtualCurrency_member != obj.MemberEnd() && !VirtualCurrency_member->value.IsNull()) VirtualCurrency = VirtualCurrency_member->value.GetString();
+
+    return true;
+}
+
+AdPlacementDetails::~AdPlacementDetails()
+{
+
+}
+
+void AdPlacementDetails::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (PlacementId.length() > 0) { writer.String("PlacementId"); writer.String(PlacementId.c_str()); }
+    if (PlacementName.length() > 0) { writer.String("PlacementName"); writer.String(PlacementName.c_str()); }
+    if (PlacementViewsRemaining.notNull()) { writer.String("PlacementViewsRemaining"); writer.Int(PlacementViewsRemaining); }
+    if (PlacementViewsResetMinutes.notNull()) { writer.String("PlacementViewsResetMinutes"); writer.Double(PlacementViewsResetMinutes); }
+    if (RewardAssetUrl.length() > 0) { writer.String("RewardAssetUrl"); writer.String(RewardAssetUrl.c_str()); }
+    if (RewardDescription.length() > 0) { writer.String("RewardDescription"); writer.String(RewardDescription.c_str()); }
+    if (RewardId.length() > 0) { writer.String("RewardId"); writer.String(RewardId.c_str()); }
+    if (RewardName.length() > 0) { writer.String("RewardName"); writer.String(RewardName.c_str()); }
+    writer.EndObject();
+}
+
+bool AdPlacementDetails::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlacementId_member = obj.FindMember("PlacementId");
+    if (PlacementId_member != obj.MemberEnd() && !PlacementId_member->value.IsNull()) PlacementId = PlacementId_member->value.GetString();
+    const Value::ConstMemberIterator PlacementName_member = obj.FindMember("PlacementName");
+    if (PlacementName_member != obj.MemberEnd() && !PlacementName_member->value.IsNull()) PlacementName = PlacementName_member->value.GetString();
+    const Value::ConstMemberIterator PlacementViewsRemaining_member = obj.FindMember("PlacementViewsRemaining");
+    if (PlacementViewsRemaining_member != obj.MemberEnd() && !PlacementViewsRemaining_member->value.IsNull()) PlacementViewsRemaining = PlacementViewsRemaining_member->value.GetInt();
+    const Value::ConstMemberIterator PlacementViewsResetMinutes_member = obj.FindMember("PlacementViewsResetMinutes");
+    if (PlacementViewsResetMinutes_member != obj.MemberEnd() && !PlacementViewsResetMinutes_member->value.IsNull()) PlacementViewsResetMinutes = PlacementViewsResetMinutes_member->value.GetDouble();
+    const Value::ConstMemberIterator RewardAssetUrl_member = obj.FindMember("RewardAssetUrl");
+    if (RewardAssetUrl_member != obj.MemberEnd() && !RewardAssetUrl_member->value.IsNull()) RewardAssetUrl = RewardAssetUrl_member->value.GetString();
+    const Value::ConstMemberIterator RewardDescription_member = obj.FindMember("RewardDescription");
+    if (RewardDescription_member != obj.MemberEnd() && !RewardDescription_member->value.IsNull()) RewardDescription = RewardDescription_member->value.GetString();
+    const Value::ConstMemberIterator RewardId_member = obj.FindMember("RewardId");
+    if (RewardId_member != obj.MemberEnd() && !RewardId_member->value.IsNull()) RewardId = RewardId_member->value.GetString();
+    const Value::ConstMemberIterator RewardName_member = obj.FindMember("RewardName");
+    if (RewardName_member != obj.MemberEnd() && !RewardName_member->value.IsNull()) RewardName = RewardName_member->value.GetString();
+
+    return true;
+}
+
+AdRewardItemGranted::~AdRewardItemGranted()
+{
+
+}
+
+void AdRewardItemGranted::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (CatalogId.length() > 0) { writer.String("CatalogId"); writer.String(CatalogId.c_str()); }
+    if (DisplayName.length() > 0) { writer.String("DisplayName"); writer.String(DisplayName.c_str()); }
+    if (InstanceId.length() > 0) { writer.String("InstanceId"); writer.String(InstanceId.c_str()); }
+    if (ItemId.length() > 0) { writer.String("ItemId"); writer.String(ItemId.c_str()); }
+    writer.EndObject();
+}
+
+bool AdRewardItemGranted::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CatalogId_member = obj.FindMember("CatalogId");
+    if (CatalogId_member != obj.MemberEnd() && !CatalogId_member->value.IsNull()) CatalogId = CatalogId_member->value.GetString();
+    const Value::ConstMemberIterator DisplayName_member = obj.FindMember("DisplayName");
+    if (DisplayName_member != obj.MemberEnd() && !DisplayName_member->value.IsNull()) DisplayName = DisplayName_member->value.GetString();
+    const Value::ConstMemberIterator InstanceId_member = obj.FindMember("InstanceId");
+    if (InstanceId_member != obj.MemberEnd() && !InstanceId_member->value.IsNull()) InstanceId = InstanceId_member->value.GetString();
+    const Value::ConstMemberIterator ItemId_member = obj.FindMember("ItemId");
+    if (ItemId_member != obj.MemberEnd() && !ItemId_member->value.IsNull()) ItemId = ItemId_member->value.GetString();
+
+    return true;
+}
+
+AdRewardResults::~AdRewardResults()
+{
+
+}
+
+void AdRewardResults::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!GrantedItems.empty()) {
+        writer.String("GrantedItems");
+        writer.StartArray();
+        for (std::list<AdRewardItemGranted>::iterator iter = GrantedItems.begin(); iter != GrantedItems.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (!GrantedVirtualCurrencies.empty()) {
+        writer.String("GrantedVirtualCurrencies");
+        writer.StartObject();
+        for (std::map<std::string, Int32>::iterator iter = GrantedVirtualCurrencies.begin(); iter != GrantedVirtualCurrencies.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Int(iter->second);
+        }
+        writer.EndObject();
+    }
+    if (!IncrementedStatistics.empty()) {
+        writer.String("IncrementedStatistics");
+        writer.StartObject();
+        for (std::map<std::string, Int32>::iterator iter = IncrementedStatistics.begin(); iter != IncrementedStatistics.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.Int(iter->second);
+        }
+        writer.EndObject();
+    }
+    writer.EndObject();
+}
+
+bool AdRewardResults::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator GrantedItems_member = obj.FindMember("GrantedItems");
+    if (GrantedItems_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = GrantedItems_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            GrantedItems.push_back(AdRewardItemGranted(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator GrantedVirtualCurrencies_member = obj.FindMember("GrantedVirtualCurrencies");
+    if (GrantedVirtualCurrencies_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = GrantedVirtualCurrencies_member->value.MemberBegin(); iter != GrantedVirtualCurrencies_member->value.MemberEnd(); ++iter) {
+            GrantedVirtualCurrencies[iter->name.GetString()] = iter->value.GetInt();
+        }
+    }
+    const Value::ConstMemberIterator IncrementedStatistics_member = obj.FindMember("IncrementedStatistics");
+    if (IncrementedStatistics_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = IncrementedStatistics_member->value.MemberBegin(); iter != IncrementedStatistics_member->value.MemberEnd(); ++iter) {
+            IncrementedStatistics[iter->name.GetString()] = iter->value.GetInt();
+        }
+    }
 
     return true;
 }
@@ -4479,6 +4640,85 @@ bool GetAccountInfoResult::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AccountInfo_member = obj.FindMember("AccountInfo");
     if (AccountInfo_member != obj.MemberEnd() && !AccountInfo_member->value.IsNull()) AccountInfo = new UserAccountInfo(AccountInfo_member->value);
+
+    return true;
+}
+
+NameIdentifier::~NameIdentifier()
+{
+
+}
+
+void NameIdentifier::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
+    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    writer.EndObject();
+}
+
+bool NameIdentifier::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
+    if (Id_member != obj.MemberEnd() && !Id_member->value.IsNull()) Id = Id_member->value.GetString();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+
+    return true;
+}
+
+GetAdPlacementsRequest::~GetAdPlacementsRequest()
+{
+    if (Identifier != NULL) delete Identifier;
+
+}
+
+void GetAdPlacementsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("AppId"); writer.String(AppId.c_str());
+    if (Identifier != NULL) { writer.String("Identifier"); Identifier->writeJSON(writer); }
+    writer.EndObject();
+}
+
+bool GetAdPlacementsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AppId_member = obj.FindMember("AppId");
+    if (AppId_member != obj.MemberEnd() && !AppId_member->value.IsNull()) AppId = AppId_member->value.GetString();
+    const Value::ConstMemberIterator Identifier_member = obj.FindMember("Identifier");
+    if (Identifier_member != obj.MemberEnd() && !Identifier_member->value.IsNull()) Identifier = new NameIdentifier(Identifier_member->value);
+
+    return true;
+}
+
+GetAdPlacementsResult::~GetAdPlacementsResult()
+{
+
+}
+
+void GetAdPlacementsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!AdPlacements.empty()) {
+        writer.String("AdPlacements");
+        writer.StartArray();
+        for (std::list<AdPlacementDetails>::iterator iter = AdPlacements.begin(); iter != AdPlacements.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool GetAdPlacementsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AdPlacements_member = obj.FindMember("AdPlacements");
+    if (AdPlacements_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = AdPlacements_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            AdPlacements.push_back(AdPlacementDetails(memberList[i]));
+        }
+    }
 
     return true;
 }
@@ -8524,6 +8764,32 @@ bool LinkKongregateAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+LinkNintendoSwitchAccountRequest::~LinkNintendoSwitchAccountRequest()
+{
+
+}
+
+void LinkNintendoSwitchAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (EnvironmentId.length() > 0) { writer.String("EnvironmentId"); writer.String(EnvironmentId.c_str()); }
+    if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
+    writer.String("IdentityToken"); writer.String(IdentityToken.c_str());
+    writer.EndObject();
+}
+
+bool LinkNintendoSwitchAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator EnvironmentId_member = obj.FindMember("EnvironmentId");
+    if (EnvironmentId_member != obj.MemberEnd() && !EnvironmentId_member->value.IsNull()) EnvironmentId = EnvironmentId_member->value.GetString();
+    const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
+    if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
+    const Value::ConstMemberIterator IdentityToken_member = obj.FindMember("IdentityToken");
+    if (IdentityToken_member != obj.MemberEnd() && !IdentityToken_member->value.IsNull()) IdentityToken = IdentityToken_member->value.GetString();
+
+    return true;
+}
+
 LinkNintendoSwitchDeviceIdRequest::~LinkNintendoSwitchDeviceIdRequest()
 {
 
@@ -9368,6 +9634,45 @@ bool LoginWithKongregateRequest::readFromValue(const rapidjson::Value& obj)
     if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
     const Value::ConstMemberIterator KongregateId_member = obj.FindMember("KongregateId");
     if (KongregateId_member != obj.MemberEnd() && !KongregateId_member->value.IsNull()) KongregateId = KongregateId_member->value.GetString();
+    const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
+    if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
+    const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
+    if (TitleId_member != obj.MemberEnd() && !TitleId_member->value.IsNull()) TitleId = TitleId_member->value.GetString();
+
+    return true;
+}
+
+LoginWithNintendoSwitchAccountRequest::~LoginWithNintendoSwitchAccountRequest()
+{
+    if (InfoRequestParameters != NULL) delete InfoRequestParameters;
+
+}
+
+void LoginWithNintendoSwitchAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
+    if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
+    if (EnvironmentId.length() > 0) { writer.String("EnvironmentId"); writer.String(EnvironmentId.c_str()); }
+    writer.String("IdentityToken"); writer.String(IdentityToken.c_str());
+    if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
+    if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
+    writer.String("TitleId"); writer.String(TitleId.c_str());
+    writer.EndObject();
+}
+
+bool LoginWithNintendoSwitchAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
+    if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
+    const Value::ConstMemberIterator EncryptedRequest_member = obj.FindMember("EncryptedRequest");
+    if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
+    const Value::ConstMemberIterator EnvironmentId_member = obj.FindMember("EnvironmentId");
+    if (EnvironmentId_member != obj.MemberEnd() && !EnvironmentId_member->value.IsNull()) EnvironmentId = EnvironmentId_member->value.GetString();
+    const Value::ConstMemberIterator IdentityToken_member = obj.FindMember("IdentityToken");
+    if (IdentityToken_member != obj.MemberEnd() && !IdentityToken_member->value.IsNull()) IdentityToken = IdentityToken_member->value.GetString();
+    const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
+    if (InfoRequestParameters_member != obj.MemberEnd() && !InfoRequestParameters_member->value.IsNull()) InfoRequestParameters = new GetPlayerCombinedInfoRequestParams(InfoRequestParameters_member->value);
     const Value::ConstMemberIterator PlayerSecret_member = obj.FindMember("PlayerSecret");
     if (PlayerSecret_member != obj.MemberEnd() && !PlayerSecret_member->value.IsNull()) PlayerSecret = PlayerSecret_member->value.GetString();
     const Value::ConstMemberIterator TitleId_member = obj.FindMember("TitleId");
@@ -10593,6 +10898,49 @@ bool RemoveSharedGroupMembersResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+ReportAdActivityRequest::~ReportAdActivityRequest()
+{
+
+}
+
+void ReportAdActivityRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("Activity"); writeAdActivityEnumJSON(Activity, writer);
+    writer.String("PlacementId"); writer.String(PlacementId.c_str());
+    writer.String("RewardId"); writer.String(RewardId.c_str());
+    writer.EndObject();
+}
+
+bool ReportAdActivityRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Activity_member = obj.FindMember("Activity");
+    if (Activity_member != obj.MemberEnd() && !Activity_member->value.IsNull()) Activity = readAdActivityFromValue(Activity_member->value);
+    const Value::ConstMemberIterator PlacementId_member = obj.FindMember("PlacementId");
+    if (PlacementId_member != obj.MemberEnd() && !PlacementId_member->value.IsNull()) PlacementId = PlacementId_member->value.GetString();
+    const Value::ConstMemberIterator RewardId_member = obj.FindMember("RewardId");
+    if (RewardId_member != obj.MemberEnd() && !RewardId_member->value.IsNull()) RewardId = RewardId_member->value.GetString();
+
+    return true;
+}
+
+ReportAdActivityResult::~ReportAdActivityResult()
+{
+
+}
+
+void ReportAdActivityResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool ReportAdActivityResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 ReportPlayerClientRequest::~ReportPlayerClientRequest()
 {
 
@@ -10687,6 +11035,80 @@ bool RestoreIOSPurchasesResult::readFromValue(const rapidjson::Value& obj)
             Fulfillments.push_back(PurchaseReceiptFulfillment(memberList[i]));
         }
     }
+
+    return true;
+}
+
+RewardAdActivityRequest::~RewardAdActivityRequest()
+{
+
+}
+
+void RewardAdActivityRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("PlacementId"); writer.String(PlacementId.c_str());
+    writer.String("RewardId"); writer.String(RewardId.c_str());
+    writer.EndObject();
+}
+
+bool RewardAdActivityRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator PlacementId_member = obj.FindMember("PlacementId");
+    if (PlacementId_member != obj.MemberEnd() && !PlacementId_member->value.IsNull()) PlacementId = PlacementId_member->value.GetString();
+    const Value::ConstMemberIterator RewardId_member = obj.FindMember("RewardId");
+    if (RewardId_member != obj.MemberEnd() && !RewardId_member->value.IsNull()) RewardId = RewardId_member->value.GetString();
+
+    return true;
+}
+
+RewardAdActivityResult::~RewardAdActivityResult()
+{
+    if (RewardResults != NULL) delete RewardResults;
+
+}
+
+void RewardAdActivityResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (AdActivityEventId.length() > 0) { writer.String("AdActivityEventId"); writer.String(AdActivityEventId.c_str()); }
+    if (!DebugResults.empty()) {
+        writer.String("DebugResults");
+        writer.StartArray();
+        for (std::list<std::string>::iterator iter = DebugResults.begin(); iter != DebugResults.end(); iter++) {
+            writer.String(iter->c_str());
+        }
+        writer.EndArray();
+    }
+    if (PlacementId.length() > 0) { writer.String("PlacementId"); writer.String(PlacementId.c_str()); }
+    if (PlacementName.length() > 0) { writer.String("PlacementName"); writer.String(PlacementName.c_str()); }
+    if (PlacementViewsRemaining.notNull()) { writer.String("PlacementViewsRemaining"); writer.Int(PlacementViewsRemaining); }
+    if (PlacementViewsResetMinutes.notNull()) { writer.String("PlacementViewsResetMinutes"); writer.Double(PlacementViewsResetMinutes); }
+    if (RewardResults != NULL) { writer.String("RewardResults"); RewardResults->writeJSON(writer); }
+    writer.EndObject();
+}
+
+bool RewardAdActivityResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AdActivityEventId_member = obj.FindMember("AdActivityEventId");
+    if (AdActivityEventId_member != obj.MemberEnd() && !AdActivityEventId_member->value.IsNull()) AdActivityEventId = AdActivityEventId_member->value.GetString();
+    const Value::ConstMemberIterator DebugResults_member = obj.FindMember("DebugResults");
+    if (DebugResults_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = DebugResults_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            DebugResults.push_back(memberList[i].GetString());
+        }
+    }
+    const Value::ConstMemberIterator PlacementId_member = obj.FindMember("PlacementId");
+    if (PlacementId_member != obj.MemberEnd() && !PlacementId_member->value.IsNull()) PlacementId = PlacementId_member->value.GetString();
+    const Value::ConstMemberIterator PlacementName_member = obj.FindMember("PlacementName");
+    if (PlacementName_member != obj.MemberEnd() && !PlacementName_member->value.IsNull()) PlacementName = PlacementName_member->value.GetString();
+    const Value::ConstMemberIterator PlacementViewsRemaining_member = obj.FindMember("PlacementViewsRemaining");
+    if (PlacementViewsRemaining_member != obj.MemberEnd() && !PlacementViewsRemaining_member->value.IsNull()) PlacementViewsRemaining = PlacementViewsRemaining_member->value.GetInt();
+    const Value::ConstMemberIterator PlacementViewsResetMinutes_member = obj.FindMember("PlacementViewsResetMinutes");
+    if (PlacementViewsResetMinutes_member != obj.MemberEnd() && !PlacementViewsResetMinutes_member->value.IsNull()) PlacementViewsResetMinutes = PlacementViewsResetMinutes_member->value.GetDouble();
+    const Value::ConstMemberIterator RewardResults_member = obj.FindMember("RewardResults");
+    if (RewardResults_member != obj.MemberEnd() && !RewardResults_member->value.IsNull()) RewardResults = new AdRewardResults(RewardResults_member->value);
 
     return true;
 }
@@ -11049,26 +11471,6 @@ bool SubtractUserVirtualCurrencyRequest::readFromValue(const rapidjson::Value& o
     return true;
 }
 
-UninkOpenIdConnectRequest::~UninkOpenIdConnectRequest()
-{
-
-}
-
-void UninkOpenIdConnectRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.String("ConnectionId"); writer.String(ConnectionId.c_str());
-    writer.EndObject();
-}
-
-bool UninkOpenIdConnectRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator ConnectionId_member = obj.FindMember("ConnectionId");
-    if (ConnectionId_member != obj.MemberEnd() && !ConnectionId_member->value.IsNull()) ConnectionId = ConnectionId_member->value.GetString();
-
-    return true;
-}
-
 UnlinkAndroidDeviceIDRequest::~UnlinkAndroidDeviceIDRequest()
 {
 
@@ -11370,6 +11772,23 @@ bool UnlinkKongregateAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UnlinkNintendoSwitchAccountRequest::~UnlinkNintendoSwitchAccountRequest()
+{
+
+}
+
+void UnlinkNintendoSwitchAccountRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool UnlinkNintendoSwitchAccountRequest::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 UnlinkNintendoSwitchDeviceIdRequest::~UnlinkNintendoSwitchDeviceIdRequest()
 {
 
@@ -11403,6 +11822,26 @@ void UnlinkNintendoSwitchDeviceIdResult::writeJSON(PFStringJsonWriter& writer)
 
 bool UnlinkNintendoSwitchDeviceIdResult::readFromValue(const rapidjson::Value& obj)
 {
+
+    return true;
+}
+
+UnlinkOpenIdConnectRequest::~UnlinkOpenIdConnectRequest()
+{
+
+}
+
+void UnlinkOpenIdConnectRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("ConnectionId"); writer.String(ConnectionId.c_str());
+    writer.EndObject();
+}
+
+bool UnlinkOpenIdConnectRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ConnectionId_member = obj.FindMember("ConnectionId");
+    if (ConnectionId_member != obj.MemberEnd() && !ConnectionId_member->value.IsNull()) ConnectionId = ConnectionId_member->value.GetString();
 
     return true;
 }

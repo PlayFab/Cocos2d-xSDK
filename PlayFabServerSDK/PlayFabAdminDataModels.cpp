@@ -3667,6 +3667,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesPartyRequestsThrottledFromRateLimiter: writer.String("PartyRequestsThrottledFromRateLimiter"); break;
     case GenericErrorCodesXboxServiceTooManyRequests: writer.String("XboxServiceTooManyRequests"); break;
     case GenericErrorCodesNintendoSwitchNotEnabledForTitle: writer.String("NintendoSwitchNotEnabledForTitle"); break;
+    case GenericErrorCodesRequestMultiplayerServersThrottledFromRateLimiter: writer.String("RequestMultiplayerServersThrottledFromRateLimiter"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -4256,6 +4257,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["PartyRequestsThrottledFromRateLimiter"] = GenericErrorCodesPartyRequestsThrottledFromRateLimiter;
         _GenericErrorCodesMap["XboxServiceTooManyRequests"] = GenericErrorCodesXboxServiceTooManyRequests;
         _GenericErrorCodesMap["NintendoSwitchNotEnabledForTitle"] = GenericErrorCodesNintendoSwitchNotEnabledForTitle;
+        _GenericErrorCodesMap["RequestMultiplayerServersThrottledFromRateLimiter"] = GenericErrorCodesRequestMultiplayerServersThrottledFromRateLimiter;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;

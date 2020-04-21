@@ -138,6 +138,17 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum AdActivity
+        {
+            AdActivityOpened,
+            AdActivityClosed,
+            AdActivityStart,
+            AdActivityEnd
+        };
+
+        void writeAdActivityEnumJSON(AdActivity enumVal, PFStringJsonWriter& writer);
+        AdActivity readAdActivityFromValue(const rapidjson::Value& obj);
+
         struct AdCampaignAttributionModel : public PlayFabBaseModel
         {
             time_t AttributedAt;
@@ -479,6 +490,117 @@ namespace PlayFab
             }
 
             ~AddUserVirtualCurrencyRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct AdPlacementDetails : public PlayFabBaseModel
+        {
+            std::string PlacementId;
+            std::string PlacementName;
+            OptionalInt32 PlacementViewsRemaining;
+            OptionalDouble PlacementViewsResetMinutes;
+            std::string RewardAssetUrl;
+            std::string RewardDescription;
+            std::string RewardId;
+            std::string RewardName;
+
+            AdPlacementDetails() :
+                PlayFabBaseModel(),
+                PlacementId(),
+                PlacementName(),
+                PlacementViewsRemaining(),
+                PlacementViewsResetMinutes(),
+                RewardAssetUrl(),
+                RewardDescription(),
+                RewardId(),
+                RewardName()
+            {}
+
+            AdPlacementDetails(const AdPlacementDetails& src) :
+                PlayFabBaseModel(),
+                PlacementId(src.PlacementId),
+                PlacementName(src.PlacementName),
+                PlacementViewsRemaining(src.PlacementViewsRemaining),
+                PlacementViewsResetMinutes(src.PlacementViewsResetMinutes),
+                RewardAssetUrl(src.RewardAssetUrl),
+                RewardDescription(src.RewardDescription),
+                RewardId(src.RewardId),
+                RewardName(src.RewardName)
+            {}
+
+            AdPlacementDetails(const rapidjson::Value& obj) : AdPlacementDetails()
+            {
+                readFromValue(obj);
+            }
+
+            ~AdPlacementDetails();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct AdRewardItemGranted : public PlayFabBaseModel
+        {
+            std::string CatalogId;
+            std::string DisplayName;
+            std::string InstanceId;
+            std::string ItemId;
+
+            AdRewardItemGranted() :
+                PlayFabBaseModel(),
+                CatalogId(),
+                DisplayName(),
+                InstanceId(),
+                ItemId()
+            {}
+
+            AdRewardItemGranted(const AdRewardItemGranted& src) :
+                PlayFabBaseModel(),
+                CatalogId(src.CatalogId),
+                DisplayName(src.DisplayName),
+                InstanceId(src.InstanceId),
+                ItemId(src.ItemId)
+            {}
+
+            AdRewardItemGranted(const rapidjson::Value& obj) : AdRewardItemGranted()
+            {
+                readFromValue(obj);
+            }
+
+            ~AdRewardItemGranted();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct AdRewardResults : public PlayFabBaseModel
+        {
+            std::list<AdRewardItemGranted> GrantedItems;
+            std::map<std::string, Int32> GrantedVirtualCurrencies;
+            std::map<std::string, Int32> IncrementedStatistics;
+
+            AdRewardResults() :
+                PlayFabBaseModel(),
+                GrantedItems(),
+                GrantedVirtualCurrencies(),
+                IncrementedStatistics()
+            {}
+
+            AdRewardResults(const AdRewardResults& src) :
+                PlayFabBaseModel(),
+                GrantedItems(src.GrantedItems),
+                GrantedVirtualCurrencies(src.GrantedVirtualCurrencies),
+                IncrementedStatistics(src.IncrementedStatistics)
+            {}
+
+            AdRewardResults(const rapidjson::Value& obj) : AdRewardResults()
+            {
+                readFromValue(obj);
+            }
+
+            ~AdRewardResults();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -3661,6 +3783,87 @@ namespace PlayFab
             }
 
             ~GetAccountInfoResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct NameIdentifier : public PlayFabBaseModel
+        {
+            std::string Id;
+            std::string Name;
+
+            NameIdentifier() :
+                PlayFabBaseModel(),
+                Id(),
+                Name()
+            {}
+
+            NameIdentifier(const NameIdentifier& src) :
+                PlayFabBaseModel(),
+                Id(src.Id),
+                Name(src.Name)
+            {}
+
+            NameIdentifier(const rapidjson::Value& obj) : NameIdentifier()
+            {
+                readFromValue(obj);
+            }
+
+            ~NameIdentifier();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetAdPlacementsRequest : public PlayFabBaseModel
+        {
+            std::string AppId;
+            NameIdentifier* Identifier;
+
+            GetAdPlacementsRequest() :
+                PlayFabBaseModel(),
+                AppId(),
+                Identifier(NULL)
+            {}
+
+            GetAdPlacementsRequest(const GetAdPlacementsRequest& src) :
+                PlayFabBaseModel(),
+                AppId(src.AppId),
+                Identifier(src.Identifier ? new NameIdentifier(*src.Identifier) : NULL)
+            {}
+
+            GetAdPlacementsRequest(const rapidjson::Value& obj) : GetAdPlacementsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetAdPlacementsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetAdPlacementsResult : public PlayFabBaseModel
+        {
+            std::list<AdPlacementDetails> AdPlacements;
+
+            GetAdPlacementsResult() :
+                PlayFabBaseModel(),
+                AdPlacements()
+            {}
+
+            GetAdPlacementsResult(const GetAdPlacementsResult& src) :
+                PlayFabBaseModel(),
+                AdPlacements(src.AdPlacements)
+            {}
+
+            GetAdPlacementsResult(const rapidjson::Value& obj) : GetAdPlacementsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetAdPlacementsResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -7455,6 +7658,37 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct LinkNintendoSwitchAccountRequest : public PlayFabBaseModel
+        {
+            std::string EnvironmentId;
+            OptionalBool ForceLink;
+            std::string IdentityToken;
+
+            LinkNintendoSwitchAccountRequest() :
+                PlayFabBaseModel(),
+                EnvironmentId(),
+                ForceLink(),
+                IdentityToken()
+            {}
+
+            LinkNintendoSwitchAccountRequest(const LinkNintendoSwitchAccountRequest& src) :
+                PlayFabBaseModel(),
+                EnvironmentId(src.EnvironmentId),
+                ForceLink(src.ForceLink),
+                IdentityToken(src.IdentityToken)
+            {}
+
+            LinkNintendoSwitchAccountRequest(const rapidjson::Value& obj) : LinkNintendoSwitchAccountRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinkNintendoSwitchAccountRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct LinkNintendoSwitchDeviceIdRequest : public PlayFabBaseModel
         {
             OptionalBool ForceLink;
@@ -8397,6 +8631,49 @@ namespace PlayFab
             }
 
             ~LoginWithKongregateRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct LoginWithNintendoSwitchAccountRequest : public PlayFabBaseModel
+        {
+            OptionalBool CreateAccount;
+            std::string EncryptedRequest;
+            std::string EnvironmentId;
+            std::string IdentityToken;
+            GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
+            std::string PlayerSecret;
+            std::string TitleId;
+
+            LoginWithNintendoSwitchAccountRequest() :
+                PlayFabBaseModel(),
+                CreateAccount(),
+                EncryptedRequest(),
+                EnvironmentId(),
+                IdentityToken(),
+                InfoRequestParameters(NULL),
+                PlayerSecret(),
+                TitleId()
+            {}
+
+            LoginWithNintendoSwitchAccountRequest(const LoginWithNintendoSwitchAccountRequest& src) :
+                PlayFabBaseModel(),
+                CreateAccount(src.CreateAccount),
+                EncryptedRequest(src.EncryptedRequest),
+                EnvironmentId(src.EnvironmentId),
+                IdentityToken(src.IdentityToken),
+                InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
+                PlayerSecret(src.PlayerSecret),
+                TitleId(src.TitleId)
+            {}
+
+            LoginWithNintendoSwitchAccountRequest(const rapidjson::Value& obj) : LoginWithNintendoSwitchAccountRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~LoginWithNintendoSwitchAccountRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -9619,6 +9896,59 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct ReportAdActivityRequest : public PlayFabBaseModel
+        {
+            AdActivity Activity;
+            std::string PlacementId;
+            std::string RewardId;
+
+            ReportAdActivityRequest() :
+                PlayFabBaseModel(),
+                Activity(),
+                PlacementId(),
+                RewardId()
+            {}
+
+            ReportAdActivityRequest(const ReportAdActivityRequest& src) :
+                PlayFabBaseModel(),
+                Activity(src.Activity),
+                PlacementId(src.PlacementId),
+                RewardId(src.RewardId)
+            {}
+
+            ReportAdActivityRequest(const rapidjson::Value& obj) : ReportAdActivityRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~ReportAdActivityRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ReportAdActivityResult : public PlayFabBaseModel
+        {
+
+            ReportAdActivityResult() :
+                PlayFabBaseModel()
+            {}
+
+            ReportAdActivityResult(const ReportAdActivityResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            ReportAdActivityResult(const rapidjson::Value& obj) : ReportAdActivityResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~ReportAdActivityResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct ReportPlayerClientRequest : public PlayFabBaseModel
         {
             std::string Comment;
@@ -9720,6 +10050,77 @@ namespace PlayFab
             }
 
             ~RestoreIOSPurchasesResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RewardAdActivityRequest : public PlayFabBaseModel
+        {
+            std::string PlacementId;
+            std::string RewardId;
+
+            RewardAdActivityRequest() :
+                PlayFabBaseModel(),
+                PlacementId(),
+                RewardId()
+            {}
+
+            RewardAdActivityRequest(const RewardAdActivityRequest& src) :
+                PlayFabBaseModel(),
+                PlacementId(src.PlacementId),
+                RewardId(src.RewardId)
+            {}
+
+            RewardAdActivityRequest(const rapidjson::Value& obj) : RewardAdActivityRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~RewardAdActivityRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct RewardAdActivityResult : public PlayFabBaseModel
+        {
+            std::string AdActivityEventId;
+            std::list<std::string> DebugResults;
+            std::string PlacementId;
+            std::string PlacementName;
+            OptionalInt32 PlacementViewsRemaining;
+            OptionalDouble PlacementViewsResetMinutes;
+            AdRewardResults* RewardResults;
+
+            RewardAdActivityResult() :
+                PlayFabBaseModel(),
+                AdActivityEventId(),
+                DebugResults(),
+                PlacementId(),
+                PlacementName(),
+                PlacementViewsRemaining(),
+                PlacementViewsResetMinutes(),
+                RewardResults(NULL)
+            {}
+
+            RewardAdActivityResult(const RewardAdActivityResult& src) :
+                PlayFabBaseModel(),
+                AdActivityEventId(src.AdActivityEventId),
+                DebugResults(src.DebugResults),
+                PlacementId(src.PlacementId),
+                PlacementName(src.PlacementName),
+                PlacementViewsRemaining(src.PlacementViewsRemaining),
+                PlacementViewsResetMinutes(src.PlacementViewsResetMinutes),
+                RewardResults(src.RewardResults ? new AdRewardResults(*src.RewardResults) : NULL)
+            {}
+
+            RewardAdActivityResult(const rapidjson::Value& obj) : RewardAdActivityResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~RewardAdActivityResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -10083,31 +10484,6 @@ namespace PlayFab
             }
 
             ~SubtractUserVirtualCurrencyRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        struct UninkOpenIdConnectRequest : public PlayFabBaseModel
-        {
-            std::string ConnectionId;
-
-            UninkOpenIdConnectRequest() :
-                PlayFabBaseModel(),
-                ConnectionId()
-            {}
-
-            UninkOpenIdConnectRequest(const UninkOpenIdConnectRequest& src) :
-                PlayFabBaseModel(),
-                ConnectionId(src.ConnectionId)
-            {}
-
-            UninkOpenIdConnectRequest(const rapidjson::Value& obj) : UninkOpenIdConnectRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~UninkOpenIdConnectRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -10499,6 +10875,28 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UnlinkNintendoSwitchAccountRequest : public PlayFabBaseModel
+        {
+
+            UnlinkNintendoSwitchAccountRequest() :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkNintendoSwitchAccountRequest(const UnlinkNintendoSwitchAccountRequest& src) :
+                PlayFabBaseModel()
+            {}
+
+            UnlinkNintendoSwitchAccountRequest(const rapidjson::Value& obj) : UnlinkNintendoSwitchAccountRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlinkNintendoSwitchAccountRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UnlinkNintendoSwitchDeviceIdRequest : public PlayFabBaseModel
         {
             std::string NintendoSwitchDeviceId;
@@ -10541,6 +10939,31 @@ namespace PlayFab
             }
 
             ~UnlinkNintendoSwitchDeviceIdResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct UnlinkOpenIdConnectRequest : public PlayFabBaseModel
+        {
+            std::string ConnectionId;
+
+            UnlinkOpenIdConnectRequest() :
+                PlayFabBaseModel(),
+                ConnectionId()
+            {}
+
+            UnlinkOpenIdConnectRequest(const UnlinkOpenIdConnectRequest& src) :
+                PlayFabBaseModel(),
+                ConnectionId(src.ConnectionId)
+            {}
+
+            UnlinkOpenIdConnectRequest(const rapidjson::Value& obj) : UnlinkOpenIdConnectRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UnlinkOpenIdConnectRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

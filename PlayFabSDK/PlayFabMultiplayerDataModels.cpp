@@ -1972,6 +1972,26 @@ bool DeleteCertificateRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeleteContainerImageRequest::~DeleteContainerImageRequest()
+{
+
+}
+
+void DeleteContainerImageRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (ImageName.length() > 0) { writer.String("ImageName"); writer.String(ImageName.c_str()); }
+    writer.EndObject();
+}
+
+bool DeleteContainerImageRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ImageName_member = obj.FindMember("ImageName");
+    if (ImageName_member != obj.MemberEnd() && !ImageName_member->value.IsNull()) ImageName = ImageName_member->value.GetString();
+
+    return true;
+}
+
 DeleteRemoteUserRequest::~DeleteRemoteUserRequest()
 {
 
