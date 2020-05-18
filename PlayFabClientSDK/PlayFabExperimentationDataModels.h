@@ -64,6 +64,7 @@ namespace PlayFab
             std::string Id;
             bool IsControl;
             std::string Name;
+            std::string TitleDataOverrideId;
             Uint32 TrafficPercentage;
             std::list<Variable> Variables;
 
@@ -73,6 +74,7 @@ namespace PlayFab
                 Id(),
                 IsControl(false),
                 Name(),
+                TitleDataOverrideId(),
                 TrafficPercentage(0),
                 Variables()
             {}
@@ -83,6 +85,7 @@ namespace PlayFab
                 Id(src.Id),
                 IsControl(src.IsControl),
                 Name(src.Name),
+                TitleDataOverrideId(src.TitleDataOverrideId),
                 TrafficPercentage(src.TrafficPercentage),
                 Variables(src.Variables)
             {}

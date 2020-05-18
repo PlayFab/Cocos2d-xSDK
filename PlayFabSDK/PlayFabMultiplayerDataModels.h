@@ -130,15 +130,23 @@ namespace PlayFab
 
         enum AzureVmSize
         {
+            AzureVmSizeStandard_A1,
+            AzureVmSizeStandard_A2,
+            AzureVmSizeStandard_A3,
+            AzureVmSizeStandard_A4,
+            AzureVmSizeStandard_A1_v2,
+            AzureVmSizeStandard_A2_v2,
+            AzureVmSizeStandard_A4_v2,
+            AzureVmSizeStandard_A8_v2,
             AzureVmSizeStandard_D1_v2,
             AzureVmSizeStandard_D2_v2,
             AzureVmSizeStandard_D3_v2,
             AzureVmSizeStandard_D4_v2,
             AzureVmSizeStandard_D5_v2,
-            AzureVmSizeStandard_A1_v2,
-            AzureVmSizeStandard_A2_v2,
-            AzureVmSizeStandard_A4_v2,
-            AzureVmSizeStandard_A8_v2,
+            AzureVmSizeStandard_D2_v3,
+            AzureVmSizeStandard_D4_v3,
+            AzureVmSizeStandard_D8_v3,
+            AzureVmSizeStandard_D16_v3,
             AzureVmSizeStandard_F1,
             AzureVmSizeStandard_F2,
             AzureVmSizeStandard_F4,
@@ -147,11 +155,7 @@ namespace PlayFab
             AzureVmSizeStandard_F2s_v2,
             AzureVmSizeStandard_F4s_v2,
             AzureVmSizeStandard_F8s_v2,
-            AzureVmSizeStandard_F16s_v2,
-            AzureVmSizeStandard_A1,
-            AzureVmSizeStandard_A2,
-            AzureVmSizeStandard_A3,
-            AzureVmSizeStandard_A4
+            AzureVmSizeStandard_F16s_v2
         };
 
         void writeAzureVmSizeEnumJSON(AzureVmSize enumVal, PFStringJsonWriter& writer);

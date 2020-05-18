@@ -104,6 +104,7 @@ void Variant::writeJSON(PFStringJsonWriter& writer)
     if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
     writer.String("IsControl"); writer.Bool(IsControl);
     writer.String("Name"); writer.String(Name.c_str());
+    if (TitleDataOverrideId.length() > 0) { writer.String("TitleDataOverrideId"); writer.String(TitleDataOverrideId.c_str()); }
     writer.String("TrafficPercentage"); writer.Uint(TrafficPercentage);
     if (!Variables.empty()) {
         writer.String("Variables");
@@ -126,6 +127,8 @@ bool Variant::readFromValue(const rapidjson::Value& obj)
     if (IsControl_member != obj.MemberEnd() && !IsControl_member->value.IsNull()) IsControl = IsControl_member->value.GetBool();
     const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
     if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+    const Value::ConstMemberIterator TitleDataOverrideId_member = obj.FindMember("TitleDataOverrideId");
+    if (TitleDataOverrideId_member != obj.MemberEnd() && !TitleDataOverrideId_member->value.IsNull()) TitleDataOverrideId = TitleDataOverrideId_member->value.GetString();
     const Value::ConstMemberIterator TrafficPercentage_member = obj.FindMember("TrafficPercentage");
     if (TrafficPercentage_member != obj.MemberEnd() && !TrafficPercentage_member->value.IsNull()) TrafficPercentage = TrafficPercentage_member->value.GetUint();
     const Value::ConstMemberIterator Variables_member = obj.FindMember("Variables");

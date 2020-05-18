@@ -11059,13 +11059,16 @@ namespace PlayFab
 
         struct UnlinkTwitchAccountRequest : public PlayFabBaseModel
         {
+            std::string AccessToken;
 
             UnlinkTwitchAccountRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                AccessToken()
             {}
 
             UnlinkTwitchAccountRequest(const UnlinkTwitchAccountRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                AccessToken(src.AccessToken)
             {}
 
             UnlinkTwitchAccountRequest(const rapidjson::Value& obj) : UnlinkTwitchAccountRequest()

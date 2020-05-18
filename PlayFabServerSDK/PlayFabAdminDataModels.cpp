@@ -3668,6 +3668,8 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesXboxServiceTooManyRequests: writer.String("XboxServiceTooManyRequests"); break;
     case GenericErrorCodesNintendoSwitchNotEnabledForTitle: writer.String("NintendoSwitchNotEnabledForTitle"); break;
     case GenericErrorCodesRequestMultiplayerServersThrottledFromRateLimiter: writer.String("RequestMultiplayerServersThrottledFromRateLimiter"); break;
+    case GenericErrorCodesTitleDataInstanceNotFound: writer.String("TitleDataInstanceNotFound"); break;
+    case GenericErrorCodesDuplicateTitleDataOverrideInstanceName: writer.String("DuplicateTitleDataOverrideInstanceName"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -3748,6 +3750,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExperimentationInvalidDuration: writer.String("ExperimentationInvalidDuration"); break;
     case GenericErrorCodesExperimentationMaxExperimentsReached: writer.String("ExperimentationMaxExperimentsReached"); break;
     case GenericErrorCodesExperimentationExperimentSchedulingInProgress: writer.String("ExperimentationExperimentSchedulingInProgress"); break;
+    case GenericErrorCodesExperimentationExistingCodelessScheduled: writer.String("ExperimentationExistingCodelessScheduled"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesTitleNotOnUpdatedPricingPlan: writer.String("TitleNotOnUpdatedPricingPlan"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
@@ -4258,6 +4261,8 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["XboxServiceTooManyRequests"] = GenericErrorCodesXboxServiceTooManyRequests;
         _GenericErrorCodesMap["NintendoSwitchNotEnabledForTitle"] = GenericErrorCodesNintendoSwitchNotEnabledForTitle;
         _GenericErrorCodesMap["RequestMultiplayerServersThrottledFromRateLimiter"] = GenericErrorCodesRequestMultiplayerServersThrottledFromRateLimiter;
+        _GenericErrorCodesMap["TitleDataInstanceNotFound"] = GenericErrorCodesTitleDataInstanceNotFound;
+        _GenericErrorCodesMap["DuplicateTitleDataOverrideInstanceName"] = GenericErrorCodesDuplicateTitleDataOverrideInstanceName;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -4338,6 +4343,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExperimentationInvalidDuration"] = GenericErrorCodesExperimentationInvalidDuration;
         _GenericErrorCodesMap["ExperimentationMaxExperimentsReached"] = GenericErrorCodesExperimentationMaxExperimentsReached;
         _GenericErrorCodesMap["ExperimentationExperimentSchedulingInProgress"] = GenericErrorCodesExperimentationExperimentSchedulingInProgress;
+        _GenericErrorCodesMap["ExperimentationExistingCodelessScheduled"] = GenericErrorCodesExperimentationExistingCodelessScheduled;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["TitleNotOnUpdatedPricingPlan"] = GenericErrorCodesTitleNotOnUpdatedPricingPlan;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
