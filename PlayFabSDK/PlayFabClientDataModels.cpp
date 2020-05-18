@@ -11922,11 +11922,14 @@ UnlinkTwitchAccountRequest::~UnlinkTwitchAccountRequest()
 void UnlinkTwitchAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (AccessToken.length() > 0) { writer.String("AccessToken"); writer.String(AccessToken.c_str()); }
     writer.EndObject();
 }
 
 bool UnlinkTwitchAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator AccessToken_member = obj.FindMember("AccessToken");
+    if (AccessToken_member != obj.MemberEnd() && !AccessToken_member->value.IsNull()) AccessToken = AccessToken_member->value.GetString();
 
     return true;
 }

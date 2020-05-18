@@ -6773,6 +6773,7 @@ void PlayFabClientAPI::OnUnlinkSteamAccountResult(int httpStatus, HttpRequest* r
 }
 
 void PlayFabClientAPI::UnlinkTwitch(
+    UnlinkTwitchAccountRequest& request,
     ProcessApiCallback<UnlinkTwitchAccountResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -6788,7 +6789,7 @@ void PlayFabClientAPI::UnlinkTwitch(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkTwitchResult, userData);

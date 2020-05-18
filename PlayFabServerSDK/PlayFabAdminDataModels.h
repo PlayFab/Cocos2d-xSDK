@@ -3174,6 +3174,8 @@ namespace PlayFab
             GenericErrorCodesXboxServiceTooManyRequests,
             GenericErrorCodesNintendoSwitchNotEnabledForTitle,
             GenericErrorCodesRequestMultiplayerServersThrottledFromRateLimiter,
+            GenericErrorCodesTitleDataInstanceNotFound,
+            GenericErrorCodesDuplicateTitleDataOverrideInstanceName,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -3254,6 +3256,7 @@ namespace PlayFab
             GenericErrorCodesExperimentationInvalidDuration,
             GenericErrorCodesExperimentationMaxExperimentsReached,
             GenericErrorCodesExperimentationExperimentSchedulingInProgress,
+            GenericErrorCodesExperimentationExistingCodelessScheduled,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesTitleNotOnUpdatedPricingPlan,
             GenericErrorCodesSnapshotNotFound
