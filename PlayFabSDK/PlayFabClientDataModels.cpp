@@ -8764,24 +8764,21 @@ bool LinkKongregateAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-LinkNintendoSwitchAccountRequest::~LinkNintendoSwitchAccountRequest()
+LinkNintendoAccountRequest::~LinkNintendoAccountRequest()
 {
 
 }
 
-void LinkNintendoSwitchAccountRequest::writeJSON(PFStringJsonWriter& writer)
+void LinkNintendoAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    if (EnvironmentId.length() > 0) { writer.String("EnvironmentId"); writer.String(EnvironmentId.c_str()); }
     if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
     writer.String("IdentityToken"); writer.String(IdentityToken.c_str());
     writer.EndObject();
 }
 
-bool LinkNintendoSwitchAccountRequest::readFromValue(const rapidjson::Value& obj)
+bool LinkNintendoAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator EnvironmentId_member = obj.FindMember("EnvironmentId");
-    if (EnvironmentId_member != obj.MemberEnd() && !EnvironmentId_member->value.IsNull()) EnvironmentId = EnvironmentId_member->value.GetString();
     const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
     if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
     const Value::ConstMemberIterator IdentityToken_member = obj.FindMember("IdentityToken");
@@ -9642,18 +9639,17 @@ bool LoginWithKongregateRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-LoginWithNintendoSwitchAccountRequest::~LoginWithNintendoSwitchAccountRequest()
+LoginWithNintendoAccountRequest::~LoginWithNintendoAccountRequest()
 {
     if (InfoRequestParameters != NULL) delete InfoRequestParameters;
 
 }
 
-void LoginWithNintendoSwitchAccountRequest::writeJSON(PFStringJsonWriter& writer)
+void LoginWithNintendoAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
     if (EncryptedRequest.length() > 0) { writer.String("EncryptedRequest"); writer.String(EncryptedRequest.c_str()); }
-    if (EnvironmentId.length() > 0) { writer.String("EnvironmentId"); writer.String(EnvironmentId.c_str()); }
     writer.String("IdentityToken"); writer.String(IdentityToken.c_str());
     if (InfoRequestParameters != NULL) { writer.String("InfoRequestParameters"); InfoRequestParameters->writeJSON(writer); }
     if (PlayerSecret.length() > 0) { writer.String("PlayerSecret"); writer.String(PlayerSecret.c_str()); }
@@ -9661,14 +9657,12 @@ void LoginWithNintendoSwitchAccountRequest::writeJSON(PFStringJsonWriter& writer
     writer.EndObject();
 }
 
-bool LoginWithNintendoSwitchAccountRequest::readFromValue(const rapidjson::Value& obj)
+bool LoginWithNintendoAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
     if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
     const Value::ConstMemberIterator EncryptedRequest_member = obj.FindMember("EncryptedRequest");
     if (EncryptedRequest_member != obj.MemberEnd() && !EncryptedRequest_member->value.IsNull()) EncryptedRequest = EncryptedRequest_member->value.GetString();
-    const Value::ConstMemberIterator EnvironmentId_member = obj.FindMember("EnvironmentId");
-    if (EnvironmentId_member != obj.MemberEnd() && !EnvironmentId_member->value.IsNull()) EnvironmentId = EnvironmentId_member->value.GetString();
     const Value::ConstMemberIterator IdentityToken_member = obj.FindMember("IdentityToken");
     if (IdentityToken_member != obj.MemberEnd() && !IdentityToken_member->value.IsNull()) IdentityToken = IdentityToken_member->value.GetString();
     const Value::ConstMemberIterator InfoRequestParameters_member = obj.FindMember("InfoRequestParameters");
@@ -11772,18 +11766,18 @@ bool UnlinkKongregateAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-UnlinkNintendoSwitchAccountRequest::~UnlinkNintendoSwitchAccountRequest()
+UnlinkNintendoAccountRequest::~UnlinkNintendoAccountRequest()
 {
 
 }
 
-void UnlinkNintendoSwitchAccountRequest::writeJSON(PFStringJsonWriter& writer)
+void UnlinkNintendoAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.EndObject();
 }
 
-bool UnlinkNintendoSwitchAccountRequest::readFromValue(const rapidjson::Value& obj)
+bool UnlinkNintendoAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;

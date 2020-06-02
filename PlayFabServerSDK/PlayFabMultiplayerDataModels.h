@@ -121,8 +121,10 @@ namespace PlayFab
             AzureVmFamilyA,
             AzureVmFamilyAv2,
             AzureVmFamilyDv2,
+            AzureVmFamilyDv3,
             AzureVmFamilyF,
-            AzureVmFamilyFsv2
+            AzureVmFamilyFsv2,
+            AzureVmFamilyDasv4
         };
 
         void writeAzureVmFamilyEnumJSON(AzureVmFamily enumVal, PFStringJsonWriter& writer);
@@ -155,7 +157,11 @@ namespace PlayFab
             AzureVmSizeStandard_F2s_v2,
             AzureVmSizeStandard_F4s_v2,
             AzureVmSizeStandard_F8s_v2,
-            AzureVmSizeStandard_F16s_v2
+            AzureVmSizeStandard_F16s_v2,
+            AzureVmSizeStandard_D2as_v4,
+            AzureVmSizeStandard_D4as_v4,
+            AzureVmSizeStandard_D8as_v4,
+            AzureVmSizeStandard_D16as_v4
         };
 
         void writeAzureVmSizeEnumJSON(AzureVmSize enumVal, PFStringJsonWriter& writer);

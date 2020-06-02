@@ -3688,14 +3688,14 @@ void PlayFabClientAPI::OnLinkKongregateResult(int httpStatus, HttpRequest* reque
     delete request;
 }
 
-void PlayFabClientAPI::LinkNintendoSwitchAccount(
-    LinkNintendoSwitchAccountRequest& request,
+void PlayFabClientAPI::LinkNintendoAccount(
+    LinkNintendoAccountRequest& request,
     ProcessApiCallback<EmptyResult> callback,
     ErrorCallback errorCallback,
     void* userData
 )
 {
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LinkNintendoSwitchAccount"));
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LinkNintendoAccount"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", PlayFabSettings::clientSessionTicket);
@@ -3708,10 +3708,10 @@ void PlayFabClientAPI::LinkNintendoSwitchAccount(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkNintendoSwitchAccountResult, userData);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLinkNintendoAccountResult, userData);
 }
 
-void PlayFabClientAPI::OnLinkNintendoSwitchAccountResult(int httpStatus, HttpRequest* request, void* userData)
+void PlayFabClientAPI::OnLinkNintendoAccountResult(int httpStatus, HttpRequest* request, void* userData)
 {
     EmptyResult outResult;
     PlayFabError errorResult;
@@ -4566,8 +4566,8 @@ void PlayFabClientAPI::OnLoginWithKongregateResult(int httpStatus, HttpRequest* 
     delete request;
 }
 
-void PlayFabClientAPI::LoginWithNintendoSwitchAccount(
-    LoginWithNintendoSwitchAccountRequest& request,
+void PlayFabClientAPI::LoginWithNintendoAccount(
+    LoginWithNintendoAccountRequest& request,
     ProcessApiCallback<LoginResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -4575,7 +4575,7 @@ void PlayFabClientAPI::LoginWithNintendoSwitchAccount(
 {
     if (PlayFabSettings::titleId.length() > 0)
         request.TitleId = PlayFabSettings::titleId;
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithNintendoSwitchAccount"));
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/LoginWithNintendoAccount"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
 
@@ -4587,10 +4587,10 @@ void PlayFabClientAPI::LoginWithNintendoSwitchAccount(
     httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithNintendoSwitchAccountResult, userData);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnLoginWithNintendoAccountResult, userData);
 }
 
-void PlayFabClientAPI::OnLoginWithNintendoSwitchAccountResult(int httpStatus, HttpRequest* request, void* userData)
+void PlayFabClientAPI::OnLoginWithNintendoAccountResult(int httpStatus, HttpRequest* request, void* userData)
 {
     LoginResult outResult;
     PlayFabError errorResult;
@@ -6545,13 +6545,13 @@ void PlayFabClientAPI::OnUnlinkKongregateResult(int httpStatus, HttpRequest* req
     delete request;
 }
 
-void PlayFabClientAPI::UnlinkNintendoSwitchAccount(
+void PlayFabClientAPI::UnlinkNintendoAccount(
     ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
 )
 {
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/UnlinkNintendoSwitchAccount"));
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Client/UnlinkNintendoAccount"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
     httpRequest->SetHeader("X-Authorization", PlayFabSettings::clientSessionTicket);
@@ -6564,10 +6564,10 @@ void PlayFabClientAPI::UnlinkNintendoSwitchAccount(
     httpRequest->SetBody("{}");
     httpRequest->CompressBody();
 
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkNintendoSwitchAccountResult, userData);
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkNintendoAccountResult, userData);
 }
 
-void PlayFabClientAPI::OnUnlinkNintendoSwitchAccountResult(int httpStatus, HttpRequest* request, void* userData)
+void PlayFabClientAPI::OnUnlinkNintendoAccountResult(int httpStatus, HttpRequest* request, void* userData)
 {
     EmptyResponse outResult;
     PlayFabError errorResult;

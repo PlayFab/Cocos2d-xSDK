@@ -150,8 +150,10 @@ void PlayFab::MultiplayerModels::writeAzureVmFamilyEnumJSON(AzureVmFamily enumVa
     case AzureVmFamilyA: writer.String("A"); break;
     case AzureVmFamilyAv2: writer.String("Av2"); break;
     case AzureVmFamilyDv2: writer.String("Dv2"); break;
+    case AzureVmFamilyDv3: writer.String("Dv3"); break;
     case AzureVmFamilyF: writer.String("F"); break;
     case AzureVmFamilyFsv2: writer.String("Fsv2"); break;
+    case AzureVmFamilyDasv4: writer.String("Dasv4"); break;
 
     }
 }
@@ -165,8 +167,10 @@ AzureVmFamily PlayFab::MultiplayerModels::readAzureVmFamilyFromValue(const rapid
         _AzureVmFamilyMap["A"] = AzureVmFamilyA;
         _AzureVmFamilyMap["Av2"] = AzureVmFamilyAv2;
         _AzureVmFamilyMap["Dv2"] = AzureVmFamilyDv2;
+        _AzureVmFamilyMap["Dv3"] = AzureVmFamilyDv3;
         _AzureVmFamilyMap["F"] = AzureVmFamilyF;
         _AzureVmFamilyMap["Fsv2"] = AzureVmFamilyFsv2;
+        _AzureVmFamilyMap["Dasv4"] = AzureVmFamilyDasv4;
 
     }
 
@@ -206,6 +210,10 @@ void PlayFab::MultiplayerModels::writeAzureVmSizeEnumJSON(AzureVmSize enumVal, P
     case AzureVmSizeStandard_F4s_v2: writer.String("Standard_F4s_v2"); break;
     case AzureVmSizeStandard_F8s_v2: writer.String("Standard_F8s_v2"); break;
     case AzureVmSizeStandard_F16s_v2: writer.String("Standard_F16s_v2"); break;
+    case AzureVmSizeStandard_D2as_v4: writer.String("Standard_D2as_v4"); break;
+    case AzureVmSizeStandard_D4as_v4: writer.String("Standard_D4as_v4"); break;
+    case AzureVmSizeStandard_D8as_v4: writer.String("Standard_D8as_v4"); break;
+    case AzureVmSizeStandard_D16as_v4: writer.String("Standard_D16as_v4"); break;
 
     }
 }
@@ -242,6 +250,10 @@ AzureVmSize PlayFab::MultiplayerModels::readAzureVmSizeFromValue(const rapidjson
         _AzureVmSizeMap["Standard_F4s_v2"] = AzureVmSizeStandard_F4s_v2;
         _AzureVmSizeMap["Standard_F8s_v2"] = AzureVmSizeStandard_F8s_v2;
         _AzureVmSizeMap["Standard_F16s_v2"] = AzureVmSizeStandard_F16s_v2;
+        _AzureVmSizeMap["Standard_D2as_v4"] = AzureVmSizeStandard_D2as_v4;
+        _AzureVmSizeMap["Standard_D4as_v4"] = AzureVmSizeStandard_D4as_v4;
+        _AzureVmSizeMap["Standard_D8as_v4"] = AzureVmSizeStandard_D8as_v4;
+        _AzureVmSizeMap["Standard_D16as_v4"] = AzureVmSizeStandard_D16as_v4;
 
     }
 

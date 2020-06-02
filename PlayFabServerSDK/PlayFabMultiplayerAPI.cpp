@@ -1993,7 +1993,6 @@ void PlayFabMultiplayerAPI::ListPartyQosServers(
     HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/MultiplayerServer/ListPartyQosServers"));
     httpRequest->SetHeader("Content-Type", "application/json");
     httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-    httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
 
     if (callback != nullptr)
         httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ListPartyQosServersResponse>(callback)));
