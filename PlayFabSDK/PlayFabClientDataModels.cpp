@@ -7894,6 +7894,7 @@ void GetTitleDataRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndArray();
     }
+    if (OverrideLabel.length() > 0) { writer.String("OverrideLabel"); writer.String(OverrideLabel.c_str()); }
     writer.EndObject();
 }
 
@@ -7906,6 +7907,8 @@ bool GetTitleDataRequest::readFromValue(const rapidjson::Value& obj)
             Keys.push_back(memberList[i].GetString());
         }
     }
+    const Value::ConstMemberIterator OverrideLabel_member = obj.FindMember("OverrideLabel");
+    if (OverrideLabel_member != obj.MemberEnd() && !OverrideLabel_member->value.IsNull()) OverrideLabel = OverrideLabel_member->value.GetString();
 
     return true;
 }

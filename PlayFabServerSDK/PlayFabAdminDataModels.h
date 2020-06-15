@@ -3174,8 +3174,8 @@ namespace PlayFab
             GenericErrorCodesXboxServiceTooManyRequests,
             GenericErrorCodesNintendoSwitchNotEnabledForTitle,
             GenericErrorCodesRequestMultiplayerServersThrottledFromRateLimiter,
-            GenericErrorCodesTitleDataInstanceNotFound,
-            GenericErrorCodesDuplicateTitleDataOverrideInstanceName,
+            GenericErrorCodesTitleDataOverrideNotFound,
+            GenericErrorCodesDuplicateKeys,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -5897,15 +5897,18 @@ namespace PlayFab
         struct GetTitleDataRequest : public PlayFabBaseModel
         {
             std::list<std::string> Keys;
+            std::string OverrideLabel;
 
             GetTitleDataRequest() :
                 PlayFabBaseModel(),
-                Keys()
+                Keys(),
+                OverrideLabel()
             {}
 
             GetTitleDataRequest(const GetTitleDataRequest& src) :
                 PlayFabBaseModel(),
-                Keys(src.Keys)
+                Keys(src.Keys),
+                OverrideLabel(src.OverrideLabel)
             {}
 
             GetTitleDataRequest(const rapidjson::Value& obj) : GetTitleDataRequest()

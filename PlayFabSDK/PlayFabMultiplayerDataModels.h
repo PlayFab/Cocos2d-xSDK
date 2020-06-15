@@ -951,6 +951,7 @@ namespace PlayFab
 
         struct CreateBuildWithCustomContainerRequest : public PlayFabBaseModel
         {
+            OptionalBool AreAssetsReadonly;
             std::string BuildName;
             Boxed<ContainerFlavor> pfContainerFlavor;
             ContainerImageReference* pfContainerImageReference;
@@ -961,10 +962,12 @@ namespace PlayFab
             Int32 MultiplayerServerCountPerVm;
             std::list<Port> Ports;
             std::list<BuildRegionParams> RegionConfigurations;
+            OptionalBool UseStreamingForAssetDownloads;
             Boxed<AzureVmSize> VmSize;
 
             CreateBuildWithCustomContainerRequest() :
                 PlayFabBaseModel(),
+                AreAssetsReadonly(),
                 BuildName(),
                 pfContainerFlavor(),
                 pfContainerImageReference(NULL),
@@ -975,11 +978,13 @@ namespace PlayFab
                 MultiplayerServerCountPerVm(0),
                 Ports(),
                 RegionConfigurations(),
+                UseStreamingForAssetDownloads(),
                 VmSize()
             {}
 
             CreateBuildWithCustomContainerRequest(const CreateBuildWithCustomContainerRequest& src) :
                 PlayFabBaseModel(),
+                AreAssetsReadonly(src.AreAssetsReadonly),
                 BuildName(src.BuildName),
                 pfContainerFlavor(src.pfContainerFlavor),
                 pfContainerImageReference(src.pfContainerImageReference ? new ContainerImageReference(*src.pfContainerImageReference) : NULL),
@@ -990,6 +995,7 @@ namespace PlayFab
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 Ports(src.Ports),
                 RegionConfigurations(src.RegionConfigurations),
+                UseStreamingForAssetDownloads(src.UseStreamingForAssetDownloads),
                 VmSize(src.VmSize)
             {}
 
@@ -1034,6 +1040,7 @@ namespace PlayFab
 
         struct CreateBuildWithCustomContainerResponse : public PlayFabBaseModel
         {
+            OptionalBool AreAssetsReadonly;
             std::string BuildId;
             std::string BuildName;
             Boxed<ContainerFlavor> pfContainerFlavor;
@@ -1048,10 +1055,12 @@ namespace PlayFab
             std::list<Port> Ports;
             std::list<BuildRegion> RegionConfigurations;
             std::string ServerType;
+            OptionalBool UseStreamingForAssetDownloads;
             Boxed<AzureVmSize> VmSize;
 
             CreateBuildWithCustomContainerResponse() :
                 PlayFabBaseModel(),
+                AreAssetsReadonly(),
                 BuildId(),
                 BuildName(),
                 pfContainerFlavor(),
@@ -1066,11 +1075,13 @@ namespace PlayFab
                 Ports(),
                 RegionConfigurations(),
                 ServerType(),
+                UseStreamingForAssetDownloads(),
                 VmSize()
             {}
 
             CreateBuildWithCustomContainerResponse(const CreateBuildWithCustomContainerResponse& src) :
                 PlayFabBaseModel(),
+                AreAssetsReadonly(src.AreAssetsReadonly),
                 BuildId(src.BuildId),
                 BuildName(src.BuildName),
                 pfContainerFlavor(src.pfContainerFlavor),
@@ -1085,6 +1096,7 @@ namespace PlayFab
                 Ports(src.Ports),
                 RegionConfigurations(src.RegionConfigurations),
                 ServerType(src.ServerType),
+                UseStreamingForAssetDownloads(src.UseStreamingForAssetDownloads),
                 VmSize(src.VmSize)
             {}
 
@@ -1126,6 +1138,7 @@ namespace PlayFab
 
         struct CreateBuildWithManagedContainerRequest : public PlayFabBaseModel
         {
+            OptionalBool AreAssetsReadonly;
             std::string BuildName;
             Boxed<ContainerFlavor> pfContainerFlavor;
             std::list<AssetReferenceParams> GameAssetReferences;
@@ -1137,10 +1150,12 @@ namespace PlayFab
             std::list<Port> Ports;
             std::list<BuildRegionParams> RegionConfigurations;
             std::string StartMultiplayerServerCommand;
+            OptionalBool UseStreamingForAssetDownloads;
             Boxed<AzureVmSize> VmSize;
 
             CreateBuildWithManagedContainerRequest() :
                 PlayFabBaseModel(),
+                AreAssetsReadonly(),
                 BuildName(),
                 pfContainerFlavor(),
                 GameAssetReferences(),
@@ -1152,11 +1167,13 @@ namespace PlayFab
                 Ports(),
                 RegionConfigurations(),
                 StartMultiplayerServerCommand(),
+                UseStreamingForAssetDownloads(),
                 VmSize()
             {}
 
             CreateBuildWithManagedContainerRequest(const CreateBuildWithManagedContainerRequest& src) :
                 PlayFabBaseModel(),
+                AreAssetsReadonly(src.AreAssetsReadonly),
                 BuildName(src.BuildName),
                 pfContainerFlavor(src.pfContainerFlavor),
                 GameAssetReferences(src.GameAssetReferences),
@@ -1168,6 +1185,7 @@ namespace PlayFab
                 Ports(src.Ports),
                 RegionConfigurations(src.RegionConfigurations),
                 StartMultiplayerServerCommand(src.StartMultiplayerServerCommand),
+                UseStreamingForAssetDownloads(src.UseStreamingForAssetDownloads),
                 VmSize(src.VmSize)
             {}
 
@@ -1184,6 +1202,7 @@ namespace PlayFab
 
         struct CreateBuildWithManagedContainerResponse : public PlayFabBaseModel
         {
+            OptionalBool AreAssetsReadonly;
             std::string BuildId;
             std::string BuildName;
             Boxed<ContainerFlavor> pfContainerFlavor;
@@ -1199,10 +1218,12 @@ namespace PlayFab
             std::list<BuildRegion> RegionConfigurations;
             std::string ServerType;
             std::string StartMultiplayerServerCommand;
+            OptionalBool UseStreamingForAssetDownloads;
             Boxed<AzureVmSize> VmSize;
 
             CreateBuildWithManagedContainerResponse() :
                 PlayFabBaseModel(),
+                AreAssetsReadonly(),
                 BuildId(),
                 BuildName(),
                 pfContainerFlavor(),
@@ -1218,11 +1239,13 @@ namespace PlayFab
                 RegionConfigurations(),
                 ServerType(),
                 StartMultiplayerServerCommand(),
+                UseStreamingForAssetDownloads(),
                 VmSize()
             {}
 
             CreateBuildWithManagedContainerResponse(const CreateBuildWithManagedContainerResponse& src) :
                 PlayFabBaseModel(),
+                AreAssetsReadonly(src.AreAssetsReadonly),
                 BuildId(src.BuildId),
                 BuildName(src.BuildName),
                 pfContainerFlavor(src.pfContainerFlavor),
@@ -1238,6 +1261,7 @@ namespace PlayFab
                 RegionConfigurations(src.RegionConfigurations),
                 ServerType(src.ServerType),
                 StartMultiplayerServerCommand(src.StartMultiplayerServerCommand),
+                UseStreamingForAssetDownloads(src.UseStreamingForAssetDownloads),
                 VmSize(src.VmSize)
             {}
 
@@ -1958,6 +1982,7 @@ namespace PlayFab
 
         struct GetBuildResponse : public PlayFabBaseModel
         {
+            OptionalBool AreAssetsReadonly;
             std::string BuildId;
             std::string BuildName;
             std::string BuildStatus;
@@ -1975,10 +2000,12 @@ namespace PlayFab
             std::list<BuildRegion> RegionConfigurations;
             std::string ServerType;
             std::string StartMultiplayerServerCommand;
+            OptionalBool UseStreamingForAssetDownloads;
             Boxed<AzureVmSize> VmSize;
 
             GetBuildResponse() :
                 PlayFabBaseModel(),
+                AreAssetsReadonly(),
                 BuildId(),
                 BuildName(),
                 BuildStatus(),
@@ -1996,11 +2023,13 @@ namespace PlayFab
                 RegionConfigurations(),
                 ServerType(),
                 StartMultiplayerServerCommand(),
+                UseStreamingForAssetDownloads(),
                 VmSize()
             {}
 
             GetBuildResponse(const GetBuildResponse& src) :
                 PlayFabBaseModel(),
+                AreAssetsReadonly(src.AreAssetsReadonly),
                 BuildId(src.BuildId),
                 BuildName(src.BuildName),
                 BuildStatus(src.BuildStatus),
@@ -2018,6 +2047,7 @@ namespace PlayFab
                 RegionConfigurations(src.RegionConfigurations),
                 ServerType(src.ServerType),
                 StartMultiplayerServerCommand(src.StartMultiplayerServerCommand),
+                UseStreamingForAssetDownloads(src.UseStreamingForAssetDownloads),
                 VmSize(src.VmSize)
             {}
 

@@ -1056,6 +1056,7 @@ CreateBuildWithCustomContainerRequest::~CreateBuildWithCustomContainerRequest()
 void CreateBuildWithCustomContainerRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (AreAssetsReadonly.notNull()) { writer.String("AreAssetsReadonly"); writer.Bool(AreAssetsReadonly); }
     writer.String("BuildName"); writer.String(BuildName.c_str());
     if (pfContainerFlavor.notNull()) { writer.String("ContainerFlavor"); writeContainerFlavorEnumJSON(pfContainerFlavor, writer); }
     if (pfContainerImageReference != NULL) { writer.String("ContainerImageReference"); pfContainerImageReference->writeJSON(writer); }
@@ -1097,12 +1098,15 @@ void CreateBuildWithCustomContainerRequest::writeJSON(PFStringJsonWriter& writer
         iter->writeJSON(writer);
     }
     writer.EndArray();
+    if (UseStreamingForAssetDownloads.notNull()) { writer.String("UseStreamingForAssetDownloads"); writer.Bool(UseStreamingForAssetDownloads); }
     if (VmSize.notNull()) { writer.String("VmSize"); writeAzureVmSizeEnumJSON(VmSize, writer); }
     writer.EndObject();
 }
 
 bool CreateBuildWithCustomContainerRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator AreAssetsReadonly_member = obj.FindMember("AreAssetsReadonly");
+    if (AreAssetsReadonly_member != obj.MemberEnd() && !AreAssetsReadonly_member->value.IsNull()) AreAssetsReadonly = AreAssetsReadonly_member->value.GetBool();
     const Value::ConstMemberIterator BuildName_member = obj.FindMember("BuildName");
     if (BuildName_member != obj.MemberEnd() && !BuildName_member->value.IsNull()) BuildName = BuildName_member->value.GetString();
     const Value::ConstMemberIterator ContainerFlavor_member = obj.FindMember("ContainerFlavor");
@@ -1147,6 +1151,8 @@ bool CreateBuildWithCustomContainerRequest::readFromValue(const rapidjson::Value
             RegionConfigurations.push_back(BuildRegionParams(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator UseStreamingForAssetDownloads_member = obj.FindMember("UseStreamingForAssetDownloads");
+    if (UseStreamingForAssetDownloads_member != obj.MemberEnd() && !UseStreamingForAssetDownloads_member->value.IsNull()) UseStreamingForAssetDownloads = UseStreamingForAssetDownloads_member->value.GetBool();
     const Value::ConstMemberIterator VmSize_member = obj.FindMember("VmSize");
     if (VmSize_member != obj.MemberEnd() && !VmSize_member->value.IsNull()) VmSize = readAzureVmSizeFromValue(VmSize_member->value);
 
@@ -1185,6 +1191,7 @@ CreateBuildWithCustomContainerResponse::~CreateBuildWithCustomContainerResponse(
 void CreateBuildWithCustomContainerResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (AreAssetsReadonly.notNull()) { writer.String("AreAssetsReadonly"); writer.Bool(AreAssetsReadonly); }
     if (BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
     if (BuildName.length() > 0) { writer.String("BuildName"); writer.String(BuildName.c_str()); }
     if (pfContainerFlavor.notNull()) { writer.String("ContainerFlavor"); writeContainerFlavorEnumJSON(pfContainerFlavor, writer); }
@@ -1234,12 +1241,15 @@ void CreateBuildWithCustomContainerResponse::writeJSON(PFStringJsonWriter& write
         writer.EndArray();
     }
     if (ServerType.length() > 0) { writer.String("ServerType"); writer.String(ServerType.c_str()); }
+    if (UseStreamingForAssetDownloads.notNull()) { writer.String("UseStreamingForAssetDownloads"); writer.Bool(UseStreamingForAssetDownloads); }
     if (VmSize.notNull()) { writer.String("VmSize"); writeAzureVmSizeEnumJSON(VmSize, writer); }
     writer.EndObject();
 }
 
 bool CreateBuildWithCustomContainerResponse::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator AreAssetsReadonly_member = obj.FindMember("AreAssetsReadonly");
+    if (AreAssetsReadonly_member != obj.MemberEnd() && !AreAssetsReadonly_member->value.IsNull()) AreAssetsReadonly = AreAssetsReadonly_member->value.GetBool();
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
     const Value::ConstMemberIterator BuildName_member = obj.FindMember("BuildName");
@@ -1292,6 +1302,8 @@ bool CreateBuildWithCustomContainerResponse::readFromValue(const rapidjson::Valu
     }
     const Value::ConstMemberIterator ServerType_member = obj.FindMember("ServerType");
     if (ServerType_member != obj.MemberEnd() && !ServerType_member->value.IsNull()) ServerType = ServerType_member->value.GetString();
+    const Value::ConstMemberIterator UseStreamingForAssetDownloads_member = obj.FindMember("UseStreamingForAssetDownloads");
+    if (UseStreamingForAssetDownloads_member != obj.MemberEnd() && !UseStreamingForAssetDownloads_member->value.IsNull()) UseStreamingForAssetDownloads = UseStreamingForAssetDownloads_member->value.GetBool();
     const Value::ConstMemberIterator VmSize_member = obj.FindMember("VmSize");
     if (VmSize_member != obj.MemberEnd() && !VmSize_member->value.IsNull()) VmSize = readAzureVmSizeFromValue(VmSize_member->value);
 
@@ -1339,6 +1351,7 @@ CreateBuildWithManagedContainerRequest::~CreateBuildWithManagedContainerRequest(
 void CreateBuildWithManagedContainerRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (AreAssetsReadonly.notNull()) { writer.String("AreAssetsReadonly"); writer.Bool(AreAssetsReadonly); }
     writer.String("BuildName"); writer.String(BuildName.c_str());
     if (pfContainerFlavor.notNull()) { writer.String("ContainerFlavor"); writeContainerFlavorEnumJSON(pfContainerFlavor, writer); }
     writer.String("GameAssetReferences");
@@ -1379,12 +1392,15 @@ void CreateBuildWithManagedContainerRequest::writeJSON(PFStringJsonWriter& write
     }
     writer.EndArray();
     writer.String("StartMultiplayerServerCommand"); writer.String(StartMultiplayerServerCommand.c_str());
+    if (UseStreamingForAssetDownloads.notNull()) { writer.String("UseStreamingForAssetDownloads"); writer.Bool(UseStreamingForAssetDownloads); }
     if (VmSize.notNull()) { writer.String("VmSize"); writeAzureVmSizeEnumJSON(VmSize, writer); }
     writer.EndObject();
 }
 
 bool CreateBuildWithManagedContainerRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator AreAssetsReadonly_member = obj.FindMember("AreAssetsReadonly");
+    if (AreAssetsReadonly_member != obj.MemberEnd() && !AreAssetsReadonly_member->value.IsNull()) AreAssetsReadonly = AreAssetsReadonly_member->value.GetBool();
     const Value::ConstMemberIterator BuildName_member = obj.FindMember("BuildName");
     if (BuildName_member != obj.MemberEnd() && !BuildName_member->value.IsNull()) BuildName = BuildName_member->value.GetString();
     const Value::ConstMemberIterator ContainerFlavor_member = obj.FindMember("ContainerFlavor");
@@ -1431,6 +1447,8 @@ bool CreateBuildWithManagedContainerRequest::readFromValue(const rapidjson::Valu
     }
     const Value::ConstMemberIterator StartMultiplayerServerCommand_member = obj.FindMember("StartMultiplayerServerCommand");
     if (StartMultiplayerServerCommand_member != obj.MemberEnd() && !StartMultiplayerServerCommand_member->value.IsNull()) StartMultiplayerServerCommand = StartMultiplayerServerCommand_member->value.GetString();
+    const Value::ConstMemberIterator UseStreamingForAssetDownloads_member = obj.FindMember("UseStreamingForAssetDownloads");
+    if (UseStreamingForAssetDownloads_member != obj.MemberEnd() && !UseStreamingForAssetDownloads_member->value.IsNull()) UseStreamingForAssetDownloads = UseStreamingForAssetDownloads_member->value.GetBool();
     const Value::ConstMemberIterator VmSize_member = obj.FindMember("VmSize");
     if (VmSize_member != obj.MemberEnd() && !VmSize_member->value.IsNull()) VmSize = readAzureVmSizeFromValue(VmSize_member->value);
 
@@ -1446,6 +1464,7 @@ CreateBuildWithManagedContainerResponse::~CreateBuildWithManagedContainerRespons
 void CreateBuildWithManagedContainerResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (AreAssetsReadonly.notNull()) { writer.String("AreAssetsReadonly"); writer.Bool(AreAssetsReadonly); }
     if (BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
     if (BuildName.length() > 0) { writer.String("BuildName"); writer.String(BuildName.c_str()); }
     if (pfContainerFlavor.notNull()) { writer.String("ContainerFlavor"); writeContainerFlavorEnumJSON(pfContainerFlavor, writer); }
@@ -1496,12 +1515,15 @@ void CreateBuildWithManagedContainerResponse::writeJSON(PFStringJsonWriter& writ
     }
     if (ServerType.length() > 0) { writer.String("ServerType"); writer.String(ServerType.c_str()); }
     if (StartMultiplayerServerCommand.length() > 0) { writer.String("StartMultiplayerServerCommand"); writer.String(StartMultiplayerServerCommand.c_str()); }
+    if (UseStreamingForAssetDownloads.notNull()) { writer.String("UseStreamingForAssetDownloads"); writer.Bool(UseStreamingForAssetDownloads); }
     if (VmSize.notNull()) { writer.String("VmSize"); writeAzureVmSizeEnumJSON(VmSize, writer); }
     writer.EndObject();
 }
 
 bool CreateBuildWithManagedContainerResponse::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator AreAssetsReadonly_member = obj.FindMember("AreAssetsReadonly");
+    if (AreAssetsReadonly_member != obj.MemberEnd() && !AreAssetsReadonly_member->value.IsNull()) AreAssetsReadonly = AreAssetsReadonly_member->value.GetBool();
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
     const Value::ConstMemberIterator BuildName_member = obj.FindMember("BuildName");
@@ -1556,6 +1578,8 @@ bool CreateBuildWithManagedContainerResponse::readFromValue(const rapidjson::Val
     if (ServerType_member != obj.MemberEnd() && !ServerType_member->value.IsNull()) ServerType = ServerType_member->value.GetString();
     const Value::ConstMemberIterator StartMultiplayerServerCommand_member = obj.FindMember("StartMultiplayerServerCommand");
     if (StartMultiplayerServerCommand_member != obj.MemberEnd() && !StartMultiplayerServerCommand_member->value.IsNull()) StartMultiplayerServerCommand = StartMultiplayerServerCommand_member->value.GetString();
+    const Value::ConstMemberIterator UseStreamingForAssetDownloads_member = obj.FindMember("UseStreamingForAssetDownloads");
+    if (UseStreamingForAssetDownloads_member != obj.MemberEnd() && !UseStreamingForAssetDownloads_member->value.IsNull()) UseStreamingForAssetDownloads = UseStreamingForAssetDownloads_member->value.GetBool();
     const Value::ConstMemberIterator VmSize_member = obj.FindMember("VmSize");
     if (VmSize_member != obj.MemberEnd() && !VmSize_member->value.IsNull()) VmSize = readAzureVmSizeFromValue(VmSize_member->value);
 
@@ -2217,6 +2241,7 @@ GetBuildResponse::~GetBuildResponse()
 void GetBuildResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (AreAssetsReadonly.notNull()) { writer.String("AreAssetsReadonly"); writer.Bool(AreAssetsReadonly); }
     if (BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
     if (BuildName.length() > 0) { writer.String("BuildName"); writer.String(BuildName.c_str()); }
     if (BuildStatus.length() > 0) { writer.String("BuildStatus"); writer.String(BuildStatus.c_str()); }
@@ -2269,12 +2294,15 @@ void GetBuildResponse::writeJSON(PFStringJsonWriter& writer)
     }
     if (ServerType.length() > 0) { writer.String("ServerType"); writer.String(ServerType.c_str()); }
     if (StartMultiplayerServerCommand.length() > 0) { writer.String("StartMultiplayerServerCommand"); writer.String(StartMultiplayerServerCommand.c_str()); }
+    if (UseStreamingForAssetDownloads.notNull()) { writer.String("UseStreamingForAssetDownloads"); writer.Bool(UseStreamingForAssetDownloads); }
     if (VmSize.notNull()) { writer.String("VmSize"); writeAzureVmSizeEnumJSON(VmSize, writer); }
     writer.EndObject();
 }
 
 bool GetBuildResponse::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator AreAssetsReadonly_member = obj.FindMember("AreAssetsReadonly");
+    if (AreAssetsReadonly_member != obj.MemberEnd() && !AreAssetsReadonly_member->value.IsNull()) AreAssetsReadonly = AreAssetsReadonly_member->value.GetBool();
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
     const Value::ConstMemberIterator BuildName_member = obj.FindMember("BuildName");
@@ -2333,6 +2361,8 @@ bool GetBuildResponse::readFromValue(const rapidjson::Value& obj)
     if (ServerType_member != obj.MemberEnd() && !ServerType_member->value.IsNull()) ServerType = ServerType_member->value.GetString();
     const Value::ConstMemberIterator StartMultiplayerServerCommand_member = obj.FindMember("StartMultiplayerServerCommand");
     if (StartMultiplayerServerCommand_member != obj.MemberEnd() && !StartMultiplayerServerCommand_member->value.IsNull()) StartMultiplayerServerCommand = StartMultiplayerServerCommand_member->value.GetString();
+    const Value::ConstMemberIterator UseStreamingForAssetDownloads_member = obj.FindMember("UseStreamingForAssetDownloads");
+    if (UseStreamingForAssetDownloads_member != obj.MemberEnd() && !UseStreamingForAssetDownloads_member->value.IsNull()) UseStreamingForAssetDownloads = UseStreamingForAssetDownloads_member->value.GetBool();
     const Value::ConstMemberIterator VmSize_member = obj.FindMember("VmSize");
     if (VmSize_member != obj.MemberEnd() && !VmSize_member->value.IsNull()) VmSize = readAzureVmSizeFromValue(VmSize_member->value);
 
