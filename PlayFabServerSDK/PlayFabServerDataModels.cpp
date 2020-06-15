@@ -4439,8 +4439,8 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesXboxServiceTooManyRequests: writer.String("XboxServiceTooManyRequests"); break;
     case GenericErrorCodesNintendoSwitchNotEnabledForTitle: writer.String("NintendoSwitchNotEnabledForTitle"); break;
     case GenericErrorCodesRequestMultiplayerServersThrottledFromRateLimiter: writer.String("RequestMultiplayerServersThrottledFromRateLimiter"); break;
-    case GenericErrorCodesTitleDataInstanceNotFound: writer.String("TitleDataInstanceNotFound"); break;
-    case GenericErrorCodesDuplicateTitleDataOverrideInstanceName: writer.String("DuplicateTitleDataOverrideInstanceName"); break;
+    case GenericErrorCodesTitleDataOverrideNotFound: writer.String("TitleDataOverrideNotFound"); break;
+    case GenericErrorCodesDuplicateKeys: writer.String("DuplicateKeys"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -5032,8 +5032,8 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["XboxServiceTooManyRequests"] = GenericErrorCodesXboxServiceTooManyRequests;
         _GenericErrorCodesMap["NintendoSwitchNotEnabledForTitle"] = GenericErrorCodesNintendoSwitchNotEnabledForTitle;
         _GenericErrorCodesMap["RequestMultiplayerServersThrottledFromRateLimiter"] = GenericErrorCodesRequestMultiplayerServersThrottledFromRateLimiter;
-        _GenericErrorCodesMap["TitleDataInstanceNotFound"] = GenericErrorCodesTitleDataInstanceNotFound;
-        _GenericErrorCodesMap["DuplicateTitleDataOverrideInstanceName"] = GenericErrorCodesDuplicateTitleDataOverrideInstanceName;
+        _GenericErrorCodesMap["TitleDataOverrideNotFound"] = GenericErrorCodesTitleDataOverrideNotFound;
+        _GenericErrorCodesMap["DuplicateKeys"] = GenericErrorCodesDuplicateKeys;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
@@ -8441,6 +8441,7 @@ void GetTitleDataRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndArray();
     }
+    if (OverrideLabel.length() > 0) { writer.String("OverrideLabel"); writer.String(OverrideLabel.c_str()); }
     writer.EndObject();
 }
 
@@ -8453,6 +8454,8 @@ bool GetTitleDataRequest::readFromValue(const rapidjson::Value& obj)
             Keys.push_back(memberList[i].GetString());
         }
     }
+    const Value::ConstMemberIterator OverrideLabel_member = obj.FindMember("OverrideLabel");
+    if (OverrideLabel_member != obj.MemberEnd() && !OverrideLabel_member->value.IsNull()) OverrideLabel = OverrideLabel_member->value.GetString();
 
     return true;
 }
