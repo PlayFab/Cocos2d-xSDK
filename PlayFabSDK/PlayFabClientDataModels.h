@@ -7661,29 +7661,29 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct LinkNintendoAccountRequest : public PlayFabBaseModel
+        struct LinkNintendoServiceAccountRequest : public PlayFabBaseModel
         {
             OptionalBool ForceLink;
             std::string IdentityToken;
 
-            LinkNintendoAccountRequest() :
+            LinkNintendoServiceAccountRequest() :
                 PlayFabBaseModel(),
                 ForceLink(),
                 IdentityToken()
             {}
 
-            LinkNintendoAccountRequest(const LinkNintendoAccountRequest& src) :
+            LinkNintendoServiceAccountRequest(const LinkNintendoServiceAccountRequest& src) :
                 PlayFabBaseModel(),
                 ForceLink(src.ForceLink),
                 IdentityToken(src.IdentityToken)
             {}
 
-            LinkNintendoAccountRequest(const rapidjson::Value& obj) : LinkNintendoAccountRequest()
+            LinkNintendoServiceAccountRequest(const rapidjson::Value& obj) : LinkNintendoServiceAccountRequest()
             {
                 readFromValue(obj);
             }
 
-            ~LinkNintendoAccountRequest();
+            ~LinkNintendoServiceAccountRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -8636,7 +8636,7 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct LoginWithNintendoAccountRequest : public PlayFabBaseModel
+        struct LoginWithNintendoServiceAccountRequest : public PlayFabBaseModel
         {
             OptionalBool CreateAccount;
             std::string EncryptedRequest;
@@ -8645,7 +8645,7 @@ namespace PlayFab
             std::string PlayerSecret;
             std::string TitleId;
 
-            LoginWithNintendoAccountRequest() :
+            LoginWithNintendoServiceAccountRequest() :
                 PlayFabBaseModel(),
                 CreateAccount(),
                 EncryptedRequest(),
@@ -8655,7 +8655,7 @@ namespace PlayFab
                 TitleId()
             {}
 
-            LoginWithNintendoAccountRequest(const LoginWithNintendoAccountRequest& src) :
+            LoginWithNintendoServiceAccountRequest(const LoginWithNintendoServiceAccountRequest& src) :
                 PlayFabBaseModel(),
                 CreateAccount(src.CreateAccount),
                 EncryptedRequest(src.EncryptedRequest),
@@ -8665,12 +8665,12 @@ namespace PlayFab
                 TitleId(src.TitleId)
             {}
 
-            LoginWithNintendoAccountRequest(const rapidjson::Value& obj) : LoginWithNintendoAccountRequest()
+            LoginWithNintendoServiceAccountRequest(const rapidjson::Value& obj) : LoginWithNintendoServiceAccountRequest()
             {
                 readFromValue(obj);
             }
 
-            ~LoginWithNintendoAccountRequest();
+            ~LoginWithNintendoServiceAccountRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -10872,23 +10872,23 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
-        struct UnlinkNintendoAccountRequest : public PlayFabBaseModel
+        struct UnlinkNintendoServiceAccountRequest : public PlayFabBaseModel
         {
 
-            UnlinkNintendoAccountRequest() :
+            UnlinkNintendoServiceAccountRequest() :
                 PlayFabBaseModel()
             {}
 
-            UnlinkNintendoAccountRequest(const UnlinkNintendoAccountRequest& src) :
+            UnlinkNintendoServiceAccountRequest(const UnlinkNintendoServiceAccountRequest& src) :
                 PlayFabBaseModel()
             {}
 
-            UnlinkNintendoAccountRequest(const rapidjson::Value& obj) : UnlinkNintendoAccountRequest()
+            UnlinkNintendoServiceAccountRequest(const rapidjson::Value& obj) : UnlinkNintendoServiceAccountRequest()
             {
                 readFromValue(obj);
             }
 
-            ~UnlinkNintendoAccountRequest();
+            ~UnlinkNintendoServiceAccountRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -11150,17 +11150,13 @@ namespace PlayFab
 
         struct UnlinkXboxAccountRequest : public PlayFabBaseModel
         {
-            // Deprecated - Do not use
-            std::string XboxToken;
 
             UnlinkXboxAccountRequest() :
-                PlayFabBaseModel(),
-                XboxToken()
+                PlayFabBaseModel()
             {}
 
             UnlinkXboxAccountRequest(const UnlinkXboxAccountRequest& src) :
-                PlayFabBaseModel(),
-                XboxToken(src.XboxToken)
+                PlayFabBaseModel()
             {}
 
             UnlinkXboxAccountRequest(const rapidjson::Value& obj) : UnlinkXboxAccountRequest()

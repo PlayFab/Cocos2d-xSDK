@@ -98,7 +98,7 @@ namespace PlayFab
         static void LinkGoogleAccount(ClientModels::LinkGoogleAccountRequest& request, ProcessApiCallback<ClientModels::LinkGoogleAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkIOSDeviceID(ClientModels::LinkIOSDeviceIDRequest& request, ProcessApiCallback<ClientModels::LinkIOSDeviceIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkKongregate(ClientModels::LinkKongregateAccountRequest& request, ProcessApiCallback<ClientModels::LinkKongregateAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void LinkNintendoAccount(ClientModels::LinkNintendoAccountRequest& request, ProcessApiCallback<ClientModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void LinkNintendoServiceAccount(ClientModels::LinkNintendoServiceAccountRequest& request, ProcessApiCallback<ClientModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkNintendoSwitchDeviceId(ClientModels::LinkNintendoSwitchDeviceIdRequest& request, ProcessApiCallback<ClientModels::LinkNintendoSwitchDeviceIdResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkOpenIdConnect(ClientModels::LinkOpenIdConnectRequest& request, ProcessApiCallback<ClientModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LinkPSNAccount(ClientModels::LinkPSNAccountRequest& request, ProcessApiCallback<ClientModels::LinkPSNAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -116,7 +116,7 @@ namespace PlayFab
         static void LoginWithGoogleAccount(ClientModels::LoginWithGoogleAccountRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithIOSDeviceID(ClientModels::LoginWithIOSDeviceIDRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithKongregate(ClientModels::LoginWithKongregateRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void LoginWithNintendoAccount(ClientModels::LoginWithNintendoAccountRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void LoginWithNintendoServiceAccount(ClientModels::LoginWithNintendoServiceAccountRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithNintendoSwitchDeviceId(ClientModels::LoginWithNintendoSwitchDeviceIdRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithOpenIdConnect(ClientModels::LoginWithOpenIdConnectRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void LoginWithPlayFab(ClientModels::LoginWithPlayFabRequest& request, ProcessApiCallback<ClientModels::LoginResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -158,14 +158,14 @@ namespace PlayFab
         static void UnlinkGoogleAccount(ProcessApiCallback<ClientModels::UnlinkGoogleAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkIOSDeviceID(ClientModels::UnlinkIOSDeviceIDRequest& request, ProcessApiCallback<ClientModels::UnlinkIOSDeviceIDResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkKongregate(ProcessApiCallback<ClientModels::UnlinkKongregateAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UnlinkNintendoAccount(ProcessApiCallback<ClientModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UnlinkNintendoServiceAccount(ProcessApiCallback<ClientModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkNintendoSwitchDeviceId(ClientModels::UnlinkNintendoSwitchDeviceIdRequest& request, ProcessApiCallback<ClientModels::UnlinkNintendoSwitchDeviceIdResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkOpenIdConnect(ClientModels::UnlinkOpenIdConnectRequest& request, ProcessApiCallback<ClientModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkPSNAccount(ProcessApiCallback<ClientModels::UnlinkPSNAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkSteamAccount(ProcessApiCallback<ClientModels::UnlinkSteamAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkTwitch(ClientModels::UnlinkTwitchAccountRequest& request, ProcessApiCallback<ClientModels::UnlinkTwitchAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlinkWindowsHello(ClientModels::UnlinkWindowsHelloAccountRequest& request, ProcessApiCallback<ClientModels::UnlinkWindowsHelloAccountResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void UnlinkXboxAccount(ClientModels::UnlinkXboxAccountRequest& request, ProcessApiCallback<ClientModels::UnlinkXboxAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void UnlinkXboxAccount(ProcessApiCallback<ClientModels::UnlinkXboxAccountResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlockContainerInstance(ClientModels::UnlockContainerInstanceRequest& request, ProcessApiCallback<ClientModels::UnlockContainerItemResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UnlockContainerItem(ClientModels::UnlockContainerItemRequest& request, ProcessApiCallback<ClientModels::UnlockContainerItemResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void UpdateAvatarUrl(ClientModels::UpdateAvatarUrlRequest& request, ProcessApiCallback<ClientModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -269,7 +269,7 @@ namespace PlayFab
         static void OnLinkGoogleAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkKongregateResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnLinkNintendoAccountResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnLinkNintendoServiceAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkNintendoSwitchDeviceIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkOpenIdConnectResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLinkPSNAccountResult(int httpStatus, HttpRequest* request, void* userData);
@@ -287,7 +287,7 @@ namespace PlayFab
         static void OnLoginWithGoogleAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithKongregateResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnLoginWithNintendoAccountResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnLoginWithNintendoServiceAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithNintendoSwitchDeviceIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithOpenIdConnectResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnLoginWithPlayFabResult(int httpStatus, HttpRequest* request, void* userData);
@@ -329,7 +329,7 @@ namespace PlayFab
         static void OnUnlinkGoogleAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkIOSDeviceIDResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkKongregateResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnUnlinkNintendoAccountResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnUnlinkNintendoServiceAccountResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkNintendoSwitchDeviceIdResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkOpenIdConnectResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnUnlinkPSNAccountResult(int httpStatus, HttpRequest* request, void* userData);

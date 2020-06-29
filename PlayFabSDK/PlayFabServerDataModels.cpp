@@ -11422,7 +11422,6 @@ void UnlinkXboxAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("PlayFabId"); writer.String(PlayFabId.c_str());
-    if (XboxToken.length() > 0) { writer.String("XboxToken"); writer.String(XboxToken.c_str()); }
     writer.EndObject();
 }
 
@@ -11430,8 +11429,6 @@ bool UnlinkXboxAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator PlayFabId_member = obj.FindMember("PlayFabId");
     if (PlayFabId_member != obj.MemberEnd() && !PlayFabId_member->value.IsNull()) PlayFabId = PlayFabId_member->value.GetString();
-    const Value::ConstMemberIterator XboxToken_member = obj.FindMember("XboxToken");
-    if (XboxToken_member != obj.MemberEnd() && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
 
     return true;
 }
