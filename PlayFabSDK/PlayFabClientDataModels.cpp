@@ -8767,12 +8767,12 @@ bool LinkKongregateAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-LinkNintendoAccountRequest::~LinkNintendoAccountRequest()
+LinkNintendoServiceAccountRequest::~LinkNintendoServiceAccountRequest()
 {
 
 }
 
-void LinkNintendoAccountRequest::writeJSON(PFStringJsonWriter& writer)
+void LinkNintendoServiceAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (ForceLink.notNull()) { writer.String("ForceLink"); writer.Bool(ForceLink); }
@@ -8780,7 +8780,7 @@ void LinkNintendoAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.EndObject();
 }
 
-bool LinkNintendoAccountRequest::readFromValue(const rapidjson::Value& obj)
+bool LinkNintendoServiceAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator ForceLink_member = obj.FindMember("ForceLink");
     if (ForceLink_member != obj.MemberEnd() && !ForceLink_member->value.IsNull()) ForceLink = ForceLink_member->value.GetBool();
@@ -9642,13 +9642,13 @@ bool LoginWithKongregateRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-LoginWithNintendoAccountRequest::~LoginWithNintendoAccountRequest()
+LoginWithNintendoServiceAccountRequest::~LoginWithNintendoServiceAccountRequest()
 {
     if (InfoRequestParameters != NULL) delete InfoRequestParameters;
 
 }
 
-void LoginWithNintendoAccountRequest::writeJSON(PFStringJsonWriter& writer)
+void LoginWithNintendoServiceAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (CreateAccount.notNull()) { writer.String("CreateAccount"); writer.Bool(CreateAccount); }
@@ -9660,7 +9660,7 @@ void LoginWithNintendoAccountRequest::writeJSON(PFStringJsonWriter& writer)
     writer.EndObject();
 }
 
-bool LoginWithNintendoAccountRequest::readFromValue(const rapidjson::Value& obj)
+bool LoginWithNintendoServiceAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator CreateAccount_member = obj.FindMember("CreateAccount");
     if (CreateAccount_member != obj.MemberEnd() && !CreateAccount_member->value.IsNull()) CreateAccount = CreateAccount_member->value.GetBool();
@@ -11769,18 +11769,18 @@ bool UnlinkKongregateAccountResult::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
-UnlinkNintendoAccountRequest::~UnlinkNintendoAccountRequest()
+UnlinkNintendoServiceAccountRequest::~UnlinkNintendoServiceAccountRequest()
 {
 
 }
 
-void UnlinkNintendoAccountRequest::writeJSON(PFStringJsonWriter& writer)
+void UnlinkNintendoServiceAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.EndObject();
 }
 
-bool UnlinkNintendoAccountRequest::readFromValue(const rapidjson::Value& obj)
+bool UnlinkNintendoServiceAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;
@@ -11993,14 +11993,11 @@ UnlinkXboxAccountRequest::~UnlinkXboxAccountRequest()
 void UnlinkXboxAccountRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
-    if (XboxToken.length() > 0) { writer.String("XboxToken"); writer.String(XboxToken.c_str()); }
     writer.EndObject();
 }
 
 bool UnlinkXboxAccountRequest::readFromValue(const rapidjson::Value& obj)
 {
-    const Value::ConstMemberIterator XboxToken_member = obj.FindMember("XboxToken");
-    if (XboxToken_member != obj.MemberEnd() && !XboxToken_member->value.IsNull()) XboxToken = XboxToken_member->value.GetString();
 
     return true;
 }

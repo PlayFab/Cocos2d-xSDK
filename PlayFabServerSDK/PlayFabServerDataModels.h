@@ -9838,19 +9838,15 @@ namespace PlayFab
         struct UnlinkXboxAccountRequest : public PlayFabBaseModel
         {
             std::string PlayFabId;
-            // Deprecated - Do not use
-            std::string XboxToken;
 
             UnlinkXboxAccountRequest() :
                 PlayFabBaseModel(),
-                PlayFabId(),
-                XboxToken()
+                PlayFabId()
             {}
 
             UnlinkXboxAccountRequest(const UnlinkXboxAccountRequest& src) :
                 PlayFabBaseModel(),
-                PlayFabId(src.PlayFabId),
-                XboxToken(src.XboxToken)
+                PlayFabId(src.PlayFabId)
             {}
 
             UnlinkXboxAccountRequest(const rapidjson::Value& obj) : UnlinkXboxAccountRequest()
