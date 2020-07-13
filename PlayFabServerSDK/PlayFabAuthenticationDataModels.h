@@ -77,15 +77,18 @@ namespace PlayFab
 
         struct GetEntityTokenRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
 
             GetEntityTokenRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL)
             {}
 
             GetEntityTokenRequest(const GetEntityTokenRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL)
             {}
 
@@ -161,15 +164,18 @@ namespace PlayFab
 
         struct ValidateEntityTokenRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string EntityToken;
 
             ValidateEntityTokenRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 EntityToken()
             {}
 
             ValidateEntityTokenRequest(const ValidateEntityTokenRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 EntityToken(src.EntityToken)
             {}
 

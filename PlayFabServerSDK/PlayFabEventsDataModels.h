@@ -37,6 +37,7 @@ namespace PlayFab
 
         struct EventContents : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
             std::string EventNamespace;
             std::string Name;
@@ -47,6 +48,7 @@ namespace PlayFab
 
             EventContents() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL),
                 EventNamespace(),
                 Name(),
@@ -58,6 +60,7 @@ namespace PlayFab
 
             EventContents(const EventContents& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 EventNamespace(src.EventNamespace),
                 Name(src.Name),
@@ -80,15 +83,18 @@ namespace PlayFab
 
         struct WriteEventsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::list<EventContents> Events;
 
             WriteEventsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Events()
             {}
 
             WriteEventsRequest(const WriteEventsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Events(src.Events)
             {}
 

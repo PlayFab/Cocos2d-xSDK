@@ -103,6 +103,7 @@ void PlayFabExperimentationAPI::OnDeleteExperimentResult(int httpStatus, HttpReq
 }
 
 void PlayFabExperimentationAPI::GetExperiments(
+    GetExperimentsRequest& request,
     ProcessApiCallback<GetExperimentsResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -118,7 +119,7 @@ void PlayFabExperimentationAPI::GetExperiments(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetExperimentsResult, userData);

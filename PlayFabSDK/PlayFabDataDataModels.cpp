@@ -36,6 +36,14 @@ AbortFileUploadsRequest::~AbortFileUploadsRequest()
 void AbortFileUploadsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("FileNames");
     writer.StartArray();
@@ -49,6 +57,12 @@ void AbortFileUploadsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool AbortFileUploadsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator FileNames_member = obj.FindMember("FileNames");
@@ -96,6 +110,14 @@ DeleteFilesRequest::~DeleteFilesRequest()
 void DeleteFilesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("FileNames");
     writer.StartArray();
@@ -109,6 +131,12 @@ void DeleteFilesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool DeleteFilesRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator FileNames_member = obj.FindMember("FileNames");
@@ -156,6 +184,14 @@ FinalizeFileUploadsRequest::~FinalizeFileUploadsRequest()
 void FinalizeFileUploadsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("FileNames");
     writer.StartArray();
@@ -168,6 +204,12 @@ void FinalizeFileUploadsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool FinalizeFileUploadsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator FileNames_member = obj.FindMember("FileNames");
@@ -259,12 +301,26 @@ GetFilesRequest::~GetFilesRequest()
 void GetFilesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.EndObject();
 }
 
 bool GetFilesRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
 
@@ -317,6 +373,14 @@ GetObjectsRequest::~GetObjectsRequest()
 void GetObjectsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     if (EscapeObject.notNull()) { writer.String("EscapeObject"); writer.Bool(EscapeObject); }
     writer.EndObject();
@@ -324,6 +388,12 @@ void GetObjectsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetObjectsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator EscapeObject_member = obj.FindMember("EscapeObject");
@@ -427,6 +497,14 @@ InitiateFileUploadsRequest::~InitiateFileUploadsRequest()
 void InitiateFileUploadsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("FileNames");
     writer.StartArray();
@@ -440,6 +518,12 @@ void InitiateFileUploadsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool InitiateFileUploadsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator FileNames_member = obj.FindMember("FileNames");
@@ -588,6 +672,14 @@ SetObjectsRequest::~SetObjectsRequest()
 void SetObjectsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     if (ExpectedProfileVersion.notNull()) { writer.String("ExpectedProfileVersion"); writer.Int(ExpectedProfileVersion); }
     writer.String("Objects");
@@ -601,6 +693,12 @@ void SetObjectsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool SetObjectsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator ExpectedProfileVersion_member = obj.FindMember("ExpectedProfileVersion");

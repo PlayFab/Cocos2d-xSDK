@@ -323,17 +323,20 @@ namespace PlayFab
 
         struct GetEntityProfileRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalBool DataAsObject;
             EntityKey* Entity;
 
             GetEntityProfileRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 DataAsObject(),
                 Entity(NULL)
             {}
 
             GetEntityProfileRequest(const GetEntityProfileRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 DataAsObject(src.DataAsObject),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL)
             {}
@@ -376,17 +379,20 @@ namespace PlayFab
 
         struct GetEntityProfilesRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalBool DataAsObject;
             std::list<EntityKey> Entities;
 
             GetEntityProfilesRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 DataAsObject(),
                 Entities()
             {}
 
             GetEntityProfilesRequest(const GetEntityProfilesRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 DataAsObject(src.DataAsObject),
                 Entities(src.Entities)
             {}
@@ -429,13 +435,16 @@ namespace PlayFab
 
         struct GetGlobalPolicyRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             GetGlobalPolicyRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             GetGlobalPolicyRequest(const GetGlobalPolicyRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             GetGlobalPolicyRequest(const rapidjson::Value& obj) : GetGlobalPolicyRequest()
@@ -476,17 +485,20 @@ namespace PlayFab
 
         struct GetTitlePlayersFromMasterPlayerAccountIdsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::list<std::string> MasterPlayerAccountIds;
             std::string TitleId;
 
             GetTitlePlayersFromMasterPlayerAccountIdsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 MasterPlayerAccountIds(),
                 TitleId()
             {}
 
             GetTitlePlayersFromMasterPlayerAccountIdsRequest(const GetTitlePlayersFromMasterPlayerAccountIdsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 MasterPlayerAccountIds(src.MasterPlayerAccountIds),
                 TitleId(src.TitleId)
             {}
@@ -543,17 +555,20 @@ namespace PlayFab
 
         struct SetEntityProfilePolicyRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             std::list<EntityPermissionStatement> Statements;
 
             SetEntityProfilePolicyRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 Statements()
             {}
 
             SetEntityProfilePolicyRequest(const SetEntityProfilePolicyRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 Statements(src.Statements)
             {}
@@ -596,15 +611,18 @@ namespace PlayFab
 
         struct SetGlobalPolicyRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::list<EntityPermissionStatement> Permissions;
 
             SetGlobalPolicyRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Permissions()
             {}
 
             SetGlobalPolicyRequest(const SetGlobalPolicyRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Permissions(src.Permissions)
             {}
 
@@ -643,12 +661,14 @@ namespace PlayFab
 
         struct SetProfileLanguageRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
             OptionalInt32 ExpectedVersion;
             std::string Language;
 
             SetProfileLanguageRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL),
                 ExpectedVersion(),
                 Language()
@@ -656,6 +676,7 @@ namespace PlayFab
 
             SetProfileLanguageRequest(const SetProfileLanguageRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 ExpectedVersion(src.ExpectedVersion),
                 Language(src.Language)

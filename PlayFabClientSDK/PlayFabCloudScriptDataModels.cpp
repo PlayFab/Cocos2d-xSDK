@@ -840,6 +840,14 @@ ExecuteEntityCloudScriptRequest::~ExecuteEntityCloudScriptRequest()
 void ExecuteEntityCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.String("FunctionName"); writer.String(FunctionName.c_str());
     if (FunctionParameter.notNull()) { writer.String("FunctionParameter"); FunctionParameter.writeJSON(writer); }
@@ -851,6 +859,12 @@ void ExecuteEntityCloudScriptRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ExecuteEntityCloudScriptRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator FunctionName_member = obj.FindMember("FunctionName");
@@ -876,6 +890,14 @@ ExecuteFunctionRequest::~ExecuteFunctionRequest()
 void ExecuteFunctionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.String("FunctionName"); writer.String(FunctionName.c_str());
     if (FunctionParameter.notNull()) { writer.String("FunctionParameter"); FunctionParameter.writeJSON(writer); }
@@ -885,6 +907,12 @@ void ExecuteFunctionRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ExecuteFunctionRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator FunctionName_member = obj.FindMember("FunctionName");
@@ -1107,11 +1135,25 @@ ListFunctionsRequest::~ListFunctionsRequest()
 void ListFunctionsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool ListFunctionsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -1776,6 +1818,14 @@ PostFunctionResultForEntityTriggeredActionRequest::~PostFunctionResultForEntityT
 void PostFunctionResultForEntityTriggeredActionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("FunctionResult"); FunctionResult.writeJSON(writer);
     writer.EndObject();
@@ -1783,6 +1833,12 @@ void PostFunctionResultForEntityTriggeredActionRequest::writeJSON(PFStringJsonWr
 
 bool PostFunctionResultForEntityTriggeredActionRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator FunctionResult_member = obj.FindMember("FunctionResult");
@@ -1799,6 +1855,14 @@ PostFunctionResultForFunctionExecutionRequest::~PostFunctionResultForFunctionExe
 void PostFunctionResultForFunctionExecutionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("FunctionResult"); FunctionResult.writeJSON(writer);
     writer.EndObject();
@@ -1806,6 +1870,12 @@ void PostFunctionResultForFunctionExecutionRequest::writeJSON(PFStringJsonWriter
 
 bool PostFunctionResultForFunctionExecutionRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator FunctionResult_member = obj.FindMember("FunctionResult");
@@ -1824,6 +1894,14 @@ PostFunctionResultForPlayerTriggeredActionRequest::~PostFunctionResultForPlayerT
 void PostFunctionResultForPlayerTriggeredActionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.String("FunctionResult"); FunctionResult.writeJSON(writer);
     writer.String("PlayerProfile"); PlayerProfile.writeJSON(writer);
@@ -1833,6 +1911,12 @@ void PostFunctionResultForPlayerTriggeredActionRequest::writeJSON(PFStringJsonWr
 
 bool PostFunctionResultForPlayerTriggeredActionRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator FunctionResult_member = obj.FindMember("FunctionResult");
@@ -1853,6 +1937,14 @@ PostFunctionResultForScheduledTaskRequest::~PostFunctionResultForScheduledTaskRe
 void PostFunctionResultForScheduledTaskRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("FunctionResult"); FunctionResult.writeJSON(writer);
     writer.String("ScheduledTaskId"); ScheduledTaskId.writeJSON(writer);
@@ -1861,6 +1953,12 @@ void PostFunctionResultForScheduledTaskRequest::writeJSON(PFStringJsonWriter& wr
 
 bool PostFunctionResultForScheduledTaskRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator FunctionResult_member = obj.FindMember("FunctionResult");
@@ -1879,6 +1977,14 @@ RegisterHttpFunctionRequest::~RegisterHttpFunctionRequest()
 void RegisterHttpFunctionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("FunctionName"); writer.String(FunctionName.c_str());
     writer.String("FunctionUrl"); writer.String(FunctionUrl.c_str());
     writer.EndObject();
@@ -1886,6 +1992,12 @@ void RegisterHttpFunctionRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool RegisterHttpFunctionRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator FunctionName_member = obj.FindMember("FunctionName");
     if (FunctionName_member != obj.MemberEnd() && !FunctionName_member->value.IsNull()) FunctionName = FunctionName_member->value.GetString();
     const Value::ConstMemberIterator FunctionUrl_member = obj.FindMember("FunctionUrl");
@@ -1903,6 +2015,14 @@ void RegisterQueuedFunctionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("ConnectionString"); writer.String(ConnectionString.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("FunctionName"); writer.String(FunctionName.c_str());
     writer.String("QueueName"); writer.String(QueueName.c_str());
     writer.EndObject();
@@ -1912,6 +2032,12 @@ bool RegisterQueuedFunctionRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator ConnectionString_member = obj.FindMember("ConnectionString");
     if (ConnectionString_member != obj.MemberEnd() && !ConnectionString_member->value.IsNull()) ConnectionString = ConnectionString_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator FunctionName_member = obj.FindMember("FunctionName");
     if (FunctionName_member != obj.MemberEnd() && !FunctionName_member->value.IsNull()) FunctionName = FunctionName_member->value.GetString();
     const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
@@ -1955,12 +2081,26 @@ UnregisterFunctionRequest::~UnregisterFunctionRequest()
 void UnregisterFunctionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("FunctionName"); writer.String(FunctionName.c_str());
     writer.EndObject();
 }
 
 bool UnregisterFunctionRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator FunctionName_member = obj.FindMember("FunctionName");
     if (FunctionName_member != obj.MemberEnd() && !FunctionName_member->value.IsNull()) FunctionName = FunctionName_member->value.GetString();
 

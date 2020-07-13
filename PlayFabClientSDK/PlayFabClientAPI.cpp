@@ -3001,6 +3001,7 @@ void PlayFabClientAPI::OnGetUserDataResult(int httpStatus, HttpRequest* request,
 }
 
 void PlayFabClientAPI::GetUserInventory(
+    GetUserInventoryRequest& request,
     ProcessApiCallback<GetUserInventoryResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -3016,7 +3017,7 @@ void PlayFabClientAPI::GetUserInventory(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetUserInventoryResult, userData);
@@ -5449,6 +5450,7 @@ void PlayFabClientAPI::OnRegisterWithWindowsHelloResult(int httpStatus, HttpRequ
 }
 
 void PlayFabClientAPI::RemoveContactEmail(
+    RemoveContactEmailRequest& request,
     ProcessApiCallback<RemoveContactEmailResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -5464,7 +5466,7 @@ void PlayFabClientAPI::RemoveContactEmail(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRemoveContactEmailResult, userData);
@@ -6183,6 +6185,7 @@ void PlayFabClientAPI::OnUnlinkAndroidDeviceIDResult(int httpStatus, HttpRequest
 }
 
 void PlayFabClientAPI::UnlinkApple(
+    UnlinkAppleRequest& request,
     ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -6198,7 +6201,7 @@ void PlayFabClientAPI::UnlinkApple(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkAppleResult, userData);
@@ -6274,6 +6277,7 @@ void PlayFabClientAPI::OnUnlinkCustomIDResult(int httpStatus, HttpRequest* reque
 }
 
 void PlayFabClientAPI::UnlinkFacebookAccount(
+    UnlinkFacebookAccountRequest& request,
     ProcessApiCallback<UnlinkFacebookAccountResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -6289,7 +6293,7 @@ void PlayFabClientAPI::UnlinkFacebookAccount(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkFacebookAccountResult, userData);
@@ -6365,6 +6369,7 @@ void PlayFabClientAPI::OnUnlinkFacebookInstantGamesIdResult(int httpStatus, Http
 }
 
 void PlayFabClientAPI::UnlinkGameCenterAccount(
+    UnlinkGameCenterAccountRequest& request,
     ProcessApiCallback<UnlinkGameCenterAccountResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -6380,7 +6385,7 @@ void PlayFabClientAPI::UnlinkGameCenterAccount(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkGameCenterAccountResult, userData);
@@ -6410,6 +6415,7 @@ void PlayFabClientAPI::OnUnlinkGameCenterAccountResult(int httpStatus, HttpReque
 }
 
 void PlayFabClientAPI::UnlinkGoogleAccount(
+    UnlinkGoogleAccountRequest& request,
     ProcessApiCallback<UnlinkGoogleAccountResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -6425,7 +6431,7 @@ void PlayFabClientAPI::UnlinkGoogleAccount(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkGoogleAccountResult, userData);
@@ -6501,6 +6507,7 @@ void PlayFabClientAPI::OnUnlinkIOSDeviceIDResult(int httpStatus, HttpRequest* re
 }
 
 void PlayFabClientAPI::UnlinkKongregate(
+    UnlinkKongregateAccountRequest& request,
     ProcessApiCallback<UnlinkKongregateAccountResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -6516,7 +6523,7 @@ void PlayFabClientAPI::UnlinkKongregate(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkKongregateResult, userData);
@@ -6546,6 +6553,7 @@ void PlayFabClientAPI::OnUnlinkKongregateResult(int httpStatus, HttpRequest* req
 }
 
 void PlayFabClientAPI::UnlinkNintendoServiceAccount(
+    UnlinkNintendoServiceAccountRequest& request,
     ProcessApiCallback<EmptyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -6561,7 +6569,7 @@ void PlayFabClientAPI::UnlinkNintendoServiceAccount(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkNintendoServiceAccountResult, userData);
@@ -6683,6 +6691,7 @@ void PlayFabClientAPI::OnUnlinkOpenIdConnectResult(int httpStatus, HttpRequest* 
 }
 
 void PlayFabClientAPI::UnlinkPSNAccount(
+    UnlinkPSNAccountRequest& request,
     ProcessApiCallback<UnlinkPSNAccountResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -6698,7 +6707,7 @@ void PlayFabClientAPI::UnlinkPSNAccount(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkPSNAccountResult, userData);
@@ -6728,6 +6737,7 @@ void PlayFabClientAPI::OnUnlinkPSNAccountResult(int httpStatus, HttpRequest* req
 }
 
 void PlayFabClientAPI::UnlinkSteamAccount(
+    UnlinkSteamAccountRequest& request,
     ProcessApiCallback<UnlinkSteamAccountResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -6743,7 +6753,7 @@ void PlayFabClientAPI::UnlinkSteamAccount(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkSteamAccountResult, userData);
@@ -6865,6 +6875,7 @@ void PlayFabClientAPI::OnUnlinkWindowsHelloResult(int httpStatus, HttpRequest* r
 }
 
 void PlayFabClientAPI::UnlinkXboxAccount(
+    UnlinkXboxAccountRequest& request,
     ProcessApiCallback<UnlinkXboxAccountResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -6880,7 +6891,7 @@ void PlayFabClientAPI::UnlinkXboxAccount(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnUnlinkXboxAccountResult, userData);

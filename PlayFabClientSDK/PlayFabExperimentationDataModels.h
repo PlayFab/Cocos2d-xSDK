@@ -64,7 +64,7 @@ namespace PlayFab
             std::string Id;
             bool IsControl;
             std::string Name;
-            std::string TitleDataOverrideId;
+            std::string TitleDataOverrideLabel;
             Uint32 TrafficPercentage;
             std::list<Variable> Variables;
 
@@ -74,7 +74,7 @@ namespace PlayFab
                 Id(),
                 IsControl(false),
                 Name(),
-                TitleDataOverrideId(),
+                TitleDataOverrideLabel(),
                 TrafficPercentage(0),
                 Variables()
             {}
@@ -85,7 +85,7 @@ namespace PlayFab
                 Id(src.Id),
                 IsControl(src.IsControl),
                 Name(src.Name),
-                TitleDataOverrideId(src.TitleDataOverrideId),
+                TitleDataOverrideLabel(src.TitleDataOverrideLabel),
                 TrafficPercentage(src.TrafficPercentage),
                 Variables(src.Variables)
             {}
@@ -103,6 +103,7 @@ namespace PlayFab
 
         struct CreateExperimentRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string Description;
             Uint32 Duration;
             Boxed<ExperimentType> pfExperimentType;
@@ -114,6 +115,7 @@ namespace PlayFab
 
             CreateExperimentRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Description(),
                 Duration(0),
                 pfExperimentType(),
@@ -126,6 +128,7 @@ namespace PlayFab
 
             CreateExperimentRequest(const CreateExperimentRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Description(src.Description),
                 Duration(src.Duration),
                 pfExperimentType(src.pfExperimentType),
@@ -174,15 +177,18 @@ namespace PlayFab
 
         struct DeleteExperimentRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string ExperimentId;
 
             DeleteExperimentRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ExperimentId()
             {}
 
             DeleteExperimentRequest(const DeleteExperimentRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ExperimentId(src.ExperimentId)
             {}
 
@@ -312,13 +318,16 @@ namespace PlayFab
 
         struct GetExperimentsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             GetExperimentsRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             GetExperimentsRequest(const GetExperimentsRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             GetExperimentsRequest(const rapidjson::Value& obj) : GetExperimentsRequest()
@@ -359,15 +368,18 @@ namespace PlayFab
 
         struct GetLatestScorecardRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string ExperimentId;
 
             GetLatestScorecardRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ExperimentId()
             {}
 
             GetLatestScorecardRequest(const GetLatestScorecardRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ExperimentId(src.ExperimentId)
             {}
 
@@ -550,15 +562,18 @@ namespace PlayFab
 
         struct GetTreatmentAssignmentRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
 
             GetTreatmentAssignmentRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL)
             {}
 
             GetTreatmentAssignmentRequest(const GetTreatmentAssignmentRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL)
             {}
 
@@ -628,15 +643,18 @@ namespace PlayFab
 
         struct StartExperimentRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string ExperimentId;
 
             StartExperimentRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ExperimentId()
             {}
 
             StartExperimentRequest(const StartExperimentRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ExperimentId(src.ExperimentId)
             {}
 
@@ -653,15 +671,18 @@ namespace PlayFab
 
         struct StopExperimentRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string ExperimentId;
 
             StopExperimentRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ExperimentId()
             {}
 
             StopExperimentRequest(const StopExperimentRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ExperimentId(src.ExperimentId)
             {}
 
@@ -678,6 +699,7 @@ namespace PlayFab
 
         struct UpdateExperimentRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string Description;
             Uint32 Duration;
             Boxed<ExperimentType> pfExperimentType;
@@ -690,6 +712,7 @@ namespace PlayFab
 
             UpdateExperimentRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Description(),
                 Duration(0),
                 pfExperimentType(),
@@ -703,6 +726,7 @@ namespace PlayFab
 
             UpdateExperimentRequest(const UpdateExperimentRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Description(src.Description),
                 Duration(src.Duration),
                 pfExperimentType(src.pfExperimentType),

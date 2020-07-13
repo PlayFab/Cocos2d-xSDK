@@ -37,12 +37,14 @@ namespace PlayFab
 
         struct AbortFileUploadsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             std::list<std::string> FileNames;
             OptionalInt32 ProfileVersion;
 
             AbortFileUploadsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 FileNames(),
                 ProfileVersion()
@@ -50,6 +52,7 @@ namespace PlayFab
 
             AbortFileUploadsRequest(const AbortFileUploadsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 FileNames(src.FileNames),
                 ProfileVersion(src.ProfileVersion)
@@ -96,12 +99,14 @@ namespace PlayFab
 
         struct DeleteFilesRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             std::list<std::string> FileNames;
             OptionalInt32 ProfileVersion;
 
             DeleteFilesRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 FileNames(),
                 ProfileVersion()
@@ -109,6 +114,7 @@ namespace PlayFab
 
             DeleteFilesRequest(const DeleteFilesRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 FileNames(src.FileNames),
                 ProfileVersion(src.ProfileVersion)
@@ -155,17 +161,20 @@ namespace PlayFab
 
         struct FinalizeFileUploadsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             std::list<std::string> FileNames;
 
             FinalizeFileUploadsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 FileNames()
             {}
 
             FinalizeFileUploadsRequest(const FinalizeFileUploadsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 FileNames(src.FileNames)
             {}
@@ -251,15 +260,18 @@ namespace PlayFab
 
         struct GetFilesRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
 
             GetFilesRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity()
             {}
 
             GetFilesRequest(const GetFilesRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity)
             {}
 
@@ -307,17 +319,20 @@ namespace PlayFab
 
         struct GetObjectsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             OptionalBool EscapeObject;
 
             GetObjectsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 EscapeObject()
             {}
 
             GetObjectsRequest(const GetObjectsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 EscapeObject(src.EscapeObject)
             {}
@@ -425,12 +440,14 @@ namespace PlayFab
 
         struct InitiateFileUploadsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             std::list<std::string> FileNames;
             OptionalInt32 ProfileVersion;
 
             InitiateFileUploadsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 FileNames(),
                 ProfileVersion()
@@ -438,6 +455,7 @@ namespace PlayFab
 
             InitiateFileUploadsRequest(const InitiateFileUploadsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 FileNames(src.FileNames),
                 ProfileVersion(src.ProfileVersion)
@@ -563,12 +581,14 @@ namespace PlayFab
 
         struct SetObjectsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             OptionalInt32 ExpectedProfileVersion;
             std::list<SetObject> Objects;
 
             SetObjectsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 ExpectedProfileVersion(),
                 Objects()
@@ -576,6 +596,7 @@ namespace PlayFab
 
             SetObjectsRequest(const SetObjectsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 ExpectedProfileVersion(src.ExpectedProfileVersion),
                 Objects(src.Objects)

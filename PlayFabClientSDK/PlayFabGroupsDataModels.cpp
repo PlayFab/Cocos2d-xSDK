@@ -36,6 +36,14 @@ AcceptGroupApplicationRequest::~AcceptGroupApplicationRequest()
 void AcceptGroupApplicationRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
@@ -43,6 +51,12 @@ void AcceptGroupApplicationRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool AcceptGroupApplicationRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
@@ -60,6 +74,14 @@ AcceptGroupInvitationRequest::~AcceptGroupInvitationRequest()
 void AcceptGroupInvitationRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
@@ -67,6 +89,12 @@ void AcceptGroupInvitationRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool AcceptGroupInvitationRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
@@ -83,6 +111,14 @@ AddMembersRequest::~AddMembersRequest()
 void AddMembersRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Group"); Group.writeJSON(writer);
     writer.String("Members");
     writer.StartArray();
@@ -96,6 +132,12 @@ void AddMembersRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool AddMembersRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
     if (Group_member != obj.MemberEnd() && !Group_member->value.IsNull()) Group = EntityKey(Group_member->value);
     const Value::ConstMemberIterator Members_member = obj.FindMember("Members");
@@ -121,6 +163,14 @@ void ApplyToGroupRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (AutoAcceptOutstandingInvite.notNull()) { writer.String("AutoAcceptOutstandingInvite"); writer.Bool(AutoAcceptOutstandingInvite); }
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
@@ -130,6 +180,12 @@ bool ApplyToGroupRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AutoAcceptOutstandingInvite_member = obj.FindMember("AutoAcceptOutstandingInvite");
     if (AutoAcceptOutstandingInvite_member != obj.MemberEnd() && !AutoAcceptOutstandingInvite_member->value.IsNull()) AutoAcceptOutstandingInvite = AutoAcceptOutstandingInvite_member->value.GetBool();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
@@ -209,6 +265,14 @@ BlockEntityRequest::~BlockEntityRequest()
 void BlockEntityRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
@@ -216,6 +280,12 @@ void BlockEntityRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool BlockEntityRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
@@ -232,6 +302,14 @@ ChangeMemberRoleRequest::~ChangeMemberRoleRequest()
 void ChangeMemberRoleRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (DestinationRoleId.length() > 0) { writer.String("DestinationRoleId"); writer.String(DestinationRoleId.c_str()); }
     writer.String("Group"); Group.writeJSON(writer);
     writer.String("Members");
@@ -246,6 +324,12 @@ void ChangeMemberRoleRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ChangeMemberRoleRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator DestinationRoleId_member = obj.FindMember("DestinationRoleId");
     if (DestinationRoleId_member != obj.MemberEnd() && !DestinationRoleId_member->value.IsNull()) DestinationRoleId = DestinationRoleId_member->value.GetString();
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
@@ -272,6 +356,14 @@ CreateGroupRequest::~CreateGroupRequest()
 void CreateGroupRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.String("GroupName"); writer.String(GroupName.c_str());
     writer.EndObject();
@@ -279,6 +371,12 @@ void CreateGroupRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool CreateGroupRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator GroupName_member = obj.FindMember("GroupName");
@@ -344,6 +442,14 @@ CreateGroupRoleRequest::~CreateGroupRoleRequest()
 void CreateGroupRoleRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Group"); Group.writeJSON(writer);
     writer.String("RoleId"); writer.String(RoleId.c_str());
     writer.String("RoleName"); writer.String(RoleName.c_str());
@@ -352,6 +458,12 @@ void CreateGroupRoleRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool CreateGroupRoleRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
     if (Group_member != obj.MemberEnd() && !Group_member->value.IsNull()) Group = EntityKey(Group_member->value);
     const Value::ConstMemberIterator RoleId_member = obj.FindMember("RoleId");
@@ -396,12 +508,26 @@ DeleteGroupRequest::~DeleteGroupRequest()
 void DeleteGroupRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
 }
 
 bool DeleteGroupRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
     if (Group_member != obj.MemberEnd() && !Group_member->value.IsNull()) Group = EntityKey(Group_member->value);
 
@@ -416,6 +542,14 @@ DeleteRoleRequest::~DeleteRoleRequest()
 void DeleteRoleRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Group"); Group.writeJSON(writer);
     if (RoleId.length() > 0) { writer.String("RoleId"); writer.String(RoleId.c_str()); }
     writer.EndObject();
@@ -423,6 +557,12 @@ void DeleteRoleRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool DeleteRoleRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
     if (Group_member != obj.MemberEnd() && !Group_member->value.IsNull()) Group = EntityKey(Group_member->value);
     const Value::ConstMemberIterator RoleId_member = obj.FindMember("RoleId");
@@ -495,6 +635,14 @@ GetGroupRequest::~GetGroupRequest()
 void GetGroupRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Group != NULL) { writer.String("Group"); Group->writeJSON(writer); }
     if (GroupName.length() > 0) { writer.String("GroupName"); writer.String(GroupName.c_str()); }
     writer.EndObject();
@@ -502,6 +650,12 @@ void GetGroupRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetGroupRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
     if (Group_member != obj.MemberEnd() && !Group_member->value.IsNull()) Group = new EntityKey(Group_member->value);
     const Value::ConstMemberIterator GroupName_member = obj.FindMember("GroupName");
@@ -720,6 +874,14 @@ void InviteToGroupRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (AutoAcceptOutstandingApplication.notNull()) { writer.String("AutoAcceptOutstandingApplication"); writer.Bool(AutoAcceptOutstandingApplication); }
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("Group"); Group.writeJSON(writer);
     if (RoleId.length() > 0) { writer.String("RoleId"); writer.String(RoleId.c_str()); }
@@ -730,6 +892,12 @@ bool InviteToGroupRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AutoAcceptOutstandingApplication_member = obj.FindMember("AutoAcceptOutstandingApplication");
     if (AutoAcceptOutstandingApplication_member != obj.MemberEnd() && !AutoAcceptOutstandingApplication_member->value.IsNull()) AutoAcceptOutstandingApplication = AutoAcceptOutstandingApplication_member->value.GetBool();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
@@ -783,6 +951,14 @@ IsMemberRequest::~IsMemberRequest()
 void IsMemberRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("Group"); Group.writeJSON(writer);
     if (RoleId.length() > 0) { writer.String("RoleId"); writer.String(RoleId.c_str()); }
@@ -791,6 +967,12 @@ void IsMemberRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool IsMemberRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
@@ -829,12 +1011,26 @@ ListGroupApplicationsRequest::~ListGroupApplicationsRequest()
 void ListGroupApplicationsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
 }
 
 bool ListGroupApplicationsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
     if (Group_member != obj.MemberEnd() && !Group_member->value.IsNull()) Group = EntityKey(Group_member->value);
 
@@ -881,12 +1077,26 @@ ListGroupBlocksRequest::~ListGroupBlocksRequest()
 void ListGroupBlocksRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
 }
 
 bool ListGroupBlocksRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
     if (Group_member != obj.MemberEnd() && !Group_member->value.IsNull()) Group = EntityKey(Group_member->value);
 
@@ -933,12 +1143,26 @@ ListGroupInvitationsRequest::~ListGroupInvitationsRequest()
 void ListGroupInvitationsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
 }
 
 bool ListGroupInvitationsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
     if (Group_member != obj.MemberEnd() && !Group_member->value.IsNull()) Group = EntityKey(Group_member->value);
 
@@ -985,12 +1209,26 @@ ListGroupMembersRequest::~ListGroupMembersRequest()
 void ListGroupMembersRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
 }
 
 bool ListGroupMembersRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
     if (Group_member != obj.MemberEnd() && !Group_member->value.IsNull()) Group = EntityKey(Group_member->value);
 
@@ -1038,12 +1276,26 @@ ListMembershipOpportunitiesRequest::~ListMembershipOpportunitiesRequest()
 void ListMembershipOpportunitiesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.EndObject();
 }
 
 bool ListMembershipOpportunitiesRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
 
@@ -1106,12 +1358,26 @@ ListMembershipRequest::~ListMembershipRequest()
 void ListMembershipRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.EndObject();
 }
 
 bool ListMembershipRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
 
@@ -1189,6 +1455,14 @@ RemoveGroupApplicationRequest::~RemoveGroupApplicationRequest()
 void RemoveGroupApplicationRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
@@ -1196,6 +1470,12 @@ void RemoveGroupApplicationRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool RemoveGroupApplicationRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
@@ -1212,6 +1492,14 @@ RemoveGroupInvitationRequest::~RemoveGroupInvitationRequest()
 void RemoveGroupInvitationRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
@@ -1219,6 +1507,12 @@ void RemoveGroupInvitationRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool RemoveGroupInvitationRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
@@ -1235,6 +1529,14 @@ RemoveMembersRequest::~RemoveMembersRequest()
 void RemoveMembersRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Group"); Group.writeJSON(writer);
     writer.String("Members");
     writer.StartArray();
@@ -1248,6 +1550,12 @@ void RemoveMembersRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool RemoveMembersRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
     if (Group_member != obj.MemberEnd() && !Group_member->value.IsNull()) Group = EntityKey(Group_member->value);
     const Value::ConstMemberIterator Members_member = obj.FindMember("Members");
@@ -1271,6 +1579,14 @@ UnblockEntityRequest::~UnblockEntityRequest()
 void UnblockEntityRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("Group"); Group.writeJSON(writer);
     writer.EndObject();
@@ -1278,6 +1594,12 @@ void UnblockEntityRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UnblockEntityRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
@@ -1295,6 +1617,14 @@ void UpdateGroupRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (AdminRoleId.length() > 0) { writer.String("AdminRoleId"); writer.String(AdminRoleId.c_str()); }
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (ExpectedProfileVersion.notNull()) { writer.String("ExpectedProfileVersion"); writer.Int(ExpectedProfileVersion); }
     writer.String("Group"); Group.writeJSON(writer);
     if (GroupName.length() > 0) { writer.String("GroupName"); writer.String(GroupName.c_str()); }
@@ -1306,6 +1636,12 @@ bool UpdateGroupRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AdminRoleId_member = obj.FindMember("AdminRoleId");
     if (AdminRoleId_member != obj.MemberEnd() && !AdminRoleId_member->value.IsNull()) AdminRoleId = AdminRoleId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator ExpectedProfileVersion_member = obj.FindMember("ExpectedProfileVersion");
     if (ExpectedProfileVersion_member != obj.MemberEnd() && !ExpectedProfileVersion_member->value.IsNull()) ExpectedProfileVersion = ExpectedProfileVersion_member->value.GetInt();
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");
@@ -1352,6 +1688,14 @@ UpdateGroupRoleRequest::~UpdateGroupRoleRequest()
 void UpdateGroupRoleRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (ExpectedProfileVersion.notNull()) { writer.String("ExpectedProfileVersion"); writer.Int(ExpectedProfileVersion); }
     writer.String("Group"); Group.writeJSON(writer);
     if (RoleId.length() > 0) { writer.String("RoleId"); writer.String(RoleId.c_str()); }
@@ -1361,6 +1705,12 @@ void UpdateGroupRoleRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateGroupRoleRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator ExpectedProfileVersion_member = obj.FindMember("ExpectedProfileVersion");
     if (ExpectedProfileVersion_member != obj.MemberEnd() && !ExpectedProfileVersion_member->value.IsNull()) ExpectedProfileVersion = ExpectedProfileVersion_member->value.GetInt();
     const Value::ConstMemberIterator Group_member = obj.FindMember("Group");

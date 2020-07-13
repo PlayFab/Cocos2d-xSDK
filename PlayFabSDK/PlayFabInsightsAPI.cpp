@@ -11,6 +11,7 @@ using namespace PlayFab::InsightsModels;
 PlayFabInsightsAPI::PlayFabInsightsAPI() {}
 
 void PlayFabInsightsAPI::GetDetails(
+    InsightsEmptyRequest& request,
     ProcessApiCallback<InsightsGetDetailsResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -26,7 +27,7 @@ void PlayFabInsightsAPI::GetDetails(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetDetailsResult, userData);
@@ -56,6 +57,7 @@ void PlayFabInsightsAPI::OnGetDetailsResult(int httpStatus, HttpRequest* request
 }
 
 void PlayFabInsightsAPI::GetLimits(
+    InsightsEmptyRequest& request,
     ProcessApiCallback<InsightsGetLimitsResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -71,7 +73,7 @@ void PlayFabInsightsAPI::GetLimits(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetLimitsResult, userData);

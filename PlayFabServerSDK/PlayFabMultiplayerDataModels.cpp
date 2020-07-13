@@ -603,6 +603,14 @@ CancelAllMatchmakingTicketsForPlayerRequest::~CancelAllMatchmakingTicketsForPlay
 void CancelAllMatchmakingTicketsForPlayerRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.String("QueueName"); writer.String(QueueName.c_str());
     writer.EndObject();
@@ -610,6 +618,12 @@ void CancelAllMatchmakingTicketsForPlayerRequest::writeJSON(PFStringJsonWriter& 
 
 bool CancelAllMatchmakingTicketsForPlayerRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
@@ -643,6 +657,14 @@ CancelAllServerBackfillTicketsForPlayerRequest::~CancelAllServerBackfillTicketsF
 void CancelAllServerBackfillTicketsForPlayerRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("QueueName"); writer.String(QueueName.c_str());
     writer.EndObject();
@@ -650,6 +672,12 @@ void CancelAllServerBackfillTicketsForPlayerRequest::writeJSON(PFStringJsonWrite
 
 bool CancelAllServerBackfillTicketsForPlayerRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
@@ -712,6 +740,14 @@ CancelMatchmakingTicketRequest::~CancelMatchmakingTicketRequest()
 void CancelMatchmakingTicketRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("QueueName"); writer.String(QueueName.c_str());
     writer.String("TicketId"); writer.String(TicketId.c_str());
     writer.EndObject();
@@ -719,6 +755,12 @@ void CancelMatchmakingTicketRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool CancelMatchmakingTicketRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
     if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
     const Value::ConstMemberIterator TicketId_member = obj.FindMember("TicketId");
@@ -752,6 +794,14 @@ CancelServerBackfillTicketRequest::~CancelServerBackfillTicketRequest()
 void CancelServerBackfillTicketRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("QueueName"); writer.String(QueueName.c_str());
     writer.String("TicketId"); writer.String(TicketId.c_str());
     writer.EndObject();
@@ -759,6 +809,12 @@ void CancelServerBackfillTicketRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool CancelServerBackfillTicketRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
     if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
     const Value::ConstMemberIterator TicketId_member = obj.FindMember("TicketId");
@@ -953,6 +1009,14 @@ void CreateBuildAliasRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndArray();
     }
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
@@ -965,6 +1029,12 @@ bool CreateBuildAliasRequest::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = BuildSelectionCriteria_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             BuildSelectionCriteria.push_back(BuildSelectionCriterion(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
         }
     }
 
@@ -1061,6 +1131,14 @@ void CreateBuildWithCustomContainerRequest::writeJSON(PFStringJsonWriter& writer
     if (pfContainerFlavor.notNull()) { writer.String("ContainerFlavor"); writeContainerFlavorEnumJSON(pfContainerFlavor, writer); }
     if (pfContainerImageReference != NULL) { writer.String("ContainerImageReference"); pfContainerImageReference->writeJSON(writer); }
     if (ContainerRunCommand.length() > 0) { writer.String("ContainerRunCommand"); writer.String(ContainerRunCommand.c_str()); }
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (!GameAssetReferences.empty()) {
         writer.String("GameAssetReferences");
         writer.StartArray();
@@ -1115,6 +1193,12 @@ bool CreateBuildWithCustomContainerRequest::readFromValue(const rapidjson::Value
     if (ContainerImageReference_member != obj.MemberEnd() && !ContainerImageReference_member->value.IsNull()) pfContainerImageReference = new ContainerImageReference(ContainerImageReference_member->value);
     const Value::ConstMemberIterator ContainerRunCommand_member = obj.FindMember("ContainerRunCommand");
     if (ContainerRunCommand_member != obj.MemberEnd() && !ContainerRunCommand_member->value.IsNull()) ContainerRunCommand = ContainerRunCommand_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator GameAssetReferences_member = obj.FindMember("GameAssetReferences");
     if (GameAssetReferences_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = GameAssetReferences_member->value;
@@ -1354,6 +1438,14 @@ void CreateBuildWithManagedContainerRequest::writeJSON(PFStringJsonWriter& write
     if (AreAssetsReadonly.notNull()) { writer.String("AreAssetsReadonly"); writer.Bool(AreAssetsReadonly); }
     writer.String("BuildName"); writer.String(BuildName.c_str());
     if (pfContainerFlavor.notNull()) { writer.String("ContainerFlavor"); writeContainerFlavorEnumJSON(pfContainerFlavor, writer); }
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("GameAssetReferences");
     writer.StartArray();
     for (std::list<AssetReferenceParams>::iterator iter = GameAssetReferences.begin(); iter != GameAssetReferences.end(); iter++) {
@@ -1405,6 +1497,12 @@ bool CreateBuildWithManagedContainerRequest::readFromValue(const rapidjson::Valu
     if (BuildName_member != obj.MemberEnd() && !BuildName_member->value.IsNull()) BuildName = BuildName_member->value.GetString();
     const Value::ConstMemberIterator ContainerFlavor_member = obj.FindMember("ContainerFlavor");
     if (ContainerFlavor_member != obj.MemberEnd() && !ContainerFlavor_member->value.IsNull()) pfContainerFlavor = readContainerFlavorFromValue(ContainerFlavor_member->value);
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator GameAssetReferences_member = obj.FindMember("GameAssetReferences");
     if (GameAssetReferences_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = GameAssetReferences_member->value;
@@ -1586,6 +1684,256 @@ bool CreateBuildWithManagedContainerResponse::readFromValue(const rapidjson::Val
     return true;
 }
 
+CreateBuildWithProcessBasedServerRequest::~CreateBuildWithProcessBasedServerRequest()
+{
+
+}
+
+void CreateBuildWithProcessBasedServerRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (AreAssetsReadonly.notNull()) { writer.String("AreAssetsReadonly"); writer.Bool(AreAssetsReadonly); }
+    writer.String("BuildName"); writer.String(BuildName.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
+    writer.String("GameAssetReferences");
+    writer.StartArray();
+    for (std::list<AssetReferenceParams>::iterator iter = GameAssetReferences.begin(); iter != GameAssetReferences.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    if (!GameCertificateReferences.empty()) {
+        writer.String("GameCertificateReferences");
+        writer.StartArray();
+        for (std::list<GameCertificateReferenceParams>::iterator iter = GameCertificateReferences.begin(); iter != GameCertificateReferences.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (GameWorkingDirectory.length() > 0) { writer.String("GameWorkingDirectory"); writer.String(GameWorkingDirectory.c_str()); }
+    if (!Metadata.empty()) {
+        writer.String("Metadata");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = Metadata.begin(); iter != Metadata.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
+    writer.String("MultiplayerServerCountPerVm"); writer.Int(MultiplayerServerCountPerVm);
+    if (OsPlatform.length() > 0) { writer.String("OsPlatform"); writer.String(OsPlatform.c_str()); }
+    writer.String("Ports");
+    writer.StartArray();
+    for (std::list<Port>::iterator iter = Ports.begin(); iter != Ports.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    writer.String("RegionConfigurations");
+    writer.StartArray();
+    for (std::list<BuildRegionParams>::iterator iter = RegionConfigurations.begin(); iter != RegionConfigurations.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    writer.String("StartMultiplayerServerCommand"); writer.String(StartMultiplayerServerCommand.c_str());
+    if (UseStreamingForAssetDownloads.notNull()) { writer.String("UseStreamingForAssetDownloads"); writer.Bool(UseStreamingForAssetDownloads); }
+    if (VmSize.notNull()) { writer.String("VmSize"); writeAzureVmSizeEnumJSON(VmSize, writer); }
+    writer.EndObject();
+}
+
+bool CreateBuildWithProcessBasedServerRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AreAssetsReadonly_member = obj.FindMember("AreAssetsReadonly");
+    if (AreAssetsReadonly_member != obj.MemberEnd() && !AreAssetsReadonly_member->value.IsNull()) AreAssetsReadonly = AreAssetsReadonly_member->value.GetBool();
+    const Value::ConstMemberIterator BuildName_member = obj.FindMember("BuildName");
+    if (BuildName_member != obj.MemberEnd() && !BuildName_member->value.IsNull()) BuildName = BuildName_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+    const Value::ConstMemberIterator GameAssetReferences_member = obj.FindMember("GameAssetReferences");
+    if (GameAssetReferences_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = GameAssetReferences_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            GameAssetReferences.push_back(AssetReferenceParams(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator GameCertificateReferences_member = obj.FindMember("GameCertificateReferences");
+    if (GameCertificateReferences_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = GameCertificateReferences_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            GameCertificateReferences.push_back(GameCertificateReferenceParams(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator GameWorkingDirectory_member = obj.FindMember("GameWorkingDirectory");
+    if (GameWorkingDirectory_member != obj.MemberEnd() && !GameWorkingDirectory_member->value.IsNull()) GameWorkingDirectory = GameWorkingDirectory_member->value.GetString();
+    const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
+    if (Metadata_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {
+            Metadata[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+    const Value::ConstMemberIterator MultiplayerServerCountPerVm_member = obj.FindMember("MultiplayerServerCountPerVm");
+    if (MultiplayerServerCountPerVm_member != obj.MemberEnd() && !MultiplayerServerCountPerVm_member->value.IsNull()) MultiplayerServerCountPerVm = MultiplayerServerCountPerVm_member->value.GetInt();
+    const Value::ConstMemberIterator OsPlatform_member = obj.FindMember("OsPlatform");
+    if (OsPlatform_member != obj.MemberEnd() && !OsPlatform_member->value.IsNull()) OsPlatform = OsPlatform_member->value.GetString();
+    const Value::ConstMemberIterator Ports_member = obj.FindMember("Ports");
+    if (Ports_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Ports_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Ports.push_back(Port(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator RegionConfigurations_member = obj.FindMember("RegionConfigurations");
+    if (RegionConfigurations_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = RegionConfigurations_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            RegionConfigurations.push_back(BuildRegionParams(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator StartMultiplayerServerCommand_member = obj.FindMember("StartMultiplayerServerCommand");
+    if (StartMultiplayerServerCommand_member != obj.MemberEnd() && !StartMultiplayerServerCommand_member->value.IsNull()) StartMultiplayerServerCommand = StartMultiplayerServerCommand_member->value.GetString();
+    const Value::ConstMemberIterator UseStreamingForAssetDownloads_member = obj.FindMember("UseStreamingForAssetDownloads");
+    if (UseStreamingForAssetDownloads_member != obj.MemberEnd() && !UseStreamingForAssetDownloads_member->value.IsNull()) UseStreamingForAssetDownloads = UseStreamingForAssetDownloads_member->value.GetBool();
+    const Value::ConstMemberIterator VmSize_member = obj.FindMember("VmSize");
+    if (VmSize_member != obj.MemberEnd() && !VmSize_member->value.IsNull()) VmSize = readAzureVmSizeFromValue(VmSize_member->value);
+
+    return true;
+}
+
+CreateBuildWithProcessBasedServerResponse::~CreateBuildWithProcessBasedServerResponse()
+{
+
+}
+
+void CreateBuildWithProcessBasedServerResponse::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (AreAssetsReadonly.notNull()) { writer.String("AreAssetsReadonly"); writer.Bool(AreAssetsReadonly); }
+    if (BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
+    if (BuildName.length() > 0) { writer.String("BuildName"); writer.String(BuildName.c_str()); }
+    if (pfContainerFlavor.notNull()) { writer.String("ContainerFlavor"); writeContainerFlavorEnumJSON(pfContainerFlavor, writer); }
+    if (CreationTime.notNull()) { writer.String("CreationTime"); writeDatetime(CreationTime, writer); }
+    if (!GameAssetReferences.empty()) {
+        writer.String("GameAssetReferences");
+        writer.StartArray();
+        for (std::list<AssetReference>::iterator iter = GameAssetReferences.begin(); iter != GameAssetReferences.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (!GameCertificateReferences.empty()) {
+        writer.String("GameCertificateReferences");
+        writer.StartArray();
+        for (std::list<GameCertificateReference>::iterator iter = GameCertificateReferences.begin(); iter != GameCertificateReferences.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (GameWorkingDirectory.length() > 0) { writer.String("GameWorkingDirectory"); writer.String(GameWorkingDirectory.c_str()); }
+    if (!Metadata.empty()) {
+        writer.String("Metadata");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = Metadata.begin(); iter != Metadata.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
+    writer.String("MultiplayerServerCountPerVm"); writer.Int(MultiplayerServerCountPerVm);
+    if (OsPlatform.length() > 0) { writer.String("OsPlatform"); writer.String(OsPlatform.c_str()); }
+    if (!Ports.empty()) {
+        writer.String("Ports");
+        writer.StartArray();
+        for (std::list<Port>::iterator iter = Ports.begin(); iter != Ports.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (!RegionConfigurations.empty()) {
+        writer.String("RegionConfigurations");
+        writer.StartArray();
+        for (std::list<BuildRegion>::iterator iter = RegionConfigurations.begin(); iter != RegionConfigurations.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    if (ServerType.length() > 0) { writer.String("ServerType"); writer.String(ServerType.c_str()); }
+    if (StartMultiplayerServerCommand.length() > 0) { writer.String("StartMultiplayerServerCommand"); writer.String(StartMultiplayerServerCommand.c_str()); }
+    if (UseStreamingForAssetDownloads.notNull()) { writer.String("UseStreamingForAssetDownloads"); writer.Bool(UseStreamingForAssetDownloads); }
+    if (VmSize.notNull()) { writer.String("VmSize"); writeAzureVmSizeEnumJSON(VmSize, writer); }
+    writer.EndObject();
+}
+
+bool CreateBuildWithProcessBasedServerResponse::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator AreAssetsReadonly_member = obj.FindMember("AreAssetsReadonly");
+    if (AreAssetsReadonly_member != obj.MemberEnd() && !AreAssetsReadonly_member->value.IsNull()) AreAssetsReadonly = AreAssetsReadonly_member->value.GetBool();
+    const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
+    if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator BuildName_member = obj.FindMember("BuildName");
+    if (BuildName_member != obj.MemberEnd() && !BuildName_member->value.IsNull()) BuildName = BuildName_member->value.GetString();
+    const Value::ConstMemberIterator ContainerFlavor_member = obj.FindMember("ContainerFlavor");
+    if (ContainerFlavor_member != obj.MemberEnd() && !ContainerFlavor_member->value.IsNull()) pfContainerFlavor = readContainerFlavorFromValue(ContainerFlavor_member->value);
+    const Value::ConstMemberIterator CreationTime_member = obj.FindMember("CreationTime");
+    if (CreationTime_member != obj.MemberEnd() && !CreationTime_member->value.IsNull()) CreationTime = readDatetime(CreationTime_member->value);
+    const Value::ConstMemberIterator GameAssetReferences_member = obj.FindMember("GameAssetReferences");
+    if (GameAssetReferences_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = GameAssetReferences_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            GameAssetReferences.push_back(AssetReference(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator GameCertificateReferences_member = obj.FindMember("GameCertificateReferences");
+    if (GameCertificateReferences_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = GameCertificateReferences_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            GameCertificateReferences.push_back(GameCertificateReference(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator GameWorkingDirectory_member = obj.FindMember("GameWorkingDirectory");
+    if (GameWorkingDirectory_member != obj.MemberEnd() && !GameWorkingDirectory_member->value.IsNull()) GameWorkingDirectory = GameWorkingDirectory_member->value.GetString();
+    const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
+    if (Metadata_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {
+            Metadata[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+    const Value::ConstMemberIterator MultiplayerServerCountPerVm_member = obj.FindMember("MultiplayerServerCountPerVm");
+    if (MultiplayerServerCountPerVm_member != obj.MemberEnd() && !MultiplayerServerCountPerVm_member->value.IsNull()) MultiplayerServerCountPerVm = MultiplayerServerCountPerVm_member->value.GetInt();
+    const Value::ConstMemberIterator OsPlatform_member = obj.FindMember("OsPlatform");
+    if (OsPlatform_member != obj.MemberEnd() && !OsPlatform_member->value.IsNull()) OsPlatform = OsPlatform_member->value.GetString();
+    const Value::ConstMemberIterator Ports_member = obj.FindMember("Ports");
+    if (Ports_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = Ports_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            Ports.push_back(Port(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator RegionConfigurations_member = obj.FindMember("RegionConfigurations");
+    if (RegionConfigurations_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = RegionConfigurations_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            RegionConfigurations.push_back(BuildRegion(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator ServerType_member = obj.FindMember("ServerType");
+    if (ServerType_member != obj.MemberEnd() && !ServerType_member->value.IsNull()) ServerType = ServerType_member->value.GetString();
+    const Value::ConstMemberIterator StartMultiplayerServerCommand_member = obj.FindMember("StartMultiplayerServerCommand");
+    if (StartMultiplayerServerCommand_member != obj.MemberEnd() && !StartMultiplayerServerCommand_member->value.IsNull()) StartMultiplayerServerCommand = StartMultiplayerServerCommand_member->value.GetString();
+    const Value::ConstMemberIterator UseStreamingForAssetDownloads_member = obj.FindMember("UseStreamingForAssetDownloads");
+    if (UseStreamingForAssetDownloads_member != obj.MemberEnd() && !UseStreamingForAssetDownloads_member->value.IsNull()) UseStreamingForAssetDownloads = UseStreamingForAssetDownloads_member->value.GetBool();
+    const Value::ConstMemberIterator VmSize_member = obj.FindMember("VmSize");
+    if (VmSize_member != obj.MemberEnd() && !VmSize_member->value.IsNull()) VmSize = readAzureVmSizeFromValue(VmSize_member->value);
+
+    return true;
+}
+
 MatchmakingPlayerAttributes::~MatchmakingPlayerAttributes()
 {
 
@@ -1642,6 +1990,14 @@ void CreateMatchmakingTicketRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("Creator"); Creator.writeJSON(writer);
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("GiveUpAfterSeconds"); writer.Int(GiveUpAfterSeconds);
     if (!MembersToMatchWith.empty()) {
         writer.String("MembersToMatchWith");
@@ -1659,6 +2015,12 @@ bool CreateMatchmakingTicketRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator Creator_member = obj.FindMember("Creator");
     if (Creator_member != obj.MemberEnd() && !Creator_member->value.IsNull()) Creator = MatchmakingPlayer(Creator_member->value);
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator GiveUpAfterSeconds_member = obj.FindMember("GiveUpAfterSeconds");
     if (GiveUpAfterSeconds_member != obj.MemberEnd() && !GiveUpAfterSeconds_member->value.IsNull()) GiveUpAfterSeconds = GiveUpAfterSeconds_member->value.GetInt();
     const Value::ConstMemberIterator MembersToMatchWith_member = obj.FindMember("MembersToMatchWith");
@@ -1703,6 +2065,14 @@ void CreateRemoteUserRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (ExpirationTime.notNull()) { writer.String("ExpirationTime"); writeDatetime(ExpirationTime, writer); }
     writer.String("Region"); writer.String(Region.c_str());
     writer.String("Username"); writer.String(Username.c_str());
@@ -1714,6 +2084,12 @@ bool CreateRemoteUserRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator ExpirationTime_member = obj.FindMember("ExpirationTime");
     if (ExpirationTime_member != obj.MemberEnd() && !ExpirationTime_member->value.IsNull()) ExpirationTime = readDatetime(ExpirationTime_member->value);
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
@@ -1826,6 +2202,14 @@ CreateServerBackfillTicketRequest::~CreateServerBackfillTicketRequest()
 void CreateServerBackfillTicketRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("GiveUpAfterSeconds"); writer.Int(GiveUpAfterSeconds);
     writer.String("Members");
     writer.StartArray();
@@ -1840,6 +2224,12 @@ void CreateServerBackfillTicketRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool CreateServerBackfillTicketRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator GiveUpAfterSeconds_member = obj.FindMember("GiveUpAfterSeconds");
     if (GiveUpAfterSeconds_member != obj.MemberEnd() && !GiveUpAfterSeconds_member->value.IsNull()) GiveUpAfterSeconds = GiveUpAfterSeconds_member->value.GetInt();
     const Value::ConstMemberIterator Members_member = obj.FindMember("Members");
@@ -1885,6 +2275,14 @@ CreateServerMatchmakingTicketRequest::~CreateServerMatchmakingTicketRequest()
 void CreateServerMatchmakingTicketRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("GiveUpAfterSeconds"); writer.Int(GiveUpAfterSeconds);
     writer.String("Members");
     writer.StartArray();
@@ -1898,6 +2296,12 @@ void CreateServerMatchmakingTicketRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool CreateServerMatchmakingTicketRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator GiveUpAfterSeconds_member = obj.FindMember("GiveUpAfterSeconds");
     if (GiveUpAfterSeconds_member != obj.MemberEnd() && !GiveUpAfterSeconds_member->value.IsNull()) GiveUpAfterSeconds = GiveUpAfterSeconds_member->value.GetInt();
     const Value::ConstMemberIterator Members_member = obj.FindMember("Members");
@@ -1921,12 +2325,26 @@ DeleteAssetRequest::~DeleteAssetRequest()
 void DeleteAssetRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("FileName"); writer.String(FileName.c_str());
     writer.EndObject();
 }
 
 bool DeleteAssetRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator FileName_member = obj.FindMember("FileName");
     if (FileName_member != obj.MemberEnd() && !FileName_member->value.IsNull()) FileName = FileName_member->value.GetString();
 
@@ -1942,6 +2360,14 @@ void DeleteBuildAliasRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("AliasId"); writer.String(AliasId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
@@ -1949,6 +2375,12 @@ bool DeleteBuildAliasRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AliasId_member = obj.FindMember("AliasId");
     if (AliasId_member != obj.MemberEnd() && !AliasId_member->value.IsNull()) AliasId = AliasId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -1962,6 +2394,14 @@ void DeleteBuildRegionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Region"); writer.String(Region.c_str());
     writer.EndObject();
 }
@@ -1970,6 +2410,12 @@ bool DeleteBuildRegionRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
 
@@ -1985,6 +2431,14 @@ void DeleteBuildRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
@@ -1992,6 +2446,12 @@ bool DeleteBuildRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -2004,12 +2464,26 @@ DeleteCertificateRequest::~DeleteCertificateRequest()
 void DeleteCertificateRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Name"); writer.String(Name.c_str());
     writer.EndObject();
 }
 
 bool DeleteCertificateRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
     if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
 
@@ -2024,12 +2498,26 @@ DeleteContainerImageRequest::~DeleteContainerImageRequest()
 void DeleteContainerImageRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (ImageName.length() > 0) { writer.String("ImageName"); writer.String(ImageName.c_str()); }
     writer.EndObject();
 }
 
 bool DeleteContainerImageRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator ImageName_member = obj.FindMember("ImageName");
     if (ImageName_member != obj.MemberEnd() && !ImageName_member->value.IsNull()) ImageName = ImageName_member->value.GetString();
 
@@ -2045,6 +2533,14 @@ void DeleteRemoteUserRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Region"); writer.String(Region.c_str());
     writer.String("Username"); writer.String(Username.c_str());
     writer.String("VmId"); writer.String(VmId.c_str());
@@ -2055,6 +2551,12 @@ bool DeleteRemoteUserRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
     const Value::ConstMemberIterator Username_member = obj.FindMember("Username");
@@ -2090,11 +2592,25 @@ EnableMultiplayerServersForTitleRequest::~EnableMultiplayerServersForTitleReques
 void EnableMultiplayerServersForTitleRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool EnableMultiplayerServersForTitleRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -2156,12 +2672,26 @@ GetAssetUploadUrlRequest::~GetAssetUploadUrlRequest()
 void GetAssetUploadUrlRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("FileName"); writer.String(FileName.c_str());
     writer.EndObject();
 }
 
 bool GetAssetUploadUrlRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator FileName_member = obj.FindMember("FileName");
     if (FileName_member != obj.MemberEnd() && !FileName_member->value.IsNull()) FileName = FileName_member->value.GetString();
 
@@ -2200,6 +2730,14 @@ void GetBuildAliasRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("AliasId"); writer.String(AliasId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
@@ -2207,6 +2745,12 @@ bool GetBuildAliasRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator AliasId_member = obj.FindMember("AliasId");
     if (AliasId_member != obj.MemberEnd() && !AliasId_member->value.IsNull()) AliasId = AliasId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -2220,6 +2764,14 @@ void GetBuildRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
@@ -2227,6 +2779,12 @@ bool GetBuildRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -2377,11 +2935,25 @@ GetContainerRegistryCredentialsRequest::~GetContainerRegistryCredentialsRequest(
 void GetContainerRegistryCredentialsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool GetContainerRegistryCredentialsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -2420,6 +2992,14 @@ GetMatchmakingTicketRequest::~GetMatchmakingTicketRequest()
 void GetMatchmakingTicketRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("EscapeObject"); writer.Bool(EscapeObject);
     writer.String("QueueName"); writer.String(QueueName.c_str());
     writer.String("TicketId"); writer.String(TicketId.c_str());
@@ -2428,6 +3008,12 @@ void GetMatchmakingTicketRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetMatchmakingTicketRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator EscapeObject_member = obj.FindMember("EscapeObject");
     if (EscapeObject_member != obj.MemberEnd() && !EscapeObject_member->value.IsNull()) EscapeObject = EscapeObject_member->value.GetBool();
     const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
@@ -2515,6 +3101,14 @@ GetMatchRequest::~GetMatchRequest()
 void GetMatchRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("EscapeObject"); writer.Bool(EscapeObject);
     writer.String("MatchId"); writer.String(MatchId.c_str());
     writer.String("QueueName"); writer.String(QueueName.c_str());
@@ -2524,6 +3118,12 @@ void GetMatchRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetMatchRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator EscapeObject_member = obj.FindMember("EscapeObject");
     if (EscapeObject_member != obj.MemberEnd() && !EscapeObject_member->value.IsNull()) EscapeObject = EscapeObject_member->value.GetBool();
     const Value::ConstMemberIterator MatchId_member = obj.FindMember("MatchId");
@@ -2597,6 +3197,14 @@ void GetMultiplayerServerDetailsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Region"); writer.String(Region.c_str());
     writer.String("SessionId"); writer.String(SessionId.c_str());
     writer.EndObject();
@@ -2606,6 +3214,12 @@ bool GetMultiplayerServerDetailsRequest::readFromValue(const rapidjson::Value& o
 {
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
     const Value::ConstMemberIterator SessionId_member = obj.FindMember("SessionId");
@@ -2693,12 +3307,26 @@ GetMultiplayerServerLogsRequest::~GetMultiplayerServerLogsRequest()
 void GetMultiplayerServerLogsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("ServerId"); writer.String(ServerId.c_str());
     writer.EndObject();
 }
 
 bool GetMultiplayerServerLogsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator ServerId_member = obj.FindMember("ServerId");
     if (ServerId_member != obj.MemberEnd() && !ServerId_member->value.IsNull()) ServerId = ServerId_member->value.GetString();
 
@@ -2733,12 +3361,26 @@ GetMultiplayerSessionLogsBySessionIdRequest::~GetMultiplayerSessionLogsBySession
 void GetMultiplayerSessionLogsBySessionIdRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("SessionId"); writer.String(SessionId.c_str());
     writer.EndObject();
 }
 
 bool GetMultiplayerSessionLogsBySessionIdRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator SessionId_member = obj.FindMember("SessionId");
     if (SessionId_member != obj.MemberEnd() && !SessionId_member->value.IsNull()) SessionId = SessionId_member->value.GetString();
 
@@ -2753,12 +3395,26 @@ GetQueueStatisticsRequest::~GetQueueStatisticsRequest()
 void GetQueueStatisticsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("QueueName"); writer.String(QueueName.c_str());
     writer.EndObject();
 }
 
 bool GetQueueStatisticsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
     if (QueueName_member != obj.MemberEnd() && !QueueName_member->value.IsNull()) QueueName = QueueName_member->value.GetString();
 
@@ -2827,6 +3483,14 @@ void GetRemoteLoginEndpointRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Region"); writer.String(Region.c_str());
     writer.String("VmId"); writer.String(VmId.c_str());
     writer.EndObject();
@@ -2836,6 +3500,12 @@ bool GetRemoteLoginEndpointRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
     const Value::ConstMemberIterator VmId_member = obj.FindMember("VmId");
@@ -2875,6 +3545,14 @@ GetServerBackfillTicketRequest::~GetServerBackfillTicketRequest()
 void GetServerBackfillTicketRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("EscapeObject"); writer.Bool(EscapeObject);
     writer.String("QueueName"); writer.String(QueueName.c_str());
     writer.String("TicketId"); writer.String(TicketId.c_str());
@@ -2883,6 +3561,12 @@ void GetServerBackfillTicketRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetServerBackfillTicketRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator EscapeObject_member = obj.FindMember("EscapeObject");
     if (EscapeObject_member != obj.MemberEnd() && !EscapeObject_member->value.IsNull()) EscapeObject = EscapeObject_member->value.GetBool();
     const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
@@ -2955,11 +3639,25 @@ GetTitleEnabledForMultiplayerServersStatusRequest::~GetTitleEnabledForMultiplaye
 void GetTitleEnabledForMultiplayerServersStatusRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool GetTitleEnabledForMultiplayerServersStatusRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -2992,11 +3690,25 @@ GetTitleMultiplayerServersQuotasRequest::~GetTitleMultiplayerServersQuotasReques
 void GetTitleMultiplayerServersQuotasRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool GetTitleMultiplayerServersQuotasRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -3062,6 +3774,14 @@ JoinMatchmakingTicketRequest::~JoinMatchmakingTicketRequest()
 void JoinMatchmakingTicketRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Member"); Member.writeJSON(writer);
     writer.String("QueueName"); writer.String(QueueName.c_str());
     writer.String("TicketId"); writer.String(TicketId.c_str());
@@ -3070,6 +3790,12 @@ void JoinMatchmakingTicketRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool JoinMatchmakingTicketRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Member_member = obj.FindMember("Member");
     if (Member_member != obj.MemberEnd() && !Member_member->value.IsNull()) Member = MatchmakingPlayer(Member_member->value);
     const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
@@ -3105,6 +3831,14 @@ ListAssetSummariesRequest::~ListAssetSummariesRequest()
 void ListAssetSummariesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (PageSize.notNull()) { writer.String("PageSize"); writer.Int(PageSize); }
     if (SkipToken.length() > 0) { writer.String("SkipToken"); writer.String(SkipToken.c_str()); }
     writer.EndObject();
@@ -3112,6 +3846,12 @@ void ListAssetSummariesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ListAssetSummariesRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator PageSize_member = obj.FindMember("PageSize");
     if (PageSize_member != obj.MemberEnd() && !PageSize_member->value.IsNull()) PageSize = PageSize_member->value.GetInt();
     const Value::ConstMemberIterator SkipToken_member = obj.FindMember("SkipToken");
@@ -3198,6 +3938,14 @@ ListBuildSummariesRequest::~ListBuildSummariesRequest()
 void ListBuildSummariesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (PageSize.notNull()) { writer.String("PageSize"); writer.Int(PageSize); }
     if (SkipToken.length() > 0) { writer.String("SkipToken"); writer.String(SkipToken.c_str()); }
     writer.EndObject();
@@ -3205,6 +3953,12 @@ void ListBuildSummariesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ListBuildSummariesRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator PageSize_member = obj.FindMember("PageSize");
     if (PageSize_member != obj.MemberEnd() && !PageSize_member->value.IsNull()) PageSize = PageSize_member->value.GetInt();
     const Value::ConstMemberIterator SkipToken_member = obj.FindMember("SkipToken");
@@ -3259,6 +4013,14 @@ ListCertificateSummariesRequest::~ListCertificateSummariesRequest()
 void ListCertificateSummariesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (PageSize.notNull()) { writer.String("PageSize"); writer.Int(PageSize); }
     if (SkipToken.length() > 0) { writer.String("SkipToken"); writer.String(SkipToken.c_str()); }
     writer.EndObject();
@@ -3266,6 +4028,12 @@ void ListCertificateSummariesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ListCertificateSummariesRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator PageSize_member = obj.FindMember("PageSize");
     if (PageSize_member != obj.MemberEnd() && !PageSize_member->value.IsNull()) PageSize = PageSize_member->value.GetInt();
     const Value::ConstMemberIterator SkipToken_member = obj.FindMember("SkipToken");
@@ -3320,6 +4088,14 @@ ListContainerImagesRequest::~ListContainerImagesRequest()
 void ListContainerImagesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (PageSize.notNull()) { writer.String("PageSize"); writer.Int(PageSize); }
     if (SkipToken.length() > 0) { writer.String("SkipToken"); writer.String(SkipToken.c_str()); }
     writer.EndObject();
@@ -3327,6 +4103,12 @@ void ListContainerImagesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool ListContainerImagesRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator PageSize_member = obj.FindMember("PageSize");
     if (PageSize_member != obj.MemberEnd() && !PageSize_member->value.IsNull()) PageSize = PageSize_member->value.GetInt();
     const Value::ConstMemberIterator SkipToken_member = obj.FindMember("SkipToken");
@@ -3381,12 +4163,26 @@ ListContainerImageTagsRequest::~ListContainerImageTagsRequest()
 void ListContainerImageTagsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (ImageName.length() > 0) { writer.String("ImageName"); writer.String(ImageName.c_str()); }
     writer.EndObject();
 }
 
 bool ListContainerImageTagsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator ImageName_member = obj.FindMember("ImageName");
     if (ImageName_member != obj.MemberEnd() && !ImageName_member->value.IsNull()) ImageName = ImageName_member->value.GetString();
 
@@ -3434,6 +4230,14 @@ ListMatchmakingTicketsForPlayerRequest::~ListMatchmakingTicketsForPlayerRequest(
 void ListMatchmakingTicketsForPlayerRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.String("QueueName"); writer.String(QueueName.c_str());
     writer.EndObject();
@@ -3441,6 +4245,12 @@ void ListMatchmakingTicketsForPlayerRequest::writeJSON(PFStringJsonWriter& write
 
 bool ListMatchmakingTicketsForPlayerRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
@@ -3488,6 +4298,14 @@ void ListMultiplayerServersRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (PageSize.notNull()) { writer.String("PageSize"); writer.Int(PageSize); }
     writer.String("Region"); writer.String(Region.c_str());
     if (SkipToken.length() > 0) { writer.String("SkipToken"); writer.String(SkipToken.c_str()); }
@@ -3498,6 +4316,12 @@ bool ListMultiplayerServersRequest::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator PageSize_member = obj.FindMember("PageSize");
     if (PageSize_member != obj.MemberEnd() && !PageSize_member->value.IsNull()) PageSize = PageSize_member->value.GetInt();
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
@@ -3604,12 +4428,26 @@ ListPartyQosServersRequest::~ListPartyQosServersRequest()
 void ListPartyQosServersRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Version"); writer.String(Version.c_str());
     writer.EndObject();
 }
 
 bool ListPartyQosServersRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
     if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetString();
 
@@ -3685,11 +4523,25 @@ ListQosServersForTitleRequest::~ListQosServersForTitleRequest()
 void ListQosServersForTitleRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool ListQosServersForTitleRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -3740,11 +4592,25 @@ ListQosServersRequest::~ListQosServersRequest()
 void ListQosServersRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool ListQosServersRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -3795,6 +4661,14 @@ ListServerBackfillTicketsForPlayerRequest::~ListServerBackfillTicketsForPlayerRe
 void ListServerBackfillTicketsForPlayerRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     writer.String("QueueName"); writer.String(QueueName.c_str());
     writer.EndObject();
@@ -3802,6 +4676,12 @@ void ListServerBackfillTicketsForPlayerRequest::writeJSON(PFStringJsonWriter& wr
 
 bool ListServerBackfillTicketsForPlayerRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator QueueName_member = obj.FindMember("QueueName");
@@ -3849,6 +4729,14 @@ void ListVirtualMachineSummariesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (PageSize.notNull()) { writer.String("PageSize"); writer.Int(PageSize); }
     writer.String("Region"); writer.String(Region.c_str());
     if (SkipToken.length() > 0) { writer.String("SkipToken"); writer.String(SkipToken.c_str()); }
@@ -3859,6 +4747,12 @@ bool ListVirtualMachineSummariesRequest::readFromValue(const rapidjson::Value& o
 {
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator PageSize_member = obj.FindMember("PageSize");
     if (PageSize_member != obj.MemberEnd() && !PageSize_member->value.IsNull()) PageSize = PageSize_member->value.GetInt();
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
@@ -3941,11 +4835,25 @@ MultiplayerEmptyRequest::~MultiplayerEmptyRequest()
 void MultiplayerEmptyRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool MultiplayerEmptyRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -3988,6 +4896,14 @@ void RequestMultiplayerServerRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
     if (pfBuildAliasParams != NULL) { writer.String("BuildAliasParams"); pfBuildAliasParams->writeJSON(writer); }
     if (BuildId.length() > 0) { writer.String("BuildId"); writer.String(BuildId.c_str()); }
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (!InitialPlayers.empty()) {
         writer.String("InitialPlayers");
         writer.StartArray();
@@ -4013,6 +4929,12 @@ bool RequestMultiplayerServerRequest::readFromValue(const rapidjson::Value& obj)
     if (BuildAliasParams_member != obj.MemberEnd() && !BuildAliasParams_member->value.IsNull()) pfBuildAliasParams = new BuildAliasParams(BuildAliasParams_member->value);
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator InitialPlayers_member = obj.FindMember("InitialPlayers");
     if (InitialPlayers_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = InitialPlayers_member->value;
@@ -4114,11 +5036,25 @@ RolloverContainerRegistryCredentialsRequest::~RolloverContainerRegistryCredentia
 void RolloverContainerRegistryCredentialsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool RolloverContainerRegistryCredentialsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -4185,6 +5121,14 @@ void ShutdownMultiplayerServerRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Region"); writer.String(Region.c_str());
     writer.String("SessionId"); writer.String(SessionId.c_str());
     writer.EndObject();
@@ -4194,6 +5138,12 @@ bool ShutdownMultiplayerServerRequest::readFromValue(const rapidjson::Value& obj
 {
     const Value::ConstMemberIterator BuildId_member = obj.FindMember("BuildId");
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
     const Value::ConstMemberIterator SessionId_member = obj.FindMember("SessionId");
@@ -4210,6 +5160,14 @@ UntagContainerImageRequest::~UntagContainerImageRequest()
 void UntagContainerImageRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (ImageName.length() > 0) { writer.String("ImageName"); writer.String(ImageName.c_str()); }
     if (Tag.length() > 0) { writer.String("Tag"); writer.String(Tag.c_str()); }
     writer.EndObject();
@@ -4217,6 +5175,12 @@ void UntagContainerImageRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UntagContainerImageRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator ImageName_member = obj.FindMember("ImageName");
     if (ImageName_member != obj.MemberEnd() && !ImageName_member->value.IsNull()) ImageName = ImageName_member->value.GetString();
     const Value::ConstMemberIterator Tag_member = obj.FindMember("Tag");
@@ -4243,6 +5207,14 @@ void UpdateBuildAliasRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndArray();
     }
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
@@ -4259,6 +5231,12 @@ bool UpdateBuildAliasRequest::readFromValue(const rapidjson::Value& obj)
             BuildSelectionCriteria.push_back(BuildSelectionCriterion(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -4273,6 +5251,14 @@ void UpdateBuildRegionRequest::writeJSON(PFStringJsonWriter& writer)
     writer.StartObject();
     writer.String("BuildId"); writer.String(BuildId.c_str());
     writer.String("BuildRegion"); BuildRegion.writeJSON(writer);
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
@@ -4282,6 +5268,12 @@ bool UpdateBuildRegionRequest::readFromValue(const rapidjson::Value& obj)
     if (BuildId_member != obj.MemberEnd() && !BuildId_member->value.IsNull()) BuildId = BuildId_member->value.GetString();
     const Value::ConstMemberIterator BuildRegion_member = obj.FindMember("BuildRegion");
     if (BuildRegion_member != obj.MemberEnd() && !BuildRegion_member->value.IsNull()) BuildRegion = BuildRegionParams(BuildRegion_member->value);
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -4301,6 +5293,14 @@ void UpdateBuildRegionsRequest::writeJSON(PFStringJsonWriter& writer)
         iter->writeJSON(writer);
     }
     writer.EndArray();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
@@ -4315,6 +5315,12 @@ bool UpdateBuildRegionsRequest::readFromValue(const rapidjson::Value& obj)
             BuildRegions.push_back(BuildRegionParams(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -4327,12 +5333,26 @@ UploadCertificateRequest::~UploadCertificateRequest()
 void UploadCertificateRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("GameCertificate"); GameCertificate.writeJSON(writer);
     writer.EndObject();
 }
 
 bool UploadCertificateRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator GameCertificate_member = obj.FindMember("GameCertificate");
     if (GameCertificate_member != obj.MemberEnd() && !GameCertificate_member->value.IsNull()) GameCertificate = Certificate(GameCertificate_member->value);
 

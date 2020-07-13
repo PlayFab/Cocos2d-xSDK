@@ -13,11 +13,25 @@ InsightsEmptyRequest::~InsightsEmptyRequest()
 void InsightsEmptyRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool InsightsEmptyRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -204,12 +218,26 @@ InsightsGetOperationStatusRequest::~InsightsGetOperationStatusRequest()
 void InsightsGetOperationStatusRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (OperationId.length() > 0) { writer.String("OperationId"); writer.String(OperationId.c_str()); }
     writer.EndObject();
 }
 
 bool InsightsGetOperationStatusRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator OperationId_member = obj.FindMember("OperationId");
     if (OperationId_member != obj.MemberEnd() && !OperationId_member->value.IsNull()) OperationId = OperationId_member->value.GetString();
 
@@ -224,12 +252,26 @@ InsightsGetPendingOperationsRequest::~InsightsGetPendingOperationsRequest()
 void InsightsGetPendingOperationsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (OperationType.length() > 0) { writer.String("OperationType"); writer.String(OperationType.c_str()); }
     writer.EndObject();
 }
 
 bool InsightsGetPendingOperationsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator OperationType_member = obj.FindMember("OperationType");
     if (OperationType_member != obj.MemberEnd() && !OperationType_member->value.IsNull()) OperationType = OperationType_member->value.GetString();
 
@@ -302,12 +344,26 @@ InsightsSetPerformanceRequest::~InsightsSetPerformanceRequest()
 void InsightsSetPerformanceRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("PerformanceLevel"); writer.Int(PerformanceLevel);
     writer.EndObject();
 }
 
 bool InsightsSetPerformanceRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator PerformanceLevel_member = obj.FindMember("PerformanceLevel");
     if (PerformanceLevel_member != obj.MemberEnd() && !PerformanceLevel_member->value.IsNull()) PerformanceLevel = PerformanceLevel_member->value.GetInt();
 
@@ -322,12 +378,26 @@ InsightsSetStorageRetentionRequest::~InsightsSetStorageRetentionRequest()
 void InsightsSetStorageRetentionRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("RetentionDays"); writer.Int(RetentionDays);
     writer.EndObject();
 }
 
 bool InsightsSetStorageRetentionRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator RetentionDays_member = obj.FindMember("RetentionDays");
     if (RetentionDays_member != obj.MemberEnd() && !RetentionDays_member->value.IsNull()) RetentionDays = RetentionDays_member->value.GetInt();
 

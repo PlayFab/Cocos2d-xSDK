@@ -14,8 +14,8 @@ namespace PlayFab
         template<typename ResType> using ProcessApiCallback = std::function<void(const ResType& result, void* userData)>;
 
         // ------------ Generated API calls
-        static void GetDetails(ProcessApiCallback<InsightsModels::InsightsGetDetailsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetLimits(ProcessApiCallback<InsightsModels::InsightsGetLimitsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetDetails(InsightsModels::InsightsEmptyRequest& request, ProcessApiCallback<InsightsModels::InsightsGetDetailsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetLimits(InsightsModels::InsightsEmptyRequest& request, ProcessApiCallback<InsightsModels::InsightsGetLimitsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetOperationStatus(InsightsModels::InsightsGetOperationStatusRequest& request, ProcessApiCallback<InsightsModels::InsightsGetOperationStatusResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetPendingOperations(InsightsModels::InsightsGetPendingOperationsRequest& request, ProcessApiCallback<InsightsModels::InsightsGetPendingOperationsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetPerformance(InsightsModels::InsightsSetPerformanceRequest& request, ProcessApiCallback<InsightsModels::InsightsOperationResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
