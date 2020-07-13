@@ -376,6 +376,14 @@ GetEntityProfileRequest::~GetEntityProfileRequest()
 void GetEntityProfileRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (DataAsObject.notNull()) { writer.String("DataAsObject"); writer.Bool(DataAsObject); }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.EndObject();
@@ -383,6 +391,12 @@ void GetEntityProfileRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetEntityProfileRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator DataAsObject_member = obj.FindMember("DataAsObject");
     if (DataAsObject_member != obj.MemberEnd() && !DataAsObject_member->value.IsNull()) DataAsObject = DataAsObject_member->value.GetBool();
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
@@ -420,6 +434,14 @@ GetEntityProfilesRequest::~GetEntityProfilesRequest()
 void GetEntityProfilesRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (DataAsObject.notNull()) { writer.String("DataAsObject"); writer.Bool(DataAsObject); }
     writer.String("Entities");
     writer.StartArray();
@@ -432,6 +454,12 @@ void GetEntityProfilesRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool GetEntityProfilesRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator DataAsObject_member = obj.FindMember("DataAsObject");
     if (DataAsObject_member != obj.MemberEnd() && !DataAsObject_member->value.IsNull()) DataAsObject = DataAsObject_member->value.GetBool();
     const Value::ConstMemberIterator Entities_member = obj.FindMember("Entities");
@@ -485,11 +513,25 @@ GetGlobalPolicyRequest::~GetGlobalPolicyRequest()
 void GetGlobalPolicyRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool GetGlobalPolicyRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -534,6 +576,14 @@ GetTitlePlayersFromMasterPlayerAccountIdsRequest::~GetTitlePlayersFromMasterPlay
 void GetTitlePlayersFromMasterPlayerAccountIdsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("MasterPlayerAccountIds");
     writer.StartArray();
     for (std::list<std::string>::iterator iter = MasterPlayerAccountIds.begin(); iter != MasterPlayerAccountIds.end(); iter++) {
@@ -546,6 +596,12 @@ void GetTitlePlayersFromMasterPlayerAccountIdsRequest::writeJSON(PFStringJsonWri
 
 bool GetTitlePlayersFromMasterPlayerAccountIdsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator MasterPlayerAccountIds_member = obj.FindMember("MasterPlayerAccountIds");
     if (MasterPlayerAccountIds_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = MasterPlayerAccountIds_member->value;
@@ -632,6 +688,14 @@ SetEntityProfilePolicyRequest::~SetEntityProfilePolicyRequest()
 void SetEntityProfilePolicyRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Entity"); Entity.writeJSON(writer);
     if (!Statements.empty()) {
         writer.String("Statements");
@@ -646,6 +710,12 @@ void SetEntityProfilePolicyRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool SetEntityProfilePolicyRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = EntityKey(Entity_member->value);
     const Value::ConstMemberIterator Statements_member = obj.FindMember("Statements");
@@ -699,6 +769,14 @@ SetGlobalPolicyRequest::~SetGlobalPolicyRequest()
 void SetGlobalPolicyRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (!Permissions.empty()) {
         writer.String("Permissions");
         writer.StartArray();
@@ -712,6 +790,12 @@ void SetGlobalPolicyRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool SetGlobalPolicyRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Permissions_member = obj.FindMember("Permissions");
     if (Permissions_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Permissions_member->value;
@@ -749,6 +833,14 @@ SetProfileLanguageRequest::~SetProfileLanguageRequest()
 void SetProfileLanguageRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     if (ExpectedVersion.notNull()) { writer.String("ExpectedVersion"); writer.Int(ExpectedVersion); }
     if (Language.length() > 0) { writer.String("Language"); writer.String(Language.c_str()); }
@@ -757,6 +849,12 @@ void SetProfileLanguageRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool SetProfileLanguageRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator ExpectedVersion_member = obj.FindMember("ExpectedVersion");

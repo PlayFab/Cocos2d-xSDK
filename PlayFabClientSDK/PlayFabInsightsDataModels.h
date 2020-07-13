@@ -9,13 +9,16 @@ namespace PlayFab
     {
         struct InsightsEmptyRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             InsightsEmptyRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             InsightsEmptyRequest(const InsightsEmptyRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             InsightsEmptyRequest(const rapidjson::Value& obj) : InsightsEmptyRequest()
@@ -200,15 +203,18 @@ namespace PlayFab
 
         struct InsightsGetOperationStatusRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string OperationId;
 
             InsightsGetOperationStatusRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 OperationId()
             {}
 
             InsightsGetOperationStatusRequest(const InsightsGetOperationStatusRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 OperationId(src.OperationId)
             {}
 
@@ -225,15 +231,18 @@ namespace PlayFab
 
         struct InsightsGetPendingOperationsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string OperationType;
 
             InsightsGetPendingOperationsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 OperationType()
             {}
 
             InsightsGetPendingOperationsRequest(const InsightsGetPendingOperationsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 OperationType(src.OperationType)
             {}
 
@@ -306,15 +315,18 @@ namespace PlayFab
 
         struct InsightsSetPerformanceRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             Int32 PerformanceLevel;
 
             InsightsSetPerformanceRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PerformanceLevel(0)
             {}
 
             InsightsSetPerformanceRequest(const InsightsSetPerformanceRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PerformanceLevel(src.PerformanceLevel)
             {}
 
@@ -331,15 +343,18 @@ namespace PlayFab
 
         struct InsightsSetStorageRetentionRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             Int32 RetentionDays;
 
             InsightsSetStorageRetentionRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 RetentionDays(0)
             {}
 
             InsightsSetStorageRetentionRequest(const InsightsSetStorageRetentionRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 RetentionDays(src.RetentionDays)
             {}
 

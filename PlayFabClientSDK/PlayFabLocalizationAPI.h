@@ -14,7 +14,7 @@ namespace PlayFab
         template<typename ResType> using ProcessApiCallback = std::function<void(const ResType& result, void* userData)>;
 
         // ------------ Generated API calls
-        static void GetLanguageList(ProcessApiCallback<LocalizationModels::GetLanguageListResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetLanguageList(LocalizationModels::GetLanguageListRequest& request, ProcessApiCallback<LocalizationModels::GetLanguageListResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
 
     private:
         // ------------ Private constructor, to enforce all-static class

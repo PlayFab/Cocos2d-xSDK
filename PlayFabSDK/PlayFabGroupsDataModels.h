@@ -37,17 +37,20 @@ namespace PlayFab
 
         struct AcceptGroupApplicationRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             EntityKey Group;
 
             AcceptGroupApplicationRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 Group()
             {}
 
             AcceptGroupApplicationRequest(const AcceptGroupApplicationRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 Group(src.Group)
             {}
@@ -65,17 +68,20 @@ namespace PlayFab
 
         struct AcceptGroupInvitationRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
             EntityKey Group;
 
             AcceptGroupInvitationRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL),
                 Group()
             {}
 
             AcceptGroupInvitationRequest(const AcceptGroupInvitationRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 Group(src.Group)
             {}
@@ -93,12 +99,14 @@ namespace PlayFab
 
         struct AddMembersRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Group;
             std::list<EntityKey> Members;
             std::string RoleId;
 
             AddMembersRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Group(),
                 Members(),
                 RoleId()
@@ -106,6 +114,7 @@ namespace PlayFab
 
             AddMembersRequest(const AddMembersRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Group(src.Group),
                 Members(src.Members),
                 RoleId(src.RoleId)
@@ -125,12 +134,14 @@ namespace PlayFab
         struct ApplyToGroupRequest : public PlayFabBaseModel
         {
             OptionalBool AutoAcceptOutstandingInvite;
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
             EntityKey Group;
 
             ApplyToGroupRequest() :
                 PlayFabBaseModel(),
                 AutoAcceptOutstandingInvite(),
+                CustomTags(),
                 Entity(NULL),
                 Group()
             {}
@@ -138,6 +149,7 @@ namespace PlayFab
             ApplyToGroupRequest(const ApplyToGroupRequest& src) :
                 PlayFabBaseModel(),
                 AutoAcceptOutstandingInvite(src.AutoAcceptOutstandingInvite),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 Group(src.Group)
             {}
@@ -214,17 +226,20 @@ namespace PlayFab
 
         struct BlockEntityRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             EntityKey Group;
 
             BlockEntityRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 Group()
             {}
 
             BlockEntityRequest(const BlockEntityRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 Group(src.Group)
             {}
@@ -242,6 +257,7 @@ namespace PlayFab
 
         struct ChangeMemberRoleRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string DestinationRoleId;
             EntityKey Group;
             std::list<EntityKey> Members;
@@ -249,6 +265,7 @@ namespace PlayFab
 
             ChangeMemberRoleRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 DestinationRoleId(),
                 Group(),
                 Members(),
@@ -257,6 +274,7 @@ namespace PlayFab
 
             ChangeMemberRoleRequest(const ChangeMemberRoleRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 DestinationRoleId(src.DestinationRoleId),
                 Group(src.Group),
                 Members(src.Members),
@@ -276,17 +294,20 @@ namespace PlayFab
 
         struct CreateGroupRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
             std::string GroupName;
 
             CreateGroupRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL),
                 GroupName()
             {}
 
             CreateGroupRequest(const CreateGroupRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 GroupName(src.GroupName)
             {}
@@ -347,12 +368,14 @@ namespace PlayFab
 
         struct CreateGroupRoleRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Group;
             std::string RoleId;
             std::string RoleName;
 
             CreateGroupRoleRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Group(),
                 RoleId(),
                 RoleName()
@@ -360,6 +383,7 @@ namespace PlayFab
 
             CreateGroupRoleRequest(const CreateGroupRoleRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Group(src.Group),
                 RoleId(src.RoleId),
                 RoleName(src.RoleName)
@@ -409,15 +433,18 @@ namespace PlayFab
 
         struct DeleteGroupRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Group;
 
             DeleteGroupRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Group()
             {}
 
             DeleteGroupRequest(const DeleteGroupRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Group(src.Group)
             {}
 
@@ -434,17 +461,20 @@ namespace PlayFab
 
         struct DeleteRoleRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Group;
             std::string RoleId;
 
             DeleteRoleRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Group(),
                 RoleId()
             {}
 
             DeleteRoleRequest(const DeleteRoleRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Group(src.Group),
                 RoleId(src.RoleId)
             {}
@@ -515,17 +545,20 @@ namespace PlayFab
 
         struct GetGroupRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Group;
             std::string GroupName;
 
             GetGroupRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Group(NULL),
                 GroupName()
             {}
 
             GetGroupRequest(const GetGroupRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Group(src.Group ? new EntityKey(*src.Group) : NULL),
                 GroupName(src.GroupName)
             {}
@@ -745,6 +778,7 @@ namespace PlayFab
         struct InviteToGroupRequest : public PlayFabBaseModel
         {
             OptionalBool AutoAcceptOutstandingApplication;
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             EntityKey Group;
             std::string RoleId;
@@ -752,6 +786,7 @@ namespace PlayFab
             InviteToGroupRequest() :
                 PlayFabBaseModel(),
                 AutoAcceptOutstandingApplication(),
+                CustomTags(),
                 Entity(),
                 Group(),
                 RoleId()
@@ -760,6 +795,7 @@ namespace PlayFab
             InviteToGroupRequest(const InviteToGroupRequest& src) :
                 PlayFabBaseModel(),
                 AutoAcceptOutstandingApplication(src.AutoAcceptOutstandingApplication),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 Group(src.Group),
                 RoleId(src.RoleId)
@@ -815,12 +851,14 @@ namespace PlayFab
 
         struct IsMemberRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             EntityKey Group;
             std::string RoleId;
 
             IsMemberRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 Group(),
                 RoleId()
@@ -828,6 +866,7 @@ namespace PlayFab
 
             IsMemberRequest(const IsMemberRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 Group(src.Group),
                 RoleId(src.RoleId)
@@ -871,15 +910,18 @@ namespace PlayFab
 
         struct ListGroupApplicationsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Group;
 
             ListGroupApplicationsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Group()
             {}
 
             ListGroupApplicationsRequest(const ListGroupApplicationsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Group(src.Group)
             {}
 
@@ -921,15 +963,18 @@ namespace PlayFab
 
         struct ListGroupBlocksRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Group;
 
             ListGroupBlocksRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Group()
             {}
 
             ListGroupBlocksRequest(const ListGroupBlocksRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Group(src.Group)
             {}
 
@@ -971,15 +1016,18 @@ namespace PlayFab
 
         struct ListGroupInvitationsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Group;
 
             ListGroupInvitationsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Group()
             {}
 
             ListGroupInvitationsRequest(const ListGroupInvitationsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Group(src.Group)
             {}
 
@@ -1021,15 +1069,18 @@ namespace PlayFab
 
         struct ListGroupMembersRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Group;
 
             ListGroupMembersRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Group()
             {}
 
             ListGroupMembersRequest(const ListGroupMembersRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Group(src.Group)
             {}
 
@@ -1071,15 +1122,18 @@ namespace PlayFab
 
         struct ListMembershipOpportunitiesRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
 
             ListMembershipOpportunitiesRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL)
             {}
 
             ListMembershipOpportunitiesRequest(const ListMembershipOpportunitiesRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL)
             {}
 
@@ -1124,15 +1178,18 @@ namespace PlayFab
 
         struct ListMembershipRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
 
             ListMembershipRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL)
             {}
 
             ListMembershipRequest(const ListMembershipRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL)
             {}
 
@@ -1185,17 +1242,20 @@ namespace PlayFab
 
         struct RemoveGroupApplicationRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             EntityKey Group;
 
             RemoveGroupApplicationRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 Group()
             {}
 
             RemoveGroupApplicationRequest(const RemoveGroupApplicationRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 Group(src.Group)
             {}
@@ -1213,17 +1273,20 @@ namespace PlayFab
 
         struct RemoveGroupInvitationRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             EntityKey Group;
 
             RemoveGroupInvitationRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 Group()
             {}
 
             RemoveGroupInvitationRequest(const RemoveGroupInvitationRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 Group(src.Group)
             {}
@@ -1241,12 +1304,14 @@ namespace PlayFab
 
         struct RemoveMembersRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Group;
             std::list<EntityKey> Members;
             std::string RoleId;
 
             RemoveMembersRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Group(),
                 Members(),
                 RoleId()
@@ -1254,6 +1319,7 @@ namespace PlayFab
 
             RemoveMembersRequest(const RemoveMembersRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Group(src.Group),
                 Members(src.Members),
                 RoleId(src.RoleId)
@@ -1272,17 +1338,20 @@ namespace PlayFab
 
         struct UnblockEntityRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             EntityKey Group;
 
             UnblockEntityRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 Group()
             {}
 
             UnblockEntityRequest(const UnblockEntityRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 Group(src.Group)
             {}
@@ -1301,6 +1370,7 @@ namespace PlayFab
         struct UpdateGroupRequest : public PlayFabBaseModel
         {
             std::string AdminRoleId;
+            std::map<std::string, std::string> CustomTags;
             OptionalInt32 ExpectedProfileVersion;
             EntityKey Group;
             std::string GroupName;
@@ -1309,6 +1379,7 @@ namespace PlayFab
             UpdateGroupRequest() :
                 PlayFabBaseModel(),
                 AdminRoleId(),
+                CustomTags(),
                 ExpectedProfileVersion(),
                 Group(),
                 GroupName(),
@@ -1318,6 +1389,7 @@ namespace PlayFab
             UpdateGroupRequest(const UpdateGroupRequest& src) :
                 PlayFabBaseModel(),
                 AdminRoleId(src.AdminRoleId),
+                CustomTags(src.CustomTags),
                 ExpectedProfileVersion(src.ExpectedProfileVersion),
                 Group(src.Group),
                 GroupName(src.GroupName),
@@ -1368,6 +1440,7 @@ namespace PlayFab
 
         struct UpdateGroupRoleRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalInt32 ExpectedProfileVersion;
             EntityKey Group;
             std::string RoleId;
@@ -1375,6 +1448,7 @@ namespace PlayFab
 
             UpdateGroupRoleRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ExpectedProfileVersion(),
                 Group(),
                 RoleId(),
@@ -1383,6 +1457,7 @@ namespace PlayFab
 
             UpdateGroupRoleRequest(const UpdateGroupRoleRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ExpectedProfileVersion(src.ExpectedProfileVersion),
                 Group(src.Group),
                 RoleId(src.RoleId),

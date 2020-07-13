@@ -14,7 +14,7 @@ namespace PlayFab
         template<typename ResType> using ProcessApiCallback = std::function<void(const ResType& result, void* userData)>;
 
         // ------------ Generated API calls
-        static void GetGlobalPolicy(ProcessApiCallback<ProfilesModels::GetGlobalPolicyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetGlobalPolicy(ProfilesModels::GetGlobalPolicyRequest& request, ProcessApiCallback<ProfilesModels::GetGlobalPolicyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetProfile(ProfilesModels::GetEntityProfileRequest& request, ProcessApiCallback<ProfilesModels::GetEntityProfileResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetProfiles(ProfilesModels::GetEntityProfilesRequest& request, ProcessApiCallback<ProfilesModels::GetEntityProfilesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTitlePlayersFromMasterPlayerAccountIds(ProfilesModels::GetTitlePlayersFromMasterPlayerAccountIdsRequest& request, ProcessApiCallback<ProfilesModels::GetTitlePlayersFromMasterPlayerAccountIdsResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);

@@ -11,6 +11,7 @@ using namespace PlayFab::LocalizationModels;
 PlayFabLocalizationAPI::PlayFabLocalizationAPI() {}
 
 void PlayFabLocalizationAPI::GetLanguageList(
+    GetLanguageListRequest& request,
     ProcessApiCallback<GetLanguageListResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -26,7 +27,7 @@ void PlayFabLocalizationAPI::GetLanguageList(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetLanguageListResult, userData);

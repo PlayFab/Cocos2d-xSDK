@@ -16,7 +16,7 @@ namespace PlayFab
         // ------------ Generated API calls
         static void CreateExperiment(ExperimentationModels::CreateExperimentRequest& request, ProcessApiCallback<ExperimentationModels::CreateExperimentResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteExperiment(ExperimentationModels::DeleteExperimentRequest& request, ProcessApiCallback<ExperimentationModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void GetExperiments(ProcessApiCallback<ExperimentationModels::GetExperimentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void GetExperiments(ExperimentationModels::GetExperimentsRequest& request, ProcessApiCallback<ExperimentationModels::GetExperimentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetLatestScorecard(ExperimentationModels::GetLatestScorecardRequest& request, ProcessApiCallback<ExperimentationModels::GetLatestScorecardResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetTreatmentAssignment(ExperimentationModels::GetTreatmentAssignmentRequest& request, ProcessApiCallback<ExperimentationModels::GetTreatmentAssignmentResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void StartExperiment(ExperimentationModels::StartExperimentRequest& request, ProcessApiCallback<ExperimentationModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);

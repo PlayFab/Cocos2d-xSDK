@@ -104,7 +104,7 @@ void Variant::writeJSON(PFStringJsonWriter& writer)
     if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
     writer.String("IsControl"); writer.Bool(IsControl);
     writer.String("Name"); writer.String(Name.c_str());
-    if (TitleDataOverrideId.length() > 0) { writer.String("TitleDataOverrideId"); writer.String(TitleDataOverrideId.c_str()); }
+    if (TitleDataOverrideLabel.length() > 0) { writer.String("TitleDataOverrideLabel"); writer.String(TitleDataOverrideLabel.c_str()); }
     writer.String("TrafficPercentage"); writer.Uint(TrafficPercentage);
     if (!Variables.empty()) {
         writer.String("Variables");
@@ -127,8 +127,8 @@ bool Variant::readFromValue(const rapidjson::Value& obj)
     if (IsControl_member != obj.MemberEnd() && !IsControl_member->value.IsNull()) IsControl = IsControl_member->value.GetBool();
     const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
     if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
-    const Value::ConstMemberIterator TitleDataOverrideId_member = obj.FindMember("TitleDataOverrideId");
-    if (TitleDataOverrideId_member != obj.MemberEnd() && !TitleDataOverrideId_member->value.IsNull()) TitleDataOverrideId = TitleDataOverrideId_member->value.GetString();
+    const Value::ConstMemberIterator TitleDataOverrideLabel_member = obj.FindMember("TitleDataOverrideLabel");
+    if (TitleDataOverrideLabel_member != obj.MemberEnd() && !TitleDataOverrideLabel_member->value.IsNull()) TitleDataOverrideLabel = TitleDataOverrideLabel_member->value.GetString();
     const Value::ConstMemberIterator TrafficPercentage_member = obj.FindMember("TrafficPercentage");
     if (TrafficPercentage_member != obj.MemberEnd() && !TrafficPercentage_member->value.IsNull()) TrafficPercentage = TrafficPercentage_member->value.GetUint();
     const Value::ConstMemberIterator Variables_member = obj.FindMember("Variables");
@@ -150,6 +150,14 @@ CreateExperimentRequest::~CreateExperimentRequest()
 void CreateExperimentRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
     writer.String("Duration"); writer.Uint(Duration);
     if (pfExperimentType.notNull()) { writer.String("ExperimentType"); writeExperimentTypeEnumJSON(pfExperimentType, writer); }
@@ -175,6 +183,12 @@ void CreateExperimentRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool CreateExperimentRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
     if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
     const Value::ConstMemberIterator Duration_member = obj.FindMember("Duration");
@@ -233,12 +247,26 @@ DeleteExperimentRequest::~DeleteExperimentRequest()
 void DeleteExperimentRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("ExperimentId"); writer.String(ExperimentId.c_str());
     writer.EndObject();
 }
 
 bool DeleteExperimentRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator ExperimentId_member = obj.FindMember("ExperimentId");
     if (ExperimentId_member != obj.MemberEnd() && !ExperimentId_member->value.IsNull()) ExperimentId = ExperimentId_member->value.GetString();
 
@@ -395,11 +423,25 @@ GetExperimentsRequest::~GetExperimentsRequest()
 void GetExperimentsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.EndObject();
 }
 
 bool GetExperimentsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
 
     return true;
 }
@@ -444,12 +486,26 @@ GetLatestScorecardRequest::~GetLatestScorecardRequest()
 void GetLatestScorecardRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (ExperimentId.length() > 0) { writer.String("ExperimentId"); writer.String(ExperimentId.c_str()); }
     writer.EndObject();
 }
 
 bool GetLatestScorecardRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator ExperimentId_member = obj.FindMember("ExperimentId");
     if (ExperimentId_member != obj.MemberEnd() && !ExperimentId_member->value.IsNull()) ExperimentId = ExperimentId_member->value.GetString();
 
@@ -635,12 +691,26 @@ GetTreatmentAssignmentRequest::~GetTreatmentAssignmentRequest()
 void GetTreatmentAssignmentRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.EndObject();
 }
 
 bool GetTreatmentAssignmentRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
 
@@ -723,12 +793,26 @@ StartExperimentRequest::~StartExperimentRequest()
 void StartExperimentRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("ExperimentId"); writer.String(ExperimentId.c_str());
     writer.EndObject();
 }
 
 bool StartExperimentRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator ExperimentId_member = obj.FindMember("ExperimentId");
     if (ExperimentId_member != obj.MemberEnd() && !ExperimentId_member->value.IsNull()) ExperimentId = ExperimentId_member->value.GetString();
 
@@ -743,12 +827,26 @@ StopExperimentRequest::~StopExperimentRequest()
 void StopExperimentRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("ExperimentId"); writer.String(ExperimentId.c_str());
     writer.EndObject();
 }
 
 bool StopExperimentRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator ExperimentId_member = obj.FindMember("ExperimentId");
     if (ExperimentId_member != obj.MemberEnd() && !ExperimentId_member->value.IsNull()) ExperimentId = ExperimentId_member->value.GetString();
 
@@ -763,6 +861,14 @@ UpdateExperimentRequest::~UpdateExperimentRequest()
 void UpdateExperimentRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
     writer.String("Duration"); writer.Uint(Duration);
     if (pfExperimentType.notNull()) { writer.String("ExperimentType"); writeExperimentTypeEnumJSON(pfExperimentType, writer); }
@@ -789,6 +895,12 @@ void UpdateExperimentRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool UpdateExperimentRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
     if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
     const Value::ConstMemberIterator Duration_member = obj.FindMember("Duration");

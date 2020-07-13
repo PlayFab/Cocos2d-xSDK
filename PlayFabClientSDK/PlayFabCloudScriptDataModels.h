@@ -531,6 +531,7 @@ namespace PlayFab
 
         struct ExecuteEntityCloudScriptRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
             std::string FunctionName;
             MultitypeVar FunctionParameter;
@@ -540,6 +541,7 @@ namespace PlayFab
 
             ExecuteEntityCloudScriptRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL),
                 FunctionName(),
                 FunctionParameter(),
@@ -550,6 +552,7 @@ namespace PlayFab
 
             ExecuteEntityCloudScriptRequest(const ExecuteEntityCloudScriptRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 FunctionName(src.FunctionName),
                 FunctionParameter(src.FunctionParameter),
@@ -571,6 +574,7 @@ namespace PlayFab
 
         struct ExecuteFunctionRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
             std::string FunctionName;
             MultitypeVar FunctionParameter;
@@ -578,6 +582,7 @@ namespace PlayFab
 
             ExecuteFunctionRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL),
                 FunctionName(),
                 FunctionParameter(),
@@ -586,6 +591,7 @@ namespace PlayFab
 
             ExecuteFunctionRequest(const ExecuteFunctionRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 FunctionName(src.FunctionName),
                 FunctionParameter(src.FunctionParameter),
@@ -794,13 +800,16 @@ namespace PlayFab
 
         struct ListFunctionsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             ListFunctionsRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             ListFunctionsRequest(const ListFunctionsRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             ListFunctionsRequest(const rapidjson::Value& obj) : ListFunctionsRequest()
@@ -1328,17 +1337,20 @@ namespace PlayFab
 
         struct PostFunctionResultForEntityTriggeredActionRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             ExecuteFunctionResult FunctionResult;
 
             PostFunctionResultForEntityTriggeredActionRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 FunctionResult()
             {}
 
             PostFunctionResultForEntityTriggeredActionRequest(const PostFunctionResultForEntityTriggeredActionRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 FunctionResult(src.FunctionResult)
             {}
@@ -1356,17 +1368,20 @@ namespace PlayFab
 
         struct PostFunctionResultForFunctionExecutionRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             ExecuteFunctionResult FunctionResult;
 
             PostFunctionResultForFunctionExecutionRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 FunctionResult()
             {}
 
             PostFunctionResultForFunctionExecutionRequest(const PostFunctionResultForFunctionExecutionRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 FunctionResult(src.FunctionResult)
             {}
@@ -1384,6 +1399,7 @@ namespace PlayFab
 
         struct PostFunctionResultForPlayerTriggeredActionRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
             ExecuteFunctionResult FunctionResult;
             PlayerProfileModel PlayerProfile;
@@ -1391,6 +1407,7 @@ namespace PlayFab
 
             PostFunctionResultForPlayerTriggeredActionRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL),
                 FunctionResult(),
                 PlayerProfile(),
@@ -1399,6 +1416,7 @@ namespace PlayFab
 
             PostFunctionResultForPlayerTriggeredActionRequest(const PostFunctionResultForPlayerTriggeredActionRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 FunctionResult(src.FunctionResult),
                 PlayerProfile(src.PlayerProfile),
@@ -1418,12 +1436,14 @@ namespace PlayFab
 
         struct PostFunctionResultForScheduledTaskRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             ExecuteFunctionResult FunctionResult;
             NameIdentifier ScheduledTaskId;
 
             PostFunctionResultForScheduledTaskRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 FunctionResult(),
                 ScheduledTaskId()
@@ -1431,6 +1451,7 @@ namespace PlayFab
 
             PostFunctionResultForScheduledTaskRequest(const PostFunctionResultForScheduledTaskRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 FunctionResult(src.FunctionResult),
                 ScheduledTaskId(src.ScheduledTaskId)
@@ -1449,17 +1470,20 @@ namespace PlayFab
 
         struct RegisterHttpFunctionRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string FunctionName;
             std::string FunctionUrl;
 
             RegisterHttpFunctionRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 FunctionName(),
                 FunctionUrl()
             {}
 
             RegisterHttpFunctionRequest(const RegisterHttpFunctionRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 FunctionName(src.FunctionName),
                 FunctionUrl(src.FunctionUrl)
             {}
@@ -1478,12 +1502,14 @@ namespace PlayFab
         struct RegisterQueuedFunctionRequest : public PlayFabBaseModel
         {
             std::string ConnectionString;
+            std::map<std::string, std::string> CustomTags;
             std::string FunctionName;
             std::string QueueName;
 
             RegisterQueuedFunctionRequest() :
                 PlayFabBaseModel(),
                 ConnectionString(),
+                CustomTags(),
                 FunctionName(),
                 QueueName()
             {}
@@ -1491,6 +1517,7 @@ namespace PlayFab
             RegisterQueuedFunctionRequest(const RegisterQueuedFunctionRequest& src) :
                 PlayFabBaseModel(),
                 ConnectionString(src.ConnectionString),
+                CustomTags(src.CustomTags),
                 FunctionName(src.FunctionName),
                 QueueName(src.QueueName)
             {}
@@ -1517,15 +1544,18 @@ namespace PlayFab
 
         struct UnregisterFunctionRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string FunctionName;
 
             UnregisterFunctionRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 FunctionName()
             {}
 
             UnregisterFunctionRequest(const UnregisterFunctionRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 FunctionName(src.FunctionName)
             {}
 

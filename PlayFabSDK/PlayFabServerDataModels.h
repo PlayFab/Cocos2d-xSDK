@@ -73,6 +73,7 @@ namespace PlayFab
         {
             Int32 Amount;
             std::string CharacterId;
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
             std::string VirtualCurrency;
 
@@ -80,6 +81,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Amount(0),
                 CharacterId(),
+                CustomTags(),
                 PlayFabId(),
                 VirtualCurrency()
             {}
@@ -88,6 +90,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Amount(src.Amount),
                 CharacterId(src.CharacterId),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId),
                 VirtualCurrency(src.VirtualCurrency)
             {}
@@ -198,17 +201,20 @@ namespace PlayFab
 
         struct AddPlayerTagRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
             std::string TagName;
 
             AddPlayerTagRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PlayFabId(),
                 TagName()
             {}
 
             AddPlayerTagRequest(const AddPlayerTagRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId),
                 TagName(src.TagName)
             {}
@@ -299,12 +305,14 @@ namespace PlayFab
         struct AddUserVirtualCurrencyRequest : public PlayFabBaseModel
         {
             Int32 Amount;
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
             std::string VirtualCurrency;
 
             AddUserVirtualCurrencyRequest() :
                 PlayFabBaseModel(),
                 Amount(0),
+                CustomTags(),
                 PlayFabId(),
                 VirtualCurrency()
             {}
@@ -312,6 +320,7 @@ namespace PlayFab
             AddUserVirtualCurrencyRequest(const AddUserVirtualCurrencyRequest& src) :
                 PlayFabBaseModel(),
                 Amount(src.Amount),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId),
                 VirtualCurrency(src.VirtualCurrency)
             {}
@@ -1450,15 +1459,18 @@ namespace PlayFab
         struct BanUsersRequest : public PlayFabBaseModel
         {
             std::list<BanRequest> Bans;
+            std::map<std::string, std::string> CustomTags;
 
             BanUsersRequest() :
                 PlayFabBaseModel(),
-                Bans()
+                Bans(),
+                CustomTags()
             {}
 
             BanUsersRequest(const BanUsersRequest& src) :
                 PlayFabBaseModel(),
-                Bans(src.Bans)
+                Bans(src.Bans),
+                CustomTags(src.CustomTags)
             {}
 
             BanUsersRequest(const rapidjson::Value& obj) : BanUsersRequest()
@@ -1852,6 +1864,7 @@ namespace PlayFab
         {
             std::string CharacterId;
             Int32 ConsumeCount;
+            std::map<std::string, std::string> CustomTags;
             std::string ItemInstanceId;
             std::string PlayFabId;
 
@@ -1859,6 +1872,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CharacterId(),
                 ConsumeCount(0),
+                CustomTags(),
                 ItemInstanceId(),
                 PlayFabId()
             {}
@@ -1867,6 +1881,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CharacterId(src.CharacterId),
                 ConsumeCount(src.ConsumeCount),
+                CustomTags(src.CustomTags),
                 ItemInstanceId(src.ItemInstanceId),
                 PlayFabId(src.PlayFabId)
             {}
@@ -2305,12 +2320,14 @@ namespace PlayFab
         struct DeleteCharacterFromUserRequest : public PlayFabBaseModel
         {
             std::string CharacterId;
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
             bool SaveCharacterInventory;
 
             DeleteCharacterFromUserRequest() :
                 PlayFabBaseModel(),
                 CharacterId(),
+                CustomTags(),
                 PlayFabId(),
                 SaveCharacterInventory(false)
             {}
@@ -2318,6 +2335,7 @@ namespace PlayFab
             DeleteCharacterFromUserRequest(const DeleteCharacterFromUserRequest& src) :
                 PlayFabBaseModel(),
                 CharacterId(src.CharacterId),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId),
                 SaveCharacterInventory(src.SaveCharacterInventory)
             {}
@@ -2476,15 +2494,18 @@ namespace PlayFab
 
         struct DeregisterGameRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string LobbyId;
 
             DeregisterGameRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 LobbyId()
             {}
 
             DeregisterGameRequest(const DeregisterGameRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 LobbyId(src.LobbyId)
             {}
 
@@ -2771,6 +2792,7 @@ namespace PlayFab
 
         struct ExecuteCloudScriptServerRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string FunctionName;
             MultitypeVar FunctionParameter;
             OptionalBool GeneratePlayStreamEvent;
@@ -2780,6 +2802,7 @@ namespace PlayFab
 
             ExecuteCloudScriptServerRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 FunctionName(),
                 FunctionParameter(),
                 GeneratePlayStreamEvent(),
@@ -2790,6 +2813,7 @@ namespace PlayFab
 
             ExecuteCloudScriptServerRequest(const ExecuteCloudScriptServerRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 FunctionName(src.FunctionName),
                 FunctionParameter(src.FunctionParameter),
                 GeneratePlayStreamEvent(src.GeneratePlayStreamEvent),
@@ -3818,6 +3842,7 @@ namespace PlayFab
             GenericErrorCodesRequestMultiplayerServersThrottledFromRateLimiter,
             GenericErrorCodesTitleDataOverrideNotFound,
             GenericErrorCodesDuplicateKeys,
+            GenericErrorCodesWasNotCreatedWithCloudRoot,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,
@@ -4175,12 +4200,14 @@ namespace PlayFab
         {
             std::string CatalogVersion;
             std::string CharacterId;
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
 
             GetCharacterInventoryRequest() :
                 PlayFabBaseModel(),
                 CatalogVersion(),
                 CharacterId(),
+                CustomTags(),
                 PlayFabId()
             {}
 
@@ -4188,6 +4215,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CatalogVersion(src.CatalogVersion),
                 CharacterId(src.CharacterId),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId)
             {}
 
@@ -4519,6 +4547,7 @@ namespace PlayFab
 
         struct GetFriendLeaderboardRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalBool IncludeFacebookFriends;
             OptionalBool IncludeSteamFriends;
             Int32 MaxResultsCount;
@@ -4531,6 +4560,7 @@ namespace PlayFab
 
             GetFriendLeaderboardRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 IncludeFacebookFriends(),
                 IncludeSteamFriends(),
                 MaxResultsCount(0),
@@ -4544,6 +4574,7 @@ namespace PlayFab
 
             GetFriendLeaderboardRequest(const GetFriendLeaderboardRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 IncludeFacebookFriends(src.IncludeFacebookFriends),
                 IncludeSteamFriends(src.IncludeSteamFriends),
                 MaxResultsCount(src.MaxResultsCount),
@@ -4568,6 +4599,7 @@ namespace PlayFab
 
         struct GetFriendsListRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalBool IncludeFacebookFriends;
             OptionalBool IncludeSteamFriends;
             std::string PlayFabId;
@@ -4576,6 +4608,7 @@ namespace PlayFab
 
             GetFriendsListRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 IncludeFacebookFriends(),
                 IncludeSteamFriends(),
                 PlayFabId(),
@@ -4585,6 +4618,7 @@ namespace PlayFab
 
             GetFriendsListRequest(const GetFriendsListRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 IncludeFacebookFriends(src.IncludeFacebookFriends),
                 IncludeSteamFriends(src.IncludeSteamFriends),
                 PlayFabId(src.PlayFabId),
@@ -4692,6 +4726,7 @@ namespace PlayFab
 
         struct GetLeaderboardAroundUserRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             Int32 MaxResultsCount;
             std::string PlayFabId;
             PlayerProfileViewConstraints* ProfileConstraints;
@@ -4700,6 +4735,7 @@ namespace PlayFab
 
             GetLeaderboardAroundUserRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 MaxResultsCount(0),
                 PlayFabId(),
                 ProfileConstraints(NULL),
@@ -4709,6 +4745,7 @@ namespace PlayFab
 
             GetLeaderboardAroundUserRequest(const GetLeaderboardAroundUserRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 MaxResultsCount(src.MaxResultsCount),
                 PlayFabId(src.PlayFabId),
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL),
@@ -4853,6 +4890,7 @@ namespace PlayFab
 
         struct GetLeaderboardRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             Int32 MaxResultsCount;
             PlayerProfileViewConstraints* ProfileConstraints;
             Int32 StartPosition;
@@ -4861,6 +4899,7 @@ namespace PlayFab
 
             GetLeaderboardRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 MaxResultsCount(0),
                 ProfileConstraints(NULL),
                 StartPosition(0),
@@ -4870,6 +4909,7 @@ namespace PlayFab
 
             GetLeaderboardRequest(const GetLeaderboardRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 MaxResultsCount(src.MaxResultsCount),
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL),
                 StartPosition(src.StartPosition),
@@ -4988,17 +5028,20 @@ namespace PlayFab
 
         struct GetPlayerCombinedInfoRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             GetPlayerCombinedInfoRequestParams InfoRequestParameters;
             std::string PlayFabId;
 
             GetPlayerCombinedInfoRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 InfoRequestParameters(),
                 PlayFabId()
             {}
 
             GetPlayerCombinedInfoRequest(const GetPlayerCombinedInfoRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 InfoRequestParameters(src.InfoRequestParameters),
                 PlayFabId(src.PlayFabId)
             {}
@@ -5136,17 +5179,20 @@ namespace PlayFab
 
         struct GetPlayerProfileRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
             PlayerProfileViewConstraints* ProfileConstraints;
 
             GetPlayerProfileRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PlayFabId(),
                 ProfileConstraints(NULL)
             {}
 
             GetPlayerProfileRequest(const GetPlayerProfileRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId),
                 ProfileConstraints(src.ProfileConstraints ? new PlayerProfileViewConstraints(*src.ProfileConstraints) : NULL)
             {}
@@ -5215,6 +5261,7 @@ namespace PlayFab
         struct GetPlayersInSegmentRequest : public PlayFabBaseModel
         {
             std::string ContinuationToken;
+            std::map<std::string, std::string> CustomTags;
             OptionalUint32 MaxBatchSize;
             OptionalUint32 SecondsToLive;
             std::string SegmentId;
@@ -5222,6 +5269,7 @@ namespace PlayFab
             GetPlayersInSegmentRequest() :
                 PlayFabBaseModel(),
                 ContinuationToken(),
+                CustomTags(),
                 MaxBatchSize(),
                 SecondsToLive(),
                 SegmentId()
@@ -5230,6 +5278,7 @@ namespace PlayFab
             GetPlayersInSegmentRequest(const GetPlayersInSegmentRequest& src) :
                 PlayFabBaseModel(),
                 ContinuationToken(src.ContinuationToken),
+                CustomTags(src.CustomTags),
                 MaxBatchSize(src.MaxBatchSize),
                 SecondsToLive(src.SecondsToLive),
                 SegmentId(src.SegmentId)
@@ -5497,15 +5546,18 @@ namespace PlayFab
 
         struct GetPlayersSegmentsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
 
             GetPlayersSegmentsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PlayFabId()
             {}
 
             GetPlayersSegmentsRequest(const GetPlayersSegmentsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId)
             {}
 
@@ -5550,12 +5602,14 @@ namespace PlayFab
 
         struct GetPlayerStatisticsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
             std::list<std::string> StatisticNames;
             std::list<StatisticNameVersion> StatisticNameVersions;
 
             GetPlayerStatisticsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PlayFabId(),
                 StatisticNames(),
                 StatisticNameVersions()
@@ -5563,6 +5617,7 @@ namespace PlayFab
 
             GetPlayerStatisticsRequest(const GetPlayerStatisticsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId),
                 StatisticNames(src.StatisticNames),
                 StatisticNameVersions(src.StatisticNameVersions)
@@ -5609,15 +5664,18 @@ namespace PlayFab
 
         struct GetPlayerStatisticVersionsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string StatisticName;
 
             GetPlayerStatisticVersionsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 StatisticName()
             {}
 
             GetPlayerStatisticVersionsRequest(const GetPlayerStatisticVersionsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 StatisticName(src.StatisticName)
             {}
 
@@ -5699,17 +5757,20 @@ namespace PlayFab
 
         struct GetPlayerTagsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string Namespace;
             std::string PlayFabId;
 
             GetPlayerTagsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Namespace(),
                 PlayFabId()
             {}
 
             GetPlayerTagsRequest(const GetPlayerTagsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Namespace(src.Namespace),
                 PlayFabId(src.PlayFabId)
             {}
@@ -6688,12 +6749,14 @@ namespace PlayFab
         struct GetStoreItemsServerRequest : public PlayFabBaseModel
         {
             std::string CatalogVersion;
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
             std::string StoreId;
 
             GetStoreItemsServerRequest() :
                 PlayFabBaseModel(),
                 CatalogVersion(),
+                CustomTags(),
                 PlayFabId(),
                 StoreId()
             {}
@@ -6701,6 +6764,7 @@ namespace PlayFab
             GetStoreItemsServerRequest(const GetStoreItemsServerRequest& src) :
                 PlayFabBaseModel(),
                 CatalogVersion(src.CatalogVersion),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId),
                 StoreId(src.StoreId)
             {}
@@ -7064,15 +7128,18 @@ namespace PlayFab
 
         struct GetUserInventoryRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
 
             GetUserInventoryRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PlayFabId()
             {}
 
             GetUserInventoryRequest(const GetUserInventoryRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId)
             {}
 
@@ -7125,12 +7192,14 @@ namespace PlayFab
         {
             std::string CharacterName;
             std::string CharacterType;
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
 
             GrantCharacterToUserRequest() :
                 PlayFabBaseModel(),
                 CharacterName(),
                 CharacterType(),
+                CustomTags(),
                 PlayFabId()
             {}
 
@@ -7138,6 +7207,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CharacterName(src.CharacterName),
                 CharacterType(src.CharacterType),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId)
             {}
 
@@ -7258,6 +7328,7 @@ namespace PlayFab
             std::string Annotation;
             std::string CatalogVersion;
             std::string CharacterId;
+            std::map<std::string, std::string> CustomTags;
             std::list<std::string> ItemIds;
             std::string PlayFabId;
 
@@ -7266,6 +7337,7 @@ namespace PlayFab
                 Annotation(),
                 CatalogVersion(),
                 CharacterId(),
+                CustomTags(),
                 ItemIds(),
                 PlayFabId()
             {}
@@ -7275,6 +7347,7 @@ namespace PlayFab
                 Annotation(src.Annotation),
                 CatalogVersion(src.CatalogVersion),
                 CharacterId(src.CharacterId),
+                CustomTags(src.CustomTags),
                 ItemIds(src.ItemIds),
                 PlayFabId(src.PlayFabId)
             {}
@@ -7319,6 +7392,7 @@ namespace PlayFab
         {
             std::string Annotation;
             std::string CatalogVersion;
+            std::map<std::string, std::string> CustomTags;
             std::list<std::string> ItemIds;
             std::string PlayFabId;
 
@@ -7326,6 +7400,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Annotation(),
                 CatalogVersion(),
+                CustomTags(),
                 ItemIds(),
                 PlayFabId()
             {}
@@ -7334,6 +7409,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Annotation(src.Annotation),
                 CatalogVersion(src.CatalogVersion),
+                CustomTags(src.CustomTags),
                 ItemIds(src.ItemIds),
                 PlayFabId(src.PlayFabId)
             {}
@@ -7417,17 +7493,20 @@ namespace PlayFab
         struct GrantItemsToUsersRequest : public PlayFabBaseModel
         {
             std::string CatalogVersion;
+            std::map<std::string, std::string> CustomTags;
             std::list<ItemGrant> ItemGrants;
 
             GrantItemsToUsersRequest() :
                 PlayFabBaseModel(),
                 CatalogVersion(),
+                CustomTags(),
                 ItemGrants()
             {}
 
             GrantItemsToUsersRequest(const GrantItemsToUsersRequest& src) :
                 PlayFabBaseModel(),
                 CatalogVersion(src.CatalogVersion),
+                CustomTags(src.CustomTags),
                 ItemGrants(src.ItemGrants)
             {}
 
@@ -7470,6 +7549,7 @@ namespace PlayFab
         struct LinkPSNAccountRequest : public PlayFabBaseModel
         {
             std::string AuthCode;
+            std::map<std::string, std::string> CustomTags;
             OptionalBool ForceLink;
             OptionalInt32 IssuerId;
             std::string PlayFabId;
@@ -7478,6 +7558,7 @@ namespace PlayFab
             LinkPSNAccountRequest() :
                 PlayFabBaseModel(),
                 AuthCode(),
+                CustomTags(),
                 ForceLink(),
                 IssuerId(),
                 PlayFabId(),
@@ -7487,6 +7568,7 @@ namespace PlayFab
             LinkPSNAccountRequest(const LinkPSNAccountRequest& src) :
                 PlayFabBaseModel(),
                 AuthCode(src.AuthCode),
+                CustomTags(src.CustomTags),
                 ForceLink(src.ForceLink),
                 IssuerId(src.IssuerId),
                 PlayFabId(src.PlayFabId),
@@ -7528,12 +7610,14 @@ namespace PlayFab
 
         struct LinkServerCustomIdRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalBool ForceLink;
             std::string PlayFabId;
             std::string ServerCustomId;
 
             LinkServerCustomIdRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ForceLink(),
                 PlayFabId(),
                 ServerCustomId()
@@ -7541,6 +7625,7 @@ namespace PlayFab
 
             LinkServerCustomIdRequest(const LinkServerCustomIdRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ForceLink(src.ForceLink),
                 PlayFabId(src.PlayFabId),
                 ServerCustomId(src.ServerCustomId)
@@ -7581,12 +7666,14 @@ namespace PlayFab
 
         struct LinkXboxAccountRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalBool ForceLink;
             std::string PlayFabId;
             std::string XboxToken;
 
             LinkXboxAccountRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ForceLink(),
                 PlayFabId(),
                 XboxToken()
@@ -7594,6 +7681,7 @@ namespace PlayFab
 
             LinkXboxAccountRequest(const LinkXboxAccountRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ForceLink(src.ForceLink),
                 PlayFabId(src.PlayFabId),
                 XboxToken(src.XboxToken)
@@ -7713,6 +7801,7 @@ namespace PlayFab
         struct LoginWithServerCustomIdRequest : public PlayFabBaseModel
         {
             OptionalBool CreateAccount;
+            std::map<std::string, std::string> CustomTags;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
             std::string PlayerSecret;
             std::string ServerCustomId;
@@ -7720,6 +7809,7 @@ namespace PlayFab
             LoginWithServerCustomIdRequest() :
                 PlayFabBaseModel(),
                 CreateAccount(),
+                CustomTags(),
                 InfoRequestParameters(NULL),
                 PlayerSecret(),
                 ServerCustomId()
@@ -7728,6 +7818,7 @@ namespace PlayFab
             LoginWithServerCustomIdRequest(const LoginWithServerCustomIdRequest& src) :
                 PlayFabBaseModel(),
                 CreateAccount(src.CreateAccount),
+                CustomTags(src.CustomTags),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
                 PlayerSecret(src.PlayerSecret),
                 ServerCustomId(src.ServerCustomId)
@@ -7747,6 +7838,7 @@ namespace PlayFab
         struct LoginWithXboxIdRequest : public PlayFabBaseModel
         {
             OptionalBool CreateAccount;
+            std::map<std::string, std::string> CustomTags;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
             std::string Sandbox;
             std::string XboxId;
@@ -7754,6 +7846,7 @@ namespace PlayFab
             LoginWithXboxIdRequest() :
                 PlayFabBaseModel(),
                 CreateAccount(),
+                CustomTags(),
                 InfoRequestParameters(NULL),
                 Sandbox(),
                 XboxId()
@@ -7762,6 +7855,7 @@ namespace PlayFab
             LoginWithXboxIdRequest(const LoginWithXboxIdRequest& src) :
                 PlayFabBaseModel(),
                 CreateAccount(src.CreateAccount),
+                CustomTags(src.CustomTags),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
                 Sandbox(src.Sandbox),
                 XboxId(src.XboxId)
@@ -7781,12 +7875,14 @@ namespace PlayFab
         struct LoginWithXboxRequest : public PlayFabBaseModel
         {
             OptionalBool CreateAccount;
+            std::map<std::string, std::string> CustomTags;
             GetPlayerCombinedInfoRequestParams* InfoRequestParameters;
             std::string XboxToken;
 
             LoginWithXboxRequest() :
                 PlayFabBaseModel(),
                 CreateAccount(),
+                CustomTags(),
                 InfoRequestParameters(NULL),
                 XboxToken()
             {}
@@ -7794,6 +7890,7 @@ namespace PlayFab
             LoginWithXboxRequest(const LoginWithXboxRequest& src) :
                 PlayFabBaseModel(),
                 CreateAccount(src.CreateAccount),
+                CustomTags(src.CustomTags),
                 InfoRequestParameters(src.InfoRequestParameters ? new GetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters) : NULL),
                 XboxToken(src.XboxToken)
             {}
@@ -7839,12 +7936,14 @@ namespace PlayFab
 
         struct ModifyItemUsesRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string ItemInstanceId;
             std::string PlayFabId;
             Int32 UsesToAdd;
 
             ModifyItemUsesRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ItemInstanceId(),
                 PlayFabId(),
                 UsesToAdd(0)
@@ -7852,6 +7951,7 @@ namespace PlayFab
 
             ModifyItemUsesRequest(const ModifyItemUsesRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ItemInstanceId(src.ItemInstanceId),
                 PlayFabId(src.PlayFabId),
                 UsesToAdd(src.UsesToAdd)
@@ -8094,17 +8194,20 @@ namespace PlayFab
 
         struct NotifyMatchmakerPlayerLeftRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string LobbyId;
             std::string PlayFabId;
 
             NotifyMatchmakerPlayerLeftRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 LobbyId(),
                 PlayFabId()
             {}
 
             NotifyMatchmakerPlayerLeftRequest(const NotifyMatchmakerPlayerLeftRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 LobbyId(src.LobbyId),
                 PlayFabId(src.PlayFabId)
             {}
@@ -8201,6 +8304,7 @@ namespace PlayFab
             std::string CatalogVersion;
             std::string CharacterId;
             std::string CouponCode;
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
 
             RedeemCouponRequest() :
@@ -8208,6 +8312,7 @@ namespace PlayFab
                 CatalogVersion(),
                 CharacterId(),
                 CouponCode(),
+                CustomTags(),
                 PlayFabId()
             {}
 
@@ -8216,6 +8321,7 @@ namespace PlayFab
                 CatalogVersion(src.CatalogVersion),
                 CharacterId(src.CharacterId),
                 CouponCode(src.CouponCode),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId)
             {}
 
@@ -8257,17 +8363,20 @@ namespace PlayFab
 
         struct RedeemMatchmakerTicketRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string LobbyId;
             std::string Ticket;
 
             RedeemMatchmakerTicketRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 LobbyId(),
                 Ticket()
             {}
 
             RedeemMatchmakerTicketRequest(const RedeemMatchmakerTicketRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 LobbyId(src.LobbyId),
                 Ticket(src.Ticket)
             {}
@@ -8378,6 +8487,7 @@ namespace PlayFab
         struct RegisterGameRequest : public PlayFabBaseModel
         {
             std::string Build;
+            std::map<std::string, std::string> CustomTags;
             std::string GameMode;
             std::string LobbyId;
             Region pfRegion;
@@ -8390,6 +8500,7 @@ namespace PlayFab
             RegisterGameRequest() :
                 PlayFabBaseModel(),
                 Build(),
+                CustomTags(),
                 GameMode(),
                 LobbyId(),
                 pfRegion(),
@@ -8403,6 +8514,7 @@ namespace PlayFab
             RegisterGameRequest(const RegisterGameRequest& src) :
                 PlayFabBaseModel(),
                 Build(src.Build),
+                CustomTags(src.CustomTags),
                 GameMode(src.GameMode),
                 LobbyId(src.LobbyId),
                 pfRegion(src.pfRegion),
@@ -8507,17 +8619,20 @@ namespace PlayFab
 
         struct RemovePlayerTagRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
             std::string TagName;
 
             RemovePlayerTagRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PlayFabId(),
                 TagName()
             {}
 
             RemovePlayerTagRequest(const RemovePlayerTagRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId),
                 TagName(src.TagName)
             {}
@@ -8608,12 +8723,14 @@ namespace PlayFab
         struct ReportPlayerServerRequest : public PlayFabBaseModel
         {
             std::string Comment;
+            std::map<std::string, std::string> CustomTags;
             std::string ReporteeId;
             std::string ReporterId;
 
             ReportPlayerServerRequest() :
                 PlayFabBaseModel(),
                 Comment(),
+                CustomTags(),
                 ReporteeId(),
                 ReporterId()
             {}
@@ -8621,6 +8738,7 @@ namespace PlayFab
             ReportPlayerServerRequest(const ReportPlayerServerRequest& src) :
                 PlayFabBaseModel(),
                 Comment(src.Comment),
+                CustomTags(src.CustomTags),
                 ReporteeId(src.ReporteeId),
                 ReporterId(src.ReporterId)
             {}
@@ -8987,12 +9105,14 @@ namespace PlayFab
 
         struct SendCustomAccountRecoveryEmailRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string Email;
             std::string EmailTemplateId;
             std::string Username;
 
             SendCustomAccountRecoveryEmailRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Email(),
                 EmailTemplateId(),
                 Username()
@@ -9000,6 +9120,7 @@ namespace PlayFab
 
             SendCustomAccountRecoveryEmailRequest(const SendCustomAccountRecoveryEmailRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Email(src.Email),
                 EmailTemplateId(src.EmailTemplateId),
                 Username(src.Username)
@@ -9040,17 +9161,20 @@ namespace PlayFab
 
         struct SendEmailFromTemplateRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string EmailTemplateId;
             std::string PlayFabId;
 
             SendEmailFromTemplateRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 EmailTemplateId(),
                 PlayFabId()
             {}
 
             SendEmailFromTemplateRequest(const SendEmailFromTemplateRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 EmailTemplateId(src.EmailTemplateId),
                 PlayFabId(src.PlayFabId)
             {}
@@ -9090,17 +9214,20 @@ namespace PlayFab
 
         struct SendPushNotificationFromTemplateRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string PushNotificationTemplateId;
             std::string Recipient;
 
             SendPushNotificationFromTemplateRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PushNotificationTemplateId(),
                 Recipient()
             {}
 
             SendPushNotificationFromTemplateRequest(const SendPushNotificationFromTemplateRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PushNotificationTemplateId(src.PushNotificationTemplateId),
                 Recipient(src.Recipient)
             {}
@@ -9119,6 +9246,7 @@ namespace PlayFab
         struct SendPushNotificationRequest : public PlayFabBaseModel
         {
             std::list<AdvancedPushPlatformMsg> AdvancedPlatformDelivery;
+            std::map<std::string, std::string> CustomTags;
             std::string Message;
             PushNotificationPackage* Package;
             std::string Recipient;
@@ -9128,6 +9256,7 @@ namespace PlayFab
             SendPushNotificationRequest() :
                 PlayFabBaseModel(),
                 AdvancedPlatformDelivery(),
+                CustomTags(),
                 Message(),
                 Package(NULL),
                 Recipient(),
@@ -9138,6 +9267,7 @@ namespace PlayFab
             SendPushNotificationRequest(const SendPushNotificationRequest& src) :
                 PlayFabBaseModel(),
                 AdvancedPlatformDelivery(src.AdvancedPlatformDelivery),
+                CustomTags(src.CustomTags),
                 Message(src.Message),
                 Package(src.Package ? new PushNotificationPackage(*src.Package) : NULL),
                 Recipient(src.Recipient),
@@ -9677,6 +9807,7 @@ namespace PlayFab
         {
             Int32 Amount;
             std::string CharacterId;
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
             std::string VirtualCurrency;
 
@@ -9684,6 +9815,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Amount(0),
                 CharacterId(),
+                CustomTags(),
                 PlayFabId(),
                 VirtualCurrency()
             {}
@@ -9692,6 +9824,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Amount(src.Amount),
                 CharacterId(src.CharacterId),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId),
                 VirtualCurrency(src.VirtualCurrency)
             {}
@@ -9710,12 +9843,14 @@ namespace PlayFab
         struct SubtractUserVirtualCurrencyRequest : public PlayFabBaseModel
         {
             Int32 Amount;
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
             std::string VirtualCurrency;
 
             SubtractUserVirtualCurrencyRequest() :
                 PlayFabBaseModel(),
                 Amount(0),
+                CustomTags(),
                 PlayFabId(),
                 VirtualCurrency()
             {}
@@ -9723,6 +9858,7 @@ namespace PlayFab
             SubtractUserVirtualCurrencyRequest(const SubtractUserVirtualCurrencyRequest& src) :
                 PlayFabBaseModel(),
                 Amount(src.Amount),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId),
                 VirtualCurrency(src.VirtualCurrency)
             {}
@@ -9740,15 +9876,18 @@ namespace PlayFab
 
         struct UnlinkPSNAccountRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
 
             UnlinkPSNAccountRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PlayFabId()
             {}
 
             UnlinkPSNAccountRequest(const UnlinkPSNAccountRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId)
             {}
 
@@ -9787,17 +9926,20 @@ namespace PlayFab
 
         struct UnlinkServerCustomIdRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
             std::string ServerCustomId;
 
             UnlinkServerCustomIdRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PlayFabId(),
                 ServerCustomId()
             {}
 
             UnlinkServerCustomIdRequest(const UnlinkServerCustomIdRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId),
                 ServerCustomId(src.ServerCustomId)
             {}
@@ -9837,15 +9979,18 @@ namespace PlayFab
 
         struct UnlinkXboxAccountRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
 
             UnlinkXboxAccountRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PlayFabId()
             {}
 
             UnlinkXboxAccountRequest(const UnlinkXboxAccountRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId)
             {}
 
@@ -9887,6 +10032,7 @@ namespace PlayFab
             std::string CatalogVersion;
             std::string CharacterId;
             std::string ContainerItemInstanceId;
+            std::map<std::string, std::string> CustomTags;
             std::string KeyItemInstanceId;
             std::string PlayFabId;
 
@@ -9895,6 +10041,7 @@ namespace PlayFab
                 CatalogVersion(),
                 CharacterId(),
                 ContainerItemInstanceId(),
+                CustomTags(),
                 KeyItemInstanceId(),
                 PlayFabId()
             {}
@@ -9904,6 +10051,7 @@ namespace PlayFab
                 CatalogVersion(src.CatalogVersion),
                 CharacterId(src.CharacterId),
                 ContainerItemInstanceId(src.ContainerItemInstanceId),
+                CustomTags(src.CustomTags),
                 KeyItemInstanceId(src.KeyItemInstanceId),
                 PlayFabId(src.PlayFabId)
             {}
@@ -9924,6 +10072,7 @@ namespace PlayFab
             std::string CatalogVersion;
             std::string CharacterId;
             std::string ContainerItemId;
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
 
             UnlockContainerItemRequest() :
@@ -9931,6 +10080,7 @@ namespace PlayFab
                 CatalogVersion(),
                 CharacterId(),
                 ContainerItemId(),
+                CustomTags(),
                 PlayFabId()
             {}
 
@@ -9939,6 +10089,7 @@ namespace PlayFab
                 CatalogVersion(src.CatalogVersion),
                 CharacterId(src.CharacterId),
                 ContainerItemId(src.ContainerItemId),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId)
             {}
 
@@ -10111,6 +10262,7 @@ namespace PlayFab
         struct UpdateCharacterDataRequest : public PlayFabBaseModel
         {
             std::string CharacterId;
+            std::map<std::string, std::string> CustomTags;
             std::map<std::string, std::string> Data;
             std::list<std::string> KeysToRemove;
             Boxed<UserDataPermission> Permission;
@@ -10119,6 +10271,7 @@ namespace PlayFab
             UpdateCharacterDataRequest() :
                 PlayFabBaseModel(),
                 CharacterId(),
+                CustomTags(),
                 Data(),
                 KeysToRemove(),
                 Permission(),
@@ -10128,6 +10281,7 @@ namespace PlayFab
             UpdateCharacterDataRequest(const UpdateCharacterDataRequest& src) :
                 PlayFabBaseModel(),
                 CharacterId(src.CharacterId),
+                CustomTags(src.CustomTags),
                 Data(src.Data),
                 KeysToRemove(src.KeysToRemove),
                 Permission(src.Permission),
@@ -10174,12 +10328,14 @@ namespace PlayFab
         {
             std::string CharacterId;
             std::map<std::string, Int32> CharacterStatistics;
+            std::map<std::string, std::string> CustomTags;
             std::string PlayFabId;
 
             UpdateCharacterStatisticsRequest() :
                 PlayFabBaseModel(),
                 CharacterId(),
                 CharacterStatistics(),
+                CustomTags(),
                 PlayFabId()
             {}
 
@@ -10187,6 +10343,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CharacterId(src.CharacterId),
                 CharacterStatistics(src.CharacterStatistics),
+                CustomTags(src.CustomTags),
                 PlayFabId(src.PlayFabId)
             {}
 
@@ -10225,12 +10382,14 @@ namespace PlayFab
 
         struct UpdatePlayerStatisticsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalBool ForceUpdate;
             std::string PlayFabId;
             std::list<StatisticUpdate> Statistics;
 
             UpdatePlayerStatisticsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ForceUpdate(),
                 PlayFabId(),
                 Statistics()
@@ -10238,6 +10397,7 @@ namespace PlayFab
 
             UpdatePlayerStatisticsRequest(const UpdatePlayerStatisticsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ForceUpdate(src.ForceUpdate),
                 PlayFabId(src.PlayFabId),
                 Statistics(src.Statistics)
@@ -10278,6 +10438,7 @@ namespace PlayFab
 
         struct UpdateSharedGroupDataRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::map<std::string, std::string> Data;
             std::list<std::string> KeysToRemove;
             Boxed<UserDataPermission> Permission;
@@ -10285,6 +10446,7 @@ namespace PlayFab
 
             UpdateSharedGroupDataRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Data(),
                 KeysToRemove(),
                 Permission(),
@@ -10293,6 +10455,7 @@ namespace PlayFab
 
             UpdateSharedGroupDataRequest(const UpdateSharedGroupDataRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Data(src.Data),
                 KeysToRemove(src.KeysToRemove),
                 Permission(src.Permission),
@@ -10334,6 +10497,7 @@ namespace PlayFab
 
         struct UpdateUserDataRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::map<std::string, std::string> Data;
             std::list<std::string> KeysToRemove;
             Boxed<UserDataPermission> Permission;
@@ -10341,6 +10505,7 @@ namespace PlayFab
 
             UpdateUserDataRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Data(),
                 KeysToRemove(),
                 Permission(),
@@ -10349,6 +10514,7 @@ namespace PlayFab
 
             UpdateUserDataRequest(const UpdateUserDataRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Data(src.Data),
                 KeysToRemove(src.KeysToRemove),
                 Permission(src.Permission),
@@ -10393,12 +10559,14 @@ namespace PlayFab
 
         struct UpdateUserInternalDataRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::map<std::string, std::string> Data;
             std::list<std::string> KeysToRemove;
             std::string PlayFabId;
 
             UpdateUserInternalDataRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Data(),
                 KeysToRemove(),
                 PlayFabId()
@@ -10406,6 +10574,7 @@ namespace PlayFab
 
             UpdateUserInternalDataRequest(const UpdateUserInternalDataRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Data(src.Data),
                 KeysToRemove(src.KeysToRemove),
                 PlayFabId(src.PlayFabId)
@@ -10425,6 +10594,7 @@ namespace PlayFab
         struct UpdateUserInventoryItemDataRequest : public PlayFabBaseModel
         {
             std::string CharacterId;
+            std::map<std::string, std::string> CustomTags;
             std::map<std::string, std::string> Data;
             std::string ItemInstanceId;
             std::list<std::string> KeysToRemove;
@@ -10433,6 +10603,7 @@ namespace PlayFab
             UpdateUserInventoryItemDataRequest() :
                 PlayFabBaseModel(),
                 CharacterId(),
+                CustomTags(),
                 Data(),
                 ItemInstanceId(),
                 KeysToRemove(),
@@ -10442,6 +10613,7 @@ namespace PlayFab
             UpdateUserInventoryItemDataRequest(const UpdateUserInventoryItemDataRequest& src) :
                 PlayFabBaseModel(),
                 CharacterId(src.CharacterId),
+                CustomTags(src.CustomTags),
                 Data(src.Data),
                 ItemInstanceId(src.ItemInstanceId),
                 KeysToRemove(src.KeysToRemove),
@@ -10488,6 +10660,7 @@ namespace PlayFab
         {
             std::map<std::string, MultitypeVar> Body;
             std::string CharacterId;
+            std::map<std::string, std::string> CustomTags;
             std::string EventName;
             std::string PlayFabId;
             OptionalTime Timestamp;
@@ -10496,6 +10669,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Body(),
                 CharacterId(),
+                CustomTags(),
                 EventName(),
                 PlayFabId(),
                 Timestamp()
@@ -10505,6 +10679,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Body(src.Body),
                 CharacterId(src.CharacterId),
+                CustomTags(src.CustomTags),
                 EventName(src.EventName),
                 PlayFabId(src.PlayFabId),
                 Timestamp(src.Timestamp)
@@ -10524,6 +10699,7 @@ namespace PlayFab
         struct WriteServerPlayerEventRequest : public PlayFabBaseModel
         {
             std::map<std::string, MultitypeVar> Body;
+            std::map<std::string, std::string> CustomTags;
             std::string EventName;
             std::string PlayFabId;
             OptionalTime Timestamp;
@@ -10531,6 +10707,7 @@ namespace PlayFab
             WriteServerPlayerEventRequest() :
                 PlayFabBaseModel(),
                 Body(),
+                CustomTags(),
                 EventName(),
                 PlayFabId(),
                 Timestamp()
@@ -10539,6 +10716,7 @@ namespace PlayFab
             WriteServerPlayerEventRequest(const WriteServerPlayerEventRequest& src) :
                 PlayFabBaseModel(),
                 Body(src.Body),
+                CustomTags(src.CustomTags),
                 EventName(src.EventName),
                 PlayFabId(src.PlayFabId),
                 Timestamp(src.Timestamp)
@@ -10558,12 +10736,14 @@ namespace PlayFab
         struct WriteTitleEventRequest : public PlayFabBaseModel
         {
             std::map<std::string, MultitypeVar> Body;
+            std::map<std::string, std::string> CustomTags;
             std::string EventName;
             OptionalTime Timestamp;
 
             WriteTitleEventRequest() :
                 PlayFabBaseModel(),
                 Body(),
+                CustomTags(),
                 EventName(),
                 Timestamp()
             {}
@@ -10571,6 +10751,7 @@ namespace PlayFab
             WriteTitleEventRequest(const WriteTitleEventRequest& src) :
                 PlayFabBaseModel(),
                 Body(src.Body),
+                CustomTags(src.CustomTags),
                 EventName(src.EventName),
                 Timestamp(src.Timestamp)
             {}

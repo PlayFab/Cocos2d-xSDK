@@ -488,17 +488,20 @@ namespace PlayFab
 
         struct CancelAllMatchmakingTicketsForPlayerRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
             std::string QueueName;
 
             CancelAllMatchmakingTicketsForPlayerRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL),
                 QueueName()
             {}
 
             CancelAllMatchmakingTicketsForPlayerRequest(const CancelAllMatchmakingTicketsForPlayerRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 QueueName(src.QueueName)
             {}
@@ -538,17 +541,20 @@ namespace PlayFab
 
         struct CancelAllServerBackfillTicketsForPlayerRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             std::string QueueName;
 
             CancelAllServerBackfillTicketsForPlayerRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 QueueName()
             {}
 
             CancelAllServerBackfillTicketsForPlayerRequest(const CancelAllServerBackfillTicketsForPlayerRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 QueueName(src.QueueName)
             {}
@@ -598,17 +604,20 @@ namespace PlayFab
 
         struct CancelMatchmakingTicketRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string QueueName;
             std::string TicketId;
 
             CancelMatchmakingTicketRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 QueueName(),
                 TicketId()
             {}
 
             CancelMatchmakingTicketRequest(const CancelMatchmakingTicketRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 QueueName(src.QueueName),
                 TicketId(src.TicketId)
             {}
@@ -648,17 +657,20 @@ namespace PlayFab
 
         struct CancelServerBackfillTicketRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string QueueName;
             std::string TicketId;
 
             CancelServerBackfillTicketRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 QueueName(),
                 TicketId()
             {}
 
             CancelServerBackfillTicketRequest(const CancelServerBackfillTicketRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 QueueName(src.QueueName),
                 TicketId(src.TicketId)
             {}
@@ -857,17 +869,20 @@ namespace PlayFab
         {
             std::string AliasName;
             std::list<BuildSelectionCriterion> BuildSelectionCriteria;
+            std::map<std::string, std::string> CustomTags;
 
             CreateBuildAliasRequest() :
                 PlayFabBaseModel(),
                 AliasName(),
-                BuildSelectionCriteria()
+                BuildSelectionCriteria(),
+                CustomTags()
             {}
 
             CreateBuildAliasRequest(const CreateBuildAliasRequest& src) :
                 PlayFabBaseModel(),
                 AliasName(src.AliasName),
-                BuildSelectionCriteria(src.BuildSelectionCriteria)
+                BuildSelectionCriteria(src.BuildSelectionCriteria),
+                CustomTags(src.CustomTags)
             {}
 
             CreateBuildAliasRequest(const rapidjson::Value& obj) : CreateBuildAliasRequest()
@@ -956,6 +971,7 @@ namespace PlayFab
             Boxed<ContainerFlavor> pfContainerFlavor;
             ContainerImageReference* pfContainerImageReference;
             std::string ContainerRunCommand;
+            std::map<std::string, std::string> CustomTags;
             std::list<AssetReferenceParams> GameAssetReferences;
             std::list<GameCertificateReferenceParams> GameCertificateReferences;
             std::map<std::string, std::string> Metadata;
@@ -972,6 +988,7 @@ namespace PlayFab
                 pfContainerFlavor(),
                 pfContainerImageReference(NULL),
                 ContainerRunCommand(),
+                CustomTags(),
                 GameAssetReferences(),
                 GameCertificateReferences(),
                 Metadata(),
@@ -989,6 +1006,7 @@ namespace PlayFab
                 pfContainerFlavor(src.pfContainerFlavor),
                 pfContainerImageReference(src.pfContainerImageReference ? new ContainerImageReference(*src.pfContainerImageReference) : NULL),
                 ContainerRunCommand(src.ContainerRunCommand),
+                CustomTags(src.CustomTags),
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
                 Metadata(src.Metadata),
@@ -1141,6 +1159,7 @@ namespace PlayFab
             OptionalBool AreAssetsReadonly;
             std::string BuildName;
             Boxed<ContainerFlavor> pfContainerFlavor;
+            std::map<std::string, std::string> CustomTags;
             std::list<AssetReferenceParams> GameAssetReferences;
             std::list<GameCertificateReferenceParams> GameCertificateReferences;
             std::string GameWorkingDirectory;
@@ -1158,6 +1177,7 @@ namespace PlayFab
                 AreAssetsReadonly(),
                 BuildName(),
                 pfContainerFlavor(),
+                CustomTags(),
                 GameAssetReferences(),
                 GameCertificateReferences(),
                 GameWorkingDirectory(),
@@ -1176,6 +1196,7 @@ namespace PlayFab
                 AreAssetsReadonly(src.AreAssetsReadonly),
                 BuildName(src.BuildName),
                 pfContainerFlavor(src.pfContainerFlavor),
+                CustomTags(src.CustomTags),
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
                 GameWorkingDirectory(src.GameWorkingDirectory),
@@ -1276,6 +1297,143 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct CreateBuildWithProcessBasedServerRequest : public PlayFabBaseModel
+        {
+            OptionalBool AreAssetsReadonly;
+            std::string BuildName;
+            std::map<std::string, std::string> CustomTags;
+            std::list<AssetReferenceParams> GameAssetReferences;
+            std::list<GameCertificateReferenceParams> GameCertificateReferences;
+            std::string GameWorkingDirectory;
+            std::map<std::string, std::string> Metadata;
+            Int32 MultiplayerServerCountPerVm;
+            std::string OsPlatform;
+            std::list<Port> Ports;
+            std::list<BuildRegionParams> RegionConfigurations;
+            std::string StartMultiplayerServerCommand;
+            OptionalBool UseStreamingForAssetDownloads;
+            Boxed<AzureVmSize> VmSize;
+
+            CreateBuildWithProcessBasedServerRequest() :
+                PlayFabBaseModel(),
+                AreAssetsReadonly(),
+                BuildName(),
+                CustomTags(),
+                GameAssetReferences(),
+                GameCertificateReferences(),
+                GameWorkingDirectory(),
+                Metadata(),
+                MultiplayerServerCountPerVm(0),
+                OsPlatform(),
+                Ports(),
+                RegionConfigurations(),
+                StartMultiplayerServerCommand(),
+                UseStreamingForAssetDownloads(),
+                VmSize()
+            {}
+
+            CreateBuildWithProcessBasedServerRequest(const CreateBuildWithProcessBasedServerRequest& src) :
+                PlayFabBaseModel(),
+                AreAssetsReadonly(src.AreAssetsReadonly),
+                BuildName(src.BuildName),
+                CustomTags(src.CustomTags),
+                GameAssetReferences(src.GameAssetReferences),
+                GameCertificateReferences(src.GameCertificateReferences),
+                GameWorkingDirectory(src.GameWorkingDirectory),
+                Metadata(src.Metadata),
+                MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
+                OsPlatform(src.OsPlatform),
+                Ports(src.Ports),
+                RegionConfigurations(src.RegionConfigurations),
+                StartMultiplayerServerCommand(src.StartMultiplayerServerCommand),
+                UseStreamingForAssetDownloads(src.UseStreamingForAssetDownloads),
+                VmSize(src.VmSize)
+            {}
+
+            CreateBuildWithProcessBasedServerRequest(const rapidjson::Value& obj) : CreateBuildWithProcessBasedServerRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateBuildWithProcessBasedServerRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateBuildWithProcessBasedServerResponse : public PlayFabBaseModel
+        {
+            OptionalBool AreAssetsReadonly;
+            std::string BuildId;
+            std::string BuildName;
+            Boxed<ContainerFlavor> pfContainerFlavor;
+            OptionalTime CreationTime;
+            std::list<AssetReference> GameAssetReferences;
+            std::list<GameCertificateReference> GameCertificateReferences;
+            std::string GameWorkingDirectory;
+            std::map<std::string, std::string> Metadata;
+            Int32 MultiplayerServerCountPerVm;
+            std::string OsPlatform;
+            std::list<Port> Ports;
+            std::list<BuildRegion> RegionConfigurations;
+            std::string ServerType;
+            std::string StartMultiplayerServerCommand;
+            OptionalBool UseStreamingForAssetDownloads;
+            Boxed<AzureVmSize> VmSize;
+
+            CreateBuildWithProcessBasedServerResponse() :
+                PlayFabBaseModel(),
+                AreAssetsReadonly(),
+                BuildId(),
+                BuildName(),
+                pfContainerFlavor(),
+                CreationTime(),
+                GameAssetReferences(),
+                GameCertificateReferences(),
+                GameWorkingDirectory(),
+                Metadata(),
+                MultiplayerServerCountPerVm(0),
+                OsPlatform(),
+                Ports(),
+                RegionConfigurations(),
+                ServerType(),
+                StartMultiplayerServerCommand(),
+                UseStreamingForAssetDownloads(),
+                VmSize()
+            {}
+
+            CreateBuildWithProcessBasedServerResponse(const CreateBuildWithProcessBasedServerResponse& src) :
+                PlayFabBaseModel(),
+                AreAssetsReadonly(src.AreAssetsReadonly),
+                BuildId(src.BuildId),
+                BuildName(src.BuildName),
+                pfContainerFlavor(src.pfContainerFlavor),
+                CreationTime(src.CreationTime),
+                GameAssetReferences(src.GameAssetReferences),
+                GameCertificateReferences(src.GameCertificateReferences),
+                GameWorkingDirectory(src.GameWorkingDirectory),
+                Metadata(src.Metadata),
+                MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
+                OsPlatform(src.OsPlatform),
+                Ports(src.Ports),
+                RegionConfigurations(src.RegionConfigurations),
+                ServerType(src.ServerType),
+                StartMultiplayerServerCommand(src.StartMultiplayerServerCommand),
+                UseStreamingForAssetDownloads(src.UseStreamingForAssetDownloads),
+                VmSize(src.VmSize)
+            {}
+
+            CreateBuildWithProcessBasedServerResponse(const rapidjson::Value& obj) : CreateBuildWithProcessBasedServerResponse()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateBuildWithProcessBasedServerResponse();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct MatchmakingPlayerAttributes : public PlayFabBaseModel
         {
             MultitypeVar DataObject;
@@ -1335,6 +1493,7 @@ namespace PlayFab
         struct CreateMatchmakingTicketRequest : public PlayFabBaseModel
         {
             MatchmakingPlayer Creator;
+            std::map<std::string, std::string> CustomTags;
             Int32 GiveUpAfterSeconds;
             std::list<EntityKey> MembersToMatchWith;
             std::string QueueName;
@@ -1342,6 +1501,7 @@ namespace PlayFab
             CreateMatchmakingTicketRequest() :
                 PlayFabBaseModel(),
                 Creator(),
+                CustomTags(),
                 GiveUpAfterSeconds(0),
                 MembersToMatchWith(),
                 QueueName()
@@ -1350,6 +1510,7 @@ namespace PlayFab
             CreateMatchmakingTicketRequest(const CreateMatchmakingTicketRequest& src) :
                 PlayFabBaseModel(),
                 Creator(src.Creator),
+                CustomTags(src.CustomTags),
                 GiveUpAfterSeconds(src.GiveUpAfterSeconds),
                 MembersToMatchWith(src.MembersToMatchWith),
                 QueueName(src.QueueName)
@@ -1394,6 +1555,7 @@ namespace PlayFab
         struct CreateRemoteUserRequest : public PlayFabBaseModel
         {
             std::string BuildId;
+            std::map<std::string, std::string> CustomTags;
             OptionalTime ExpirationTime;
             std::string Region;
             std::string Username;
@@ -1402,6 +1564,7 @@ namespace PlayFab
             CreateRemoteUserRequest() :
                 PlayFabBaseModel(),
                 BuildId(),
+                CustomTags(),
                 ExpirationTime(),
                 Region(),
                 Username(),
@@ -1411,6 +1574,7 @@ namespace PlayFab
             CreateRemoteUserRequest(const CreateRemoteUserRequest& src) :
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
+                CustomTags(src.CustomTags),
                 ExpirationTime(src.ExpirationTime),
                 Region(src.Region),
                 Username(src.Username),
@@ -1523,6 +1687,7 @@ namespace PlayFab
 
         struct CreateServerBackfillTicketRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             Int32 GiveUpAfterSeconds;
             std::list<MatchmakingPlayerWithTeamAssignment> Members;
             std::string QueueName;
@@ -1530,6 +1695,7 @@ namespace PlayFab
 
             CreateServerBackfillTicketRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 GiveUpAfterSeconds(0),
                 Members(),
                 QueueName(),
@@ -1538,6 +1704,7 @@ namespace PlayFab
 
             CreateServerBackfillTicketRequest(const CreateServerBackfillTicketRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 GiveUpAfterSeconds(src.GiveUpAfterSeconds),
                 Members(src.Members),
                 QueueName(src.QueueName),
@@ -1582,12 +1749,14 @@ namespace PlayFab
 
         struct CreateServerMatchmakingTicketRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             Int32 GiveUpAfterSeconds;
             std::list<MatchmakingPlayer> Members;
             std::string QueueName;
 
             CreateServerMatchmakingTicketRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 GiveUpAfterSeconds(0),
                 Members(),
                 QueueName()
@@ -1595,6 +1764,7 @@ namespace PlayFab
 
             CreateServerMatchmakingTicketRequest(const CreateServerMatchmakingTicketRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 GiveUpAfterSeconds(src.GiveUpAfterSeconds),
                 Members(src.Members),
                 QueueName(src.QueueName)
@@ -1613,15 +1783,18 @@ namespace PlayFab
 
         struct DeleteAssetRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string FileName;
 
             DeleteAssetRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 FileName()
             {}
 
             DeleteAssetRequest(const DeleteAssetRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 FileName(src.FileName)
             {}
 
@@ -1639,15 +1812,18 @@ namespace PlayFab
         struct DeleteBuildAliasRequest : public PlayFabBaseModel
         {
             std::string AliasId;
+            std::map<std::string, std::string> CustomTags;
 
             DeleteBuildAliasRequest() :
                 PlayFabBaseModel(),
-                AliasId()
+                AliasId(),
+                CustomTags()
             {}
 
             DeleteBuildAliasRequest(const DeleteBuildAliasRequest& src) :
                 PlayFabBaseModel(),
-                AliasId(src.AliasId)
+                AliasId(src.AliasId),
+                CustomTags(src.CustomTags)
             {}
 
             DeleteBuildAliasRequest(const rapidjson::Value& obj) : DeleteBuildAliasRequest()
@@ -1664,17 +1840,20 @@ namespace PlayFab
         struct DeleteBuildRegionRequest : public PlayFabBaseModel
         {
             std::string BuildId;
+            std::map<std::string, std::string> CustomTags;
             std::string Region;
 
             DeleteBuildRegionRequest() :
                 PlayFabBaseModel(),
                 BuildId(),
+                CustomTags(),
                 Region()
             {}
 
             DeleteBuildRegionRequest(const DeleteBuildRegionRequest& src) :
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
+                CustomTags(src.CustomTags),
                 Region(src.Region)
             {}
 
@@ -1692,15 +1871,18 @@ namespace PlayFab
         struct DeleteBuildRequest : public PlayFabBaseModel
         {
             std::string BuildId;
+            std::map<std::string, std::string> CustomTags;
 
             DeleteBuildRequest() :
                 PlayFabBaseModel(),
-                BuildId()
+                BuildId(),
+                CustomTags()
             {}
 
             DeleteBuildRequest(const DeleteBuildRequest& src) :
                 PlayFabBaseModel(),
-                BuildId(src.BuildId)
+                BuildId(src.BuildId),
+                CustomTags(src.CustomTags)
             {}
 
             DeleteBuildRequest(const rapidjson::Value& obj) : DeleteBuildRequest()
@@ -1716,15 +1898,18 @@ namespace PlayFab
 
         struct DeleteCertificateRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string Name;
 
             DeleteCertificateRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Name()
             {}
 
             DeleteCertificateRequest(const DeleteCertificateRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Name(src.Name)
             {}
 
@@ -1741,15 +1926,18 @@ namespace PlayFab
 
         struct DeleteContainerImageRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string ImageName;
 
             DeleteContainerImageRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ImageName()
             {}
 
             DeleteContainerImageRequest(const DeleteContainerImageRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ImageName(src.ImageName)
             {}
 
@@ -1767,6 +1955,7 @@ namespace PlayFab
         struct DeleteRemoteUserRequest : public PlayFabBaseModel
         {
             std::string BuildId;
+            std::map<std::string, std::string> CustomTags;
             std::string Region;
             std::string Username;
             std::string VmId;
@@ -1774,6 +1963,7 @@ namespace PlayFab
             DeleteRemoteUserRequest() :
                 PlayFabBaseModel(),
                 BuildId(),
+                CustomTags(),
                 Region(),
                 Username(),
                 VmId()
@@ -1782,6 +1972,7 @@ namespace PlayFab
             DeleteRemoteUserRequest(const DeleteRemoteUserRequest& src) :
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
+                CustomTags(src.CustomTags),
                 Region(src.Region),
                 Username(src.Username),
                 VmId(src.VmId)
@@ -1822,13 +2013,16 @@ namespace PlayFab
 
         struct EnableMultiplayerServersForTitleRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             EnableMultiplayerServersForTitleRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             EnableMultiplayerServersForTitleRequest(const EnableMultiplayerServersForTitleRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             EnableMultiplayerServersForTitleRequest(const rapidjson::Value& obj) : EnableMultiplayerServersForTitleRequest()
@@ -1879,15 +2073,18 @@ namespace PlayFab
 
         struct GetAssetUploadUrlRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string FileName;
 
             GetAssetUploadUrlRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 FileName()
             {}
 
             GetAssetUploadUrlRequest(const GetAssetUploadUrlRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 FileName(src.FileName)
             {}
 
@@ -1933,15 +2130,18 @@ namespace PlayFab
         struct GetBuildAliasRequest : public PlayFabBaseModel
         {
             std::string AliasId;
+            std::map<std::string, std::string> CustomTags;
 
             GetBuildAliasRequest() :
                 PlayFabBaseModel(),
-                AliasId()
+                AliasId(),
+                CustomTags()
             {}
 
             GetBuildAliasRequest(const GetBuildAliasRequest& src) :
                 PlayFabBaseModel(),
-                AliasId(src.AliasId)
+                AliasId(src.AliasId),
+                CustomTags(src.CustomTags)
             {}
 
             GetBuildAliasRequest(const rapidjson::Value& obj) : GetBuildAliasRequest()
@@ -1958,15 +2158,18 @@ namespace PlayFab
         struct GetBuildRequest : public PlayFabBaseModel
         {
             std::string BuildId;
+            std::map<std::string, std::string> CustomTags;
 
             GetBuildRequest() :
                 PlayFabBaseModel(),
-                BuildId()
+                BuildId(),
+                CustomTags()
             {}
 
             GetBuildRequest(const GetBuildRequest& src) :
                 PlayFabBaseModel(),
-                BuildId(src.BuildId)
+                BuildId(src.BuildId),
+                CustomTags(src.CustomTags)
             {}
 
             GetBuildRequest(const rapidjson::Value& obj) : GetBuildRequest()
@@ -2064,13 +2267,16 @@ namespace PlayFab
 
         struct GetContainerRegistryCredentialsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             GetContainerRegistryCredentialsRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             GetContainerRegistryCredentialsRequest(const GetContainerRegistryCredentialsRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             GetContainerRegistryCredentialsRequest(const rapidjson::Value& obj) : GetContainerRegistryCredentialsRequest()
@@ -2117,12 +2323,14 @@ namespace PlayFab
 
         struct GetMatchmakingTicketRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             bool EscapeObject;
             std::string QueueName;
             std::string TicketId;
 
             GetMatchmakingTicketRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 EscapeObject(false),
                 QueueName(),
                 TicketId()
@@ -2130,6 +2338,7 @@ namespace PlayFab
 
             GetMatchmakingTicketRequest(const GetMatchmakingTicketRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 EscapeObject(src.EscapeObject),
                 QueueName(src.QueueName),
                 TicketId(src.TicketId)
@@ -2200,6 +2409,7 @@ namespace PlayFab
 
         struct GetMatchRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             bool EscapeObject;
             std::string MatchId;
             std::string QueueName;
@@ -2207,6 +2417,7 @@ namespace PlayFab
 
             GetMatchRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 EscapeObject(false),
                 MatchId(),
                 QueueName(),
@@ -2215,6 +2426,7 @@ namespace PlayFab
 
             GetMatchRequest(const GetMatchRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 EscapeObject(src.EscapeObject),
                 MatchId(src.MatchId),
                 QueueName(src.QueueName),
@@ -2269,12 +2481,14 @@ namespace PlayFab
         struct GetMultiplayerServerDetailsRequest : public PlayFabBaseModel
         {
             std::string BuildId;
+            std::map<std::string, std::string> CustomTags;
             std::string Region;
             std::string SessionId;
 
             GetMultiplayerServerDetailsRequest() :
                 PlayFabBaseModel(),
                 BuildId(),
+                CustomTags(),
                 Region(),
                 SessionId()
             {}
@@ -2282,6 +2496,7 @@ namespace PlayFab
             GetMultiplayerServerDetailsRequest(const GetMultiplayerServerDetailsRequest& src) :
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
+                CustomTags(src.CustomTags),
                 Region(src.Region),
                 SessionId(src.SessionId)
             {}
@@ -2351,15 +2566,18 @@ namespace PlayFab
 
         struct GetMultiplayerServerLogsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string ServerId;
 
             GetMultiplayerServerLogsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ServerId()
             {}
 
             GetMultiplayerServerLogsRequest(const GetMultiplayerServerLogsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ServerId(src.ServerId)
             {}
 
@@ -2401,15 +2619,18 @@ namespace PlayFab
 
         struct GetMultiplayerSessionLogsBySessionIdRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string SessionId;
 
             GetMultiplayerSessionLogsBySessionIdRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 SessionId()
             {}
 
             GetMultiplayerSessionLogsBySessionIdRequest(const GetMultiplayerSessionLogsBySessionIdRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 SessionId(src.SessionId)
             {}
 
@@ -2426,15 +2647,18 @@ namespace PlayFab
 
         struct GetQueueStatisticsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string QueueName;
 
             GetQueueStatisticsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 QueueName()
             {}
 
             GetQueueStatisticsRequest(const GetQueueStatisticsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 QueueName(src.QueueName)
             {}
 
@@ -2514,12 +2738,14 @@ namespace PlayFab
         struct GetRemoteLoginEndpointRequest : public PlayFabBaseModel
         {
             std::string BuildId;
+            std::map<std::string, std::string> CustomTags;
             std::string Region;
             std::string VmId;
 
             GetRemoteLoginEndpointRequest() :
                 PlayFabBaseModel(),
                 BuildId(),
+                CustomTags(),
                 Region(),
                 VmId()
             {}
@@ -2527,6 +2753,7 @@ namespace PlayFab
             GetRemoteLoginEndpointRequest(const GetRemoteLoginEndpointRequest& src) :
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
+                CustomTags(src.CustomTags),
                 Region(src.Region),
                 VmId(src.VmId)
             {}
@@ -2572,12 +2799,14 @@ namespace PlayFab
 
         struct GetServerBackfillTicketRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             bool EscapeObject;
             std::string QueueName;
             std::string TicketId;
 
             GetServerBackfillTicketRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 EscapeObject(false),
                 QueueName(),
                 TicketId()
@@ -2585,6 +2814,7 @@ namespace PlayFab
 
             GetServerBackfillTicketRequest(const GetServerBackfillTicketRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 EscapeObject(src.EscapeObject),
                 QueueName(src.QueueName),
                 TicketId(src.TicketId)
@@ -2652,13 +2882,16 @@ namespace PlayFab
 
         struct GetTitleEnabledForMultiplayerServersStatusRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             GetTitleEnabledForMultiplayerServersStatusRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             GetTitleEnabledForMultiplayerServersStatusRequest(const GetTitleEnabledForMultiplayerServersStatusRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             GetTitleEnabledForMultiplayerServersStatusRequest(const rapidjson::Value& obj) : GetTitleEnabledForMultiplayerServersStatusRequest()
@@ -2699,13 +2932,16 @@ namespace PlayFab
 
         struct GetTitleMultiplayerServersQuotasRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             GetTitleMultiplayerServersQuotasRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             GetTitleMultiplayerServersQuotasRequest(const GetTitleMultiplayerServersQuotasRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             GetTitleMultiplayerServersQuotasRequest(const rapidjson::Value& obj) : GetTitleMultiplayerServersQuotasRequest()
@@ -2771,12 +3007,14 @@ namespace PlayFab
 
         struct JoinMatchmakingTicketRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             MatchmakingPlayer Member;
             std::string QueueName;
             std::string TicketId;
 
             JoinMatchmakingTicketRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Member(),
                 QueueName(),
                 TicketId()
@@ -2784,6 +3022,7 @@ namespace PlayFab
 
             JoinMatchmakingTicketRequest(const JoinMatchmakingTicketRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Member(src.Member),
                 QueueName(src.QueueName),
                 TicketId(src.TicketId)
@@ -2824,17 +3063,20 @@ namespace PlayFab
 
         struct ListAssetSummariesRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalInt32 PageSize;
             std::string SkipToken;
 
             ListAssetSummariesRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PageSize(),
                 SkipToken()
             {}
 
             ListAssetSummariesRequest(const ListAssetSummariesRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PageSize(src.PageSize),
                 SkipToken(src.SkipToken)
             {}
@@ -2908,17 +3150,20 @@ namespace PlayFab
 
         struct ListBuildSummariesRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalInt32 PageSize;
             std::string SkipToken;
 
             ListBuildSummariesRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PageSize(),
                 SkipToken()
             {}
 
             ListBuildSummariesRequest(const ListBuildSummariesRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PageSize(src.PageSize),
                 SkipToken(src.SkipToken)
             {}
@@ -2967,17 +3212,20 @@ namespace PlayFab
 
         struct ListCertificateSummariesRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalInt32 PageSize;
             std::string SkipToken;
 
             ListCertificateSummariesRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PageSize(),
                 SkipToken()
             {}
 
             ListCertificateSummariesRequest(const ListCertificateSummariesRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PageSize(src.PageSize),
                 SkipToken(src.SkipToken)
             {}
@@ -3026,17 +3274,20 @@ namespace PlayFab
 
         struct ListContainerImagesRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             OptionalInt32 PageSize;
             std::string SkipToken;
 
             ListContainerImagesRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 PageSize(),
                 SkipToken()
             {}
 
             ListContainerImagesRequest(const ListContainerImagesRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 PageSize(src.PageSize),
                 SkipToken(src.SkipToken)
             {}
@@ -3085,15 +3336,18 @@ namespace PlayFab
 
         struct ListContainerImageTagsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string ImageName;
 
             ListContainerImageTagsRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ImageName()
             {}
 
             ListContainerImageTagsRequest(const ListContainerImageTagsRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ImageName(src.ImageName)
             {}
 
@@ -3135,17 +3389,20 @@ namespace PlayFab
 
         struct ListMatchmakingTicketsForPlayerRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey* Entity;
             std::string QueueName;
 
             ListMatchmakingTicketsForPlayerRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(NULL),
                 QueueName()
             {}
 
             ListMatchmakingTicketsForPlayerRequest(const ListMatchmakingTicketsForPlayerRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
                 QueueName(src.QueueName)
             {}
@@ -3189,6 +3446,7 @@ namespace PlayFab
         struct ListMultiplayerServersRequest : public PlayFabBaseModel
         {
             std::string BuildId;
+            std::map<std::string, std::string> CustomTags;
             OptionalInt32 PageSize;
             std::string Region;
             std::string SkipToken;
@@ -3196,6 +3454,7 @@ namespace PlayFab
             ListMultiplayerServersRequest() :
                 PlayFabBaseModel(),
                 BuildId(),
+                CustomTags(),
                 PageSize(),
                 Region(),
                 SkipToken()
@@ -3204,6 +3463,7 @@ namespace PlayFab
             ListMultiplayerServersRequest(const ListMultiplayerServersRequest& src) :
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
+                CustomTags(src.CustomTags),
                 PageSize(src.PageSize),
                 Region(src.Region),
                 SkipToken(src.SkipToken)
@@ -3296,15 +3556,18 @@ namespace PlayFab
 
         struct ListPartyQosServersRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string Version;
 
             ListPartyQosServersRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Version()
             {}
 
             ListPartyQosServersRequest(const ListPartyQosServersRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Version(src.Version)
             {}
 
@@ -3380,13 +3643,16 @@ namespace PlayFab
 
         struct ListQosServersForTitleRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             ListQosServersForTitleRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             ListQosServersForTitleRequest(const ListQosServersForTitleRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             ListQosServersForTitleRequest(const rapidjson::Value& obj) : ListQosServersForTitleRequest()
@@ -3434,13 +3700,16 @@ namespace PlayFab
         // Deprecated - Do not use
         struct ListQosServersRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             ListQosServersRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             ListQosServersRequest(const ListQosServersRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             ListQosServersRequest(const rapidjson::Value& obj) : ListQosServersRequest()
@@ -3488,17 +3757,20 @@ namespace PlayFab
 
         struct ListServerBackfillTicketsForPlayerRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             std::string QueueName;
 
             ListServerBackfillTicketsForPlayerRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 Entity(),
                 QueueName()
             {}
 
             ListServerBackfillTicketsForPlayerRequest(const ListServerBackfillTicketsForPlayerRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 Entity(src.Entity),
                 QueueName(src.QueueName)
             {}
@@ -3542,6 +3814,7 @@ namespace PlayFab
         struct ListVirtualMachineSummariesRequest : public PlayFabBaseModel
         {
             std::string BuildId;
+            std::map<std::string, std::string> CustomTags;
             OptionalInt32 PageSize;
             std::string Region;
             std::string SkipToken;
@@ -3549,6 +3822,7 @@ namespace PlayFab
             ListVirtualMachineSummariesRequest() :
                 PlayFabBaseModel(),
                 BuildId(),
+                CustomTags(),
                 PageSize(),
                 Region(),
                 SkipToken()
@@ -3557,6 +3831,7 @@ namespace PlayFab
             ListVirtualMachineSummariesRequest(const ListVirtualMachineSummariesRequest& src) :
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
+                CustomTags(src.CustomTags),
                 PageSize(src.PageSize),
                 Region(src.Region),
                 SkipToken(src.SkipToken)
@@ -3637,13 +3912,16 @@ namespace PlayFab
 
         struct MultiplayerEmptyRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             MultiplayerEmptyRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             MultiplayerEmptyRequest(const MultiplayerEmptyRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             MultiplayerEmptyRequest(const rapidjson::Value& obj) : MultiplayerEmptyRequest()
@@ -3670,6 +3948,7 @@ namespace PlayFab
         {
             BuildAliasParams* pfBuildAliasParams;
             std::string BuildId;
+            std::map<std::string, std::string> CustomTags;
             std::list<std::string> InitialPlayers;
             std::list<std::string> PreferredRegions;
             std::string SessionCookie;
@@ -3679,6 +3958,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 pfBuildAliasParams(NULL),
                 BuildId(),
+                CustomTags(),
                 InitialPlayers(),
                 PreferredRegions(),
                 SessionCookie(),
@@ -3689,6 +3969,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 pfBuildAliasParams(src.pfBuildAliasParams ? new BuildAliasParams(*src.pfBuildAliasParams) : NULL),
                 BuildId(src.BuildId),
+                CustomTags(src.CustomTags),
                 InitialPlayers(src.InitialPlayers),
                 PreferredRegions(src.PreferredRegions),
                 SessionCookie(src.SessionCookie),
@@ -3760,13 +4041,16 @@ namespace PlayFab
 
         struct RolloverContainerRegistryCredentialsRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             RolloverContainerRegistryCredentialsRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             RolloverContainerRegistryCredentialsRequest(const RolloverContainerRegistryCredentialsRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             RolloverContainerRegistryCredentialsRequest(const rapidjson::Value& obj) : RolloverContainerRegistryCredentialsRequest()
@@ -3823,12 +4107,14 @@ namespace PlayFab
         struct ShutdownMultiplayerServerRequest : public PlayFabBaseModel
         {
             std::string BuildId;
+            std::map<std::string, std::string> CustomTags;
             std::string Region;
             std::string SessionId;
 
             ShutdownMultiplayerServerRequest() :
                 PlayFabBaseModel(),
                 BuildId(),
+                CustomTags(),
                 Region(),
                 SessionId()
             {}
@@ -3836,6 +4122,7 @@ namespace PlayFab
             ShutdownMultiplayerServerRequest(const ShutdownMultiplayerServerRequest& src) :
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
+                CustomTags(src.CustomTags),
                 Region(src.Region),
                 SessionId(src.SessionId)
             {}
@@ -3853,17 +4140,20 @@ namespace PlayFab
 
         struct UntagContainerImageRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string ImageName;
             std::string Tag;
 
             UntagContainerImageRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 ImageName(),
                 Tag()
             {}
 
             UntagContainerImageRequest(const UntagContainerImageRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 ImageName(src.ImageName),
                 Tag(src.Tag)
             {}
@@ -3884,19 +4174,22 @@ namespace PlayFab
             std::string AliasId;
             std::string AliasName;
             std::list<BuildSelectionCriterion> BuildSelectionCriteria;
+            std::map<std::string, std::string> CustomTags;
 
             UpdateBuildAliasRequest() :
                 PlayFabBaseModel(),
                 AliasId(),
                 AliasName(),
-                BuildSelectionCriteria()
+                BuildSelectionCriteria(),
+                CustomTags()
             {}
 
             UpdateBuildAliasRequest(const UpdateBuildAliasRequest& src) :
                 PlayFabBaseModel(),
                 AliasId(src.AliasId),
                 AliasName(src.AliasName),
-                BuildSelectionCriteria(src.BuildSelectionCriteria)
+                BuildSelectionCriteria(src.BuildSelectionCriteria),
+                CustomTags(src.CustomTags)
             {}
 
             UpdateBuildAliasRequest(const rapidjson::Value& obj) : UpdateBuildAliasRequest()
@@ -3914,17 +4207,20 @@ namespace PlayFab
         {
             std::string BuildId;
             BuildRegionParams BuildRegion;
+            std::map<std::string, std::string> CustomTags;
 
             UpdateBuildRegionRequest() :
                 PlayFabBaseModel(),
                 BuildId(),
-                BuildRegion()
+                BuildRegion(),
+                CustomTags()
             {}
 
             UpdateBuildRegionRequest(const UpdateBuildRegionRequest& src) :
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
-                BuildRegion(src.BuildRegion)
+                BuildRegion(src.BuildRegion),
+                CustomTags(src.CustomTags)
             {}
 
             UpdateBuildRegionRequest(const rapidjson::Value& obj) : UpdateBuildRegionRequest()
@@ -3942,17 +4238,20 @@ namespace PlayFab
         {
             std::string BuildId;
             std::list<BuildRegionParams> BuildRegions;
+            std::map<std::string, std::string> CustomTags;
 
             UpdateBuildRegionsRequest() :
                 PlayFabBaseModel(),
                 BuildId(),
-                BuildRegions()
+                BuildRegions(),
+                CustomTags()
             {}
 
             UpdateBuildRegionsRequest(const UpdateBuildRegionsRequest& src) :
                 PlayFabBaseModel(),
                 BuildId(src.BuildId),
-                BuildRegions(src.BuildRegions)
+                BuildRegions(src.BuildRegions),
+                CustomTags(src.CustomTags)
             {}
 
             UpdateBuildRegionsRequest(const rapidjson::Value& obj) : UpdateBuildRegionsRequest()
@@ -3968,15 +4267,18 @@ namespace PlayFab
 
         struct UploadCertificateRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             Certificate GameCertificate;
 
             UploadCertificateRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 GameCertificate()
             {}
 
             UploadCertificateRequest(const UploadCertificateRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 GameCertificate(src.GameCertificate)
             {}
 

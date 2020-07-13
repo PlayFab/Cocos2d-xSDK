@@ -11,6 +11,7 @@ using namespace PlayFab::ProfilesModels;
 PlayFabProfilesAPI::PlayFabProfilesAPI() {}
 
 void PlayFabProfilesAPI::GetGlobalPolicy(
+    GetGlobalPolicyRequest& request,
     ProcessApiCallback<GetGlobalPolicyResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -26,7 +27,7 @@ void PlayFabProfilesAPI::GetGlobalPolicy(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetGlobalPolicyResult, userData);

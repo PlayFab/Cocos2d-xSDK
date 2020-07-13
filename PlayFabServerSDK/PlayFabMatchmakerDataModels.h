@@ -129,17 +129,20 @@ namespace PlayFab
 
         struct PlayerJoinedRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string LobbyId;
             std::string PlayFabId;
 
             PlayerJoinedRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 LobbyId(),
                 PlayFabId()
             {}
 
             PlayerJoinedRequest(const PlayerJoinedRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 LobbyId(src.LobbyId),
                 PlayFabId(src.PlayFabId)
             {}
@@ -179,17 +182,20 @@ namespace PlayFab
 
         struct PlayerLeftRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             std::string LobbyId;
             std::string PlayFabId;
 
             PlayerLeftRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 LobbyId(),
                 PlayFabId()
             {}
 
             PlayerLeftRequest(const PlayerLeftRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 LobbyId(src.LobbyId),
                 PlayFabId(src.PlayFabId)
             {}
@@ -245,6 +251,7 @@ namespace PlayFab
         {
             std::string Build;
             std::string CustomCommandLineData;
+            std::map<std::string, std::string> CustomTags;
             std::string ExternalMatchmakerEventEndpoint;
             std::string GameMode;
             Region pfRegion;
@@ -253,6 +260,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Build(),
                 CustomCommandLineData(),
+                CustomTags(),
                 ExternalMatchmakerEventEndpoint(),
                 GameMode(),
                 pfRegion()
@@ -262,6 +270,7 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Build(src.Build),
                 CustomCommandLineData(src.CustomCommandLineData),
+                CustomTags(src.CustomTags),
                 ExternalMatchmakerEventEndpoint(src.ExternalMatchmakerEventEndpoint),
                 GameMode(src.GameMode),
                 pfRegion(src.pfRegion)
@@ -317,17 +326,20 @@ namespace PlayFab
 
         struct UserInfoRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
             Int32 MinCatalogVersion;
             std::string PlayFabId;
 
             UserInfoRequest() :
                 PlayFabBaseModel(),
+                CustomTags(),
                 MinCatalogVersion(0),
                 PlayFabId()
             {}
 
             UserInfoRequest(const UserInfoRequest& src) :
                 PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
                 MinCatalogVersion(src.MinCatalogVersion),
                 PlayFabId(src.PlayFabId)
             {}

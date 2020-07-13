@@ -16,9 +16,9 @@ namespace PlayFab
         // ------------ Generated API calls
         static void ExecuteEntityCloudScript(CloudScriptModels::ExecuteEntityCloudScriptRequest& request, ProcessApiCallback<CloudScriptModels::ExecuteCloudScriptResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ExecuteFunction(CloudScriptModels::ExecuteFunctionRequest& request, ProcessApiCallback<CloudScriptModels::ExecuteFunctionResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ListFunctions(ProcessApiCallback<CloudScriptModels::ListFunctionsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ListHttpFunctions(ProcessApiCallback<CloudScriptModels::ListHttpFunctionsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        static void ListQueuedFunctions(ProcessApiCallback<CloudScriptModels::ListQueuedFunctionsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ListFunctions(CloudScriptModels::ListFunctionsRequest& request, ProcessApiCallback<CloudScriptModels::ListFunctionsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ListHttpFunctions(CloudScriptModels::ListFunctionsRequest& request, ProcessApiCallback<CloudScriptModels::ListHttpFunctionsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void ListQueuedFunctions(CloudScriptModels::ListFunctionsRequest& request, ProcessApiCallback<CloudScriptModels::ListQueuedFunctionsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void PostFunctionResultForEntityTriggeredAction(CloudScriptModels::PostFunctionResultForEntityTriggeredActionRequest& request, ProcessApiCallback<CloudScriptModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void PostFunctionResultForFunctionExecution(CloudScriptModels::PostFunctionResultForFunctionExecutionRequest& request, ProcessApiCallback<CloudScriptModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void PostFunctionResultForPlayerTriggeredAction(CloudScriptModels::PostFunctionResultForPlayerTriggeredActionRequest& request, ProcessApiCallback<CloudScriptModels::EmptyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);

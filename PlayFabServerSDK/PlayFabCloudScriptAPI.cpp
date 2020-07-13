@@ -103,6 +103,7 @@ void PlayFabCloudScriptAPI::OnExecuteFunctionResult(int httpStatus, HttpRequest*
 }
 
 void PlayFabCloudScriptAPI::ListFunctions(
+    ListFunctionsRequest& request,
     ProcessApiCallback<ListFunctionsResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -118,7 +119,7 @@ void PlayFabCloudScriptAPI::ListFunctions(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnListFunctionsResult, userData);
@@ -148,6 +149,7 @@ void PlayFabCloudScriptAPI::OnListFunctionsResult(int httpStatus, HttpRequest* r
 }
 
 void PlayFabCloudScriptAPI::ListHttpFunctions(
+    ListFunctionsRequest& request,
     ProcessApiCallback<ListHttpFunctionsResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -163,7 +165,7 @@ void PlayFabCloudScriptAPI::ListHttpFunctions(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnListHttpFunctionsResult, userData);
@@ -193,6 +195,7 @@ void PlayFabCloudScriptAPI::OnListHttpFunctionsResult(int httpStatus, HttpReques
 }
 
 void PlayFabCloudScriptAPI::ListQueuedFunctions(
+    ListFunctionsRequest& request,
     ProcessApiCallback<ListQueuedFunctionsResult> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -208,7 +211,7 @@ void PlayFabCloudScriptAPI::ListQueuedFunctions(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnListQueuedFunctionsResult, userData);

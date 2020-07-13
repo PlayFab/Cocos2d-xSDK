@@ -9,13 +9,16 @@ namespace PlayFab
     {
         struct GetLanguageListRequest : public PlayFabBaseModel
         {
+            std::map<std::string, std::string> CustomTags;
 
             GetLanguageListRequest() :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags()
             {}
 
             GetLanguageListRequest(const GetLanguageListRequest& src) :
-                PlayFabBaseModel()
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
             {}
 
             GetLanguageListRequest(const rapidjson::Value& obj) : GetLanguageListRequest()

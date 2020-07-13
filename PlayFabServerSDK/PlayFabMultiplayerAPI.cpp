@@ -332,6 +332,52 @@ void PlayFabMultiplayerAPI::OnCreateBuildWithManagedContainerResult(int httpStat
     delete request;
 }
 
+void PlayFabMultiplayerAPI::CreateBuildWithProcessBasedServer(
+    CreateBuildWithProcessBasedServerRequest& request,
+    ProcessApiCallback<CreateBuildWithProcessBasedServerResponse> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/MultiplayerServer/CreateBuildWithProcessBasedServer"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-EntityToken", PlayFabSettings::entityToken);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<CreateBuildWithProcessBasedServerResponse>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnCreateBuildWithProcessBasedServerResult, userData);
+}
+
+void PlayFabMultiplayerAPI::OnCreateBuildWithProcessBasedServerResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    CreateBuildWithProcessBasedServerResponse outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<CreateBuildWithProcessBasedServerResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabMultiplayerAPI::CreateMatchmakingTicket(
     CreateMatchmakingTicketRequest& request,
     ProcessApiCallback<CreateMatchmakingTicketResult> callback,
@@ -839,6 +885,7 @@ void PlayFabMultiplayerAPI::OnDeleteRemoteUserResult(int httpStatus, HttpRequest
 }
 
 void PlayFabMultiplayerAPI::EnableMultiplayerServersForTitle(
+    EnableMultiplayerServersForTitleRequest& request,
     ProcessApiCallback<EnableMultiplayerServersForTitleResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -854,7 +901,7 @@ void PlayFabMultiplayerAPI::EnableMultiplayerServersForTitle(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnEnableMultiplayerServersForTitleResult, userData);
@@ -1022,6 +1069,7 @@ void PlayFabMultiplayerAPI::OnGetBuildAliasResult(int httpStatus, HttpRequest* r
 }
 
 void PlayFabMultiplayerAPI::GetContainerRegistryCredentials(
+    GetContainerRegistryCredentialsRequest& request,
     ProcessApiCallback<GetContainerRegistryCredentialsResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -1037,7 +1085,7 @@ void PlayFabMultiplayerAPI::GetContainerRegistryCredentials(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetContainerRegistryCredentialsResult, userData);
@@ -1435,6 +1483,7 @@ void PlayFabMultiplayerAPI::OnGetServerBackfillTicketResult(int httpStatus, Http
 }
 
 void PlayFabMultiplayerAPI::GetTitleEnabledForMultiplayerServersStatus(
+    GetTitleEnabledForMultiplayerServersStatusRequest& request,
     ProcessApiCallback<GetTitleEnabledForMultiplayerServersStatusResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -1450,7 +1499,7 @@ void PlayFabMultiplayerAPI::GetTitleEnabledForMultiplayerServersStatus(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetTitleEnabledForMultiplayerServersStatusResult, userData);
@@ -1480,6 +1529,7 @@ void PlayFabMultiplayerAPI::OnGetTitleEnabledForMultiplayerServersStatusResult(i
 }
 
 void PlayFabMultiplayerAPI::GetTitleMultiplayerServersQuotas(
+    GetTitleMultiplayerServersQuotasRequest& request,
     ProcessApiCallback<GetTitleMultiplayerServersQuotasResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -1495,7 +1545,7 @@ void PlayFabMultiplayerAPI::GetTitleMultiplayerServersQuotas(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnGetTitleMultiplayerServersQuotasResult, userData);
@@ -1663,6 +1713,7 @@ void PlayFabMultiplayerAPI::OnListAssetSummariesResult(int httpStatus, HttpReque
 }
 
 void PlayFabMultiplayerAPI::ListBuildAliases(
+    MultiplayerEmptyRequest& request,
     ProcessApiCallback<ListBuildAliasesForTitleResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -1678,7 +1729,7 @@ void PlayFabMultiplayerAPI::ListBuildAliases(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnListBuildAliasesResult, userData);
@@ -2029,6 +2080,7 @@ void PlayFabMultiplayerAPI::OnListPartyQosServersResult(int httpStatus, HttpRequ
 }
 
 void PlayFabMultiplayerAPI::ListQosServers(
+    ListQosServersRequest& request,
     ProcessApiCallback<ListQosServersResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -2043,7 +2095,7 @@ void PlayFabMultiplayerAPI::ListQosServers(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnListQosServersResult, userData);
@@ -2073,6 +2125,7 @@ void PlayFabMultiplayerAPI::OnListQosServersResult(int httpStatus, HttpRequest* 
 }
 
 void PlayFabMultiplayerAPI::ListQosServersForTitle(
+    ListQosServersForTitleRequest& request,
     ProcessApiCallback<ListQosServersForTitleResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -2088,7 +2141,7 @@ void PlayFabMultiplayerAPI::ListQosServersForTitle(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnListQosServersForTitleResult, userData);
@@ -2256,6 +2309,7 @@ void PlayFabMultiplayerAPI::OnRequestMultiplayerServerResult(int httpStatus, Htt
 }
 
 void PlayFabMultiplayerAPI::RolloverContainerRegistryCredentials(
+    RolloverContainerRegistryCredentialsRequest& request,
     ProcessApiCallback<RolloverContainerRegistryCredentialsResponse> callback,
     ErrorCallback errorCallback,
     void* userData
@@ -2271,7 +2325,7 @@ void PlayFabMultiplayerAPI::RolloverContainerRegistryCredentials(
     httpRequest->SetErrorCallback(errorCallback);
     httpRequest->SetUserData(userData);
 
-    httpRequest->SetBody("{}");
+    httpRequest->SetBody(request.toJSONString());
     httpRequest->CompressBody();
 
     PlayFabSettings::httpRequester->AddRequest(httpRequest, OnRolloverContainerRegistryCredentialsResult, userData);

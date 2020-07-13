@@ -37,6 +37,14 @@ EventContents::~EventContents()
 void EventContents::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
     writer.String("EventNamespace"); writer.String(EventNamespace.c_str());
     writer.String("Name"); writer.String(Name.c_str());
@@ -49,6 +57,12 @@ void EventContents::writeJSON(PFStringJsonWriter& writer)
 
 bool EventContents::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
     const Value::ConstMemberIterator EventNamespace_member = obj.FindMember("EventNamespace");
@@ -75,6 +89,14 @@ WriteEventsRequest::~WriteEventsRequest()
 void WriteEventsRequest::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
     writer.String("Events");
     writer.StartArray();
     for (std::list<EventContents>::iterator iter = Events.begin(); iter != Events.end(); iter++) {
@@ -86,6 +108,12 @@ void WriteEventsRequest::writeJSON(PFStringJsonWriter& writer)
 
 bool WriteEventsRequest::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
     const Value::ConstMemberIterator Events_member = obj.FindMember("Events");
     if (Events_member != obj.MemberEnd()) {
         const rapidjson::Value& memberList = Events_member->value;
