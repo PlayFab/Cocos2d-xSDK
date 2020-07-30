@@ -110,7 +110,8 @@ namespace PlayFab
             AzureRegionWestUs,
             AzureRegionChinaEast2,
             AzureRegionChinaNorth2,
-            AzureRegionSouthAfricaNorth
+            AzureRegionSouthAfricaNorth,
+            AzureRegionCentralUsEuap
         };
 
         void writeAzureRegionEnumJSON(AzureRegion enumVal, PFStringJsonWriter& writer);
@@ -924,6 +925,31 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct LinuxInstrumentationConfiguration : public PlayFabBaseModel
+        {
+            bool IsEnabled;
+
+            LinuxInstrumentationConfiguration() :
+                PlayFabBaseModel(),
+                IsEnabled(false)
+            {}
+
+            LinuxInstrumentationConfiguration(const LinuxInstrumentationConfiguration& src) :
+                PlayFabBaseModel(),
+                IsEnabled(src.IsEnabled)
+            {}
+
+            LinuxInstrumentationConfiguration(const rapidjson::Value& obj) : LinuxInstrumentationConfiguration()
+            {
+                readFromValue(obj);
+            }
+
+            ~LinuxInstrumentationConfiguration();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum ProtocolType
         {
             ProtocolTypeTCP,
@@ -974,6 +1000,7 @@ namespace PlayFab
             std::map<std::string, std::string> CustomTags;
             std::list<AssetReferenceParams> GameAssetReferences;
             std::list<GameCertificateReferenceParams> GameCertificateReferences;
+            LinuxInstrumentationConfiguration* pfLinuxInstrumentationConfiguration;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
             std::list<Port> Ports;
@@ -991,6 +1018,7 @@ namespace PlayFab
                 CustomTags(),
                 GameAssetReferences(),
                 GameCertificateReferences(),
+                pfLinuxInstrumentationConfiguration(NULL),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
                 Ports(),
@@ -1009,6 +1037,7 @@ namespace PlayFab
                 CustomTags(src.CustomTags),
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
+                pfLinuxInstrumentationConfiguration(src.pfLinuxInstrumentationConfiguration ? new LinuxInstrumentationConfiguration(*src.pfLinuxInstrumentationConfiguration) : NULL),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 Ports(src.Ports),
@@ -1067,6 +1096,7 @@ namespace PlayFab
             ContainerImageReference* CustomGameContainerImage;
             std::list<AssetReference> GameAssetReferences;
             std::list<GameCertificateReference> GameCertificateReferences;
+            LinuxInstrumentationConfiguration* pfLinuxInstrumentationConfiguration;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
             std::string OsPlatform;
@@ -1087,6 +1117,7 @@ namespace PlayFab
                 CustomGameContainerImage(NULL),
                 GameAssetReferences(),
                 GameCertificateReferences(),
+                pfLinuxInstrumentationConfiguration(NULL),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
                 OsPlatform(),
@@ -1108,6 +1139,7 @@ namespace PlayFab
                 CustomGameContainerImage(src.CustomGameContainerImage ? new ContainerImageReference(*src.CustomGameContainerImage) : NULL),
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
+                pfLinuxInstrumentationConfiguration(src.pfLinuxInstrumentationConfiguration ? new LinuxInstrumentationConfiguration(*src.pfLinuxInstrumentationConfiguration) : NULL),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 OsPlatform(src.OsPlatform),
@@ -1305,6 +1337,7 @@ namespace PlayFab
             std::list<AssetReferenceParams> GameAssetReferences;
             std::list<GameCertificateReferenceParams> GameCertificateReferences;
             std::string GameWorkingDirectory;
+            InstrumentationConfiguration* pfInstrumentationConfiguration;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
             std::string OsPlatform;
@@ -1322,6 +1355,7 @@ namespace PlayFab
                 GameAssetReferences(),
                 GameCertificateReferences(),
                 GameWorkingDirectory(),
+                pfInstrumentationConfiguration(NULL),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
                 OsPlatform(),
@@ -1340,6 +1374,7 @@ namespace PlayFab
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
                 GameWorkingDirectory(src.GameWorkingDirectory),
+                pfInstrumentationConfiguration(src.pfInstrumentationConfiguration ? new InstrumentationConfiguration(*src.pfInstrumentationConfiguration) : NULL),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 OsPlatform(src.OsPlatform),
@@ -1371,6 +1406,7 @@ namespace PlayFab
             std::list<AssetReference> GameAssetReferences;
             std::list<GameCertificateReference> GameCertificateReferences;
             std::string GameWorkingDirectory;
+            InstrumentationConfiguration* pfInstrumentationConfiguration;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
             std::string OsPlatform;
@@ -1391,6 +1427,7 @@ namespace PlayFab
                 GameAssetReferences(),
                 GameCertificateReferences(),
                 GameWorkingDirectory(),
+                pfInstrumentationConfiguration(NULL),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
                 OsPlatform(),
@@ -1412,6 +1449,7 @@ namespace PlayFab
                 GameAssetReferences(src.GameAssetReferences),
                 GameCertificateReferences(src.GameCertificateReferences),
                 GameWorkingDirectory(src.GameWorkingDirectory),
+                pfInstrumentationConfiguration(src.pfInstrumentationConfiguration ? new InstrumentationConfiguration(*src.pfInstrumentationConfiguration) : NULL),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 OsPlatform(src.OsPlatform),
@@ -3557,6 +3595,7 @@ namespace PlayFab
         struct ListPartyQosServersRequest : public PlayFabBaseModel
         {
             std::map<std::string, std::string> CustomTags;
+            // Deprecated - Do not use
             std::string Version;
 
             ListPartyQosServersRequest() :
