@@ -106,6 +106,7 @@ void PlayFab::MultiplayerModels::writeAzureRegionEnumJSON(AzureRegion enumVal, P
     case AzureRegionChinaEast2: writer.String("ChinaEast2"); break;
     case AzureRegionChinaNorth2: writer.String("ChinaNorth2"); break;
     case AzureRegionSouthAfricaNorth: writer.String("SouthAfricaNorth"); break;
+    case AzureRegionCentralUsEuap: writer.String("CentralUsEuap"); break;
 
     }
 }
@@ -134,6 +135,7 @@ AzureRegion PlayFab::MultiplayerModels::readAzureRegionFromValue(const rapidjson
         _AzureRegionMap["ChinaEast2"] = AzureRegionChinaEast2;
         _AzureRegionMap["ChinaNorth2"] = AzureRegionChinaNorth2;
         _AzureRegionMap["SouthAfricaNorth"] = AzureRegionSouthAfricaNorth;
+        _AzureRegionMap["CentralUsEuap"] = AzureRegionCentralUsEuap;
 
     }
 
@@ -1063,6 +1065,26 @@ bool GameCertificateReferenceParams::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+
+LinuxInstrumentationConfiguration::~LinuxInstrumentationConfiguration()
+{
+
+}
+
+void LinuxInstrumentationConfiguration::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("IsEnabled"); writer.Bool(IsEnabled);
+    writer.EndObject();
+}
+
+bool LinuxInstrumentationConfiguration::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator IsEnabled_member = obj.FindMember("IsEnabled");
+    if (IsEnabled_member != obj.MemberEnd() && !IsEnabled_member->value.IsNull()) IsEnabled = IsEnabled_member->value.GetBool();
+
+    return true;
+}
 void PlayFab::MultiplayerModels::writeProtocolTypeEnumJSON(ProtocolType enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -1120,6 +1142,7 @@ bool Port::readFromValue(const rapidjson::Value& obj)
 CreateBuildWithCustomContainerRequest::~CreateBuildWithCustomContainerRequest()
 {
     if (pfContainerImageReference != NULL) delete pfContainerImageReference;
+    if (pfLinuxInstrumentationConfiguration != NULL) delete pfLinuxInstrumentationConfiguration;
 
 }
 
@@ -1155,6 +1178,7 @@ void CreateBuildWithCustomContainerRequest::writeJSON(PFStringJsonWriter& writer
         }
         writer.EndArray();
     }
+    if (pfLinuxInstrumentationConfiguration != NULL) { writer.String("LinuxInstrumentationConfiguration"); pfLinuxInstrumentationConfiguration->writeJSON(writer); }
     if (!Metadata.empty()) {
         writer.String("Metadata");
         writer.StartObject();
@@ -1213,6 +1237,8 @@ bool CreateBuildWithCustomContainerRequest::readFromValue(const rapidjson::Value
             GameCertificateReferences.push_back(GameCertificateReferenceParams(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator LinuxInstrumentationConfiguration_member = obj.FindMember("LinuxInstrumentationConfiguration");
+    if (LinuxInstrumentationConfiguration_member != obj.MemberEnd() && !LinuxInstrumentationConfiguration_member->value.IsNull()) pfLinuxInstrumentationConfiguration = new LinuxInstrumentationConfiguration(LinuxInstrumentationConfiguration_member->value);
     const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
     if (Metadata_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {
@@ -1269,6 +1295,7 @@ bool GameCertificateReference::readFromValue(const rapidjson::Value& obj)
 CreateBuildWithCustomContainerResponse::~CreateBuildWithCustomContainerResponse()
 {
     if (CustomGameContainerImage != NULL) delete CustomGameContainerImage;
+    if (pfLinuxInstrumentationConfiguration != NULL) delete pfLinuxInstrumentationConfiguration;
 
 }
 
@@ -1298,6 +1325,7 @@ void CreateBuildWithCustomContainerResponse::writeJSON(PFStringJsonWriter& write
         }
         writer.EndArray();
     }
+    if (pfLinuxInstrumentationConfiguration != NULL) { writer.String("LinuxInstrumentationConfiguration"); pfLinuxInstrumentationConfiguration->writeJSON(writer); }
     if (!Metadata.empty()) {
         writer.String("Metadata");
         writer.StartObject();
@@ -1360,6 +1388,8 @@ bool CreateBuildWithCustomContainerResponse::readFromValue(const rapidjson::Valu
             GameCertificateReferences.push_back(GameCertificateReference(memberList[i]));
         }
     }
+    const Value::ConstMemberIterator LinuxInstrumentationConfiguration_member = obj.FindMember("LinuxInstrumentationConfiguration");
+    if (LinuxInstrumentationConfiguration_member != obj.MemberEnd() && !LinuxInstrumentationConfiguration_member->value.IsNull()) pfLinuxInstrumentationConfiguration = new LinuxInstrumentationConfiguration(LinuxInstrumentationConfiguration_member->value);
     const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
     if (Metadata_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {
@@ -1686,6 +1716,7 @@ bool CreateBuildWithManagedContainerResponse::readFromValue(const rapidjson::Val
 
 CreateBuildWithProcessBasedServerRequest::~CreateBuildWithProcessBasedServerRequest()
 {
+    if (pfInstrumentationConfiguration != NULL) delete pfInstrumentationConfiguration;
 
 }
 
@@ -1717,6 +1748,7 @@ void CreateBuildWithProcessBasedServerRequest::writeJSON(PFStringJsonWriter& wri
         writer.EndArray();
     }
     if (GameWorkingDirectory.length() > 0) { writer.String("GameWorkingDirectory"); writer.String(GameWorkingDirectory.c_str()); }
+    if (pfInstrumentationConfiguration != NULL) { writer.String("InstrumentationConfiguration"); pfInstrumentationConfiguration->writeJSON(writer); }
     if (!Metadata.empty()) {
         writer.String("Metadata");
         writer.StartObject();
@@ -1773,6 +1805,8 @@ bool CreateBuildWithProcessBasedServerRequest::readFromValue(const rapidjson::Va
     }
     const Value::ConstMemberIterator GameWorkingDirectory_member = obj.FindMember("GameWorkingDirectory");
     if (GameWorkingDirectory_member != obj.MemberEnd() && !GameWorkingDirectory_member->value.IsNull()) GameWorkingDirectory = GameWorkingDirectory_member->value.GetString();
+    const Value::ConstMemberIterator InstrumentationConfiguration_member = obj.FindMember("InstrumentationConfiguration");
+    if (InstrumentationConfiguration_member != obj.MemberEnd() && !InstrumentationConfiguration_member->value.IsNull()) pfInstrumentationConfiguration = new InstrumentationConfiguration(InstrumentationConfiguration_member->value);
     const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
     if (Metadata_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {
@@ -1809,6 +1843,7 @@ bool CreateBuildWithProcessBasedServerRequest::readFromValue(const rapidjson::Va
 
 CreateBuildWithProcessBasedServerResponse::~CreateBuildWithProcessBasedServerResponse()
 {
+    if (pfInstrumentationConfiguration != NULL) delete pfInstrumentationConfiguration;
 
 }
 
@@ -1837,6 +1872,7 @@ void CreateBuildWithProcessBasedServerResponse::writeJSON(PFStringJsonWriter& wr
         writer.EndArray();
     }
     if (GameWorkingDirectory.length() > 0) { writer.String("GameWorkingDirectory"); writer.String(GameWorkingDirectory.c_str()); }
+    if (pfInstrumentationConfiguration != NULL) { writer.String("InstrumentationConfiguration"); pfInstrumentationConfiguration->writeJSON(writer); }
     if (!Metadata.empty()) {
         writer.String("Metadata");
         writer.StartObject();
@@ -1898,6 +1934,8 @@ bool CreateBuildWithProcessBasedServerResponse::readFromValue(const rapidjson::V
     }
     const Value::ConstMemberIterator GameWorkingDirectory_member = obj.FindMember("GameWorkingDirectory");
     if (GameWorkingDirectory_member != obj.MemberEnd() && !GameWorkingDirectory_member->value.IsNull()) GameWorkingDirectory = GameWorkingDirectory_member->value.GetString();
+    const Value::ConstMemberIterator InstrumentationConfiguration_member = obj.FindMember("InstrumentationConfiguration");
+    if (InstrumentationConfiguration_member != obj.MemberEnd() && !InstrumentationConfiguration_member->value.IsNull()) pfInstrumentationConfiguration = new InstrumentationConfiguration(InstrumentationConfiguration_member->value);
     const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
     if (Metadata_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {
@@ -4436,7 +4474,7 @@ void ListPartyQosServersRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndObject();
     }
-    writer.String("Version"); writer.String(Version.c_str());
+    if (Version.length() > 0) { writer.String("Version"); writer.String(Version.c_str()); }
     writer.EndObject();
 }
 
