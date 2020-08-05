@@ -124,6 +124,35 @@ bool GetEntityTokenResponse::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+void PlayFab::AuthenticationModels::writeIdentifiedDeviceTypeEnumJSON(IdentifiedDeviceType enumVal, PFStringJsonWriter& writer)
+{
+    switch (enumVal)
+    {
+    case IdentifiedDeviceTypeUnknown: writer.String("Unknown"); break;
+    case IdentifiedDeviceTypeXboxOne: writer.String("XboxOne"); break;
+    case IdentifiedDeviceTypeScarlett: writer.String("Scarlett"); break;
+
+    }
+}
+
+IdentifiedDeviceType PlayFab::AuthenticationModels::readIdentifiedDeviceTypeFromValue(const rapidjson::Value& obj)
+{
+    static std::map<std::string, IdentifiedDeviceType> _IdentifiedDeviceTypeMap;
+    if (_IdentifiedDeviceTypeMap.size() == 0)
+    {
+        // Auto-generate the map on the first use
+        _IdentifiedDeviceTypeMap["Unknown"] = IdentifiedDeviceTypeUnknown;
+        _IdentifiedDeviceTypeMap["XboxOne"] = IdentifiedDeviceTypeXboxOne;
+        _IdentifiedDeviceTypeMap["Scarlett"] = IdentifiedDeviceTypeScarlett;
+
+    }
+
+    auto output = _IdentifiedDeviceTypeMap.find(obj.GetString());
+    if (output != _IdentifiedDeviceTypeMap.end())
+        return output->second;
+
+    return IdentifiedDeviceTypeUnknown; // Basically critical fail
+}
 void PlayFab::AuthenticationModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -235,6 +264,7 @@ void ValidateEntityTokenResponse::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (Entity != NULL) { writer.String("Entity"); Entity->writeJSON(writer); }
+    if (pfIdentifiedDeviceType.notNull()) { writer.String("IdentifiedDeviceType"); writeIdentifiedDeviceTypeEnumJSON(pfIdentifiedDeviceType, writer); }
     if (IdentityProvider.notNull()) { writer.String("IdentityProvider"); writeLoginIdentityProviderEnumJSON(IdentityProvider, writer); }
     if (Lineage != NULL) { writer.String("Lineage"); Lineage->writeJSON(writer); }
     writer.EndObject();
@@ -244,6 +274,8 @@ bool ValidateEntityTokenResponse::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator Entity_member = obj.FindMember("Entity");
     if (Entity_member != obj.MemberEnd() && !Entity_member->value.IsNull()) Entity = new EntityKey(Entity_member->value);
+    const Value::ConstMemberIterator IdentifiedDeviceType_member = obj.FindMember("IdentifiedDeviceType");
+    if (IdentifiedDeviceType_member != obj.MemberEnd() && !IdentifiedDeviceType_member->value.IsNull()) pfIdentifiedDeviceType = readIdentifiedDeviceTypeFromValue(IdentifiedDeviceType_member->value);
     const Value::ConstMemberIterator IdentityProvider_member = obj.FindMember("IdentityProvider");
     if (IdentityProvider_member != obj.MemberEnd() && !IdentityProvider_member->value.IsNull()) IdentityProvider = readLoginIdentityProviderFromValue(IdentityProvider_member->value);
     const Value::ConstMemberIterator Lineage_member = obj.FindMember("Lineage");

@@ -3166,6 +3166,43 @@ bool DeleteTaskRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+DeleteTitleDataOverrideRequest::~DeleteTitleDataOverrideRequest()
+{
+
+}
+
+void DeleteTitleDataOverrideRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("OverrideLabel"); writer.String(OverrideLabel.c_str());
+    writer.EndObject();
+}
+
+bool DeleteTitleDataOverrideRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator OverrideLabel_member = obj.FindMember("OverrideLabel");
+    if (OverrideLabel_member != obj.MemberEnd() && !OverrideLabel_member->value.IsNull()) OverrideLabel = OverrideLabel_member->value.GetString();
+
+    return true;
+}
+
+DeleteTitleDataOverrideResult::~DeleteTitleDataOverrideResult()
+{
+
+}
+
+void DeleteTitleDataOverrideResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool DeleteTitleDataOverrideResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
 DeleteTitleRequest::~DeleteTitleRequest()
 {
 
@@ -3919,7 +3956,6 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExperimentationInvalidDuration: writer.String("ExperimentationInvalidDuration"); break;
     case GenericErrorCodesExperimentationMaxExperimentsReached: writer.String("ExperimentationMaxExperimentsReached"); break;
     case GenericErrorCodesExperimentationExperimentSchedulingInProgress: writer.String("ExperimentationExperimentSchedulingInProgress"); break;
-    case GenericErrorCodesExperimentationExistingCodelessScheduled: writer.String("ExperimentationExistingCodelessScheduled"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesTitleNotOnUpdatedPricingPlan: writer.String("TitleNotOnUpdatedPricingPlan"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
@@ -4513,7 +4549,6 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExperimentationInvalidDuration"] = GenericErrorCodesExperimentationInvalidDuration;
         _GenericErrorCodesMap["ExperimentationMaxExperimentsReached"] = GenericErrorCodesExperimentationMaxExperimentsReached;
         _GenericErrorCodesMap["ExperimentationExperimentSchedulingInProgress"] = GenericErrorCodesExperimentationExperimentSchedulingInProgress;
-        _GenericErrorCodesMap["ExperimentationExistingCodelessScheduled"] = GenericErrorCodesExperimentationExistingCodelessScheduled;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["TitleNotOnUpdatedPricingPlan"] = GenericErrorCodesTitleNotOnUpdatedPricingPlan;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
@@ -10417,6 +10452,79 @@ void SetPublisherDataResult::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool SetPublisherDataResult::readFromValue(const rapidjson::Value& obj)
+{
+
+    return true;
+}
+
+TitleDataKeyValue::~TitleDataKeyValue()
+{
+
+}
+
+void TitleDataKeyValue::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Key.length() > 0) { writer.String("Key"); writer.String(Key.c_str()); }
+    if (Value.length() > 0) { writer.String("Value"); writer.String(Value.c_str()); }
+    writer.EndObject();
+}
+
+bool TitleDataKeyValue::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Key_member = obj.FindMember("Key");
+    if (Key_member != obj.MemberEnd() && !Key_member->value.IsNull()) Key = Key_member->value.GetString();
+    const Value::ConstMemberIterator Value_member = obj.FindMember("Value");
+    if (Value_member != obj.MemberEnd() && !Value_member->value.IsNull()) Value = Value_member->value.GetString();
+
+    return true;
+}
+
+SetTitleDataAndOverridesRequest::~SetTitleDataAndOverridesRequest()
+{
+
+}
+
+void SetTitleDataAndOverridesRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("KeyValues");
+    writer.StartArray();
+    for (std::list<TitleDataKeyValue>::iterator iter = KeyValues.begin(); iter != KeyValues.end(); iter++) {
+        iter->writeJSON(writer);
+    }
+    writer.EndArray();
+    if (OverrideLabel.length() > 0) { writer.String("OverrideLabel"); writer.String(OverrideLabel.c_str()); }
+    writer.EndObject();
+}
+
+bool SetTitleDataAndOverridesRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator KeyValues_member = obj.FindMember("KeyValues");
+    if (KeyValues_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = KeyValues_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            KeyValues.push_back(TitleDataKeyValue(memberList[i]));
+        }
+    }
+    const Value::ConstMemberIterator OverrideLabel_member = obj.FindMember("OverrideLabel");
+    if (OverrideLabel_member != obj.MemberEnd() && !OverrideLabel_member->value.IsNull()) OverrideLabel = OverrideLabel_member->value.GetString();
+
+    return true;
+}
+
+SetTitleDataAndOverridesResult::~SetTitleDataAndOverridesResult()
+{
+
+}
+
+void SetTitleDataAndOverridesResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.EndObject();
+}
+
+bool SetTitleDataAndOverridesResult::readFromValue(const rapidjson::Value& obj)
 {
 
     return true;

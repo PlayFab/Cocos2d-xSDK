@@ -2524,6 +2524,53 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct DeleteTitleDataOverrideRequest : public PlayFabBaseModel
+        {
+            std::string OverrideLabel;
+
+            DeleteTitleDataOverrideRequest() :
+                PlayFabBaseModel(),
+                OverrideLabel()
+            {}
+
+            DeleteTitleDataOverrideRequest(const DeleteTitleDataOverrideRequest& src) :
+                PlayFabBaseModel(),
+                OverrideLabel(src.OverrideLabel)
+            {}
+
+            DeleteTitleDataOverrideRequest(const rapidjson::Value& obj) : DeleteTitleDataOverrideRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteTitleDataOverrideRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeleteTitleDataOverrideResult : public PlayFabBaseModel
+        {
+
+            DeleteTitleDataOverrideResult() :
+                PlayFabBaseModel()
+            {}
+
+            DeleteTitleDataOverrideResult(const DeleteTitleDataOverrideResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            DeleteTitleDataOverrideResult(const rapidjson::Value& obj) : DeleteTitleDataOverrideResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteTitleDataOverrideResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct DeleteTitleRequest : public PlayFabBaseModel
         {
 
@@ -3293,7 +3340,6 @@ namespace PlayFab
             GenericErrorCodesExperimentationInvalidDuration,
             GenericErrorCodesExperimentationMaxExperimentsReached,
             GenericErrorCodesExperimentationExperimentSchedulingInProgress,
-            GenericErrorCodesExperimentationExistingCodelessScheduled,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesTitleNotOnUpdatedPricingPlan,
             GenericErrorCodesSnapshotNotFound
@@ -8646,6 +8692,84 @@ namespace PlayFab
             }
 
             ~SetPublisherDataResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct TitleDataKeyValue : public PlayFabBaseModel
+        {
+            std::string Key;
+            std::string Value;
+
+            TitleDataKeyValue() :
+                PlayFabBaseModel(),
+                Key(),
+                Value()
+            {}
+
+            TitleDataKeyValue(const TitleDataKeyValue& src) :
+                PlayFabBaseModel(),
+                Key(src.Key),
+                Value(src.Value)
+            {}
+
+            TitleDataKeyValue(const rapidjson::Value& obj) : TitleDataKeyValue()
+            {
+                readFromValue(obj);
+            }
+
+            ~TitleDataKeyValue();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetTitleDataAndOverridesRequest : public PlayFabBaseModel
+        {
+            std::list<TitleDataKeyValue> KeyValues;
+            std::string OverrideLabel;
+
+            SetTitleDataAndOverridesRequest() :
+                PlayFabBaseModel(),
+                KeyValues(),
+                OverrideLabel()
+            {}
+
+            SetTitleDataAndOverridesRequest(const SetTitleDataAndOverridesRequest& src) :
+                PlayFabBaseModel(),
+                KeyValues(src.KeyValues),
+                OverrideLabel(src.OverrideLabel)
+            {}
+
+            SetTitleDataAndOverridesRequest(const rapidjson::Value& obj) : SetTitleDataAndOverridesRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetTitleDataAndOverridesRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct SetTitleDataAndOverridesResult : public PlayFabBaseModel
+        {
+
+            SetTitleDataAndOverridesResult() :
+                PlayFabBaseModel()
+            {}
+
+            SetTitleDataAndOverridesResult(const SetTitleDataAndOverridesResult& src) :
+                PlayFabBaseModel()
+            {}
+
+            SetTitleDataAndOverridesResult(const rapidjson::Value& obj) : SetTitleDataAndOverridesResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~SetTitleDataAndOverridesResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
