@@ -1067,6 +1067,52 @@ void PlayFabAdminAPI::OnDeleteTitleResult(int httpStatus, HttpRequest* request, 
     delete request;
 }
 
+void PlayFabAdminAPI::DeleteTitleDataOverride(
+    DeleteTitleDataOverrideRequest& request,
+    ProcessApiCallback<DeleteTitleDataOverrideResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/DeleteTitleDataOverride"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<DeleteTitleDataOverrideResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnDeleteTitleDataOverrideResult, userData);
+}
+
+void PlayFabAdminAPI::OnDeleteTitleDataOverrideResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    DeleteTitleDataOverrideResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<DeleteTitleDataOverrideResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
 void PlayFabAdminAPI::ExportMasterPlayerData(
     ExportMasterPlayerDataRequest& request,
     ProcessApiCallback<ExportMasterPlayerDataResult> callback,
@@ -4175,6 +4221,52 @@ void PlayFabAdminAPI::OnSetTitleDataResult(int httpStatus, HttpRequest* request,
         if (request->GetResultCallback() != nullptr)
         {
             (*static_cast<ProcessApiCallback<SetTitleDataResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
+        }
+    }
+    else
+    {
+        if (PlayFabSettings::globalErrorHandler != nullptr)
+            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
+        if (request->GetErrorCallback() != nullptr)
+            request->GetErrorCallback()(errorResult, request->GetUserData());
+    }
+
+    delete request;
+}
+
+void PlayFabAdminAPI::SetTitleDataAndOverrides(
+    SetTitleDataAndOverridesRequest& request,
+    ProcessApiCallback<SetTitleDataAndOverridesResult> callback,
+    ErrorCallback errorCallback,
+    void* userData
+)
+{
+    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/Admin/SetTitleDataAndOverrides"));
+    httpRequest->SetHeader("Content-Type", "application/json");
+    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
+    httpRequest->SetHeader("X-SecretKey", PlayFabSettings::developerSecretKey);
+
+    if (callback != nullptr)
+        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<SetTitleDataAndOverridesResult>(callback)));
+    httpRequest->SetErrorCallback(errorCallback);
+    httpRequest->SetUserData(userData);
+
+    httpRequest->SetBody(request.toJSONString());
+    httpRequest->CompressBody();
+
+    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnSetTitleDataAndOverridesResult, userData);
+}
+
+void PlayFabAdminAPI::OnSetTitleDataAndOverridesResult(int httpStatus, HttpRequest* request, void* userData)
+{
+    SetTitleDataAndOverridesResult outResult;
+    PlayFabError errorResult;
+
+    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
+    {
+        if (request->GetResultCallback() != nullptr)
+        {
+            (*static_cast<ProcessApiCallback<SetTitleDataAndOverridesResult> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
         }
     }
     else

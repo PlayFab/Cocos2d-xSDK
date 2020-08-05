@@ -37,6 +37,7 @@ namespace PlayFab
         static void DeleteStore(AdminModels::DeleteStoreRequest& request, ProcessApiCallback<AdminModels::DeleteStoreResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteTask(AdminModels::DeleteTaskRequest& request, ProcessApiCallback<AdminModels::EmptyResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void DeleteTitle(ProcessApiCallback<AdminModels::DeleteTitleResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void DeleteTitleDataOverride(AdminModels::DeleteTitleDataOverrideRequest& request, ProcessApiCallback<AdminModels::DeleteTitleDataOverrideResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ExportMasterPlayerData(AdminModels::ExportMasterPlayerDataRequest& request, ProcessApiCallback<AdminModels::ExportMasterPlayerDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetActionsOnPlayersInSegmentTaskInstance(AdminModels::GetTaskInstanceRequest& request, ProcessApiCallback<AdminModels::GetActionsOnPlayersInSegmentTaskInstanceResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void GetAllSegments(ProcessApiCallback<AdminModels::GetAllSegmentsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -105,6 +106,7 @@ namespace PlayFab
         static void SetPublisherData(AdminModels::SetPublisherDataRequest& request, ProcessApiCallback<AdminModels::SetPublisherDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetStoreItems(AdminModels::UpdateStoreItemsRequest& request, ProcessApiCallback<AdminModels::UpdateStoreItemsResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetTitleData(AdminModels::SetTitleDataRequest& request, ProcessApiCallback<AdminModels::SetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
+        static void SetTitleDataAndOverrides(AdminModels::SetTitleDataAndOverridesRequest& request, ProcessApiCallback<AdminModels::SetTitleDataAndOverridesResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetTitleInternalData(AdminModels::SetTitleDataRequest& request, ProcessApiCallback<AdminModels::SetTitleDataResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SetupPushNotification(AdminModels::SetupPushNotificationRequest& request, ProcessApiCallback<AdminModels::SetupPushNotificationResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void SubtractUserVirtualCurrency(AdminModels::SubtractUserVirtualCurrencyRequest& request, ProcessApiCallback<AdminModels::ModifyUserVirtualCurrencyResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -154,6 +156,7 @@ namespace PlayFab
         static void OnDeleteStoreResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteTaskResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnDeleteTitleResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnDeleteTitleDataOverrideResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnExportMasterPlayerDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetActionsOnPlayersInSegmentTaskInstanceResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnGetAllSegmentsResult(int httpStatus, HttpRequest* request, void* userData);
@@ -222,6 +225,7 @@ namespace PlayFab
         static void OnSetPublisherDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetStoreItemsResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetTitleDataResult(int httpStatus, HttpRequest* request, void* userData);
+        static void OnSetTitleDataAndOverridesResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetTitleInternalDataResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSetupPushNotificationResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnSubtractUserVirtualCurrencyResult(int httpStatus, HttpRequest* request, void* userData);

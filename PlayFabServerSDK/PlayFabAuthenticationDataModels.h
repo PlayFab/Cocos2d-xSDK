@@ -134,6 +134,16 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        enum IdentifiedDeviceType
+        {
+            IdentifiedDeviceTypeUnknown,
+            IdentifiedDeviceTypeXboxOne,
+            IdentifiedDeviceTypeScarlett
+        };
+
+        void writeIdentifiedDeviceTypeEnumJSON(IdentifiedDeviceType enumVal, PFStringJsonWriter& writer);
+        IdentifiedDeviceType readIdentifiedDeviceTypeFromValue(const rapidjson::Value& obj);
+
         enum LoginIdentityProvider
         {
             LoginIdentityProviderUnknown,
@@ -193,12 +203,14 @@ namespace PlayFab
         struct ValidateEntityTokenResponse : public PlayFabBaseModel
         {
             EntityKey* Entity;
+            Boxed<IdentifiedDeviceType> pfIdentifiedDeviceType;
             Boxed<LoginIdentityProvider> IdentityProvider;
             EntityLineage* Lineage;
 
             ValidateEntityTokenResponse() :
                 PlayFabBaseModel(),
                 Entity(NULL),
+                pfIdentifiedDeviceType(),
                 IdentityProvider(),
                 Lineage(NULL)
             {}
@@ -206,6 +218,7 @@ namespace PlayFab
             ValidateEntityTokenResponse(const ValidateEntityTokenResponse& src) :
                 PlayFabBaseModel(),
                 Entity(src.Entity ? new EntityKey(*src.Entity) : NULL),
+                pfIdentifiedDeviceType(src.pfIdentifiedDeviceType),
                 IdentityProvider(src.IdentityProvider),
                 Lineage(src.Lineage ? new EntityLineage(*src.Lineage) : NULL)
             {}
