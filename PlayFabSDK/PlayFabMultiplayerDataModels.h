@@ -111,7 +111,8 @@ namespace PlayFab
             AzureRegionChinaEast2,
             AzureRegionChinaNorth2,
             AzureRegionSouthAfricaNorth,
-            AzureRegionCentralUsEuap
+            AzureRegionCentralUsEuap,
+            AzureRegionWestCentralUs
         };
 
         void writeAzureRegionEnumJSON(AzureRegion enumVal, PFStringJsonWriter& writer);
@@ -3595,19 +3596,15 @@ namespace PlayFab
         struct ListPartyQosServersRequest : public PlayFabBaseModel
         {
             std::map<std::string, std::string> CustomTags;
-            // Deprecated - Do not use
-            std::string Version;
 
             ListPartyQosServersRequest() :
                 PlayFabBaseModel(),
-                CustomTags(),
-                Version()
+                CustomTags()
             {}
 
             ListPartyQosServersRequest(const ListPartyQosServersRequest& src) :
                 PlayFabBaseModel(),
-                CustomTags(src.CustomTags),
-                Version(src.Version)
+                CustomTags(src.CustomTags)
             {}
 
             ListPartyQosServersRequest(const rapidjson::Value& obj) : ListPartyQosServersRequest()
@@ -3683,15 +3680,18 @@ namespace PlayFab
         struct ListQosServersForTitleRequest : public PlayFabBaseModel
         {
             std::map<std::string, std::string> CustomTags;
+            bool IncludeAllRegions;
 
             ListQosServersForTitleRequest() :
                 PlayFabBaseModel(),
-                CustomTags()
+                CustomTags(),
+                IncludeAllRegions(false)
             {}
 
             ListQosServersForTitleRequest(const ListQosServersForTitleRequest& src) :
                 PlayFabBaseModel(),
-                CustomTags(src.CustomTags)
+                CustomTags(src.CustomTags),
+                IncludeAllRegions(src.IncludeAllRegions)
             {}
 
             ListQosServersForTitleRequest(const rapidjson::Value& obj) : ListQosServersForTitleRequest()
@@ -3731,64 +3731,6 @@ namespace PlayFab
             }
 
             ~ListQosServersForTitleResponse();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        // Deprecated - Do not use
-        struct ListQosServersRequest : public PlayFabBaseModel
-        {
-            std::map<std::string, std::string> CustomTags;
-
-            ListQosServersRequest() :
-                PlayFabBaseModel(),
-                CustomTags()
-            {}
-
-            ListQosServersRequest(const ListQosServersRequest& src) :
-                PlayFabBaseModel(),
-                CustomTags(src.CustomTags)
-            {}
-
-            ListQosServersRequest(const rapidjson::Value& obj) : ListQosServersRequest()
-            {
-                readFromValue(obj);
-            }
-
-            ~ListQosServersRequest();
-
-            void writeJSON(PFStringJsonWriter& writer);
-            bool readFromValue(const rapidjson::Value& obj);
-        };
-
-        // Deprecated - Do not use
-        struct ListQosServersResponse : public PlayFabBaseModel
-        {
-            Int32 PageSize;
-            std::list<QosServer> QosServers;
-            std::string SkipToken;
-
-            ListQosServersResponse() :
-                PlayFabBaseModel(),
-                PageSize(0),
-                QosServers(),
-                SkipToken()
-            {}
-
-            ListQosServersResponse(const ListQosServersResponse& src) :
-                PlayFabBaseModel(),
-                PageSize(src.PageSize),
-                QosServers(src.QosServers),
-                SkipToken(src.SkipToken)
-            {}
-
-            ListQosServersResponse(const rapidjson::Value& obj) : ListQosServersResponse()
-            {
-                readFromValue(obj);
-            }
-
-            ~ListQosServersResponse();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);

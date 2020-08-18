@@ -3260,6 +3260,7 @@ namespace PlayFab
             GenericErrorCodesTitleDataOverrideNotFound,
             GenericErrorCodesDuplicateKeys,
             GenericErrorCodesWasNotCreatedWithCloudRoot,
+            GenericErrorCodesLegacyMultiplayerServersDeprecated,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,

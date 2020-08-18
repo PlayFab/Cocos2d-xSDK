@@ -2079,51 +2079,6 @@ void PlayFabMultiplayerAPI::OnListPartyQosServersResult(int httpStatus, HttpRequ
     delete request;
 }
 
-void PlayFabMultiplayerAPI::ListQosServers(
-    ListQosServersRequest& request,
-    ProcessApiCallback<ListQosServersResponse> callback,
-    ErrorCallback errorCallback,
-    void* userData
-)
-{
-    HttpRequest* httpRequest = new HttpRequest("POST", PlayFabSettings::getURL("/MultiplayerServer/ListQosServers"));
-    httpRequest->SetHeader("Content-Type", "application/json");
-    httpRequest->SetHeader("X-PlayFabSDK", PlayFabSettings::versionString);
-
-    if (callback != nullptr)
-        httpRequest->SetResultCallback(SharedVoidPointer(new ProcessApiCallback<ListQosServersResponse>(callback)));
-    httpRequest->SetErrorCallback(errorCallback);
-    httpRequest->SetUserData(userData);
-
-    httpRequest->SetBody(request.toJSONString());
-    httpRequest->CompressBody();
-
-    PlayFabSettings::httpRequester->AddRequest(httpRequest, OnListQosServersResult, userData);
-}
-
-void PlayFabMultiplayerAPI::OnListQosServersResult(int httpStatus, HttpRequest* request, void* userData)
-{
-    ListQosServersResponse outResult;
-    PlayFabError errorResult;
-
-    if (PlayFabRequestHandler::DecodeRequest(httpStatus, request, userData, outResult, errorResult))
-    {
-        if (request->GetResultCallback() != nullptr)
-        {
-            (*static_cast<ProcessApiCallback<ListQosServersResponse> *>(request->GetResultCallback().get()))(outResult, request->GetUserData());
-        }
-    }
-    else
-    {
-        if (PlayFabSettings::globalErrorHandler != nullptr)
-            PlayFabSettings::globalErrorHandler(errorResult, request->GetUserData());
-        if (request->GetErrorCallback() != nullptr)
-            request->GetErrorCallback()(errorResult, request->GetUserData());
-    }
-
-    delete request;
-}
-
 void PlayFabMultiplayerAPI::ListQosServersForTitle(
     ListQosServersForTitleRequest& request,
     ProcessApiCallback<ListQosServersForTitleResponse> callback,
