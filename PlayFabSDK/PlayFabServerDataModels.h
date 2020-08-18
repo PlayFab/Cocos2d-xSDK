@@ -1269,15 +1269,18 @@ namespace PlayFab
 
         struct AuthenticateSessionTicketResult : public PlayFabBaseModel
         {
+            OptionalBool IsSessionTicketExpired;
             UserAccountInfo* UserInfo;
 
             AuthenticateSessionTicketResult() :
                 PlayFabBaseModel(),
+                IsSessionTicketExpired(),
                 UserInfo(NULL)
             {}
 
             AuthenticateSessionTicketResult(const AuthenticateSessionTicketResult& src) :
                 PlayFabBaseModel(),
+                IsSessionTicketExpired(src.IsSessionTicketExpired),
                 UserInfo(src.UserInfo ? new UserAccountInfo(*src.UserInfo) : NULL)
             {}
 
@@ -3843,6 +3846,7 @@ namespace PlayFab
             GenericErrorCodesTitleDataOverrideNotFound,
             GenericErrorCodesDuplicateKeys,
             GenericErrorCodesWasNotCreatedWithCloudRoot,
+            GenericErrorCodesLegacyMultiplayerServersDeprecated,
             GenericErrorCodesMatchmakingEntityInvalid,
             GenericErrorCodesMatchmakingPlayerAttributesInvalid,
             GenericErrorCodesMatchmakingQueueNotFound,

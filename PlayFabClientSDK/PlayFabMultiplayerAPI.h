@@ -59,8 +59,6 @@ namespace PlayFab
         static void ListMatchmakingTicketsForPlayer(MultiplayerModels::ListMatchmakingTicketsForPlayerRequest& request, ProcessApiCallback<MultiplayerModels::ListMatchmakingTicketsForPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListMultiplayerServers(MultiplayerModels::ListMultiplayerServersRequest& request, ProcessApiCallback<MultiplayerModels::ListMultiplayerServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListPartyQosServers(MultiplayerModels::ListPartyQosServersRequest& request, ProcessApiCallback<MultiplayerModels::ListPartyQosServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
-        // Deprecated - Use 'ListQosServersForTitle' instead
-        static void ListQosServers(MultiplayerModels::ListQosServersRequest& request, ProcessApiCallback<MultiplayerModels::ListQosServersResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListQosServersForTitle(MultiplayerModels::ListQosServersForTitleRequest& request, ProcessApiCallback<MultiplayerModels::ListQosServersForTitleResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListServerBackfillTicketsForPlayer(MultiplayerModels::ListServerBackfillTicketsForPlayerRequest& request, ProcessApiCallback<MultiplayerModels::ListServerBackfillTicketsForPlayerResult> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
         static void ListVirtualMachineSummaries(MultiplayerModels::ListVirtualMachineSummariesRequest& request, ProcessApiCallback<MultiplayerModels::ListVirtualMachineSummariesResponse> callback, ErrorCallback errorCallback = nullptr, void* userData = nullptr);
@@ -123,7 +121,6 @@ namespace PlayFab
         static void OnListMatchmakingTicketsForPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListMultiplayerServersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListPartyQosServersResult(int httpStatus, HttpRequest* request, void* userData);
-        static void OnListQosServersResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListQosServersForTitleResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListServerBackfillTicketsForPlayerResult(int httpStatus, HttpRequest* request, void* userData);
         static void OnListVirtualMachineSummariesResult(int httpStatus, HttpRequest* request, void* userData);

@@ -1435,12 +1435,15 @@ AuthenticateSessionTicketResult::~AuthenticateSessionTicketResult()
 void AuthenticateSessionTicketResult::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (IsSessionTicketExpired.notNull()) { writer.String("IsSessionTicketExpired"); writer.Bool(IsSessionTicketExpired); }
     if (UserInfo != NULL) { writer.String("UserInfo"); UserInfo->writeJSON(writer); }
     writer.EndObject();
 }
 
 bool AuthenticateSessionTicketResult::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator IsSessionTicketExpired_member = obj.FindMember("IsSessionTicketExpired");
+    if (IsSessionTicketExpired_member != obj.MemberEnd() && !IsSessionTicketExpired_member->value.IsNull()) IsSessionTicketExpired = IsSessionTicketExpired_member->value.GetBool();
     const Value::ConstMemberIterator UserInfo_member = obj.FindMember("UserInfo");
     if (UserInfo_member != obj.MemberEnd() && !UserInfo_member->value.IsNull()) UserInfo = new UserAccountInfo(UserInfo_member->value);
 
@@ -4554,6 +4557,7 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesTitleDataOverrideNotFound: writer.String("TitleDataOverrideNotFound"); break;
     case GenericErrorCodesDuplicateKeys: writer.String("DuplicateKeys"); break;
     case GenericErrorCodesWasNotCreatedWithCloudRoot: writer.String("WasNotCreatedWithCloudRoot"); break;
+    case GenericErrorCodesLegacyMultiplayerServersDeprecated: writer.String("LegacyMultiplayerServersDeprecated"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -5147,6 +5151,7 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["TitleDataOverrideNotFound"] = GenericErrorCodesTitleDataOverrideNotFound;
         _GenericErrorCodesMap["DuplicateKeys"] = GenericErrorCodesDuplicateKeys;
         _GenericErrorCodesMap["WasNotCreatedWithCloudRoot"] = GenericErrorCodesWasNotCreatedWithCloudRoot;
+        _GenericErrorCodesMap["LegacyMultiplayerServersDeprecated"] = GenericErrorCodesLegacyMultiplayerServersDeprecated;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;

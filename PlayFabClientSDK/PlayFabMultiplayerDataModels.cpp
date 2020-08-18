@@ -107,6 +107,7 @@ void PlayFab::MultiplayerModels::writeAzureRegionEnumJSON(AzureRegion enumVal, P
     case AzureRegionChinaNorth2: writer.String("ChinaNorth2"); break;
     case AzureRegionSouthAfricaNorth: writer.String("SouthAfricaNorth"); break;
     case AzureRegionCentralUsEuap: writer.String("CentralUsEuap"); break;
+    case AzureRegionWestCentralUs: writer.String("WestCentralUs"); break;
 
     }
 }
@@ -136,6 +137,7 @@ AzureRegion PlayFab::MultiplayerModels::readAzureRegionFromValue(const rapidjson
         _AzureRegionMap["ChinaNorth2"] = AzureRegionChinaNorth2;
         _AzureRegionMap["SouthAfricaNorth"] = AzureRegionSouthAfricaNorth;
         _AzureRegionMap["CentralUsEuap"] = AzureRegionCentralUsEuap;
+        _AzureRegionMap["WestCentralUs"] = AzureRegionWestCentralUs;
 
     }
 
@@ -4474,7 +4476,6 @@ void ListPartyQosServersRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndObject();
     }
-    if (Version.length() > 0) { writer.String("Version"); writer.String(Version.c_str()); }
     writer.EndObject();
 }
 
@@ -4486,8 +4487,6 @@ bool ListPartyQosServersRequest::readFromValue(const rapidjson::Value& obj)
             CustomTags[iter->name.GetString()] = iter->value.GetString();
         }
     }
-    const Value::ConstMemberIterator Version_member = obj.FindMember("Version");
-    if (Version_member != obj.MemberEnd() && !Version_member->value.IsNull()) Version = Version_member->value.GetString();
 
     return true;
 }
@@ -4569,6 +4568,7 @@ void ListQosServersForTitleRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndObject();
     }
+    writer.String("IncludeAllRegions"); writer.Bool(IncludeAllRegions);
     writer.EndObject();
 }
 
@@ -4580,6 +4580,8 @@ bool ListQosServersForTitleRequest::readFromValue(const rapidjson::Value& obj)
             CustomTags[iter->name.GetString()] = iter->value.GetString();
         }
     }
+    const Value::ConstMemberIterator IncludeAllRegions_member = obj.FindMember("IncludeAllRegions");
+    if (IncludeAllRegions_member != obj.MemberEnd() && !IncludeAllRegions_member->value.IsNull()) IncludeAllRegions = IncludeAllRegions_member->value.GetBool();
 
     return true;
 }
@@ -4606,75 +4608,6 @@ void ListQosServersForTitleResponse::writeJSON(PFStringJsonWriter& writer)
 }
 
 bool ListQosServersForTitleResponse::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator PageSize_member = obj.FindMember("PageSize");
-    if (PageSize_member != obj.MemberEnd() && !PageSize_member->value.IsNull()) PageSize = PageSize_member->value.GetInt();
-    const Value::ConstMemberIterator QosServers_member = obj.FindMember("QosServers");
-    if (QosServers_member != obj.MemberEnd()) {
-        const rapidjson::Value& memberList = QosServers_member->value;
-        for (SizeType i = 0; i < memberList.Size(); i++) {
-            QosServers.push_back(QosServer(memberList[i]));
-        }
-    }
-    const Value::ConstMemberIterator SkipToken_member = obj.FindMember("SkipToken");
-    if (SkipToken_member != obj.MemberEnd() && !SkipToken_member->value.IsNull()) SkipToken = SkipToken_member->value.GetString();
-
-    return true;
-}
-
-ListQosServersRequest::~ListQosServersRequest()
-{
-
-}
-
-void ListQosServersRequest::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    if (!CustomTags.empty()) {
-        writer.String("CustomTags");
-        writer.StartObject();
-        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
-            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
-        }
-        writer.EndObject();
-    }
-    writer.EndObject();
-}
-
-bool ListQosServersRequest::readFromValue(const rapidjson::Value& obj)
-{
-    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
-    if (CustomTags_member != obj.MemberEnd()) {
-        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
-            CustomTags[iter->name.GetString()] = iter->value.GetString();
-        }
-    }
-
-    return true;
-}
-
-ListQosServersResponse::~ListQosServersResponse()
-{
-
-}
-
-void ListQosServersResponse::writeJSON(PFStringJsonWriter& writer)
-{
-    writer.StartObject();
-    writer.String("PageSize"); writer.Int(PageSize);
-    if (!QosServers.empty()) {
-        writer.String("QosServers");
-        writer.StartArray();
-        for (std::list<QosServer>::iterator iter = QosServers.begin(); iter != QosServers.end(); iter++) {
-            iter->writeJSON(writer);
-        }
-        writer.EndArray();
-    }
-    if (SkipToken.length() > 0) { writer.String("SkipToken"); writer.String(SkipToken.c_str()); }
-    writer.EndObject();
-}
-
-bool ListQosServersResponse::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator PageSize_member = obj.FindMember("PageSize");
     if (PageSize_member != obj.MemberEnd() && !PageSize_member->value.IsNull()) PageSize = PageSize_member->value.GetInt();

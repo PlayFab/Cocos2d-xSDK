@@ -3876,6 +3876,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesTitleDataOverrideNotFound: writer.String("TitleDataOverrideNotFound"); break;
     case GenericErrorCodesDuplicateKeys: writer.String("DuplicateKeys"); break;
     case GenericErrorCodesWasNotCreatedWithCloudRoot: writer.String("WasNotCreatedWithCloudRoot"); break;
+    case GenericErrorCodesLegacyMultiplayerServersDeprecated: writer.String("LegacyMultiplayerServersDeprecated"); break;
     case GenericErrorCodesMatchmakingEntityInvalid: writer.String("MatchmakingEntityInvalid"); break;
     case GenericErrorCodesMatchmakingPlayerAttributesInvalid: writer.String("MatchmakingPlayerAttributesInvalid"); break;
     case GenericErrorCodesMatchmakingQueueNotFound: writer.String("MatchmakingQueueNotFound"); break;
@@ -4469,6 +4470,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["TitleDataOverrideNotFound"] = GenericErrorCodesTitleDataOverrideNotFound;
         _GenericErrorCodesMap["DuplicateKeys"] = GenericErrorCodesDuplicateKeys;
         _GenericErrorCodesMap["WasNotCreatedWithCloudRoot"] = GenericErrorCodesWasNotCreatedWithCloudRoot;
+        _GenericErrorCodesMap["LegacyMultiplayerServersDeprecated"] = GenericErrorCodesLegacyMultiplayerServersDeprecated;
         _GenericErrorCodesMap["MatchmakingEntityInvalid"] = GenericErrorCodesMatchmakingEntityInvalid;
         _GenericErrorCodesMap["MatchmakingPlayerAttributesInvalid"] = GenericErrorCodesMatchmakingPlayerAttributesInvalid;
         _GenericErrorCodesMap["MatchmakingQueueNotFound"] = GenericErrorCodesMatchmakingQueueNotFound;
