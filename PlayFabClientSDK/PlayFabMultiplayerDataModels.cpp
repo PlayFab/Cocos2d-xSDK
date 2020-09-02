@@ -453,10 +453,81 @@ bool DynamicStandbySettings::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+Schedule::~Schedule()
+{
+
+}
+
+void Schedule::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
+    writer.String("EndTime"); writeDatetime(EndTime, writer);
+    writer.String("IsDisabled"); writer.Bool(IsDisabled);
+    writer.String("IsRecurringWeekly"); writer.Bool(IsRecurringWeekly);
+    writer.String("StartTime"); writeDatetime(StartTime, writer);
+    writer.String("TargetStandby"); writer.Int(TargetStandby);
+    writer.EndObject();
+}
+
+bool Schedule::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator EndTime_member = obj.FindMember("EndTime");
+    if (EndTime_member != obj.MemberEnd() && !EndTime_member->value.IsNull()) EndTime = readDatetime(EndTime_member->value);
+    const Value::ConstMemberIterator IsDisabled_member = obj.FindMember("IsDisabled");
+    if (IsDisabled_member != obj.MemberEnd() && !IsDisabled_member->value.IsNull()) IsDisabled = IsDisabled_member->value.GetBool();
+    const Value::ConstMemberIterator IsRecurringWeekly_member = obj.FindMember("IsRecurringWeekly");
+    if (IsRecurringWeekly_member != obj.MemberEnd() && !IsRecurringWeekly_member->value.IsNull()) IsRecurringWeekly = IsRecurringWeekly_member->value.GetBool();
+    const Value::ConstMemberIterator StartTime_member = obj.FindMember("StartTime");
+    if (StartTime_member != obj.MemberEnd() && !StartTime_member->value.IsNull()) StartTime = readDatetime(StartTime_member->value);
+    const Value::ConstMemberIterator TargetStandby_member = obj.FindMember("TargetStandby");
+    if (TargetStandby_member != obj.MemberEnd() && !TargetStandby_member->value.IsNull()) TargetStandby = TargetStandby_member->value.GetInt();
+
+    return true;
+}
+
+ScheduledStandbySettings::~ScheduledStandbySettings()
+{
+
+}
+
+void ScheduledStandbySettings::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    writer.String("IsEnabled"); writer.Bool(IsEnabled);
+    if (!ScheduleList.empty()) {
+        writer.String("ScheduleList");
+        writer.StartArray();
+        for (std::list<Schedule>::iterator iter = ScheduleList.begin(); iter != ScheduleList.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool ScheduledStandbySettings::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator IsEnabled_member = obj.FindMember("IsEnabled");
+    if (IsEnabled_member != obj.MemberEnd() && !IsEnabled_member->value.IsNull()) IsEnabled = IsEnabled_member->value.GetBool();
+    const Value::ConstMemberIterator ScheduleList_member = obj.FindMember("ScheduleList");
+    if (ScheduleList_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = ScheduleList_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            ScheduleList.push_back(Schedule(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
 BuildRegion::~BuildRegion()
 {
     if (pfCurrentServerStats != NULL) delete pfCurrentServerStats;
     if (pfDynamicStandbySettings != NULL) delete pfDynamicStandbySettings;
+    if (pfScheduledStandbySettings != NULL) delete pfScheduledStandbySettings;
 
 }
 
@@ -467,6 +538,7 @@ void BuildRegion::writeJSON(PFStringJsonWriter& writer)
     if (pfDynamicStandbySettings != NULL) { writer.String("DynamicStandbySettings"); pfDynamicStandbySettings->writeJSON(writer); }
     writer.String("MaxServers"); writer.Int(MaxServers);
     if (Region.length() > 0) { writer.String("Region"); writer.String(Region.c_str()); }
+    if (pfScheduledStandbySettings != NULL) { writer.String("ScheduledStandbySettings"); pfScheduledStandbySettings->writeJSON(writer); }
     writer.String("StandbyServers"); writer.Int(StandbyServers);
     if (Status.length() > 0) { writer.String("Status"); writer.String(Status.c_str()); }
     writer.EndObject();
@@ -482,6 +554,8 @@ bool BuildRegion::readFromValue(const rapidjson::Value& obj)
     if (MaxServers_member != obj.MemberEnd() && !MaxServers_member->value.IsNull()) MaxServers = MaxServers_member->value.GetInt();
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
+    const Value::ConstMemberIterator ScheduledStandbySettings_member = obj.FindMember("ScheduledStandbySettings");
+    if (ScheduledStandbySettings_member != obj.MemberEnd() && !ScheduledStandbySettings_member->value.IsNull()) pfScheduledStandbySettings = new ScheduledStandbySettings(ScheduledStandbySettings_member->value);
     const Value::ConstMemberIterator StandbyServers_member = obj.FindMember("StandbyServers");
     if (StandbyServers_member != obj.MemberEnd() && !StandbyServers_member->value.IsNull()) StandbyServers = StandbyServers_member->value.GetInt();
     const Value::ConstMemberIterator Status_member = obj.FindMember("Status");
@@ -493,6 +567,7 @@ bool BuildRegion::readFromValue(const rapidjson::Value& obj)
 BuildRegionParams::~BuildRegionParams()
 {
     if (pfDynamicStandbySettings != NULL) delete pfDynamicStandbySettings;
+    if (pfScheduledStandbySettings != NULL) delete pfScheduledStandbySettings;
 
 }
 
@@ -502,6 +577,7 @@ void BuildRegionParams::writeJSON(PFStringJsonWriter& writer)
     if (pfDynamicStandbySettings != NULL) { writer.String("DynamicStandbySettings"); pfDynamicStandbySettings->writeJSON(writer); }
     writer.String("MaxServers"); writer.Int(MaxServers);
     writer.String("Region"); writer.String(Region.c_str());
+    if (pfScheduledStandbySettings != NULL) { writer.String("ScheduledStandbySettings"); pfScheduledStandbySettings->writeJSON(writer); }
     writer.String("StandbyServers"); writer.Int(StandbyServers);
     writer.EndObject();
 }
@@ -514,6 +590,8 @@ bool BuildRegionParams::readFromValue(const rapidjson::Value& obj)
     if (MaxServers_member != obj.MemberEnd() && !MaxServers_member->value.IsNull()) MaxServers = MaxServers_member->value.GetInt();
     const Value::ConstMemberIterator Region_member = obj.FindMember("Region");
     if (Region_member != obj.MemberEnd() && !Region_member->value.IsNull()) Region = Region_member->value.GetString();
+    const Value::ConstMemberIterator ScheduledStandbySettings_member = obj.FindMember("ScheduledStandbySettings");
+    if (ScheduledStandbySettings_member != obj.MemberEnd() && !ScheduledStandbySettings_member->value.IsNull()) pfScheduledStandbySettings = new ScheduledStandbySettings(ScheduledStandbySettings_member->value);
     const Value::ConstMemberIterator StandbyServers_member = obj.FindMember("StandbyServers");
     if (StandbyServers_member != obj.MemberEnd() && !StandbyServers_member->value.IsNull()) StandbyServers = StandbyServers_member->value.GetInt();
 
@@ -4568,7 +4646,7 @@ void ListQosServersForTitleRequest::writeJSON(PFStringJsonWriter& writer)
         }
         writer.EndObject();
     }
-    writer.String("IncludeAllRegions"); writer.Bool(IncludeAllRegions);
+    if (IncludeAllRegions.notNull()) { writer.String("IncludeAllRegions"); writer.Bool(IncludeAllRegions); }
     writer.EndObject();
 }
 

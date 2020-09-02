@@ -3959,6 +3959,10 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExperimentationExperimentSchedulingInProgress: writer.String("ExperimentationExperimentSchedulingInProgress"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesTitleNotOnUpdatedPricingPlan: writer.String("TitleNotOnUpdatedPricingPlan"); break;
+    case GenericErrorCodesSegmentManagementTitleNotInFlight: writer.String("SegmentManagementTitleNotInFlight"); break;
+    case GenericErrorCodesSegmentManagementNoExpressionTree: writer.String("SegmentManagementNoExpressionTree"); break;
+    case GenericErrorCodesSegmentManagementTriggerActionCountOverLimit: writer.String("SegmentManagementTriggerActionCountOverLimit"); break;
+    case GenericErrorCodesSegmentManagementSegmentCountOverLimit: writer.String("SegmentManagementSegmentCountOverLimit"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
     }
@@ -4553,6 +4557,10 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExperimentationExperimentSchedulingInProgress"] = GenericErrorCodesExperimentationExperimentSchedulingInProgress;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["TitleNotOnUpdatedPricingPlan"] = GenericErrorCodesTitleNotOnUpdatedPricingPlan;
+        _GenericErrorCodesMap["SegmentManagementTitleNotInFlight"] = GenericErrorCodesSegmentManagementTitleNotInFlight;
+        _GenericErrorCodesMap["SegmentManagementNoExpressionTree"] = GenericErrorCodesSegmentManagementNoExpressionTree;
+        _GenericErrorCodesMap["SegmentManagementTriggerActionCountOverLimit"] = GenericErrorCodesSegmentManagementTriggerActionCountOverLimit;
+        _GenericErrorCodesMap["SegmentManagementSegmentCountOverLimit"] = GenericErrorCodesSegmentManagementSegmentCountOverLimit;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 
     }

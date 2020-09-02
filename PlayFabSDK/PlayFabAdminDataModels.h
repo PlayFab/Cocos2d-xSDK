@@ -3343,6 +3343,10 @@ namespace PlayFab
             GenericErrorCodesExperimentationExperimentSchedulingInProgress,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesTitleNotOnUpdatedPricingPlan,
+            GenericErrorCodesSegmentManagementTitleNotInFlight,
+            GenericErrorCodesSegmentManagementNoExpressionTree,
+            GenericErrorCodesSegmentManagementTriggerActionCountOverLimit,
+            GenericErrorCodesSegmentManagementSegmentCountOverLimit,
             GenericErrorCodesSnapshotNotFound
         };
 
