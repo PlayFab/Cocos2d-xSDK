@@ -349,12 +349,81 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct Schedule : public PlayFabBaseModel
+        {
+            std::string Description;
+            time_t EndTime;
+            bool IsDisabled;
+            bool IsRecurringWeekly;
+            time_t StartTime;
+            Int32 TargetStandby;
+
+            Schedule() :
+                PlayFabBaseModel(),
+                Description(),
+                EndTime(0),
+                IsDisabled(false),
+                IsRecurringWeekly(false),
+                StartTime(0),
+                TargetStandby(0)
+            {}
+
+            Schedule(const Schedule& src) :
+                PlayFabBaseModel(),
+                Description(src.Description),
+                EndTime(src.EndTime),
+                IsDisabled(src.IsDisabled),
+                IsRecurringWeekly(src.IsRecurringWeekly),
+                StartTime(src.StartTime),
+                TargetStandby(src.TargetStandby)
+            {}
+
+            Schedule(const rapidjson::Value& obj) : Schedule()
+            {
+                readFromValue(obj);
+            }
+
+            ~Schedule();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ScheduledStandbySettings : public PlayFabBaseModel
+        {
+            bool IsEnabled;
+            std::list<Schedule> ScheduleList;
+
+            ScheduledStandbySettings() :
+                PlayFabBaseModel(),
+                IsEnabled(false),
+                ScheduleList()
+            {}
+
+            ScheduledStandbySettings(const ScheduledStandbySettings& src) :
+                PlayFabBaseModel(),
+                IsEnabled(src.IsEnabled),
+                ScheduleList(src.ScheduleList)
+            {}
+
+            ScheduledStandbySettings(const rapidjson::Value& obj) : ScheduledStandbySettings()
+            {
+                readFromValue(obj);
+            }
+
+            ~ScheduledStandbySettings();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct BuildRegion : public PlayFabBaseModel
         {
             CurrentServerStats* pfCurrentServerStats;
             DynamicStandbySettings* pfDynamicStandbySettings;
             Int32 MaxServers;
             std::string Region;
+            ScheduledStandbySettings* pfScheduledStandbySettings;
             Int32 StandbyServers;
             std::string Status;
 
@@ -364,6 +433,7 @@ namespace PlayFab
                 pfDynamicStandbySettings(NULL),
                 MaxServers(0),
                 Region(),
+                pfScheduledStandbySettings(NULL),
                 StandbyServers(0),
                 Status()
             {}
@@ -374,6 +444,7 @@ namespace PlayFab
                 pfDynamicStandbySettings(src.pfDynamicStandbySettings ? new DynamicStandbySettings(*src.pfDynamicStandbySettings) : NULL),
                 MaxServers(src.MaxServers),
                 Region(src.Region),
+                pfScheduledStandbySettings(src.pfScheduledStandbySettings ? new ScheduledStandbySettings(*src.pfScheduledStandbySettings) : NULL),
                 StandbyServers(src.StandbyServers),
                 Status(src.Status)
             {}
@@ -394,6 +465,7 @@ namespace PlayFab
             DynamicStandbySettings* pfDynamicStandbySettings;
             Int32 MaxServers;
             std::string Region;
+            ScheduledStandbySettings* pfScheduledStandbySettings;
             Int32 StandbyServers;
 
             BuildRegionParams() :
@@ -401,6 +473,7 @@ namespace PlayFab
                 pfDynamicStandbySettings(NULL),
                 MaxServers(0),
                 Region(),
+                pfScheduledStandbySettings(NULL),
                 StandbyServers(0)
             {}
 
@@ -409,6 +482,7 @@ namespace PlayFab
                 pfDynamicStandbySettings(src.pfDynamicStandbySettings ? new DynamicStandbySettings(*src.pfDynamicStandbySettings) : NULL),
                 MaxServers(src.MaxServers),
                 Region(src.Region),
+                pfScheduledStandbySettings(src.pfScheduledStandbySettings ? new ScheduledStandbySettings(*src.pfScheduledStandbySettings) : NULL),
                 StandbyServers(src.StandbyServers)
             {}
 
@@ -3680,12 +3754,12 @@ namespace PlayFab
         struct ListQosServersForTitleRequest : public PlayFabBaseModel
         {
             std::map<std::string, std::string> CustomTags;
-            bool IncludeAllRegions;
+            OptionalBool IncludeAllRegions;
 
             ListQosServersForTitleRequest() :
                 PlayFabBaseModel(),
                 CustomTags(),
-                IncludeAllRegions(false)
+                IncludeAllRegions()
             {}
 
             ListQosServersForTitleRequest(const ListQosServersForTitleRequest& src) :
