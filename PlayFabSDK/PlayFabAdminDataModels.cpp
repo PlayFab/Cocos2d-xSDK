@@ -3963,6 +3963,7 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesSegmentManagementNoExpressionTree: writer.String("SegmentManagementNoExpressionTree"); break;
     case GenericErrorCodesSegmentManagementTriggerActionCountOverLimit: writer.String("SegmentManagementTriggerActionCountOverLimit"); break;
     case GenericErrorCodesSegmentManagementSegmentCountOverLimit: writer.String("SegmentManagementSegmentCountOverLimit"); break;
+    case GenericErrorCodesSegmentManagementInvalidSegmentId: writer.String("SegmentManagementInvalidSegmentId"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
     }
@@ -4561,6 +4562,7 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["SegmentManagementNoExpressionTree"] = GenericErrorCodesSegmentManagementNoExpressionTree;
         _GenericErrorCodesMap["SegmentManagementTriggerActionCountOverLimit"] = GenericErrorCodesSegmentManagementTriggerActionCountOverLimit;
         _GenericErrorCodesMap["SegmentManagementSegmentCountOverLimit"] = GenericErrorCodesSegmentManagementSegmentCountOverLimit;
+        _GenericErrorCodesMap["SegmentManagementInvalidSegmentId"] = GenericErrorCodesSegmentManagementInvalidSegmentId;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 
     }

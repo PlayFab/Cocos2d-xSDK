@@ -3347,6 +3347,7 @@ namespace PlayFab
             GenericErrorCodesSegmentManagementNoExpressionTree,
             GenericErrorCodesSegmentManagementTriggerActionCountOverLimit,
             GenericErrorCodesSegmentManagementSegmentCountOverLimit,
+            GenericErrorCodesSegmentManagementInvalidSegmentId,
             GenericErrorCodesSnapshotNotFound
         };
 
