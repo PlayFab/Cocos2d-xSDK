@@ -164,19 +164,22 @@ namespace PlayFab
             std::map<std::string, std::string> CustomTags;
             EntityKey Entity;
             std::list<std::string> FileNames;
+            Int32 ProfileVersion;
 
             FinalizeFileUploadsRequest() :
                 PlayFabBaseModel(),
                 CustomTags(),
                 Entity(),
-                FileNames()
+                FileNames(),
+                ProfileVersion(0)
             {}
 
             FinalizeFileUploadsRequest(const FinalizeFileUploadsRequest& src) :
                 PlayFabBaseModel(),
                 CustomTags(src.CustomTags),
                 Entity(src.Entity),
-                FileNames(src.FileNames)
+                FileNames(src.FileNames),
+                ProfileVersion(src.ProfileVersion)
             {}
 
             FinalizeFileUploadsRequest(const rapidjson::Value& obj) : FinalizeFileUploadsRequest()

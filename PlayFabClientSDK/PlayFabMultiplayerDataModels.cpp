@@ -1829,6 +1829,7 @@ void CreateBuildWithProcessBasedServerRequest::writeJSON(PFStringJsonWriter& wri
     }
     if (GameWorkingDirectory.length() > 0) { writer.String("GameWorkingDirectory"); writer.String(GameWorkingDirectory.c_str()); }
     if (pfInstrumentationConfiguration != NULL) { writer.String("InstrumentationConfiguration"); pfInstrumentationConfiguration->writeJSON(writer); }
+    if (IsOSPreview.notNull()) { writer.String("IsOSPreview"); writer.Bool(IsOSPreview); }
     if (!Metadata.empty()) {
         writer.String("Metadata");
         writer.StartObject();
@@ -1887,6 +1888,8 @@ bool CreateBuildWithProcessBasedServerRequest::readFromValue(const rapidjson::Va
     if (GameWorkingDirectory_member != obj.MemberEnd() && !GameWorkingDirectory_member->value.IsNull()) GameWorkingDirectory = GameWorkingDirectory_member->value.GetString();
     const Value::ConstMemberIterator InstrumentationConfiguration_member = obj.FindMember("InstrumentationConfiguration");
     if (InstrumentationConfiguration_member != obj.MemberEnd() && !InstrumentationConfiguration_member->value.IsNull()) pfInstrumentationConfiguration = new InstrumentationConfiguration(InstrumentationConfiguration_member->value);
+    const Value::ConstMemberIterator IsOSPreview_member = obj.FindMember("IsOSPreview");
+    if (IsOSPreview_member != obj.MemberEnd() && !IsOSPreview_member->value.IsNull()) IsOSPreview = IsOSPreview_member->value.GetBool();
     const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
     if (Metadata_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {
@@ -1953,6 +1956,7 @@ void CreateBuildWithProcessBasedServerResponse::writeJSON(PFStringJsonWriter& wr
     }
     if (GameWorkingDirectory.length() > 0) { writer.String("GameWorkingDirectory"); writer.String(GameWorkingDirectory.c_str()); }
     if (pfInstrumentationConfiguration != NULL) { writer.String("InstrumentationConfiguration"); pfInstrumentationConfiguration->writeJSON(writer); }
+    if (IsOSPreview.notNull()) { writer.String("IsOSPreview"); writer.Bool(IsOSPreview); }
     if (!Metadata.empty()) {
         writer.String("Metadata");
         writer.StartObject();
@@ -2016,6 +2020,8 @@ bool CreateBuildWithProcessBasedServerResponse::readFromValue(const rapidjson::V
     if (GameWorkingDirectory_member != obj.MemberEnd() && !GameWorkingDirectory_member->value.IsNull()) GameWorkingDirectory = GameWorkingDirectory_member->value.GetString();
     const Value::ConstMemberIterator InstrumentationConfiguration_member = obj.FindMember("InstrumentationConfiguration");
     if (InstrumentationConfiguration_member != obj.MemberEnd() && !InstrumentationConfiguration_member->value.IsNull()) pfInstrumentationConfiguration = new InstrumentationConfiguration(InstrumentationConfiguration_member->value);
+    const Value::ConstMemberIterator IsOSPreview_member = obj.FindMember("IsOSPreview");
+    if (IsOSPreview_member != obj.MemberEnd() && !IsOSPreview_member->value.IsNull()) IsOSPreview = IsOSPreview_member->value.GetBool();
     const Value::ConstMemberIterator Metadata_member = obj.FindMember("Metadata");
     if (Metadata_member != obj.MemberEnd()) {
         for (Value::ConstMemberIterator iter = Metadata_member->value.MemberBegin(); iter != Metadata_member->value.MemberEnd(); ++iter) {

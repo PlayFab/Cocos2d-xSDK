@@ -41,6 +41,63 @@ AnalysisTaskState PlayFab::ExperimentationModels::readAnalysisTaskStateFromValue
 
     return AnalysisTaskStateWaiting; // Basically critical fail
 }
+
+CreateExclusionGroupRequest::~CreateExclusionGroupRequest()
+{
+
+}
+
+void CreateExclusionGroupRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
+    if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
+    writer.String("Name"); writer.String(Name.c_str());
+    writer.EndObject();
+}
+
+bool CreateExclusionGroupRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+
+    return true;
+}
+
+CreateExclusionGroupResult::~CreateExclusionGroupResult()
+{
+
+}
+
+void CreateExclusionGroupResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (ExclusionGroupId.length() > 0) { writer.String("ExclusionGroupId"); writer.String(ExclusionGroupId.c_str()); }
+    writer.EndObject();
+}
+
+bool CreateExclusionGroupResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ExclusionGroupId_member = obj.FindMember("ExclusionGroupId");
+    if (ExclusionGroupId_member != obj.MemberEnd() && !ExclusionGroupId_member->value.IsNull()) ExclusionGroupId = ExclusionGroupId_member->value.GetString();
+
+    return true;
+}
 void PlayFab::ExperimentationModels::writeExperimentTypeEnumJSON(ExperimentType enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -159,7 +216,10 @@ void CreateExperimentRequest::writeJSON(PFStringJsonWriter& writer)
         writer.EndObject();
     }
     if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
-    writer.String("Duration"); writer.Uint(Duration);
+    if (Duration.notNull()) { writer.String("Duration"); writer.Uint(Duration); }
+    if (EndDate.notNull()) { writer.String("EndDate"); writeDatetime(EndDate, writer); }
+    if (ExclusionGroupId.length() > 0) { writer.String("ExclusionGroupId"); writer.String(ExclusionGroupId.c_str()); }
+    if (ExclusionGroupTrafficAllocation.notNull()) { writer.String("ExclusionGroupTrafficAllocation"); writer.Uint(ExclusionGroupTrafficAllocation); }
     if (pfExperimentType.notNull()) { writer.String("ExperimentType"); writeExperimentTypeEnumJSON(pfExperimentType, writer); }
     writer.String("Name"); writer.String(Name.c_str());
     if (SegmentId.length() > 0) { writer.String("SegmentId"); writer.String(SegmentId.c_str()); }
@@ -193,6 +253,12 @@ bool CreateExperimentRequest::readFromValue(const rapidjson::Value& obj)
     if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
     const Value::ConstMemberIterator Duration_member = obj.FindMember("Duration");
     if (Duration_member != obj.MemberEnd() && !Duration_member->value.IsNull()) Duration = Duration_member->value.GetUint();
+    const Value::ConstMemberIterator EndDate_member = obj.FindMember("EndDate");
+    if (EndDate_member != obj.MemberEnd() && !EndDate_member->value.IsNull()) EndDate = readDatetime(EndDate_member->value);
+    const Value::ConstMemberIterator ExclusionGroupId_member = obj.FindMember("ExclusionGroupId");
+    if (ExclusionGroupId_member != obj.MemberEnd() && !ExclusionGroupId_member->value.IsNull()) ExclusionGroupId = ExclusionGroupId_member->value.GetString();
+    const Value::ConstMemberIterator ExclusionGroupTrafficAllocation_member = obj.FindMember("ExclusionGroupTrafficAllocation");
+    if (ExclusionGroupTrafficAllocation_member != obj.MemberEnd() && !ExclusionGroupTrafficAllocation_member->value.IsNull()) ExclusionGroupTrafficAllocation = ExclusionGroupTrafficAllocation_member->value.GetUint();
     const Value::ConstMemberIterator ExperimentType_member = obj.FindMember("ExperimentType");
     if (ExperimentType_member != obj.MemberEnd() && !ExperimentType_member->value.IsNull()) pfExperimentType = readExperimentTypeFromValue(ExperimentType_member->value);
     const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
@@ -235,6 +301,40 @@ bool CreateExperimentResult::readFromValue(const rapidjson::Value& obj)
 {
     const Value::ConstMemberIterator ExperimentId_member = obj.FindMember("ExperimentId");
     if (ExperimentId_member != obj.MemberEnd() && !ExperimentId_member->value.IsNull()) ExperimentId = ExperimentId_member->value.GetString();
+
+    return true;
+}
+
+DeleteExclusionGroupRequest::~DeleteExclusionGroupRequest()
+{
+
+}
+
+void DeleteExclusionGroupRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
+    writer.String("ExclusionGroupId"); writer.String(ExclusionGroupId.c_str());
+    writer.EndObject();
+}
+
+bool DeleteExclusionGroupRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+    const Value::ConstMemberIterator ExclusionGroupId_member = obj.FindMember("ExclusionGroupId");
+    if (ExclusionGroupId_member != obj.MemberEnd() && !ExclusionGroupId_member->value.IsNull()) ExclusionGroupId = ExclusionGroupId_member->value.GetString();
 
     return true;
 }
@@ -312,6 +412,29 @@ bool EntityKey::readFromValue(const rapidjson::Value& obj)
 
     return true;
 }
+
+ExclusionGroupTrafficAllocation::~ExclusionGroupTrafficAllocation()
+{
+
+}
+
+void ExclusionGroupTrafficAllocation::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (ExperimentId.length() > 0) { writer.String("ExperimentId"); writer.String(ExperimentId.c_str()); }
+    writer.String("TrafficAllocation"); writer.Uint(TrafficAllocation);
+    writer.EndObject();
+}
+
+bool ExclusionGroupTrafficAllocation::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ExperimentId_member = obj.FindMember("ExperimentId");
+    if (ExperimentId_member != obj.MemberEnd() && !ExperimentId_member->value.IsNull()) ExperimentId = ExperimentId_member->value.GetString();
+    const Value::ConstMemberIterator TrafficAllocation_member = obj.FindMember("TrafficAllocation");
+    if (TrafficAllocation_member != obj.MemberEnd() && !TrafficAllocation_member->value.IsNull()) TrafficAllocation = TrafficAllocation_member->value.GetUint();
+
+    return true;
+}
 void PlayFab::ExperimentationModels::writeExperimentStateEnumJSON(ExperimentState enumVal, PFStringJsonWriter& writer)
 {
     switch (enumVal)
@@ -353,7 +476,10 @@ void Experiment::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
     if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
-    writer.String("Duration"); writer.Uint(Duration);
+    if (Duration.notNull()) { writer.String("Duration"); writer.Uint(Duration); }
+    if (EndDate.notNull()) { writer.String("EndDate"); writeDatetime(EndDate, writer); }
+    if (ExclusionGroupId.length() > 0) { writer.String("ExclusionGroupId"); writer.String(ExclusionGroupId.c_str()); }
+    if (ExclusionGroupTrafficAllocation.notNull()) { writer.String("ExclusionGroupTrafficAllocation"); writer.Uint(ExclusionGroupTrafficAllocation); }
     if (pfExperimentType.notNull()) { writer.String("ExperimentType"); writeExperimentTypeEnumJSON(pfExperimentType, writer); }
     if (Id.length() > 0) { writer.String("Id"); writer.String(Id.c_str()); }
     if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
@@ -385,6 +511,12 @@ bool Experiment::readFromValue(const rapidjson::Value& obj)
     if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
     const Value::ConstMemberIterator Duration_member = obj.FindMember("Duration");
     if (Duration_member != obj.MemberEnd() && !Duration_member->value.IsNull()) Duration = Duration_member->value.GetUint();
+    const Value::ConstMemberIterator EndDate_member = obj.FindMember("EndDate");
+    if (EndDate_member != obj.MemberEnd() && !EndDate_member->value.IsNull()) EndDate = readDatetime(EndDate_member->value);
+    const Value::ConstMemberIterator ExclusionGroupId_member = obj.FindMember("ExclusionGroupId");
+    if (ExclusionGroupId_member != obj.MemberEnd() && !ExclusionGroupId_member->value.IsNull()) ExclusionGroupId = ExclusionGroupId_member->value.GetString();
+    const Value::ConstMemberIterator ExclusionGroupTrafficAllocation_member = obj.FindMember("ExclusionGroupTrafficAllocation");
+    if (ExclusionGroupTrafficAllocation_member != obj.MemberEnd() && !ExclusionGroupTrafficAllocation_member->value.IsNull()) ExclusionGroupTrafficAllocation = ExclusionGroupTrafficAllocation_member->value.GetUint();
     const Value::ConstMemberIterator ExperimentType_member = obj.FindMember("ExperimentType");
     if (ExperimentType_member != obj.MemberEnd() && !ExperimentType_member->value.IsNull()) pfExperimentType = readExperimentTypeFromValue(ExperimentType_member->value);
     const Value::ConstMemberIterator Id_member = obj.FindMember("Id");
@@ -409,6 +541,161 @@ bool Experiment::readFromValue(const rapidjson::Value& obj)
         const rapidjson::Value& memberList = Variants_member->value;
         for (SizeType i = 0; i < memberList.Size(); i++) {
             Variants.push_back(Variant(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+ExperimentExclusionGroup::~ExperimentExclusionGroup()
+{
+
+}
+
+void ExperimentExclusionGroup::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
+    if (ExclusionGroupId.length() > 0) { writer.String("ExclusionGroupId"); writer.String(ExclusionGroupId.c_str()); }
+    if (Name.length() > 0) { writer.String("Name"); writer.String(Name.c_str()); }
+    writer.EndObject();
+}
+
+bool ExperimentExclusionGroup::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator ExclusionGroupId_member = obj.FindMember("ExclusionGroupId");
+    if (ExclusionGroupId_member != obj.MemberEnd() && !ExclusionGroupId_member->value.IsNull()) ExclusionGroupId = ExclusionGroupId_member->value.GetString();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+
+    return true;
+}
+
+GetExclusionGroupsRequest::~GetExclusionGroupsRequest()
+{
+
+}
+
+void GetExclusionGroupsRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
+    writer.EndObject();
+}
+
+bool GetExclusionGroupsRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+
+    return true;
+}
+
+GetExclusionGroupsResult::~GetExclusionGroupsResult()
+{
+
+}
+
+void GetExclusionGroupsResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!ExclusionGroups.empty()) {
+        writer.String("ExclusionGroups");
+        writer.StartArray();
+        for (std::list<ExperimentExclusionGroup>::iterator iter = ExclusionGroups.begin(); iter != ExclusionGroups.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool GetExclusionGroupsResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator ExclusionGroups_member = obj.FindMember("ExclusionGroups");
+    if (ExclusionGroups_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = ExclusionGroups_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            ExclusionGroups.push_back(ExperimentExclusionGroup(memberList[i]));
+        }
+    }
+
+    return true;
+}
+
+GetExclusionGroupTrafficRequest::~GetExclusionGroupTrafficRequest()
+{
+
+}
+
+void GetExclusionGroupTrafficRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
+    writer.String("ExclusionGroupId"); writer.String(ExclusionGroupId.c_str());
+    writer.EndObject();
+}
+
+bool GetExclusionGroupTrafficRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+    const Value::ConstMemberIterator ExclusionGroupId_member = obj.FindMember("ExclusionGroupId");
+    if (ExclusionGroupId_member != obj.MemberEnd() && !ExclusionGroupId_member->value.IsNull()) ExclusionGroupId = ExclusionGroupId_member->value.GetString();
+
+    return true;
+}
+
+GetExclusionGroupTrafficResult::~GetExclusionGroupTrafficResult()
+{
+
+}
+
+void GetExclusionGroupTrafficResult::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!TrafficAllocations.empty()) {
+        writer.String("TrafficAllocations");
+        writer.StartArray();
+        for (std::list<ExclusionGroupTrafficAllocation>::iterator iter = TrafficAllocations.begin(); iter != TrafficAllocations.end(); iter++) {
+            iter->writeJSON(writer);
+        }
+        writer.EndArray();
+    }
+    writer.EndObject();
+}
+
+bool GetExclusionGroupTrafficResult::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator TrafficAllocations_member = obj.FindMember("TrafficAllocations");
+    if (TrafficAllocations_member != obj.MemberEnd()) {
+        const rapidjson::Value& memberList = TrafficAllocations_member->value;
+        for (SizeType i = 0; i < memberList.Size(); i++) {
+            TrafficAllocations.push_back(ExclusionGroupTrafficAllocation(memberList[i]));
         }
     }
 
@@ -853,6 +1140,46 @@ bool StopExperimentRequest::readFromValue(const rapidjson::Value& obj)
     return true;
 }
 
+UpdateExclusionGroupRequest::~UpdateExclusionGroupRequest()
+{
+
+}
+
+void UpdateExclusionGroupRequest::writeJSON(PFStringJsonWriter& writer)
+{
+    writer.StartObject();
+    if (!CustomTags.empty()) {
+        writer.String("CustomTags");
+        writer.StartObject();
+        for (std::map<std::string, std::string>::iterator iter = CustomTags.begin(); iter != CustomTags.end(); ++iter) {
+            writer.String(iter->first.c_str()); writer.String(iter->second.c_str());
+        }
+        writer.EndObject();
+    }
+    if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
+    writer.String("ExclusionGroupId"); writer.String(ExclusionGroupId.c_str());
+    writer.String("Name"); writer.String(Name.c_str());
+    writer.EndObject();
+}
+
+bool UpdateExclusionGroupRequest::readFromValue(const rapidjson::Value& obj)
+{
+    const Value::ConstMemberIterator CustomTags_member = obj.FindMember("CustomTags");
+    if (CustomTags_member != obj.MemberEnd()) {
+        for (Value::ConstMemberIterator iter = CustomTags_member->value.MemberBegin(); iter != CustomTags_member->value.MemberEnd(); ++iter) {
+            CustomTags[iter->name.GetString()] = iter->value.GetString();
+        }
+    }
+    const Value::ConstMemberIterator Description_member = obj.FindMember("Description");
+    if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
+    const Value::ConstMemberIterator ExclusionGroupId_member = obj.FindMember("ExclusionGroupId");
+    if (ExclusionGroupId_member != obj.MemberEnd() && !ExclusionGroupId_member->value.IsNull()) ExclusionGroupId = ExclusionGroupId_member->value.GetString();
+    const Value::ConstMemberIterator Name_member = obj.FindMember("Name");
+    if (Name_member != obj.MemberEnd() && !Name_member->value.IsNull()) Name = Name_member->value.GetString();
+
+    return true;
+}
+
 UpdateExperimentRequest::~UpdateExperimentRequest()
 {
 
@@ -870,7 +1197,10 @@ void UpdateExperimentRequest::writeJSON(PFStringJsonWriter& writer)
         writer.EndObject();
     }
     if (Description.length() > 0) { writer.String("Description"); writer.String(Description.c_str()); }
-    writer.String("Duration"); writer.Uint(Duration);
+    if (Duration.notNull()) { writer.String("Duration"); writer.Uint(Duration); }
+    if (EndDate.notNull()) { writer.String("EndDate"); writeDatetime(EndDate, writer); }
+    if (ExclusionGroupId.length() > 0) { writer.String("ExclusionGroupId"); writer.String(ExclusionGroupId.c_str()); }
+    if (ExclusionGroupTrafficAllocation.notNull()) { writer.String("ExclusionGroupTrafficAllocation"); writer.Uint(ExclusionGroupTrafficAllocation); }
     if (pfExperimentType.notNull()) { writer.String("ExperimentType"); writeExperimentTypeEnumJSON(pfExperimentType, writer); }
     writer.String("Id"); writer.String(Id.c_str());
     writer.String("Name"); writer.String(Name.c_str());
@@ -905,6 +1235,12 @@ bool UpdateExperimentRequest::readFromValue(const rapidjson::Value& obj)
     if (Description_member != obj.MemberEnd() && !Description_member->value.IsNull()) Description = Description_member->value.GetString();
     const Value::ConstMemberIterator Duration_member = obj.FindMember("Duration");
     if (Duration_member != obj.MemberEnd() && !Duration_member->value.IsNull()) Duration = Duration_member->value.GetUint();
+    const Value::ConstMemberIterator EndDate_member = obj.FindMember("EndDate");
+    if (EndDate_member != obj.MemberEnd() && !EndDate_member->value.IsNull()) EndDate = readDatetime(EndDate_member->value);
+    const Value::ConstMemberIterator ExclusionGroupId_member = obj.FindMember("ExclusionGroupId");
+    if (ExclusionGroupId_member != obj.MemberEnd() && !ExclusionGroupId_member->value.IsNull()) ExclusionGroupId = ExclusionGroupId_member->value.GetString();
+    const Value::ConstMemberIterator ExclusionGroupTrafficAllocation_member = obj.FindMember("ExclusionGroupTrafficAllocation");
+    if (ExclusionGroupTrafficAllocation_member != obj.MemberEnd() && !ExclusionGroupTrafficAllocation_member->value.IsNull()) ExclusionGroupTrafficAllocation = ExclusionGroupTrafficAllocation_member->value.GetUint();
     const Value::ConstMemberIterator ExperimentType_member = obj.FindMember("ExperimentType");
     if (ExperimentType_member != obj.MemberEnd() && !ExperimentType_member->value.IsNull()) pfExperimentType = readExperimentTypeFromValue(ExperimentType_member->value);
     const Value::ConstMemberIterator Id_member = obj.FindMember("Id");

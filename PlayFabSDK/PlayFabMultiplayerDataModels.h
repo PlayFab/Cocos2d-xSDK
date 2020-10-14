@@ -1413,6 +1413,7 @@ namespace PlayFab
             std::list<GameCertificateReferenceParams> GameCertificateReferences;
             std::string GameWorkingDirectory;
             InstrumentationConfiguration* pfInstrumentationConfiguration;
+            OptionalBool IsOSPreview;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
             std::string OsPlatform;
@@ -1431,6 +1432,7 @@ namespace PlayFab
                 GameCertificateReferences(),
                 GameWorkingDirectory(),
                 pfInstrumentationConfiguration(NULL),
+                IsOSPreview(),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
                 OsPlatform(),
@@ -1450,6 +1452,7 @@ namespace PlayFab
                 GameCertificateReferences(src.GameCertificateReferences),
                 GameWorkingDirectory(src.GameWorkingDirectory),
                 pfInstrumentationConfiguration(src.pfInstrumentationConfiguration ? new InstrumentationConfiguration(*src.pfInstrumentationConfiguration) : NULL),
+                IsOSPreview(src.IsOSPreview),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 OsPlatform(src.OsPlatform),
@@ -1482,6 +1485,7 @@ namespace PlayFab
             std::list<GameCertificateReference> GameCertificateReferences;
             std::string GameWorkingDirectory;
             InstrumentationConfiguration* pfInstrumentationConfiguration;
+            OptionalBool IsOSPreview;
             std::map<std::string, std::string> Metadata;
             Int32 MultiplayerServerCountPerVm;
             std::string OsPlatform;
@@ -1503,6 +1507,7 @@ namespace PlayFab
                 GameCertificateReferences(),
                 GameWorkingDirectory(),
                 pfInstrumentationConfiguration(NULL),
+                IsOSPreview(),
                 Metadata(),
                 MultiplayerServerCountPerVm(0),
                 OsPlatform(),
@@ -1525,6 +1530,7 @@ namespace PlayFab
                 GameCertificateReferences(src.GameCertificateReferences),
                 GameWorkingDirectory(src.GameWorkingDirectory),
                 pfInstrumentationConfiguration(src.pfInstrumentationConfiguration ? new InstrumentationConfiguration(*src.pfInstrumentationConfiguration) : NULL),
+                IsOSPreview(src.IsOSPreview),
                 Metadata(src.Metadata),
                 MultiplayerServerCountPerVm(src.MultiplayerServerCountPerVm),
                 OsPlatform(src.OsPlatform),

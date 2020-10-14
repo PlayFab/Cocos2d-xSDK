@@ -21,6 +21,62 @@ namespace PlayFab
         void writeAnalysisTaskStateEnumJSON(AnalysisTaskState enumVal, PFStringJsonWriter& writer);
         AnalysisTaskState readAnalysisTaskStateFromValue(const rapidjson::Value& obj);
 
+        struct CreateExclusionGroupRequest : public PlayFabBaseModel
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string Description;
+            std::string Name;
+
+            CreateExclusionGroupRequest() :
+                PlayFabBaseModel(),
+                CustomTags(),
+                Description(),
+                Name()
+            {}
+
+            CreateExclusionGroupRequest(const CreateExclusionGroupRequest& src) :
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
+                Description(src.Description),
+                Name(src.Name)
+            {}
+
+            CreateExclusionGroupRequest(const rapidjson::Value& obj) : CreateExclusionGroupRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateExclusionGroupRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct CreateExclusionGroupResult : public PlayFabBaseModel
+        {
+            std::string ExclusionGroupId;
+
+            CreateExclusionGroupResult() :
+                PlayFabBaseModel(),
+                ExclusionGroupId()
+            {}
+
+            CreateExclusionGroupResult(const CreateExclusionGroupResult& src) :
+                PlayFabBaseModel(),
+                ExclusionGroupId(src.ExclusionGroupId)
+            {}
+
+            CreateExclusionGroupResult(const rapidjson::Value& obj) : CreateExclusionGroupResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~CreateExclusionGroupResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum ExperimentType
         {
             ExperimentTypeActive,
@@ -105,7 +161,11 @@ namespace PlayFab
         {
             std::map<std::string, std::string> CustomTags;
             std::string Description;
-            Uint32 Duration;
+            // Deprecated - Use 'EndDate' instead
+            OptionalUint32 Duration;
+            OptionalTime EndDate;
+            std::string ExclusionGroupId;
+            OptionalUint32 ExclusionGroupTrafficAllocation;
             Boxed<ExperimentType> pfExperimentType;
             std::string Name;
             std::string SegmentId;
@@ -117,7 +177,10 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CustomTags(),
                 Description(),
-                Duration(0),
+                Duration(),
+                EndDate(),
+                ExclusionGroupId(),
+                ExclusionGroupTrafficAllocation(),
                 pfExperimentType(),
                 Name(),
                 SegmentId(),
@@ -131,6 +194,9 @@ namespace PlayFab
                 CustomTags(src.CustomTags),
                 Description(src.Description),
                 Duration(src.Duration),
+                EndDate(src.EndDate),
+                ExclusionGroupId(src.ExclusionGroupId),
+                ExclusionGroupTrafficAllocation(src.ExclusionGroupTrafficAllocation),
                 pfExperimentType(src.pfExperimentType),
                 Name(src.Name),
                 SegmentId(src.SegmentId),
@@ -170,6 +236,34 @@ namespace PlayFab
             }
 
             ~CreateExperimentResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct DeleteExclusionGroupRequest : public PlayFabBaseModel
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string ExclusionGroupId;
+
+            DeleteExclusionGroupRequest() :
+                PlayFabBaseModel(),
+                CustomTags(),
+                ExclusionGroupId()
+            {}
+
+            DeleteExclusionGroupRequest(const DeleteExclusionGroupRequest& src) :
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
+                ExclusionGroupId(src.ExclusionGroupId)
+            {}
+
+            DeleteExclusionGroupRequest(const rapidjson::Value& obj) : DeleteExclusionGroupRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~DeleteExclusionGroupRequest();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -253,6 +347,34 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct ExclusionGroupTrafficAllocation : public PlayFabBaseModel
+        {
+            std::string ExperimentId;
+            Uint32 TrafficAllocation;
+
+            ExclusionGroupTrafficAllocation() :
+                PlayFabBaseModel(),
+                ExperimentId(),
+                TrafficAllocation(0)
+            {}
+
+            ExclusionGroupTrafficAllocation(const ExclusionGroupTrafficAllocation& src) :
+                PlayFabBaseModel(),
+                ExperimentId(src.ExperimentId),
+                TrafficAllocation(src.TrafficAllocation)
+            {}
+
+            ExclusionGroupTrafficAllocation(const rapidjson::Value& obj) : ExclusionGroupTrafficAllocation()
+            {
+                readFromValue(obj);
+            }
+
+            ~ExclusionGroupTrafficAllocation();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         enum ExperimentState
         {
             ExperimentStateNew,
@@ -267,7 +389,11 @@ namespace PlayFab
         struct Experiment : public PlayFabBaseModel
         {
             std::string Description;
-            Uint32 Duration;
+            // Deprecated - Use 'EndDate' instead
+            OptionalUint32 Duration;
+            OptionalTime EndDate;
+            std::string ExclusionGroupId;
+            OptionalUint32 ExclusionGroupTrafficAllocation;
             Boxed<ExperimentType> pfExperimentType;
             std::string Id;
             std::string Name;
@@ -280,7 +406,10 @@ namespace PlayFab
             Experiment() :
                 PlayFabBaseModel(),
                 Description(),
-                Duration(0),
+                Duration(),
+                EndDate(),
+                ExclusionGroupId(),
+                ExclusionGroupTrafficAllocation(),
                 pfExperimentType(),
                 Id(),
                 Name(),
@@ -295,6 +424,9 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 Description(src.Description),
                 Duration(src.Duration),
+                EndDate(src.EndDate),
+                ExclusionGroupId(src.ExclusionGroupId),
+                ExclusionGroupTrafficAllocation(src.ExclusionGroupTrafficAllocation),
                 pfExperimentType(src.pfExperimentType),
                 Id(src.Id),
                 Name(src.Name),
@@ -311,6 +443,140 @@ namespace PlayFab
             }
 
             ~Experiment();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct ExperimentExclusionGroup : public PlayFabBaseModel
+        {
+            std::string Description;
+            std::string ExclusionGroupId;
+            std::string Name;
+
+            ExperimentExclusionGroup() :
+                PlayFabBaseModel(),
+                Description(),
+                ExclusionGroupId(),
+                Name()
+            {}
+
+            ExperimentExclusionGroup(const ExperimentExclusionGroup& src) :
+                PlayFabBaseModel(),
+                Description(src.Description),
+                ExclusionGroupId(src.ExclusionGroupId),
+                Name(src.Name)
+            {}
+
+            ExperimentExclusionGroup(const rapidjson::Value& obj) : ExperimentExclusionGroup()
+            {
+                readFromValue(obj);
+            }
+
+            ~ExperimentExclusionGroup();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetExclusionGroupsRequest : public PlayFabBaseModel
+        {
+            std::map<std::string, std::string> CustomTags;
+
+            GetExclusionGroupsRequest() :
+                PlayFabBaseModel(),
+                CustomTags()
+            {}
+
+            GetExclusionGroupsRequest(const GetExclusionGroupsRequest& src) :
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags)
+            {}
+
+            GetExclusionGroupsRequest(const rapidjson::Value& obj) : GetExclusionGroupsRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetExclusionGroupsRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetExclusionGroupsResult : public PlayFabBaseModel
+        {
+            std::list<ExperimentExclusionGroup> ExclusionGroups;
+
+            GetExclusionGroupsResult() :
+                PlayFabBaseModel(),
+                ExclusionGroups()
+            {}
+
+            GetExclusionGroupsResult(const GetExclusionGroupsResult& src) :
+                PlayFabBaseModel(),
+                ExclusionGroups(src.ExclusionGroups)
+            {}
+
+            GetExclusionGroupsResult(const rapidjson::Value& obj) : GetExclusionGroupsResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetExclusionGroupsResult();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetExclusionGroupTrafficRequest : public PlayFabBaseModel
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string ExclusionGroupId;
+
+            GetExclusionGroupTrafficRequest() :
+                PlayFabBaseModel(),
+                CustomTags(),
+                ExclusionGroupId()
+            {}
+
+            GetExclusionGroupTrafficRequest(const GetExclusionGroupTrafficRequest& src) :
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
+                ExclusionGroupId(src.ExclusionGroupId)
+            {}
+
+            GetExclusionGroupTrafficRequest(const rapidjson::Value& obj) : GetExclusionGroupTrafficRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetExclusionGroupTrafficRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
+        struct GetExclusionGroupTrafficResult : public PlayFabBaseModel
+        {
+            std::list<ExclusionGroupTrafficAllocation> TrafficAllocations;
+
+            GetExclusionGroupTrafficResult() :
+                PlayFabBaseModel(),
+                TrafficAllocations()
+            {}
+
+            GetExclusionGroupTrafficResult(const GetExclusionGroupTrafficResult& src) :
+                PlayFabBaseModel(),
+                TrafficAllocations(src.TrafficAllocations)
+            {}
+
+            GetExclusionGroupTrafficResult(const rapidjson::Value& obj) : GetExclusionGroupTrafficResult()
+            {
+                readFromValue(obj);
+            }
+
+            ~GetExclusionGroupTrafficResult();
 
             void writeJSON(PFStringJsonWriter& writer);
             bool readFromValue(const rapidjson::Value& obj);
@@ -697,11 +963,49 @@ namespace PlayFab
             bool readFromValue(const rapidjson::Value& obj);
         };
 
+        struct UpdateExclusionGroupRequest : public PlayFabBaseModel
+        {
+            std::map<std::string, std::string> CustomTags;
+            std::string Description;
+            std::string ExclusionGroupId;
+            std::string Name;
+
+            UpdateExclusionGroupRequest() :
+                PlayFabBaseModel(),
+                CustomTags(),
+                Description(),
+                ExclusionGroupId(),
+                Name()
+            {}
+
+            UpdateExclusionGroupRequest(const UpdateExclusionGroupRequest& src) :
+                PlayFabBaseModel(),
+                CustomTags(src.CustomTags),
+                Description(src.Description),
+                ExclusionGroupId(src.ExclusionGroupId),
+                Name(src.Name)
+            {}
+
+            UpdateExclusionGroupRequest(const rapidjson::Value& obj) : UpdateExclusionGroupRequest()
+            {
+                readFromValue(obj);
+            }
+
+            ~UpdateExclusionGroupRequest();
+
+            void writeJSON(PFStringJsonWriter& writer);
+            bool readFromValue(const rapidjson::Value& obj);
+        };
+
         struct UpdateExperimentRequest : public PlayFabBaseModel
         {
             std::map<std::string, std::string> CustomTags;
             std::string Description;
-            Uint32 Duration;
+            // Deprecated - Use 'EndDate' instead
+            OptionalUint32 Duration;
+            OptionalTime EndDate;
+            std::string ExclusionGroupId;
+            OptionalUint32 ExclusionGroupTrafficAllocation;
             Boxed<ExperimentType> pfExperimentType;
             std::string Id;
             std::string Name;
@@ -714,7 +1018,10 @@ namespace PlayFab
                 PlayFabBaseModel(),
                 CustomTags(),
                 Description(),
-                Duration(0),
+                Duration(),
+                EndDate(),
+                ExclusionGroupId(),
+                ExclusionGroupTrafficAllocation(),
                 pfExperimentType(),
                 Id(),
                 Name(),
@@ -729,6 +1036,9 @@ namespace PlayFab
                 CustomTags(src.CustomTags),
                 Description(src.Description),
                 Duration(src.Duration),
+                EndDate(src.EndDate),
+                ExclusionGroupId(src.ExclusionGroupId),
+                ExclusionGroupTrafficAllocation(src.ExclusionGroupTrafficAllocation),
                 pfExperimentType(src.pfExperimentType),
                 Id(src.Id),
                 Name(src.Name),
