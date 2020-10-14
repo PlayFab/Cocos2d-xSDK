@@ -357,6 +357,7 @@ AdvancedPushPlatformMsg::~AdvancedPushPlatformMsg()
 void AdvancedPushPlatformMsg::writeJSON(PFStringJsonWriter& writer)
 {
     writer.StartObject();
+    if (GCMDataOnly.notNull()) { writer.String("GCMDataOnly"); writer.Bool(GCMDataOnly); }
     writer.String("Json"); writer.String(Json.c_str());
     writer.String("Platform"); writePushNotificationPlatformEnumJSON(Platform, writer);
     writer.EndObject();
@@ -364,6 +365,8 @@ void AdvancedPushPlatformMsg::writeJSON(PFStringJsonWriter& writer)
 
 bool AdvancedPushPlatformMsg::readFromValue(const rapidjson::Value& obj)
 {
+    const Value::ConstMemberIterator GCMDataOnly_member = obj.FindMember("GCMDataOnly");
+    if (GCMDataOnly_member != obj.MemberEnd() && !GCMDataOnly_member->value.IsNull()) GCMDataOnly = GCMDataOnly_member->value.GetBool();
     const Value::ConstMemberIterator Json_member = obj.FindMember("Json");
     if (Json_member != obj.MemberEnd() && !Json_member->value.IsNull()) Json = Json_member->value.GetString();
     const Value::ConstMemberIterator Platform_member = obj.FindMember("Platform");
@@ -4638,6 +4641,13 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesExperimentationInvalidDuration: writer.String("ExperimentationInvalidDuration"); break;
     case GenericErrorCodesExperimentationMaxExperimentsReached: writer.String("ExperimentationMaxExperimentsReached"); break;
     case GenericErrorCodesExperimentationExperimentSchedulingInProgress: writer.String("ExperimentationExperimentSchedulingInProgress"); break;
+    case GenericErrorCodesExperimentationInvalidEndDate: writer.String("ExperimentationInvalidEndDate"); break;
+    case GenericErrorCodesExperimentationInvalidStartDate: writer.String("ExperimentationInvalidStartDate"); break;
+    case GenericErrorCodesExperimentationMaxDurationExceeded: writer.String("ExperimentationMaxDurationExceeded"); break;
+    case GenericErrorCodesExperimentationExclusionGroupNotFound: writer.String("ExperimentationExclusionGroupNotFound"); break;
+    case GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity: writer.String("ExperimentationExclusionGroupInsufficientCapacity"); break;
+    case GenericErrorCodesExperimentationExclusionGroupCannotDelete: writer.String("ExperimentationExclusionGroupCannotDelete"); break;
+    case GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation: writer.String("ExperimentationExclusionGroupInvalidTrafficAllocation"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesTitleNotOnUpdatedPricingPlan: writer.String("TitleNotOnUpdatedPricingPlan"); break;
     case GenericErrorCodesSegmentManagementTitleNotInFlight: writer.String("SegmentManagementTitleNotInFlight"); break;
@@ -4645,6 +4655,8 @@ void PlayFab::ServerModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enu
     case GenericErrorCodesSegmentManagementTriggerActionCountOverLimit: writer.String("SegmentManagementTriggerActionCountOverLimit"); break;
     case GenericErrorCodesSegmentManagementSegmentCountOverLimit: writer.String("SegmentManagementSegmentCountOverLimit"); break;
     case GenericErrorCodesSegmentManagementInvalidSegmentId: writer.String("SegmentManagementInvalidSegmentId"); break;
+    case GenericErrorCodesSegmentManagementInvalidInput: writer.String("SegmentManagementInvalidInput"); break;
+    case GenericErrorCodesSegmentManagementInvalidSegmentName: writer.String("SegmentManagementInvalidSegmentName"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
     }
@@ -5237,6 +5249,13 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["ExperimentationInvalidDuration"] = GenericErrorCodesExperimentationInvalidDuration;
         _GenericErrorCodesMap["ExperimentationMaxExperimentsReached"] = GenericErrorCodesExperimentationMaxExperimentsReached;
         _GenericErrorCodesMap["ExperimentationExperimentSchedulingInProgress"] = GenericErrorCodesExperimentationExperimentSchedulingInProgress;
+        _GenericErrorCodesMap["ExperimentationInvalidEndDate"] = GenericErrorCodesExperimentationInvalidEndDate;
+        _GenericErrorCodesMap["ExperimentationInvalidStartDate"] = GenericErrorCodesExperimentationInvalidStartDate;
+        _GenericErrorCodesMap["ExperimentationMaxDurationExceeded"] = GenericErrorCodesExperimentationMaxDurationExceeded;
+        _GenericErrorCodesMap["ExperimentationExclusionGroupNotFound"] = GenericErrorCodesExperimentationExclusionGroupNotFound;
+        _GenericErrorCodesMap["ExperimentationExclusionGroupInsufficientCapacity"] = GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity;
+        _GenericErrorCodesMap["ExperimentationExclusionGroupCannotDelete"] = GenericErrorCodesExperimentationExclusionGroupCannotDelete;
+        _GenericErrorCodesMap["ExperimentationExclusionGroupInvalidTrafficAllocation"] = GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["TitleNotOnUpdatedPricingPlan"] = GenericErrorCodesTitleNotOnUpdatedPricingPlan;
         _GenericErrorCodesMap["SegmentManagementTitleNotInFlight"] = GenericErrorCodesSegmentManagementTitleNotInFlight;
@@ -5244,6 +5263,8 @@ GenericErrorCodes PlayFab::ServerModels::readGenericErrorCodesFromValue(const ra
         _GenericErrorCodesMap["SegmentManagementTriggerActionCountOverLimit"] = GenericErrorCodesSegmentManagementTriggerActionCountOverLimit;
         _GenericErrorCodesMap["SegmentManagementSegmentCountOverLimit"] = GenericErrorCodesSegmentManagementSegmentCountOverLimit;
         _GenericErrorCodesMap["SegmentManagementInvalidSegmentId"] = GenericErrorCodesSegmentManagementInvalidSegmentId;
+        _GenericErrorCodesMap["SegmentManagementInvalidInput"] = GenericErrorCodesSegmentManagementInvalidInput;
+        _GenericErrorCodesMap["SegmentManagementInvalidSegmentName"] = GenericErrorCodesSegmentManagementInvalidSegmentName;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 
     }

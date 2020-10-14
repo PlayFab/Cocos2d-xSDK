@@ -3957,6 +3957,13 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesExperimentationInvalidDuration: writer.String("ExperimentationInvalidDuration"); break;
     case GenericErrorCodesExperimentationMaxExperimentsReached: writer.String("ExperimentationMaxExperimentsReached"); break;
     case GenericErrorCodesExperimentationExperimentSchedulingInProgress: writer.String("ExperimentationExperimentSchedulingInProgress"); break;
+    case GenericErrorCodesExperimentationInvalidEndDate: writer.String("ExperimentationInvalidEndDate"); break;
+    case GenericErrorCodesExperimentationInvalidStartDate: writer.String("ExperimentationInvalidStartDate"); break;
+    case GenericErrorCodesExperimentationMaxDurationExceeded: writer.String("ExperimentationMaxDurationExceeded"); break;
+    case GenericErrorCodesExperimentationExclusionGroupNotFound: writer.String("ExperimentationExclusionGroupNotFound"); break;
+    case GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity: writer.String("ExperimentationExclusionGroupInsufficientCapacity"); break;
+    case GenericErrorCodesExperimentationExclusionGroupCannotDelete: writer.String("ExperimentationExclusionGroupCannotDelete"); break;
+    case GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation: writer.String("ExperimentationExclusionGroupInvalidTrafficAllocation"); break;
     case GenericErrorCodesMaxActionDepthExceeded: writer.String("MaxActionDepthExceeded"); break;
     case GenericErrorCodesTitleNotOnUpdatedPricingPlan: writer.String("TitleNotOnUpdatedPricingPlan"); break;
     case GenericErrorCodesSegmentManagementTitleNotInFlight: writer.String("SegmentManagementTitleNotInFlight"); break;
@@ -3964,6 +3971,8 @@ void PlayFab::AdminModels::writeGenericErrorCodesEnumJSON(GenericErrorCodes enum
     case GenericErrorCodesSegmentManagementTriggerActionCountOverLimit: writer.String("SegmentManagementTriggerActionCountOverLimit"); break;
     case GenericErrorCodesSegmentManagementSegmentCountOverLimit: writer.String("SegmentManagementSegmentCountOverLimit"); break;
     case GenericErrorCodesSegmentManagementInvalidSegmentId: writer.String("SegmentManagementInvalidSegmentId"); break;
+    case GenericErrorCodesSegmentManagementInvalidInput: writer.String("SegmentManagementInvalidInput"); break;
+    case GenericErrorCodesSegmentManagementInvalidSegmentName: writer.String("SegmentManagementInvalidSegmentName"); break;
     case GenericErrorCodesSnapshotNotFound: writer.String("SnapshotNotFound"); break;
 
     }
@@ -4556,6 +4565,13 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["ExperimentationInvalidDuration"] = GenericErrorCodesExperimentationInvalidDuration;
         _GenericErrorCodesMap["ExperimentationMaxExperimentsReached"] = GenericErrorCodesExperimentationMaxExperimentsReached;
         _GenericErrorCodesMap["ExperimentationExperimentSchedulingInProgress"] = GenericErrorCodesExperimentationExperimentSchedulingInProgress;
+        _GenericErrorCodesMap["ExperimentationInvalidEndDate"] = GenericErrorCodesExperimentationInvalidEndDate;
+        _GenericErrorCodesMap["ExperimentationInvalidStartDate"] = GenericErrorCodesExperimentationInvalidStartDate;
+        _GenericErrorCodesMap["ExperimentationMaxDurationExceeded"] = GenericErrorCodesExperimentationMaxDurationExceeded;
+        _GenericErrorCodesMap["ExperimentationExclusionGroupNotFound"] = GenericErrorCodesExperimentationExclusionGroupNotFound;
+        _GenericErrorCodesMap["ExperimentationExclusionGroupInsufficientCapacity"] = GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity;
+        _GenericErrorCodesMap["ExperimentationExclusionGroupCannotDelete"] = GenericErrorCodesExperimentationExclusionGroupCannotDelete;
+        _GenericErrorCodesMap["ExperimentationExclusionGroupInvalidTrafficAllocation"] = GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation;
         _GenericErrorCodesMap["MaxActionDepthExceeded"] = GenericErrorCodesMaxActionDepthExceeded;
         _GenericErrorCodesMap["TitleNotOnUpdatedPricingPlan"] = GenericErrorCodesTitleNotOnUpdatedPricingPlan;
         _GenericErrorCodesMap["SegmentManagementTitleNotInFlight"] = GenericErrorCodesSegmentManagementTitleNotInFlight;
@@ -4563,6 +4579,8 @@ GenericErrorCodes PlayFab::AdminModels::readGenericErrorCodesFromValue(const rap
         _GenericErrorCodesMap["SegmentManagementTriggerActionCountOverLimit"] = GenericErrorCodesSegmentManagementTriggerActionCountOverLimit;
         _GenericErrorCodesMap["SegmentManagementSegmentCountOverLimit"] = GenericErrorCodesSegmentManagementSegmentCountOverLimit;
         _GenericErrorCodesMap["SegmentManagementInvalidSegmentId"] = GenericErrorCodesSegmentManagementInvalidSegmentId;
+        _GenericErrorCodesMap["SegmentManagementInvalidInput"] = GenericErrorCodesSegmentManagementInvalidInput;
+        _GenericErrorCodesMap["SegmentManagementInvalidSegmentName"] = GenericErrorCodesSegmentManagementInvalidSegmentName;
         _GenericErrorCodesMap["SnapshotNotFound"] = GenericErrorCodesSnapshotNotFound;
 
     }

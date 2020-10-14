@@ -347,17 +347,20 @@ namespace PlayFab
 
         struct AdvancedPushPlatformMsg : public PlayFabBaseModel
         {
+            OptionalBool GCMDataOnly;
             std::string Json;
             PushNotificationPlatform Platform;
 
             AdvancedPushPlatformMsg() :
                 PlayFabBaseModel(),
+                GCMDataOnly(),
                 Json(),
                 Platform()
             {}
 
             AdvancedPushPlatformMsg(const AdvancedPushPlatformMsg& src) :
                 PlayFabBaseModel(),
+                GCMDataOnly(src.GCMDataOnly),
                 Json(src.Json),
                 Platform(src.Platform)
             {}
@@ -3927,6 +3930,13 @@ namespace PlayFab
             GenericErrorCodesExperimentationInvalidDuration,
             GenericErrorCodesExperimentationMaxExperimentsReached,
             GenericErrorCodesExperimentationExperimentSchedulingInProgress,
+            GenericErrorCodesExperimentationInvalidEndDate,
+            GenericErrorCodesExperimentationInvalidStartDate,
+            GenericErrorCodesExperimentationMaxDurationExceeded,
+            GenericErrorCodesExperimentationExclusionGroupNotFound,
+            GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity,
+            GenericErrorCodesExperimentationExclusionGroupCannotDelete,
+            GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesTitleNotOnUpdatedPricingPlan,
             GenericErrorCodesSegmentManagementTitleNotInFlight,
@@ -3934,6 +3944,8 @@ namespace PlayFab
             GenericErrorCodesSegmentManagementTriggerActionCountOverLimit,
             GenericErrorCodesSegmentManagementSegmentCountOverLimit,
             GenericErrorCodesSegmentManagementInvalidSegmentId,
+            GenericErrorCodesSegmentManagementInvalidInput,
+            GenericErrorCodesSegmentManagementInvalidSegmentName,
             GenericErrorCodesSnapshotNotFound
         };
 

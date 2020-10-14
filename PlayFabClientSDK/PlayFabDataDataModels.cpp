@@ -199,6 +199,7 @@ void FinalizeFileUploadsRequest::writeJSON(PFStringJsonWriter& writer)
         writer.String(iter->c_str());
     }
     writer.EndArray();
+    writer.String("ProfileVersion"); writer.Int(ProfileVersion);
     writer.EndObject();
 }
 
@@ -219,6 +220,8 @@ bool FinalizeFileUploadsRequest::readFromValue(const rapidjson::Value& obj)
             FileNames.push_back(memberList[i].GetString());
         }
     }
+    const Value::ConstMemberIterator ProfileVersion_member = obj.FindMember("ProfileVersion");
+    if (ProfileVersion_member != obj.MemberEnd() && !ProfileVersion_member->value.IsNull()) ProfileVersion = ProfileVersion_member->value.GetInt();
 
     return true;
 }

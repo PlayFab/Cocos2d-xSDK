@@ -3341,6 +3341,13 @@ namespace PlayFab
             GenericErrorCodesExperimentationInvalidDuration,
             GenericErrorCodesExperimentationMaxExperimentsReached,
             GenericErrorCodesExperimentationExperimentSchedulingInProgress,
+            GenericErrorCodesExperimentationInvalidEndDate,
+            GenericErrorCodesExperimentationInvalidStartDate,
+            GenericErrorCodesExperimentationMaxDurationExceeded,
+            GenericErrorCodesExperimentationExclusionGroupNotFound,
+            GenericErrorCodesExperimentationExclusionGroupInsufficientCapacity,
+            GenericErrorCodesExperimentationExclusionGroupCannotDelete,
+            GenericErrorCodesExperimentationExclusionGroupInvalidTrafficAllocation,
             GenericErrorCodesMaxActionDepthExceeded,
             GenericErrorCodesTitleNotOnUpdatedPricingPlan,
             GenericErrorCodesSegmentManagementTitleNotInFlight,
@@ -3348,6 +3355,8 @@ namespace PlayFab
             GenericErrorCodesSegmentManagementTriggerActionCountOverLimit,
             GenericErrorCodesSegmentManagementSegmentCountOverLimit,
             GenericErrorCodesSegmentManagementInvalidSegmentId,
+            GenericErrorCodesSegmentManagementInvalidInput,
+            GenericErrorCodesSegmentManagementInvalidSegmentName,
             GenericErrorCodesSnapshotNotFound
         };
 
